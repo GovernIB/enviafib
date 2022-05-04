@@ -32,7 +32,7 @@
 		<!-- Centre esquerra -->
 		<div class="col-4 text-center pt-2 text-decoration-none bg-transparent text-uppercase p-2 opcionsPeu elementPeuResponsive">
 
-			<a styleClass="text-dark linkPeu" href="/mapaweb"> <fmt:message
+			<!--  <a styleClass="text-dark linkPeu" href="/mapaweb"> <fmt:message
 					key="labels.mapaweb" />
 			</a><br /> <a styleClass="text-dark linkPeu" href="/accessibilitat">
 				<fmt:message key="labels.accessibilitat" />
@@ -40,7 +40,7 @@
 				<fmt:message key="labels.protecciodades" />
 			</a><br /> <a styleClass="text-dark linkPeu" href="/avislegal"> <fmt:message
 					key="labels.avislegal" />
-			</a>
+			</a> -->
 
 		</div>
 

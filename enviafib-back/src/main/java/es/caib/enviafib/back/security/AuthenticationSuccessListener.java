@@ -25,7 +25,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import es.caib.enviafib.ejb.UsuariService;
 import es.caib.enviafib.logic.utils.EjbManager;
-import es.caib.enviafib.logic.utils.PortaFIBPluginsManager;
+import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
@@ -120,7 +120,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 			// Revisar si és un Administrador que entra per primera vegada
 			log.info("\n No s'ha trobat l'usuari " + username + " a la BBDD \n");
 			try {
-				IUserInformationPlugin plugin = PortaFIBPluginsManager.getUserInformationPluginInstance();
+				IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
 				UserInfo info = plugin.getUserInfoByUserName(username);
 				if (info != null) {
 
