@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:sec="http://www.springframework.org/schema/security"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="
+				http://www.springframework.org/schema/beans
+				http://www.springframework.org/schema/beans/spring-beans.xsd
+				http://www.springframework.org/schema/security
+				http://www.springframework.org/schema/security/spring-security.xsd">
+
+ 	<sec:http create-session="never" use-expressions="true" auto-config="false" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
+        
+        <sec:csrf disabled="true"/>
+        
+        <sec:logout logout-success-url="/index.jsp" />
+
+  		<sec:intercept-url pattern="/js/**" access="permitAll"/>
+		<sec:intercept-url pattern="/doc/**" access="permitAll"/>
+		<sec:intercept-url pattern="/img/**" access="permitAll"/>
+		<sec:intercept-url pattern="/css/**" access="permitAll"/>
+		<sec:intercept-url pattern="/error.jsp" access="permitAll"/>
+		<sec:intercept-url pattern="/index.jsp" access="permitAll"/>
+	
+        <sec:intercept-url pattern="/common/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        
+        <sec:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
+        
+        <sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        
+        <sec:intercept-url pattern="/webdb/**" access="hasRole('ROLE_ADMIN')"/>
+
+<!--  OTHER EXAMPLES 
+		<sec:intercept-url pattern="/soli/**" access="hasRole('ROLE_SOLI')"/>
+		
+		<sec:intercept-url pattern="/dest/**" access="hasRole('ROLE_DEST')"/>
+		
+		<sec:intercept-url pattern="/dele/**" access="hasRole('ROLE_DELE')"/>
+		
+		<sec:intercept-url pattern="/cola/**" access="hasRole('ROLE_COLA')"/>
+		
+		<sec:intercept-url pattern="/aden/**" access="hasRole('ROLE_ADEN')"/>
+
+		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		
+		<sec:intercept-url pattern="/webdb/**" access="hasRole('ROLE_ADMIN')"/>
+		
+-->
+		
+		
+
+		
+		
+    <sec:custom-filter position="PRE_AUTH_FILTER" ref="preauthFilter"/>
+		<sec:session-management session-fixation-protection="none"/>
+	</sec:http>
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider ref="preAuthenticatedAuthenticationProvider"/>
+	</sec:authentication-manager>
+	
+
+	<bean id="preAuthenticatedProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint" />
+
+	<bean id="preAuthenticatedAuthenticationProvider" class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+		<property name="preAuthenticatedUserDetailsService">
+			<bean class="org.springframework.security.web.authentication.preauth.PreAuthenticatedGrantedAuthoritiesUserDetailsService" />
+		</property>
+	</bean>
+
+	<bean id="attributes2GrantedAuthoritiesMapper" class="es.caib.enviafib.back.security.RolesBasedAttributes2GrantedAuthoritiesMapper">
+		<property name="baseRoleMapping">
+			<map>
+				<entry key="EFI_USER" value="ROLE_USER"/>
+				<entry key="EFI_ADMIN" value="ROLE_ADMIN"/>
+				<entry key="@EFI_USER" value="ROLE_USER"/>
+                <entry key="@EFI_ADMIN" value="ROLE_ADMIN"/>
+			</map>
+		</property>
+	</bean>
+
+    
+	<bean id="mappableAttributesRetriever" class="es.caib.enviafib.back.security.RolesBasedMappableAttributesRetriever">
+		<property name="defaultMappableAttributes">
+			<set>
+				<value>EFI_USER</value>
+				<value>EFI_ADMIN</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="preauthFilter" class="org.springframework.security.web.authentication.preauth.j2ee.J2eePreAuthenticatedProcessingFilter">
+		<property name="authenticationDetailsSource">
+		<bean class="org.springframework.security.web.authentication.preauth.j2ee.J2eeBasedPreAuthenticatedWebAuthenticationDetailsSource">
+			<property name="mappableRolesRetriever" ref="mappableAttributesRetriever"/>
+			<property name="userRoles2GrantedAuthoritiesMapper" ref="attributes2GrantedAuthoritiesMapper"/>
+		</bean>
+		</property>
+		<property name="authenticationManager" ref="authenticationManager"/>
+	</bean>
+
+	<bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+
+	
+	<bean class="es.caib.enviafib.back.security.AuthenticationSuccessListener" />
+	
+</beans>

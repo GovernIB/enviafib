@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss xmlns="urn:jboss:1.0">
+    <!--
+    Permet introduïr configuracions del servidor necessaries per l'aplicació.
+
+    Per exemple, per evitar que qualsevol llibreria JAR amb beans anotats siguin idenficats com a beans CDI per Weld:
+    <weld xmlns="urn:jboss:weld:1.0" require-bean-descriptor="true"/>
+    Veure Suppressing implicit bean archives a https://docs.jboss.org/author/display/WFLY10/CDI+Reference
+    -->
+</jboss>

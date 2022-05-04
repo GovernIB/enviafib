@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib
+        xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+        http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0"
+        >
+<tlib-version>1.0</tlib-version>
+
+<short-name>EnviaFIB</short-name>
+
+<function>
+        <name>fileUrl</name>
+        <description>Crea una URL a partir d'un objecte IFile</description>
+        <function-class>es.caib.enviafib.back.controller.FileDownloadController</function-class>
+        <function-signature>String fileUrl(es.caib.enviafib.model.entity.Fitxer) throws Exception
+        </function-signature>
+</function>
+
+<function>
+        <name>getSortIcons</name>
+        <description>Genera Icones per ordenar columnes </description>
+        <function-class>es.caib.enviafib.back.utils.Utils</function-class>
+        <function-signature>java.lang.String getSortIcons(org.fundaciobit.genapp.common.web.form.BaseFilterForm, org.fundaciobit.genapp.common.query.Field) throws Exception
+        </function-signature>
+</function>
+
+<function>
+        <name>getSortIconsAdditionalField</name>
+        <description>Genera Icones per ordenar les columnes addicionals</description>
+        <function-class>es.caib.enviafib.back.utils.Utils</function-class>
+        <function-signature>java.lang.String getSortIconsAdditionalField(org.fundaciobit.genapp.common.web.form.BaseFilterForm, org.fundaciobit.genapp.common.web.form.AdditionalField) throws Exception
+        </function-signature>
+</function>
+
+<function>
+        <name>escapeJavaScript</name>
+        <description>escapeJavaScript</description>
+        <function-class>org.apache.commons.lang.StringEscapeUtils</function-class>
+        <function-signature>java.lang.String escapeJavaScript(java.lang.String)</function-signature>
+</function>
+
+<function>
+        <name>isDesenvolupament</name>
+        <description>Retorna si estam en mode desenvolupament</description>
+        <function-class>es.caib.enviafib.commons.utils.Configuracio</function-class>
+        <function-signature>boolean isDesenvolupament()</function-signature>
+</function>
+
+<function>
+        <name>hasRole</name>
+        <description>hasRole</description>
+        <function-class>es.caib.enviafib.back.security.LoginInfo</function-class>
+        <function-signature>boolean hasRole(java.lang.String)</function-signature>
+</function>
+
+</taglib>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib
+        xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+        http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0"
+        >
+<tlib-version>1.0</tlib-version>
+
+<short-name>GenApp</short-name>
+
+
+<function>
+        <name>getDateTimePattern</name>
+        <description>Retorna el patr� per imprimir una Data-Hora </description>
+        <function-class>org.fundaciobit.genapp.common.web.i18n.I18NUtils</function-class>
+        <function-signature>java.lang.String getDateTimePattern()</function-signature>
+</function>
+
+<function>
+        <name>getDatePattern</name>
+        <description>Retorna el patr� per imprimir una Data </description>
+        <function-class>org.fundaciobit.genapp.common.web.i18n.I18NUtils</function-class>
+        <function-signature>java.lang.String getDatePattern()</function-signature>
+</function>
+
+<function>
+        <name>getTimePattern</name>
+        <description>Retorna el patr� per imprimir una Hora </description>
+        <function-class>org.fundaciobit.genapp.common.web.i18n.I18NUtils</function-class>
+        <function-signature>java.lang.String getTimePattern()</function-signature>
+</function>
+
+<function>
+        <name>getJSDateTimePattern</name>
+        <description>Retorna el patr� per imprimir una Data-Hora </description>
+        <function-class>org.fundaciobit.genapp.common.web.i18n.I18NUtils</function-class>
+        <function-signature>java.lang.String getJSDateTimePattern()</function-signature>
+</function>
+
+<function>
+        <name>getJSDatePattern</name>
+        <description>Retorna el patr� per imprimir una Data </description>
+        <function-class>org.fundaciobit.genapp.common.web.i18n.I18NUtils</function-class>
+        <function-signature>java.lang.String getJSDatePattern()</function-signature>
+</function>
+
+<function>
+        <name>getJSTimePattern</name>
+        <description>Retorna el patr� per imprimir una Hora </description>
+        <function-class>org.fundaciobit.genapp.common.web.i18n.I18NUtils</function-class>
+        <function-signature>java.lang.String getJSTimePattern()</function-signature>
+</function>
+
+<function>
+        <name>getFirstDayOfTheWeek</name>
+        <description>Retorna el primer dia de la setmana</description>
+        <function-class>org.fundaciobit.genapp.common.web.i18n.I18NUtils</function-class>
+        <function-signature>int getFirstDayOfTheWeek()</function-signature>
+</function>
+
+
+<function>
+        <name>contains</name>
+        <description>Retorna true si  una llista cont� un element</description>
+        <function-class>org.fundaciobit.genapp.common.utils.Utils</function-class>
+        <function-signature>boolean contains(java.util.Collection, java.lang.Object)</function-signature>
+</function>
+
+<!--
+<function>
+        <name>containsField</name>
+        <description>Retorna true si  una llista de Field cont� u Field mab javaName igual al segon par�metre</description>
+        <function-class>org.fundaciobit.genapp.common.utils.Utils</function-class>
+        <function-signature>boolean containsField(org.fundaciobit.genapp.common.query.Field[], java.lang.String)</function-signature>
+</function>
+-->
+
+<function>
+        <name>findValue</name>
+        <description>troba un valor dins una llista de StrignKeyValue</description>
+        <function-class>org.fundaciobit.genapp.common.utils.Utils</function-class>
+        <function-signature>java.lang.String findValue(java.lang.Object, java.util.Collection)</function-signature>
+</function>
+
+
+<function>
+    <name>hasProperty</name>
+    <function-class>org.fundaciobit.genapp.common.utils.Utils</function-class>
+    <function-signature>boolean hasProperty(java.lang.Object, java.lang.String)</function-signature>
+</function>
+
+<function>
+        <name>isFieldSearchInRange</name>
+        <description>Retorna true si la cerca del Field es fa en rang (from,to). Un exemple serien Integer, Double, Short, Byte, BigDecimal i BigInteger)</description>
+        <function-class>org.fundaciobit.genapp.common.web.controller.CommonBaseController</function-class>
+        <function-signature>boolean isFieldSearchInRange(org.fundaciobit.genapp.common.query.Field)</function-signature>
+</function>
+
+</taglib>

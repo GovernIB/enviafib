@@ -1,0 +1,495 @@
+/* Estils generals */
+@font-face {
+	font-family: 'Bariol Regular';
+	src: url('../fonts/Bariol_Regular.ttf');
+}
+body {
+	padding-top: 4.5rem;
+	font: normal 100% 'Bariol Regular', Arial, Helvetica, sans-serif;
+	color: #333;
+	background-color: #f7f7f7;
+}
+a{
+	color: #4dba79;
+}
+a:hover{
+	color: #000;
+	text-decoration: none;
+}
+.p-3aplicacio{
+	padding: 3.5rem 1rem!important;
+}
+.verde{
+	color: #4dba79;
+}
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+.bg-white {
+	background-color: #fff !important;
+}
+.colorVerd{
+	background-color: #265d3c;
+	margin-left: 5px;
+}
+.colorVerd:hover:enabled{
+	background-color: #0000;
+}
+.desactivat{
+	cursor: not-allowed !important;
+}
+.btn-primary.aplicacio-btn {
+	background-color: #4dba79;
+	border-color: #4dba79;
+	border: none !important;
+}
+.btn-primary.aplicacio-btn:hover,
+.btn-primary.aplicacio-btn:focus,
+.btn-primary.aplicacio-btn:active{
+	background-color: #000 !important;
+	border: none #000 !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+.btn-danger.aplicacio-btn {
+	background-color: #dc3545;
+	border-color: #dc3545;
+	border: none !important;
+}
+.btn-danger.aplicacio-btn:hover,
+.btn-danger.aplicacio-btn:focus,
+.btn-danger.aplicacio-btn:active{
+	background-color: #000 !important;
+	border: none #000 !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.lh15{
+	line-height:1.5
+}
+.clickable-row{
+	cursor: pointer;
+}
+.col-center{
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+}
+/* FI Estils generals */
+
+/* Motlla de pa */
+.breadcrumb{
+	padding-left: 45px;
+	background-color: #ffffff;
+	margin-bottom: 0px;
+        width: 100%;
+	border-bottom: 2px solid #EAEAEA;
+}
+
+.miga{
+	position: fixed;
+	z-index: 20;
+	width: 100%;
+}
+/* FI Motlla de pa */
+
+
+/* APLICA QUAN WIDTH MENOR DE 992px */
+@media only screen and (max-width: 992px) {
+	.botoCurt{
+		display: none;
+	}
+	.mobil{
+		float: left !important;
+	}
+	.container {
+		max-width: initial !important;
+	}
+}
+/* FI*/
+
+/* APLICA QUAN WIDTH MENOR DE 768px */
+@media only screen and (max-width : 767px) {
+	.colorVerd{
+		background-color: #4DBA79 !important;
+		margin-left: 0px !important;
+	}
+	.colorVerd:hover{
+		background-color: #4DBA79 !important;
+	}
+	.mobil li a:hover{
+		background-color: #4DBA79 !important;
+	}
+	.peuResponsive{
+		display: list-item !important;
+		list-style: none !important;
+	}
+	.elementPeuResponsive{
+		max-width: 100% !important;
+		text-align: center !important;
+		justify-content: center !important;
+	}
+	.llevarMobil{
+		display: none;
+	}
+	.botoCurt{
+		display: inline;
+	}
+	.navbar-nav.mobil {
+		width: 100%;
+	}
+	.dropdown-menu {
+		float: none;
+		padding: 0;
+	}
+	a.nav-link.mobil:hover {
+		color: #000 !important;
+	}
+	a.dropdown-item.mobil:hover {
+		color: #4dba79 !important;
+		background-color: #FFF !important;
+	}
+	.p-3aplicacio{
+		padding-bottom: 1rem !important;
+	}
+	.subtitolMay {
+		font-size: 0.8rem !important;
+	}
+	.marg0 {
+		border: 0px !important;
+	}
+}
+/* FI */
+
+/* APLICA QUAN WIDTH MENOR DE 480px */
+@media only screen and (min-width : 401px) and (max-width : 480px) {
+	body {
+		padding-top: 4rem !important;
+	}
+	.logoGovern {
+		margin-right: 10px !important;
+		margin-left: 10px !important;
+	}
+	.imatgeGovern{
+		width: 45px !important;
+	}
+	.navbar-toggler {
+		padding: 0.25rem !important;
+		font-size: 1rem !important;
+	}
+	.desactivarMobil{
+		display: none !important;
+	}
+	.peuResponsive{
+		display: list-item !important;
+	}
+	.breadcrumb{
+		padding: 1rem 1rem 0.5rem 1rem !important;
+		border-radius: 0 !important;
+	}
+	.containerPeu{
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}
+/* FI */
+
+/* APLICA QUAN WIDTH MENOR DE 400px */
+@media only screen and (min-width : 200px) and (max-width : 400px) {
+	body {
+		padding-top: 4rem !important;
+	}
+	.logoGovern {
+		margin-right: 5px !important;
+		margin-left: 5px !important;
+	}
+	.imatgeGovern{
+		width: 40px !important;
+	}
+	.navbar-brand {
+		font-size: 1rem !important;
+	}
+	.dadesSuport{
+		padding-left: 30px !important;
+		line-height: 1.5 !important;
+	}
+	.dadesSuport li{
+		list-style: circle !important;
+	}
+	.navbar-nav.mobil {
+		padding-left: 20px !important;
+	}
+	.navbar-toggler {
+		padding: 0.25rem !important;
+		font-size: 1rem !important;
+	}
+	.desactivarMobil{
+		display: none !important;
+	}
+	.breadcrumb{
+		padding: .35rem 0.6rem !important;
+		border-radius: 0 !important;
+	}
+}
+/* FI */
+
+/* Boto Dropdown */
+.dropdown:hover>.dropdown-menu {
+	display: block;
+}
+.dropdown>.dropdown-toggle:active {
+	pointer-events: none;
+}
+/* FI Boto Dropdown */
+
+/* Cap�alera */
+.flechaSubmenu{
+	font-size: 8px;
+	padding-top: 5px !important;
+}
+.oi-caret-bottom:before {
+	content: '\0000a0\e02d' !important;
+}
+.oi-globe:before {
+	content: '\e06f\0000a0' !important;
+}
+.oi-power-standby:before {
+	content: '\e0ab\0000a0' !important;
+}
+.oi-briefcase:before {
+	content: '\e024\0000a0' !important;
+}
+.bg-aplicacio{
+	background-color: #4dba79 !important;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.menuGovern{
+	min-width: 400px;
+}
+.titol{
+	text-transform: uppercase;
+	font-size: 1.2em !important;
+	margin-bottom: 0px;
+}
+.subtitol{
+	font-size: 0.85em !important;
+}
+.subtitolMay{
+	font-size: 0.85em !important;
+	text-transform: uppercase;
+}
+.menuGovern span, strong{
+	font-size: 1em;
+}
+.logoGovern{
+	float: left;
+	margin-right: 20px;
+	margin-left: 5px;
+}
+.imatgeGovern{
+	width: 50px;
+}
+.iconoCapsalera{
+	font-size: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	height: 17px;
+	margin-right: 3px;
+}
+.minW0{
+	min-width: 0;
+}
+/* FI Cap�alera */
+
+/* Men� m�bil */
+.botoMobil{
+	position: absolute;
+	right: 10px;
+	top: 20px;
+}
+.mobil{
+	margin-left: auto!important;
+	padding-right: 20px;
+	padding-top: 10px !important;
+}
+.navbar-nav.mobil{
+	padding-top: 10px;
+	padding-left: 40px;
+}
+.mobil li a:hover{
+	color: #fff !important;
+	background-color: #000;
+}
+.nav-link.mobil{
+	color: #fff !important;
+}
+.marg0{
+	margin: 0px;
+	border: 1px solid #B9B9B9;
+}
+.icono{
+	opacity: 0.5;
+	padding-bottom: 4px;
+}
+a.dropdown-item{
+	background-color: #fff;
+}
+a.dropdown-item.mobil:hover{
+	color: #4dba79 !important;
+	background-color: #fff;
+}
+/* FI Men� m�bil */
+
+/* Suport */
+.infoContacte{
+	padding: 0em 1em 2em 1em;
+	text-align: center;
+}
+.btn-suport{
+	background-color: transparent;
+	color: #4dba79;
+	padding: 0px;
+	cursor: pointer;
+	margin-bottom: 2px;
+}
+.btn-suport:hover{
+	color: #000;
+}
+.btn-suport.focus,.btn-suport:focus{
+	box-shadow: 0 0 0 0px !important;
+}
+.dadesSuport{
+	padding-left: 10%;
+	line-height: 1.7;
+	text-align: start;
+}
+.dadesSuport li{
+	list-style: circle;
+}
+.dades a {
+	color: #4dba79;
+}
+.dades a:hover,
+.dades a:focus {
+	color: #000;
+	background-color: transparent;
+	text-decoration: none;
+}
+/* FI Suport */
+
+/* Peu */
+.opcionsPeu li::before {
+	content: "\0000a0\0000a0|\0000a0\0000a0";
+}
+.opcionsPeu li:first-child::before {
+	content: "";
+}
+a.linkPeu:hover,
+a.linkPeu:focus,
+a.linkPeu:active {
+	color: #4dba79 !important;
+}
+/* FI Peu */
+
+/* Xarxes Socials */
+a.iconoXarxes{
+	-moz-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-webkit-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-o-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-ms-transition: background-color .2s ease-out, border-color .2s ease-out;
+	transition: background-color .2s ease-out, border-color .2s ease-out;
+
+}
+a.iconoXarxes{
+	display: inline-block;
+	width: 2.5em;
+	height: 2.5em;
+	margin-right: .2em;
+	border: .2em solid #333;
+	border-radius: 2em;
+	will-change: border-color;
+
+}
+a.iconoXarxes{
+	-moz-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-webkit-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-o-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-ms-transition: background-color .2s ease-out, border-color .2s ease-out;
+	transition: background-color .2s ease-out, border-color .2s ease-out;
+
+}
+a.iconoXarxes svg { transform: scale(.7, .7); }
+a.iconoXarxes:hover,
+a.iconoXarxes:focus,
+a.iconoXarxes:active { background-color: #4dba79; border-color: #4dba79; }
+a.iconoXarxes:hover path,
+a.iconoXarxes:focus path,
+a.iconoXarxes:active path { fill: #fff; }
+a.iconoXarxes{
+	-moz-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-webkit-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-o-transition: background-color .2s ease-out, border-color .2s ease-out;
+	-ms-transition: background-color .2s ease-out, border-color .2s ease-out;
+	transition: background-color .2s ease-out, border-color .2s ease-out;
+}
+/* FI Xarxes Socials */
+
+
+/* Capsa Box */
+.box{
+	padding:60px 0px;
+}
+.box-part{
+	background:#EAEAEA;
+	border-radius:0;
+	padding:30px 10px;
+	margin:20px 0px;
+	border: thin outset;
+	font: normal 100% 'Bariol Regular', Arial, Helvetica, sans-serif;
+	color: #333;
+}
+.box-part:hover{
+	cursor: pointer;
+	background: #b9b9b9;
+}
+.box-part:focus, .box-part:active, .box-part:visited{
+	outline: none !important;
+	box-shadow: none;
+}
+.text{
+	margin:20px 0px;
+}
+.imatgeMenu{
+	font-size: 200%;
+	padding-bottom: 10px;
+	color: #265d3c;
+}
+.iconaMenu{
+	height: 45px;
+	padding-bottom: 10px;
+	filter: invert(78%) sepia(53%) saturate(428%) hue-rotate(91deg) brightness(96%) contrast(94%);
+}
+.titolMenu{
+	font: normal 100% 'Bariol Regular', Arial, Helvetica, sans-serif;
+	color: #4dba79;
+	font-size: 1.5em;
+	display: flow-root;
+}
+/* FI Capsa Box */
+
+/* Per paginació */
+.page-link{
+	color: #4dba79;
+}
+.page-item.active .page-link {
+	background-color: #4dba79;
+	border-color: #4dba79;
+}
+.page-link:focus, .page-link:hover {
+	color: #000;
+}
+
+

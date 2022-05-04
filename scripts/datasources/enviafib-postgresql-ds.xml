@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.ironjacamar.org/doc/schema"
+             xsi:schemaLocation="http://www.ironjacamar.org/doc/schema http://www.ironjacamar.org/doc/schema/datasources_1_2.xsd">          
+    <datasource jndi-name="java:jboss/datasources/enviafibDS" pool-name="enviafibDS" enabled="true"
+                use-java-context="true">
+        <connection-url>jdbc:postgresql://localhost:5432/enviafib</connection-url>
+        <driver>postgresql</driver>
+        <security>
+            <user-name>enviafib</user-name>
+            <password>enviafib</password>
+        </security>
+    </datasource>
+</datasources>

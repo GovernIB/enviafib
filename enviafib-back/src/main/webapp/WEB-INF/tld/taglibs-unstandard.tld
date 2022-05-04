@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.2</jspversion>
+  <shortname>unstandard</shortname>
+  <uri>http://jakarta.apache.org/taglibs/unstandard-1.0</uri>
+  <info>Your unstandard description summary.This JSP tag library can be used to ....
+    etc....</info>
+  <tag>
+    <name>equals</name>
+    <tagclass>org.apache.taglibs.unstandard.EqualsTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>var</name>
+      <required>no</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>ignoreCase</name>
+      <required>no</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>lhs</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>rhs</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>instanceOf</name>
+    <tagclass>org.apache.taglibs.unstandard.InstanceOfTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>var</name>
+      <required>no</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>type</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>invoke</name>
+    <tagclass>org.apache.taglibs.unstandard.InvokeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>var</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>target</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>method</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>bind</name>
+    <tagclass>org.apache.taglibs.unstandard.BindTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>var</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>target</name>
+      <required>no</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>type</name>
+      <required>no</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>field</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>size</name>
+    <tagclass>org.apache.taglibs.unstandard.SizeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>var</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>target</name>
+      <required>no</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>useConstants</name>
+    <tagclass>org.apache.taglibs.unstandard.UseConstantsTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>var</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>className</name>
+      <required>yes</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>scope</name>
+      <required>no</required>
+      <rtexprvalue>no</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
+
+
+
+
+
