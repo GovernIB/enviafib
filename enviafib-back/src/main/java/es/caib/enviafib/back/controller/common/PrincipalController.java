@@ -77,11 +77,11 @@ public class PrincipalController {
 			 */
 
 			if ("admin".equals(pipella)) {
-				return new ModelAndView(new RedirectView("/admin/option1", true));
+				return new ModelAndView(new RedirectView("admin/usuari/list", true));
 			}
 
 			if ("user".equals(pipella)) {
-				return new ModelAndView(new RedirectView("/user/option1", true));
+				return new ModelAndView(new RedirectView("user/peticio/list", true));
 			}
 
 			if ("webdb".equals(pipella)) {
