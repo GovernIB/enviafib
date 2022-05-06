@@ -34,14 +34,6 @@ This page is generated automatically. Please edit.
  
 </div>
 
-<br/>
-Username: ${loginInfo.username}<br/>
-&#36;{efi:hasRole(ROLE_ADMIN)}= ${efi:hasRole('ROLE_ADMIN')}<br/>
-&#36;{efi:hasRole(ROLE_USER) }= ${efi:hasRole('ROLE_USER') }<br/>
-Locale = <%=LocaleContextHolder.getLocale() %> <br/>
-lang = ${lang} <br/>
-<br/>
-
 <c:if test="${efi:isDesenvolupament()}">
 Only in Development Mode
 </c:if>
