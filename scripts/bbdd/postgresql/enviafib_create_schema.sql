@@ -11,11 +11,7 @@ SET client_min_messages = warning;
 SET escape_string_warning = off;
 
 
---
--- Name: DATABASE enviafib; Type: COMMENT; Schema: -; Owner: enviafib
---
 
-COMMENT ON DATABASE enviafib IS 'Database de desenvolupament per enviafib.';
 
 
 --
@@ -23,15 +19,6 @@ COMMENT ON DATABASE enviafib IS 'Database de desenvolupament per enviafib.';
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
-
-
---TODO: Revisar si es necessari afegir el create schema, search_path i alterschema.
-
-CREATE SCHEMA enviafib;
-
-ALTER SCHEMA enviafib OWNER TO enviafib;
 
 SET search_path = enviafib, pg_catalog;
 
