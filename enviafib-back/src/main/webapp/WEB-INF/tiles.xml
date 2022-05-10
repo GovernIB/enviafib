@@ -70,14 +70,6 @@
         <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_user.jsp" />
          <put-attribute name="pipella" value="user" />
     </definition>
-    
-    <definition name="option1User" extends="user">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/user/user.jsp" />
-    </definition>
-    
-    <definition name="option2User" extends="user">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/user/user.jsp" />
-    </definition>
 
     <definition name="peticioFormUser" extends="user">
         <put-attribute name="titol" value="peticio.peticio" />
@@ -93,14 +85,6 @@
     <definition name="admin" extends="base.definition">
         <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_admin.jsp" />
         <put-attribute name="pipella" value="admin" />
-    </definition>
-    
-    <definition name="option1Admin" extends="admin">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/admin/admin.jsp" />
-    </definition>
-     
-    <definition name="option2Admin" extends="admin">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/admin/admin.jsp" />
     </definition>
 
     <definition name="usuariFormAdmin" extends="admin">

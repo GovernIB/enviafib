@@ -48,6 +48,48 @@
 	  		<groupId>org.fundaciobit.pluginsib.userinformation</groupId>
 		    <version>${pluginsib.userinformation.api.version}</version>
 		</dependency>
+		
+		
+		<dependency>
+      <artifactId>apifirmaasyncsimple-jersey</artifactId>
+      <groupId>org.fundaciobit.apisib.apifirmaasyncsimple</groupId>
+      <version>2.0.2</version>
+      <exclusions>
+      		<exclusion>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+			</exclusion>
+		</exclusions>
+    </dependency>
+		
+	<dependency>
+      <artifactId>jersey-apache-client4</artifactId>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <version>1.19.4</version>
+      <exclusions>
+      		<exclusion>
+				<groupId>com.sun.jersey</groupId>
+				<artifactId>jersey-client</artifactId>
+			</exclusion>
+		</exclusions>
+    </dependency>
+    <dependency>
+      <artifactId>httpclient</artifactId>
+      <groupId>org.apache.httpcomponents</groupId>
+      <version>4.1.1</version>
+      <exclusions>
+      		<exclusion>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+			</exclusion>			
+		</exclusions>
+    </dependency>
+    
+		
 	</dependencies>
 
 	<build>
