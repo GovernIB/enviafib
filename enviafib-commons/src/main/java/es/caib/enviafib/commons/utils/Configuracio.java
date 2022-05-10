@@ -115,5 +115,15 @@ public class Configuracio implements Constants {
     public static String getFileSystemManager() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "filesystemmanagerclass");
     }
+    
+    public static String getPortafibGatewayV2() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibgatewayv2");
+    }
+    public static String getPortafibUsername() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibusername");
+    }
+    public static String getPortafibPassword() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibpassword");
+    }
 
 }
