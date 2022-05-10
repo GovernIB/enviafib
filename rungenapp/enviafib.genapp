@@ -144,8 +144,21 @@
              <string>efi_fitxer_pk</string>
             </void>
             <void property="foreignKeys">
-             <array class="org.fundaciobit.genapp.ForeignKey" length="1">
+             <array class="org.fundaciobit.genapp.ForeignKey" length="2">
               <void index="0">
+               <object class="org.fundaciobit.genapp.ForeignKey">
+                <void property="field">
+                 <string>fitxer_firmatid</string>
+                </void>
+                <void property="name">
+                 <string>efi_peticio_fitxer_ffirm_fk</string>
+                </void>
+                <void property="table">
+                 <string>efi_peticio</string>
+                </void>
+               </object>
+              </void>
+              <void index="1">
                <object class="org.fundaciobit.genapp.ForeignKey">
                 <void property="field">
                  <string>fitxerid</string>
@@ -880,7 +893,7 @@
         <string>fields</string>
         <void method="set">
          <object idref="TableInfo2"/>
-         <array class="org.fundaciobit.genapp.FieldInfo" length="7">
+         <array class="org.fundaciobit.genapp.FieldInfo" length="9">
           <void index="0">
            <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo9">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -1527,6 +1540,181 @@
             </void>
            </object>
           </void>
+          <void index="7">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo16">
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlName</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <string>estat</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlType</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <int>5</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>size</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <int>5</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>digits</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <int>0</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>isNotNullable</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <boolean>true</boolean>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>javaName</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <string>estat</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>defaultValue</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <string>0</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>orderBy</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <int>1</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>webFieldInfo</string>
+             <void method="set">
+              <object idref="FieldInfo16"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo13">
+               <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
+                <string>webtype</string>
+                <void method="set">
+                 <object idref="WebFieldInfo13"/>
+                 <int>14</int>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void property="javaType">
+             <class>short</class>
+            </void>
+           </object>
+          </void>
+          <void index="8">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo17">
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlName</string>
+             <void method="set">
+              <object idref="FieldInfo17"/>
+              <string>fitxer_firmatid</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlType</string>
+             <void method="set">
+              <object idref="FieldInfo17"/>
+              <int>-5</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>size</string>
+             <void method="set">
+              <object idref="FieldInfo17"/>
+              <int>19</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>digits</string>
+             <void method="set">
+              <object idref="FieldInfo17"/>
+              <int>0</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>javaName</string>
+             <void method="set">
+              <object idref="FieldInfo17"/>
+              <string>fitxerFirmatID</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>showInWebList</string>
+             <void method="set">
+              <object idref="FieldInfo17"/>
+              <void class="org.fundaciobit.genapp.FieldInfo" id="Field0" method="getField">
+               <string>traduible</string>
+               <void id="Boolean0" method="get">
+                <object idref="FieldInfo0"/>
+               </void>
+              </void>
+              <object idref="Boolean0"/>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>webFieldInfo</string>
+             <void method="set">
+              <object idref="FieldInfo17"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo14">
+               <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
+                <string>webtype</string>
+                <void method="set">
+                 <object idref="WebFieldInfo14"/>
+                 <int>3</int>
+                </void>
+               </void>
+               <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
+                <string>foreignKey</string>
+                <void method="set">
+                 <object idref="WebFieldInfo14"/>
+                 <object class="org.fundaciobit.genapp.ForeignKey" id="ForeignKey0">
+                  <void property="field">
+                   <string>fitxerid</string>
+                  </void>
+                  <void property="name">
+                   <string>efi_peticio_fitxer_ffirm_fk</string>
+                  </void>
+                  <void property="table">
+                   <string>efi_fitxer</string>
+                  </void>
+                  <void property="type">
+                   <int>1</int>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void property="foreignKeys">
+             <array class="org.fundaciobit.genapp.ForeignKey" length="1">
+              <void index="0">
+               <object idref="ForeignKey0"/>
+              </void>
+             </array>
+            </void>
+            <void property="javaType">
+             <class>java.lang.Long</class>
+            </void>
+           </object>
+          </void>
          </array>
         </void>
        </void>
@@ -1588,74 +1776,74 @@
          <object idref="TableInfo3"/>
          <array class="org.fundaciobit.genapp.FieldInfo" length="7">
           <void index="0">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo16">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo18">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isAutoIncrement</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <string>pluginid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <int>-5</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <int>19</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <string>pluginid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>showInReferenceList</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>defaultValue</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <string>nextval(&apos;efi_plugin_seq&apos;::regclass)</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo16"/>
+              <object idref="FieldInfo18"/>
               <object class="org.fundaciobit.genapp.WebFieldInfo"/>
              </void>
             </void>
@@ -1671,65 +1859,65 @@
            </object>
           </void>
           <void index="1">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo17">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo19">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
+              <object idref="FieldInfo19"/>
               <string>nomid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
+              <object idref="FieldInfo19"/>
               <int>-5</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
+              <object idref="FieldInfo19"/>
               <int>19</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
+              <object idref="FieldInfo19"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
+              <object idref="FieldInfo19"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
+              <object idref="FieldInfo19"/>
               <string>nomid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>traduible</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
+              <object idref="FieldInfo19"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo17"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo13">
+              <object idref="FieldInfo19"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo15">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo13"/>
+                 <object idref="WebFieldInfo15"/>
                  <int>14</int>
                 </void>
                </void>
@@ -1742,65 +1930,65 @@
            </object>
           </void>
           <void index="2">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo18">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo20">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
+              <object idref="FieldInfo20"/>
               <string>descripciocurtaid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
+              <object idref="FieldInfo20"/>
               <int>-5</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
+              <object idref="FieldInfo20"/>
               <int>19</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
+              <object idref="FieldInfo20"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
+              <object idref="FieldInfo20"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
+              <object idref="FieldInfo20"/>
               <string>descripciocurtaid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>traduible</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
+              <object idref="FieldInfo20"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo18"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo14">
+              <object idref="FieldInfo20"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo16">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo14"/>
+                 <object idref="WebFieldInfo16"/>
                  <int>14</int>
                 </void>
                </void>
@@ -1813,51 +2001,51 @@
            </object>
           </void>
           <void index="3">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo19">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo21">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo19"/>
+              <object idref="FieldInfo21"/>
               <string>classe</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo19"/>
+              <object idref="FieldInfo21"/>
               <int>12</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo19"/>
+              <object idref="FieldInfo21"/>
               <int>255</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo19"/>
+              <object idref="FieldInfo21"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo19"/>
+              <object idref="FieldInfo21"/>
               <string>classe</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo19"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo15">
+              <object idref="FieldInfo21"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo17">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo15"/>
+                 <object idref="WebFieldInfo17"/>
                  <int>2</int>
                 </void>
                </void>
@@ -1870,51 +2058,51 @@
            </object>
           </void>
           <void index="4">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo20">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo22">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo20"/>
+              <object idref="FieldInfo22"/>
               <string>properties</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo20"/>
+              <object idref="FieldInfo22"/>
               <int>12</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo20"/>
+              <object idref="FieldInfo22"/>
               <int>2147483647</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo20"/>
+              <object idref="FieldInfo22"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo20"/>
+              <object idref="FieldInfo22"/>
               <string>properties</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo20"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo16">
+              <object idref="FieldInfo22"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo18">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo16"/>
+                 <object idref="WebFieldInfo18"/>
                  <int>2</int>
                 </void>
                </void>
@@ -1927,58 +2115,58 @@
            </object>
           </void>
           <void index="5">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo21">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo23">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo21"/>
+              <object idref="FieldInfo23"/>
               <string>actiu</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo21"/>
+              <object idref="FieldInfo23"/>
               <int>-7</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo21"/>
+              <object idref="FieldInfo23"/>
               <int>1</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo21"/>
+              <object idref="FieldInfo23"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo21"/>
+              <object idref="FieldInfo23"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo21"/>
+              <object idref="FieldInfo23"/>
               <string>actiu</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo21"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo17">
+              <object idref="FieldInfo23"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo19">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo17"/>
+                 <object idref="WebFieldInfo19"/>
                  <int>4</int>
                 </void>
                </void>
@@ -1991,65 +2179,65 @@
            </object>
           </void>
           <void index="6">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo22">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo24">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
+              <object idref="FieldInfo24"/>
               <string>tipus</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
+              <object idref="FieldInfo24"/>
               <int>4</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
+              <object idref="FieldInfo24"/>
               <int>10</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
+              <object idref="FieldInfo24"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
+              <object idref="FieldInfo24"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
+              <object idref="FieldInfo24"/>
               <string>tipus</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>minAllowedValue</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
+              <object idref="FieldInfo24"/>
               <string>1,2,3,4</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo22"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo18">
+              <object idref="FieldInfo24"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo20">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo18"/>
+                 <object idref="WebFieldInfo20"/>
                  <int>16</int>
                 </void>
                </void>
@@ -2122,81 +2310,81 @@
          <object idref="TableInfo4"/>
          <array class="org.fundaciobit.genapp.FieldInfo" length="1">
           <void index="0">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo23">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo25">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isAutoIncrement</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <string>traduccioid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <int>-5</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <int>19</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <string>traduccioID</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>showInReferenceList</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>descripcio</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <string></string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>defaultValue</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <string>nextval(&apos;efi_traduccio_seq&apos;::regclass)</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo23"/>
+              <object idref="FieldInfo25"/>
               <object class="org.fundaciobit.genapp.WebFieldInfo">
                <void property="label">
                 <array class="java.lang.String" length="1">
@@ -2329,72 +2517,72 @@
          <object idref="TableInfo5"/>
          <array class="org.fundaciobit.genapp.FieldInfo" length="3">
           <void index="0">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo24">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo26">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
+              <object idref="FieldInfo26"/>
               <string>traducciomapid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
+              <object idref="FieldInfo26"/>
               <int>-5</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
+              <object idref="FieldInfo26"/>
               <int>19</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
+              <object idref="FieldInfo26"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
+              <object idref="FieldInfo26"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
+              <object idref="FieldInfo26"/>
               <string>traduccioMapID</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>descripcio</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
+              <object idref="FieldInfo26"/>
               <string></string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo24"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo19">
+              <object idref="FieldInfo26"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo21">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo19"/>
+                 <object idref="WebFieldInfo21"/>
                  <int>3</int>
                 </void>
                </void>
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>foreignKey</string>
                 <void method="set">
-                 <object idref="WebFieldInfo19"/>
+                 <object idref="WebFieldInfo21"/>
                  <object class="org.fundaciobit.genapp.ForeignKey">
                   <void property="field">
                    <string>traduccioid</string>
@@ -2446,67 +2634,67 @@
            </object>
           </void>
           <void index="1">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo25">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo27">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <string>idiomaid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <int>12</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <int>10</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <string>idiomaID</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>showInReferenceList</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>descripcio</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <string></string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo25"/>
+              <object idref="FieldInfo27"/>
               <object class="org.fundaciobit.genapp.WebFieldInfo"/>
              </void>
             </void>
@@ -2522,65 +2710,65 @@
            </object>
           </void>
           <void index="2">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo26">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo28">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
+              <object idref="FieldInfo28"/>
               <string>valor</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
+              <object idref="FieldInfo28"/>
               <int>12</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
+              <object idref="FieldInfo28"/>
               <int>4000</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
+              <object idref="FieldInfo28"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
+              <object idref="FieldInfo28"/>
               <string>valor</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>showInReferenceList</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
+              <object idref="FieldInfo28"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>descripcio</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
+              <object idref="FieldInfo28"/>
               <string></string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo26"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo20">
+              <object idref="FieldInfo28"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo22">
                <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
                 <string>webtype</string>
                 <void method="set">
-                 <object idref="WebFieldInfo20"/>
+                 <object idref="WebFieldInfo22"/>
                  <int>2</int>
                 </void>
                </void>
@@ -2672,67 +2860,67 @@
          <object idref="TableInfo6"/>
          <array class="org.fundaciobit.genapp.FieldInfo" length="7">
           <void index="0">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo27">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo29">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isAutoIncrement</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <string>usuariid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <int>-5</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <int>19</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <string>usuariID</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>defaultValue</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <string>nextval(&apos;efi_usuari_seq&apos;::regclass)</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>webFieldInfo</string>
              <void method="set">
-              <object idref="FieldInfo27"/>
+              <object idref="FieldInfo29"/>
               <object class="org.fundaciobit.genapp.WebFieldInfo">
                <void property="label">
                 <array class="java.lang.String" length="1">
@@ -2773,189 +2961,47 @@
            </object>
           </void>
           <void index="1">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo28">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo30">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
-              <object idref="FieldInfo28"/>
+              <object idref="FieldInfo30"/>
               <string>username</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlType</string>
              <void method="set">
-              <object idref="FieldInfo28"/>
+              <object idref="FieldInfo30"/>
               <int>12</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>size</string>
              <void method="set">
-              <object idref="FieldInfo28"/>
+              <object idref="FieldInfo30"/>
               <int>100</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>digits</string>
              <void method="set">
-              <object idref="FieldInfo28"/>
+              <object idref="FieldInfo30"/>
               <int>0</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>isNotNullable</string>
              <void method="set">
-              <object idref="FieldInfo28"/>
+              <object idref="FieldInfo30"/>
               <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
-              <object idref="FieldInfo28"/>
+              <object idref="FieldInfo30"/>
               <string>username</string>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>webFieldInfo</string>
-             <void method="set">
-              <object idref="FieldInfo28"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo21">
-               <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
-                <string>webtype</string>
-                <void method="set">
-                 <object idref="WebFieldInfo21"/>
-                 <int>1</int>
-                </void>
-               </void>
-              </object>
-             </void>
-            </void>
-            <void property="javaType">
-             <class>java.lang.String</class>
-            </void>
-           </object>
-          </void>
-          <void index="2">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo29">
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>sqlName</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <string>nom</string>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>sqlType</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <int>12</int>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>size</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <int>256</int>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>digits</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <int>0</int>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>isNotNullable</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <boolean>true</boolean>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>javaName</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <string>nom</string>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>showInReferenceList</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <boolean>true</boolean>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>webFieldInfo</string>
-             <void method="set">
-              <object idref="FieldInfo29"/>
-              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo22">
-               <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
-                <string>webtype</string>
-                <void method="set">
-                 <object idref="WebFieldInfo22"/>
-                 <int>1</int>
-                </void>
-               </void>
-              </object>
-             </void>
-            </void>
-            <void property="javaType">
-             <class>java.lang.String</class>
-            </void>
-           </object>
-          </void>
-          <void index="3">
-           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo30">
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>sqlName</string>
-             <void method="set">
-              <object idref="FieldInfo30"/>
-              <string>llinatge1</string>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>sqlType</string>
-             <void method="set">
-              <object idref="FieldInfo30"/>
-              <int>12</int>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>size</string>
-             <void method="set">
-              <object idref="FieldInfo30"/>
-              <int>256</int>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>digits</string>
-             <void method="set">
-              <object idref="FieldInfo30"/>
-              <int>0</int>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>isNotNullable</string>
-             <void method="set">
-              <object idref="FieldInfo30"/>
-              <boolean>true</boolean>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>javaName</string>
-             <void method="set">
-              <object idref="FieldInfo30"/>
-              <string>llinatge1</string>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>showInReferenceList</string>
-             <void method="set">
-              <object idref="FieldInfo30"/>
-              <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -2978,13 +3024,13 @@
             </void>
            </object>
           </void>
-          <void index="4">
+          <void index="2">
            <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo31">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
               <object idref="FieldInfo31"/>
-              <string>llinatge2</string>
+              <string>nom</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -3009,10 +3055,17 @@
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>isNotNullable</string>
+             <void method="set">
+              <object idref="FieldInfo31"/>
+              <boolean>true</boolean>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
               <object idref="FieldInfo31"/>
-              <string>llinatge2</string>
+              <string>nom</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -3042,13 +3095,13 @@
             </void>
            </object>
           </void>
-          <void index="5">
+          <void index="3">
            <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo32">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
               <object idref="FieldInfo32"/>
-              <string>nif</string>
+              <string>llinatge1</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -3062,7 +3115,7 @@
              <string>size</string>
              <void method="set">
               <object idref="FieldInfo32"/>
-              <int>50</int>
+              <int>256</int>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -3083,14 +3136,14 @@
              <string>javaName</string>
              <void method="set">
               <object idref="FieldInfo32"/>
-              <string>nif</string>
+              <string>llinatge1</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>minAllowedValue</string>
+             <string>showInReferenceList</string>
              <void method="set">
               <object idref="FieldInfo32"/>
-              <string>([XYZ][0-9]{7}[A-Z])|([0-9]{8}[A-Z])</string>
+              <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -3111,18 +3164,15 @@
             <void property="javaType">
              <class>java.lang.String</class>
             </void>
-            <void property="unique">
-             <string>efi_usuari_nif_uk</string>
-            </void>
            </object>
           </void>
-          <void index="6">
+          <void index="4">
            <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo33">
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>sqlName</string>
              <void method="set">
               <object idref="FieldInfo33"/>
-              <string>email</string>
+              <string>llinatge2</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -3147,24 +3197,17 @@
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>isNotNullable</string>
-             <void method="set">
-              <object idref="FieldInfo33"/>
-              <boolean>true</boolean>
-             </void>
-            </void>
-            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
              <string>javaName</string>
              <void method="set">
               <object idref="FieldInfo33"/>
-              <string>email</string>
+              <string>llinatge2</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
-             <string>minAllowedValue</string>
+             <string>showInReferenceList</string>
              <void method="set">
               <object idref="FieldInfo33"/>
-              <string>[a-z0-9!#$%&amp;;&apos;;*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;;&apos;;*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?</string>
+              <boolean>true</boolean>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -3176,6 +3219,151 @@
                 <string>webtype</string>
                 <void method="set">
                  <object idref="WebFieldInfo26"/>
+                 <int>1</int>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void property="javaType">
+             <class>java.lang.String</class>
+            </void>
+           </object>
+          </void>
+          <void index="5">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo34">
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlName</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <string>nif</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlType</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <int>12</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>size</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <int>50</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>digits</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <int>0</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>isNotNullable</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <boolean>true</boolean>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>javaName</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <string>nif</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>minAllowedValue</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <string>([XYZ][0-9]{7}[A-Z])|([0-9]{8}[A-Z])</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>webFieldInfo</string>
+             <void method="set">
+              <object idref="FieldInfo34"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo27">
+               <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
+                <string>webtype</string>
+                <void method="set">
+                 <object idref="WebFieldInfo27"/>
+                 <int>1</int>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void property="javaType">
+             <class>java.lang.String</class>
+            </void>
+            <void property="unique">
+             <string>efi_usuari_nif_uk</string>
+            </void>
+           </object>
+          </void>
+          <void index="6">
+           <object class="org.fundaciobit.genapp.FieldInfo" id="FieldInfo35">
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlName</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <string>email</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>sqlType</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <int>12</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>size</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <int>256</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>digits</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <int>0</int>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>isNotNullable</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <boolean>true</boolean>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>javaName</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <string>email</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>minAllowedValue</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <string>[a-z0-9!#$%&amp;;&apos;;*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;;&apos;;*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?</string>
+             </void>
+            </void>
+            <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
+             <string>webFieldInfo</string>
+             <void method="set">
+              <object idref="FieldInfo35"/>
+              <object class="org.fundaciobit.genapp.WebFieldInfo" id="WebFieldInfo28">
+               <void class="org.fundaciobit.genapp.WebFieldInfo" method="getField">
+                <string>webtype</string>
+                <void method="set">
+                 <object idref="WebFieldInfo28"/>
                  <int>1</int>
                 </void>
                </void>
@@ -3241,373 +3429,32 @@
    <string>enviafib-</string>
   </void>
  </object>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field0" method="getField">
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field1" method="getField">
  <string>labels</string>
  <void id="HashMap0" method="get">
-  <object idref="FieldInfo3"/>
+  <object idref="FieldInfo26"/>
   <void method="put">
    <string>en</string>
-   <string>Size</string>
+   <string>ID</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Tamany</string>
+   <string>ID</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Tamaño</string>
+   <string>ID</string>
   </void>
   <void method="put">
    <string>de</string>
-   <string>Size</string>
+   <string>ID</string>
   </void>
  </void>
 </void>
 <void idref="HashMap0"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field1" method="getField">
- <string>labels</string>
- <void id="HashMap1" method="get">
-  <object idref="FieldInfo2"/>
-  <void method="put">
-   <string>en</string>
-   <string>mime</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>mime</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>mime</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>mime</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap1"/>
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field2" method="getField">
  <string>labels</string>
- <void id="HashMap2" method="get">
-  <object idref="FieldInfo24"/>
-  <void method="put">
-   <string>en</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap2"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field3" method="getField">
- <string>labels</string>
- <void id="HashMap3" method="get">
-  <object idref="FieldInfo23"/>
-  <void method="put">
-   <string>en</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap3"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field4" method="getField">
- <string>labels</string>
- <void id="HashMap4" method="get">
-  <object idref="FieldInfo20"/>
-  <void method="put">
-   <string>es</string>
-   <string>Properties</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Properties</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap4"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field5" method="getField">
- <string>labels</string>
- <void id="HashMap5" method="get">
-  <object idref="FieldInfo29"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Nombre</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap5"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field6" method="getField">
- <string>labels</string>
- <void id="HashMap6" method="get">
-  <object idref="FieldInfo5"/>
-  <void method="put">
-   <string>en</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap6"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field7" method="getField">
- <string>labels</string>
- <void id="HashMap7" method="get">
-  <object idref="FieldInfo6"/>
-  <void method="put">
-   <string>en</string>
-   <string>Name</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Nombre</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>Name</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap7"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field8" method="getField">
- <string>labels</string>
- <void id="HashMap8" method="get">
-  <object idref="FieldInfo9"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Títol</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Título</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap8"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field9" method="getField">
- <string>labels</string>
- <void id="HashMap9" method="get">
-  <object idref="FieldInfo30"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Llintage</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Apellido</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap9"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field10" method="getField">
- <string>labels</string>
- <void id="HashMap10" method="get">
-  <object idref="FieldInfo14"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Idioma</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Idioma</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap10"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field11" method="getField">
- <string>labels</string>
- <void id="HashMap11" method="get">
-  <object idref="FieldInfo12"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Fitxer</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Fichero</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap11"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field12" method="getField">
- <string>labels</string>
- <void id="HashMap12" method="get">
-  <object idref="FieldInfo18"/>
-  <void method="put">
-   <string>es</string>
-   <string>Descripcion</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Descripció</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap12"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field13" method="getField">
- <string>labels</string>
- <void id="HashMap13" method="get">
-  <object idref="FieldInfo32"/>
-  <void method="put">
-   <string>ca</string>
-   <string>NIF</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>NIF</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap13"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field14" method="getField">
- <string>labels</string>
- <void id="HashMap14" method="get">
-  <object idref="FieldInfo26"/>
-  <void method="put">
-   <string>en</string>
-   <string>Value</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Valor</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Valor</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>Value</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap14"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field15" method="getField">
- <string>labels</string>
- <void id="HashMap15" method="get">
-  <object idref="FieldInfo7"/>
-  <void method="put">
-   <string>en</string>
-   <string>Suported</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Suportat</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Suportado</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>suportat</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap15"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field16" method="getField">
- <string>labels</string>
- <void id="HashMap16" method="get">
-  <object idref="FieldInfo22"/>
-  <void method="put">
-   <string>es</string>
-   <string>Tipo</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Tipus</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap16"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field17" method="getField">
- <string>labels</string>
- <void id="HashMap17" method="get">
-  <object idref="FieldInfo19"/>
-  <void method="put">
-   <string>es</string>
-   <string>Classe</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Classe</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap17"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field18" method="getField">
- <string>labels</string>
- <void id="HashMap18" method="get">
-  <object idref="FieldInfo27"/>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap18"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field19" method="getField">
- <string>labels</string>
- <void id="HashMap19" method="get">
-  <object idref="FieldInfo15"/>
-  <void method="put">
-   <string>es</string>
-   <string>NIF destinatario</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>NIF destinatari</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap19"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field20" method="getField">
- <string>labels</string>
- <void id="HashMap20" method="get">
+ <void id="HashMap1" method="get">
   <object idref="FieldInfo4"/>
   <void method="put">
    <string>en</string>
@@ -3627,78 +3474,25 @@
   </void>
  </void>
 </void>
-<void idref="HashMap20"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field21" method="getField">
+<void idref="HashMap1"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field3" method="getField">
  <string>labels</string>
- <void id="HashMap21" method="get">
-  <object idref="FieldInfo16"/>
-  <void method="put">
-   <string>es</string>
-   <string>pluginid</string>
-  </void>
+ <void id="HashMap2" method="get">
+  <object idref="FieldInfo29"/>
   <void method="put">
    <string>ca</string>
-   <string>pluginid</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap21"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field22" method="getField">
- <string>labels</string>
- <void id="HashMap22" method="get">
-  <object idref="FieldInfo13"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Sol·licitant</string>
+   <string>ID</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Solicitante</string>
+   <string>ID</string>
   </void>
  </void>
 </void>
-<void idref="HashMap22"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field23" method="getField">
+<void idref="HashMap2"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field4" method="getField">
  <string>labels</string>
- <void id="HashMap23" method="get">
-  <object idref="FieldInfo1"/>
-  <void method="put">
-   <string>en</string>
-   <string>Name</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Nombre</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>Name</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap23"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field24" method="getField">
- <string>labels</string>
- <void id="HashMap24" method="get">
-  <object idref="FieldInfo21"/>
-  <void method="put">
-   <string>es</string>
-   <string>Activo</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Actiu</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap24"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field25" method="getField">
- <string>labels</string>
- <void id="HashMap25" method="get">
+ <void id="HashMap3" method="get">
   <object idref="FieldInfo11"/>
   <void method="put">
    <string>ca</string>
@@ -3710,66 +3504,149 @@
   </void>
  </void>
 </void>
-<void idref="HashMap25"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field26" method="getField">
+<void idref="HashMap3"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field5" method="getField">
  <string>labels</string>
- <void id="HashMap26" method="get">
+ <void id="HashMap4" method="get">
+  <object idref="FieldInfo31"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap4"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field6" method="getField">
+ <string>labels</string>
+ <void id="HashMap5" method="get">
+  <object idref="FieldInfo32"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Llintage</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Apellido</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap5"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field7" method="getField">
+ <string>labels</string>
+ <void id="HashMap6" method="get">
+  <object idref="FieldInfo15"/>
+  <void method="put">
+   <string>es</string>
+   <string>NIF destinatario</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>NIF destinatari</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap6"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field8" method="getField">
+ <string>labels</string>
+ <void id="HashMap7" method="get">
+  <object idref="FieldInfo21"/>
+  <void method="put">
+   <string>es</string>
+   <string>Classe</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Classe</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap7"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field9" method="getField">
+ <string>labels</string>
+ <void id="HashMap8" method="get">
+  <object idref="FieldInfo23"/>
+  <void method="put">
+   <string>es</string>
+   <string>Activo</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Actiu</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap8"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field10" method="getField">
+ <string>labels</string>
+ <void id="HashMap9" method="get">
+  <object idref="FieldInfo12"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Fitxer</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Fichero</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap9"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field11" method="getField">
+ <string>labels</string>
+ <void id="HashMap10" method="get">
+  <object idref="FieldInfo7"/>
+  <void method="put">
+   <string>en</string>
+   <string>Suported</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Suportat</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Suportado</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>suportat</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap10"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field12" method="getField">
+ <string>labels</string>
+ <void id="HashMap11" method="get">
+  <object idref="FieldInfo5"/>
+  <void method="put">
+   <string>en</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap11"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field13" method="getField">
+ <string>labels</string>
+ <void id="HashMap12" method="get">
   <object idref="FieldInfo25"/>
   <void method="put">
    <string>en</string>
-   <string>idiomaID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>idiomaID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>idiomaID</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>idiomaid</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap26"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field27" method="getField">
- <string>labels</string>
- <void id="HashMap27" method="get">
-  <object idref="FieldInfo28"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Username</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Username</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap27"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field28" method="getField">
- <string>labels</string>
- <void id="HashMap28" method="get">
-  <object idref="FieldInfo10"/>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap28"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field29" method="getField">
- <string>labels</string>
- <void id="HashMap29" method="get">
-  <object idref="FieldInfo0"/>
-  <void method="put">
-   <string>en</string>
    <string>ID</string>
   </void>
   <void method="put">
@@ -3786,10 +3663,70 @@
   </void>
  </void>
 </void>
-<void idref="HashMap29"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field30" method="getField">
+<void idref="HashMap12"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field14" method="getField">
  <string>labels</string>
- <void id="HashMap30" method="get">
+ <void id="HashMap13" method="get">
+  <object idref="FieldInfo34"/>
+  <void method="put">
+   <string>ca</string>
+   <string>NIF</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>NIF</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap13"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field15" method="getField">
+ <string>labels</string>
+ <void id="HashMap14" method="get">
+  <object idref="FieldInfo33"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Segon Llinatge</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Segundo Apellido</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap14"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field16" method="getField">
+ <string>labels</string>
+ <void id="HashMap15" method="get">
+  <object idref="FieldInfo35"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Email</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Email</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap15"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field17" method="getField">
+ <string>labels</string>
+ <void id="HashMap16" method="get">
+  <object idref="FieldInfo9"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Títol</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Título</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap16"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field18" method="getField">
+ <string>labels</string>
+ <void id="HashMap17" method="get">
   <object idref="FieldInfo8"/>
   <void method="put">
    <string>en</string>
@@ -3809,26 +3746,11 @@
   </void>
  </void>
 </void>
-<void idref="HashMap30"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field31" method="getField">
+<void idref="HashMap17"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field19" method="getField">
  <string>labels</string>
- <void id="HashMap31" method="get">
-  <object idref="FieldInfo31"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Segon Llinatge</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Segundo Apellido</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap31"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field32" method="getField">
- <string>labels</string>
- <void id="HashMap32" method="get">
-  <object idref="FieldInfo17"/>
+ <void id="HashMap18" method="get">
+  <object idref="FieldInfo19"/>
   <void method="put">
    <string>es</string>
    <string>Nombre</string>
@@ -3839,20 +3761,316 @@
   </void>
  </void>
 </void>
-<void idref="HashMap32"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field33" method="getField">
+<void idref="HashMap18"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field20" method="getField">
  <string>labels</string>
- <void id="HashMap33" method="get">
-  <object idref="FieldInfo33"/>
+ <void id="HashMap19" method="get">
+  <object idref="FieldInfo24"/>
+  <void method="put">
+   <string>es</string>
+   <string>Tipo</string>
+  </void>
   <void method="put">
    <string>ca</string>
-   <string>Email</string>
+   <string>Tipus</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap19"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field21" method="getField">
+ <string>labels</string>
+ <void id="HashMap20" method="get">
+  <object idref="FieldInfo20"/>
+  <void method="put">
+   <string>es</string>
+   <string>Descripcion</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Descripció</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap20"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field22" method="getField">
+ <string>labels</string>
+ <void id="HashMap21" method="get">
+  <object idref="FieldInfo27"/>
+  <void method="put">
+   <string>en</string>
+   <string>idiomaID</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>idiomaID</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Email</string>
+   <string>idiomaID</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>idiomaid</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap21"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field23" method="getField">
+ <string>labels</string>
+ <void id="HashMap22" method="get">
+  <object idref="FieldInfo22"/>
+  <void method="put">
+   <string>es</string>
+   <string>Properties</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Properties</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap22"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field24" method="getField">
+ <string>labels</string>
+ <void id="HashMap23" method="get">
+  <object idref="FieldInfo10"/>
+  <void method="put">
+   <string>ca</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap23"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field25" method="getField">
+ <string>labels</string>
+ <void id="HashMap24" method="get">
+  <object idref="FieldInfo14"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Idioma</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Idioma</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap24"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field26" method="getField">
+ <string>labels</string>
+ <void id="HashMap25" method="get">
+  <object idref="FieldInfo3"/>
+  <void method="put">
+   <string>en</string>
+   <string>Size</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Tamany</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Tamaño</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Size</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap25"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field27" method="getField">
+ <string>labels</string>
+ <void id="HashMap26" method="get">
+  <object idref="FieldInfo17"/>
+  <void method="put">
+   <string>ca</string>
+   <string>FitxerFirmatID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>FitxerFirmatID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap26"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field28" method="getField">
+ <string>labels</string>
+ <void id="HashMap27" method="get">
+  <object idref="FieldInfo1"/>
+  <void method="put">
+   <string>en</string>
+   <string>Name</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Name</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap27"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field29" method="getField">
+ <string>labels</string>
+ <void id="HashMap28" method="get">
+  <object idref="FieldInfo6"/>
+  <void method="put">
+   <string>en</string>
+   <string>Name</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Name</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap28"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field30" method="getField">
+ <string>labels</string>
+ <void id="HashMap29" method="get">
+  <object idref="FieldInfo28"/>
+  <void method="put">
+   <string>en</string>
+   <string>Value</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Valor</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Valor</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Value</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap29"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field31" method="getField">
+ <string>labels</string>
+ <void id="HashMap30" method="get">
+  <object idref="FieldInfo18"/>
+  <void method="put">
+   <string>es</string>
+   <string>pluginid</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>pluginid</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap30"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field32" method="getField">
+ <string>labels</string>
+ <void id="HashMap31" method="get">
+  <object idref="FieldInfo13"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Sol·licitant</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Solicitante</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap31"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field33" method="getField">
+ <string>labels</string>
+ <void id="HashMap32" method="get">
+  <object idref="FieldInfo0"/>
+  <void method="put">
+   <string>en</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap32"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field34" method="getField">
+ <string>labels</string>
+ <void id="HashMap33" method="get">
+  <object idref="FieldInfo16"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Estat</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Estat</string>
   </void>
  </void>
 </void>
 <void idref="HashMap33"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field35" method="getField">
+ <string>labels</string>
+ <void id="HashMap34" method="get">
+  <object idref="FieldInfo30"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Username</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Username</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap34"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field36" method="getField">
+ <string>labels</string>
+ <void id="HashMap35" method="get">
+  <object idref="FieldInfo2"/>
+  <void method="put">
+   <string>en</string>
+   <string>mime</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>mime</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>mime</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>mime</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap35"/>
 </java>

@@ -15,7 +15,7 @@ import java.util.Set;
 import javax.persistence.Id;
 
 
-@Entity
+@Entity(name = "Fitxer")
 @Table(name = "efi_fitxer" , indexes = { 
         @Index(name="efi_fitxer_pk_i", columnList = "fitxerid")})
 @SequenceGenerator(name="FITXER_SEQ", sequenceName="efi_fitxer_seq", allocationSize=1, initialValue=1000)
@@ -126,16 +126,29 @@ private static final long serialVersionUID = -252813913L;
     return __result;
   }
 
+// EXP  Field:fitxer_firmatid | Table: efi_peticio | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxerFirmatID")
+    private Set<PeticioJPA> peticio_fitxer_firmatids = new HashSet<PeticioJPA>(0);
+    public  Set<PeticioJPA> getPeticio_fitxer_firmatids() {
+    return this.peticio_fitxer_firmatids;
+  }
+
+    public void setPeticio_fitxer_firmatids(Set<PeticioJPA> peticio_fitxer_firmatids) {
+      this.peticio_fitxer_firmatids = peticio_fitxer_firmatids;
+    }
+
+
 // EXP  Field:fitxerid | Table: efi_peticio | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxerID")
-    private Set<PeticioJPA> peticios = new HashSet<PeticioJPA>(0);
-    public  Set<PeticioJPA> getPeticios() {
-    return this.peticios;
+    private Set<PeticioJPA> peticio_fitxerids = new HashSet<PeticioJPA>(0);
+    public  Set<PeticioJPA> getPeticio_fitxerids() {
+    return this.peticio_fitxerids;
   }
 
-    public void setPeticios(Set<PeticioJPA> peticios) {
-      this.peticios = peticios;
+    public void setPeticio_fitxerids(Set<PeticioJPA> peticio_fitxerids) {
+      this.peticio_fitxerids = peticio_fitxerids;
     }
 
 
@@ -225,8 +238,12 @@ private static final long serialVersionUID = -252813913L;
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
     if(!"PeticioJPA".equals(origenJPA) 
-       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticios) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticios())) ) {
-      __tmp.setPeticios(PeticioJPA.copyJPA(__jpa.getPeticios(), __alreadyCopied,"FitxerJPA"));
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticio_fitxerids) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticio_fitxerids())) ) {
+      __tmp.setPeticio_fitxerids(PeticioJPA.copyJPA(__jpa.getPeticio_fitxerids(), __alreadyCopied,"FitxerJPA"));
+    }
+    if(!"PeticioJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticio_fitxer_firmatids) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticio_fitxer_firmatids())) ) {
+      __tmp.setPeticio_fitxer_firmatids(PeticioJPA.copyJPA(__jpa.getPeticio_fitxer_firmatids(), __alreadyCopied,"FitxerJPA"));
     }
     // Copia de beans complexes (IMP)
 

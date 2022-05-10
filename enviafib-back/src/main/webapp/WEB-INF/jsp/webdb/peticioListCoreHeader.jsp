@@ -33,6 +33,12 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DESTINATARINIF)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.DESTINATARINIF)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ESTAT)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ESTAT)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.FITXERFIRMATID)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.FITXERFIRMATID)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

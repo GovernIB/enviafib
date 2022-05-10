@@ -131,6 +131,28 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.Short estatDesde;
+
+  public java.lang.Short getEstatDesde() {
+    return this.estatDesde;
+  }
+
+  public void setEstatDesde(java.lang.Short estatDesde) {
+    this.estatDesde = estatDesde;
+  }
+
+
+  private java.lang.Short estatFins;
+
+  public java.lang.Short getEstatFins() {
+    return this.estatFins;
+  }
+
+  public void setEstatFins(java.lang.Short estatFins) {
+    this.estatFins = estatFins;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -146,6 +168,8 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.solicitantIDFins = __toClone.solicitantIDFins;
     this.idiomaID = __toClone.idiomaID;
     this.destinatarinif = __toClone.destinatarinif;
+    this.estatDesde = __toClone.estatDesde;
+    this.estatFins = __toClone.estatFins;
     this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
@@ -164,7 +188,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  protected OrderBy[] defaultOrderBy = null;
+  protected OrderBy[] defaultOrderBy = new OrderBy[] {new OrderBy(ESTAT )};
 
 
   public OrderBy[] getDefaultOrderBy() {

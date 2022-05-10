@@ -13,7 +13,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Id;
 
 
-@Entity
+@Entity(name = "Plugin")
 @Table(name = "efi_plugin" , indexes = { 
         @Index(name="efi_plugin_pk_i", columnList = "pluginid")})
 @SequenceGenerator(name="PLUGIN_SEQ", sequenceName="efi_plugin_seq", allocationSize=1, initialValue=1000)

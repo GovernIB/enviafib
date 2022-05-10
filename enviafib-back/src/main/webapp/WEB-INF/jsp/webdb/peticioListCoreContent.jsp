@@ -68,6 +68,18 @@
           ${peticio.destinatarinif}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ESTAT)}">
+          <td>
+          ${peticio.estat}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.FITXERFIRMATID)}">
+          <td>
+            <c:if test="${not empty peticio.fitxerFirmat}">
+              <a target="_blank" href="<c:url value="${efi:fileUrl(peticio.fitxerFirmat)}"/>">${peticio.fitxerFirmat.nom}</a>
+            </c:if>
+           </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

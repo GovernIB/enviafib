@@ -15,7 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 
 
-@Entity
+@Entity(name = "Peticio")
 @Table(name = "efi_peticio" , indexes = { 
         @Index(name="efi_peticio_titolid_fk_i", columnList = "titolid"),
         @Index(name="efi_peticio_pk_i", columnList = "peticioid"),
@@ -53,6 +53,12 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="destinatarinif",nullable = false,length = 50)
     java.lang.String destinatarinif;
 
+    @Column(name="estat",nullable = false,length = 5)
+    short estat;
+
+    @Column(name="fitxer_firmatid",length = 19)
+    java.lang.Long fitxerFirmatID;
+
 
 
   /** Constructor Buit */
@@ -60,7 +66,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -68,15 +74,19 @@ private static final long serialVersionUID = 1230292508L;
     this.solicitantID=solicitantID;
     this.idiomaID=idiomaID;
     this.destinatarinif=destinatarinif;
+    this.estat=estat;
+    this.fitxerFirmatID=fitxerFirmatID;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif) {
+  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
     this.solicitantID=solicitantID;
     this.idiomaID=idiomaID;
     this.destinatarinif=destinatarinif;
+    this.estat=estat;
+    this.fitxerFirmatID=fitxerFirmatID;
 }
   public PeticioJPA(Peticio __bean) {
     this.setTitolID(__bean.getTitolID());
@@ -86,8 +96,12 @@ private static final long serialVersionUID = 1230292508L;
     this.setSolicitantID(__bean.getSolicitantID());
     this.setIdiomaID(__bean.getIdiomaID());
     this.setDestinatarinif(__bean.getDestinatarinif());
+    this.setEstat(__bean.getEstat());
+    this.setFitxerFirmatID(__bean.getFitxerFirmatID());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
+    // Fitxer
+    this.setFitxerFirmat(FitxerJPA.toJPA(__bean.getFitxerFirmat()));
 	}
 
 	public long getTitolID() {
@@ -137,6 +151,20 @@ private static final long serialVersionUID = 1230292508L;
 	};
 	public void setDestinatarinif(java.lang.String _destinatarinif_) {
 		this.destinatarinif = _destinatarinif_;
+	};
+
+	public short getEstat() {
+		return(estat);
+	};
+	public void setEstat(short _estat_) {
+		this.estat = _estat_;
+	};
+
+	public java.lang.Long getFitxerFirmatID() {
+		return(fitxerFirmatID);
+	};
+	public void setFitxerFirmatID(java.lang.Long _fitxerFirmatID_) {
+		this.fitxerFirmatID = _fitxerFirmatID_;
 	};
 
 
@@ -220,6 +248,20 @@ private static final long serialVersionUID = 1230292508L;
     this.idioma = idioma;
   }
 
+// IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fitxer_firmatid", referencedColumnName ="fitxerID", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_peticio_fitxer_ffirm_fk"))
+    private FitxerJPA fitxerFirmat;
+
+    public FitxerJPA getFitxerFirmat() {
+    return this.fitxerFirmat;
+  }
+
+    public  void setFitxerFirmat(FitxerJPA fitxerFirmat) {
+    this.fitxerFirmat = fitxerFirmat;
+  }
+
 
  // ---------------  STATIC METHODS ------------------
   public static PeticioJPA toJPA(Peticio __bean) {
@@ -232,8 +274,12 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setSolicitantID(__bean.getSolicitantID());
     __tmp.setIdiomaID(__bean.getIdiomaID());
     __tmp.setDestinatarinif(__bean.getDestinatarinif());
+    __tmp.setEstat(__bean.getEstat());
+    __tmp.setFitxerFirmatID(__bean.getFitxerFirmatID());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
+    // Fitxer
+    __tmp.setFitxerFirmat(FitxerJPA.toJPA(__bean.getFitxerFirmat()));
 		return __tmp;
 	}
 

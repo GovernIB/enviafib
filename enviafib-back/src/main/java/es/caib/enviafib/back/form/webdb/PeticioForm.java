@@ -18,6 +18,10 @@ public class PeticioForm extends EnviaFIBBaseForm {
   private CommonsMultipartFile fitxerID;
   private boolean fitxerIDDelete;
   
+  
+  private CommonsMultipartFile fitxerFirmatID;
+  private boolean fitxerFirmatIDDelete;
+  
   public PeticioForm() {
   }
   
@@ -64,6 +68,20 @@ public class PeticioForm extends EnviaFIBBaseForm {
   
   public void setFitxerIDDelete(boolean fitxerIDDelete) {
     this.fitxerIDDelete = fitxerIDDelete;
+   }
+  public CommonsMultipartFile getFitxerFirmatID() {
+    return fitxerFirmatID;
+  }
+  
+   public void setFitxerFirmatID(CommonsMultipartFile fitxerFirmatID) {
+    this.fitxerFirmatID = fitxerFirmatID;
+  }
+  public boolean isFitxerFirmatIDDelete() {
+    return fitxerFirmatIDDelete;
+  }
+  
+  public void setFitxerFirmatIDDelete(boolean fitxerFirmatIDDelete) {
+    this.fitxerFirmatIDDelete = fitxerFirmatIDDelete;
    }
   private List<StringKeyValue> listOfTraduccioForTitolID;
 

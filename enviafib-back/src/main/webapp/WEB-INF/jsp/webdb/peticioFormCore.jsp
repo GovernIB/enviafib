@@ -205,3 +205,77 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.ESTAT)}">
+        <tr id="peticio_estat_rowid">
+          <td id="peticio_estat_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.ESTAT])?'peticio.estat':__theForm.labels[PeticioFields.ESTAT]}" /> &nbsp;(*)
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.ESTAT]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.ESTAT]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_estat_columnvalueid">
+            <form:errors path="peticio.estat" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ESTAT)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ESTAT)? ' uneditable-input' : ''}"  style=""  path="peticio.estat"   />
+
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.FITXERFIRMATID)}">
+        <tr id="peticio_fitxerFirmatID_rowid">
+          <td id="peticio_fitxerFirmatID_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.FITXERFIRMATID])?'peticio.fitxerFirmatID':__theForm.labels[PeticioFields.FITXERFIRMATID]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.FITXERFIRMATID]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.FITXERFIRMATID]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_fitxerFirmatID_columnvalueid">
+              <form:errors path="peticio.fitxerFirmatID" cssClass="errorField alert alert-danger" />
+            <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.FITXERFIRMATID)}" >
+              <a target="_blank" href="<c:url value="${efi:fileUrl(__theForm.peticio.fitxerFirmat)}"/>">${__theForm.peticio.fitxerFirmat.nom}</a>
+            </c:if>
+            <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.FITXERFIRMATID)}" >
+              <div class="input-group col-md-9-optional" style="padding: 0px">
+                <div class="custom-file">
+                  <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.FITXERFIRMATID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.FITXERFIRMATID)? ' uneditable-input' : ''}"   path="fitxerFirmatID" type="file" />
+                  <label class="custom-file-label" for="fitxerFirmatID">
+                  </label>
+                </div>
+                <c:choose>
+                <c:when test="${not empty __theForm.peticio.fitxerFirmat}">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="">
+                  <small>              <a target="_blank" href="<c:url value="${efi:fileUrl(__theForm.peticio.fitxerFirmat)}"/>">${__theForm.peticio.fitxerFirmat.nom}</a>
+</small>
+                  </span>
+                  <span class="input-group-text" id="">
+                        <form:checkbox path="fitxerFirmatIDDelete"/>
+                        <small><fmt:message key="genapp.form.file.delete"/></small>
+                  </span>
+                </div>
+                </c:when>
+                <c:otherwise>
+                <div class="input-group-append input-group-append-file">
+                  <span class="input-group-text" id="fitxerFirmatID-custom-file-label" style="display:none">
+                  <small></small>
+                  </span>
+                </div>
+                <script type="text/javascript">
+					$('#fitxerFirmatID').on('change', function(){
+						var ruta = $('#fitxerFirmatID').val(); 
+						var rutaArray = ruta.split('\\');
+						$('#fitxerFirmatID-custom-file-label').css('display','block');
+						$('#fitxerFirmatID-custom-file-label small').html(rutaArray[rutaArray.length - 1]);
+					});
+				</script>                </c:otherwise>
+                </c:choose>
+              </div>
+            </c:if>
+           </td>
+        </tr>
+        </c:if>
+        
