@@ -198,19 +198,19 @@
 
 
         </c:if>
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.PORTAFIBID)}">
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.PETICIOPORTAFIB)}">
             <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="peticio.PortafibID" />:</span>
+              <span class="add-on"><fmt:message key="peticio.peticioPortafib" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
-              <form:input cssClass="input-append input-small" path="PortafibIDDesde" />
+              <form:input cssClass="input-append input-small" path="peticioPortafibDesde" />
 
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
 
-              <form:input cssClass="input-append input-small search-query" path="PortafibIDFins" />
+              <form:input cssClass="input-append input-small search-query" path="peticioPortafibFins" />
 
             </div>
 

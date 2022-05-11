@@ -80,9 +80,9 @@
             </c:if>
            </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PORTAFIBID)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIB)}">
           <td>
-          ${peticio.PortafibID}
+          ${peticio.peticioPortafib}
           </td>
         </c:if>
 

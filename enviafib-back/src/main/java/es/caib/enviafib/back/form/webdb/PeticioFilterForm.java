@@ -153,25 +153,25 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.Long PortafibIDDesde;
+  private java.lang.Long peticioPortafibDesde;
 
-  public java.lang.Long getPortafibIDDesde() {
-    return this.PortafibIDDesde;
+  public java.lang.Long getPeticioPortafibDesde() {
+    return this.peticioPortafibDesde;
   }
 
-  public void setPortafibIDDesde(java.lang.Long PortafibIDDesde) {
-    this.PortafibIDDesde = PortafibIDDesde;
+  public void setPeticioPortafibDesde(java.lang.Long peticioPortafibDesde) {
+    this.peticioPortafibDesde = peticioPortafibDesde;
   }
 
 
-  private java.lang.Long PortafibIDFins;
+  private java.lang.Long peticioPortafibFins;
 
-  public java.lang.Long getPortafibIDFins() {
-    return this.PortafibIDFins;
+  public java.lang.Long getPeticioPortafibFins() {
+    return this.peticioPortafibFins;
   }
 
-  public void setPortafibIDFins(java.lang.Long PortafibIDFins) {
-    this.PortafibIDFins = PortafibIDFins;
+  public void setPeticioPortafibFins(java.lang.Long peticioPortafibFins) {
+    this.peticioPortafibFins = peticioPortafibFins;
   }
 
 
@@ -192,8 +192,8 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.destinatarinif = __toClone.destinatarinif;
     this.estatDesde = __toClone.estatDesde;
     this.estatFins = __toClone.estatFins;
-    this.PortafibIDDesde = __toClone.PortafibIDDesde;
-    this.PortafibIDFins = __toClone.PortafibIDFins;
+    this.peticioPortafibDesde = __toClone.peticioPortafibDesde;
+    this.peticioPortafibFins = __toClone.peticioPortafibFins;
     this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;

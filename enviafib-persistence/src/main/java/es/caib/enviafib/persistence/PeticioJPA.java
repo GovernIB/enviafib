@@ -59,9 +59,9 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="fitxer_firmatid",length = 19)
     java.lang.Long fitxerFirmatID;
 
-  /** Id de la peticio dins el sistema de portafib un cop enviada. */
-    @Column(name="portafibid",length = 19)
-    java.lang.Long PortafibID;
+  /** Identificador de la peticio dins el sistema de Portafib. */
+    @Column(name="peticioportafib",length = 19)
+    java.lang.Long peticioPortafib;
 
 
 
@@ -70,7 +70,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long PortafibID) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -80,10 +80,10 @@ private static final long serialVersionUID = 1230292508L;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
-    this.PortafibID=PortafibID;
+    this.peticioPortafib=peticioPortafib;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long PortafibID) {
+  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -92,7 +92,7 @@ private static final long serialVersionUID = 1230292508L;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
-    this.PortafibID=PortafibID;
+    this.peticioPortafib=peticioPortafib;
 }
   /** Constructor dels valors Not Null */
   public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat) {
@@ -115,7 +115,7 @@ private static final long serialVersionUID = 1230292508L;
     this.setDestinatarinif(__bean.getDestinatarinif());
     this.setEstat(__bean.getEstat());
     this.setFitxerFirmatID(__bean.getFitxerFirmatID());
-    this.setPortafibID(__bean.getPortafibID());
+    this.setPeticioPortafib(__bean.getPeticioPortafib());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -185,11 +185,11 @@ private static final long serialVersionUID = 1230292508L;
 		this.fitxerFirmatID = _fitxerFirmatID_;
 	};
 
-	public java.lang.Long getPortafibID() {
-		return(PortafibID);
+	public java.lang.Long getPeticioPortafib() {
+		return(peticioPortafib);
 	};
-	public void setPortafibID(java.lang.Long _PortafibID_) {
-		this.PortafibID = _PortafibID_;
+	public void setPeticioPortafib(java.lang.Long _peticioPortafib_) {
+		this.peticioPortafib = _peticioPortafib_;
 	};
 
 
@@ -301,7 +301,7 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setDestinatarinif(__bean.getDestinatarinif());
     __tmp.setEstat(__bean.getEstat());
     __tmp.setFitxerFirmatID(__bean.getFitxerFirmatID());
-    __tmp.setPortafibID(__bean.getPortafibID());
+    __tmp.setPeticioPortafib(__bean.getPeticioPortafib());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer

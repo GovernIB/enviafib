@@ -39,8 +39,8 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.FITXERFIRMATID)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.FITXERFIRMATID)}</th>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PORTAFIBID)}">
-        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.PORTAFIBID)}</th>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIB)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.PETICIOPORTAFIB)}</th>
         </c:if>
 
 

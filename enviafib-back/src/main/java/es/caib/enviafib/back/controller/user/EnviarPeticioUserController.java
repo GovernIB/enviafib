@@ -1,6 +1,7 @@
 package es.caib.enviafib.back.controller.user;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +24,11 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
+import es.caib.portafib.utils.ConstantsV2;
 
 /**
  * 
@@ -75,6 +78,9 @@ public class EnviarPeticioUserController extends PeticioController {
 		Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
 		peticioForm.getPeticio().setSolicitantID(userId);
 		peticioForm.addReadOnlyField(SOLICITANTID);
+		peticioForm.addHiddenField(FITXERFIRMATID);
+		peticioForm.addHiddenField(PETICIOPORTAFIB);
+		peticioForm.addHiddenField(ESTAT);		
 		return peticioForm;
 	}
 
@@ -86,10 +92,50 @@ public class EnviarPeticioUserController extends PeticioController {
 			peticioFilterForm.setVisibleExportList(false);
 			peticioFilterForm.addHiddenField(SOLICITANTID);
 			peticioFilterForm.addHiddenField(PETICIOID);
-			peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
+			peticioFilterForm.addHiddenField(FITXERFIRMATID);
+			peticioFilterForm.addHiddenField(PETICIOPORTAFIB);
 		}
 		return peticioFilterForm;
 	}
+	
+	
+	@Override
+	  public void postList(HttpServletRequest request, ModelAndView mav, 
+			  PeticioFilterForm filterForm,  List<Peticio> list)
+	    throws I18NException {
+
+	    
+	    // Mostrar boto per editar usuaris que poden veure les meves plantilles
+	   
+	    filterForm.getAdditionalButtonsByPK().clear();
+
+	    
+	    
+	    for (Peticio peticio : list) {
+	    	
+	    	switch(peticio.getEstat()) {
+	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
+	      	  break;
+	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
+	        	filterForm.setEditButtonVisible(false);
+	      	  break;
+	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
+	        	filterForm.setEditButtonVisible(false);
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
+	      	  break;
+	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
+	        	filterForm.setEditButtonVisible(false);
+	        	filterForm.setDeleteButtonVisible(false);
+	      	  break;
+	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
+	        	filterForm.setEditButtonVisible(false);
+	        	filterForm.setDeleteButtonVisible(false);
+	      	  break;    	  	
+	        }
+	    }
+
+	  }
 	
 	@RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
 	  public String arrancarPeticio(HttpServletRequest request,
@@ -111,7 +157,10 @@ public class EnviarPeticioUserController extends PeticioController {
 		}
 		
 		return "redirect:" + getContextWeb() + "/list";
-		
+	}
+	
+	private List<Peticio> getPeticionsNoIniciades(List<Peticio> list){
+		return list;
 	}
 
 }

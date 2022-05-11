@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller.restcallback;
 
+import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
 
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
@@ -24,6 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class PortaFIBCallbackRestService {
 
   private final Logger log = Logger.getLogger(getClass());
+  
+  @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
+  protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+
 
   @GetMapping("/versio")
   public String getVersio() {
@@ -76,18 +81,34 @@ public class PortaFIBCallbackRestService {
       
       //TODO: Gestionar tots els tipus de notificacions.
       
-      switch(event.getSigningRequest().getState()) {
-      case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
-    	  break;
-      case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
-    	  break;
-      case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
-    	  break;
-      case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
-    	  break;
-      case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
-    	  break;    	  	
+      
+      if(event != null) {
+    	  
+    	  
+    	  
+    	  if(event.getSigningRequest() != null) {
+        	  peticioLogicaEjb.findByPrimaryKey(event.getSigningRequest().getID());
+        	  
+          }
+          
+          switch(event.getSigningRequest().getState()) {
+          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
+        	  break;
+          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
+        	  break;
+          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
+        	  break;
+          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
+        	  break;
+          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
+        	  break;
+        	  
+        	  
+          }
       }
+      
+      
+      
     	    
       
       //PortaFIBEventStore.addEvent(event);

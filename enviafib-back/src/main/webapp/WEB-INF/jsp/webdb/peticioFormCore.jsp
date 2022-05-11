@@ -279,19 +279,19 @@
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.PORTAFIBID)}">
-        <tr id="peticio_PortafibID_rowid">
-          <td id="peticio_PortafibID_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.PETICIOPORTAFIB)}">
+        <tr id="peticio_peticioPortafib_rowid">
+          <td id="peticio_peticioPortafib_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.PORTAFIBID])?'peticio.PortafibID':__theForm.labels[PeticioFields.PORTAFIBID]}" />
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.PETICIOPORTAFIB])?'peticio.peticioPortafib':__theForm.labels[PeticioFields.PETICIOPORTAFIB]}" />
              </label>
-              <c:if test="${not empty __theForm.help[PeticioFields.PORTAFIBID]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.PORTAFIBID]}" ></i>
+              <c:if test="${not empty __theForm.help[PeticioFields.PETICIOPORTAFIB]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.PETICIOPORTAFIB]}" ></i>
               </c:if>
             </td>
-          <td id="peticio_PortafibID_columnvalueid">
-            <form:errors path="peticio.PortafibID" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.PORTAFIBID)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.PORTAFIBID)? ' uneditable-input' : ''}"  style=""  path="peticio.PortafibID"   />
+          <td id="peticio_peticioPortafib_columnvalueid">
+            <form:errors path="peticio.peticioPortafib" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIB)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIB)? ' uneditable-input' : ''}"  style=""  path="peticio.peticioPortafib"   />
 
            </td>
         </tr>

@@ -65,7 +65,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
 		try {
-			createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar, fitxerAAnexar, api);
+			Long idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar, fitxerAAnexar, api);
+			Peticio peticioTemp = this.findByPrimaryKey(peticioID);
+			peticioTemp.setPeticioPortafib(idPortafib);
+			this.update(peticioTemp);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,7 +76,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
 	}
 
-	public void createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,
+	public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,
 			FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar, ApiFirmaAsyncSimple api)
 			throws Exception {
 
@@ -187,10 +190,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		log.info("Creada peticio amb ID = " + peticioDeFirmaID2);
 
 		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
-
+		
 		String url = api.getUrlToViewFlow(rinfo);
-
+		
 		log.info("URL to view flow: " + url);
+		return peticioDeFirmaID2;
 
 	}
 
