@@ -47,6 +47,10 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new LongField(getQueryPath(), PeticioFields.FITXERFIRMATID);
   }
 
+  public LongField PORTAFIBID() {
+    return new LongField(getQueryPath(), PeticioFields.PORTAFIBID);
+  }
+
 
 
   @Override

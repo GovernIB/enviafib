@@ -15,7 +15,7 @@ import java.util.Set;
 import javax.persistence.Id;
 
 
-@Entity(name = "Fitxer")
+@Entity(name = "FitxerJPA")
 @Table(name = "efi_fitxer" , indexes = { 
         @Index(name="efi_fitxer_pk_i", columnList = "fitxerid")})
 @SequenceGenerator(name="FITXER_SEQ", sequenceName="efi_fitxer_seq", allocationSize=1, initialValue=1000)

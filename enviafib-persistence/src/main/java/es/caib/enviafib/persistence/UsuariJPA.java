@@ -15,7 +15,7 @@ import java.util.Set;
 import javax.persistence.Id;
 
 
-@Entity(name = "Usuari")
+@Entity(name = "UsuariJPA")
 @Table(name = "efi_usuari" , indexes = { 
         @Index(name="efi_usuari_pk_i", columnList = "usuariid")})
 @SequenceGenerator(name="USUARI_SEQ", sequenceName="efi_usuari_seq", allocationSize=1, initialValue=1000)

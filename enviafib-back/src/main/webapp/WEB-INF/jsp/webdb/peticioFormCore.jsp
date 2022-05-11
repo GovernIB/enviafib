@@ -279,3 +279,21 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.PORTAFIBID)}">
+        <tr id="peticio_PortafibID_rowid">
+          <td id="peticio_PortafibID_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.PORTAFIBID])?'peticio.PortafibID':__theForm.labels[PeticioFields.PORTAFIBID]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.PORTAFIBID]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.PORTAFIBID]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_PortafibID_columnvalueid">
+            <form:errors path="peticio.PortafibID" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.PORTAFIBID)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.PORTAFIBID)? ' uneditable-input' : ''}"  style=""  path="peticio.PortafibID"   />
+
+           </td>
+        </tr>
+        </c:if>
+        

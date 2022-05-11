@@ -29,6 +29,9 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.Long getFitxerFirmatID();
 	public void setFitxerFirmatID(java.lang.Long _fitxerFirmatID_);
 
+	public java.lang.Long getPortafibID();
+	public void setPortafibID(java.lang.Long _PortafibID_);
+
   // Fitxer
   public <F extends Fitxer> F getFitxer();
   // Fitxer

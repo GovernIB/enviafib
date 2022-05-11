@@ -153,6 +153,28 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.Long PortafibIDDesde;
+
+  public java.lang.Long getPortafibIDDesde() {
+    return this.PortafibIDDesde;
+  }
+
+  public void setPortafibIDDesde(java.lang.Long PortafibIDDesde) {
+    this.PortafibIDDesde = PortafibIDDesde;
+  }
+
+
+  private java.lang.Long PortafibIDFins;
+
+  public java.lang.Long getPortafibIDFins() {
+    return this.PortafibIDFins;
+  }
+
+  public void setPortafibIDFins(java.lang.Long PortafibIDFins) {
+    this.PortafibIDFins = PortafibIDFins;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -170,6 +192,8 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.destinatarinif = __toClone.destinatarinif;
     this.estatDesde = __toClone.estatDesde;
     this.estatFins = __toClone.estatFins;
+    this.PortafibIDDesde = __toClone.PortafibIDDesde;
+    this.PortafibIDFins = __toClone.PortafibIDFins;
     this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;

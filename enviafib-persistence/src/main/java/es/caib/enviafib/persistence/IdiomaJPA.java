@@ -13,7 +13,7 @@ import java.util.Set;
 import javax.persistence.Id;
 
 
-@Entity(name = "Idioma")
+@Entity(name = "IdiomaJPA")
 @Table(name = "efi_idioma" , indexes = { 
         @Index(name="efi_idioma_pk_i", columnList = "idiomaid")})
 @SequenceGenerator(name="IDIOMA_SEQ", sequenceName="efi_idioma_seq", allocationSize=1, initialValue=1000)

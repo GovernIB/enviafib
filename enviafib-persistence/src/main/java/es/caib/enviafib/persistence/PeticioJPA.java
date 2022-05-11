@@ -15,7 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 
 
-@Entity(name = "Peticio")
+@Entity(name = "PeticioJPA")
 @Table(name = "efi_peticio" , indexes = { 
         @Index(name="efi_peticio_titolid_fk_i", columnList = "titolid"),
         @Index(name="efi_peticio_pk_i", columnList = "peticioid"),
@@ -59,6 +59,10 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="fitxer_firmatid",length = 19)
     java.lang.Long fitxerFirmatID;
 
+  /** Id de la peticio dins el sistema de portafib un cop enviada. */
+    @Column(name="portafibid",length = 19)
+    java.lang.Long PortafibID;
+
 
 
   /** Constructor Buit */
@@ -66,7 +70,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long PortafibID) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -76,9 +80,10 @@ private static final long serialVersionUID = 1230292508L;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
+    this.PortafibID=PortafibID;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID) {
+  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long PortafibID) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -87,6 +92,18 @@ private static final long serialVersionUID = 1230292508L;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
+    this.PortafibID=PortafibID;
+}
+  /** Constructor dels valors Not Null */
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat) {
+    this.titolID=titolID;
+    this.peticioID=peticioID;
+    this.datacreacio=datacreacio;
+    this.fitxerID=fitxerID;
+    this.solicitantID=solicitantID;
+    this.idiomaID=idiomaID;
+    this.destinatarinif=destinatarinif;
+    this.estat=estat;
 }
   public PeticioJPA(Peticio __bean) {
     this.setTitolID(__bean.getTitolID());
@@ -98,6 +115,7 @@ private static final long serialVersionUID = 1230292508L;
     this.setDestinatarinif(__bean.getDestinatarinif());
     this.setEstat(__bean.getEstat());
     this.setFitxerFirmatID(__bean.getFitxerFirmatID());
+    this.setPortafibID(__bean.getPortafibID());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -165,6 +183,13 @@ private static final long serialVersionUID = 1230292508L;
 	};
 	public void setFitxerFirmatID(java.lang.Long _fitxerFirmatID_) {
 		this.fitxerFirmatID = _fitxerFirmatID_;
+	};
+
+	public java.lang.Long getPortafibID() {
+		return(PortafibID);
+	};
+	public void setPortafibID(java.lang.Long _PortafibID_) {
+		this.PortafibID = _PortafibID_;
 	};
 
 
@@ -276,6 +301,7 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setDestinatarinif(__bean.getDestinatarinif());
     __tmp.setEstat(__bean.getEstat());
     __tmp.setFitxerFirmatID(__bean.getFitxerFirmatID());
+    __tmp.setPortafibID(__bean.getPortafibID());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
