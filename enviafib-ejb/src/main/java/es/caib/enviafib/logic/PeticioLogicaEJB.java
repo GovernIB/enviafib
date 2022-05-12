@@ -1,6 +1,9 @@
 package es.caib.enviafib.logic;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,19 +88,27 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 	}
 
 	@Override
-	public long guardarFitxerSignat(long peticioID, String languageUI ) throws I18NException, AbstractApisIBException {
+	public long guardarFitxerSignat(long peticioID, String languageUI ) throws I18NException, AbstractApisIBException, IOException {
 		
 		Peticio peticio = this.findByPrimaryKey(peticioID);
 		
-		FirmaAsyncSimpleFile fitxersignat = getFitxerSignat(peticioID, languageUI);
+		FirmaAsyncSimpleFile firma = getFitxerSignat(peticioID, languageUI);
 		
-		String nom = fitxersignat.getNom();	
-		String mime = fitxersignat.getMime();
-		byte[] data = fitxersignat.getData();
+		String nom = firma.getNom();	
+		String mime = firma.getMime();
+		byte[] data = firma.getData();
 
 		Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
-
+		
 		Long idfitxer = fdb.getFitxerID();
+
+		File fitxersignat = FileSystemManager.getFile(idfitxer);
+		FileOutputStream fos = new FileOutputStream(fitxersignat);
+		fos.write(data);
+		fos.flush();
+		fos.close();
+
+
 		peticio.setFitxerFirmatID(idfitxer);
 
 		return idfitxer;

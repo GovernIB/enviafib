@@ -1,5 +1,7 @@
 package es.caib.enviafib.logic;
 
+import java.io.IOException;
+
 import javax.ejb.Local;
 
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
@@ -22,7 +24,7 @@ public interface PeticioLogicaService extends PeticioService {
 	
 	public void updatePublic(Peticio peticio) throws I18NException;
 
-	public long guardarFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException;
+	public long guardarFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
 
 }
 
