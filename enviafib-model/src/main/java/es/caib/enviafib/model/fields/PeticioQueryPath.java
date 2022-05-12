@@ -39,8 +39,8 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new StringField(getQueryPath(), PeticioFields.DESTINATARINIF);
   }
 
-  public ShortField ESTAT() {
-    return new ShortField(getQueryPath(), PeticioFields.ESTAT);
+  public LongField ESTAT() {
+    return new LongField(getQueryPath(), PeticioFields.ESTAT);
   }
 
   public LongField FITXERFIRMATID() {

@@ -53,8 +53,8 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="destinatarinif",nullable = false,length = 50)
     java.lang.String destinatarinif;
 
-    @Column(name="estat",nullable = false,length = 5)
-    short estat;
+    @Column(name="estat",nullable = false,length = 19)
+    long estat;
 
     @Column(name="fitxer_firmatid",length = 19)
     java.lang.Long fitxerFirmatID;
@@ -70,7 +70,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -83,7 +83,7 @@ private static final long serialVersionUID = 1230292508L;
     this.peticioPortafib=peticioPortafib;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
+  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -95,7 +95,7 @@ private static final long serialVersionUID = 1230292508L;
     this.peticioPortafib=peticioPortafib;
 }
   /** Constructor dels valors Not Null */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -171,10 +171,10 @@ private static final long serialVersionUID = 1230292508L;
 		this.destinatarinif = _destinatarinif_;
 	};
 
-	public short getEstat() {
+	public long getEstat() {
 		return(estat);
 	};
-	public void setEstat(short _estat_) {
+	public void setEstat(long _estat_) {
 		this.estat = _estat_;
 	};
 

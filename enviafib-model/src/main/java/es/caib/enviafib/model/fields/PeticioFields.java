@@ -19,7 +19,7 @@ public interface PeticioFields extends java.io.Serializable {
 	 public static final LongField SOLICITANTID = new LongField(_TABLE_MODEL, "solicitantID", "solicitantid");
 	 public static final StringField IDIOMAID = new StringField(_TABLE_MODEL, "idiomaID", "idiomaid");
 	 public static final StringField DESTINATARINIF = new StringField(_TABLE_MODEL, "destinatarinif", "destinatarinif");
-	 public static final ShortField ESTAT = new ShortField(_TABLE_MODEL, "estat", "estat");
+	 public static final LongField ESTAT = new LongField(_TABLE_MODEL, "estat", "estat");
 	 public static final LongField FITXERFIRMATID = new LongField(_TABLE_MODEL, "fitxerFirmatID", "fitxer_firmatid");
 	 public static final LongField PETICIOPORTAFIB = new LongField(_TABLE_MODEL, "peticioPortafib", "peticioportafib");
 

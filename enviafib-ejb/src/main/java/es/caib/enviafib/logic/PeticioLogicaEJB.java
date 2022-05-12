@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
+
 /*
 import es.caib.enviafib.ejb.AnnexEJB;
 import es.caib.enviafib.ejb.FitxerService;
@@ -39,6 +41,7 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.PeticioFields;
 
 /**
  * 
@@ -64,16 +67,22 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		FirmaAsyncSimpleFile fitxerAAnexar = null;
 		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
-		try {
-			Long idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar, fitxerAAnexar, api);
+			Long idPortafib;
+			try {
+				idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar, fitxerAAnexar, api);
+			} catch (Exception e) {
+				throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
+			}
 			Peticio peticioTemp = this.findByPrimaryKey(peticioID);
 			peticioTemp.setPeticioPortafib(idPortafib);
 			this.update(peticioTemp);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
+	}
+	
+	@Override
+	@PermitAll
+	public void updatePublic(Peticio peticio) throws I18NException {
+		super.update(peticio);
 	}
 
 	public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,

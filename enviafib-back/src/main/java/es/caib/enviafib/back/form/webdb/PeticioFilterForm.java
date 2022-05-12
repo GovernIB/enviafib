@@ -131,24 +131,24 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.Short estatDesde;
+  private java.lang.Long estatDesde;
 
-  public java.lang.Short getEstatDesde() {
+  public java.lang.Long getEstatDesde() {
     return this.estatDesde;
   }
 
-  public void setEstatDesde(java.lang.Short estatDesde) {
+  public void setEstatDesde(java.lang.Long estatDesde) {
     this.estatDesde = estatDesde;
   }
 
 
-  private java.lang.Short estatFins;
+  private java.lang.Long estatFins;
 
-  public java.lang.Short getEstatFins() {
+  public java.lang.Long getEstatFins() {
     return this.estatFins;
   }
 
-  public void setEstatFins(java.lang.Short estatFins) {
+  public void setEstatFins(java.lang.Long estatFins) {
     this.estatFins = estatFins;
   }
 

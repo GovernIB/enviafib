@@ -17,7 +17,7 @@ private static final long serialVersionUID = -515854961L;
 	long solicitantID;
 	java.lang.String idiomaID;
 	java.lang.String destinatarinif;
-	short estat;
+	long estat;
 	java.lang.Long fitxerFirmatID;
 	java.lang.Long peticioPortafib;
 
@@ -27,7 +27,7 @@ private static final long serialVersionUID = -515854961L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
+  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -40,7 +40,7 @@ private static final long serialVersionUID = -515854961L;
     this.peticioPortafib=peticioPortafib;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioBean(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
+  public PeticioBean(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -52,7 +52,7 @@ private static final long serialVersionUID = -515854961L;
     this.peticioPortafib=peticioPortafib;
 }
   /** Constructor dels valors Not Null */
-  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , short estat) {
+  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -128,10 +128,10 @@ private static final long serialVersionUID = -515854961L;
 		this.destinatarinif = _destinatarinif_;
 	};
 
-	public short getEstat() {
+	public long getEstat() {
 		return(estat);
 	};
-	public void setEstat(short _estat_) {
+	public void setEstat(long _estat_) {
 		this.estat = _estat_;
 	};
 
