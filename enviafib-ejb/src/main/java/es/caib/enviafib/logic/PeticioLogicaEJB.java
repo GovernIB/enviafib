@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
+import javax.ejb.EJB;
 
 /*
 import es.caib.enviafib.ejb.AnnexEJB;
@@ -31,8 +32,10 @@ import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSigna
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignatureRequestBase;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignatureRequestInfo;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignatureRequestWithSignBlockList;
+import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignedFile;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSigner;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.jersey.ApiFirmaAsyncSimpleJersey;
+import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
@@ -51,6 +54,9 @@ import es.caib.enviafib.model.fields.PeticioFields;
 @Stateless(name = "PeticioLogicaEJB")
 public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService {
 
+	@EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
+	protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
+
 	public PeticioLogicaEJB() {
 
 	}
@@ -67,18 +73,36 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		FirmaAsyncSimpleFile fitxerAAnexar = null;
 		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
-			Long idPortafib;
-			try {
-				idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar, fitxerAAnexar, api);
-			} catch (Exception e) {
-				throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
-			}
-			Peticio peticioTemp = this.findByPrimaryKey(peticioID);
-			peticioTemp.setPeticioPortafib(idPortafib);
-			this.update(peticioTemp);
-		
+		Long idPortafib;
+		try {
+			idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar,
+					fitxerAAnexar, api);
+		} catch (Exception e) {
+			throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
+		}
+		peticio.setPeticioPortafib(idPortafib);
+		this.update(peticio);
 	}
-	
+
+	@Override
+	public long guardarFitxerSignat(long peticioID, String languageUI ) throws I18NException, AbstractApisIBException {
+		
+		Peticio peticio = this.findByPrimaryKey(peticioID);
+		
+		FirmaAsyncSimpleFile fitxersignat = getFitxerSignat(peticioID, languageUI);
+		
+		String nom = fitxersignat.getNom();	
+		String mime = fitxersignat.getMime();
+		byte[] data = fitxersignat.getData();
+
+		Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
+
+		Long idfitxer = fdb.getFitxerID();
+		peticio.setFitxerFirmatID(idfitxer);
+
+		return idfitxer;
+	}
+
 	@Override
 	@PermitAll
 	public void updatePublic(Peticio peticio) throws I18NException {
@@ -199,9 +223,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		log.info("Creada peticio amb ID = " + peticioDeFirmaID2);
 
 		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
-		
+
 		String url = api.getUrlToViewFlow(rinfo);
-		
 		log.info("URL to view flow: " + url);
 		return peticioDeFirmaID2;
 
@@ -225,6 +248,24 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		}
 
 		return new FirmaAsyncSimpleFile(fitxer.getNom(), fitxer.getMime(), data);
+	}
+
+	public FirmaAsyncSimpleFile getFitxerSignat(long peticioDeFirmaID, String languageUI)
+			throws I18NException, AbstractApisIBException {
+		FirmaAsyncSimpleSignedFile fitxerSignat = null;
+
+		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID, languageUI);
+
+		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+
+		fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
+
+		String nom = fitxerSignat.getSignedFile().getNom();
+		String mime = fitxerSignat.getSignedFile().getMime();
+		byte[] data = fitxerSignat.getSignedFile().getData();
+
+		return fitxerSignat.getSignedFile();
 	}
 
 	public ApiFirmaAsyncSimple getApiFirmaAsyncSimple() {
