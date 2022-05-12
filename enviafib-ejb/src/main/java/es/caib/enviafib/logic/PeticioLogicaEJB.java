@@ -250,14 +250,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		return new FirmaAsyncSimpleFile(fitxer.getNom(), fitxer.getMime(), data);
 	}
 
-	public FirmaAsyncSimpleFile getFitxerSignat(long peticioDeFirmaID, String languageUI)
+	public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)
 			throws I18NException, AbstractApisIBException {
 		FirmaAsyncSimpleSignedFile fitxerSignat = null;
 
 		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID, languageUI);
+		
+		Long peticioPortafibId = this.findByPrimaryKey(peticioID).getPeticioPortafib();
+		
+		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);
 
 		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+		
+		
 
 		fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
 
