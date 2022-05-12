@@ -1,10 +1,14 @@
 package es.caib.enviafib.back.controller.restcallback;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
 
+import es.caib.enviafib.ejb.PeticioEJB;
+import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
-import es.caib.portafib.utils.ConstantsV2;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,45 +77,21 @@ public class PortaFIBCallbackRestService {
     	  if(event.getSign().getSerialNumber() != null) {
         	  log.info("Sign Serial Number: " + event.getSign().getSerialNumber());
     	  }
-    	  
+    	     	  
     	  }else {
     		  log.info(" -- No s'ha firmat el document: Peticio fallida o rebutjada.");
     	  }
       log.info("XYZ **************************************************** XYZ " );
       
-      //TODO: Gestionar tots els tipus de notificacions.
-      
-      
-      if(event != null) {
-    	  
-    	  
-    	  
-    	  if(event.getSigningRequest() != null) {
-        	  peticioLogicaEjb.findByPrimaryKey(event.getSigningRequest().getID());
-        	  
-          }
-          
-          switch(event.getSigningRequest().getState()) {
-          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
-        	  break;
-          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
-        	  break;
-          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
-        	  break;
-          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
-        	  break;
-          case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
-        	  break;
-        	  
-        	  
-          }
+      //Assignacio de l'estat a la peticio corresponent.
+      if(event != null && event.getSigningRequest() != null) {
+    	  Peticio peticioTemp = peticioLogicaEjb.select(PeticioFields.PETICIOPORTAFIB.equal(event.getSigningRequest().getID())).get(0);
+          peticioTemp.setEstat((short) event.getSigningRequest().getState());
+          peticioLogicaEjb.updatePublic(peticioTemp);
       }
       
+      //Actualitzacio del pintat de la pagina
       
-      
-    	    
-      
-      //PortaFIBEventStore.addEvent(event);
       log.info("Event processat");
       return Response.status(200).entity("OK").build();
     } catch (Throwable th) {

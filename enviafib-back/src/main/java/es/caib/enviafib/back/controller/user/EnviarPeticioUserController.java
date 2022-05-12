@@ -110,27 +110,38 @@ public class EnviarPeticioUserController extends PeticioController {
 	    filterForm.getAdditionalButtonsByPK().clear();
 
 	    
+	    //<a class="btn btn-warning btn-sm a_item" style="margin-bottom:5px;color: white;" href="<c:url value="${contexte}/${fitxer.fitxerID}/edit"/>" onclick="null">
+        //<i class="fas fa-edit"></i>
+        // <fmt:message key="genapp.edit"/>
+       
+        //<c:if test="${__theFilterForm.deleteButtonVisible}">
+        //<a class="btn btn-danger btn-sm a_item" style="margin-bottom:5px;color: white;" href="#myModal" onclick="openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show');">
+        //<i class="fas fa-trash icon-white"></i>
+         //<fmt:message key="genapp.delete"/>
+         
+         
+         //Per fer que els botons siguin onClick, afegir -> javascript: openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show')
+     	filterForm.setEditButtonVisible(false);
+    	filterForm.setDeleteButtonVisible(false);
+
+	    
 	    
 	    for (Peticio peticio : list) {
 	    	
-	    	switch(peticio.getEstat()) {
+	    	switch((int) peticio.getEstat()) {
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit", "genapp.edit", getContextWeb()+"/"+peticio.getPeticioID()+"/edit/", "btn-warning"));
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
 	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
-	        	filterForm.setEditButtonVisible(false);
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
-	        	filterForm.setEditButtonVisible(false);
 	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
-	        	filterForm.setEditButtonVisible(false);
-	        	filterForm.setDeleteButtonVisible(false);
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
-	        	filterForm.setEditButtonVisible(false);
-	        	filterForm.setDeleteButtonVisible(false);
 	      	  break;    	  	
 	        }
 	    }
@@ -155,12 +166,10 @@ public class EnviarPeticioUserController extends PeticioController {
 			HtmlUtils.saveMessageError(request, msg);
 			log.error(msg, e);
 		}
+		log.info("Peticio enviada correctament.");
 		
 		return "redirect:" + getContextWeb() + "/list";
 	}
 	
-	private List<Peticio> getPeticionsNoIniciades(List<Peticio> list){
-		return list;
-	}
 
 }
