@@ -108,17 +108,6 @@ public class EnviarPeticioUserController extends PeticioController {
 	    // Mostrar boto per editar usuaris que poden veure les meves plantilles
 	   
 	    filterForm.getAdditionalButtonsByPK().clear();
-
-	    
-	    //<a class="btn btn-warning btn-sm a_item" style="margin-bottom:5px;color: white;" href="<c:url value="${contexte}/${fitxer.fitxerID}/edit"/>" onclick="null">
-        //<i class="fas fa-edit"></i>
-        // <fmt:message key="genapp.edit"/>
-       
-        //<c:if test="${__theFilterForm.deleteButtonVisible}">
-        //<a class="btn btn-danger btn-sm a_item" style="margin-bottom:5px;color: white;" href="#myModal" onclick="openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show');">
-        //<i class="fas fa-trash icon-white"></i>
-         //<fmt:message key="genapp.delete"/>
-         
          
          //Per fer que els botons siguin onClick, afegir -> javascript: openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show')
      	filterForm.setEditButtonVisible(false);
@@ -135,13 +124,18 @@ public class EnviarPeticioUserController extends PeticioController {
 	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
 	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
 	      	  break;
 	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit", "genapp.edit", getContextWeb()+"/"+peticio.getPeticioID()+"/edit/", "btn-warning"));
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
+	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
 	      	  break;    	  	
 	        }
 	    }
