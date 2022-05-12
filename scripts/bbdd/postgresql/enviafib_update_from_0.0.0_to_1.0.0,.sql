@@ -19,3 +19,11 @@ ALTER TABLE efi_peticio
 ALTER TABLE efi_peticio
   ADD COLUMN peticioportafib bigint;
 COMMENT ON COLUMN efi_peticio.peticioportafib IS 'Identificador de la peticio dins el sistema de Portafib.';
+
+
+---
+--- 12/05/2022 - Correcció de tipus enumerat "estat" de taula efi_peticio corregit a bigint (en vers de smallint)
+---
+
+ALTER TABLE efi_peticio
+   ALTER COLUMN estat TYPE bigint;
