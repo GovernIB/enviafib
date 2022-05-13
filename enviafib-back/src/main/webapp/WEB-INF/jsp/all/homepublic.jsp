@@ -16,7 +16,8 @@
 
 PAGINA PUBLICA <br/>
 
-This page is generated automatically. Please edit.
+EnviaFIB és la pàgina per enviar peticions de firma a través del portal de firmes PortaFIB.
+Desenvolupat pel departament de Govern Digital de la Fundació Bit.
 
 <br/>
 <br/>
