@@ -119,58 +119,29 @@ public class EnviarPeticioUserController extends PeticioController {
 		
 		for (Peticio peticio : list) {
 
-//			AdditionalButton edit =  new AdditionalButton("fas fa-edit",
-//					"genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning");
+			AdditionalButton editButton =  new AdditionalButton("fas fa-edit", "genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning");
+			AdditionalButton deleteButton =  new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')","btn-danger");
+			AdditionalButton arrancarButton =  new AdditionalButton("fas fa-play","posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success");
+			AdditionalButton downloadButton =  new AdditionalButton("fas fa-file-download","descarregar_firma", getContextWeb() + "/descarregarFirmat/{0}", "btn-warning");
 
 			switch ((int) peticio.getEstat()) {
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
-				
-//				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), edit);
-//				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), marxa);
-//				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), delete);
-				
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit",
-						"genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning"));
-				filterForm
-						.addAdditionalButtonByPK(peticio.getPeticioID(),
-								new AdditionalButton(
-										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
-												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
-										"btn-danger"));
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play",
-						"posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success"));
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), editButton);
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), arrancarButton);
 				break;
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
-				filterForm
-						.addAdditionalButtonByPK(peticio.getPeticioID(),
-								new AdditionalButton(
-										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
-												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
-										"btn-danger"));
-				break;
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play",
-						"posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success"));
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), arrancarButton);
 				break;
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
-				filterForm
-						.addAdditionalButtonByPK(peticio.getPeticioID(),
-								new AdditionalButton(
-										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
-												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
-										"btn-danger"));
-				break;
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), downloadButton);
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit",
-						"genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning"));
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play",
-						"posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success"));
-				filterForm
-						.addAdditionalButtonByPK(peticio.getPeticioID(),
-								new AdditionalButton(
-										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
-												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
-										"btn-danger"));
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), editButton);
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), arrancarButton);
 				break;
 			}
 		}
