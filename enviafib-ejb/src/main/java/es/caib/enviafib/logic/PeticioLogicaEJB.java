@@ -89,18 +89,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 	}
 
 	@Override
-	public long guardarFitxerSignat(long peticioID, String languageUI ) throws I18NException, AbstractApisIBException, IOException {
-		
+	public long guardarFitxerSignat(long peticioID, String languageUI)
+			throws I18NException, AbstractApisIBException, IOException {
+
 		Peticio peticio = this.findByPrimaryKey(peticioID);
-		
+
 		FirmaAsyncSimpleFile firma = getFitxerSignat(peticioID, languageUI);
-		
-		String nom = firma.getNom();	
+
+		String nom = firma.getNom();
 		String mime = firma.getMime();
 		byte[] data = firma.getData();
 
 		Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
-	
+
 		Long idfitxer = fdb.getFitxerID();
 
 		File fitxersignat = FileSystemManager.getFile(idfitxer);
@@ -267,15 +268,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		FirmaAsyncSimpleSignedFile fitxerSignat = null;
 
 		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-		
+
 		Peticio peticio = this.findByPrimaryKey(peticioID);
 		Long peticioPortafibId = peticio.getPeticioPortafib();
-		
+
 		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);
 
 		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
-		
-		
 
 		fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
 
@@ -286,7 +285,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		return fitxerSignat.getSignedFile();
 	}
 
-	
 	public ApiFirmaAsyncSimple getApiFirmaAsyncSimple() {
 
 		String host = Configuracio.getPortafibGatewayV2();

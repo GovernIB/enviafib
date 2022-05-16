@@ -123,10 +123,18 @@ public class EnviarPeticioUserController extends PeticioController {
 
 		for (Peticio peticio : list) {
 
-			AdditionalButton editButton =  new AdditionalButton("fas fa-edit", "genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning");
-			AdditionalButton deleteButton =  new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')","btn-danger");
-			AdditionalButton arrancarButton =  new AdditionalButton("fas fa-play","posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success");
-			AdditionalButton downloadButton =  new AdditionalButton("fas fa-file-download","descarregar_firma", getContextWeb() + "/descarregarFirmat/{0}", "btn-warning");
+			AdditionalButton editButton = new AdditionalButton("fas fa-edit", "genapp.edit",
+					getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning");
+
+			AdditionalButton deleteButton = new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
+					"javascript: openModal('" + getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
+					"btn-danger");
+			
+			AdditionalButton arrancarButton = new AdditionalButton("fas fa-play", "posar_en_martxa",
+					getContextWeb() + "/arrancar/{0}", "btn-success");
+			
+			AdditionalButton downloadButton = new AdditionalButton("fas fa-file-download", "descarregar_firma",
+					getContextWeb() + "/descarregarFirmat/{0}", "btn-warning");
 
 			switch ((int) peticio.getEstat()) {
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
@@ -189,24 +197,24 @@ public class EnviarPeticioUserController extends PeticioController {
 			long fitxerFirmatId = peticio.getFitxerFirmatID();
 			File file = FileSystemManager.getFile(fitxerFirmatId);
 
-			//Mime
+			// Mime
 			MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
 			String mime = mimeTypesMap.getContentType(file);
 
-			//Nom
+			// Nom
 			String filename = "Fitxer firmat de la peticio - " + peticioID;
 
 			response.setContentType(mime);
 			response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
-	        response.setContentLength((int) file.length());
+			response.setContentLength((int) file.length());
 
-	        output = response.getOutputStream();
-	        input = new FileInputStream(file);
-	        
-	        FileSystemManager.copy(input, output);
-	       
-	        input.close();
-	        output.close();
+			output = response.getOutputStream();
+			input = new FileInputStream(file);
+
+			FileSystemManager.copy(input, output);
+
+			input.close();
+			output.close();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

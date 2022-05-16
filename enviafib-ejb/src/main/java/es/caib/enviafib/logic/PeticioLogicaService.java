@@ -18,15 +18,16 @@ import es.caib.enviafib.model.entity.Peticio;
  */
 @Local
 public interface PeticioLogicaService extends PeticioService {
-	
+
 	public static final String JNDI_NAME = "java:app/enviafib-ejb/PeticioLogicaEJB!es.caib.enviafib.logic.PeticioLogicaService";
-	
+
 	public void arrancarPeticio(long peticioID, String languageUI) throws I18NException;
-	
+
 	public void updatePublic(Peticio peticio) throws I18NException;
 
-	public long guardarFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
+	public long guardarFitxerSignat(long peticioID, String languageUI)
+			throws I18NException, AbstractApisIBException, IOException;
 
-	public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException;
+	public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)
+			throws I18NException, AbstractApisIBException;
 }
-
