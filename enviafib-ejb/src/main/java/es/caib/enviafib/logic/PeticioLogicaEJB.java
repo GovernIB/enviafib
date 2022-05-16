@@ -110,6 +110,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		fos.close();
 
 		peticio.setFitxerFirmatID(idfitxer);
+		this.update(peticio);
 
 		return idfitxer;
 	}
@@ -285,6 +286,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		return fitxerSignat.getSignedFile();
 	}
 
+	public 
+	
 	public ApiFirmaAsyncSimple getApiFirmaAsyncSimple() {
 
 		String host = Configuracio.getPortafibGatewayV2();

@@ -1,16 +1,21 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleFile;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
+import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
@@ -98,8 +103,7 @@ public class EnviarPeticioUserController extends PeticioController {
 			peticioFilterForm.addHiddenField(PETICIOID);
 			peticioFilterForm.addHiddenField(FITXERFIRMATID);
 			peticioFilterForm.addHiddenField(PETICIOPORTAFIB);
-			
-			
+
 		}
 		return peticioFilterForm;
 	}
@@ -116,7 +120,7 @@ public class EnviarPeticioUserController extends PeticioController {
 		// openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show')
 		filterForm.setEditButtonVisible(false);
 		filterForm.setDeleteButtonVisible(false);
-		
+
 		for (Peticio peticio : list) {
 
 //			AdditionalButton edit =  new AdditionalButton("fas fa-edit",
@@ -124,11 +128,11 @@ public class EnviarPeticioUserController extends PeticioController {
 
 			switch ((int) peticio.getEstat()) {
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
-				
+
 //				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), edit);
 //				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), marxa);
 //				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), delete);
-				
+
 				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit",
 						"genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning"));
 				filterForm
@@ -203,34 +207,37 @@ public class EnviarPeticioUserController extends PeticioController {
 	@RequestMapping("/descarregarFirmat/{peticioID}")
 	public void descarregarJustificant(@PathVariable("peticioID") Long peticioID, HttpServletRequest request,
 			HttpServletResponse response) {
+
+		FileInputStream input = null;
+		OutputStream output = null;
+
 		try {
-			
-			String languageUI = "";
-//			languageUI = LoginInfo.getInstance().getLanguage();
-			FirmaAsyncSimpleFile firma = peticioLogicaEjb.getFitxerSignat(peticioID, languageUI);
+			Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
-			String nom = firma.getNom();
-			String mime = firma.getMime();
-			byte[] contingut = firma.getData();
+			long fitxerFirmatId = peticio.getFitxerFirmatID();
+			File file = FileSystemManager.getFile(fitxerFirmatId);
 
-			OutputStream output = null;
+			//Mime
+			MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+			String mime = mimeTypesMap.getContentType(file);
 
-			String filename = "Fitxer firmat de la peticio - " + peticioID ;
+			//Nom
+			String filename = "Fitxer firmat de la peticio - " + peticioID;
 
 			response.setContentType(mime);
 			response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
-			response.setContentLength((int) contingut.length);
+	        response.setContentLength((int) file.length());
 
-			output = response.getOutputStream();
+	        output = response.getOutputStream();
+	        input = new FileInputStream(file);
+	        
+	        FileSystemManager.copy(input, output);
+	       
+	        input.close();
+	        output.close();
 
-			output.write(contingut);
-			output.close();
-		} catch (I18NException e) {
-			HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + I18NUtils.getMessage(e));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
-		} catch (AbstractApisIBException e) {
 			HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
 		}
 	}
