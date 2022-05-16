@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.ejb.Local;
 
+import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleFile;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 
@@ -26,5 +27,6 @@ public interface PeticioLogicaService extends PeticioService {
 
 	public long guardarFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
 
+	public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException;
 }
 

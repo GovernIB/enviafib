@@ -48,6 +48,7 @@ import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
+import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
  * 
@@ -99,7 +100,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		byte[] data = firma.getData();
 
 		Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
-		
+	
 		Long idfitxer = fdb.getFitxerID();
 
 		File fitxersignat = FileSystemManager.getFile(idfitxer);
@@ -107,7 +108,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		fos.write(data);
 		fos.flush();
 		fos.close();
-
 
 		peticio.setFitxerFirmatID(idfitxer);
 
@@ -267,7 +267,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
 		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
 		
-		Long peticioPortafibId = this.findByPrimaryKey(peticioID).getPeticioPortafib();
+		Peticio peticio = this.findByPrimaryKey(peticioID);
+		Long peticioPortafibId = peticio.getPeticioPortafib();
 		
 		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);
 

@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -7,6 +9,8 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleFile;
+import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
@@ -42,9 +46,9 @@ public class EnviarPeticioUserController extends PeticioController {
 
 	@EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
 	protected es.caib.enviafib.ejb.UsuariService usuariEjb;
-	
+
 	@EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
-	  protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+	protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
 	@Override
 	public String getTileForm() {
@@ -80,7 +84,7 @@ public class EnviarPeticioUserController extends PeticioController {
 		peticioForm.addReadOnlyField(SOLICITANTID);
 		peticioForm.addHiddenField(FITXERFIRMATID);
 		peticioForm.addHiddenField(PETICIOPORTAFIB);
-		peticioForm.addHiddenField(ESTAT);		
+		peticioForm.addHiddenField(ESTAT);
 		return peticioForm;
 	}
 
@@ -94,64 +98,95 @@ public class EnviarPeticioUserController extends PeticioController {
 			peticioFilterForm.addHiddenField(PETICIOID);
 			peticioFilterForm.addHiddenField(FITXERFIRMATID);
 			peticioFilterForm.addHiddenField(PETICIOPORTAFIB);
+			
+			
 		}
 		return peticioFilterForm;
 	}
-	
-	
+
 	@Override
-	  public void postList(HttpServletRequest request, ModelAndView mav, 
-			  PeticioFilterForm filterForm,  List<Peticio> list)
-	    throws I18NException {
+	public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
+			throws I18NException {
 
-	    
-	    // Mostrar boto per editar usuaris que poden veure les meves plantilles
-	   
-	    filterForm.getAdditionalButtonsByPK().clear();
-         
-         //Per fer que els botons siguin onClick, afegir -> javascript: openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show')
-     	filterForm.setEditButtonVisible(false);
-    	filterForm.setDeleteButtonVisible(false);
+		// Mostrar boto per editar usuaris que poden veure les meves plantilles
 
-	    
-	    
-	    for (Peticio peticio : list) {
-	    	
-	    	switch((int) peticio.getEstat()) {
-	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit", "genapp.edit", getContextWeb()+"/"+peticio.getPeticioID()+"/edit/", "btn-warning"));
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
-	      	  break;
-	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
-	      	  break;
-	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
-	      	  break;
-	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
-	      	  break;
-	        case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit", "genapp.edit", getContextWeb()+"/"+peticio.getPeticioID()+"/edit/", "btn-warning"));
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play", "posar_en_martxa", getContextWeb()+"/arrancar/{0}", "btn-success"));
-	        	filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"+getContextWeb() + "/"+peticio.getPeticioID()+"/delete','show')", "btn-danger"));
-	      	  break;    	  	
-	        }
-	    }
+		filterForm.getAdditionalButtonsByPK().clear();
 
-	  }
-	
-	@RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
-	  public String arrancarPeticio(HttpServletRequest request,
-	    HttpServletResponse response, @PathVariable("peticioID") Long peticioID){
+		// Per fer que els botons siguin onClick, afegir -> javascript:
+		// openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show')
+		filterForm.setEditButtonVisible(false);
+		filterForm.setDeleteButtonVisible(false);
 		
+		for (Peticio peticio : list) {
+
+//			AdditionalButton edit =  new AdditionalButton("fas fa-edit",
+//					"genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning");
+
+			switch ((int) peticio.getEstat()) {
+			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
+				
+//				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), edit);
+//				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), marxa);
+//				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), delete);
+				
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit",
+						"genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning"));
+				filterForm
+						.addAdditionalButtonByPK(peticio.getPeticioID(),
+								new AdditionalButton(
+										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
+										"btn-danger"));
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play",
+						"posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success"));
+				break;
+			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
+				filterForm
+						.addAdditionalButtonByPK(peticio.getPeticioID(),
+								new AdditionalButton(
+										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
+										"btn-danger"));
+				break;
+			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play",
+						"posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success"));
+				break;
+			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
+				filterForm
+						.addAdditionalButtonByPK(peticio.getPeticioID(),
+								new AdditionalButton(
+										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
+										"btn-danger"));
+				break;
+			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-edit",
+						"genapp.edit", getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning"));
+				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), new AdditionalButton("fas fa-play",
+						"posar_en_martxa", getContextWeb() + "/arrancar/{0}", "btn-success"));
+				filterForm
+						.addAdditionalButtonByPK(peticio.getPeticioID(),
+								new AdditionalButton(
+										"fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+												+ getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
+										"btn-danger"));
+				break;
+			}
+		}
+
+	}
+
+	@RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
+	public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("peticioID") Long peticioID) {
+
 		try {
 			peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage());
 			HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticioID + " enviada correctament.");
 		} catch (LoginException e) {
 			// TODO Auto-generated catch block
-			String msg = "La sessio de l'usuari ha caducat."; 
+			String msg = "La sessio de l'usuari ha caducat.";
 			HtmlUtils.saveMessageError(request, msg);
 			log.error(msg, e);
 		} catch (I18NException e) {
@@ -161,9 +196,42 @@ public class EnviarPeticioUserController extends PeticioController {
 			log.error(msg, e);
 		}
 		log.info("Peticio enviada correctament.");
-		
+
 		return "redirect:" + getContextWeb() + "/list";
 	}
-	
 
+	@RequestMapping("/descarregarFirmat/{peticioID}")
+	public void descarregarJustificant(@PathVariable("peticioID") Long peticioID, HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			
+			String languageUI = "";
+//			languageUI = LoginInfo.getInstance().getLanguage();
+			FirmaAsyncSimpleFile firma = peticioLogicaEjb.getFitxerSignat(peticioID, languageUI);
+
+			String nom = firma.getNom();
+			String mime = firma.getMime();
+			byte[] contingut = firma.getData();
+
+			OutputStream output = null;
+
+			String filename = "Fitxer firmat de la peticio - " + peticioID ;
+
+			response.setContentType(mime);
+			response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
+			response.setContentLength((int) contingut.length);
+
+			output = response.getOutputStream();
+
+			output.write(contingut);
+			output.close();
+		} catch (I18NException e) {
+			HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + I18NUtils.getMessage(e));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
+		} catch (AbstractApisIBException e) {
+			HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
+		}
+	}
 }
