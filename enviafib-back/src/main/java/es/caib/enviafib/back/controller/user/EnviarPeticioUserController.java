@@ -122,12 +122,13 @@ public class EnviarPeticioUserController extends PeticioController {
 		filterForm.setDeleteButtonVisible(false);
 
 		for (Peticio peticio : list) {
+			long peticioID =  peticio.getPeticioID();
 
 			AdditionalButton editButton = new AdditionalButton("fas fa-edit", "genapp.edit",
-					getContextWeb() + "/" + peticio.getPeticioID() + "/edit/", "btn-warning");
+					getContextWeb() + "/" + peticioID + "/edit/", "btn-warning");
 
 			AdditionalButton deleteButton = new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
-					"javascript: openModal('" + getContextWeb() + "/" + peticio.getPeticioID() + "/delete','show')",
+					"javascript: openModal('" + getContextWeb() + "/" + peticioID + "/delete','show')",
 					"btn-danger");
 			
 			AdditionalButton arrancarButton = new AdditionalButton("fas fa-play", "posar_en_martxa",
@@ -138,23 +139,23 @@ public class EnviarPeticioUserController extends PeticioController {
 
 			switch ((int) peticio.getEstat()) {
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_NOINICIAT:
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), editButton);
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), arrancarButton);
+				filterForm.addAdditionalButtonByPK(peticioID, editButton);
+				filterForm.addAdditionalButtonByPK(peticioID, deleteButton);
+				filterForm.addAdditionalButtonByPK(peticioID, arrancarButton);
 
 				break;
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_ENPROCES:
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
+				filterForm.addAdditionalButtonByPK(peticioID, deleteButton);
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_PAUSAT:
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), arrancarButton);
+				filterForm.addAdditionalButtonByPK(peticioID, arrancarButton);
 				break;
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_FIRMAT:
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), downloadButton);
+				filterForm.addAdditionalButtonByPK(peticioID, deleteButton);
+				filterForm.addAdditionalButtonByPK(peticioID, downloadButton);
 			case ConstantsV2.TIPUSESTATPETICIODEFIRMA_REBUTJAT:
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), editButton);
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), deleteButton);
-				filterForm.addAdditionalButtonByPK(peticio.getPeticioID(), arrancarButton);
+				filterForm.addAdditionalButtonByPK(peticioID, editButton);
+				filterForm.addAdditionalButtonByPK(peticioID, deleteButton);
+				filterForm.addAdditionalButtonByPK(peticioID, arrancarButton);
 				break;
 			}
 		}
