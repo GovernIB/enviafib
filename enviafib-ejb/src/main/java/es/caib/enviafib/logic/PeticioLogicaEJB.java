@@ -286,7 +286,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		return fitxerSignat.getSignedFile();
 	}
 
-	public 
 	
 	public ApiFirmaAsyncSimple getApiFirmaAsyncSimple() {
 
