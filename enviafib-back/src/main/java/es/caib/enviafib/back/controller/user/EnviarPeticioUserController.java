@@ -122,18 +122,17 @@ public class EnviarPeticioUserController extends PeticioController {
 		filterForm.setDeleteButtonVisible(false);
 
 		for (Peticio peticio : list) {
-			long peticioID =  peticio.getPeticioID();
+			long peticioID = peticio.getPeticioID();
 
 			AdditionalButton editButton = new AdditionalButton("fas fa-edit", "genapp.edit",
 					getContextWeb() + "/" + peticioID + "/edit/", "btn-warning");
 
 			AdditionalButton deleteButton = new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
-					"javascript: openModal('" + getContextWeb() + "/" + peticioID + "/delete','show')",
-					"btn-danger");
-			
+					"javascript: openModal('" + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')", "btn-danger");
+
 			AdditionalButton arrancarButton = new AdditionalButton("fas fa-play", "posar_en_martxa",
 					getContextWeb() + "/arrancar/{0}", "btn-success");
-			
+
 			AdditionalButton downloadButton = new AdditionalButton("fas fa-file-download", "descarregar_firma",
 					getContextWeb() + "/descarregarFirmat/{0}", "btn-warning");
 
