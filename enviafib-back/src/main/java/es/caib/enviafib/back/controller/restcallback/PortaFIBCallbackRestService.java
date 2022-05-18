@@ -9,6 +9,7 @@ import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
+import es.caib.portafib.utils.ConstantsV2;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,39 +53,62 @@ public class PortaFIBCallbackRestService {
       log.info("Entity ID: " + event.getEntityID());
       log.info("Version: " + event.getVersion());
       
-      if(event.getSigningRequest() != null) {
-    	  log.info("Titol de peticio de Firma: " + event.getSigningRequest().getTitle());
-          log.info("Estat de peticio de Firma: " + event.getSigningRequest().getState());
-          log.info("ID de peticio de Firma: " + event.getSigningRequest().getID());
-          log.info("CustodyURL de peticio de Firma: " + event.getSigningRequest().getCustodyURL());
-          log.info("RejectionReason de peticio de Firma: " + event.getSigningRequest().getRejectionReason());
-          log.info("Additional Information: " + event.getSigningRequest().getAdditionalInformation());
-      }else {
-    	  log.info(" -- No hi ha peticio de firma: La peticio no s'ha enviat correctament?");
+      switch(event.getEventTypeID()) {
+          case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES :{
+              log.info("NOTIFICACIOAVIS_PETICIO_EN_PROCES = " + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR  :{
+              log.info("NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR = " + (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_VALIDAR  :{
+              log.info("NOTIFICACIOAVIS_DESCARTAT_PER_VALIDAR = " + (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_VALIDAR);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_FIRMAR  :{
+              log.info("NOTIFICACIOAVIS_REQUERIT_PER_FIRMAR = " + (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_FIRMAR);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_FIRMAR  :{
+              log.info("NOTIFICACIOAVIS_DESCARTAT_PER_FIRMAR = " + (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_FIRMAR);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_VALIDAT  :{
+              log.info("NOTIFICACIOAVIS_VALIDAT = " + (int) ConstantsV2.NOTIFICACIOAVIS_VALIDAT);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_INVALIDAT  :{
+              log.info("NOTIFICACIOAVIS_INVALIDAT = " + (int) ConstantsV2.NOTIFICACIOAVIS_INVALIDAT);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_FIRMA_PARCIAL  :{
+              log.info("NOTIFICACIOAVIS_FIRMA_PARCIAL = " + (int) ConstantsV2.NOTIFICACIOAVIS_FIRMA_PARCIAL);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA  :{
+              log.info("NOTIFICACIOAVIS_PETICIO_FIRMADA = " + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA  :{
+              log.info("NOTIFICACIOAVIS_PETICIO_REBUTJADA = " + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_PAUSADA  :{
+              log.info("NOTIFICACIOAVIS_PETICIO_PAUSADA = " + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_PAUSADA);
+          }
+          break;
+          case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_REVISAR  :{
+              log.info("NOTIFICACIOAVIS_REQUERIT_PER_REVISAR = " + (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_REVISAR);
+          }
+          break;
       }
       
-      
-      if(event.getSign() != null) {
-    	  if(event.getSign().getID() > -1) {
-        	  log.info("Sign ID: " + event.getSign().getID());
-    	  }
-    	  if(event.getSign().getIssuer() != null) {
-        	  log.info("Sign Issuer: " + event.getSign().getIssuer());
-    	  }
-    	  if(event.getSign().getSubject() != null) {
-        	  log.info("Sign Subject: " + event.getSign().getSubject());
-    	  }
-    	  if(event.getSign().getSerialNumber() != null) {
-        	  log.info("Sign Serial Number: " + event.getSign().getSerialNumber());
-    	  }
-    	     	  
-    	  }else {
-    		  log.info(" -- No s'ha firmat el document: Peticio fallida o rebutjada.");
-    	  }
       log.info("XYZ **************************************************** XYZ " );
       
       //Assignacio de l'estat a la peticio corresponent.
-      if(event != null && event.getSigningRequest() != null) {
+      if(event != null && event.getSign() != null) {
+          
     	  Peticio peticioTemp = peticioLogicaEjb.select(PeticioFields.PETICIOPORTAFIB.equal(event.getSigningRequest().getID())).get(0);
           peticioTemp.setEstat((short) event.getSigningRequest().getState());
           peticioLogicaEjb.updatePublic(peticioTemp);
