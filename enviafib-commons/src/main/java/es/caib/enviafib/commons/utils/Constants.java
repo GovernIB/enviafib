@@ -22,5 +22,11 @@ public interface Constants {
     // EJB HIGH LEVEL ROLES
     public static final String ROLE_EJB_FULL_ACCESS  = EFI_ADMIN;
     public static final String ROLE_EJB_BASIC_ACCESS = EFI_USER;
+    
+    public static final int ESTAT_PETICIO_CREADA = 1;
+    public static final int ESTAT_PETICIO_EN_PROCES = 2;
+    public static final int ESTAT_PETICIO_FIRMADA = 3;
+    public static final int ESTAT_PETICIO_REBUTJADA = 4;
+    
 
 }
