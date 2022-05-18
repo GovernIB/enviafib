@@ -76,3 +76,12 @@ hs_err_pid*
 /enviafib-persistence/.settings/org.eclipse.wst.common.project.facet.core.xml
 /enviafib-persistence/.settings/org.eclipse.wst.validation.prefs
 /version-ruleset.xml
+/enviafib-back/src/main/resources/enviafib_genapp_ca.properties
+/enviafib-back/src/main/resources/enviafib_genapp_es.properties
+/enviafib-back/src/main/resources/genapp_ca.properties
+/enviafib-back/src/main/resources/genapp_en.properties
+/enviafib-back/src/main/resources/genapp_es.properties
+/enviafib-back/src/main/resources/logicmissatges_ca.properties
+/enviafib-back/src/main/resources/logicmissatges_en.properties
+/enviafib-back/src/main/resources/logicmissatges_es.properties
+/dependencies.txt
