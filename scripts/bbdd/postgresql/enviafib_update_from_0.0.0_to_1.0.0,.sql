@@ -19,3 +19,11 @@ ALTER TABLE efi_peticio
 ALTER TABLE efi_peticio
   ADD COLUMN peticioportafib bigint;
 COMMENT ON COLUMN efi_peticio.peticioportafib IS 'Identificador de la peticio dins el sistema de Portafib.';
+
+
+---
+--- 18/05/2022 - Canviat valor per defecte d'estat de creació de peticions a 1. Implementar botó de descarrega del fitxer firmat #20
+---
+
+ALTER TABLE efi_peticio
+   ALTER COLUMN estat SET DEFAULT 1;
