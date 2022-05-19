@@ -35,6 +35,7 @@ import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.FitxerFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
@@ -55,6 +56,9 @@ public class EnviarPeticioUserController extends PeticioController {
 
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+
+    @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
 
     @Override
     public String getTileForm() {
@@ -222,8 +226,9 @@ public class EnviarPeticioUserController extends PeticioController {
             String mime = mimeTypesMap.getContentType(file);
 
             // Nom
-            String filename = "Fitxer firmat de la peticio - " + peticioID;
-
+//            String filename = "Fitxer firmat de la peticio - " + peticioID;
+            String filename = fitxerEjb.executeQueryOne(FitxerFields.NOM, FitxerFields.FITXERID.equal(fitxerFirmatId));
+            
             response.setContentType(mime);
             response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
             response.setContentLength((int) file.length());
@@ -239,6 +244,8 @@ public class EnviarPeticioUserController extends PeticioController {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
-        }
+        } catch (I18NException e) {
+            HtmlUtils.saveMessageError(request, "Error intentant obtenir el nom del fitxer signat: " + e.getMessage());
+		}
     }
 }

@@ -44,6 +44,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
@@ -111,6 +112,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		fos.close();
 
 		peticio.setFitxerFirmatID(idfitxer);
+		peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
 		this.update(peticio);
 
 		return idfitxer;
@@ -265,8 +267,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
 	public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)
 			throws I18NException, AbstractApisIBException {
+		
 		FirmaAsyncSimpleSignedFile fitxerSignat = null;
-
 		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
 
 		Peticio peticio = this.findByPrimaryKey(peticioID);
@@ -278,9 +280,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
 		fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
 
-		String nom = fitxerSignat.getSignedFile().getNom();
-		String mime = fitxerSignat.getSignedFile().getMime();
-		byte[] data = fitxerSignat.getSignedFile().getData();
+//		String nom = fitxerSignat.getSignedFile().getNom();
+//		String mime = fitxerSignat.getSignedFile().getMime();
+//		byte[] data = fitxerSignat.getSignedFile().getData();
 
 		return fitxerSignat.getSignedFile();
 	}

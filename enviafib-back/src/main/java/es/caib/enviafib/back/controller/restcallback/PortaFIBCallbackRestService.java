@@ -101,15 +101,15 @@ public class PortaFIBCallbackRestService {
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA: {
                     log.info("NOTIFICACIOAVIS_PETICIO_FIRMADA = " + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA);
-                    if (!peticioLogicaEjb.select(PeticioFields.PETICIOPORTAFIB.equal(event.getSigningRequest().getID()))
-                            .isEmpty()) {
-                        Peticio peticioTemp = peticioLogicaEjb
-                                .select(PeticioFields.PETICIOPORTAFIB.equal(event.getSigningRequest().getID())).get(0);
-                        peticioTemp.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-                        peticioLogicaEjb.updatePublic(peticioTemp);
+                    
+                    Long peticioid = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID, PeticioFields.PETICIOPORTAFIB.equal(event.getSigningRequest().getID()));
+                    
+                    if (peticioid != null) {
+                        String languageUI = "ca";
+                        peticioLogicaEjb.guardarFitxerSignat(peticioid,languageUI);
+                        
                     } else {
-                        log.error(
-                                "S'ha rebut un event de FIRMA, pero no s'ha trobat la peticio que l'hi correspon a enviafib.");
+                        log.error("S'ha rebut un event de FIRMA, pero no s'ha trobat la peticio que l'hi correspon a enviafib.");
                     }
                 }
                 break;
