@@ -138,36 +138,43 @@ public class Configuracio implements Constants {
 	public static File getFilesDirectory() {
         String path = getProperty(ENVIAFIB_PROPERTY_BASE + "filesdirectory");
         if (path == null) {
-            throw new RuntimeException("No existeix la propietat " + "'filesdirectory'" + " al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
-                    + ". S'hauria d'anar al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
-                    + " de JBoss standalone/deployments i incloure la propietat " + "'filesdirectory'"
-                    + " amb una ruta al directori on l'aplició gestionara els fitxers.");
+            throw new RuntimeException("No existeix la propietat '" + ENVIAFIB_PROPERTY_BASE + "filesdirectory'"
+                    + " al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+                    + ". S'hauria d'anar al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+                    + " i incloure la propietat '" + ENVIAFIB_PROPERTY_BASE
+                    + "filesdirectory'" + " amb una ruta al directori on l'aplició gestionara els fitxers.");
         }
 
         if (path.isEmpty()) {
-            throw new RuntimeException("No s'ha definit la propietat " + "'filesdirectory'" + " al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
-                    + ". S'hauria d'anar al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
-                    + " de JBoss standalone/deployments i donar valor a la propietat " + "'filesdirectory'"
+            throw new RuntimeException("No s'ha definit la propietat '" + ENVIAFIB_PROPERTY_BASE + "filesdirectory'"
+                    + " al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+                    + ". S'hauria d'anar al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+                    + " i donar valor a la propietat '" + ENVIAFIB_PROPERTY_BASE +"filesdirectory'"
                     + " amb una ruta al directori on l'aplició gestionara els fitxers.");
         }
         
         File filesFolder = new File(path);
         
         if (!filesFolder.exists()) {
-            throw new RuntimeException("El directori indicat a la propietat " + "'filesdirectory'" + " del fitxer "
+            throw new RuntimeException("El directori indicat a la propietat '" + ENVIAFIB_PROPERTY_BASE
+                    + ".filesdirectory'" + " del fitxer "
                     + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
                     + " no existeix. S'hauria de modificar la ruta indicada per la d'un directori existent, o crear un directori amb la ruta: "
                     + path);
         }
 
         if (!filesFolder.isDirectory()) {
-            throw new RuntimeException("El directori indicat a la propietat " + "'filesdirectory'" + " del fitxer "
+            throw new RuntimeException("El directori indicat a la propietat '" + ENVIAFIB_PROPERTY_BASE
+                    + ".filesdirectory'" + " del fitxer "
                     + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
                     + " no es un directori, probablement es tracti d'un fitxer. S'hauria de modificar la ruta indicada per la d'un directori existent.");
+        }
+
+        if (!filesFolder.canWrite()) {
+            throw new RuntimeException("El directori indicat a la propietat '" + ENVIAFIB_PROPERTY_BASE
+                    + ".filesdirectory'" + " del fitxer "
+                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+                    + " es un directori sense permisos d'escriptura. S'haurien de donar permisos d'escriptura al directori, o canviar la ruta a un directori amb permisos.");
         }
         return new File(path);
 
@@ -176,14 +183,15 @@ public class Configuracio implements Constants {
 	public static String getFileSystemManager() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "filesystemmanagerclass");
     }
-	public static String getPortafibGatewayV2() {
+
+    public static String getPortafibGatewayV2() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibgatewayv2");
     }
-    
+
     public static String getPortafibUsername() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibusername");
     }
-    
+
     public static String getPortafibPassword() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibpassword");
     }
