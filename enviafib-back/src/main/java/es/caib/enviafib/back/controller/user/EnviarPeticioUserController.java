@@ -87,6 +87,7 @@ public class EnviarPeticioUserController extends PeticioController {
             throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
         peticioForm.getPeticio().setDatacreacio(new Timestamp(System.currentTimeMillis()));
+        peticioForm.getPeticio().setEstat(Constants.ESTAT_PETICIO_CREADA);
         peticioForm.addReadOnlyField(PeticioFields.DATACREACIO);
         String userName = request.getRemoteUser();
         Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
@@ -121,26 +122,11 @@ public class EnviarPeticioUserController extends PeticioController {
 
         filterForm.getAdditionalButtonsByPK().clear();
 
-        // Per fer que els botons siguin onClick, afegir -> javascript:
-        // openModal('<c:url value="${contexte}/${fitxer.fitxerID}/delete"/>','show')
         filterForm.setEditButtonVisible(false);
         filterForm.setDeleteButtonVisible(false);
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
-
-//			AdditionalButton editButton = new AdditionalButton("fas fa-edit", "genapp.edit",
-//					getContextWeb() + "/" + peticioID + "/edit/", "btn-warning");
-//
-//			AdditionalButton deleteButton = new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
-//					"javascript: openModal('" + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')", "btn-danger");
-//
-//			AdditionalButton arrancarButton = new AdditionalButton("fas fa-play", "peticio.posarenmarxa",
-//					getContextWeb() + "/arrancar/" + peticioID , "btn-success");
-//			
-//			AdditionalButton downloadButton = new AdditionalButton("fas fa-file-download", "descarregar_firma",
-//                    getContextWeb() + "/descarregarFirmat/" + peticioID, "btn-warning");
-
             I18NUtils.tradueix("peticio.posarenmarxa");
 
             switch ((int) peticio.getEstat()) {
@@ -167,7 +153,6 @@ public class EnviarPeticioUserController extends PeticioController {
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
                             "descarregar_firma", getContextWeb() + "/descarregarFirmat/" + peticioID, "btn-warning"));
                 }
-
                 break;
 
                 case Constants.ESTAT_PETICIO_REBUTJADA:
@@ -211,41 +196,48 @@ public class EnviarPeticioUserController extends PeticioController {
     public void descarregarJustificant(@PathVariable("peticioID") Long peticioID, HttpServletRequest request,
             HttpServletResponse response) {
 
-        FileInputStream input = null;
-        OutputStream output = null;
-
         try {
             Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
-            log.info("peticio: " + peticio);
-            long fitxerFirmatId = peticio.getFitxerFirmatID();
-            File file = FileSystemManager.getFile(fitxerFirmatId);
+            if (peticio != null) {
+                FileInputStream input = null;
+                OutputStream output = null;
 
-            // Mime
-            MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-            String mime = mimeTypesMap.getContentType(file);
+                long fitxerFirmatId = peticio.getFitxerFirmatID();
+                File file = FileSystemManager.getFile(fitxerFirmatId);
 
-            // Nom
-//            String filename = "Fitxer firmat de la peticio - " + peticioID;
-            String filename = fitxerEjb.executeQueryOne(FitxerFields.NOM, FitxerFields.FITXERID.equal(fitxerFirmatId));
-            
-            response.setContentType(mime);
-            response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
-            response.setContentLength((int) file.length());
+                // Mime
+                MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+                String mime = mimeTypesMap.getContentType(file);
 
-            output = response.getOutputStream();
-            input = new FileInputStream(file);
+                // Nom
+//                String filename = "Fitxer firmat de la peticio - " + peticioID;
+                String filename = fitxerEjb.executeQueryOne(FitxerFields.NOM,
+                        FitxerFields.FITXERID.equal(fitxerFirmatId));
 
-            FileSystemManager.copy(input, output);
+                response.setContentType(mime);
+                response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
+                response.setContentLength((int) file.length());
 
-            input.close();
-            output.close();
+                output = response.getOutputStream();
+                input = new FileInputStream(file);
+
+                FileSystemManager.copy(input, output);
+
+                input.close();
+                output.close();
+            } else {
+                String msg = "La peticio amb ID: " + peticioID
+                        + " no s'ha trobat al sistema. No s'ha pogut gestionar la firma.";
+                HtmlUtils.saveMessageError(request, msg);
+                log.error(msg);
+            }
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
         } catch (I18NException e) {
             HtmlUtils.saveMessageError(request, "Error intentant obtenir el nom del fitxer signat: " + e.getMessage());
-		}
+        }
     }
 }
