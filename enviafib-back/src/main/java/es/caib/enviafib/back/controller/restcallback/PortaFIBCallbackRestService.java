@@ -55,15 +55,16 @@ public class PortaFIBCallbackRestService {
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES: {
                     log.info("NOTIFICACIOAVIS_PETICIO_EN_PROCES = "
                             + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES);
-                    if (!peticioLogicaEjb.select(PeticioFields.PETICIOPORTAFIB.equal(event.getSigningRequest().getID()))
-                            .isEmpty()) {
-                        Peticio peticioTemp = peticioLogicaEjb
-                                .select(PeticioFields.PETICIOPORTAFIB.equal(event.getSigningRequest().getID())).get(0);
+
+                    Long portafibID = event.getSigningRequest().getID();
+                    Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID, PeticioFields.PETICIOPORTAFIB.equal(portafibID));
+                    
+                    if (peticioID != null) {
+                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKey(peticioID);
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
                         peticioLogicaEjb.updatePublic(peticioTemp);
                     } else {
-                        log.error(
-                                "S'ha rebut un event de PETICIO EN PROCES, pero no s'ha trobat la peticio que l'hi correspon a enviafib.");
+                        log.error("S'ha rebut un event de PETICIO EN PROCES, pero no s'ha trobat la peticio que l'hi correspon a enviafib.");
                     }
                 }
                 break;
