@@ -235,7 +235,7 @@ public class EnviarPeticioUserController extends PeticioController {
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
+            HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e );
         } catch (I18NException e) {
             HtmlUtils.saveMessageError(request, "Error intentant obtenir el nom del fitxer signat: " + e.getMessage());
         }

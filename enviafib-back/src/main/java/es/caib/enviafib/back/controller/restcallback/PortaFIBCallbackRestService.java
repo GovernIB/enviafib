@@ -13,6 +13,7 @@ import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
 
 import org.apache.log4j.Logger;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,63 +52,64 @@ public class PortaFIBCallbackRestService {
             log.info("Entity ID: " + event.getEntityID());
             log.info("Version: " + event.getVersion());
 
-            switch (event.getEventTypeID()) {
+            int eventID = event.getEventTypeID();
+
+            switch (eventID) {
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES: {
-                    log.info("NOTIFICACIOAVIS_PETICIO_EN_PROCES = "
-                            + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES);
+                    log.info("NOTIFICACIOAVIS_PETICIO_EN_PROCES = " + eventID);
 
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
                             PeticioFields.PETICIOPORTAFIB.equal(portafibID));
+
+                    String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
 
                     if (peticioID != null) {
                         Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKey(peticioID);
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
                         peticioLogicaEjb.updatePublic(peticioTemp);
                     } else {
-                        log.error(
-                                "S'ha rebut un event de PETICIO EN PROCES, pero no s'ha trobat la peticio que l'hi correspon a enviafib.");
+                        log.error(I18NUtils.tradueix("callback.event.enproces.error") + IDsToString);
                     }
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR: {
-                    log.info("NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR = "
-                            + (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR);
+                    log.info("NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR = " + eventID);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_VALIDAR: {
-                    log.info("NOTIFICACIOAVIS_DESCARTAT_PER_VALIDAR = "
-                            + (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_VALIDAR);
+                    log.info("NOTIFICACIOAVIS_DESCARTAT_PER_VALIDAR = " + eventID);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_FIRMAR: {
-                    log.info("NOTIFICACIOAVIS_REQUERIT_PER_FIRMAR = "
-                            + (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_FIRMAR);
+                    log.info("NOTIFICACIOAVIS_REQUERIT_PER_FIRMAR = " + eventID);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_FIRMAR: {
-                    log.info("NOTIFICACIOAVIS_DESCARTAT_PER_FIRMAR = "
-                            + (int) ConstantsV2.NOTIFICACIOAVIS_DESCARTAT_PER_FIRMAR);
+                    log.info("NOTIFICACIOAVIS_DESCARTAT_PER_FIRMAR = " + eventID);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_VALIDAT: {
-                    log.info("NOTIFICACIOAVIS_VALIDAT = " + (int) ConstantsV2.NOTIFICACIOAVIS_VALIDAT);
+                    log.info("NOTIFICACIOAVIS_VALIDAT = " + eventID);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_INVALIDAT: {
-                    log.info("NOTIFICACIOAVIS_INVALIDAT = " + (int) ConstantsV2.NOTIFICACIOAVIS_INVALIDAT);
+                    log.info("NOTIFICACIOAVIS_INVALIDAT = " + eventID);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_FIRMA_PARCIAL: {
-                    log.info("NOTIFICACIOAVIS_FIRMA_PARCIAL = " + (int) ConstantsV2.NOTIFICACIOAVIS_FIRMA_PARCIAL);
+                    log.info("NOTIFICACIOAVIS_FIRMA_PARCIAL = " + eventID);
                 }
                 break;
+
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA: {
-                    log.info("NOTIFICACIOAVIS_PETICIO_FIRMADA = " + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA);
+                    log.info("NOTIFICACIOAVIS_PETICIO_FIRMADA = " + eventID);
 
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
                             PeticioFields.PETICIOPORTAFIB.equal(portafibID));
+
+                    String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
 
                     if (peticioID != null) {
                         String languageUI = "ca";
@@ -118,36 +120,35 @@ public class PortaFIBCallbackRestService {
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
                         peticioLogicaEjb.updatePublic(peticioTemp);
                     } else {
-                        log.error(
-                                "S'ha rebut un event de FIRMA, pero no s'ha trobat la peticio que l'hi correspon a enviafib.");
+                        log.error(I18NUtils.tradueix("callback.event.firma.error") + IDsToString);
                     }
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA: {
-                    log.info("NOTIFICACIOAVIS_PETICIO_REBUTJADA = "
-                            + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA);
+                    log.info("NOTIFICACIOAVIS_PETICIO_REBUTJADA = " + eventID);
 
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
                             PeticioFields.PETICIOPORTAFIB.equal(portafibID));
+
+                    String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
 
                     if (peticioID != null) {
                         Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKey(peticioID);
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
                         peticioLogicaEjb.updatePublic(peticioTemp);
                     } else {
-                        log.error(
-                                "S'ha rebut un event de REBUIG, pero no s'ha trobat la peticio que l'hi correspon a enviafib.");
+                        log.error(I18NUtils.tradueix("callback.event.rebuig.error") + IDsToString);
                     }
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_PAUSADA: {
-                    log.info("NOTIFICACIOAVIS_PETICIO_PAUSADA = " + (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_PAUSADA);
+                    log.info("NOTIFICACIOAVIS_PETICIO_PAUSADA = " + eventID);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_REVISAR: {
-                    log.info("NOTIFICACIOAVIS_REQUERIT_PER_REVISAR = "
-                            + (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_REVISAR);
+                    log.info("NOTIFICACIOAVIS_REQUERIT_PER_REVISAR = " + eventID);
+
                 }
                 break;
             }
