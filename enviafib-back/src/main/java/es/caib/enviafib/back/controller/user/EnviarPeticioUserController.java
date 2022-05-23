@@ -28,12 +28,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.caib.enviafib.back.controller.FileDownloadController;
 import es.caib.enviafib.back.controller.webdb.PeticioController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.FitxerFields;
 import es.caib.enviafib.model.fields.PeticioFields;
@@ -150,8 +152,12 @@ public class EnviarPeticioUserController extends PeticioController {
                             new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
+                    
+                    long fitxerFirmatId = peticio.getFitxerFirmatID();
+                    Fitxer file = fitxerEjb.findByPrimaryKey(fitxerFirmatId);
+                    
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
-                            "descarregar_firma", getContextWeb() + "/descarregarFirmat/" + peticioID, "btn-warning"));
+                            "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
                 }
                 break;
 
@@ -190,54 +196,5 @@ public class EnviarPeticioUserController extends PeticioController {
         log.info("Peticio enviada correctament.");
 
         return "redirect:" + getContextWeb() + "/list";
-    }
-
-    @RequestMapping("/descarregarFirmat/{peticioID}")
-    public void descarregarJustificant(@PathVariable("peticioID") Long peticioID, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        try {
-            Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
-
-            if (peticio != null) {
-                FileInputStream input = null;
-                OutputStream output = null;
-
-                long fitxerFirmatId = peticio.getFitxerFirmatID();
-                File file = FileSystemManager.getFile(fitxerFirmatId);
-
-                // Mime
-                MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-                String mime = mimeTypesMap.getContentType(file);
-
-                // Nom
-//                String filename = "Fitxer firmat de la peticio - " + peticioID;
-                String filename = fitxerEjb.executeQueryOne(FitxerFields.NOM,
-                        FitxerFields.FITXERID.equal(fitxerFirmatId));
-
-                response.setContentType(mime);
-                response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
-                response.setContentLength((int) file.length());
-
-                output = response.getOutputStream();
-                input = new FileInputStream(file);
-
-                FileSystemManager.copy(input, output);
-
-                input.close();
-                output.close();
-            } else {
-                String msg = "La peticio amb ID: " + peticioID
-                        + " no s'ha trobat al sistema. No s'ha pogut gestionar la firma.";
-                HtmlUtils.saveMessageError(request, msg);
-                log.error(msg);
-            }
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            HtmlUtils.saveMessageError(request, "Error intentant descarregar fitxer signat: " + e.getMessage());
-        } catch (I18NException e) {
-            HtmlUtils.saveMessageError(request, "Error intentant obtenir el nom del fitxer signat: " + e.getMessage());
-        }
     }
 }
