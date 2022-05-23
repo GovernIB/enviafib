@@ -173,7 +173,7 @@ public class EnviarPeticioUserController extends PeticioController {
             HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticioID + " enviada correctament.");
         } catch (LoginException e) {
             // TODO Auto-generated catch block
-            String msg = "La sessio de l'usuari ha caducat.";
+            String msg = I18NUtils.tradueix("session.expired");
             HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
         } catch (I18NException e) {

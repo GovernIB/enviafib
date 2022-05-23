@@ -61,7 +61,7 @@ public class PortaFIBCallbackRestService {
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
                             PeticioFields.PETICIOPORTAFIB.equal(portafibID));
-
+                    
                     String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
 
                     if (peticioID != null) {
@@ -70,6 +70,7 @@ public class PortaFIBCallbackRestService {
                         peticioLogicaEjb.updatePublic(peticioTemp);
                     } else {
                         log.error(I18NUtils.tradueix("callback.event.enproces.error") + IDsToString);
+                        
                     }
                 }
                 break;
