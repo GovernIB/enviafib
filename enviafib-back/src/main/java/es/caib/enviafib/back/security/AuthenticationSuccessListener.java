@@ -1,13 +1,10 @@
 package es.caib.enviafib.back.security;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import es.caib.enviafib.back.security.LoginInfo;
-
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
@@ -18,7 +15,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -77,6 +73,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		}
 
 		log.info(" ============ Login Usuari: " + username);
+		log.info(" ============ containsRoleUser: " + containsRoleUser);
+		log.info(" ============ containsRoleAdmin: " + containsRoleAdmin);
 
 		try {
 			LoginInfo loginInfo = LoginInfo.getInstance();

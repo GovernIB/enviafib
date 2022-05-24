@@ -1,12 +1,10 @@
 package es.caib.enviafib.back.controller.restcallback;
 
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
 
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;

@@ -58,7 +58,7 @@ public class IdiomaJPAManager
         return list.toArray(new Idioma[list.size()]);
     };
 
-    public synchronized Idioma create( java.lang.String _idiomaID_, java.lang.String _nom_, boolean _suportat_, int _ordre_) throws I18NException {
+    public Idioma create( java.lang.String _idiomaID_, java.lang.String _nom_, boolean _suportat_, int _ordre_) throws I18NException {
         IdiomaJPA __bean =  new IdiomaJPA(_idiomaID_,_nom_,_suportat_,_ordre_);
         return create(__bean);
     }

@@ -3,12 +3,7 @@ package es.caib.enviafib.logic.utils;
 import java.util.Date;
 import java.util.List;
 
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.QueueConnection;
-import javax.jms.QueueConnectionFactory;
-import javax.jms.QueueSender;
-import javax.jms.QueueSession;
+
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.Message.RecipientType;
@@ -16,9 +11,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-
-import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
-import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.commons.utils.Constants;
 

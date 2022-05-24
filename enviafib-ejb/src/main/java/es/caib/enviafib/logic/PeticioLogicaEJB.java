@@ -1,7 +1,6 @@
 package es.caib.enviafib.logic;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +47,6 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
-import es.caib.enviafib.model.fields.PeticioFields;
-import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
  * 

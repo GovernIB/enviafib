@@ -1,8 +1,5 @@
 package es.caib.enviafib.commons.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,8 +12,6 @@ import java.util.Properties;
  * 
  */
 public class Configuracio implements Constants {
-
-	private static final Logger LOG = LoggerFactory.getLogger(Configuracio.class);
 
 	private static final Properties fileProperties = new Properties();
 

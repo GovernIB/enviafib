@@ -216,9 +216,22 @@
               </c:if>
             </td>
           <td id="peticio_estat_columnvalueid">
-            <form:errors path="peticio.estat" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ESTAT)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ESTAT)? ' uneditable-input' : ''}"  style=""  path="peticio.estat"   />
-
+          <form:errors path="peticio.estat" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.ESTAT)}" >
+          <form:hidden path="peticio.estat"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.estat,__theForm.listOfValuesForEstat)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.ESTAT)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_estat"  onchange="if(typeof onChangeEstat == 'function') {  onChangeEstat(this); };"  cssClass="form-control col-md-9-optional" path="peticio.estat">
+            <c:forEach items="${__theForm.listOfValuesForEstat}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>

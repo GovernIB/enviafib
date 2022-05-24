@@ -31,6 +31,7 @@ public class PeticioForm extends EnviaFIBBaseForm {
     this.listOfTraduccioForTitolID = __toClone.listOfTraduccioForTitolID;
     this.listOfUsuariForSolicitantID = __toClone.listOfUsuariForSolicitantID;
     this.listOfIdiomaForIdiomaID = __toClone.listOfIdiomaForIdiomaID;
+    this.listOfValuesForEstat = __toClone.listOfValuesForEstat;
   }
   
   public PeticioForm(PeticioJPA peticio, boolean nou) {
@@ -115,6 +116,18 @@ public class PeticioForm extends EnviaFIBBaseForm {
 
   public void setListOfIdiomaForIdiomaID(List<StringKeyValue> listOfIdiomaForIdiomaID) {
     this.listOfIdiomaForIdiomaID = listOfIdiomaForIdiomaID;
+  }
+
+
+
+  private List<StringKeyValue> listOfValuesForEstat;
+
+  public List<StringKeyValue> getListOfValuesForEstat() {
+    return this.listOfValuesForEstat;
+  }
+
+  public void setListOfValuesForEstat(List<StringKeyValue> listOfValuesForEstat) {
+    this.listOfValuesForEstat = listOfValuesForEstat;
   }
 
 

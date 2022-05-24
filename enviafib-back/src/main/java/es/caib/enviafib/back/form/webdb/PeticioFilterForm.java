@@ -197,6 +197,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
+    this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
   }
   
   /* ========= UTILS ========== */
@@ -263,6 +264,18 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setMapOfIdiomaForIdiomaID(Map<String, String> mapOfIdiomaForIdiomaID) {
     this.mapOfIdiomaForIdiomaID = mapOfIdiomaForIdiomaID;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForEstat;
+
+  public Map<String, String> getMapOfValuesForEstat() {
+    return this.mapOfValuesForEstat;
+  }
+
+  public void setMapOfValuesForEstat(Map<String, String> mapOfValuesForEstat) {
+    this.mapOfValuesForEstat = mapOfValuesForEstat;
   }
 
 

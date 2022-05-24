@@ -10,7 +10,6 @@ import org.fundaciobit.genapp.common.web.controller.CommonFilesBaseController;
 import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import org.fundaciobit.genapp.common.web.form.BaseForm;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.springframework.stereotype.Controller;
 
 import javax.ejb.EJB;

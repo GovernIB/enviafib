@@ -58,7 +58,7 @@ public class TraduccioJPAManager
         return list.toArray(new Traduccio[list.size()]);
     };
 
-    public synchronized Traduccio create() throws I18NException {
+    public Traduccio create() throws I18NException {
         TraduccioJPA __bean =  new TraduccioJPA();
         return create(__bean);
     }

@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
 import es.caib.enviafib.model.entity.Usuari;
-import es.caib.enviafib.persistence.UsuariJPA;
 
 
 /**

@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
-import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.ejb.UsuariService;
 import es.caib.enviafib.persistence.UsuariJPA;
 

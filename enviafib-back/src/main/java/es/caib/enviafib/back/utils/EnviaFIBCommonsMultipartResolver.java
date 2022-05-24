@@ -103,7 +103,7 @@ public class EnviaFIBCommonsMultipartResolver extends
     return maxUploadSize;
   }
 
-  private Long getMaxFitxerAdaptatSize() {
+  public Long getMaxFitxerAdaptatSize() {
     Long maxFitxerAdaptatSizeGlobal = Configuracio.getMaxFitxerAdaptatSizeInBytes();
     if (log.isDebugEnabled()) {
       if (maxFitxerAdaptatSizeGlobal == null) {
