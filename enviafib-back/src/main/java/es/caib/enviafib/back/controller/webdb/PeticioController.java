@@ -820,10 +820,10 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-    __tmp.add(new StringKeyValue("Estat.1" , "Estat.1"));
-    __tmp.add(new StringKeyValue(" Estat.2" , " Estat.2"));
-    __tmp.add(new StringKeyValue(" Estat.3" , " Estat.3"));
-    __tmp.add(new StringKeyValue(" Estat.4" , " Estat.4"));
+    __tmp.add(new StringKeyValue("1" , "1"));
+    __tmp.add(new StringKeyValue("2" , "2"));
+    __tmp.add(new StringKeyValue("3" , "3"));
+    __tmp.add(new StringKeyValue("4" , "4"));
     return __tmp;
   }
 

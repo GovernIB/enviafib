@@ -27,3 +27,29 @@ COMMENT ON COLUMN efi_peticio.peticioportafib IS 'Identificador de la peticio di
 
 ALTER TABLE efi_peticio
    ALTER COLUMN estat SET DEFAULT 1;
+
+---
+--- 24/05/2022 - Gestió de Series Documentals #38
+---
+
+CREATE SEQUENCE public.efi_seriedocumental_seq;
+ALTER SEQUENCE public.efi_seriedocumental_seq
+  OWNER TO enviafib;
+
+
+CREATE TABLE public.efi_seriedocu
+(
+   seriedocumentalid bigint NOT NULL DEFAULT nextval('efi_seriedocumental_seq'), 
+   nom character varying(256) NOT NULL, 
+   tipusdocumental character varying(256), 
+   CONSTRAINT efi_seriedocu_pk PRIMARY KEY (seriedocuid), 
+   CONSTRAINT efi_seriedocu_tipusdocu_uk UNIQUE (tipusdocu)
+) 
+WITH (
+  OIDS = FALSE
+)
+;
+ALTER TABLE public.efi_seriedocumental
+  OWNER TO enviafib;
+COMMENT ON TABLE public.efi_seriedocumental
+  IS 'Taula de relacio de Series documentals amb Tipus documentals d''Arxiu.';

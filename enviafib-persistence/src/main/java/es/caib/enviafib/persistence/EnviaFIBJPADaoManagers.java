@@ -10,6 +10,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
    private final IdiomaJPAManager efi_idioma;
    private final PeticioJPAManager efi_peticio;
    private final PluginJPAManager efi_plugin;
+   private final SerieDocumentalJPAManager efi_seriedocu;
    private final TraduccioJPAManager efi_traduccio;
    private final UsuariJPAManager efi_usuari;
 
@@ -18,6 +19,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
     this.efi_idioma = new IdiomaJPAManager(__em);
     this.efi_peticio = new PeticioJPAManager(__em);
     this.efi_plugin = new PluginJPAManager(__em);
+    this.efi_seriedocu = new SerieDocumentalJPAManager(__em);
     this.efi_traduccio = new TraduccioJPAManager(__em);
     this.efi_usuari = new UsuariJPAManager(__em);
   }
@@ -36,6 +38,10 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
     public IPluginManager getPluginManager() {
         return this.efi_plugin;
+    };
+
+    public ISerieDocumentalManager getSerieDocumentalManager() {
+        return this.efi_seriedocu;
     };
 
     public ITraduccioManager getTraduccioManager() {

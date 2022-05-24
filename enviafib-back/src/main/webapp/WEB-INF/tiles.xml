@@ -170,6 +170,16 @@
     </definition>
 
 
+    <definition name="serieDocumentalFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="serieDocumental.serieDocumental" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalForm.jsp" />
+    </definition>
+    
+    <definition name="serieDocumentalListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalList.jsp" />
+    </definition>
+
+
     <definition name="traduccioFormWebDB" extends="webdb">
         <put-attribute name="titol" value="traduccio.traduccio" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/traduccioForm.jsp" />

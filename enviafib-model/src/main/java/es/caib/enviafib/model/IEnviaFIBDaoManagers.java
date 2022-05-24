@@ -7,6 +7,7 @@ public interface IEnviaFIBDaoManagers {
 	public IIdiomaManager getIdiomaManager();
 	public IPeticioManager getPeticioManager();
 	public IPluginManager getPluginManager();
+	public ISerieDocumentalManager getSerieDocumentalManager();
 	public ITraduccioManager getTraduccioManager();
 	public IUsuariManager getUsuariManager();
 

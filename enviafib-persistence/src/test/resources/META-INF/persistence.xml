@@ -11,6 +11,7 @@
 		<class>es.caib.enviafib.persistence.IdiomaJPA</class>
 		<class>es.caib.enviafib.persistence.PeticioJPA</class>
 		<class>es.caib.enviafib.persistence.PluginJPA</class>
+		<class>es.caib.enviafib.persistence.SerieDocumentalJPA</class>
 		<class>es.caib.enviafib.persistence.TraduccioJPA</class>
 		<class>es.caib.enviafib.persistence.TraduccioMapJPA</class>
 		<class>es.caib.enviafib.persistence.UsuariJPA</class>

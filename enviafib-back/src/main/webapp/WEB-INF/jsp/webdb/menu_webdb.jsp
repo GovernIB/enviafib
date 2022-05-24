@@ -35,6 +35,13 @@ ${entityname}
         </span></a>
         </li>
 
+    <%-- SerieDocumental --%>
+       <fmt:message var="entityname" key="serieDocumental.serieDocumental.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/serieDocumental/list/1"/>" ><span style="${(fn:contains(url, 'serieDocumental/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
+
     <%-- Traduccio --%>
        <fmt:message var="entityname" key="traduccio.traduccio.plural"/>
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/traduccio/list/1"/>" ><span style="${(fn:contains(url, 'traduccio/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
