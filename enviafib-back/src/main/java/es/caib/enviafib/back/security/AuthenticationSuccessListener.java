@@ -84,7 +84,6 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 						+ " Tanqui el navegador completament.");
 			}
 		} catch (Throwable e) {
-			log.info(" XYZ ZZZ ZZZ S'ha produit un error consultant la informació de login actual: " + e.getMessage());
 		}
 
 		final boolean isDebug = log.isDebugEnabled();
