@@ -2,12 +2,16 @@ package es.caib.enviafib.back.controller.user;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.Field;
+import org.fundaciobit.genapp.common.query.GroupByItem;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
@@ -91,6 +95,27 @@ public class EnviarPeticioUserController extends PeticioController {
     }
 
     @Override
+    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request, ModelAndView mav,
+            PeticioFilterForm peticioFilterForm, List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap,
+            Where where) throws I18NException {
+        if (peticioFilterForm.isHiddenField(ESTAT) && !peticioFilterForm.isGroupByField(ESTAT)) {
+            return EMPTY_STRINGKEYVALUE_LIST;
+        }
+        Where _w = null;
+        return getReferenceListForEstat(request, mav, Where.AND(where, _w));
+    }
+
+    @Override
+    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request, ModelAndView mav, Where where)
+            throws I18NException {
+        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+        for(int i = 0; i < Constants.ESTATS_PETICIO.length; i++) {
+            __tmp.add(new StringKeyValue(String.valueOf(Constants.ESTATS_PETICIO[i]),I18NUtils.tradueix("estat."+Constants.ESTATS_PETICIO[i])));
+        }
+        return __tmp;
+    }
+
+    @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
@@ -118,7 +143,6 @@ public class EnviarPeticioUserController extends PeticioController {
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
-//            I18NUtils.tradueix("peticio.posarenmarxa");
 
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:
@@ -141,10 +165,10 @@ public class EnviarPeticioUserController extends PeticioController {
                             new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
-                    
+
                     long fitxerFirmatId = peticio.getFitxerFirmatID();
                     Fitxer file = fitxerEjb.findByPrimaryKey(fitxerFirmatId);
-                    
+
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
                             "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
                 }
