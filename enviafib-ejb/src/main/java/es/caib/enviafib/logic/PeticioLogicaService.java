@@ -10,6 +10,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.ejb.PeticioService;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
  * 
@@ -23,9 +24,13 @@ public interface PeticioLogicaService extends PeticioService {
 
 	public void arrancarPeticio(long peticioID, String languageUI) throws I18NException;
 
-	public void updatePublic(Peticio peticio) throws I18NException;
+    public void esborrarPeticioPortafib(long peticioPortafibId, String languageUI) throws Exception;
 
-	public long guardarFitxerSignat(long peticioID, String languageUI)
+	public void updatePublic(Peticio peticio) throws I18NException;
+	
+    public PeticioJPA findByPrimaryKeyPublic(Long _ID_); 
+    
+    public long guardarFitxerSignat(long peticioID, String languageUI)
 			throws I18NException, AbstractApisIBException, IOException;
 
 	public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)

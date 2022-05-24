@@ -118,7 +118,7 @@ public class EnviarPeticioUserController extends PeticioController {
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
-            I18NUtils.tradueix("peticio.posarenmarxa");
+//            I18NUtils.tradueix("peticio.posarenmarxa");
 
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:

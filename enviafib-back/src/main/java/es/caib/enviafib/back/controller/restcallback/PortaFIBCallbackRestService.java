@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller.restcallback;
 
+import java.util.Locale;
 
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
@@ -11,6 +12,8 @@ import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
 
 import org.apache.log4j.Logger;
+import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
+import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,12 +37,14 @@ public class PortaFIBCallbackRestService {
 
     @GetMapping("/versio")
     public String getVersio() {
+        log.info("URL de CallBack Validada");
         return "1";
     }
 
     @PostMapping("/event")
     public Response event(@RequestBody PortaFIBEvent event) {
         try {
+            long startTime = System.currentTimeMillis();
 
             // TODO: Eliminar tots els log.info quan s'hagui implementat la gestió de la
             // resposta de PortaFIB
@@ -107,18 +112,20 @@ public class PortaFIBCallbackRestService {
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
                             PeticioFields.PETICIOPORTAFIB.equal(portafibID));
 
-                    String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
-
                     if (peticioID != null) {
                         String languageUI = "ca";
                         peticioLogicaEjb.guardarFitxerSignat(peticioID, languageUI);
                         log.info("Guardat fitxer signat de la petició amb ID=" + peticioID + " al FileSystemManager");
 
-                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKey(peticioID);
+                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
                         peticioLogicaEjb.updatePublic(peticioTemp);
+
+                        peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);
+
                     } else {
-                        log.error(I18NUtils.tradueix("callback.event.firma.error") + IDsToString);
+                        log.error("S'ha rebut un event de FIRMA amb idportafib=" + portafibID
+                                + ", pero peticioID es null");
                     }
                 }
                 break;
@@ -129,14 +136,17 @@ public class PortaFIBCallbackRestService {
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
                             PeticioFields.PETICIOPORTAFIB.equal(portafibID));
 
-                    String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
-
                     if (peticioID != null) {
-                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKey(peticioID);
+                        String languageUI = "ca";
+
+                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
                         peticioLogicaEjb.updatePublic(peticioTemp);
+
+                        peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);
                     } else {
-                        log.error(I18NUtils.tradueix("callback.event.rebuig.error") + IDsToString);
+                        log.error("S'ha rebut un event de REBUIG amb idportafib=" + portafibID
+                                + ", pero peticioID es null");
                     }
                 }
                 break;
@@ -160,13 +170,18 @@ public class PortaFIBCallbackRestService {
 
             // Actualitzacio del pintat de la pagina
 
-            log.info("Event processat");
+            long endTime = System.currentTimeMillis();
+            log.info("Event processat. Temps: " + (endTime - startTime));
+
             return Response.status(200).entity("OK").build();
+        } catch (I18NException e) {
+            String msg = I18NCommonUtils.getMessage(e, new Locale("ca"));
+            log.error(msg, e);
+            return Response.status(500).entity(msg).build();
+
         } catch (Throwable th) {
             String msg = "Error desconegut processant event de Peticio de Firma REST: " + th.getMessage();
-
-            th.printStackTrace();
-
+            log.error(msg, th);
             return Response.status(500).entity(msg).build();
         }
     }
