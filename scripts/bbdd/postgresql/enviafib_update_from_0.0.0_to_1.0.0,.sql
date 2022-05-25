@@ -32,24 +32,23 @@ ALTER TABLE efi_peticio
 --- 24/05/2022 - Gestió de Series Documentals #38
 ---
 
-CREATE SEQUENCE public.efi_seriedocumental_seq;
-ALTER SEQUENCE public.efi_seriedocumental_seq
+CREATE SEQUENCE public.efi_seriedocu_seq;
+ALTER SEQUENCE public.efi_seriedocu_seq
   OWNER TO enviafib;
 
 
-CREATE TABLE public.efi_seriedocu
+CREATE TABLE efi_seriedocu
 (
-   seriedocumentalid bigint NOT NULL DEFAULT nextval('efi_seriedocumental_seq'), 
-   nom character varying(256) NOT NULL, 
-   tipusdocumental character varying(256), 
-   CONSTRAINT efi_seriedocu_pk PRIMARY KEY (seriedocuid), 
-   CONSTRAINT efi_seriedocu_tipusdocu_uk UNIQUE (tipusdocu)
-) 
-WITH (
-  OIDS = FALSE
+  seriedocuid bigint NOT NULL DEFAULT nextval('efi_seriedocu_seq'::regclass),
+  nom character varying(256) NOT NULL,
+  tipusdocu character varying(256),
+  CONSTRAINT efi_seriedocu_pk PRIMARY KEY (seriedocuid),
+  CONSTRAINT efi_tipusdocu_uk UNIQUE (tipusdocu)
 )
-;
-ALTER TABLE public.efi_seriedocumental
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE efi_seriedocu
   OWNER TO enviafib;
-COMMENT ON TABLE public.efi_seriedocumental
+COMMENT ON TABLE efi_seriedocu
   IS 'Taula de relacio de Series documentals amb Tipus documentals d''Arxiu.';
