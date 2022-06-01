@@ -67,7 +67,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 	@Override
 	public void arrancarPeticio(long peticioID, String languageUI) throws I18NException {
 
-		Peticio peticio = this.findByPrimaryKey(peticioID);
+		Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 
 		String nifDestinatari = peticio.getDestinatarinif();
 		String perfil = "ENVIAFIB_PADES";
@@ -91,7 +91,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 	public long guardarFitxerSignat(long peticioID, String languageUI)
 			throws I18NException, AbstractApisIBException, IOException {
 
-		Peticio peticio = this.findByPrimaryKey(peticioID);
+		Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 
 		FirmaAsyncSimpleFile firma = getFitxerSignat(peticioID, languageUI);
 
@@ -293,7 +293,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		FirmaAsyncSimpleSignedFile fitxerSignat = null;
 		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
 
-		Peticio peticio = this.findByPrimaryKey(peticioID);
+		Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 		Long peticioPortafibId = peticio.getPeticioPortafib();
 
 		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);

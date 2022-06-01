@@ -68,7 +68,7 @@ public class PortaFIBCallbackRestService {
                     String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
 
                     if (peticioID != null) {
-                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKey(peticioID);
+                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
                         peticioLogicaEjb.updatePublic(peticioTemp);
                     } else {
