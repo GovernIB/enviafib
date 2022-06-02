@@ -181,8 +181,6 @@ public class EnviarPeticioUserController extends PeticioController {
                             new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play",
-                            "peticio.posarenmarxa", getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
                 break;
             }
         }
