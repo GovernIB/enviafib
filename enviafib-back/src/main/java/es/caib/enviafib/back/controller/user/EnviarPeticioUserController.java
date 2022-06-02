@@ -157,8 +157,6 @@ public class EnviarPeticioUserController extends PeticioController {
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", "genapp.edit",
-                            getContextWeb() + "/" + peticioID + "/view/", "btn-warning"));
                 break;
                 case Constants.ESTAT_PETICIO_FIRMADA: {
                     filterForm.addAdditionalButtonByPK(peticioID,
@@ -175,8 +173,6 @@ public class EnviarPeticioUserController extends PeticioController {
                 break;
 
                 case Constants.ESTAT_PETICIO_REBUTJADA:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", "genapp.edit",
-                            getContextWeb() + "/" + peticioID + "/edit/", "btn-warning"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
