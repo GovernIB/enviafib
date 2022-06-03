@@ -22,6 +22,8 @@ public interface PeticioFields extends java.io.Serializable {
 	 public static final LongField ESTAT = new LongField(_TABLE_MODEL, "estat", "estat");
 	 public static final LongField FITXERFIRMATID = new LongField(_TABLE_MODEL, "fitxerFirmatID", "fitxer_firmatid");
 	 public static final LongField PETICIOPORTAFIB = new LongField(_TABLE_MODEL, "peticioPortafib", "peticioportafib");
+	 public static final StringField TIPUSDOCUMENTAL = new StringField(_TABLE_MODEL, "tipusdocumental", "tipusdocumental");
+	 public static final StringField IDIOMADOC = new StringField(_TABLE_MODEL, "idiomadoc", "idiomadoc");
 
 
   public static final Field<?>[] ALL_PETICIO_FIELDS = {
@@ -34,7 +36,9 @@ public interface PeticioFields extends java.io.Serializable {
     DESTINATARINIF,
     ESTAT,
     FITXERFIRMATID,
-    PETICIOPORTAFIB
+    PETICIOPORTAFIB,
+    TIPUSDOCUMENTAL,
+    IDIOMADOC
   };
 
 

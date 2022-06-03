@@ -310,3 +310,83 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
+        <tr id="peticio_tipusdocumental_rowid">
+          <td id="peticio_tipusdocumental_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.TIPUSDOCUMENTAL])?'peticio.tipusdocumental':__theForm.labels[PeticioFields.TIPUSDOCUMENTAL]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.TIPUSDOCUMENTAL]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.TIPUSDOCUMENTAL]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_tipusdocumental_columnvalueid">
+          <form:errors path="peticio.tipusdocumental" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.TIPUSDOCUMENTAL)}" >
+          <form:hidden path="peticio.tipusdocumental"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.tipusdocumental,__theForm.listOfValuesForTipusdocumental)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.TIPUSDOCUMENTAL)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_tipusdocumental"  onchange="if(typeof onChangeTipusdocumental == 'function') {  onChangeTipusdocumental(this); };"  cssClass="form-control col-md-9-optional" path="peticio.tipusdocumental">
+            <c:forEach items="${__theForm.listOfValuesForTipusdocumental}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.peticio.tipusdocumental }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.peticio.tipusdocumental }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.IDIOMADOC)}">
+        <tr id="peticio_idiomadoc_rowid">
+          <td id="peticio_idiomadoc_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.IDIOMADOC])?'peticio.idiomadoc':__theForm.labels[PeticioFields.IDIOMADOC]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.IDIOMADOC]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.IDIOMADOC]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_idiomadoc_columnvalueid">
+          <form:errors path="peticio.idiomadoc" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.IDIOMADOC)}" >
+          <form:hidden path="peticio.idiomadoc"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.idiomadoc,__theForm.listOfValuesForIdiomadoc)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.IDIOMADOC)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_idiomadoc"  onchange="if(typeof onChangeIdiomadoc == 'function') {  onChangeIdiomadoc(this); };"  cssClass="form-control col-md-9-optional" path="peticio.idiomadoc">
+            <c:forEach items="${__theForm.listOfValuesForIdiomadoc}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.peticio.idiomadoc }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.peticio.idiomadoc }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        

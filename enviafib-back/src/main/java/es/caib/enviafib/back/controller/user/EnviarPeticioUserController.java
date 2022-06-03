@@ -109,8 +109,9 @@ public class EnviarPeticioUserController extends PeticioController {
     public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request, ModelAndView mav, Where where)
             throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-        for(int i = 0; i < Constants.ESTATS_PETICIO.length; i++) {
-            __tmp.add(new StringKeyValue(String.valueOf(Constants.ESTATS_PETICIO[i]),I18NUtils.tradueix("estat."+Constants.ESTATS_PETICIO[i])));
+        for (int i = 0; i < Constants.ESTATS_PETICIO.length; i++) {
+            __tmp.add(new StringKeyValue(String.valueOf(Constants.ESTATS_PETICIO[i]),
+                    I18NUtils.tradueix("estat." + Constants.ESTATS_PETICIO[i])));
         }
         return __tmp;
     }

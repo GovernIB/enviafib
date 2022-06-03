@@ -175,6 +175,28 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.String tipusdocumental;
+
+  public java.lang.String getTipusdocumental() {
+    return this.tipusdocumental;
+  }
+
+  public void setTipusdocumental(java.lang.String tipusdocumental) {
+    this.tipusdocumental = tipusdocumental;
+  }
+
+
+  private java.lang.String idiomadoc;
+
+  public java.lang.String getIdiomadoc() {
+    return this.idiomadoc;
+  }
+
+  public void setIdiomadoc(java.lang.String idiomadoc) {
+    this.idiomadoc = idiomadoc;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -194,10 +216,14 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.estatFins = __toClone.estatFins;
     this.peticioPortafibDesde = __toClone.peticioPortafibDesde;
     this.peticioPortafibFins = __toClone.peticioPortafibFins;
+    this.tipusdocumental = __toClone.tipusdocumental;
+    this.idiomadoc = __toClone.idiomadoc;
     this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
+    this.mapOfValuesForTipusdocumental = __toClone.mapOfValuesForTipusdocumental;
+    this.mapOfValuesForIdiomadoc = __toClone.mapOfValuesForIdiomadoc;
   }
   
   /* ========= UTILS ========== */
@@ -276,6 +302,30 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setMapOfValuesForEstat(Map<String, String> mapOfValuesForEstat) {
     this.mapOfValuesForEstat = mapOfValuesForEstat;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForTipusdocumental;
+
+  public Map<String, String> getMapOfValuesForTipusdocumental() {
+    return this.mapOfValuesForTipusdocumental;
+  }
+
+  public void setMapOfValuesForTipusdocumental(Map<String, String> mapOfValuesForTipusdocumental) {
+    this.mapOfValuesForTipusdocumental = mapOfValuesForTipusdocumental;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForIdiomadoc;
+
+  public Map<String, String> getMapOfValuesForIdiomadoc() {
+    return this.mapOfValuesForIdiomadoc;
+  }
+
+  public void setMapOfValuesForIdiomadoc(Map<String, String> mapOfValuesForIdiomadoc) {
+    this.mapOfValuesForIdiomadoc = mapOfValuesForIdiomadoc;
   }
 
 

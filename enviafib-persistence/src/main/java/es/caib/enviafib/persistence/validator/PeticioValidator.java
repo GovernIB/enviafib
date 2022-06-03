@@ -88,6 +88,22 @@ public class PeticioValidator<I extends Peticio>
       }
     }
 
+    if (__vr.getFieldErrorCount(TIPUSDOCUMENTAL) == 0) {
+      java.lang.String __tipusdocumental = __target__.getTipusdocumental();
+      if (__tipusdocumental!= null && __tipusdocumental.length() > 100) {
+        __vr.rejectValue(TIPUSDOCUMENTAL, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCUMENTAL)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(100)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(IDIOMADOC) == 0) {
+      java.lang.String __idiomadoc = __target__.getIdiomadoc();
+      if (__idiomadoc!= null && __idiomadoc.length() > 30) {
+        __vr.rejectValue(IDIOMADOC, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMADOC)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(30)));
+      }
+    }
+
     if (__isNou__) { // Creació
       // ================ CREATION
       // Fitxers 

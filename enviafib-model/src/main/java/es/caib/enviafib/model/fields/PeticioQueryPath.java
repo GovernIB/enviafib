@@ -51,6 +51,14 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new LongField(getQueryPath(), PeticioFields.PETICIOPORTAFIB);
   }
 
+  public StringField TIPUSDOCUMENTAL() {
+    return new StringField(getQueryPath(), PeticioFields.TIPUSDOCUMENTAL);
+  }
+
+  public StringField IDIOMADOC() {
+    return new StringField(getQueryPath(), PeticioFields.IDIOMADOC);
+  }
+
 
 
   @Override

@@ -216,6 +216,32 @@
 
 
         </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.TIPUSDOCUMENTAL)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.tipusdocumental" var="tipusdocumental" />
+              <fmt:message key="genapp.form.searchby" var="cercapertipusdocumental" >                
+                 <fmt:param value="${tipusdocumental}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${tipusdocumental}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapertipusdocumental}" path="tipusdocumental" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.IDIOMADOC)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.idiomadoc" var="idiomadoc" />
+              <fmt:message key="genapp.form.searchby" var="cercaperidiomadoc" >                
+                 <fmt:param value="${idiomadoc}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${idiomadoc}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperidiomadoc}" path="idiomadoc" />
+            </div>
+
+
+        </c:if>
 
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key >= 0 && not empty __entry.value.searchBy }">

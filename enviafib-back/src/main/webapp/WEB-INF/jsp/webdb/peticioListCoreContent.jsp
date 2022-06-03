@@ -88,6 +88,22 @@
           ${peticio.peticioPortafib}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
+          <td>
+          <c:set var="tmp">${peticio.tipusdocumental}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForTipusdocumental[tmp]}
+          </c:if>
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.IDIOMADOC)}">
+          <td>
+          <c:set var="tmp">${peticio.idiomadoc}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForIdiomadoc[tmp]}
+          </c:if>
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

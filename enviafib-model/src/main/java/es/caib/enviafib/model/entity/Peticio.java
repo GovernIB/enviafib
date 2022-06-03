@@ -32,6 +32,12 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.Long getPeticioPortafib();
 	public void setPeticioPortafib(java.lang.Long _peticioPortafib_);
 
+	public java.lang.String getTipusdocumental();
+	public void setTipusdocumental(java.lang.String _tipusdocumental_);
+
+	public java.lang.String getIdiomadoc();
+	public void setIdiomadoc(java.lang.String _idiomadoc_);
+
   // Fitxer
   public <F extends Fitxer> F getFitxer();
   // Fitxer

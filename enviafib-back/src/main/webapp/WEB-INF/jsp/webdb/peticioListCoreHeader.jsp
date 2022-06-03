@@ -42,6 +42,12 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIB)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.PETICIOPORTAFIB)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.TIPUSDOCUMENTAL)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.IDIOMADOC)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.IDIOMADOC)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

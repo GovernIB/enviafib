@@ -52,3 +52,18 @@ ALTER TABLE efi_seriedocu
   OWNER TO enviafib;
 COMMENT ON TABLE efi_seriedocu
   IS 'Taula de relacio de Series documentals amb Tipus documentals d''Arxiu.';
+
+---
+--- 03/06/2022 - Gestió de Tipus de Document #34
+---
+
+ALTER TABLE efi_peticio
+   ADD COLUMN tipusdocumental character varying(100);
+
+ALTER TABLE efi_seriedocu DROP CONSTRAINT efi_tipusdocu_uk;
+ALTER TABLE efi_seriedocu ADD CONSTRAINT efi_seriedocu_tipusdocu_uk unique (tipusdocu);
+
+ALTER TABLE efi_peticio
+   ADD COLUMN idiomadoc character varying(30);
+
+

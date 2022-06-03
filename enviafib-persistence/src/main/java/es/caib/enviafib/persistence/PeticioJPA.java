@@ -63,6 +63,12 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="peticioportafib",length = 19)
     java.lang.Long peticioPortafib;
 
+    @Column(name="tipusdocumental",length = 100)
+    java.lang.String tipusdocumental;
+
+    @Column(name="idiomadoc",length = 30)
+    java.lang.String idiomadoc;
+
 
 
   /** Constructor Buit */
@@ -70,7 +76,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -81,9 +87,11 @@ private static final long serialVersionUID = 1230292508L;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
     this.peticioPortafib=peticioPortafib;
+    this.tipusdocumental=tipusdocumental;
+    this.idiomadoc=idiomadoc;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib) {
+  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -93,6 +101,8 @@ private static final long serialVersionUID = 1230292508L;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
     this.peticioPortafib=peticioPortafib;
+    this.tipusdocumental=tipusdocumental;
+    this.idiomadoc=idiomadoc;
 }
   /** Constructor dels valors Not Null */
   public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat) {
@@ -116,6 +126,8 @@ private static final long serialVersionUID = 1230292508L;
     this.setEstat(__bean.getEstat());
     this.setFitxerFirmatID(__bean.getFitxerFirmatID());
     this.setPeticioPortafib(__bean.getPeticioPortafib());
+    this.setTipusdocumental(__bean.getTipusdocumental());
+    this.setIdiomadoc(__bean.getIdiomadoc());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -190,6 +202,20 @@ private static final long serialVersionUID = 1230292508L;
 	};
 	public void setPeticioPortafib(java.lang.Long _peticioPortafib_) {
 		this.peticioPortafib = _peticioPortafib_;
+	};
+
+	public java.lang.String getTipusdocumental() {
+		return(tipusdocumental);
+	};
+	public void setTipusdocumental(java.lang.String _tipusdocumental_) {
+		this.tipusdocumental = _tipusdocumental_;
+	};
+
+	public java.lang.String getIdiomadoc() {
+		return(idiomadoc);
+	};
+	public void setIdiomadoc(java.lang.String _idiomadoc_) {
+		this.idiomadoc = _idiomadoc_;
 	};
 
 
@@ -302,6 +328,8 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setEstat(__bean.getEstat());
     __tmp.setFitxerFirmatID(__bean.getFitxerFirmatID());
     __tmp.setPeticioPortafib(__bean.getPeticioPortafib());
+    __tmp.setTipusdocumental(__bean.getTipusdocumental());
+    __tmp.setIdiomadoc(__bean.getIdiomadoc());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer

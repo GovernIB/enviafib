@@ -236,6 +236,26 @@ public class PeticioController
       };
     }
 
+    // Field tipusdocumental
+    {
+      _listSKV = getReferenceListForTipusdocumental(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForTipusdocumental(_tmp);
+      if (filterForm.getGroupByFields().contains(TIPUSDOCUMENTAL)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, TIPUSDOCUMENTAL, false);
+      };
+    }
+
+    // Field idiomadoc
+    {
+      _listSKV = getReferenceListForIdiomadoc(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForIdiomadoc(_tmp);
+      if (filterForm.getGroupByFields().contains(IDIOMADOC)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, IDIOMADOC, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -255,6 +275,8 @@ public class PeticioController
     __mapping.put(SOLICITANTID, filterForm.getMapOfUsuariForSolicitantID());
     __mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
     __mapping.put(ESTAT, filterForm.getMapOfValuesForEstat());
+    __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusdocumental());
+    __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomadoc());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -338,6 +360,24 @@ public class PeticioController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       peticioForm.setListOfValuesForEstat(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (peticioForm.getListOfValuesForTipusdocumental() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForTipusdocumental(request, mav, peticioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      peticioForm.setListOfValuesForTipusdocumental(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (peticioForm.getListOfValuesForIdiomadoc() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForIdiomadoc(request, mav, peticioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      peticioForm.setListOfValuesForIdiomadoc(_listSKV);
     }
     
   }
@@ -824,6 +864,66 @@ public java.lang.Long stringToPK(String value) {
     __tmp.add(new StringKeyValue("2" , "2"));
     __tmp.add(new StringKeyValue("3" , "3"));
     __tmp.add(new StringKeyValue("4" , "4"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+       ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
+    if (peticioForm.isHiddenField(TIPUSDOCUMENTAL)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForTipusdocumental(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+       ModelAndView mav, PeticioFilterForm peticioFilterForm,
+       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (peticioFilterForm.isHiddenField(TIPUSDOCUMENTAL)
+      && !peticioFilterForm.isGroupByField(TIPUSDOCUMENTAL)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForTipusdocumental(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "0"));
+    __tmp.add(new StringKeyValue("1" , "1"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+       ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
+    if (peticioForm.isHiddenField(IDIOMADOC)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForIdiomadoc(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+       ModelAndView mav, PeticioFilterForm peticioFilterForm,
+       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (peticioFilterForm.isHiddenField(IDIOMADOC)
+      && !peticioFilterForm.isGroupByField(IDIOMADOC)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForIdiomadoc(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("es" , "es"));
+    __tmp.add(new StringKeyValue("ca" , "ca"));
     return __tmp;
   }
 
