@@ -26,6 +26,7 @@ import javax.ejb.Stateless;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
+import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleDocumentTypeInformation;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleFile;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleMetadata;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleReviser;
@@ -38,6 +39,7 @@ import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSigne
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSigner;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.jersey.ApiFirmaAsyncSimpleJersey;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
+import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
@@ -57,287 +59,307 @@ import es.caib.enviafib.persistence.PeticioJPA;
 @Stateless(name = "PeticioLogicaEJB")
 public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService {
 
-	@EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
-	protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
+    @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
 
-	public PeticioLogicaEJB() {
+    public PeticioLogicaEJB() {
 
-	}
+    }
 
-	@Override
-	public void arrancarPeticio(long peticioID, String languageUI) throws I18NException {
+    @Override
+    public void arrancarPeticio(long peticioID, String languageUI) throws I18NException {
 
-		Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
+        Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 
-		String nifDestinatari = peticio.getDestinatarinif();
-		String perfil = "ENVIAFIB_PADES";
-		FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
+        String nifDestinatari = peticio.getDestinatarinif();
+        String perfil = "ENVIAFIB_PADES";
+        FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
 
-		FirmaAsyncSimpleFile fitxerAAnexar = null;
-		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+        FirmaAsyncSimpleFile fitxerAAnexar = null;
+        ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
-		Long idPortafib;
-		try {
-			idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar,
-					fitxerAAnexar, api);
-		} catch (Exception e) {
-			throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
-		}
-		peticio.setPeticioPortafib(idPortafib);
-		this.update(peticio);
-	}
+        Long idPortafib;
+        try {
+            idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar,
+                    fitxerAAnexar, api);
+        } catch (Exception e) {
+            throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
+        }
+        peticio.setPeticioPortafib(idPortafib);
+        this.update(peticio);
+    }
 
-	@Override
-	public long guardarFitxerSignat(long peticioID, String languageUI)
-			throws I18NException, AbstractApisIBException, IOException {
+    @Override
+    public long guardarFitxerSignat(long peticioID, String languageUI)
+            throws I18NException, AbstractApisIBException, IOException {
 
-		Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
+        Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 
-		FirmaAsyncSimpleFile firma = getFitxerSignat(peticioID, languageUI);
+        FirmaAsyncSimpleFile firma = getFitxerSignat(peticioID, languageUI);
 
-		String nom = firma.getNom();
-		String mime = firma.getMime();
-		byte[] data = firma.getData();
+        String nom = firma.getNom();
+        String mime = firma.getMime();
+        byte[] data = firma.getData();
 
-		Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
+        Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
 
-		Long idfitxer = fdb.getFitxerID();
+        Long idfitxer = fdb.getFitxerID();
 
-		File fitxersignat = FileSystemManager.getFile(idfitxer);
-		FileOutputStream fos = new FileOutputStream(fitxersignat);
-		fos.write(data);
-		fos.flush();
-		fos.close();
+        File fitxersignat = FileSystemManager.getFile(idfitxer);
+        FileOutputStream fos = new FileOutputStream(fitxersignat);
+        fos.write(data);
+        fos.flush();
+        fos.close();
 
-		peticio.setFitxerFirmatID(idfitxer);
-		peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-		this.update(peticio);
+        peticio.setFitxerFirmatID(idfitxer);
+        peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+        this.update(peticio);
 
-		return idfitxer;
-	}
+        return idfitxer;
+    }
 
-	@Override
-	@PermitAll
-	public void esborrarPeticioPortafib(long peticioPortafibId, String languageUI) throws I18NException {
+    @Override
+    @PermitAll
+    public void esborrarPeticioPortafib(long peticioPortafibId, String languageUI) throws I18NException {
 
-	    try {
-    //        Peticio peticio = this.findByPrimaryKey(peticioID);
-    //        Long peticioPortafibId = peticio.getPeticioPortafib();
+        try {
+            // Peticio peticio = this.findByPrimaryKey(peticioID);
+            // Long peticioPortafibId = peticio.getPeticioPortafib();
 
-	        FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+            FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);
-    
+
             ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
             api.deleteSignatureRequest(rinfo);
         } catch (AbstractApisIBException e) {
-            throw new I18NException("portafib.error.delete", String.valueOf(peticioPortafibId) );
+            throw new I18NException("portafib.error.delete", String.valueOf(peticioPortafibId));
         }
-	}
-	
-	@Override
-	@PermitAll
-	public void updatePublic(Peticio peticio) throws I18NException {
-		super.update(peticio);
-	}
+    }
+
+    @Override
+    @PermitAll
+    public void updatePublic(Peticio peticio) throws I18NException {
+        super.update(peticio);
+    }
 
     @Override
     @PermitAll
     public PeticioJPA findByPrimaryKeyPublic(Long _ID_) {
-        return (PeticioJPA)super.findByPrimaryKey(_ID_);
+        return (PeticioJPA) super.findByPrimaryKey(_ID_);
     }
 
-	public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,
-			FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar, ApiFirmaAsyncSimple api)
-			throws Exception {
+    public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,
+            FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar, ApiFirmaAsyncSimple api)
+            throws Exception {
 
-		FirmaAsyncSimpleSignatureBlock[] signatureBlocks = null;
+        FirmaAsyncSimpleSignatureBlock[] signatureBlocks = null;
 
-		String[][] destinataris = new String[][] { { nifDestinatari } };
+        String[][] destinataris = new String[][] { { nifDestinatari } };
 
-		if (destinataris == null || destinataris.length == 0) {
-			throw new Exception("S'ha de definir la propietat nifsDestinataris dins test.properties");
-		}
+        if (destinataris == null || destinataris.length == 0) {
+            throw new Exception("S'ha de definir la propietat nifsDestinataris dins test.properties");
+        }
 
-		signatureBlocks = new FirmaAsyncSimpleSignatureBlock[destinataris.length];
+        signatureBlocks = new FirmaAsyncSimpleSignatureBlock[destinataris.length];
 
-		for (int i = 0; i < destinataris.length; i++) {
-			String[] destinatarisBloc = destinataris[i];
-			if (destinatarisBloc == null || destinatarisBloc.length == 0) {
-				throw new Exception("Els destinataris del bloc " + i + " està buit o val null");
-			}
-			System.out.println("BLOC[" + i + "] => Destinataris = " + Arrays.toString(destinatarisBloc));
-			List<FirmaAsyncSimpleSignature> signers = new ArrayList<FirmaAsyncSimpleSignature>();
-			for (int j = 0; j < destinatarisBloc.length; j++) {
+        for (int i = 0; i < destinataris.length; i++) {
+            String[] destinatarisBloc = destinataris[i];
+            if (destinatarisBloc == null || destinatarisBloc.length == 0) {
+                throw new Exception("Els destinataris del bloc " + i + " està buit o val null");
+            }
+            System.out.println("BLOC[" + i + "] => Destinataris = " + Arrays.toString(destinatarisBloc));
+            List<FirmaAsyncSimpleSignature> signers = new ArrayList<FirmaAsyncSimpleSignature>();
+            for (int j = 0; j < destinatarisBloc.length; j++) {
 
-				String nif = destinatarisBloc[j].trim();
+                String nif = destinatarisBloc[j].trim();
 
-				if (nif.trim().length() == 0) {
-					throw new Exception("El destinatari " + j + " del bloc " + i + " està buit o val null");
-				}
+                if (nif.trim().length() == 0) {
+                    throw new Exception("El destinatari " + j + " del bloc " + i + " està buit o val null");
+                }
 
-				FirmaAsyncSimpleSigner personToSign;
+                FirmaAsyncSimpleSigner personToSign;
 
-				personToSign = new FirmaAsyncSimpleSigner();
-				personToSign.setAdministrationID(nif);
+                personToSign = new FirmaAsyncSimpleSigner();
+                personToSign.setAdministrationID(nif);
 
-				boolean required = true;
-				String reason = null; // Usar la de la Petició
+                boolean required = true;
+                String reason = null; // Usar la de la Petició
 
-				// Revisors
-				int minimumNumberOfRevisers;
-				List<FirmaAsyncSimpleReviser> revisers;
+                // Revisors
+                int minimumNumberOfRevisers;
+                List<FirmaAsyncSimpleReviser> revisers;
 
-				minimumNumberOfRevisers = 0;
-				revisers = null;
+                minimumNumberOfRevisers = 0;
+                revisers = null;
 
-				signers.add(new FirmaAsyncSimpleSignature(personToSign, required, reason, minimumNumberOfRevisers,
-						revisers));
+                signers.add(new FirmaAsyncSimpleSignature(personToSign, required, reason, minimumNumberOfRevisers,
+                        revisers));
 
-			}
+            }
 
-			int minimumNumberOfSignaturesRequired = signers.size();
-			signatureBlocks[i] = new FirmaAsyncSimpleSignatureBlock(minimumNumberOfSignaturesRequired, signers);
+            int minimumNumberOfSignaturesRequired = signers.size();
+            signatureBlocks[i] = new FirmaAsyncSimpleSignatureBlock(minimumNumberOfSignaturesRequired, signers);
 
-		}
+        }
 
-		// Annexes
-		List<FirmaAsyncSimpleAnnex> annexs = null;
-		{
-			FirmaAsyncSimpleFile file = fitxerAAnexar;
-			if (file != null) {
-				boolean attach = true;
-				boolean sign = true;
-				FirmaAsyncSimpleAnnex annex = new FirmaAsyncSimpleAnnex(file, attach, sign);
-				annexs = new ArrayList<FirmaAsyncSimpleAnnex>();
-				annexs.add(annex);
-			}
-		}
+        // Annexes
+        List<FirmaAsyncSimpleAnnex> annexs = null;
+        {
+            FirmaAsyncSimpleFile file = fitxerAAnexar;
+            if (file != null) {
+                boolean attach = true;
+                boolean sign = true;
+                FirmaAsyncSimpleAnnex annex = new FirmaAsyncSimpleAnnex(file, attach, sign);
+                annexs = new ArrayList<FirmaAsyncSimpleAnnex>();
+                annexs.add(annex);
+            }
+        }
 
-		// Fitxer a Firmar
-		if (fitxerAFirmar == null) {
-			throw new Exception("No s'ha definit fitxer a firmar");
-		}
+        // Fitxer a Firmar
+        if (fitxerAFirmar == null) {
+            throw new Exception("No s'ha definit fitxer a firmar");
+        }
 
-		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+        FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
 
-		String profileCode = perfil;
-		String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
-		String description = "Prova de firma - Desc";
-		String reason = "Prova de firma - reason";
-		FirmaAsyncSimpleFile originalDetachedSignature = null;
-		long documentType = 8; // TD08 Publicación.
-		String documentTypeDescription = "Publicació";
-		String languageDoc = "ca";
-		int priority = FirmaAsyncSimpleSignatureRequestWithSignBlockList.PRIORITY_NORMAL_NORMAL;
-		String senderName = "Tester Firma Async";
-		String senderDescription = "Tester Firma Async - Description";
-		String expedientCode = null;
-		String expedientName = null;
-		String expedientUrl = null;
-		String procedureCode = null;
-		String procedureName = null;
-		String additionalInformation = "Ninguna info";
-		Double additionalInformationEvaluable = (double) System.currentTimeMillis();
+        String profileCode = perfil;
+        String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
+        String description = "Prova de firma - Desc";
+        String reason = "Prova de firma - reason";
+        FirmaAsyncSimpleFile originalDetachedSignature = null;
+        long documentType = 8; // TD08 Publicación.
+        String documentTypeDescription = "Publicació";
+        String languageDoc = "ca";
+        int priority = FirmaAsyncSimpleSignatureRequestWithSignBlockList.PRIORITY_NORMAL_NORMAL;
+        String senderName = "Tester Firma Async";
+        String senderDescription = "Tester Firma Async - Description";
+        String expedientCode = null;
+        String expedientName = null;
+        String expedientUrl = null;
+        String procedureCode = null;
+        String procedureName = null;
+        String additionalInformation = "Ninguna info";
+        Double additionalInformationEvaluable = (double) System.currentTimeMillis();
 
-		List<FirmaAsyncSimpleMetadata> metadadaList = null;
+        List<FirmaAsyncSimpleMetadata> metadadaList = null;
 
-		FirmaAsyncSimpleSignatureRequestBase signatureRequestBase;
-		signatureRequestBase = new FirmaAsyncSimpleSignatureRequestBase(profileCode, title, description, reason,
-				fitxerAFirmar, originalDetachedSignature, documentType, documentTypeDescription, languageDoc,
-				languageUI, priority, senderName, senderDescription, expedientCode, expedientName, expedientUrl,
-				procedureCode, procedureName, additionalInformation, additionalInformationEvaluable, annexs,
-				metadadaList);
+        FirmaAsyncSimpleSignatureRequestBase signatureRequestBase;
+        signatureRequestBase = new FirmaAsyncSimpleSignatureRequestBase(profileCode, title, description, reason,
+                fitxerAFirmar, originalDetachedSignature, documentType, documentTypeDescription, languageDoc,
+                languageUI, priority, senderName, senderDescription, expedientCode, expedientName, expedientUrl,
+                procedureCode, procedureName, additionalInformation, additionalInformationEvaluable, annexs,
+                metadadaList);
 
-		// Crear Peticio
-		Long peticioDeFirmaID2;
+        // Crear Peticio
+        Long peticioDeFirmaID2;
 
-		// Utilitzar Blocs de Firmes
-		log.info("Petició de Firma emprant Blocs de Firmes");
-		FirmaAsyncSimpleSignatureRequestWithSignBlockList signatureRequest;
-		signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(signatureRequestBase, signatureBlocks);
-		peticioDeFirmaID2 = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
+        // Utilitzar Blocs de Firmes
+        log.info("Petició de Firma emprant Blocs de Firmes");
+        FirmaAsyncSimpleSignatureRequestWithSignBlockList signatureRequest;
+        signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(signatureRequestBase, signatureBlocks);
+        peticioDeFirmaID2 = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
 
-		log.info("Creada peticio amb ID = " + peticioDeFirmaID2);
+        log.info("Creada peticio amb ID = " + peticioDeFirmaID2);
 
-		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
+        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
 
-		String url = api.getUrlToViewFlow(rinfo);
-		log.info("URL to view flow: " + url);
-		return peticioDeFirmaID2;
+        String url = api.getUrlToViewFlow(rinfo);
+        log.info("URL to view flow: " + url);
+        return peticioDeFirmaID2;
 
-	}
+    }
 
-	// TODO: Mostra com montar un fitxer per firmar
+    // TODO: Mostra com montar un fitxer per firmar
 
-	protected FirmaAsyncSimpleFile getFitxer(Fitxer fitxer) throws I18NException {
+    protected FirmaAsyncSimpleFile getFitxer(Fitxer fitxer) throws I18NException {
 
-		File f = FileSystemManager.getFile(fitxer.getFitxerID());
+        File f = FileSystemManager.getFile(fitxer.getFitxerID());
 
-		if (!f.exists()) {
-			throw new I18NException("genapp.comodi", "No existeix el fitxer " + f.getAbsolutePath());
-		}
+        if (!f.exists()) {
+            throw new I18NException("genapp.comodi", "No existeix el fitxer " + f.getAbsolutePath());
+        }
 
-		byte[] data;
-		try {
-			data = FileUtils.readFromFile(f);
-		} catch (Exception e) {
-			throw new I18NException("genapp.comodi", "No es pot llegir el fitxer " + f.getAbsolutePath());
-		}
+        byte[] data;
+        try {
+            data = FileUtils.readFromFile(f);
+        } catch (Exception e) {
+            throw new I18NException("genapp.comodi", "No es pot llegir el fitxer " + f.getAbsolutePath());
+        }
 
-		return new FirmaAsyncSimpleFile(fitxer.getNom(), fitxer.getMime(), data);
-	}
+        return new FirmaAsyncSimpleFile(fitxer.getNom(), fitxer.getMime(), data);
+    }
 
-	public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)
-			throws I18NException, AbstractApisIBException {
-		
-		FirmaAsyncSimpleSignedFile fitxerSignat = null;
-		FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+    public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)
+            throws I18NException, AbstractApisIBException {
 
-		Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
-		Long peticioPortafibId = peticio.getPeticioPortafib();
+        FirmaAsyncSimpleSignedFile fitxerSignat = null;
+        FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
 
-		rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);
+        Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
+        Long peticioPortafibId = peticio.getPeticioPortafib();
 
-		ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);
 
-		fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
+        ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+
+        fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
 
 //		String nom = fitxerSignat.getSignedFile().getNom();
 //		String mime = fitxerSignat.getSignedFile().getMime();
 //		byte[] data = fitxerSignat.getSignedFile().getData();
 
-		return fitxerSignat.getSignedFile();
-	}
+        return fitxerSignat.getSignedFile();
+    }
 
-	public ApiFirmaAsyncSimple getApiFirmaAsyncSimple() {
+    protected ApiFirmaAsyncSimple getApiFirmaAsyncSimple() {
 
-		String host = Configuracio.getPortafibGatewayV2();
-		String username = Configuracio.getPortafibUsername();
-		String password = Configuracio.getPortafibPassword();
+        String host = Configuracio.getPortafibGatewayV2();
+        String username = Configuracio.getPortafibUsername();
+        String password = Configuracio.getPortafibPassword();
 
-		System.out.println(" Connectant amb " + host + " emprant l'usuari " + username);
+        System.out.println(" Connectant amb " + host + " emprant l'usuari " + username);
 
-		ApiFirmaAsyncSimpleJersey api;
+        ApiFirmaAsyncSimpleJersey api;
 
-		api = new ApiFirmaAsyncSimpleJersey(host, username, password);
+        api = new ApiFirmaAsyncSimpleJersey(host, username, password);
 
-		// api.setConnectionTimeoutMs(20000); // 20 segons
-		// api.setReadTimeoutMs(20000); // 20 segons
+        // api.setConnectionTimeoutMs(20000); // 20 segons
+        // api.setReadTimeoutMs(20000); // 20 segons
 
-		return api;
-	}
+        return api;
+    }
+    
+    @Override
+    public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException {
 
+        ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
-	
-	// TODO: Per esborrar peticio:
-	/*
-	 * 
-	 * // Esperam a que les notificacions s'enviin
-	 * System.out.println(" Esperam a que les notificacions s'enviin ."); for (int i
-	 * = 0; i < 20; i++) { System.out.print("."); Thread.sleep(500); }
-	 * System.out.println();
-	 * 
-	 * // Esborrar la petició api.deleteSignatureRequest(rinfo); }
-	 * 
-	 */
+        try {
+            List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
+
+            List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+
+            for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
+                __tmp.add(new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName()));
+            }
+
+            return __tmp;
+
+        } catch (AbstractApisIBException e) {
+            throw new I18NException("genapp.comodi", "Error llegint tipus documentals: " + e.getMessage());
+        }
+
+    }
+
+    // TODO: Per esborrar peticio:
+    /*
+     * 
+     * // Esperam a que les notificacions s'enviin
+     * System.out.println(" Esperam a que les notificacions s'enviin ."); for (int i
+     * = 0; i < 20; i++) { System.out.print("."); Thread.sleep(500); }
+     * System.out.println();
+     * 
+     * // Esborrar la petició api.deleteSignatureRequest(rinfo); }
+     * 
+     */
 }

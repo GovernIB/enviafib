@@ -95,6 +95,15 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
     </definition>
     
+    <definition name="serieDocumentalFormAdmin" extends="admin">
+        <put-attribute name="titol" value="serieDocumental.serieDocumental" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalForm.jsp" />
+    </definition>
+    
+    <definition name="serieDocumentalListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalList.jsp" />
+    </definition>
+    
     <!--  ===========  DESENVOLUPAMENT ================== -->
     
     <definition name="desenvolupament" extends="base.definition">

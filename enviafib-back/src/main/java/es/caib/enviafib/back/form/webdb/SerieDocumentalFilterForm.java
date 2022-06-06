@@ -3,6 +3,7 @@ package es.caib.enviafib.back.form.webdb;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -73,6 +74,7 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
     this.seriedocuidFins = __toClone.seriedocuidFins;
     this.nom = __toClone.nom;
     this.tipusdocu = __toClone.tipusdocu;
+    this.mapOfValuesForTipusdocu = __toClone.mapOfValuesForTipusdocu;
   }
   
   /* ========= UTILS ========== */
@@ -107,6 +109,18 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
    // -----------------------
    // Maps de referencies.
    // -----------------------
+  private Map<String, String> mapOfValuesForTipusdocu;
+
+  public Map<String, String> getMapOfValuesForTipusdocu() {
+    return this.mapOfValuesForTipusdocu;
+  }
+
+  public void setMapOfValuesForTipusdocu(Map<String, String> mapOfValuesForTipusdocu) {
+    this.mapOfValuesForTipusdocu = mapOfValuesForTipusdocu;
+  }
+
+
+
 
    // --------------------------------
    // Camps traduibles de referencies.
