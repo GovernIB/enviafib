@@ -16,6 +16,8 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,7 @@ import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
@@ -191,12 +194,10 @@ public class EnviarPeticioUserController extends PeticioController {
             peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage());
             HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticioID + " enviada correctament.");
         } catch (LoginException e) {
-            // TODO Auto-generated catch block
             String msg = "La sessio de l'usuari ha caducat.";
             HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
         } catch (I18NException e) {
-            // TODO Auto-generated catch block
             String msg = I18NUtils.getMessage(e);
             HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
@@ -205,5 +206,27 @@ public class EnviarPeticioUserController extends PeticioController {
 
         return "redirect:" + getContextWeb() + "/list";
     }
-    
+
+    @Override
+    public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request, ModelAndView mav, Where where)
+            throws I18NException {
+
+        return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID,
+                Where.AND(where, Where.OR(IdiomaFields.IDIOMAID.equal("es"), IdiomaFields.IDIOMAID.equal("ca"))));
+    }
+
+    @Override
+    public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request, ModelAndView mav,
+            Where where) throws I18NException {
+        // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
+        // de PortaFIB per obtenir els tipus de documents que gestiona:
+
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        List<StringKeyValue> tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
+        // TODO: Traduir "Qualsevol valor" ->
+        // tmpList.add(new StringKeyValue("","Qualsevol valor"));
+
+        return tmpList;
+    }
+
 }

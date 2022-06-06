@@ -314,7 +314,7 @@
         <tr id="peticio_tipusdocumental_rowid">
           <td id="peticio_tipusdocumental_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.TIPUSDOCUMENTAL])?'peticio.tipusdocumental':__theForm.labels[PeticioFields.TIPUSDOCUMENTAL]}" />
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.TIPUSDOCUMENTAL])?'peticio.tipusdocumental':__theForm.labels[PeticioFields.TIPUSDOCUMENTAL]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.TIPUSDOCUMENTAL]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.TIPUSDOCUMENTAL]}" ></i>
@@ -335,15 +335,6 @@
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
             </c:forEach>
-            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
-            <c:if test="${not containEmptyValue}">
-              <c:if test="${empty __theForm.peticio.tipusdocumental }">
-                  <form:option value="" selected="true" ></form:option>
-              </c:if>
-              <c:if test="${not empty __theForm.peticio.tipusdocumental }">
-                  <form:option value="" ></form:option>
-              </c:if>
-            </c:if>
           </form:select>
           </c:if>
            </td>
@@ -354,7 +345,7 @@
         <tr id="peticio_idiomadoc_rowid">
           <td id="peticio_idiomadoc_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.IDIOMADOC])?'peticio.idiomadoc':__theForm.labels[PeticioFields.IDIOMADOC]}" />
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.IDIOMADOC])?'peticio.idiomadoc':__theForm.labels[PeticioFields.IDIOMADOC]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.IDIOMADOC]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.IDIOMADOC]}" ></i>
@@ -375,15 +366,6 @@
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
             </c:forEach>
-            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
-            <c:if test="${not containEmptyValue}">
-              <c:if test="${empty __theForm.peticio.idiomadoc }">
-                  <form:option value="" selected="true" ></form:option>
-              </c:if>
-              <c:if test="${not empty __theForm.peticio.idiomadoc }">
-                  <form:option value="" ></form:option>
-              </c:if>
-            </c:if>
           </form:select>
           </c:if>
            </td>

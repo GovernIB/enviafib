@@ -58,7 +58,7 @@ private static final long serialVersionUID = -515854961L;
     this.idiomadoc=idiomadoc;
 }
   /** Constructor dels valors Not Null */
-  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat) {
+  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -67,6 +67,8 @@ private static final long serialVersionUID = -515854961L;
     this.idiomaID=idiomaID;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
+    this.tipusdocumental=tipusdocumental;
+    this.idiomadoc=idiomadoc;
 }
   public PeticioBean(Peticio __bean) {
     this.setTitolID(__bean.getTitolID());

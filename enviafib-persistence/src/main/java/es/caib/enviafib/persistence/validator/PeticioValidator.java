@@ -60,6 +60,14 @@ public class PeticioValidator<I extends Peticio>
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ESTAT)));
 
+    __vr.rejectIfEmptyOrWhitespace(__target__,TIPUSDOCUMENTAL, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCUMENTAL)));
+
+    __vr.rejectIfEmptyOrWhitespace(__target__,IDIOMADOC, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMADOC)));
+
     // Check size
     if (__vr.getFieldErrorCount(IDIOMAID) == 0) {
       java.lang.String __idiomaid = __target__.getIdiomaID();

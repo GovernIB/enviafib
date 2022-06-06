@@ -67,3 +67,18 @@ ALTER TABLE efi_peticio
    ADD COLUMN idiomadoc character varying(30);
 
 
+
+---
+--- 03/06/2022 - Gestió de Tipus de Document #34 (fer el camp tipusdocumental not null)
+---
+UPDATE efi_peticio set tipusdocumental = 99 where tipusdocumental is null;
+
+ALTER TABLE efi_peticio
+   ALTER COLUMN tipusdocumental SET NOT NULL;
+
+UPDATE efi_peticio set idiomadoc = 'ca' where idiomadoc is null;
+
+ALTER TABLE efi_peticio
+   ALTER COLUMN idiomadoc SET NOT NULL;
+
+UPDATE efi_idioma set suportat = false where idiomaid = 'en';

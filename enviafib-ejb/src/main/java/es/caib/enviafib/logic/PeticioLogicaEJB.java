@@ -328,7 +328,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         return api;
     }
-    
+
     @Override
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException {
 
@@ -338,7 +338,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
 
             List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-
             for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
                 __tmp.add(new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName()));
             }

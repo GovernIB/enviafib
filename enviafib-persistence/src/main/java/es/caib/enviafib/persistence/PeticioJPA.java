@@ -63,10 +63,10 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="peticioportafib",length = 19)
     java.lang.Long peticioPortafib;
 
-    @Column(name="tipusdocumental",length = 100)
+    @Column(name="tipusdocumental",nullable = false,length = 100)
     java.lang.String tipusdocumental;
 
-    @Column(name="idiomadoc",length = 30)
+    @Column(name="idiomadoc",nullable = false,length = 30)
     java.lang.String idiomadoc;
 
 
@@ -105,7 +105,7 @@ private static final long serialVersionUID = 1230292508L;
     this.idiomadoc=idiomadoc;
 }
   /** Constructor dels valors Not Null */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -114,6 +114,8 @@ private static final long serialVersionUID = 1230292508L;
     this.idiomaID=idiomaID;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
+    this.tipusdocumental=tipusdocumental;
+    this.idiomadoc=idiomadoc;
 }
   public PeticioJPA(Peticio __bean) {
     this.setTitolID(__bean.getTitolID());
