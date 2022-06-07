@@ -65,15 +65,15 @@ public class SerieDocumentalJPAManager
 
 
 
- public void delete(long _seriedocuid_) {
-   delete(findByPrimaryKey(_seriedocuid_));
+ public void delete(long _serieDocuID_) {
+   delete(findByPrimaryKey(_serieDocuID_));
  }
 
 
 
 
-    public SerieDocumental findByPrimaryKey(long _seriedocuid_) {
-        return __em.find(SerieDocumentalJPA.class, _seriedocuid_);  
+    public SerieDocumental findByPrimaryKey(long _serieDocuID_) {
+        return __em.find(SerieDocumentalJPA.class, _serieDocuID_);  
     }
     @Override
     protected SerieDocumental getJPAInstance(SerieDocumental __bean) {

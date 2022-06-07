@@ -24,7 +24,7 @@
 
       <c:forEach var="plugin" items="${pluginItems}">
 
-        <tr id="plugin_rowid_${plugin.pluginid}">
+        <tr id="plugin_rowid_${plugin.pluginID}">
           <%@include file="pluginListCoreMultipleSelect.jsp" %>
 
           <%@include file="pluginListCoreContent.jsp" %>

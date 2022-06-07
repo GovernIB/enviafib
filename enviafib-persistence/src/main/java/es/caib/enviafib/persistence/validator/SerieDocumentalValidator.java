@@ -77,7 +77,7 @@ public class SerieDocumentalValidator<I extends SerieDocumental>
       // Check Unique - no PK
       if (__vr.getFieldErrorCount(TIPUSDOCU) == 0 && __vr.getFieldErrorCount(SERIEDOCUID) == 0) {
         java.lang.String __tipusdocu = __target__.getTipusdocu();
-        java.lang.Long __seriedocuid = __target__.getSeriedocuid();
+        java.lang.Long __seriedocuid = __target__.getSerieDocuID();
         Long __count_ = null;
         try { __count_ = __serieDocumentalManager.count(org.fundaciobit.genapp.common.query.Where.AND(TIPUSDOCU.equal(__tipusdocu), SERIEDOCUID.notEqual(__seriedocuid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
         if (__count_ == null || __count_ != 0) {        

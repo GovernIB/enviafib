@@ -65,15 +65,15 @@ public class PluginJPAManager
 
 
 
- public void delete(long _pluginid_) {
-   delete(findByPrimaryKey(_pluginid_));
+ public void delete(long _pluginID_) {
+   delete(findByPrimaryKey(_pluginID_));
  }
 
 
 
 
-    public Plugin findByPrimaryKey(long _pluginid_) {
-        return __em.find(PluginJPA.class, _pluginid_);  
+    public Plugin findByPrimaryKey(long _pluginID_) {
+        return __em.find(PluginJPA.class, _pluginID_);  
     }
     @Override
     protected Plugin getJPAInstance(Plugin __bean) {

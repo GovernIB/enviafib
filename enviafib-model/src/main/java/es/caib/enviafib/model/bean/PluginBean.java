@@ -10,7 +10,7 @@ public class PluginBean implements Plugin {
 
 private static final long serialVersionUID = 1605894563L;
 
-	long pluginid;// PK
+	long pluginID;// PK
 	long nomid;
 	long descripciocurtaid;
 	java.lang.String classe;
@@ -24,8 +24,8 @@ private static final long serialVersionUID = 1605894563L;
   }
 
   /** Constructor amb tots els camps  */
-  public PluginBean(long pluginid , long nomid , long descripciocurtaid , java.lang.String classe , java.lang.String properties , boolean actiu , int tipus) {
-    this.pluginid=pluginid;
+  public PluginBean(long pluginID , long nomid , long descripciocurtaid , java.lang.String classe , java.lang.String properties , boolean actiu , int tipus) {
+    this.pluginID=pluginID;
     this.nomid=nomid;
     this.descripciocurtaid=descripciocurtaid;
     this.classe=classe;
@@ -43,15 +43,15 @@ private static final long serialVersionUID = 1605894563L;
     this.tipus=tipus;
 }
   /** Constructor dels valors Not Null */
-  public PluginBean(long pluginid , long nomid , long descripciocurtaid , boolean actiu , int tipus) {
-    this.pluginid=pluginid;
+  public PluginBean(long pluginID , long nomid , long descripciocurtaid , boolean actiu , int tipus) {
+    this.pluginID=pluginID;
     this.nomid=nomid;
     this.descripciocurtaid=descripciocurtaid;
     this.actiu=actiu;
     this.tipus=tipus;
 }
   public PluginBean(Plugin __bean) {
-    this.setPluginid(__bean.getPluginid());
+    this.setPluginID(__bean.getPluginID());
     this.setNomid(__bean.getNomid());
     this.setDescripciocurtaid(__bean.getDescripciocurtaid());
     this.setClasse(__bean.getClasse());
@@ -60,11 +60,11 @@ private static final long serialVersionUID = 1605894563L;
     this.setTipus(__bean.getTipus());
 	}
 
-	public long getPluginid() {
-		return(pluginid);
+	public long getPluginID() {
+		return(pluginID);
 	};
-	public void setPluginid(long _pluginid_) {
-		this.pluginid = _pluginid_;
+	public void setPluginID(long _pluginID_) {
+		this.pluginID = _pluginID_;
 	};
 
 	public long getNomid() {
@@ -116,7 +116,7 @@ private static final long serialVersionUID = 1605894563L;
   public static PluginBean toBean(Plugin __bean) {
     if (__bean == null) { return null;}
     PluginBean __tmp = new PluginBean();
-    __tmp.setPluginid(__bean.getPluginid());
+    __tmp.setPluginID(__bean.getPluginID());
     __tmp.setNomid(__bean.getNomid());
     __tmp.setDescripciocurtaid(__bean.getDescripciocurtaid());
     __tmp.setClasse(__bean.getClasse());

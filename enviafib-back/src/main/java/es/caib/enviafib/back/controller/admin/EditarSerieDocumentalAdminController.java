@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +24,6 @@ import es.caib.enviafib.back.form.webdb.SerieDocumentalForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.ejb.SerieDocumentalService;
 
-
-
 /**
  * 
  * @author fbosch
@@ -37,16 +36,17 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
 
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
-    
+
     @Override
     public String getTileForm() {
         return "serieDocumentalFormAdmin";
-      }
+    }
+
     @Override
-      public String getTileList() {
+    public String getTileList() {
         return "serieDocumentalListAdmin";
-      }      
-      
+    }
+
     @Override
     public String getSessionAttributeFilterForm() {
         return "SerieDocumentalAdmin_FilterForm";
@@ -58,9 +58,10 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
 
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:
-        
-        List<StringKeyValue> tmpList = peticioLogicaEjb.getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
-        tmpList.add(new StringKeyValue("","Qualsevol valor"));
+
+        List<StringKeyValue> tmpList = peticioLogicaEjb
+                .getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
+        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
         return tmpList;
 
     }

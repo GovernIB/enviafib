@@ -23,7 +23,7 @@ private static final long serialVersionUID = -2030187655L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SERIEDOCUMENTAL_SEQ")
     @Column(name="seriedocuid",nullable = false,length = 19)
-    long seriedocuid;
+    long serieDocuID;
 
     @Column(name="nom",nullable = false,length = 256)
     java.lang.String nom;
@@ -38,8 +38,8 @@ private static final long serialVersionUID = -2030187655L;
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalJPA(long seriedocuid , java.lang.String nom , java.lang.String tipusdocu) {
-    this.seriedocuid=seriedocuid;
+  public SerieDocumentalJPA(long serieDocuID , java.lang.String nom , java.lang.String tipusdocu) {
+    this.serieDocuID=serieDocuID;
     this.nom=nom;
     this.tipusdocu=tipusdocu;
 }
@@ -49,16 +49,16 @@ private static final long serialVersionUID = -2030187655L;
     this.tipusdocu=tipusdocu;
 }
   public SerieDocumentalJPA(SerieDocumental __bean) {
-    this.setSeriedocuid(__bean.getSeriedocuid());
+    this.setSerieDocuID(__bean.getSerieDocuID());
     this.setNom(__bean.getNom());
     this.setTipusdocu(__bean.getTipusdocu());
 	}
 
-	public long getSeriedocuid() {
-		return(seriedocuid);
+	public long getSerieDocuID() {
+		return(serieDocuID);
 	};
-	public void setSeriedocuid(long _seriedocuid_) {
-		this.seriedocuid = _seriedocuid_;
+	public void setSerieDocuID(long _serieDocuID_) {
+		this.serieDocuID = _serieDocuID_;
 	};
 
 	public java.lang.String getNom() {
@@ -83,7 +83,7 @@ private static final long serialVersionUID = -2030187655L;
     if (__obj != null && __obj instanceof SerieDocumental) {
       SerieDocumental __instance = (SerieDocumental)__obj;
       __result = true;
-      __result = __result && (this.getSeriedocuid() == __instance.getSeriedocuid()) ;
+      __result = __result && (this.getSerieDocuID() == __instance.getSerieDocuID()) ;
     } else {
       __result = false;
     }
@@ -95,7 +95,7 @@ private static final long serialVersionUID = -2030187655L;
   public static SerieDocumentalJPA toJPA(SerieDocumental __bean) {
     if (__bean == null) { return null;}
     SerieDocumentalJPA __tmp = new SerieDocumentalJPA();
-    __tmp.setSeriedocuid(__bean.getSeriedocuid());
+    __tmp.setSerieDocuID(__bean.getSerieDocuID());
     __tmp.setNom(__bean.getNom());
     __tmp.setTipusdocu(__bean.getTipusdocu());
 		return __tmp;

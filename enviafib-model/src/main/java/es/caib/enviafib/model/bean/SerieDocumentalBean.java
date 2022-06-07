@@ -10,7 +10,7 @@ public class SerieDocumentalBean implements SerieDocumental {
 
 private static final long serialVersionUID = 1488475090L;
 
-	long seriedocuid;// PK
+	long serieDocuID;// PK
 	java.lang.String nom;
 	java.lang.String tipusdocu;
 
@@ -20,8 +20,8 @@ private static final long serialVersionUID = 1488475090L;
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalBean(long seriedocuid , java.lang.String nom , java.lang.String tipusdocu) {
-    this.seriedocuid=seriedocuid;
+  public SerieDocumentalBean(long serieDocuID , java.lang.String nom , java.lang.String tipusdocu) {
+    this.serieDocuID=serieDocuID;
     this.nom=nom;
     this.tipusdocu=tipusdocu;
 }
@@ -31,16 +31,16 @@ private static final long serialVersionUID = 1488475090L;
     this.tipusdocu=tipusdocu;
 }
   public SerieDocumentalBean(SerieDocumental __bean) {
-    this.setSeriedocuid(__bean.getSeriedocuid());
+    this.setSerieDocuID(__bean.getSerieDocuID());
     this.setNom(__bean.getNom());
     this.setTipusdocu(__bean.getTipusdocu());
 	}
 
-	public long getSeriedocuid() {
-		return(seriedocuid);
+	public long getSerieDocuID() {
+		return(serieDocuID);
 	};
-	public void setSeriedocuid(long _seriedocuid_) {
-		this.seriedocuid = _seriedocuid_;
+	public void setSerieDocuID(long _serieDocuID_) {
+		this.serieDocuID = _serieDocuID_;
 	};
 
 	public java.lang.String getNom() {
@@ -64,7 +64,7 @@ private static final long serialVersionUID = 1488475090L;
   public static SerieDocumentalBean toBean(SerieDocumental __bean) {
     if (__bean == null) { return null;}
     SerieDocumentalBean __tmp = new SerieDocumentalBean();
-    __tmp.setSeriedocuid(__bean.getSeriedocuid());
+    __tmp.setSerieDocuID(__bean.getSerieDocuID());
     __tmp.setNom(__bean.getNom());
     __tmp.setTipusdocu(__bean.getTipusdocu());
 		return __tmp;

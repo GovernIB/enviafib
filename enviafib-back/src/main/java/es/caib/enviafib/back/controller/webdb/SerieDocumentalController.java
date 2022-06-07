@@ -287,7 +287,7 @@ public class SerieDocumentalController
         return getTileForm();
       } else {
         serieDocumental = create(request, serieDocumental);
-        createMessageSuccess(request, "success.creation", serieDocumental.getSeriedocuid());
+        createMessageSuccess(request, "success.creation", serieDocumental.getSerieDocuID());
         serieDocumentalForm.setSerieDocumental(serieDocumental);
         return getRedirectWhenCreated(request, serieDocumentalForm);
       }
@@ -302,16 +302,16 @@ public class SerieDocumentalController
     }
   }
 
-  @RequestMapping(value = "/view/{seriedocuid}", method = RequestMethod.GET)
-  public ModelAndView veureSerieDocumentalGet(@PathVariable("seriedocuid") java.lang.Long seriedocuid,
+  @RequestMapping(value = "/view/{serieDocuID}", method = RequestMethod.GET)
+  public ModelAndView veureSerieDocumentalGet(@PathVariable("serieDocuID") java.lang.Long serieDocuID,
       HttpServletRequest request,
       HttpServletResponse response) throws I18NException {
-      return editAndViewSerieDocumentalGet(seriedocuid,
+      return editAndViewSerieDocumentalGet(serieDocuID,
         request, response, true);
   }
 
 
-  protected ModelAndView editAndViewSerieDocumentalGet(@PathVariable("seriedocuid") java.lang.Long seriedocuid,
+  protected ModelAndView editAndViewSerieDocumentalGet(@PathVariable("serieDocuID") java.lang.Long serieDocuID,
       HttpServletRequest request,
       HttpServletResponse response, boolean __isView) throws I18NException {
     if((!__isView) && !isActiveFormEdit()) {
@@ -323,11 +323,11 @@ public class SerieDocumentalController
         return null;
       }
     }
-    SerieDocumentalJPA serieDocumental = findByPrimaryKey(request, seriedocuid);
+    SerieDocumentalJPA serieDocumental = findByPrimaryKey(request, serieDocuID);
 
     if (serieDocumental == null) {
-      createMessageWarning(request, "error.notfound", seriedocuid);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, seriedocuid), true));
+      createMessageWarning(request, "error.notfound", serieDocuID);
+      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, serieDocuID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());
@@ -348,11 +348,11 @@ public class SerieDocumentalController
   /**
    * Carregar el formulari per modificar un SerieDocumental existent
    */
-  @RequestMapping(value = "/{seriedocuid}/edit", method = RequestMethod.GET)
-  public ModelAndView editarSerieDocumentalGet(@PathVariable("seriedocuid") java.lang.Long seriedocuid,
+  @RequestMapping(value = "/{serieDocuID}/edit", method = RequestMethod.GET)
+  public ModelAndView editarSerieDocumentalGet(@PathVariable("serieDocuID") java.lang.Long serieDocuID,
       HttpServletRequest request,
       HttpServletResponse response) throws I18NException {
-      return editAndViewSerieDocumentalGet(seriedocuid,
+      return editAndViewSerieDocumentalGet(serieDocuID,
         request, response, false);
   }
 
@@ -361,7 +361,7 @@ public class SerieDocumentalController
   /**
    * Editar un SerieDocumental existent
    */
-  @RequestMapping(value = "/{seriedocuid}/edit", method = RequestMethod.POST)
+  @RequestMapping(value = "/{serieDocuID}/edit", method = RequestMethod.POST)
   public String editarSerieDocumentalPost(@ModelAttribute SerieDocumentalForm serieDocumentalForm,
       BindingResult result, SessionStatus status, HttpServletRequest request,
       HttpServletResponse response) throws I18NException {
@@ -382,7 +382,7 @@ public class SerieDocumentalController
         return getTileForm();
       } else {
         serieDocumental = update(request, serieDocumental);
-        createMessageSuccess(request, "success.modification", serieDocumental.getSeriedocuid());
+        createMessageSuccess(request, "success.modification", serieDocumental.getSerieDocuID());
         status.setComplete();
         return getRedirectWhenModified(request, serieDocumentalForm, null);
       }
@@ -392,7 +392,7 @@ public class SerieDocumentalController
         return getTileForm();
       }
       String msg = createMessageError(request, "error.modification",
-          serieDocumental.getSeriedocuid(), __e);
+          serieDocumental.getSerieDocuID(), __e);
       log.error(msg, __e);
       return getRedirectWhenModified(request, serieDocumentalForm, __e);
     }
@@ -403,8 +403,8 @@ public class SerieDocumentalController
   /**
    * Eliminar un SerieDocumental existent
    */
-  @RequestMapping(value = "/{seriedocuid}/delete")
-  public String eliminarSerieDocumental(@PathVariable("seriedocuid") java.lang.Long seriedocuid,
+  @RequestMapping(value = "/{serieDocuID}/delete")
+  public String eliminarSerieDocumental(@PathVariable("serieDocuID") java.lang.Long serieDocuID,
       HttpServletRequest request,HttpServletResponse response) {
 
     if(!isActiveDelete()) {
@@ -412,20 +412,20 @@ public class SerieDocumentalController
       return null;
     }
     try {
-      SerieDocumental serieDocumental = serieDocumentalEjb.findByPrimaryKey(seriedocuid);
+      SerieDocumental serieDocumental = serieDocumentalEjb.findByPrimaryKey(serieDocuID);
       if (serieDocumental == null) {
-        String __msg =createMessageError(request, "error.notfound", seriedocuid);
-        return getRedirectWhenDelete(request, seriedocuid, new Exception(__msg));
+        String __msg =createMessageError(request, "error.notfound", serieDocuID);
+        return getRedirectWhenDelete(request, serieDocuID, new Exception(__msg));
       } else {
         delete(request, serieDocumental);
-        createMessageSuccess(request, "success.deleted", seriedocuid);
-        return getRedirectWhenDelete(request, seriedocuid,null);
+        createMessageSuccess(request, "success.deleted", serieDocuID);
+        return getRedirectWhenDelete(request, serieDocuID,null);
       }
 
     } catch (Throwable e) {
-      String msg = createMessageError(request, "error.deleting", seriedocuid, e);
+      String msg = createMessageError(request, "error.deleting", serieDocuID, e);
       log.error(msg, e);
-      return getRedirectWhenDelete(request, seriedocuid, e);
+      return getRedirectWhenDelete(request, serieDocuID, e);
     }
   }
 
@@ -461,8 +461,8 @@ public java.lang.Long stringToPK(String value) {
 }
 
   @Override
-  public String[] getArgumentsMissatge(Object __seriedocuid, Throwable e) {
-    java.lang.Long seriedocuid = (java.lang.Long)__seriedocuid;
+  public String[] getArgumentsMissatge(Object __serieDocuID, Throwable e) {
+    java.lang.Long serieDocuID = (java.lang.Long)__serieDocuID;
     String exceptionMsg = "";
     if (e != null) {
       if (e instanceof I18NException) {
@@ -472,13 +472,13 @@ public java.lang.Long stringToPK(String value) {
         exceptionMsg = e.getMessage();
       };
     };
-    if (seriedocuid == null) {
+    if (serieDocuID == null) {
       return new String[] { I18NUtils.tradueix(getEntityNameCode()),
          getPrimaryKeyColumnsTranslated(), null, exceptionMsg };
     } else {
       return new String[] { I18NUtils.tradueix(getEntityNameCode()),
         getPrimaryKeyColumnsTranslated(),
-         String.valueOf(seriedocuid),
+         String.valueOf(serieDocuID),
  exceptionMsg };
     }
   }
@@ -492,7 +492,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getPrimaryKeyColumnsTranslated() {
-    return  I18NUtils.tradueix("serieDocumental.seriedocuid");
+    return  I18NUtils.tradueix("serieDocumental.serieDocuID");
   }
 
   @InitBinder("serieDocumentalFilterForm")
@@ -507,7 +507,7 @@ public java.lang.Long stringToPK(String value) {
     binder.setValidator(getWebValidator());
 
 
-    initDisallowedFields(binder, "serieDocumental.seriedocuid");
+    initDisallowedFields(binder, "serieDocumental.serieDocuID");
   }
 
   public SerieDocumentalWebValidator getWebValidator() {
@@ -525,10 +525,10 @@ public java.lang.Long stringToPK(String value) {
   /**
    * Entra aqui al pitjar el boto cancel en el llistat de SerieDocumental
    */
-  @RequestMapping(value = "/{seriedocuid}/cancel")
-  public String cancelSerieDocumental(@PathVariable("seriedocuid") java.lang.Long seriedocuid,
+  @RequestMapping(value = "/{serieDocuID}/cancel")
+  public String cancelSerieDocumental(@PathVariable("serieDocuID") java.lang.Long serieDocuID,
       HttpServletRequest request,HttpServletResponse response) {
-     return getRedirectWhenCancel(request, seriedocuid);
+     return getRedirectWhenCancel(request, serieDocuID);
   }
 
   @Override
@@ -619,11 +619,11 @@ public java.lang.Long stringToPK(String value) {
     }
   }
 
-  public String getRedirectWhenDelete(HttpServletRequest request, java.lang.Long seriedocuid, Throwable __e) {
+  public String getRedirectWhenDelete(HttpServletRequest request, java.lang.Long serieDocuID, Throwable __e) {
     return "redirect:" + getContextWeb() + "/list";
   }
 
-  public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long seriedocuid) {
+  public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long serieDocuID) {
     return "redirect:" + getContextWeb() + "/list";
   }
 
@@ -653,8 +653,8 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  public SerieDocumentalJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long seriedocuid) throws I18NException {
-    return (SerieDocumentalJPA) serieDocumentalEjb.findByPrimaryKey(seriedocuid);
+  public SerieDocumentalJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long serieDocuID) throws I18NException {
+    return (SerieDocumentalJPA) serieDocumentalEjb.findByPrimaryKey(serieDocuID);
   }
 
 

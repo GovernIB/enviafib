@@ -53,16 +53,16 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.PLUGINID)}">
             <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="plugin.pluginid" />:</span>
+              <span class="add-on"><fmt:message key="plugin.pluginID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
-              <form:input cssClass="input-append input-small" path="pluginidDesde" />
+              <form:input cssClass="input-append input-small" path="pluginIDDesde" />
 
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
 
-              <form:input cssClass="input-append input-small search-query" path="pluginidFins" />
+              <form:input cssClass="input-append input-small search-query" path="pluginIDFins" />
 
             </div>
 

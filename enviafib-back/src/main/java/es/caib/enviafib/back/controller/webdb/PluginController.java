@@ -290,7 +290,7 @@ public class PluginController
         return getTileForm();
       } else {
         plugin = create(request, plugin);
-        createMessageSuccess(request, "success.creation", plugin.getPluginid());
+        createMessageSuccess(request, "success.creation", plugin.getPluginID());
         pluginForm.setPlugin(plugin);
         return getRedirectWhenCreated(request, pluginForm);
       }
@@ -305,16 +305,16 @@ public class PluginController
     }
   }
 
-  @RequestMapping(value = "/view/{pluginid}", method = RequestMethod.GET)
-  public ModelAndView veurePluginGet(@PathVariable("pluginid") java.lang.Long pluginid,
+  @RequestMapping(value = "/view/{pluginID}", method = RequestMethod.GET)
+  public ModelAndView veurePluginGet(@PathVariable("pluginID") java.lang.Long pluginID,
       HttpServletRequest request,
       HttpServletResponse response) throws I18NException {
-      return editAndViewPluginGet(pluginid,
+      return editAndViewPluginGet(pluginID,
         request, response, true);
   }
 
 
-  protected ModelAndView editAndViewPluginGet(@PathVariable("pluginid") java.lang.Long pluginid,
+  protected ModelAndView editAndViewPluginGet(@PathVariable("pluginID") java.lang.Long pluginID,
       HttpServletRequest request,
       HttpServletResponse response, boolean __isView) throws I18NException {
     if((!__isView) && !isActiveFormEdit()) {
@@ -326,11 +326,11 @@ public class PluginController
         return null;
       }
     }
-    PluginJPA plugin = findByPrimaryKey(request, pluginid);
+    PluginJPA plugin = findByPrimaryKey(request, pluginID);
 
     if (plugin == null) {
-      createMessageWarning(request, "error.notfound", pluginid);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, pluginid), true));
+      createMessageWarning(request, "error.notfound", pluginID);
+      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, pluginID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());
@@ -351,11 +351,11 @@ public class PluginController
   /**
    * Carregar el formulari per modificar un Plugin existent
    */
-  @RequestMapping(value = "/{pluginid}/edit", method = RequestMethod.GET)
-  public ModelAndView editarPluginGet(@PathVariable("pluginid") java.lang.Long pluginid,
+  @RequestMapping(value = "/{pluginID}/edit", method = RequestMethod.GET)
+  public ModelAndView editarPluginGet(@PathVariable("pluginID") java.lang.Long pluginID,
       HttpServletRequest request,
       HttpServletResponse response) throws I18NException {
-      return editAndViewPluginGet(pluginid,
+      return editAndViewPluginGet(pluginID,
         request, response, false);
   }
 
@@ -364,7 +364,7 @@ public class PluginController
   /**
    * Editar un Plugin existent
    */
-  @RequestMapping(value = "/{pluginid}/edit", method = RequestMethod.POST)
+  @RequestMapping(value = "/{pluginID}/edit", method = RequestMethod.POST)
   public String editarPluginPost(@ModelAttribute PluginForm pluginForm,
       BindingResult result, SessionStatus status, HttpServletRequest request,
       HttpServletResponse response) throws I18NException {
@@ -385,7 +385,7 @@ public class PluginController
         return getTileForm();
       } else {
         plugin = update(request, plugin);
-        createMessageSuccess(request, "success.modification", plugin.getPluginid());
+        createMessageSuccess(request, "success.modification", plugin.getPluginID());
         status.setComplete();
         return getRedirectWhenModified(request, pluginForm, null);
       }
@@ -395,7 +395,7 @@ public class PluginController
         return getTileForm();
       }
       String msg = createMessageError(request, "error.modification",
-          plugin.getPluginid(), __e);
+          plugin.getPluginID(), __e);
       log.error(msg, __e);
       return getRedirectWhenModified(request, pluginForm, __e);
     }
@@ -406,8 +406,8 @@ public class PluginController
   /**
    * Eliminar un Plugin existent
    */
-  @RequestMapping(value = "/{pluginid}/delete")
-  public String eliminarPlugin(@PathVariable("pluginid") java.lang.Long pluginid,
+  @RequestMapping(value = "/{pluginID}/delete")
+  public String eliminarPlugin(@PathVariable("pluginID") java.lang.Long pluginID,
       HttpServletRequest request,HttpServletResponse response) {
 
     if(!isActiveDelete()) {
@@ -415,20 +415,20 @@ public class PluginController
       return null;
     }
     try {
-      Plugin plugin = pluginEjb.findByPrimaryKey(pluginid);
+      Plugin plugin = pluginEjb.findByPrimaryKey(pluginID);
       if (plugin == null) {
-        String __msg =createMessageError(request, "error.notfound", pluginid);
-        return getRedirectWhenDelete(request, pluginid, new Exception(__msg));
+        String __msg =createMessageError(request, "error.notfound", pluginID);
+        return getRedirectWhenDelete(request, pluginID, new Exception(__msg));
       } else {
         delete(request, plugin);
-        createMessageSuccess(request, "success.deleted", pluginid);
-        return getRedirectWhenDelete(request, pluginid,null);
+        createMessageSuccess(request, "success.deleted", pluginID);
+        return getRedirectWhenDelete(request, pluginID,null);
       }
 
     } catch (Throwable e) {
-      String msg = createMessageError(request, "error.deleting", pluginid, e);
+      String msg = createMessageError(request, "error.deleting", pluginID, e);
       log.error(msg, e);
-      return getRedirectWhenDelete(request, pluginid, e);
+      return getRedirectWhenDelete(request, pluginID, e);
     }
   }
 
@@ -464,8 +464,8 @@ public java.lang.Long stringToPK(String value) {
 }
 
   @Override
-  public String[] getArgumentsMissatge(Object __pluginid, Throwable e) {
-    java.lang.Long pluginid = (java.lang.Long)__pluginid;
+  public String[] getArgumentsMissatge(Object __pluginID, Throwable e) {
+    java.lang.Long pluginID = (java.lang.Long)__pluginID;
     String exceptionMsg = "";
     if (e != null) {
       if (e instanceof I18NException) {
@@ -475,13 +475,13 @@ public java.lang.Long stringToPK(String value) {
         exceptionMsg = e.getMessage();
       };
     };
-    if (pluginid == null) {
+    if (pluginID == null) {
       return new String[] { I18NUtils.tradueix(getEntityNameCode()),
          getPrimaryKeyColumnsTranslated(), null, exceptionMsg };
     } else {
       return new String[] { I18NUtils.tradueix(getEntityNameCode()),
         getPrimaryKeyColumnsTranslated(),
-         String.valueOf(pluginid),
+         String.valueOf(pluginID),
  exceptionMsg };
     }
   }
@@ -495,7 +495,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getPrimaryKeyColumnsTranslated() {
-    return  I18NUtils.tradueix("plugin.pluginid");
+    return  I18NUtils.tradueix("plugin.pluginID");
   }
 
   @InitBinder("pluginFilterForm")
@@ -510,7 +510,7 @@ public java.lang.Long stringToPK(String value) {
     binder.setValidator(getWebValidator());
 
 
-    initDisallowedFields(binder, "plugin.pluginid");
+    initDisallowedFields(binder, "plugin.pluginID");
   }
 
   public PluginWebValidator getWebValidator() {
@@ -528,10 +528,10 @@ public java.lang.Long stringToPK(String value) {
   /**
    * Entra aqui al pitjar el boto cancel en el llistat de Plugin
    */
-  @RequestMapping(value = "/{pluginid}/cancel")
-  public String cancelPlugin(@PathVariable("pluginid") java.lang.Long pluginid,
+  @RequestMapping(value = "/{pluginID}/cancel")
+  public String cancelPlugin(@PathVariable("pluginID") java.lang.Long pluginID,
       HttpServletRequest request,HttpServletResponse response) {
-     return getRedirectWhenCancel(request, pluginid);
+     return getRedirectWhenCancel(request, pluginID);
   }
 
   @Override
@@ -622,11 +622,11 @@ public java.lang.Long stringToPK(String value) {
     }
   }
 
-  public String getRedirectWhenDelete(HttpServletRequest request, java.lang.Long pluginid, Throwable __e) {
+  public String getRedirectWhenDelete(HttpServletRequest request, java.lang.Long pluginID, Throwable __e) {
     return "redirect:" + getContextWeb() + "/list";
   }
 
-  public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long pluginid) {
+  public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long pluginID) {
     return "redirect:" + getContextWeb() + "/list";
   }
 
@@ -656,8 +656,8 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  public PluginJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long pluginid) throws I18NException {
-    return (PluginJPA) pluginEjb.findByPrimaryKey(pluginid);
+  public PluginJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long pluginID) throws I18NException {
+    return (PluginJPA) pluginEjb.findByPrimaryKey(pluginID);
   }
 
 

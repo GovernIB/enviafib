@@ -21,25 +21,25 @@ import es.caib.enviafib.model.fields.PluginFields;
 @Component
 public class PluginFilterForm extends EnviaFIBBaseFilterForm implements PluginFields {
 
-  private java.lang.Long pluginidDesde;
+  private java.lang.Long pluginIDDesde;
 
-  public java.lang.Long getPluginidDesde() {
-    return this.pluginidDesde;
+  public java.lang.Long getPluginIDDesde() {
+    return this.pluginIDDesde;
   }
 
-  public void setPluginidDesde(java.lang.Long pluginidDesde) {
-    this.pluginidDesde = pluginidDesde;
+  public void setPluginIDDesde(java.lang.Long pluginIDDesde) {
+    this.pluginIDDesde = pluginIDDesde;
   }
 
 
-  private java.lang.Long pluginidFins;
+  private java.lang.Long pluginIDFins;
 
-  public java.lang.Long getPluginidFins() {
-    return this.pluginidFins;
+  public java.lang.Long getPluginIDFins() {
+    return this.pluginIDFins;
   }
 
-  public void setPluginidFins(java.lang.Long pluginidFins) {
-    this.pluginidFins = pluginidFins;
+  public void setPluginIDFins(java.lang.Long pluginIDFins) {
+    this.pluginIDFins = pluginIDFins;
   }
 
 
@@ -136,8 +136,8 @@ public class PluginFilterForm extends EnviaFIBBaseFilterForm implements PluginFi
   
   public PluginFilterForm(PluginFilterForm __toClone) {
     super(__toClone);
-    this.pluginidDesde = __toClone.pluginidDesde;
-    this.pluginidFins = __toClone.pluginidFins;
+    this.pluginIDDesde = __toClone.pluginIDDesde;
+    this.pluginIDFins = __toClone.pluginIDFins;
     this.nomidDesde = __toClone.nomidDesde;
     this.nomidFins = __toClone.nomidFins;
     this.descripciocurtaidDesde = __toClone.descripciocurtaidDesde;

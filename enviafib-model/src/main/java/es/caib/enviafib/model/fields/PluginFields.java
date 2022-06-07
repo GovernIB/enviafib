@@ -12,7 +12,7 @@ public interface PluginFields extends java.io.Serializable {
   public static final String _TABLE_TRANSLATION = _TABLE_MODEL + "." + _TABLE_MODEL;
 
 
-	 public static final LongField PLUGINID = new LongField(_TABLE_MODEL, "pluginid", "pluginid");  // PK
+	 public static final LongField PLUGINID = new LongField(_TABLE_MODEL, "pluginID", "pluginid");  // PK
 	 public static final LongField NOMID = new LongField(_TABLE_MODEL, "nomid", "nomid");
 	 public static final LongField DESCRIPCIOCURTAID = new LongField(_TABLE_MODEL, "descripciocurtaid", "descripciocurtaid");
 	 public static final StringField CLASSE = new StringField(_TABLE_MODEL, "classe", "classe");

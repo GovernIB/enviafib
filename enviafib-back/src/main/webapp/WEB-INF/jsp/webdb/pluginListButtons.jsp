@@ -3,17 +3,17 @@
   
           <c:if test="${__theFilterForm.editButtonVisible || __theFilterForm.deleteButtonVisible || not empty __theFilterForm.additionalButtonsForEachItem || not empty __theFilterForm.additionalButtonsByPK}">
           <td>
-          <c:set var="pk" value="${plugin.pluginid}"/>
+          <c:set var="pk" value="${plugin.pluginID}"/>
           <c:choose>
            <c:when test="${__theFilterForm.actionsRenderer == 1}">
             <div class="btn-group" role="group" >
             <c:if test="${__theFilterForm.editButtonVisible}">
-            <a class="btn btn-warning" href="<c:url value="${contexte}/${plugin.pluginid}/edit"/>" role="button"  title="<fmt:message key="genapp.edit"/>">
+            <a class="btn btn-warning" href="<c:url value="${contexte}/${plugin.pluginID}/edit"/>" role="button"  title="<fmt:message key="genapp.edit"/>">
                <i class="fas fa-edit"></i>
             </a>
             </c:if>
             <c:if test="${__theFilterForm.deleteButtonVisible}">
-            <a class="btn btn-danger" href="#myModal" role="button"  onclick="openModal('<c:url value="${contexte}/${plugin.pluginid}/delete"/>','show');" title="<fmt:message key="genapp.delete"/>">
+            <a class="btn btn-danger" href="#myModal" role="button"  onclick="openModal('<c:url value="${contexte}/${plugin.pluginID}/delete"/>','show');" title="<fmt:message key="genapp.delete"/>">
                <i class="fas fa-trash icon-white"></i>
             </a>
             </c:if>
@@ -65,7 +65,7 @@
   <ul class="dropdown-menu float-right" style="min-width:35px;padding:5px 5px 0px 5px;margin:0px;font-size: 12px" >
             <c:if test="${__theFilterForm.editButtonVisible}">
             <li>
-            <a class="btn btn-warning btn-sm a_item" style="margin-bottom:5px;color: white;" href="<c:url value="${contexte}/${plugin.pluginid}/edit"/>" onclick="null">
+            <a class="btn btn-warning btn-sm a_item" style="margin-bottom:5px;color: white;" href="<c:url value="${contexte}/${plugin.pluginID}/edit"/>" onclick="null">
             <i class="fas fa-edit"></i>
              <fmt:message key="genapp.edit"/>
             </a>
@@ -73,7 +73,7 @@
             </c:if>
             <c:if test="${__theFilterForm.deleteButtonVisible}">
             <li>
-            <a class="btn btn-danger btn-sm a_item" style="margin-bottom:5px;color: white;" href="#myModal" onclick="openModal('<c:url value="${contexte}/${plugin.pluginid}/delete"/>','show');">
+            <a class="btn btn-danger btn-sm a_item" style="margin-bottom:5px;color: white;" href="#myModal" onclick="openModal('<c:url value="${contexte}/${plugin.pluginID}/delete"/>','show');">
             <i class="fas fa-trash icon-white"></i>
              <fmt:message key="genapp.delete"/>
             </a>

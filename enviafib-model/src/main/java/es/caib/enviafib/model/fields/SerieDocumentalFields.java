@@ -12,7 +12,7 @@ public interface SerieDocumentalFields extends java.io.Serializable {
   public static final String _TABLE_TRANSLATION = _TABLE_MODEL + "." + _TABLE_MODEL;
 
 
-	 public static final LongField SERIEDOCUID = new LongField(_TABLE_MODEL, "seriedocuid", "seriedocuid");  // PK
+	 public static final LongField SERIEDOCUID = new LongField(_TABLE_MODEL, "serieDocuID", "seriedocuid");  // PK
 	 public static final StringField NOM = new StringField(_TABLE_MODEL, "nom", "nom");
 	 public static final StringField TIPUSDOCU = new StringField(_TABLE_MODEL, "tipusdocu", "tipusdocu");
 

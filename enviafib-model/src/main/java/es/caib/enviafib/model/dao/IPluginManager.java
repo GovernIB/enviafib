@@ -9,8 +9,8 @@ public interface IPluginManager extends org.fundaciobit.genapp.common.query.ITab
 
 	public Plugin create( long _nomid_, long _descripciocurtaid_, java.lang.String _classe_, java.lang.String _properties_, boolean _actiu_, int _tipus_) throws I18NException;
 
-	public Plugin findByPrimaryKey(long _pluginid_);
+	public Plugin findByPrimaryKey(long _pluginID_);
 
-	public void delete(long _pluginid_);
+	public void delete(long _pluginID_);
 
 }

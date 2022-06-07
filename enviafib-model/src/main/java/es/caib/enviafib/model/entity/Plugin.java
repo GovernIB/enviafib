@@ -2,8 +2,8 @@ package es.caib.enviafib.model.entity;
 
 public interface Plugin extends org.fundaciobit.genapp.common.IGenAppEntity {
 
-	public long getPluginid();
-	public void setPluginid(long _pluginid_);
+	public long getPluginID();
+	public void setPluginID(long _pluginID_);
 
 	public long getNomid();
 	public void setNomid(long _nomid_);

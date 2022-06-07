@@ -22,6 +22,13 @@
         <span style="${(fn:contains(url, 'admin/usuari/list'))? "font-weight: bold;" : ""}">Llistat d'usuaris</span>
       </a>
     </li>
+    
+    <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/admin/serieDocumental/list"/>">
+        <span style="${(fn:contains(url, '/admin/serieDocumental/list'))? "font-weight: bold;" : ""}">Series documentals</span>
+      </a>
+    </li>
    
   </ul>
 </div>
