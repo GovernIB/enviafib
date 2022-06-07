@@ -6,13 +6,13 @@
 
 	<groupId>es.caib.enviafib</groupId>
 	<artifactId>enviafib-ear</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.0</version>
 	<packaging>ear</packaging>
 
 	<parent>
 		<groupId>es.caib.enviafib</groupId>
 		<artifactId>enviafib</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<name>EnviaFIB - Ear</name>
