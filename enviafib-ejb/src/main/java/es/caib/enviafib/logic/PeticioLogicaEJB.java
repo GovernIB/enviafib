@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
@@ -62,6 +63,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
 
+    private static HashMap<Long, String> tipusDocumentals = null;
+    private static long lastRefresh = 0;
+
     public PeticioLogicaEJB() {
 
     }
@@ -75,13 +79,16 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String perfil = "ENVIAFIB_PADES";
         FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
 
+        String idiomaDoc = peticio.getIdiomadoc();
+        String tipusDoc = peticio.getTipusdocumental();
+
         FirmaAsyncSimpleFile fitxerAAnexar = null;
         ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
         Long idPortafib;
         try {
             idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar,
-                    fitxerAAnexar, api);
+                    fitxerAAnexar, tipusDoc, idiomaDoc, api);
         } catch (Exception e) {
             throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
         }
@@ -149,8 +156,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,
-            FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar, ApiFirmaAsyncSimple api)
-            throws Exception {
+            FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar, String tipusDocumental,
+            String idiomaDocumental, ApiFirmaAsyncSimple api) throws Exception {
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = null;
 
@@ -227,9 +234,39 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String description = "Prova de firma - Desc";
         String reason = "Prova de firma - reason";
         FirmaAsyncSimpleFile originalDetachedSignature = null;
-        long documentType = 8; // TD08 Publicación.
-        String documentTypeDescription = "Publicació";
-        String languageDoc = "ca";
+
+        Long tipusDocumentalID = null;
+
+        try {
+            tipusDocumentalID = Long.valueOf(tipusDocumental);
+        } catch (Throwable t) {
+            throw new I18NException("genapp.comodi",
+                    "No s'ha pogut pasar a Long el tipus documental]" + tipusDocumental + "[ ");
+        }
+
+        String desc = null;
+        long hora = 60 * 60 * 1000;
+        
+        try {
+            if (tipusDocumentals == null || (lastRefresh + hora) < System.currentTimeMillis()) {
+                tipusDocumentals = new HashMap<Long, String>();
+                List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(languageUI);
+
+                for (FirmaAsyncSimpleDocumentTypeInformation f : tipus) {
+                    tipusDocumentals.put(f.getDocumentType(), f.getName());
+                }
+
+                lastRefresh = System.currentTimeMillis();
+            }
+
+            desc = tipusDocumentals.get(tipusDocumentalID);
+
+        } catch (Throwable t) {
+            log.error("Error amb API per obtenir tipus documental ]" + tipusDocumental + "[: " + t.getMessage(), t);
+        }
+
+        String languageDoc = idiomaDocumental;
+
         int priority = FirmaAsyncSimpleSignatureRequestWithSignBlockList.PRIORITY_NORMAL_NORMAL;
         String senderName = "Tester Firma Async";
         String senderDescription = "Tester Firma Async - Description";
@@ -245,10 +282,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignatureRequestBase signatureRequestBase;
         signatureRequestBase = new FirmaAsyncSimpleSignatureRequestBase(profileCode, title, description, reason,
-                fitxerAFirmar, originalDetachedSignature, documentType, documentTypeDescription, languageDoc,
-                languageUI, priority, senderName, senderDescription, expedientCode, expedientName, expedientUrl,
-                procedureCode, procedureName, additionalInformation, additionalInformationEvaluable, annexs,
-                metadadaList);
+                fitxerAFirmar, originalDetachedSignature, tipusDocumentalID, desc, languageDoc, languageUI, priority,
+                senderName, senderDescription, expedientCode, expedientName, expedientUrl, procedureCode, procedureName,
+                additionalInformation, additionalInformationEvaluable, annexs, metadadaList);
 
         // Crear Peticio
         Long peticioDeFirmaID2;
@@ -341,7 +377,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
                 __tmp.add(new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName()));
             }
-
             return __tmp;
 
         } catch (AbstractApisIBException e) {
