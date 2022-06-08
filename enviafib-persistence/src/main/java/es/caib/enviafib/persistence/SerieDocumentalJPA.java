@@ -5,13 +5,15 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
+import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Id;
 
 
 @Entity(name = "SerieDocumentalJPA")
-@Table(name = "efi_seriedocumental" )
+@Table(name = "efi_seriedocumental" , indexes = { 
+        @Index(name="efi_seriedocumental_pk_i", columnList = "seriedocumentalid")})
 @SequenceGenerator(name="SERIEDOCUMENTAL_SEQ", sequenceName="efi_seriedocumental_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class SerieDocumentalJPA implements SerieDocumental {

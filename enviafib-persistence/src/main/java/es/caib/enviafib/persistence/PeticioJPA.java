@@ -21,7 +21,8 @@ import javax.persistence.Id;
         @Index(name="efi_peticio_pk_i", columnList = "peticioid"),
         @Index(name="efi_peticio_fitxerid_fk_i", columnList = "fitxerid"),
         @Index(name="efi_peticio_solicitantid_fk_i", columnList = "solicitantid"),
-        @Index(name="efi_peticio_idiomaid_fk_i", columnList = "idiomaid")})
+        @Index(name="efi_peticio_idiomaid_fk_i", columnList = "idiomaid"),
+        @Index(name="efi_peticio_fitxer_firma_fk_i", columnList = "fitxer_firmatid")})
 @SequenceGenerator(name="PETICIO_SEQ", sequenceName="efi_peticio_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class PeticioJPA implements Peticio {
