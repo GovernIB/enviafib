@@ -34,11 +34,11 @@
           ${serieDocumental.nom}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.TIPUSDOCU)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.TIPUSDOCUMENTAL)}">
           <td>
-          <c:set var="tmp">${serieDocumental.tipusdocu}</c:set>
+          <c:set var="tmp">${serieDocumental.tipusDocumental}</c:set>
           <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForTipusdocu[tmp]}
+          ${__theFilterForm.mapOfValuesForTipusDocumental[tmp]}
           </c:if>
           </td>
         </c:if>

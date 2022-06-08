@@ -20,26 +20,26 @@
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.TIPUSDOCU)}">
-        <tr id="serieDocumental_tipusdocu_rowid">
-          <td id="serieDocumental_tipusdocu_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.TIPUSDOCUMENTAL)}">
+        <tr id="serieDocumental_tipusDocumental_rowid">
+          <td id="serieDocumental_tipusDocumental_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.TIPUSDOCU])?'serieDocumental.tipusdocu':__theForm.labels[SerieDocumentalFields.TIPUSDOCU]}" />
+              <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.TIPUSDOCUMENTAL])?'serieDocumental.tipusDocumental':__theForm.labels[SerieDocumentalFields.TIPUSDOCUMENTAL]}" />
              </label>
-              <c:if test="${not empty __theForm.help[SerieDocumentalFields.TIPUSDOCU]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[SerieDocumentalFields.TIPUSDOCU]}" ></i>
+              <c:if test="${not empty __theForm.help[SerieDocumentalFields.TIPUSDOCUMENTAL]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[SerieDocumentalFields.TIPUSDOCUMENTAL]}" ></i>
               </c:if>
             </td>
-          <td id="serieDocumental_tipusdocu_columnvalueid">
-          <form:errors path="serieDocumental.tipusdocu" cssClass="errorField alert alert-danger" />
-          <c:if test="${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.TIPUSDOCU)}" >
-          <form:hidden path="serieDocumental.tipusdocu"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.serieDocumental.tipusdocu,__theForm.listOfValuesForTipusdocu)}"  />
+          <td id="serieDocumental_tipusDocumental_columnvalueid">
+          <form:errors path="serieDocumental.tipusDocumental" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.TIPUSDOCUMENTAL)}" >
+          <form:hidden path="serieDocumental.tipusDocumental"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.serieDocumental.tipusDocumental,__theForm.listOfValuesForTipusDocumental)}"  />
           </c:if>
-          <c:if test="${!gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.TIPUSDOCU)}" >
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.TIPUSDOCUMENTAL)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="serieDocumental_tipusdocu"  onchange="if(typeof onChangeTipusdocu == 'function') {  onChangeTipusdocu(this); };"  cssClass="form-control col-md-9-optional" path="serieDocumental.tipusdocu">
-            <c:forEach items="${__theForm.listOfValuesForTipusdocu}" var="tmp">
+          <form:select id="serieDocumental_tipusDocumental"  onchange="if(typeof onChangeTipusDocumental == 'function') {  onChangeTipusDocumental(this); };"  cssClass="form-control col-md-9-optional" path="serieDocumental.tipusDocumental">
+            <c:forEach items="${__theForm.listOfValuesForTipusDocumental}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
@@ -47,10 +47,10 @@
             </c:forEach>
             <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
             <c:if test="${not containEmptyValue}">
-              <c:if test="${empty __theForm.serieDocumental.tipusdocu }">
+              <c:if test="${empty __theForm.serieDocumental.tipusDocumental }">
                   <form:option value="" selected="true" ></form:option>
               </c:if>
-              <c:if test="${not empty __theForm.serieDocumental.tipusdocu }">
+              <c:if test="${not empty __theForm.serieDocumental.tipusDocumental }">
                   <form:option value="" ></form:option>
               </c:if>
             </c:if>

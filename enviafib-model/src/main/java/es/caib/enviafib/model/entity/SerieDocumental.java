@@ -8,8 +8,8 @@ public interface SerieDocumental extends org.fundaciobit.genapp.common.IGenAppEn
 	public java.lang.String getNom();
 	public void setNom(java.lang.String _nom_);
 
-	public java.lang.String getTipusdocu();
-	public void setTipusdocu(java.lang.String _tipusdocu_);
+	public java.lang.String getTipusDocumental();
+	public void setTipusDocumental(java.lang.String _tipusDocumental_);
 
 
 

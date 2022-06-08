@@ -53,7 +53,7 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForTipusdocu(HttpServletRequest request, ModelAndView mav, Where where)
+    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav, Where where)
             throws I18NException {
 
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments

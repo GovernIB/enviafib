@@ -18,8 +18,8 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.NOM)}">
         <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.NOM)}</th>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.TIPUSDOCU)}">
-        <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.TIPUSDOCU)}</th>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.TIPUSDOCUMENTAL)}">
+        <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.TIPUSDOCUMENTAL)}</th>
         </c:if>
 
 

@@ -54,14 +54,14 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
   }
 
 
-  private java.lang.String tipusdocu;
+  private java.lang.String tipusDocumental;
 
-  public java.lang.String getTipusdocu() {
-    return this.tipusdocu;
+  public java.lang.String getTipusDocumental() {
+    return this.tipusDocumental;
   }
 
-  public void setTipusdocu(java.lang.String tipusdocu) {
-    this.tipusdocu = tipusdocu;
+  public void setTipusDocumental(java.lang.String tipusDocumental) {
+    this.tipusDocumental = tipusDocumental;
   }
 
 
@@ -73,8 +73,8 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
     this.serieDocuIDDesde = __toClone.serieDocuIDDesde;
     this.serieDocuIDFins = __toClone.serieDocuIDFins;
     this.nom = __toClone.nom;
-    this.tipusdocu = __toClone.tipusdocu;
-    this.mapOfValuesForTipusdocu = __toClone.mapOfValuesForTipusdocu;
+    this.tipusDocumental = __toClone.tipusDocumental;
+    this.mapOfValuesForTipusDocumental = __toClone.mapOfValuesForTipusDocumental;
   }
   
   /* ========= UTILS ========== */
@@ -109,14 +109,14 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
    // -----------------------
    // Maps de referencies.
    // -----------------------
-  private Map<String, String> mapOfValuesForTipusdocu;
+  private Map<String, String> mapOfValuesForTipusDocumental;
 
-  public Map<String, String> getMapOfValuesForTipusdocu() {
-    return this.mapOfValuesForTipusdocu;
+  public Map<String, String> getMapOfValuesForTipusDocumental() {
+    return this.mapOfValuesForTipusDocumental;
   }
 
-  public void setMapOfValuesForTipusdocu(Map<String, String> mapOfValuesForTipusdocu) {
-    this.mapOfValuesForTipusdocu = mapOfValuesForTipusdocu;
+  public void setMapOfValuesForTipusDocumental(Map<String, String> mapOfValuesForTipusDocumental) {
+    this.mapOfValuesForTipusDocumental = mapOfValuesForTipusDocumental;
   }
 
 

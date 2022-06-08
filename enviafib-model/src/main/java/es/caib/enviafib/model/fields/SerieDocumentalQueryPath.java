@@ -19,8 +19,8 @@ public class SerieDocumentalQueryPath extends org.fundaciobit.genapp.common.quer
     return new StringField(getQueryPath(), SerieDocumentalFields.NOM);
   }
 
-  public StringField TIPUSDOCU() {
-    return new StringField(getQueryPath(), SerieDocumentalFields.TIPUSDOCU);
+  public StringField TIPUSDOCUMENTAL() {
+    return new StringField(getQueryPath(), SerieDocumentalFields.TIPUSDOCUMENTAL);
   }
 
 

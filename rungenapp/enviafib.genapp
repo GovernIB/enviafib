@@ -2513,7 +2513,7 @@
         <string>name</string>
         <void method="set">
          <object idref="TableInfo4"/>
-         <string>efi_seriedocu</string>
+         <string>efi_seriedocumental</string>
         </void>
        </void>
        <void class="org.fundaciobit.genapp.TableInfo" method="getField">
@@ -2555,7 +2555,7 @@
              <string>sqlName</string>
              <void method="set">
               <object idref="FieldInfo28"/>
-              <string>seriedocuid</string>
+              <string>seriedocumentalid</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -2597,7 +2597,7 @@
              <string>defaultValue</string>
              <void method="set">
               <object idref="FieldInfo28"/>
-              <string>nextval(&apos;efi_seriedocu_seq&apos;::regclass)</string>
+              <string>nextval(&apos;efi_seriedocumental_seq&apos;::regclass)</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -2608,7 +2608,7 @@
              </void>
             </void>
             <void property="PK">
-             <string>efi_seriedocu_pk</string>
+             <string>efi_seriedocumental_pk</string>
             </void>
             <void property="javaType">
              <class>long</class>
@@ -2692,7 +2692,7 @@
              <string>sqlName</string>
              <void method="set">
               <object idref="FieldInfo30"/>
-              <string>tipusdocu</string>
+              <string>tipusdocumental</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">
@@ -2720,7 +2720,7 @@
              <string>javaName</string>
              <void method="set">
               <object idref="FieldInfo30"/>
-              <string>tipusdocu</string>
+              <string>tipusDocumental</string>
              </void>
             </void>
             <void class="org.fundaciobit.genapp.FieldInfo" method="getField">

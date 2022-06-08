@@ -43,11 +43,11 @@ public class SerieDocumentalValidator<I extends SerieDocumental>
       }
     }
 
-    if (__vr.getFieldErrorCount(TIPUSDOCU) == 0) {
-      java.lang.String __tipusdocu = __target__.getTipusdocu();
-      if (__tipusdocu!= null && __tipusdocu.length() > 256) {
-        __vr.rejectValue(TIPUSDOCU, "genapp.validation.sizeexceeds",
-            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCU)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(256)));
+    if (__vr.getFieldErrorCount(TIPUSDOCUMENTAL) == 0) {
+      java.lang.String __tipusdocumental = __target__.getTipusDocumental();
+      if (__tipusdocumental!= null && __tipusdocumental.length() > 256) {
+        __vr.rejectValue(TIPUSDOCUMENTAL, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCUMENTAL)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(256)));
       }
     }
 
@@ -57,14 +57,14 @@ public class SerieDocumentalValidator<I extends SerieDocumental>
       // ====== Check Unique MULTIPLES - NOU =======
 
       // Check Unique - no PK
-      if (__vr.getFieldErrorCount(TIPUSDOCU) == 0) {
-        java.lang.String __tipusdocu = __target__.getTipusdocu();
+      if (__vr.getFieldErrorCount(TIPUSDOCUMENTAL) == 0) {
+        java.lang.String __tipusdocumental = __target__.getTipusDocumental();
         Long __count_ = null;
-        try { __count_ = __serieDocumentalManager.count(org.fundaciobit.genapp.common.query.Where.AND(TIPUSDOCU.equal(__tipusdocu))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        try { __count_ = __serieDocumentalManager.count(org.fundaciobit.genapp.common.query.Where.AND(TIPUSDOCUMENTAL.equal(__tipusdocumental))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
         if (__count_ == null || __count_ != 0) {        
-            __vr.rejectValue(TIPUSDOCU, "genapp.validation.unique",
-                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipusdocu)),
-                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCU)));
+            __vr.rejectValue(TIPUSDOCUMENTAL, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipusdocumental)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCUMENTAL)));
         }
       }
 
@@ -75,15 +75,15 @@ public class SerieDocumentalValidator<I extends SerieDocumental>
       // ====== Check Unique MULTIPLES - EDIT  =======
 
       // Check Unique - no PK
-      if (__vr.getFieldErrorCount(TIPUSDOCU) == 0 && __vr.getFieldErrorCount(SERIEDOCUID) == 0) {
-        java.lang.String __tipusdocu = __target__.getTipusdocu();
+      if (__vr.getFieldErrorCount(TIPUSDOCUMENTAL) == 0 && __vr.getFieldErrorCount(SERIEDOCUID) == 0) {
+        java.lang.String __tipusdocumental = __target__.getTipusDocumental();
         java.lang.Long __seriedocuid = __target__.getSerieDocuID();
         Long __count_ = null;
-        try { __count_ = __serieDocumentalManager.count(org.fundaciobit.genapp.common.query.Where.AND(TIPUSDOCU.equal(__tipusdocu), SERIEDOCUID.notEqual(__seriedocuid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        try { __count_ = __serieDocumentalManager.count(org.fundaciobit.genapp.common.query.Where.AND(TIPUSDOCUMENTAL.equal(__tipusdocumental), SERIEDOCUID.notEqual(__seriedocuid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
         if (__count_ == null || __count_ != 0) {        
-            __vr.rejectValue(TIPUSDOCU, "genapp.validation.unique",
-                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipusdocu)),
-                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCU)));
+            __vr.rejectValue(TIPUSDOCUMENTAL, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipusdocumental)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCUMENTAL)));
         }
       }
 

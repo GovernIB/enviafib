@@ -11,8 +11,8 @@ import javax.persistence.Id;
 
 
 @Entity(name = "SerieDocumentalJPA")
-@Table(name = "efi_seriedocu" )
-@SequenceGenerator(name="SERIEDOCUMENTAL_SEQ", sequenceName="efi_seriedocu_seq", allocationSize=1, initialValue=1000)
+@Table(name = "efi_seriedocumental" )
+@SequenceGenerator(name="SERIEDOCUMENTAL_SEQ", sequenceName="efi_seriedocumental_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class SerieDocumentalJPA implements SerieDocumental {
 
@@ -22,14 +22,14 @@ private static final long serialVersionUID = -2030187655L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SERIEDOCUMENTAL_SEQ")
-    @Column(name="seriedocuid",nullable = false,length = 19)
+    @Column(name="seriedocumentalid",nullable = false,length = 19)
     long serieDocuID;
 
     @Column(name="nom",nullable = false,length = 256)
     java.lang.String nom;
 
-    @Column(name="tipusdocu",unique = true,length = 256)
-    java.lang.String tipusdocu;
+    @Column(name="tipusdocumental",unique = true,length = 256)
+    java.lang.String tipusDocumental;
 
 
 
@@ -38,20 +38,20 @@ private static final long serialVersionUID = -2030187655L;
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalJPA(long serieDocuID , java.lang.String nom , java.lang.String tipusdocu) {
+  public SerieDocumentalJPA(long serieDocuID , java.lang.String nom , java.lang.String tipusDocumental) {
     this.serieDocuID=serieDocuID;
     this.nom=nom;
-    this.tipusdocu=tipusdocu;
+    this.tipusDocumental=tipusDocumental;
 }
   /** Constructor sense valors autoincrementals */
-  public SerieDocumentalJPA(java.lang.String nom , java.lang.String tipusdocu) {
+  public SerieDocumentalJPA(java.lang.String nom , java.lang.String tipusDocumental) {
     this.nom=nom;
-    this.tipusdocu=tipusdocu;
+    this.tipusDocumental=tipusDocumental;
 }
   public SerieDocumentalJPA(SerieDocumental __bean) {
     this.setSerieDocuID(__bean.getSerieDocuID());
     this.setNom(__bean.getNom());
-    this.setTipusdocu(__bean.getTipusdocu());
+    this.setTipusDocumental(__bean.getTipusDocumental());
 	}
 
 	public long getSerieDocuID() {
@@ -68,11 +68,11 @@ private static final long serialVersionUID = -2030187655L;
 		this.nom = _nom_;
 	};
 
-	public java.lang.String getTipusdocu() {
-		return(tipusdocu);
+	public java.lang.String getTipusDocumental() {
+		return(tipusDocumental);
 	};
-	public void setTipusdocu(java.lang.String _tipusdocu_) {
-		this.tipusdocu = _tipusdocu_;
+	public void setTipusDocumental(java.lang.String _tipusDocumental_) {
+		this.tipusDocumental = _tipusDocumental_;
 	};
 
 
@@ -97,7 +97,7 @@ private static final long serialVersionUID = -2030187655L;
     SerieDocumentalJPA __tmp = new SerieDocumentalJPA();
     __tmp.setSerieDocuID(__bean.getSerieDocuID());
     __tmp.setNom(__bean.getNom());
-    __tmp.setTipusdocu(__bean.getTipusdocu());
+    __tmp.setTipusDocumental(__bean.getTipusDocumental());
 		return __tmp;
 	}
 

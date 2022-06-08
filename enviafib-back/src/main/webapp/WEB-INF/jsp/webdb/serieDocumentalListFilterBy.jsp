@@ -81,15 +81,15 @@
 
 
         </c:if>
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,SerieDocumentalFields.TIPUSDOCU)}">
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,SerieDocumentalFields.TIPUSDOCUMENTAL)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
-              <fmt:message key="serieDocumental.tipusdocu" var="tipusdocu" />
-              <fmt:message key="genapp.form.searchby" var="cercapertipusdocu" >                
-                 <fmt:param value="${tipusdocu}"/>
+              <fmt:message key="serieDocumental.tipusDocumental" var="tipusDocumental" />
+              <fmt:message key="genapp.form.searchby" var="cercapertipusDocumental" >                
+                 <fmt:param value="${tipusDocumental}"/>
               </fmt:message>
-              <span class="add-on"><c:out value="${tipusdocu}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapertipusdocu}" path="tipusdocu" />
+              <span class="add-on"><c:out value="${tipusDocumental}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapertipusDocumental}" path="tipusDocumental" />
             </div>
 
 

@@ -178,13 +178,13 @@ public class SerieDocumentalController
     Map<String, String> _tmp;
     List<StringKeyValue> _listSKV;
 
-    // Field tipusdocu
+    // Field tipusDocumental
     {
-      _listSKV = getReferenceListForTipusdocu(request, mav, filterForm, list, groupByItemsMap, null);
+      _listSKV = getReferenceListForTipusDocumental(request, mav, filterForm, list, groupByItemsMap, null);
       _tmp = Utils.listToMap(_listSKV);
-      filterForm.setMapOfValuesForTipusdocu(_tmp);
-      if (filterForm.getGroupByFields().contains(TIPUSDOCU)) {
-        fillValuesToGroupByItems(_tmp, groupByItemsMap, TIPUSDOCU, false);
+      filterForm.setMapOfValuesForTipusDocumental(_tmp);
+      if (filterForm.getGroupByFields().contains(TIPUSDOCUMENTAL)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, TIPUSDOCUMENTAL, false);
       };
     }
 
@@ -203,7 +203,7 @@ public class SerieDocumentalController
 
     java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
     __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
-    __mapping.put(TIPUSDOCU, filterForm.getMapOfValuesForTipusdocu());
+    __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusDocumental());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -252,13 +252,13 @@ public class SerieDocumentalController
   public void fillReferencesForForm(SerieDocumentalForm serieDocumentalForm,
     HttpServletRequest request, ModelAndView mav) throws I18NException {
     // Comprovam si ja esta definida la llista
-    if (serieDocumentalForm.getListOfValuesForTipusdocu() == null) {
-      List<StringKeyValue> _listSKV = getReferenceListForTipusdocu(request, mav, serieDocumentalForm, null);
+    if (serieDocumentalForm.getListOfValuesForTipusDocumental() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForTipusDocumental(request, mav, serieDocumentalForm, null);
 
       if(_listSKV != null && !_listSKV.isEmpty()) { 
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
-      serieDocumentalForm.setListOfValuesForTipusdocu(_listSKV);
+      serieDocumentalForm.setListOfValuesForTipusDocumental(_listSKV);
     }
     
   }
@@ -563,28 +563,28 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  public List<StringKeyValue> getReferenceListForTipusdocu(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request,
        ModelAndView mav, SerieDocumentalForm serieDocumentalForm, Where where)  throws I18NException {
-    if (serieDocumentalForm.isHiddenField(TIPUSDOCU)) {
+    if (serieDocumentalForm.isHiddenField(TIPUSDOCUMENTAL)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
-    return getReferenceListForTipusdocu(request, mav, where);
+    return getReferenceListForTipusDocumental(request, mav, where);
   }
 
 
-  public List<StringKeyValue> getReferenceListForTipusdocu(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request,
        ModelAndView mav, SerieDocumentalFilterForm serieDocumentalFilterForm,
        List<SerieDocumental> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
-    if (serieDocumentalFilterForm.isHiddenField(TIPUSDOCU)
-      && !serieDocumentalFilterForm.isGroupByField(TIPUSDOCU)) {
+    if (serieDocumentalFilterForm.isHiddenField(TIPUSDOCUMENTAL)
+      && !serieDocumentalFilterForm.isGroupByField(TIPUSDOCUMENTAL)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
-    return getReferenceListForTipusdocu(request, mav, Where.AND(where,_w));
+    return getReferenceListForTipusDocumental(request, mav, Where.AND(where,_w));
   }
 
 
-  public List<StringKeyValue> getReferenceListForTipusdocu(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
     __tmp.add(new StringKeyValue("1" , "1"));

@@ -12,7 +12,7 @@ private static final long serialVersionUID = 1488475090L;
 
 	long serieDocuID;// PK
 	java.lang.String nom;
-	java.lang.String tipusdocu;
+	java.lang.String tipusDocumental;
 
 
   /** Constructor Buit */
@@ -20,20 +20,20 @@ private static final long serialVersionUID = 1488475090L;
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalBean(long serieDocuID , java.lang.String nom , java.lang.String tipusdocu) {
+  public SerieDocumentalBean(long serieDocuID , java.lang.String nom , java.lang.String tipusDocumental) {
     this.serieDocuID=serieDocuID;
     this.nom=nom;
-    this.tipusdocu=tipusdocu;
+    this.tipusDocumental=tipusDocumental;
 }
   /** Constructor sense valors autoincrementals */
-  public SerieDocumentalBean(java.lang.String nom , java.lang.String tipusdocu) {
+  public SerieDocumentalBean(java.lang.String nom , java.lang.String tipusDocumental) {
     this.nom=nom;
-    this.tipusdocu=tipusdocu;
+    this.tipusDocumental=tipusDocumental;
 }
   public SerieDocumentalBean(SerieDocumental __bean) {
     this.setSerieDocuID(__bean.getSerieDocuID());
     this.setNom(__bean.getNom());
-    this.setTipusdocu(__bean.getTipusdocu());
+    this.setTipusDocumental(__bean.getTipusDocumental());
 	}
 
 	public long getSerieDocuID() {
@@ -50,11 +50,11 @@ private static final long serialVersionUID = 1488475090L;
 		this.nom = _nom_;
 	};
 
-	public java.lang.String getTipusdocu() {
-		return(tipusdocu);
+	public java.lang.String getTipusDocumental() {
+		return(tipusDocumental);
 	};
-	public void setTipusdocu(java.lang.String _tipusdocu_) {
-		this.tipusdocu = _tipusdocu_;
+	public void setTipusDocumental(java.lang.String _tipusDocumental_) {
+		this.tipusDocumental = _tipusDocumental_;
 	};
 
 
@@ -66,7 +66,7 @@ private static final long serialVersionUID = 1488475090L;
     SerieDocumentalBean __tmp = new SerieDocumentalBean();
     __tmp.setSerieDocuID(__bean.getSerieDocuID());
     __tmp.setNom(__bean.getNom());
-    __tmp.setTipusdocu(__bean.getTipusdocu());
+    __tmp.setTipusDocumental(__bean.getTipusDocumental());
 		return __tmp;
 	}
 
