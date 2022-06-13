@@ -42,6 +42,18 @@
 			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>
+		
+		
+		<!-- API INTERNA START -->
+		<dependency>
+			<groupId>es.caib.enviafib</groupId>
+			<artifactId>enviafib-api-interna</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+		<!-- API INTERNA END -->
+
+
 		<!-- Tenir en compte a l'hora de incloure dependències només si és imprescindible 
 			i no està ja dins un mòdul sobre el que es pugui establir una dependència 
 			als descriptors. https://docs.jboss.org/author/display/AS72/Implicit+module+dependencies+for+deployments -->
@@ -49,6 +61,9 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
+
+
+
 		<!-- Externes -->
 		<!-- ====================================== -->
 		<!-- ===== PLUGINS DE USERINFORMATION ===== -->
@@ -273,6 +288,15 @@
 							<artifactId>enviafib-ejb</artifactId>
 							<bundleFileName>enviafib-ejb.jar</bundleFileName>
 						</ejbModule>
+
+						<!-- API INTERNA START -->
+						<webModule>
+							<groupId>es.caib.enviafib</groupId>
+							<artifactId>enviafib-api-interna</artifactId>
+							<contextRoot>/enviafibapi/interna</contextRoot>
+							<bundleFileName>enviafib-api-interna.war</bundleFileName>
+						</webModule>
+						<!-- API INTERNA END -->
 
 					</modules>
 
