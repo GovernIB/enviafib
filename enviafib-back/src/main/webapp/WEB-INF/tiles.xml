@@ -79,6 +79,12 @@
     <definition name="peticioListUser" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioList.jsp" />
     </definition>
+    
+    
+    <definition name="firmasimpleweb_iframe" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/firmasimpleweb_iframe.jsp" />
+    </definition>
+  
 
     <!--  ===========  ADMIN  ================== -->
         

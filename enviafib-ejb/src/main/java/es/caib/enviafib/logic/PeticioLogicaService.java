@@ -39,4 +39,6 @@ public interface PeticioLogicaService extends PeticioService {
 
     public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)
             throws I18NException, AbstractApisIBException;
+
+
 }
