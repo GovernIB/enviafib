@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
@@ -38,6 +39,7 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Fitxer;
+import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -51,6 +53,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
+
+    @EJB(mappedName = es.caib.enviafib.ejb.InfoSignaturaService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.InfoSignaturaService infoSignaturaEjb;
 
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
@@ -148,6 +153,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return (PeticioJPA) super.findByPrimaryKey(_ID_);
     }
 
+    @Override
+    @PermitAll
+    public void deleteFull(Peticio instance) throws I18NException {
+
+        Long infoSignID = instance.getInfosignaturaid() ;
+        if (infoSignID != null) {
+            infoSignaturaEjb.delete(infoSignID);
+        }
+        super.delete(instance);
+    }
+    
+
+  
     public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari,
             String perfil, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
             String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api)

@@ -21,6 +21,13 @@ ${entityname}
         </span></a>
         </li>
 
+    <%-- InfoSignatura --%>
+       <fmt:message var="entityname" key="infoSignatura.infoSignatura.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/infoSignatura/list/1"/>" ><span style="${(fn:contains(url, 'infoSignatura/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
+
     <%-- Peticio --%>
        <fmt:message var="entityname" key="peticio.peticio.plural"/>
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/peticio/list/1"/>" ><span style="${(fn:contains(url, 'peticio/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >

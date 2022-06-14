@@ -48,6 +48,9 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.IDIOMADOC)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.IDIOMADOC)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.INFOSIGNATURAID)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.INFOSIGNATURAID)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

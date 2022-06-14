@@ -59,6 +59,10 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new StringField(getQueryPath(), PeticioFields.IDIOMADOC);
   }
 
+  public LongField INFOSIGNATURAID() {
+    return new LongField(getQueryPath(), PeticioFields.INFOSIGNATURAID);
+  }
+
 
 
   @Override
@@ -104,6 +108,14 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new FitxerQueryPath(new QueryPath() {
       public String getQueryPath() {
           return PeticioQueryPath.this.getQueryPath() + "fitxerFirmat" + ".";
+      }
+    });
+  }
+
+  public InfoSignaturaQueryPath INFOSIGNATURA() {
+    return new InfoSignaturaQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return PeticioQueryPath.this.getQueryPath() + "infoSignatura" + ".";
       }
     });
   }

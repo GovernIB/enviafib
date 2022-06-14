@@ -165,6 +165,16 @@
     </definition>
 
 
+    <definition name="infoSignaturaFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="infoSignatura.infoSignatura" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaForm.jsp" />
+    </definition>
+    
+    <definition name="infoSignaturaListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
+    </definition>
+
+
     <definition name="peticioFormWebDB" extends="webdb">
         <put-attribute name="titol" value="peticio.peticio" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioForm.jsp" />

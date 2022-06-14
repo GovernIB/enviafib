@@ -19,6 +19,8 @@ public class PeticioBeanValidator
   // EJB's
   protected final es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager;
 
+  protected final es.caib.enviafib.model.dao.IInfoSignaturaManager __infoSignaturaManager;
+
   protected final es.caib.enviafib.model.dao.IPeticioManager __peticioManager;
 
   protected final es.caib.enviafib.model.dao.ITraduccioManager __traduccioManager;
@@ -30,10 +32,12 @@ public class PeticioBeanValidator
 
 
   public PeticioBeanValidator(es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager,
+     es.caib.enviafib.model.dao.IInfoSignaturaManager __infoSignaturaManager,
      es.caib.enviafib.model.dao.IPeticioManager __peticioManager,
      es.caib.enviafib.model.dao.ITraduccioManager __traduccioManager,
      es.caib.enviafib.model.dao.IUsuariManager __usuariManager) { 
     this.__idiomaManager = __idiomaManager;
+    this.__infoSignaturaManager = __infoSignaturaManager;
     this.__peticioManager = __peticioManager;
     this.__traduccioManager = __traduccioManager;
     this.__usuariManager = __usuariManager;
@@ -42,10 +46,12 @@ public class PeticioBeanValidator
 
   public PeticioBeanValidator(PeticioValidator<PeticioJPA> _validator,
      es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager,
+     es.caib.enviafib.model.dao.IInfoSignaturaManager __infoSignaturaManager,
      es.caib.enviafib.model.dao.IPeticioManager __peticioManager,
      es.caib.enviafib.model.dao.ITraduccioManager __traduccioManager,
      es.caib.enviafib.model.dao.IUsuariManager __usuariManager) {
     this.__idiomaManager = __idiomaManager;
+    this.__infoSignaturaManager = __infoSignaturaManager;
     this.__peticioManager = __peticioManager;
     this.__traduccioManager = __traduccioManager;
     this.__usuariManager = __usuariManager;
@@ -55,7 +61,7 @@ public class PeticioBeanValidator
   @Override
   public List<I18NFieldError> validate(PeticioJPA target, boolean isNou) throws I18NException {
     BeanValidatorResult<PeticioJPA> _bvr_ = new BeanValidatorResult<PeticioJPA>();
-    _validator.validate(_bvr_, target, isNou, __idiomaManager, __peticioManager, __traduccioManager, __usuariManager);
+    _validator.validate(_bvr_, target, isNou, __idiomaManager, __infoSignaturaManager, __peticioManager, __traduccioManager, __usuariManager);
     return _bvr_.getErrors();
   }
 }

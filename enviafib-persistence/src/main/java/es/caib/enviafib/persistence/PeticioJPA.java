@@ -70,6 +70,9 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="idiomadoc",nullable = false,length = 30)
     java.lang.String idiomadoc;
 
+    @Column(name="infosignaturaid",length = 19)
+    java.lang.Long infosignaturaid;
+
 
 
   /** Constructor Buit */
@@ -77,7 +80,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
+  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -90,9 +93,10 @@ private static final long serialVersionUID = 1230292508L;
     this.peticioPortafib=peticioPortafib;
     this.tipusdocumental=tipusdocumental;
     this.idiomadoc=idiomadoc;
+    this.infosignaturaid=infosignaturaid;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
+  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -104,6 +108,7 @@ private static final long serialVersionUID = 1230292508L;
     this.peticioPortafib=peticioPortafib;
     this.tipusdocumental=tipusdocumental;
     this.idiomadoc=idiomadoc;
+    this.infosignaturaid=infosignaturaid;
 }
   /** Constructor dels valors Not Null */
   public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
@@ -131,6 +136,7 @@ private static final long serialVersionUID = 1230292508L;
     this.setPeticioPortafib(__bean.getPeticioPortafib());
     this.setTipusdocumental(__bean.getTipusdocumental());
     this.setIdiomadoc(__bean.getIdiomadoc());
+    this.setInfosignaturaid(__bean.getInfosignaturaid());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -219,6 +225,13 @@ private static final long serialVersionUID = 1230292508L;
 	};
 	public void setIdiomadoc(java.lang.String _idiomadoc_) {
 		this.idiomadoc = _idiomadoc_;
+	};
+
+	public java.lang.Long getInfosignaturaid() {
+		return(infosignaturaid);
+	};
+	public void setInfosignaturaid(java.lang.Long _infosignaturaid_) {
+		this.infosignaturaid = _infosignaturaid_;
 	};
 
 
@@ -316,6 +329,20 @@ private static final long serialVersionUID = 1230292508L;
     this.fitxerFirmat = fitxerFirmat;
   }
 
+// IMP Field:infosignaturaid | Table: efi_infosignatura | Type: 1  
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "infosignaturaid", referencedColumnName ="infosignaturaid", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_peticio_infosign_fk"))
+    private InfoSignaturaJPA infoSignatura;
+
+    public InfoSignaturaJPA getInfoSignatura() {
+    return this.infoSignatura;
+  }
+
+    public  void setInfoSignatura(InfoSignaturaJPA infoSignatura) {
+    this.infoSignatura = infoSignatura;
+  }
+
 
  // ---------------  STATIC METHODS ------------------
   public static PeticioJPA toJPA(Peticio __bean) {
@@ -333,6 +360,7 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setPeticioPortafib(__bean.getPeticioPortafib());
     __tmp.setTipusdocumental(__bean.getTipusdocumental());
     __tmp.setIdiomadoc(__bean.getIdiomadoc());
+    __tmp.setInfosignaturaid(__bean.getInfosignaturaid());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -378,6 +406,10 @@ private static final long serialVersionUID = 1230292508L;
     if(!"TraduccioJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.titol) || org.hibernate.Hibernate.isInitialized(__jpa.getTitol()) ) ) {
       __tmp.setTitol(TraduccioJPA.copyJPA(__jpa.getTitol(), __alreadyCopied,"PeticioJPA"));
+    }
+    if(!"InfoSignaturaJPA".equals(origenJPA) && 
+       (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoSignatura) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoSignatura()) ) ) {
+      __tmp.setInfoSignatura(InfoSignaturaJPA.copyJPA(__jpa.getInfoSignatura(), __alreadyCopied,"PeticioJPA"));
     }
 
     return __tmp;

@@ -38,6 +38,9 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.String getIdiomadoc();
 	public void setIdiomadoc(java.lang.String _idiomadoc_);
 
+	public java.lang.Long getInfosignaturaid();
+	public void setInfosignaturaid(java.lang.Long _infosignaturaid_);
+
   // Fitxer
   public <F extends Fitxer> F getFitxer();
   // Fitxer
