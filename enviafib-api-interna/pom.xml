@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-8.0</artifactId>
-			<version>1.0.4.Final</version>
+<!-- XYZ ZZZZ 			<version>1.0.4.Final</version> -->
 			<type>pom</type>
 			<scope>provided</scope>
 		</dependency>
@@ -137,7 +137,8 @@
 			</plugin>
 			<!-- Genera el Client Rest per Java a partir del fitxer openapi.json -->
 			<!-- https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/README.md#general-configuration-parameters -->
-			<!-- 			<plugin>
+			<!--
+			<plugin>
 				<groupId>io.swagger.codegen.v3</groupId>
 				<artifactId>swagger-codegen-maven-plugin</artifactId>
 				<version>3.0.27</version>
@@ -176,7 +177,8 @@
 					</execution>
 				</executions>
 			</plugin>
--->
+			-->
+
 			<!-- Profile per incloure swagger-ui dins el mòdul -->
 			<!-- Davalla la versió de swagger-ui (Web UI que parseja openapi.json. 
                 Veure index.html) -->

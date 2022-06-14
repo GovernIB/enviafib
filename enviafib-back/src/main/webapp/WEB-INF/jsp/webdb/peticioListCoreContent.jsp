@@ -104,6 +104,14 @@
           </c:if>
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.INFOSIGNATURAID)}">
+          <td>
+          <c:set var="tmp">${peticio.infosignaturaid}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfInfoSignaturaForInfosignaturaid[tmp]}
+          </c:if>
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

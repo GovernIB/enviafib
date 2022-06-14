@@ -197,6 +197,28 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.Long infosignaturaidDesde;
+
+  public java.lang.Long getInfosignaturaidDesde() {
+    return this.infosignaturaidDesde;
+  }
+
+  public void setInfosignaturaidDesde(java.lang.Long infosignaturaidDesde) {
+    this.infosignaturaidDesde = infosignaturaidDesde;
+  }
+
+
+  private java.lang.Long infosignaturaidFins;
+
+  public java.lang.Long getInfosignaturaidFins() {
+    return this.infosignaturaidFins;
+  }
+
+  public void setInfosignaturaidFins(java.lang.Long infosignaturaidFins) {
+    this.infosignaturaidFins = infosignaturaidFins;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -218,12 +240,15 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.peticioPortafibFins = __toClone.peticioPortafibFins;
     this.tipusdocumental = __toClone.tipusdocumental;
     this.idiomadoc = __toClone.idiomadoc;
+    this.infosignaturaidDesde = __toClone.infosignaturaidDesde;
+    this.infosignaturaidFins = __toClone.infosignaturaidFins;
     this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
     this.mapOfValuesForTipusdocumental = __toClone.mapOfValuesForTipusdocumental;
     this.mapOfValuesForIdiomadoc = __toClone.mapOfValuesForIdiomadoc;
+    this.mapOfInfoSignaturaForInfosignaturaid = __toClone.mapOfInfoSignaturaForInfosignaturaid;
   }
   
   /* ========= UTILS ========== */
@@ -326,6 +351,18 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setMapOfValuesForIdiomadoc(Map<String, String> mapOfValuesForIdiomadoc) {
     this.mapOfValuesForIdiomadoc = mapOfValuesForIdiomadoc;
+  }
+
+
+
+  private Map<String, String> mapOfInfoSignaturaForInfosignaturaid;
+
+  public Map<String, String> getMapOfInfoSignaturaForInfosignaturaid() {
+    return this.mapOfInfoSignaturaForInfosignaturaid;
+  }
+
+  public void setMapOfInfoSignaturaForInfosignaturaid(Map<String, String> mapOfInfoSignaturaForInfosignaturaid) {
+    this.mapOfInfoSignaturaForInfosignaturaid = mapOfInfoSignaturaForInfosignaturaid;
   }
 
 

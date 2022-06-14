@@ -34,9 +34,13 @@ public interface PeticioLogicaService extends PeticioService {
 
     public PeticioJPA findByPrimaryKeyPublic(Long _ID_);
 
+    public void deleteFull(Peticio instance) throws I18NException;
+
     public long guardarFitxerSignat(long peticioID, String languageUI)
             throws I18NException, AbstractApisIBException, IOException;
 
     public FirmaAsyncSimpleFile getFitxerSignat(long peticioID, String languageUI)
             throws I18NException, AbstractApisIBException;
+
+
 }

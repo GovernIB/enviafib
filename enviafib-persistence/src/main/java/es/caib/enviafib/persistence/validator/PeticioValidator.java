@@ -6,6 +6,7 @@ import es.caib.enviafib.model.entity.Peticio;
 import org.fundaciobit.genapp.common.query.Field;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.IdiomaFields;
+import es.caib.enviafib.model.fields.InfoSignaturaFields;
 import es.caib.enviafib.model.fields.TraduccioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 
@@ -31,6 +32,7 @@ public class PeticioValidator<I extends Peticio>
   /** Constructor */
   public void validate(IValidatorResult<I> __vr,I __target__, boolean __isNou__
     ,es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager
+    ,es.caib.enviafib.model.dao.IInfoSignaturaManager __infoSignaturaManager
     ,es.caib.enviafib.model.dao.IPeticioManager __peticioManager
     ,es.caib.enviafib.model.dao.ITraduccioManager __traduccioManager
     ,es.caib.enviafib.model.dao.IUsuariManager __usuariManager) {
@@ -169,6 +171,20 @@ public class PeticioValidator<I extends Peticio>
          new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("idioma.idioma"),
          new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("idioma.idiomaID"),
          new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__idiomaid)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(INFOSIGNATURAID) == 0) {
+      java.lang.Long __infosignaturaid = __target__.getInfosignaturaid();
+      if (__infosignaturaid != null ) {
+        Long __count_ = null;
+        try { __count_ = __infoSignaturaManager.count(InfoSignaturaFields.INFOSIGNATURAID.equal(__infosignaturaid)); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        if (__count_ == null || __count_ == 0) {        
+          __vr.rejectValue(INFOSIGNATURAID, "error.notfound",
+         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("infoSignatura.infoSignatura"),
+         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("infoSignatura.infosignaturaid"),
+         new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__infosignaturaid)));
+        }
       }
     }
 

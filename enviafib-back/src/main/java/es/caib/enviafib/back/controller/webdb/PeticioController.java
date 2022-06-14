@@ -76,6 +76,10 @@ public class PeticioController
   @Autowired
   protected IdiomaRefList idiomaRefList;
 
+  // References 
+  @Autowired
+  protected InfoSignaturaRefList infoSignaturaRefList;
+
   /**
    * Llistat de totes Peticio
    */
@@ -256,6 +260,16 @@ public class PeticioController
       };
     }
 
+    // Field infosignaturaid
+    {
+      _listSKV = getReferenceListForInfosignaturaid(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfInfoSignaturaForInfosignaturaid(_tmp);
+      if (filterForm.getGroupByFields().contains(INFOSIGNATURAID)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, INFOSIGNATURAID, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -277,6 +291,7 @@ public class PeticioController
     __mapping.put(ESTAT, filterForm.getMapOfValuesForEstat());
     __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusdocumental());
     __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomadoc());
+    __mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfosignaturaid());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -378,6 +393,15 @@ public class PeticioController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       peticioForm.setListOfValuesForIdiomadoc(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (peticioForm.getListOfInfoSignaturaForInfosignaturaid() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForInfosignaturaid(request, mav, peticioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      peticioForm.setListOfInfoSignaturaForInfosignaturaid(_listSKV);
     }
     
   }
@@ -930,6 +954,53 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
+  public List<StringKeyValue> getReferenceListForInfosignaturaid(HttpServletRequest request,
+       ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
+    if (peticioForm.isHiddenField(INFOSIGNATURAID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _where = null;
+    if (peticioForm.isReadOnlyField(INFOSIGNATURAID)) {
+      _where = InfoSignaturaFields.INFOSIGNATURAID.equal(peticioForm.getPeticio().getInfosignaturaid());
+    }
+    return getReferenceListForInfosignaturaid(request, mav, Where.AND(where, _where));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForInfosignaturaid(HttpServletRequest request,
+       ModelAndView mav, PeticioFilterForm peticioFilterForm,
+       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (peticioFilterForm.isHiddenField(INFOSIGNATURAID)
+      && !peticioFilterForm.isGroupByField(INFOSIGNATURAID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    if (!_groupByItemsMap.containsKey(INFOSIGNATURAID)) {
+      // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
+      java.util.Set<java.lang.Long> _pkList = new java.util.HashSet<java.lang.Long>();
+      for (Peticio _item : list) {
+        if(_item.getInfosignaturaid() == null) { continue; };
+        _pkList.add(_item.getInfosignaturaid());
+        }
+        _w = InfoSignaturaFields.INFOSIGNATURAID.in(_pkList);
+      }
+    return getReferenceListForInfosignaturaid(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForInfosignaturaid(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    return infoSignaturaRefList.getReferenceList(InfoSignaturaFields.INFOSIGNATURAID, where );
+  }
+
+
+  @Override
+  /** Ha de ser igual que el RequestMapping de la Classe */
+  public String getContextWeb() {
+    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+    return rm.value()[0];
+  }
+
   public void preValidate(HttpServletRequest request,PeticioForm peticioForm , BindingResult result)  throws I18NException {
   }
 
@@ -970,13 +1041,6 @@ public java.lang.Long stringToPK(String value) {
     return "peticioListWebDB";
   }
 
-  @Override
-  /** Ha de ser igual que el RequestMapping de la Classe */
-  public String getContextWeb() {
-    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
-    return rm.value()[0];
-  }
-
   public String getSessionAttributeFilterForm() {
     return "PeticioWebDB_FilterForm";
   }
@@ -994,18 +1058,18 @@ public java.lang.Long stringToPK(String value) {
 
 
   public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (PeticioJPA) peticioEjb.create(peticio);
   }
 
 
   public PeticioJPA update(HttpServletRequest request, PeticioJPA peticio)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (PeticioJPA) peticioEjb.update(peticio);
   }
 
 
-  public void delete(HttpServletRequest request, Peticio peticio) throws Exception,I18NException {
+  public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
     peticioEjb.delete(peticio);
   }
 

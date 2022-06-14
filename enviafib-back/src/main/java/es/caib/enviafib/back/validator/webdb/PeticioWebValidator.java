@@ -36,6 +36,9 @@ public class PeticioWebValidator extends AbstractWebValidator<PeticioForm, Petic
   @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.IdiomaService.JNDI_NAME)
   protected es.caib.enviafib.ejb.IdiomaService idiomaEjb;
 
+  @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.InfoSignaturaService.JNDI_NAME)
+  protected es.caib.enviafib.ejb.InfoSignaturaService infoSignaturaEjb;
+
   @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.PeticioService.JNDI_NAME)
   protected es.caib.enviafib.ejb.PeticioService peticioEjb;
 
@@ -136,7 +139,7 @@ _ignoreFields.add(TITOLID);
     }
     BeanValidatorResult<Peticio> __vr = new BeanValidatorResult<Peticio>();
     validator.validate(__vr, __bean,
-      isNou, idiomaEjb, peticioEjb, traduccioEjb, usuariEjb);
+      isNou, idiomaEjb, infoSignaturaEjb, peticioEjb, traduccioEjb, usuariEjb);
 
     if (__vr.hasErrors()) {
         List<I18NFieldError> vrErrors = __vr.getErrors();

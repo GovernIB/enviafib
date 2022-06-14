@@ -79,6 +79,12 @@
     <definition name="peticioListUser" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioList.jsp" />
     </definition>
+    
+    
+    <definition name="firmasimpleweb_iframe" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/firmasimpleweb_iframe.jsp" />
+    </definition>
+  
 
     <!--  ===========  ADMIN  ================== -->
         
@@ -156,6 +162,16 @@
     
     <definition name="idiomaListWebDB" extends="webdb">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/idiomaList.jsp" />
+    </definition>
+
+
+    <definition name="infoSignaturaFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="infoSignatura.infoSignatura" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaForm.jsp" />
+    </definition>
+    
+    <definition name="infoSignaturaListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
     </definition>
 
 

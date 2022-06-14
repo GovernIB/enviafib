@@ -92,3 +92,14 @@ hs_err_pid*
 /dependencies.txt
 /enviafib-model/.project
 /enviafib-ejb/email.properties
+/enviafib-back/.settings/org.eclipse.m2e.core.prefs
+/enviafib-commons/.settings/org.eclipse.m2e.core.prefs
+/enviafib-ejb/.settings/org.eclipse.m2e.core.prefs
+/enviafib-model/.settings/org.eclipse.m2e.core.prefs
+/enviafib-persistence/.settings/org.eclipse.m2e.core.prefs
+/genapp.bat
+/enviafib-api-interna/target
+/enviafib-api-interna/.project
+/enviafib-api-interna/.classpath
+
+/enviafib-api-interna/.settings

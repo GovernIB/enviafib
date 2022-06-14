@@ -58,8 +58,8 @@ public class PeticioJPAManager
         return list.toArray(new Peticio[list.size()]);
     };
 
-    public Peticio create( long _titolID_, java.sql.Timestamp _datacreacio_, long _fitxerID_, long _solicitantID_, java.lang.String _idiomaID_, java.lang.String _destinatarinif_, long _estat_, java.lang.Long _fitxerFirmatID_, java.lang.Long _peticioPortafib_, java.lang.String _tipusdocumental_, java.lang.String _idiomadoc_) throws I18NException {
-        PeticioJPA __bean =  new PeticioJPA(_titolID_,_datacreacio_,_fitxerID_,_solicitantID_,_idiomaID_,_destinatarinif_,_estat_,_fitxerFirmatID_,_peticioPortafib_,_tipusdocumental_,_idiomadoc_);
+    public Peticio create( long _titolID_, java.sql.Timestamp _datacreacio_, long _fitxerID_, long _solicitantID_, java.lang.String _idiomaID_, java.lang.String _destinatarinif_, long _estat_, java.lang.Long _fitxerFirmatID_, java.lang.Long _peticioPortafib_, java.lang.String _tipusdocumental_, java.lang.String _idiomadoc_, java.lang.Long _infosignaturaid_) throws I18NException {
+        PeticioJPA __bean =  new PeticioJPA(_titolID_,_datacreacio_,_fitxerID_,_solicitantID_,_idiomaID_,_destinatarinif_,_estat_,_fitxerFirmatID_,_peticioPortafib_,_tipusdocumental_,_idiomadoc_,_infosignaturaid_);
         return create(__bean);
     }
 
