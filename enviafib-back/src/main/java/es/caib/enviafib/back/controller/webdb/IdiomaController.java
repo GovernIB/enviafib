@@ -541,6 +541,13 @@ public java.lang.String stringToPK(String value) {
   }
 
 
+  @Override
+  /** Ha de ser igual que el RequestMapping de la Classe */
+  public String getContextWeb() {
+    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+    return rm.value()[0];
+  }
+
   public void preValidate(HttpServletRequest request,IdiomaForm idiomaForm , BindingResult result)  throws I18NException {
   }
 
@@ -581,13 +588,6 @@ public java.lang.String stringToPK(String value) {
     return "idiomaListWebDB";
   }
 
-  @Override
-  /** Ha de ser igual que el RequestMapping de la Classe */
-  public String getContextWeb() {
-    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
-    return rm.value()[0];
-  }
-
   public String getSessionAttributeFilterForm() {
     return "IdiomaWebDB_FilterForm";
   }
@@ -605,18 +605,18 @@ public java.lang.String stringToPK(String value) {
 
 
   public IdiomaJPA create(HttpServletRequest request, IdiomaJPA idioma)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (IdiomaJPA) idiomaEjb.create(idioma);
   }
 
 
   public IdiomaJPA update(HttpServletRequest request, IdiomaJPA idioma)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (IdiomaJPA) idiomaEjb.update(idioma);
   }
 
 
-  public void delete(HttpServletRequest request, Idioma idioma) throws Exception,I18NException {
+  public void delete(HttpServletRequest request, Idioma idioma) throws I18NException {
     idiomaEjb.delete(idioma);
   }
 

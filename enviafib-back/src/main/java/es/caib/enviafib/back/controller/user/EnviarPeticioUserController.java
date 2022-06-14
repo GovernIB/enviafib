@@ -45,9 +45,13 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 @Controller
-@RequestMapping(value = "/user/peticio")
+@RequestMapping(value = EnviarPeticioUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
 public class EnviarPeticioUserController extends PeticioController {
+    
+    
+    public static final String CONTEXT_WEB = "/user/peticio";
+    
 
     @EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
     protected es.caib.enviafib.ejb.UsuariService usuariEjb;
