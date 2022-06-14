@@ -68,9 +68,13 @@
                     <groupId>log4j</groupId>
                     <artifactId>log4j</artifactId>
                 </exclusion>
+				<exclusion>
+				    <groupId>com.sun.jersey</groupId>
+                    <artifactId>jersey-client</artifactId>
+				</exclusion>
             </exclusions>
         </dependency>
-
+<!--
         <dependency>
             <artifactId>jersey-apache-client4</artifactId>
             <groupId>com.sun.jersey.contribs</groupId>
@@ -97,7 +101,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+-->
 
     </dependencies>
 

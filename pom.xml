@@ -48,6 +48,19 @@
 			<name>GitHub GovernIB Maven Repository</name>
 			<url>https://governib.github.io/maven/maven/</url>
 		</repository>
+		
+		<repository>
+			<id>jboss-releases</id>
+			<name>JBoss Releases Repository</name>
+			<url>https://maven.repository.redhat.com/ga/</url>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>	
+		
 	</repositories>
 
 	<dependencies>
@@ -72,6 +85,10 @@
 		<url>https://github.com/GovernIB/enviafib</url>
 	</scm>
 	<properties>
+	
+	    <!-- Versions de JBoss -->
+	    <jboss-eap.version>7.2.6.GA</jboss-eap.version>
+	    <jboss-javaee.version>1.0.1.Final-redhat-00003</jboss-javaee.version>
 
 		<!-- Propietats que afecten els plugins -->
 		<maven.compiler.release>11</maven.compiler.release>
@@ -85,7 +102,7 @@
 		<javaee-api.version>8.0.1</javaee-api.version>
 		<activation.version>1.1.1</activation.version>
 		<mp-openapi.version>1.0.1</mp-openapi.version>
-		<jaxb-api.version>2.2.12</jaxb-api.version>
+		<jaxb-api.version>2.3.1</jaxb-api.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<keycloak.version>6.0.1</keycloak.version>
 
@@ -155,6 +172,37 @@
 				<artifactId>jaxb-api</artifactId>
 				<version>${jaxb-api.version}</version>
 			</dependency>
+			
+			
+			<dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>eap-runtime-artifacts</artifactId>
+				<version>${jboss-eap.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>jboss-eap-javaee8-with-tools</artifactId>
+				<version>${jboss-eap.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-8.0</artifactId>
+				<version>${jboss-javaee.version}</version>
+				<type>pom</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>javax.persistence-api</artifactId>
+				<version>2.2.0.redhat-1</version>
+				<scope>provided</scope>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
