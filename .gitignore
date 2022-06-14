@@ -91,3 +91,4 @@ hs_err_pid*
 /enviafib-back/src/main/resources/logicmissatges_es.properties
 /dependencies.txt
 /enviafib-model/.project
+/enviafib-ejb/email.properties
