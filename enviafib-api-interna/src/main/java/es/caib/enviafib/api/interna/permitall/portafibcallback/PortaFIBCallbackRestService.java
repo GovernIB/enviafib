@@ -72,7 +72,6 @@ public class PortaFIBCallbackRestService {
         try {
             long startTime = System.currentTimeMillis();
 
-            log.info("Thats my CALLBACK BABY");
             // TODO: Eliminar tots els log.info quan s'hagui implementat la gestió de la
             // resposta de PortaFIB
             log.info("XYZ **************************************************** XYZ ");
