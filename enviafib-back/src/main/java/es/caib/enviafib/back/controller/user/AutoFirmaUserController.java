@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.fundaciobit.apisib.apifirmasimple.v1.ApiFirmaWebSimple;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleAddFileToSignRequest;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleCommonInfo;
@@ -89,6 +90,9 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
         String transactionID = info[0];
         String redirectUrl = info[1];
 
+        log.info("Afegint transactionID[" + transactionID + "] => " + peticio.getPeticioID()
+                + "    dins mapping");
+
         peticioIdByTransactionId.put(transactionID, peticio.getPeticioID());
 
         request.getSession().setAttribute("redirectUrl", redirectUrl);
@@ -139,13 +143,17 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
     public ModelAndView finalProcesDeFirmaWeb(HttpServletRequest request,
             HttpServletResponse response, @PathVariable("transactionID")
             String transactionID) throws Exception {
-        
-        
-        
-        long peticioID = peticioIdByTransactionId.get(transactionID);
-        
+
+        log.info("Final Web  Consultant transactionID[" + transactionID + "] dins mapping ...");
+
+        Long peticioID = peticioIdByTransactionId.get(transactionID);
+
+        log.info("Consulta transactionID[" + transactionID + "] => " + peticioID);
+
         Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
-        
+
+        String errorMsg;
+        String errorException;
 
         ApiFirmaWebSimple api = null;
         try {
@@ -157,9 +165,6 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
             FirmaSimpleStatus transactionStatus = fullTransactionStatus.getTransactionStatus();
 
             int status = transactionStatus.getStatus();
-            
-            String errorMsg;
-            String errorException;
 
             switch (status) {
 
@@ -168,24 +173,21 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
                 {
                     errorException = "";
                     // XYZ ZZZ
-                    errorMsg =
-                            "S'ha rebut un estat inconsistent del proces de firma"
-                                    + " (inicialitzant). Pot ser s'hagi produït un error en el Plugin de Firma."
-                                    + " Consulti amb el seu administrador.";
+                    errorMsg = "S'ha rebut un estat inconsistent del proces de firma"
+                            + " (inicialitzant). Pot ser s'hagi produït un error en el Plugin de Firma."
+                            + " Consulti amb el seu administrador.";
                 }
                 break;
- 
 
                 case FirmaSimpleStatus.STATUS_IN_PROGRESS: // = 1;
-                 {
+                {
                     errorException = "";
                     // XYZ ZZZ
-                    errorMsg =
-                            "S'ha rebut un estat inconsistent del proces de firma"
-                                    + " (en progrés). Pot ser s'hagi produït un error en el Plugin de Firma."
-                                    + " Consulti amb el seu administrador.";
-                 }
-                 break;
+                    errorMsg = "S'ha rebut un estat inconsistent del proces de firma"
+                            + " (en progrés). Pot ser s'hagi produït un error en el Plugin de Firma."
+                            + " Consulti amb el seu administrador.";
+                }
+                break;
 
                 case FirmaSimpleStatus.STATUS_FINAL_ERROR: // = -1;
                 {
@@ -193,16 +195,11 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
                     String msg = "Error durant la realització de les firmes de la transacció "
                             + transactionID + ": " + transactionStatus.getErrorMessage();
                     String desc = transactionStatus.getErrorStackTrace();
-                    
-                    
-                    
+
                     errorException = desc;
                     // XYZ ZZZ
                     errorMsg = msg;
-                     
-                    
 
-                    
                 }
                 break;
 
@@ -212,7 +209,7 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
                     // XYZ ZZZ
                     errorMsg = "Durant el procés de firmes,"
                             + " l'usuari ha cancelat la transacció amb ID " + transactionID + ".";
-                    
+
                 }
                 break;
 
@@ -253,133 +250,99 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
                         log.info("Recuperada Informació de firma: "
                                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
 
-                        
-                        
                         pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-                        
-                        
+
                         FirmaSimpleFile fsf = fssr.getSignedFile();
-                         
-                        if (fsf == null) { 
+
+                        if (fsf == null) {
                             errorException = null;
                             // XYZ ZZZ
                             errorMsg = "No s'ha pogut recuperar el fitxer signat ...";
-                            
 
-                            
                         } else {
-                         
+
                             Fitxer fitxer = new FitxerJPA();
-                         
+
                             fitxer.setNom(fsf.getNom());
                             fitxer.setMime(fsf.getMime());
                             byte[] data = fsf.getData();
                             fitxer.setTamany(data.length);
-                            
-                            
+
                             fitxer = fitxerEjb.create(fitxer);
-                            
+
                             pet.setFitxerFirmatID(fitxer.getFitxerID());
-                            
-                            
+
                             pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
                             peticioLogicaEjb.update(pet);
-                            
-                            
-                            // XYZ ZZZ ZZZ  TODO
+
+                            // XYZ ZZZ ZZZ TODO
                             // XYZ ZZZ FALTA GUARDAR DADES DE LA FIRMA
-                            
-                            
-                            // XYZ ZZZ 
+
+                            // XYZ ZZZ
                             HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament");
-                            
-                            
-                            return new ModelAndView(new RedirectView(EnviarPeticioUserController.CONTEXT_WEB + "/view/" + pet.getPeticioID() , true));
-                            
-                            
+
+                            return new ModelAndView(
+                                    new RedirectView(EnviarPeticioUserController.CONTEXT_WEB
+                                            + "/view/" + pet.getPeticioID(), true));
 
                         }
-                        
-                        
-                        
-
-                       
 
                     } else {
                         errorException = null;
-                        // XYZ ZZZ
-                        errorMsg ="No s'ha retornat cap firma amb SIGNID=" + SIGNID;
+                        // XYZ ZZZ TRA
+                        errorMsg = "No s'ha retornat cap firma amb SIGNID=" + SIGNID;
                     }
                 } // Final Case Firma OK
-                    break;
-                    
-                    
-                    default:
-                        errorException = null;
-                        errorMsg = "Estat desconegut enviat per PortaIFB: " + status;
-                        
+                break;
 
-                
+                default:
+                    errorException = null;
+                    errorMsg = "Estat desconegut enviat per PortaIFB: " + status;
 
             } // Final Switch Global
-            
-            
-            
-           
-            // XYZ ZZZ
-   
-            
-            
-            log.error(errorMsg);
-             if (errorException != null) {
-                 log.error(errorException);
-             }
 
-             // ANAR A LLISTAT  DE PETICIONS
-            HtmlUtils.saveMessageError(request, errorMsg);
-            
-            
-            pet.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
-            
+        } catch (
 
-            return new ModelAndView(new RedirectView(EnviarPeticioUserController.CONTEXT_WEB + "/list" , true));
-            
-            
+        Exception e) {
 
-            // XYZ ZZZ TRA
-            /*
-            HtmlUtils.saveMessageError(request, "No s'han pogut recuperar informació de"
-                    + " resultats ja que segons el servidor la petició està Inicialitzant-se o En procés");
-                    */
-            
+            errorMsg = "Rebut un error intentant processar el resultat de la transacció de firma de fitxers: "
+                    + e.getMessage();
+            errorException = ExceptionUtils.getStackTrace(e);
 
-        }catch(
+        } finally {
+            try {
 
-    Exception e)
-    {
-
-        String missatge = "Rebut un error intentant processar el resultat de la transacció de firma de fitxers: "
-                + e.getMessage();
-        log.error(missatge, e);
-        HtmlUtils.saveMessageError(request, missatge);
-        return new ModelAndView(new RedirectView("/", true));
-
-    }finally
-    {
-        try {
-
-            if (api != null && transactionID != null) {
-                try {
-                    api.closeTransaction(transactionID);
-                } catch (Throwable th) {
-                    th.printStackTrace();
+                if (api != null && transactionID != null) {
+                    try {
+                        api.closeTransaction(transactionID);
+                    } catch (Throwable th) {
+                        th.printStackTrace();
+                    }
                 }
-            }
 
-        } catch (Exception e2) {
-            e2.printStackTrace();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
-    }
+
+        // XYZ ZZZ
+
+        log.error(errorMsg);
+        if (errorException != null) {
+            log.error(errorException);
+        }
+
+        // ANAR A LLISTAT DE PETICIONS
+        HtmlUtils.saveMessageError(request, errorMsg);
+
+        pet.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
+
+        // XYZ ZZZ FALTA POSAR ERROR DINS PETICIO
+
+        peticioLogicaEjb.update(pet);
+
+        return new ModelAndView(
+                new RedirectView(EnviarPeticioUserController.CONTEXT_WEB + "/list", true));
 
     }
 
@@ -461,8 +424,8 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
             log.info("signerEmail: ]" + signerEmail + "[");
 
             // XYZ ZZZ
-            final String reason = ""; // form.getMotiu();
-            final String location = ""; // form.getLocation();
+            final String reason = "Prova de reason"; // form.getMotiu();
+            final String location = null; // form.getLocation();
 
             // Només es suporta una firma
             final int signNumber = 1;
@@ -479,18 +442,9 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
             transactionID = apiWeb.getTransactionID(commonInfoSignature);
             log.info("TransactionID = |" + transactionID + "|");
 
-            // Map<String, InfoGlobal> peticions = new HashMap<String, InfoGlobal>();
-            // List<FirmaSimpleFileInfoSignature> fileInfoSignatureList = new
-            // ArrayList<FirmaSimpleFileInfoSignature>();
 
             FirmaSimpleFileInfoSignature fileInfoSignature;
             {
-
-                /*
-                 * CommonsMultipartFile cmf = fitxers[i];
-                 * 
-                 * if (cmf == null || cmf.isEmpty()) { continue; }
-                 */
 
                 // No ha de contenir caracters no suportats en URLs
                 final String signID = SIGNID;
@@ -521,20 +475,11 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
             final String returnUrl = absoluteControllerBase + "/finalWeb/" + transactionID;
 
             FirmaSimpleStartTransactionRequest startTransactionInfo;
-            startTransactionInfo = new FirmaSimpleStartTransactionRequest(transactionID,
-                    returnUrl + transactionID, view);
+            startTransactionInfo = new FirmaSimpleStartTransactionRequest(transactionID, returnUrl,
+                    view);
 
             String redirectUrl = apiWeb.startTransaction(startTransactionInfo);
 
-            // request.getSession().setAttribute("peticions", peticions);
-            /*
-             * if (isFullView) { ModelAndView mav = new ModelAndView("redirect:" +
-             * redirectUrl); return mav; } else {
-             * 
-             * 
-             * 
-             * }
-             */
             return new String[] { transactionID, redirectUrl };
 
         } catch (AbstractApisIBException e) {
