@@ -91,3 +91,9 @@ hs_err_pid*
 /enviafib-back/src/main/resources/logicmissatges_es.properties
 /dependencies.txt
 /enviafib-model/.project
+/enviafib-back/.settings/org.eclipse.m2e.core.prefs
+/enviafib-commons/.settings/org.eclipse.m2e.core.prefs
+/enviafib-ejb/.settings/org.eclipse.m2e.core.prefs
+/enviafib-model/.settings/org.eclipse.m2e.core.prefs
+/enviafib-persistence/.settings/org.eclipse.m2e.core.prefs
+/genapp.bat
