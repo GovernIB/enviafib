@@ -1,51 +1,78 @@
-package es.caib.enviafib.back.controller.restcallback;
+package es.caib.enviafib.api.interna.permitall.portafibcallback;
 
 import java.util.Locale;
 
 import javax.ejb.EJB;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.PeticioLogicaService;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 
  * @author fbosch
- *
+ * @author ptrias
+ * 
  */
-@RestController
-@RequestMapping("/cbrest/v1")
+@Path("/public/cbrest/v1")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+
+@OpenAPIDefinition(tags = @Tag(name = "Callback", description = "Callback de PortaFIB"))
 public class PortaFIBCallbackRestService {
 
-    private final Logger log = Logger.getLogger(getClass());
+    protected static final Logger log = Logger.getLogger(PortaFIBCallbackRestService.class);
 
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
-    @GetMapping("/versio")
+    @Operation(tags = "Callback", operationId = "event", summary = "Reb l'event de portafib realitza les accions corresponents", method = "post")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "Paràmetres incorrectes", content = @Content(mediaType = MediaType.APPLICATION_JSON)),
+            @ApiResponse(responseCode = "200", description = "Callback PortaFIB", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = PortaFIBEvent.class))) })
+
+    @GET
+    @Path("/versio")
     public String getVersio() {
         log.info("URL de CallBack Validada");
         return "1";
     }
 
-    @PostMapping("/event")
-    public Response event(@RequestBody PortaFIBEvent event) {
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/event")
+    public Response event(@RequestBody PortaFIBEvent eventRequest) {
+        return eventStatic(peticioLogicaEjb, eventRequest);
+    }
+
+    protected static Response eventStatic(PeticioLogicaService peticioLogicaEjb, PortaFIBEvent event) {
         try {
             long startTime = System.currentTimeMillis();
 
+            log.info("Thats my CALLBACK BABY");
             // TODO: Eliminar tots els log.info quan s'hagui implementat la gestió de la
             // resposta de PortaFIB
             log.info("XYZ **************************************************** XYZ ");
@@ -72,7 +99,7 @@ public class PortaFIBCallbackRestService {
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
                         peticioLogicaEjb.updatePublic(peticioTemp);
                     } else {
-                        log.error(I18NUtils.tradueix("callback.event.enproces.error") + IDsToString);
+//                        log.error(I18NUtils.tradueix("callback.event.enproces.error") + IDsToString);
                     }
                 }
                 break;
@@ -173,18 +200,25 @@ public class PortaFIBCallbackRestService {
             long endTime = System.currentTimeMillis();
             log.info("Event processat. Temps: " + (endTime - startTime));
 
-            return Response.status(200).entity("OK").build();
+            return Response.status(Response.Status.OK).entity("OK").build();
         } catch (I18NException e) {
             String msg = I18NCommonUtils.getMessage(e, new Locale("ca"));
             log.error(msg, e);
-            return Response.status(500).entity(msg).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
 
         } catch (Throwable th) {
             String msg = "Error desconegut processant event de Peticio de Firma REST: " + th.getMessage();
             log.error(msg, th);
-            return Response.status(500).entity(msg).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
         }
+
     }
+
+    // @GetMapping("/versio")
+//    public String getVersio() {
+//        log.info("URL de CallBack Validada");
+//        return "1";
+//    }
 
     // TODO: Ficar dins funcions:
     /*
