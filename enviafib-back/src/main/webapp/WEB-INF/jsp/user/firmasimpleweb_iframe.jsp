@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/views/html_header.jsp"%>
+
 
 <style>
     body{
@@ -13,4 +13,4 @@
 <iframe id="iframediv" src="${urlToIFrameCode}" width="600px" height="700px"></iframe>
 </center>
 
-<%@ include file="/WEB-INF/views/html_footer.jsp"%>
+

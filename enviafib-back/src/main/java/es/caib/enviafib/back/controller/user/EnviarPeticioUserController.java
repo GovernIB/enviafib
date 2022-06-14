@@ -48,10 +48,8 @@ import es.caib.enviafib.persistence.PeticioJPA;
 @RequestMapping(value = EnviarPeticioUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
 public class EnviarPeticioUserController extends PeticioController {
-    
-    
+
     public static final String CONTEXT_WEB = "/user/peticio";
-    
 
     @EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
     protected es.caib.enviafib.ejb.UsuariService usuariEjb;
@@ -80,31 +78,42 @@ public class EnviarPeticioUserController extends PeticioController {
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
         String userName = request.getRemoteUser();
-        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
+        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID,
+                UsuariFields.USERNAME.equal(userName));
         return PeticioFields.SOLICITANTID.equal(userId);
     }
 
     @Override
-    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
-            throws I18NException {
+    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
+            ModelAndView mav) throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
         peticioForm.getPeticio().setDatacreacio(new Timestamp(System.currentTimeMillis()));
         peticioForm.getPeticio().setEstat(Constants.ESTAT_PETICIO_CREADA);
         peticioForm.addReadOnlyField(PeticioFields.DATACREACIO);
         String userName = request.getRemoteUser();
-        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
+        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID,
+                UsuariFields.USERNAME.equal(userName));
         peticioForm.getPeticio().setSolicitantID(userId);
         peticioForm.addReadOnlyField(SOLICITANTID);
-        peticioForm.addHiddenField(FITXERFIRMATID);
+
+        if (peticioForm.isNou()) {
+            peticioForm.addHiddenField(FITXERFIRMATID);
+            peticioForm.addHiddenField(ESTAT);
+        } else {
+            if (peticioForm.getPeticio().getFitxerFirmatID() == null) {
+                peticioForm.addHiddenField(FITXERFIRMATID);
+            }
+        }
+
         peticioForm.addHiddenField(PETICIOPORTAFIB);
-        peticioForm.addHiddenField(ESTAT);
+
         return peticioForm;
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request, ModelAndView mav,
-            PeticioFilterForm peticioFilterForm, List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap,
-            Where where) throws I18NException {
+    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
+            ModelAndView mav, PeticioFilterForm peticioFilterForm, List<Peticio> list,
+            Map<Field<?>, GroupByItem> _groupByItemsMap, Where where) throws I18NException {
         if (peticioFilterForm.isHiddenField(ESTAT) && !peticioFilterForm.isGroupByField(ESTAT)) {
             return EMPTY_STRINGKEYVALUE_LIST;
         }
@@ -113,8 +122,8 @@ public class EnviarPeticioUserController extends PeticioController {
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request, ModelAndView mav, Where where)
-            throws I18NException {
+    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
+            ModelAndView mav, Where where) throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         for (int i = 0; i < Constants.ESTATS_PETICIO.length; i++) {
             __tmp.add(new StringKeyValue(String.valueOf(Constants.ESTATS_PETICIO[i]),
@@ -124,8 +133,8 @@ public class EnviarPeticioUserController extends PeticioController {
     }
 
     @Override
-    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
-            throws I18NException {
+    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav,
+            HttpServletRequest request) throws I18NException {
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.setVisibleExportList(false);
@@ -139,8 +148,8 @@ public class EnviarPeticioUserController extends PeticioController {
     }
 
     @Override
-    public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
-            throws I18NException {
+    public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm,
+            List<Peticio> list) throws I18NException {
 
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
@@ -154,36 +163,45 @@ public class EnviarPeticioUserController extends PeticioController {
 
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", "genapp.edit",
-                            getContextWeb() + "/" + peticioID + "/edit/", "btn-warning"));
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
-                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
+                            new AdditionalButton("fas fa-edit", "genapp.edit",
+                                    getContextWeb() + "/" + peticioID + "/edit/", "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
+                                    "javascript: openModal('" + request.getContextPath()
+                                            + getContextWeb() + "/" + peticioID
+                                            + "/delete','show')",
                                     "btn-danger"));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play",
-                            "peticio.posarenmarxa", getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-play", "peticio.posarenmarxa",
+                                    getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 break;
                 case Constants.ESTAT_PETICIO_FIRMADA: {
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
-                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
+                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
+                                    "javascript: openModal('" + request.getContextPath()
+                                            + getContextWeb() + "/" + peticioID
+                                            + "/delete','show')",
                                     "btn-danger"));
 
                     long fitxerFirmatId = peticio.getFitxerFirmatID();
                     Fitxer file = fitxerEjb.findByPrimaryKey(fitxerFirmatId);
 
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
-                            "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-file-download", "descarregar_firma",
+                                    FileDownloadController.fileUrl(file), "btn-warning"));
                 }
                 break;
 
                 case Constants.ESTAT_PETICIO_REBUTJADA:
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
-                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
+                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
+                                    "javascript: openModal('" + request.getContextPath()
+                                            + getContextWeb() + "/" + peticioID
+                                            + "/delete','show')",
                                     "btn-danger"));
                 break;
             }
@@ -192,11 +210,13 @@ public class EnviarPeticioUserController extends PeticioController {
 
     @RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
     public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioID") Long peticioID) {
+            @PathVariable("peticioID")
+            Long peticioID) {
 
         try {
             peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage());
-            HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticioID + " enviada correctament.");
+            HtmlUtils.saveMessageSuccess(request,
+                    "Peticio amb Id: " + peticioID + " enviada correctament.");
         } catch (LoginException e) {
             String msg = "La sessio de l'usuari ha caducat.";
             HtmlUtils.saveMessageError(request, msg);
@@ -212,16 +232,16 @@ public class EnviarPeticioUserController extends PeticioController {
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request, ModelAndView mav, Where where)
-            throws I18NException {
+    public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+            ModelAndView mav, Where where) throws I18NException {
 
-        return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID,
-                Where.AND(where, Where.OR(IdiomaFields.IDIOMAID.equal("es"), IdiomaFields.IDIOMAID.equal("ca"))));
+        return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, Where.AND(where,
+                Where.OR(IdiomaFields.IDIOMAID.equal("es"), IdiomaFields.IDIOMAID.equal("ca"))));
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request, ModelAndView mav,
-            Where where) throws I18NException {
+    public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+            ModelAndView mav, Where where) throws I18NException {
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:
 
