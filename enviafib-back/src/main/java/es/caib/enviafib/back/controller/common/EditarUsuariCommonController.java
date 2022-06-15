@@ -65,7 +65,9 @@ public class EditarUsuariCommonController extends UsuariController {
 
 		userForm.setCancelButtonVisible(false);
 		userForm.setDeleteButtonVisible(false);
-
+		if(userForm.getUsuari().getUsername() != null) {
+		    userForm.addReadOnlyField(USERNAME);
+		}
 		return userForm;
 	}
 
