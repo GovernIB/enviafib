@@ -45,9 +45,9 @@ import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
  *
  */
 @Controller
-@RequestMapping(value = EnviarPeticioUserController.CONTEXT_WEB)
+@RequestMapping(value = LlistatPeticionsUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class EnviarPeticioUserController extends AbstractPeticioUserController {
+public class LlistatPeticionsUserController extends AbstractPeticioUserController {
 
     public static final String CONTEXT_WEB = "/user/peticio";
 

@@ -292,7 +292,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                             HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament");
 
                             return new ModelAndView(
-                                    new RedirectView(EnviarPeticioUserController.CONTEXT_WEB
+                                    new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB
                                             + "/view/" + pet.getPeticioID(), true));
 
                         }
@@ -352,7 +352,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         peticioLogicaEjb.update(pet);
 
         return new ModelAndView(
-                new RedirectView(EnviarPeticioUserController.CONTEXT_WEB + "/list", true));
+                new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
 
     }
 
