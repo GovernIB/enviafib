@@ -332,4 +332,9 @@ public class EnviarPeticioUserController extends PeticioController {
         return tmpList;
     }
 
+    @Override
+    public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
+        peticioLogicaEjb.deleteFull(peticio);
+      }
+
 }
