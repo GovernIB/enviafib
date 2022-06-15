@@ -22,7 +22,6 @@ import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.web.util.UrlUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +43,6 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
-import es.caib.enviafib.persistence.IdiomaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
@@ -115,7 +113,7 @@ public class EnviarPeticioUserController extends PeticioController {
             }
         }
 
-        peticioForm.addHiddenField(PETICIOPORTAFIB);
+        peticioForm.addHiddenField(PETICIOPORTAFIRMES);
         
         //Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context autmaticament.
         peticioForm.addHiddenField(IDIOMAID);
@@ -158,7 +156,7 @@ public class EnviarPeticioUserController extends PeticioController {
             peticioFilterForm.addHiddenField(SOLICITANTID);
             peticioFilterForm.addHiddenField(PETICIOID);
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
-            peticioFilterForm.addHiddenField(PETICIOPORTAFIB);
+            peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
             peticioFilterForm.setAttachedAdditionalJspCode(true);
         }
         return peticioFilterForm;
@@ -208,9 +206,6 @@ public class EnviarPeticioUserController extends PeticioController {
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
                             "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
-
-                    String emailMessage = StringEscapeUtils
-                            .escapeJavaScript("Introdueix l'email al que vols enviar el document signat: ");
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
                             "email_firma", "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));

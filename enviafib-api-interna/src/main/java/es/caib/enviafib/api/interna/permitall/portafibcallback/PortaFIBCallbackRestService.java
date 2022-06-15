@@ -89,7 +89,7 @@ public class PortaFIBCallbackRestService {
 
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
-                            PeticioFields.PETICIOPORTAFIB.equal(portafibID));
+                            PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
                     String IDsToString = " peticioID:" + peticioID + ", portafibID:" + portafibID;
 
@@ -136,7 +136,7 @@ public class PortaFIBCallbackRestService {
 
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
-                            PeticioFields.PETICIOPORTAFIB.equal(portafibID));
+                            PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
                     if (peticioID != null) {
                         String languageUI = "ca";
@@ -160,7 +160,7 @@ public class PortaFIBCallbackRestService {
 
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
-                            PeticioFields.PETICIOPORTAFIB.equal(portafibID));
+                            PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
                     if (peticioID != null) {
                         String languageUI = "ca";

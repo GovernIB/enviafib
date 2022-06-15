@@ -70,6 +70,10 @@ public class PeticioValidator<I extends Peticio>
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMADOC)));
 
+    __vr.rejectIfEmptyOrWhitespace(__target__,TIPUS, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
+
     // Check size
     if (__vr.getFieldErrorCount(IDIOMAID) == 0) {
       java.lang.String __idiomaid = __target__.getIdiomaID();
@@ -111,6 +115,30 @@ public class PeticioValidator<I extends Peticio>
       if (__idiomadoc!= null && __idiomadoc.length() > 30) {
         __vr.rejectValue(IDIOMADOC, "genapp.validation.sizeexceeds",
             new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMADOC)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(30)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ERRORMSG) == 0) {
+      java.lang.String __errormsg = __target__.getErrorMsg();
+      if (__errormsg!= null && __errormsg.length() > 255) {
+        __vr.rejectValue(ERRORMSG, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ERRORMSG)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ERROREXCEPTION) == 0) {
+      java.lang.String __errorexception = __target__.getErrorException();
+      if (__errorexception!= null && __errorexception.length() > 2147483647) {
+        __vr.rejectValue(ERROREXCEPTION, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ERROREXCEPTION)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(2147483647)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(PETICIOPORTAFIRMES) == 0) {
+      java.lang.String __peticioportafirmes = __target__.getPeticioPortafirmes();
+      if (__peticioportafirmes!= null && __peticioportafirmes.length() > 255) {
+        __vr.rejectValue(PETICIOPORTAFIRMES, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(PETICIOPORTAFIRMES)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
       }
     }
 

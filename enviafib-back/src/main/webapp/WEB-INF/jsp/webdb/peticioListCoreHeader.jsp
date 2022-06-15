@@ -39,9 +39,6 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.FITXERFIRMATID)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.FITXERFIRMATID)}</th>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIB)}">
-        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.PETICIOPORTAFIB)}</th>
-        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.TIPUSDOCUMENTAL)}</th>
         </c:if>
@@ -50,6 +47,21 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.INFOSIGNATURAID)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.INFOSIGNATURAID)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TIPUS)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.TIPUS)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ERRORMSG)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ERRORMSG)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ERROREXCEPTION)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ERROREXCEPTION)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATAFINAL)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.DATAFINAL)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIRMES)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.PETICIOPORTAFIRMES)}</th>
         </c:if>
 
 

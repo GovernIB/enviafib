@@ -29,9 +29,6 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.Long getFitxerFirmatID();
 	public void setFitxerFirmatID(java.lang.Long _fitxerFirmatID_);
 
-	public java.lang.Long getPeticioPortafib();
-	public void setPeticioPortafib(java.lang.Long _peticioPortafib_);
-
 	public java.lang.String getTipusdocumental();
 	public void setTipusdocumental(java.lang.String _tipusdocumental_);
 
@@ -40,6 +37,21 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 
 	public java.lang.Long getInfosignaturaid();
 	public void setInfosignaturaid(java.lang.Long _infosignaturaid_);
+
+	public int getTipus();
+	public void setTipus(int _tipus_);
+
+	public java.lang.String getErrorMsg();
+	public void setErrorMsg(java.lang.String _errorMsg_);
+
+	public java.lang.String getErrorException();
+	public void setErrorException(java.lang.String _errorException_);
+
+	public java.sql.Timestamp getDataFinal();
+	public void setDataFinal(java.sql.Timestamp _dataFinal_);
+
+	public java.lang.String getPeticioPortafirmes();
+	public void setPeticioPortafirmes(java.lang.String _peticioPortafirmes_);
 
   // Fitxer
   public <F extends Fitxer> F getFitxer();
