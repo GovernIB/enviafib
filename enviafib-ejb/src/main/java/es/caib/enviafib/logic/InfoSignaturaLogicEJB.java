@@ -1,7 +1,6 @@
 
 package es.caib.enviafib.logic;
 
-// NO MODIFICAR - DO NOT MODIFY;
 import javax.ejb.Stateless;
 import javax.annotation.security.PermitAll;
 import org.fundaciobit.genapp.common.i18n.I18NException;
@@ -10,6 +9,11 @@ import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
 import es.caib.enviafib.ejb.InfoSignaturaEJB;
 
+/**
+ * 
+ * @author ptrias
+ *
+ */
 @Stateless
 public class InfoSignaturaLogicEJB extends InfoSignaturaEJB implements InfoSignaturaLogicService {
 
