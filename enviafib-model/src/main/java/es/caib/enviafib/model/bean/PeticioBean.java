@@ -19,10 +19,14 @@ private static final long serialVersionUID = -515854961L;
 	java.lang.String destinatarinif;
 	long estat;
 	java.lang.Long fitxerFirmatID;
-	java.lang.Long peticioPortafib;
 	java.lang.String tipusdocumental;
 	java.lang.String idiomadoc;
 	java.lang.Long infosignaturaid;
+	int tipus;
+	java.lang.String errorMsg;
+	java.lang.String errorException;
+	java.sql.Timestamp dataFinal;
+	java.lang.String peticioPortafirmes;
 
 
   /** Constructor Buit */
@@ -30,7 +34,7 @@ private static final long serialVersionUID = -515854961L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid) {
+  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.sql.Timestamp dataFinal , java.lang.String peticioPortafirmes) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -40,13 +44,17 @@ private static final long serialVersionUID = -515854961L;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
-    this.peticioPortafib=peticioPortafib;
     this.tipusdocumental=tipusdocumental;
     this.idiomadoc=idiomadoc;
     this.infosignaturaid=infosignaturaid;
+    this.tipus=tipus;
+    this.errorMsg=errorMsg;
+    this.errorException=errorException;
+    this.dataFinal=dataFinal;
+    this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioBean(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.Long peticioPortafib , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid) {
+  public PeticioBean(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.sql.Timestamp dataFinal , java.lang.String peticioPortafirmes) {
     this.titolID=titolID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -55,13 +63,17 @@ private static final long serialVersionUID = -515854961L;
     this.destinatarinif=destinatarinif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
-    this.peticioPortafib=peticioPortafib;
     this.tipusdocumental=tipusdocumental;
     this.idiomadoc=idiomadoc;
     this.infosignaturaid=infosignaturaid;
+    this.tipus=tipus;
+    this.errorMsg=errorMsg;
+    this.errorException=errorException;
+    this.dataFinal=dataFinal;
+    this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor dels valors Not Null */
-  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc) {
+  public PeticioBean(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc , int tipus) {
     this.titolID=titolID;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
@@ -72,6 +84,7 @@ private static final long serialVersionUID = -515854961L;
     this.estat=estat;
     this.tipusdocumental=tipusdocumental;
     this.idiomadoc=idiomadoc;
+    this.tipus=tipus;
 }
   public PeticioBean(Peticio __bean) {
     this.setTitolID(__bean.getTitolID());
@@ -83,10 +96,14 @@ private static final long serialVersionUID = -515854961L;
     this.setDestinatarinif(__bean.getDestinatarinif());
     this.setEstat(__bean.getEstat());
     this.setFitxerFirmatID(__bean.getFitxerFirmatID());
-    this.setPeticioPortafib(__bean.getPeticioPortafib());
     this.setTipusdocumental(__bean.getTipusdocumental());
     this.setIdiomadoc(__bean.getIdiomadoc());
     this.setInfosignaturaid(__bean.getInfosignaturaid());
+    this.setTipus(__bean.getTipus());
+    this.setErrorMsg(__bean.getErrorMsg());
+    this.setErrorException(__bean.getErrorException());
+    this.setDataFinal(__bean.getDataFinal());
+    this.setPeticioPortafirmes(__bean.getPeticioPortafirmes());
     // Fitxer
     this.setFitxer(FitxerBean.toBean(__bean.getFitxer()));
     // Fitxer
@@ -156,13 +173,6 @@ private static final long serialVersionUID = -515854961L;
 		this.fitxerFirmatID = _fitxerFirmatID_;
 	};
 
-	public java.lang.Long getPeticioPortafib() {
-		return(peticioPortafib);
-	};
-	public void setPeticioPortafib(java.lang.Long _peticioPortafib_) {
-		this.peticioPortafib = _peticioPortafib_;
-	};
-
 	public java.lang.String getTipusdocumental() {
 		return(tipusdocumental);
 	};
@@ -184,6 +194,41 @@ private static final long serialVersionUID = -515854961L;
 		this.infosignaturaid = _infosignaturaid_;
 	};
 
+	public int getTipus() {
+		return(tipus);
+	};
+	public void setTipus(int _tipus_) {
+		this.tipus = _tipus_;
+	};
+
+	public java.lang.String getErrorMsg() {
+		return(errorMsg);
+	};
+	public void setErrorMsg(java.lang.String _errorMsg_) {
+		this.errorMsg = _errorMsg_;
+	};
+
+	public java.lang.String getErrorException() {
+		return(errorException);
+	};
+	public void setErrorException(java.lang.String _errorException_) {
+		this.errorException = _errorException_;
+	};
+
+	public java.sql.Timestamp getDataFinal() {
+		return(dataFinal);
+	};
+	public void setDataFinal(java.sql.Timestamp _dataFinal_) {
+		this.dataFinal = _dataFinal_;
+	};
+
+	public java.lang.String getPeticioPortafirmes() {
+		return(peticioPortafirmes);
+	};
+	public void setPeticioPortafirmes(java.lang.String _peticioPortafirmes_) {
+		this.peticioPortafirmes = _peticioPortafirmes_;
+	};
+
 
 
   // ======================================
@@ -200,10 +245,14 @@ private static final long serialVersionUID = -515854961L;
     __tmp.setDestinatarinif(__bean.getDestinatarinif());
     __tmp.setEstat(__bean.getEstat());
     __tmp.setFitxerFirmatID(__bean.getFitxerFirmatID());
-    __tmp.setPeticioPortafib(__bean.getPeticioPortafib());
     __tmp.setTipusdocumental(__bean.getTipusdocumental());
     __tmp.setIdiomadoc(__bean.getIdiomadoc());
     __tmp.setInfosignaturaid(__bean.getInfosignaturaid());
+    __tmp.setTipus(__bean.getTipus());
+    __tmp.setErrorMsg(__bean.getErrorMsg());
+    __tmp.setErrorException(__bean.getErrorException());
+    __tmp.setDataFinal(__bean.getDataFinal());
+    __tmp.setPeticioPortafirmes(__bean.getPeticioPortafirmes());
     // Fitxer
     __tmp.setFitxer(FitxerBean.toBean(__bean.getFitxer()));
     // Fitxer

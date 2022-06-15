@@ -198,24 +198,6 @@
 
 
         </c:if>
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.PETICIOPORTAFIB)}">
-            <%-- FILTRE NUMERO --%>      
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="peticio.peticioPortafib" />:</span>
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
-              
-              <form:input cssClass="input-append input-small" path="peticioPortafibDesde" />
-
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
-
-              <form:input cssClass="input-append input-small search-query" path="peticioPortafibFins" />
-
-            </div>
-
-
-        </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.TIPUSDOCUMENTAL)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
@@ -256,6 +238,113 @@
 
               <form:input cssClass="input-append input-small search-query" path="infosignaturaidFins" />
 
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.TIPUS)}">
+            <%-- FILTRE NUMERO --%>      
+            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+              <span class="add-on"><fmt:message key="peticio.tipus" />:</span>
+
+              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
+              
+              <form:input cssClass="input-append input-small" path="tipusDesde" />
+
+
+              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
+
+              <form:input cssClass="input-append input-small search-query" path="tipusFins" />
+
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ERRORMSG)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.errorMsg" var="errorMsg" />
+              <fmt:message key="genapp.form.searchby" var="cercapererrorMsg" >                
+                 <fmt:param value="${errorMsg}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${errorMsg}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapererrorMsg}" path="errorMsg" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ERROREXCEPTION)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.errorException" var="errorException" />
+              <fmt:message key="genapp.form.searchby" var="cercapererrorException" >                
+                 <fmt:param value="${errorException}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${errorException}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapererrorException}" path="errorException" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.DATAFINAL)}">
+<%-- FILTRE DATE-TIME --%>
+            <div class="input-group" style="padding-right:4px;padding-bottom:4px;align-items:center;">
+              <span class="add-on"><fmt:message key="peticio.dataFinal" />:</span>
+              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
+            <div class="form-group">
+                <div class="input-group date" id="dataFinalDesde" data-target-input="nearest">
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFinalDesde" path="dataFinalDesde" />
+                    <c:if test="${!false}" >
+                    <div class="input-group-append"  data-target="#dataFinalDesde"  data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                    </c:if>
+                </div>
+            </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#dataFinalDesde').datetimepicker({
+                    format: '${gen:getJSDateTimePattern()}',
+                    locale: '${lang}',
+                    icons: {
+                       time: 'far fa-clock'
+                    }
+                });
+            });
+        </script>              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
+            <div class="form-group">
+                <div class="input-group date" id="dataFinalFins" data-target-input="nearest">
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFinalFins" path="dataFinalFins" />
+                    <c:if test="${!false}" >
+                    <div class="input-group-append"  data-target="#dataFinalFins"  data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                    </c:if>
+                </div>
+            </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#dataFinalFins').datetimepicker({
+                    format: '${gen:getJSDateTimePattern()}',
+                    locale: '${lang}',
+                    icons: {
+                       time: 'far fa-clock'
+                    }
+                });
+            });
+        </script>            </div>
+
+    
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.PETICIOPORTAFIRMES)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.peticioPortafirmes" var="peticioPortafirmes" />
+              <fmt:message key="genapp.form.searchby" var="cercaperpeticioPortafirmes" >                
+                 <fmt:param value="${peticioPortafirmes}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${peticioPortafirmes}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperpeticioPortafirmes}" path="peticioPortafirmes" />
             </div>
 
 

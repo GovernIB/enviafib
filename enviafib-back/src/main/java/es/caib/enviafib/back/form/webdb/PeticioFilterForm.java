@@ -153,28 +153,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.Long peticioPortafibDesde;
-
-  public java.lang.Long getPeticioPortafibDesde() {
-    return this.peticioPortafibDesde;
-  }
-
-  public void setPeticioPortafibDesde(java.lang.Long peticioPortafibDesde) {
-    this.peticioPortafibDesde = peticioPortafibDesde;
-  }
-
-
-  private java.lang.Long peticioPortafibFins;
-
-  public java.lang.Long getPeticioPortafibFins() {
-    return this.peticioPortafibFins;
-  }
-
-  public void setPeticioPortafibFins(java.lang.Long peticioPortafibFins) {
-    this.peticioPortafibFins = peticioPortafibFins;
-  }
-
-
   private java.lang.String tipusdocumental;
 
   public java.lang.String getTipusdocumental() {
@@ -219,6 +197,83 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.Integer tipusDesde;
+
+  public java.lang.Integer getTipusDesde() {
+    return this.tipusDesde;
+  }
+
+  public void setTipusDesde(java.lang.Integer tipusDesde) {
+    this.tipusDesde = tipusDesde;
+  }
+
+
+  private java.lang.Integer tipusFins;
+
+  public java.lang.Integer getTipusFins() {
+    return this.tipusFins;
+  }
+
+  public void setTipusFins(java.lang.Integer tipusFins) {
+    this.tipusFins = tipusFins;
+  }
+
+
+  private java.lang.String errorMsg;
+
+  public java.lang.String getErrorMsg() {
+    return this.errorMsg;
+  }
+
+  public void setErrorMsg(java.lang.String errorMsg) {
+    this.errorMsg = errorMsg;
+  }
+
+
+  private java.lang.String errorException;
+
+  public java.lang.String getErrorException() {
+    return this.errorException;
+  }
+
+  public void setErrorException(java.lang.String errorException) {
+    this.errorException = errorException;
+  }
+
+
+  private java.sql.Timestamp dataFinalDesde;
+
+  public java.sql.Timestamp getDataFinalDesde() {
+    return this.dataFinalDesde;
+  }
+
+  public void setDataFinalDesde(java.sql.Timestamp dataFinalDesde) {
+    this.dataFinalDesde = dataFinalDesde;
+  }
+
+
+  private java.sql.Timestamp dataFinalFins;
+
+  public java.sql.Timestamp getDataFinalFins() {
+    return this.dataFinalFins;
+  }
+
+  public void setDataFinalFins(java.sql.Timestamp dataFinalFins) {
+    this.dataFinalFins = dataFinalFins;
+  }
+
+
+  private java.lang.String peticioPortafirmes;
+
+  public java.lang.String getPeticioPortafirmes() {
+    return this.peticioPortafirmes;
+  }
+
+  public void setPeticioPortafirmes(java.lang.String peticioPortafirmes) {
+    this.peticioPortafirmes = peticioPortafirmes;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -236,12 +291,17 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.destinatarinif = __toClone.destinatarinif;
     this.estatDesde = __toClone.estatDesde;
     this.estatFins = __toClone.estatFins;
-    this.peticioPortafibDesde = __toClone.peticioPortafibDesde;
-    this.peticioPortafibFins = __toClone.peticioPortafibFins;
     this.tipusdocumental = __toClone.tipusdocumental;
     this.idiomadoc = __toClone.idiomadoc;
     this.infosignaturaidDesde = __toClone.infosignaturaidDesde;
     this.infosignaturaidFins = __toClone.infosignaturaidFins;
+    this.tipusDesde = __toClone.tipusDesde;
+    this.tipusFins = __toClone.tipusFins;
+    this.errorMsg = __toClone.errorMsg;
+    this.errorException = __toClone.errorException;
+    this.dataFinalDesde = __toClone.dataFinalDesde;
+    this.dataFinalFins = __toClone.dataFinalFins;
+    this.peticioPortafirmes = __toClone.peticioPortafirmes;
     this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
@@ -249,18 +309,19 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.mapOfValuesForTipusdocumental = __toClone.mapOfValuesForTipusdocumental;
     this.mapOfValuesForIdiomadoc = __toClone.mapOfValuesForIdiomadoc;
     this.mapOfInfoSignaturaForInfosignaturaid = __toClone.mapOfInfoSignaturaForInfosignaturaid;
+    this.mapOfValuesForTipus = __toClone.mapOfValuesForTipus;
   }
   
   /* ========= UTILS ========== */
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] {  }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { ERRORMSG ,ERROREXCEPTION }));
   }
 
   @Override
   public List<Field<?>> getDefaultGroupByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] {  }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { TIPUS }));
   }
 
 
@@ -363,6 +424,18 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setMapOfInfoSignaturaForInfosignaturaid(Map<String, String> mapOfInfoSignaturaForInfosignaturaid) {
     this.mapOfInfoSignaturaForInfosignaturaid = mapOfInfoSignaturaForInfosignaturaid;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForTipus;
+
+  public Map<String, String> getMapOfValuesForTipus() {
+    return this.mapOfValuesForTipus;
+  }
+
+  public void setMapOfValuesForTipus(Map<String, String> mapOfValuesForTipus) {
+    this.mapOfValuesForTipus = mapOfValuesForTipus;
   }
 
 

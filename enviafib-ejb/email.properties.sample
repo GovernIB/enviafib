@@ -1,0 +1,4 @@
+sender=noreply.sample@fundaciobit.org
+user=setuser
+pass=setpassword
+destinatary=samplemail@fundaciobit.org

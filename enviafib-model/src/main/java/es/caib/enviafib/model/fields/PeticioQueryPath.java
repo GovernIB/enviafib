@@ -47,10 +47,6 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new LongField(getQueryPath(), PeticioFields.FITXERFIRMATID);
   }
 
-  public LongField PETICIOPORTAFIB() {
-    return new LongField(getQueryPath(), PeticioFields.PETICIOPORTAFIB);
-  }
-
   public StringField TIPUSDOCUMENTAL() {
     return new StringField(getQueryPath(), PeticioFields.TIPUSDOCUMENTAL);
   }
@@ -61,6 +57,26 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
 
   public LongField INFOSIGNATURAID() {
     return new LongField(getQueryPath(), PeticioFields.INFOSIGNATURAID);
+  }
+
+  public IntegerField TIPUS() {
+    return new IntegerField(getQueryPath(), PeticioFields.TIPUS);
+  }
+
+  public StringField ERRORMSG() {
+    return new StringField(getQueryPath(), PeticioFields.ERRORMSG);
+  }
+
+  public StringField ERROREXCEPTION() {
+    return new StringField(getQueryPath(), PeticioFields.ERROREXCEPTION);
+  }
+
+  public TimestampField DATAFINAL() {
+    return new TimestampField(getQueryPath(), PeticioFields.DATAFINAL);
+  }
+
+  public StringField PETICIOPORTAFIRMES() {
+    return new StringField(getQueryPath(), PeticioFields.PETICIOPORTAFIRMES);
   }
 
 

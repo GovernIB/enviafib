@@ -42,7 +42,6 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.model.entity.Fitxer;
-import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -91,7 +90,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         } catch (Exception e) {
             throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
         }
-        peticio.setPeticioPortafib(idPortafib);
+        peticio.setPeticioPortafirmes(String.valueOf(idPortafib));
         this.update(peticio);
     }
 
@@ -100,7 +99,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throws I18NException, AbstractApisIBException, IOException {
 
         Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
-        long portafibID = peticio.getPeticioPortafib();
+        long portafibID = Long.valueOf(peticio.getPeticioPortafirmes());
 
         FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafibID, languageUI);
 
@@ -131,8 +130,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throws I18NException, AbstractApisIBException {
 
         Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
-        long portafibID = peticio.getPeticioPortafib();
-
+        long portafibID = Long.valueOf(peticio.getPeticioPortafirmes());
+        
         FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafibID, languageUI);
         FirmaAsyncSimpleSignedFileInfo info = firma.getSignedFileInfo();
 

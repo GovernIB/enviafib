@@ -83,11 +83,6 @@
             </c:if>
            </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIB)}">
-          <td>
-          ${peticio.peticioPortafib}
-          </td>
-        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
           <td>
           <c:set var="tmp">${peticio.tipusdocumental}</c:set>
@@ -110,6 +105,32 @@
           <c:if test="${not empty tmp}">
           ${__theFilterForm.mapOfInfoSignaturaForInfosignaturaid[tmp]}
           </c:if>
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TIPUS)}">
+          <td>
+          <c:set var="tmp">${peticio.tipus}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForTipus[tmp]}
+          </c:if>
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ERRORMSG)}">
+          <td>
+          ${peticio.errorMsg}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ERROREXCEPTION)}">
+          <td>
+          ${peticio.errorException}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATAFINAL)}">
+          <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.dataFinal}" /></td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIRMES)}">
+          <td>
+          ${peticio.peticioPortafirmes}
           </td>
         </c:if>
 

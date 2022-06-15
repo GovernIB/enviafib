@@ -35,6 +35,7 @@ public class PeticioForm extends EnviaFIBBaseForm {
     this.listOfValuesForTipusdocumental = __toClone.listOfValuesForTipusdocumental;
     this.listOfValuesForIdiomadoc = __toClone.listOfValuesForIdiomadoc;
     this.listOfInfoSignaturaForInfosignaturaid = __toClone.listOfInfoSignaturaForInfosignaturaid;
+    this.listOfValuesForTipus = __toClone.listOfValuesForTipus;
   }
   
   public PeticioForm(PeticioJPA peticio, boolean nou) {
@@ -167,6 +168,18 @@ public class PeticioForm extends EnviaFIBBaseForm {
 
   public void setListOfInfoSignaturaForInfosignaturaid(List<StringKeyValue> listOfInfoSignaturaForInfosignaturaid) {
     this.listOfInfoSignaturaForInfosignaturaid = listOfInfoSignaturaForInfosignaturaid;
+  }
+
+
+
+  private List<StringKeyValue> listOfValuesForTipus;
+
+  public List<StringKeyValue> getListOfValuesForTipus() {
+    return this.listOfValuesForTipus;
+  }
+
+  public void setListOfValuesForTipus(List<StringKeyValue> listOfValuesForTipus) {
+    this.listOfValuesForTipus = listOfValuesForTipus;
   }
 
 

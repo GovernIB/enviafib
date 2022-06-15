@@ -292,24 +292,6 @@
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.PETICIOPORTAFIB)}">
-        <tr id="peticio_peticioPortafib_rowid">
-          <td id="peticio_peticioPortafib_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.PETICIOPORTAFIB])?'peticio.peticioPortafib':__theForm.labels[PeticioFields.PETICIOPORTAFIB]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[PeticioFields.PETICIOPORTAFIB]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.PETICIOPORTAFIB]}" ></i>
-              </c:if>
-            </td>
-          <td id="peticio_peticioPortafib_columnvalueid">
-            <form:errors path="peticio.peticioPortafib" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIB)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIB)? ' uneditable-input' : ''}"  style=""  path="peticio.peticioPortafib"   />
-
-           </td>
-        </tr>
-        </c:if>
-        
         <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
         <tr id="peticio_tipusdocumental_rowid">
           <td id="peticio_tipusdocumental_columnlabelid">
@@ -408,6 +390,148 @@
             </c:if>
           </form:select>
           </c:if>
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.TIPUS)}">
+        <tr id="peticio_tipus_rowid">
+          <td id="peticio_tipus_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.TIPUS])?'peticio.tipus':__theForm.labels[PeticioFields.TIPUS]}" /> &nbsp;(*)
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.TIPUS]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.TIPUS]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_tipus_columnvalueid">
+          <form:errors path="peticio.tipus" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.TIPUS)}" >
+          <form:hidden path="peticio.tipus"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.tipus,__theForm.listOfValuesForTipus)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.TIPUS)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="peticio.tipus">
+            <c:forEach items="${__theForm.listOfValuesForTipus}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+          </form:select>
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.ERRORMSG)}">
+        <tr id="peticio_errorMsg_rowid">
+          <td id="peticio_errorMsg_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.ERRORMSG])?'peticio.errorMsg':__theForm.labels[PeticioFields.ERRORMSG]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.ERRORMSG]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.ERRORMSG]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_errorMsg_columnvalueid">
+            <form:errors path="peticio.errorMsg" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ERRORMSG)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ERRORMSG)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.errorMsg"   />
+
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.ERROREXCEPTION)}">
+        <tr id="peticio_errorException_rowid">
+          <td id="peticio_errorException_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.ERROREXCEPTION])?'peticio.errorException':__theForm.labels[PeticioFields.ERROREXCEPTION]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.ERROREXCEPTION]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.ERROREXCEPTION]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_errorException_columnvalueid">
+              <form:errors path="peticio.errorException" cssClass="errorField alert alert-danger" />
+  <table style="width:100%">
+  <tr>
+  <td>
+       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ERROREXCEPTION)? 'true' : 'false'}" path="peticio.errorException"  />
+   </td>
+   <td style="width:40px">
+      <div id="dropdownMenuButton_errorException" style="vertical-align:top;display:inline;position:relative;">
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <div id="dropdownMenuContainer_errorException" class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.errorException'); ta.wrap='off';" >No Wrap</a>
+          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.errorException'); ta.wrap='soft';">Soft Wrap</a>
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.errorException'); ta.wrap='hard';">Hard Wrap</a>
+        </div>
+      </div>
+      <script type="text/javascript">
+			$('#dropdownMenuButton_errorException').on('click', function(){
+					var valor = ($('#dropdownMenuContainer_errorException').css('display') != 'none') ? 'none' : 'block';
+                 $('#dropdownMenuContainer_errorException').css('display', valor);
+                 return false;
+				});
+      </script>   </td>
+   </tr>
+   </table>
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.DATAFINAL)}">
+        <tr id="peticio_dataFinal_rowid">
+          <td id="peticio_dataFinal_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.DATAFINAL])?'peticio.dataFinal':__theForm.labels[PeticioFields.DATAFINAL]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.DATAFINAL]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.DATAFINAL]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_dataFinal_columnvalueid">
+    <form:errors path="peticio.dataFinal" cssClass="errorField alert alert-danger" />
+            <div class="form-group">
+                <div class="input-group date" id="peticio_dataFinal" data-target-input="nearest">
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#peticio_dataFinal" path="peticio.dataFinal" />
+                    <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)}" >
+                    <div class="input-group-append"  data-target="#peticio_dataFinal"  data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                    </c:if>
+                </div>
+            </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#peticio_dataFinal').datetimepicker({
+                    format: '${gen:getJSDateTimePattern()}',
+                    locale: '${lang}',
+                    icons: {
+                       time: 'far fa-clock'
+                    }
+                });
+            });
+        </script>           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.PETICIOPORTAFIRMES)}">
+        <tr id="peticio_peticioPortafirmes_rowid">
+          <td id="peticio_peticioPortafirmes_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.PETICIOPORTAFIRMES])?'peticio.peticioPortafirmes':__theForm.labels[PeticioFields.PETICIOPORTAFIRMES]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.PETICIOPORTAFIRMES]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.PETICIOPORTAFIRMES]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_peticioPortafirmes_columnvalueid">
+            <form:errors path="peticio.peticioPortafirmes" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIRMES)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIRMES)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.peticioPortafirmes"   />
+
            </td>
         </tr>
         </c:if>

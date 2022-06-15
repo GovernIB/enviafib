@@ -270,6 +270,16 @@ public class PeticioController
       };
     }
 
+    // Field tipus
+    {
+      _listSKV = getReferenceListForTipus(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForTipus(_tmp);
+      if (filterForm.getGroupByFields().contains(TIPUS)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, TIPUS, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -292,6 +302,7 @@ public class PeticioController
     __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusdocumental());
     __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomadoc());
     __mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfosignaturaid());
+    __mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -402,6 +413,15 @@ public class PeticioController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       peticioForm.setListOfInfoSignaturaForInfosignaturaid(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (peticioForm.getListOfValuesForTipus() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForTipus(request, mav, peticioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      peticioForm.setListOfValuesForTipus(_listSKV);
     }
     
   }
@@ -991,6 +1011,39 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForInfosignaturaid(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     return infoSignaturaRefList.getReferenceList(InfoSignaturaFields.INFOSIGNATURAID, where );
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
+       ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
+    if (peticioForm.isHiddenField(TIPUS)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForTipus(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
+       ModelAndView mav, PeticioFilterForm peticioFilterForm,
+       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (peticioFilterForm.isHiddenField(TIPUS)
+      && !peticioFilterForm.isGroupByField(TIPUS)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForTipus(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "0"));
+    __tmp.add(new StringKeyValue("1" , "1"));
+    __tmp.add(new StringKeyValue("2" , "2"));
+    __tmp.add(new StringKeyValue("3" , "3"));
+    __tmp.add(new StringKeyValue("4" , "4"));
+    return __tmp;
   }
 
 

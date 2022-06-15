@@ -1,9 +1,13 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Timestamp;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +20,6 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +34,17 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
+
+import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 
 /**
  * 
@@ -105,7 +112,14 @@ public class EnviarPeticioUserController extends PeticioController {
             }
         }
 
-        peticioForm.addHiddenField(PETICIOPORTAFIB);
+        peticioForm.addHiddenField(PETICIOPORTAFIRMES);
+        
+        //Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context autmaticament.
+        peticioForm.addHiddenField(IDIOMAID);
+        peticioForm.getPeticio().setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
+        
+        //Idioma per defecte per els documents, catala.
+        peticioForm.getPeticio().setIdiomadoc("ca");
 
         return peticioForm;
     }
@@ -141,8 +155,8 @@ public class EnviarPeticioUserController extends PeticioController {
             peticioFilterForm.addHiddenField(SOLICITANTID);
             peticioFilterForm.addHiddenField(PETICIOID);
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
-            peticioFilterForm.addHiddenField(PETICIOPORTAFIB);
-
+            peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
+            peticioFilterForm.setAttachedAdditionalJspCode(true);
         }
         return peticioFilterForm;
     }
@@ -187,12 +201,19 @@ public class EnviarPeticioUserController extends PeticioController {
                                             + "/delete','show')",
                                     "btn-danger"));
 
-                    long fitxerFirmatId = peticio.getFitxerFirmatID();
-                    Fitxer file = fitxerEjb.findByPrimaryKey(fitxerFirmatId);
+                    Fitxer file = peticio.getFitxerFirmat();
 
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-file-download", "descarregar_firma",
-                                    FileDownloadController.fileUrl(file), "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
+                            "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
+
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
+                            "email_firma", "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
+
+                    // filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas
+                    // fa-envelope icon-white",
+                    // "email_firma", getContextWeb() + "/enviaremail/"+peticioID, "btn-primary"));
+
+
                 }
                 break;
 
@@ -206,6 +227,64 @@ public class EnviarPeticioUserController extends PeticioController {
                 break;
             }
         }
+    }
+
+    @RequestMapping(value = "/enviaremail/{peticioId}/{email}/{windowUrl}", method = RequestMethod.GET)
+    public String enviarEmail(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("peticioId") long peticioId, @PathVariable("email") String email,
+            @PathVariable("windowUrl") String windowUrl) {
+        boolean isHTML = true;
+
+        // Decodificam el email arriba en base64
+        String decodedEmail = new String(Base64.getDecoder().decode(email));
+
+        // Decodificam la URL que arriba en base64
+        String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+        URL urlTmp = null;
+        try {
+            urlTmp = new URL(decodedUrl);
+
+            // Recuperacio del fitxer firmat a partir del ID de peticio
+            Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
+            Fitxer file = fitxerEjb.findByPrimaryKey(peticio.getFitxerFirmatID());
+            int port = urlTmp.getPort();
+
+            String fileUrl = urlTmp.getProtocol() + "://" + urlTmp.getHost()
+                    + ((port == -1) ? "" : (":" + urlTmp.getPort())) + request.getContextPath()
+                    + FileDownloadController.fileUrl(file);
+
+            Map<String, Object> map = new HashMap<String, Object>();
+
+            map.put("nomFitxer", file.getNom());
+            map.put("fileUrl", fileUrl);
+
+            String subject = I18NUtils.tradueix("email.download.file.subject");
+            String message = "<h4>" + I18NUtils.tradueix("email.download.file.title") + "</h4>" + "<div>" + "<p>"
+                    + I18NUtils.tradueix("email.download.file.message") + "<br/><a href='${fileUrl}'>"
+                    + I18NUtils.tradueix("email.download.file.linktext") + "</a>" + "</p>" + "</div>";
+
+            subject = TemplateEngine.processExpressionLanguage(subject, map);
+            message = TemplateEngine.processExpressionLanguage(message, map);
+
+            EmailUtil.postMail(subject, message, isHTML, Configuracio.getAppEmail(), decodedEmail);
+            String successMsg = "S'ha enviat el email correctament";
+            HtmlUtils.saveMessageSuccess(request, successMsg);
+
+        } catch (MalformedURLException e) {
+            String msg = I18NUtils.tradueix("email.download.file.error.url");
+            HtmlUtils.saveMessageError(request, msg);
+            log.error(msg, e);
+        } catch (IOException e) {
+            String msg = I18NUtils.tradueix("email.download.file.error.message");
+            HtmlUtils.saveMessageError(request, msg);
+            log.error(msg, e);
+        } catch (Exception e) {
+            String msg = I18NUtils.tradueix("email.download.file.error.send");
+            HtmlUtils.saveMessageError(request, msg);
+            log.error(msg, e);
+        }
+
+        return "redirect:" + getContextWeb() + "/list/1";
     }
 
     @RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
