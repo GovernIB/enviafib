@@ -21,25 +21,14 @@ import es.caib.enviafib.model.fields.PeticioFields;
 @Component
 public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements PeticioFields {
 
-  private java.lang.Long titolIDDesde;
+  private java.lang.String nom;
 
-  public java.lang.Long getTitolIDDesde() {
-    return this.titolIDDesde;
+  public java.lang.String getNom() {
+    return this.nom;
   }
 
-  public void setTitolIDDesde(java.lang.Long titolIDDesde) {
-    this.titolIDDesde = titolIDDesde;
-  }
-
-
-  private java.lang.Long titolIDFins;
-
-  public java.lang.Long getTitolIDFins() {
-    return this.titolIDFins;
-  }
-
-  public void setTitolIDFins(java.lang.Long titolIDFins) {
-    this.titolIDFins = titolIDFins;
+  public void setNom(java.lang.String nom) {
+    this.nom = nom;
   }
 
 
@@ -279,8 +268,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   
   public PeticioFilterForm(PeticioFilterForm __toClone) {
     super(__toClone);
-    this.titolIDDesde = __toClone.titolIDDesde;
-    this.titolIDFins = __toClone.titolIDFins;
+    this.nom = __toClone.nom;
     this.peticioIDDesde = __toClone.peticioIDDesde;
     this.peticioIDFins = __toClone.peticioIDFins;
     this.datacreacioDesde = __toClone.datacreacioDesde;
@@ -302,7 +290,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.dataFinalDesde = __toClone.dataFinalDesde;
     this.dataFinalFins = __toClone.dataFinalFins;
     this.peticioPortafirmes = __toClone.peticioPortafirmes;
-    this.mapOfTraduccioForTitolID = __toClone.mapOfTraduccioForTitolID;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
@@ -344,18 +331,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
    // -----------------------
    // Maps de referencies.
    // -----------------------
-  private Map<String, String> mapOfTraduccioForTitolID;
-
-  public Map<String, String> getMapOfTraduccioForTitolID() {
-    return this.mapOfTraduccioForTitolID;
-  }
-
-  public void setMapOfTraduccioForTitolID(Map<String, String> mapOfTraduccioForTitolID) {
-    this.mapOfTraduccioForTitolID = mapOfTraduccioForTitolID;
-  }
-
-
-
   private Map<String, String> mapOfUsuariForSolicitantID;
 
   public Map<String, String> getMapOfUsuariForSolicitantID() {

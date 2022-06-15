@@ -58,8 +58,8 @@ public class PeticioJPAManager
         return list.toArray(new Peticio[list.size()]);
     };
 
-    public Peticio create( long _titolID_, java.sql.Timestamp _datacreacio_, long _fitxerID_, long _solicitantID_, java.lang.String _idiomaID_, java.lang.String _destinatarinif_, long _estat_, java.lang.Long _fitxerFirmatID_, java.lang.String _tipusdocumental_, java.lang.String _idiomadoc_, java.lang.Long _infosignaturaid_, int _tipus_, java.lang.String _errorMsg_, java.lang.String _errorException_, java.sql.Timestamp _dataFinal_, java.lang.String _peticioPortafirmes_) throws I18NException {
-        PeticioJPA __bean =  new PeticioJPA(_titolID_,_datacreacio_,_fitxerID_,_solicitantID_,_idiomaID_,_destinatarinif_,_estat_,_fitxerFirmatID_,_tipusdocumental_,_idiomadoc_,_infosignaturaid_,_tipus_,_errorMsg_,_errorException_,_dataFinal_,_peticioPortafirmes_);
+    public Peticio create( java.lang.String _nom_, java.sql.Timestamp _datacreacio_, long _fitxerID_, long _solicitantID_, java.lang.String _idiomaID_, java.lang.String _destinatarinif_, long _estat_, java.lang.Long _fitxerFirmatID_, java.lang.String _tipusdocumental_, java.lang.String _idiomadoc_, java.lang.Long _infosignaturaid_, int _tipus_, java.lang.String _errorMsg_, java.lang.String _errorException_, java.sql.Timestamp _dataFinal_, java.lang.String _peticioPortafirmes_) throws I18NException {
+        PeticioJPA __bean =  new PeticioJPA(_nom_,_datacreacio_,_fitxerID_,_solicitantID_,_idiomaID_,_destinatarinif_,_estat_,_fitxerFirmatID_,_tipusdocumental_,_idiomadoc_,_infosignaturaid_,_tipus_,_errorMsg_,_errorException_,_dataFinal_,_peticioPortafirmes_);
         return create(__bean);
     }
 
@@ -91,37 +91,6 @@ public class PeticioJPAManager
       
       return PeticioJPA.toJPA(__bean);
     }
-
-  @Override
-  public Peticio create(Peticio transientInstance) throws I18NException {
-    processTranslations(transientInstance);
-    return super.create(transientInstance);
-  }
-
-
-  @Override
-  public Peticio update(Peticio transientInstance) throws I18NException {
-    processTranslations(transientInstance);
-    return super.update(transientInstance);
-  }
-
-
-  private void processTranslations(Peticio transientInstance) {
-    if (transientInstance != null) {
-      if (transientInstance.getTitolID() == 0) {
-        if (transientInstance instanceof PeticioJPA) {
-          PeticioJPA _jpa = (PeticioJPA)transientInstance;
-          TraduccioJPA _trad = _jpa.getTitol();
-           if (_trad != null) {
-            if (_trad.getTraduccioID() == 0) {
-              getEntityManager().persist(_trad);
-            } 
-            transientInstance.setTitolID(_trad.getTraduccioID());
-          }
-        }
-      }
-    }
-  }
 
 
 }

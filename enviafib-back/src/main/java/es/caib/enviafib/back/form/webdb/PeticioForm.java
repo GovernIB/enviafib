@@ -28,7 +28,6 @@ public class PeticioForm extends EnviaFIBBaseForm {
   public PeticioForm(PeticioForm __toClone) {
     super(__toClone);
       this.peticio = __toClone.peticio;
-    this.listOfTraduccioForTitolID = __toClone.listOfTraduccioForTitolID;
     this.listOfUsuariForSolicitantID = __toClone.listOfUsuariForSolicitantID;
     this.listOfIdiomaForIdiomaID = __toClone.listOfIdiomaForIdiomaID;
     this.listOfValuesForEstat = __toClone.listOfValuesForEstat;
@@ -50,15 +49,6 @@ public class PeticioForm extends EnviaFIBBaseForm {
     this.peticio = peticio;
   }
   
-  java.util.List<es.caib.enviafib.model.entity.Idioma> idiomesTraduccio = null;
-
-  public java.util.List<es.caib.enviafib.model.entity.Idioma> getIdiomesTraduccio() {
-    return idiomesTraduccio;
-  }
-
-  public void setIdiomesTraduccio(java.util.List<es.caib.enviafib.model.entity.Idioma> idiomesTraduccio) {
-    this.idiomesTraduccio = idiomesTraduccio;
-  }
   
   public CommonsMultipartFile getFitxerID() {
     return fitxerID;
@@ -88,18 +78,6 @@ public class PeticioForm extends EnviaFIBBaseForm {
   public void setFitxerFirmatIDDelete(boolean fitxerFirmatIDDelete) {
     this.fitxerFirmatIDDelete = fitxerFirmatIDDelete;
    }
-  private List<StringKeyValue> listOfTraduccioForTitolID;
-
-  public List<StringKeyValue> getListOfTraduccioForTitolID() {
-    return this.listOfTraduccioForTitolID;
-  }
-
-  public void setListOfTraduccioForTitolID(List<StringKeyValue> listOfTraduccioForTitolID) {
-    this.listOfTraduccioForTitolID = listOfTraduccioForTitolID;
-  }
-
-
-
   private List<StringKeyValue> listOfUsuariForSolicitantID;
 
   public List<StringKeyValue> getListOfUsuariForSolicitantID() {

@@ -52,9 +52,6 @@ import es.caib.enviafib.model.fields.*;
 public class PeticioController
     extends es.caib.enviafib.back.controller.EnviaFIBFilesBaseController<Peticio, java.lang.Long, PeticioForm> implements PeticioFields {
 
-  @EJB(mappedName = es.caib.enviafib.ejb.IdiomaService.JNDI_NAME)
-  protected es.caib.enviafib.ejb.IdiomaService idiomaEjb;
-
   @EJB(mappedName = es.caib.enviafib.ejb.PeticioService.JNDI_NAME)
   protected es.caib.enviafib.ejb.PeticioService peticioEjb;
 
@@ -63,10 +60,6 @@ public class PeticioController
 
   @Autowired
   protected PeticioRefList peticioRefList;
-
-  // References 
-  @Autowired
-  protected TraduccioRefList traduccioRefList;
 
   // References 
   @Autowired
@@ -200,16 +193,6 @@ public class PeticioController
     Map<String, String> _tmp;
     List<StringKeyValue> _listSKV;
 
-    // Field titolID
-    {
-      _listSKV = getReferenceListForTitolID(request, mav, filterForm, list, groupByItemsMap, null);
-      _tmp = Utils.listToMap(_listSKV);
-      filterForm.setMapOfTraduccioForTitolID(_tmp);
-      if (filterForm.getGroupByFields().contains(TITOLID)) {
-        fillValuesToGroupByItems(_tmp, groupByItemsMap, TITOLID, false);
-      };
-    }
-
     // Field solicitantID
     {
       _listSKV = getReferenceListForSolicitantID(request, mav, filterForm, list, groupByItemsMap, null);
@@ -295,7 +278,6 @@ public class PeticioController
 
     java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
     __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
-    __mapping.put(TITOLID, filterForm.getMapOfTraduccioForTitolID());
     __mapping.put(SOLICITANTID, filterForm.getMapOfUsuariForSolicitantID());
     __mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
     __mapping.put(ESTAT, filterForm.getMapOfValuesForEstat());
@@ -322,15 +304,6 @@ public class PeticioController
     }
     ModelAndView mav = new ModelAndView(getTileForm());
     PeticioForm peticioForm = getPeticioForm(null, false, request, mav);
-    
-    if (peticioForm.getPeticio().getTitol() == null){
-      es.caib.enviafib.persistence.TraduccioJPA trad = new es.caib.enviafib.persistence.TraduccioJPA();
-      for (es.caib.enviafib.model.entity.Idioma idioma : peticioForm.getIdiomesTraduccio()) {
-        trad.addTraduccio(idioma.getIdiomaID(), new es.caib.enviafib.persistence.TraduccioMapJPA());
-      }
-      peticioForm.getPeticio().setTitol(trad);
-    }
-
     mav.addObject("peticioForm" ,peticioForm);
     fillReferencesForForm(peticioForm, request, mav);
   
@@ -354,7 +327,6 @@ public class PeticioController
     peticioForm.setContexte(getContextWeb());
     peticioForm.setEntityNameCode(getEntityNameCode());
     peticioForm.setEntityNameCodePlural(getEntityNameCodePlural());
-    peticioForm.setIdiomesTraduccio(getIdiomesSuportats());
     return peticioForm;
   }
 
@@ -425,13 +397,6 @@ public class PeticioController
     }
     
   }
-
-
-  public List<es.caib.enviafib.model.entity.Idioma> getIdiomesSuportats() throws I18NException {
-    List<es.caib.enviafib.model.entity.Idioma> idiomes = idiomaEjb.select(es.caib.enviafib.model.fields.IdiomaFields.SUPORTAT.equal(true));
-    return idiomes;
-  }
-
 
   /**
    * Guardar un nou Peticio
@@ -774,31 +739,6 @@ public java.lang.Long stringToPK(String value) {
 
   public boolean isActiveFormView() {
     return isActiveFormEdit();
-  }
-
-  public List<StringKeyValue> getReferenceListForTitolID(HttpServletRequest request,
-       ModelAndView mav, PeticioFilterForm peticioFilterForm,
-       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
-    if (peticioFilterForm.isHiddenField(TITOLID)
-      && !peticioFilterForm.isGroupByField(TITOLID)) {
-      return EMPTY_STRINGKEYVALUE_LIST;
-    }
-    Where _w = null;
-    if (!_groupByItemsMap.containsKey(TITOLID)) {
-      // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
-      java.util.Set<java.lang.Long> _pkList = new java.util.HashSet<java.lang.Long>();
-      for (Peticio _item : list) {
-        _pkList.add(_item.getTitolID());
-        }
-        _w = TraduccioFields.TRADUCCIOID.in(_pkList);
-      }
-    return getReferenceListForTitolID(request, mav, Where.AND(where,_w));
-  }
-
-
-  public List<StringKeyValue> getReferenceListForTitolID(HttpServletRequest request,
-       ModelAndView mav, Where where)  throws I18NException {
-    return traduccioRefList.getReferenceList(TraduccioFields.TRADUCCIOID, where );
   }
 
 

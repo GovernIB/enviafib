@@ -2,8 +2,8 @@ package es.caib.enviafib.model.entity;
 
 public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 
-	public long getTitolID();
-	public void setTitolID(long _titolID_);
+	public java.lang.String getNom();
+	public void setNom(java.lang.String _nom_);
 
 	public long getPeticioID();
 	public void setPeticioID(long _peticioID_);

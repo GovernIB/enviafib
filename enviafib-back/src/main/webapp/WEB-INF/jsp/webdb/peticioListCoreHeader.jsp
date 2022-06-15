@@ -12,8 +12,8 @@
         </c:if>
         </c:forEach>
 
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TITOLID)}">
-        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.TITOLID)}</th>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.NOM)}</th>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOID)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.PETICIOID)}</th>

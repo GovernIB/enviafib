@@ -24,12 +24,9 @@
           </c:forEach>
 
 
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TITOLID)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
           <td>
-          <c:set var="tmp">${peticio.titolID}</c:set>
-          <c:if test="${not empty tmp}">
-          ${peticio.titol.traduccions[lang].valor}
-          </c:if>
+          ${peticio.nom}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOID)}">

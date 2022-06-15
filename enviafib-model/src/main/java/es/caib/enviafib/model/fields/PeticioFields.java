@@ -12,7 +12,7 @@ public interface PeticioFields extends java.io.Serializable {
   public static final String _TABLE_TRANSLATION = _TABLE_MODEL + "." + _TABLE_MODEL;
 
 
-	 public static final LongField TITOLID = new LongField(_TABLE_MODEL, "titolID", "titolid");
+	 public static final StringField NOM = new StringField(_TABLE_MODEL, "nom", "nom");
 	 public static final LongField PETICIOID = new LongField(_TABLE_MODEL, "peticioID", "peticioid");  // PK
 	 public static final TimestampField DATACREACIO = new TimestampField(_TABLE_MODEL, "datacreacio", "datacreacio");
 	 public static final LongField FITXERID = new LongField(_TABLE_MODEL, "fitxerID", "fitxerid");
@@ -32,7 +32,7 @@ public interface PeticioFields extends java.io.Serializable {
 
 
   public static final Field<?>[] ALL_PETICIO_FIELDS = {
-    TITOLID,
+    NOM,
     PETICIOID,
     DATACREACIO,
     FITXERID,

@@ -50,20 +50,15 @@
       </c:forEach>
 
 
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.TITOLID)}">
-            <%-- FILTRE NUMERO --%>      
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="peticio.titolID" />:</span>
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
-              
-              <form:input cssClass="input-append input-small" path="titolIDDesde" />
-
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
-
-              <form:input cssClass="input-append input-small search-query" path="titolIDFins" />
-
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.NOM)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.nom" var="nom" />
+              <fmt:message key="genapp.form.searchby" var="cercapernom" >                
+                 <fmt:param value="${nom}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${nom}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapernom}" path="nom" />
             </div>
 
 
