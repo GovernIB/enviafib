@@ -55,7 +55,7 @@ CREATE INDEX efi_infosignatura_pk_i ON efi_infosignatura USING btree (infosignat
 ALTER TABLE efi_peticio ADD COLUMN infosignaturaid bigint;
 ALTER TABLE ONLY efi_peticio ADD CONSTRAINT efi_peticio_infosign_fk FOREIGN KEY (infosignaturaid) REFERENCES efi_infosignatura(infosignaturaid);
 
-create index efi_peticio_infosignaturaid_fk_i on efi_peticio (infosignaturaid);
+create index efi_peticio_infosignid_fk_i on efi_peticio (infosignaturaid);
 
 ---
 --- 15/06/2022 -  Firma de Documents per un Mateix #23 
@@ -77,3 +77,8 @@ UPDATE efi_peticio SET  peticioportafirmes=peticioportafib WHERE peticioportafib
 ALTER TABLE efi_peticio DROP COLUMN peticioportafib;
 
 COMMENT ON COLUMN efi_peticio.peticioportafirmes IS 'Identificador de la petició dins el sistema de portafirmes';
+
+
+
+
+
