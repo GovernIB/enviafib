@@ -11,13 +11,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +33,6 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
-import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 
@@ -54,10 +51,7 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
 
     public static final String CONTEXT_WEB = "/user/peticio";
 
-    @Override
-    public boolean isActiveList() {
-        return false;
-    }
+
 
     @Override
     public String getTileList() {
@@ -76,6 +70,16 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
                 UsuariFields.USERNAME.equal(userName));
         return PeticioFields.SOLICITANTID.equal(userId);
     }
+    
+    @Override
+    public boolean isActiveList() {
+        return true;
+    }
+
+    @Override
+    public boolean isActiveDelete() {
+        return true;
+    }
 
     @Override
     public boolean isActiveFormNew() {
@@ -87,10 +91,6 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
         return false;
     }
 
-    @Override
-    public boolean isActiveDelete() {
-        return true;
-    }
 
     @Override
     public boolean isActiveFormView() {
@@ -108,6 +108,10 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
             peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
             peticioFilterForm.setAttachedAdditionalJspCode(true);
+            
+            peticioFilterForm.setAddButtonVisible(false);
+            peticioFilterForm.setEditButtonVisible(false);
+            peticioFilterForm.setDeleteButtonVisible(false);
         }
         return peticioFilterForm;
     }
@@ -120,10 +124,7 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
 
         filterForm.getAdditionalButtonsByPK().clear();
         
-        filterForm.setAddButtonVisible(false);
 
-        filterForm.setEditButtonVisible(false);
-        filterForm.setDeleteButtonVisible(false);
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
@@ -132,7 +133,7 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
                 case Constants.ESTAT_PETICIO_CREADA:
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-edit", "genapp.edit",
-                                    getContextWeb() + "/" + peticioID + "/edit/", "btn-warning"));
+                                    getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
                                     "javascript: openModal('" + request.getContextPath()
@@ -141,7 +142,7 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
                                     "btn-danger"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-play", "peticio.posarenmarxa",
-                                    getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
+                                    getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
@@ -166,7 +167,7 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
 
                     // filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas
                     // fa-envelope icon-white",
-                    // "email_firma", getContextWeb() + "/enviaremail/"+peticioID, "btn-primary"));
+                    // "email_firma", getContextWebByTipus(peticio.getTipus()) + "/enviaremail/"+peticioID, "btn-primary"));
 
                 }
                 break;
@@ -182,6 +183,25 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
             }
         }
     }
+    
+    
+    protected String getContextWebByTipus(int tipus) {
+        
+        
+        String cw = firmaPathByTipus.get(tipus);
+        
+        
+        if (cw == null) {
+            
+            throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus + " en el bloc static {}  de la classe " + AbstractPeticioUserController.class.getSimpleName());
+            
+        }
+        
+        return cw;
+        
+    }
+    
+    
 
     @RequestMapping(
             value = "/enviaremail/{peticioId}/{email}/{windowUrl}",
@@ -244,7 +264,7 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
             log.error(msg, e);
         }
 
-        return "redirect:" + getContextWeb() + "/list/1";
+        return "redirect:" + getContextWeb() + "/list";
     }
 
     @RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)

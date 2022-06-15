@@ -20,7 +20,7 @@ import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
- * 
+ *
  * @author anadal
  *
  */
@@ -34,6 +34,22 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @Override
     public boolean isActiveDelete() {
         return false;
+    }
+    
+    @Override
+    public boolean isActiveFormNew() {
+        return true;
+    }
+
+    @Override
+    public boolean isActiveFormEdit() {
+        return true;
+    }
+
+
+    @Override
+    public boolean isActiveFormView() {
+        return true;
     }
 
     @Override
@@ -51,7 +67,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         Set<Field<?>> hiddens = new HashSet<Field<?>>(
                 Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
-        hiddens.remove(TITOLID);
+        hiddens.remove(NOM);
         hiddens.remove(FITXERID);
         hiddens.remove(TIPUSDOCUMENTAL);
         hiddens.remove(IDIOMADOC);

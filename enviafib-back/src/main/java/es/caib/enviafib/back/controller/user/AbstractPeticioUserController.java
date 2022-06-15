@@ -15,7 +15,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.PeticioController;
-import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.IdiomaFields;
 
@@ -26,7 +25,6 @@ import es.caib.enviafib.model.fields.IdiomaFields;
  */
 public abstract class AbstractPeticioUserController extends PeticioController implements Constants {
 
-    
     @EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
     protected es.caib.enviafib.ejb.UsuariService usuariEjb;
 
@@ -35,16 +33,14 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
-    
-    
+
     public static final Map<Integer, String> firmaPathByTipus = new HashMap<Integer, String>();
-    
+
     static {
         firmaPathByTipus.put(TIPUS_PETICIO_NIF, FirmaPerNifUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_AUTOFIRMA, AutoFirmaUserController.CONTEXT_WEB);
         // XYZ ZZZ FALTEN LA RESTA DE TIPUS
     }
-    
 
     @Override
     public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
@@ -56,9 +52,6 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         }
         return __tmp;
     }
-
-   
-    
 
     @Override
     public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
@@ -93,5 +86,30 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         }
 
         return __tmp;
+    }
+
+    @Override
+    public boolean isActiveFormNew() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveFormEdit() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveFormView() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveList() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveDelete() {
+        return false;
     }
 }
