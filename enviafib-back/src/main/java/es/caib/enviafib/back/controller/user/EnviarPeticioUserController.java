@@ -44,6 +44,7 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
+import es.caib.enviafib.persistence.IdiomaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
@@ -115,6 +116,13 @@ public class EnviarPeticioUserController extends PeticioController {
         }
 
         peticioForm.addHiddenField(PETICIOPORTAFIB);
+        
+        //Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context autmaticament.
+        peticioForm.addHiddenField(IDIOMAID);
+        peticioForm.getPeticio().setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
+        
+        //Idioma per defecte per els documents, catala.
+        peticioForm.getPeticio().setIdiomadoc("ca");
 
         return peticioForm;
     }
@@ -260,8 +268,6 @@ public class EnviarPeticioUserController extends PeticioController {
             String message = "<h4>" + I18NUtils.tradueix("email.download.file.title") + "</h4>" + "<div>" + "<p>"
                     + I18NUtils.tradueix("email.download.file.message") + "<br/><a href='${fileUrl}'>"
                     + I18NUtils.tradueix("email.download.file.linktext") + "</a>" + "</p>" + "</div>";
-
-            LoginInfo loginInfo = LoginInfo.getInstance();
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
