@@ -181,15 +181,15 @@ public class Configuracio implements Constants {
     }
 
     public static String getPortafibGatewayV2() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibgatewayv2");
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url");
     }
 
     public static String getPortafibUsername() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibusername");
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.username");
     }
 
     public static String getPortafibPassword() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafibpassword");
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.password");
     }
 
     public static String getPortaFIBApiFirmaWebUrl() {
