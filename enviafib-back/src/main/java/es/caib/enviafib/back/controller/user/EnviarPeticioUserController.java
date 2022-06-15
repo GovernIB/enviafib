@@ -271,4 +271,9 @@ public class EnviarPeticioUserController extends AbstractPeticioUserController {
     }
 
 
+    @Override
+    public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
+        peticioLogicaEjb.deleteFull(peticio);
+      }
+
 }

@@ -56,8 +56,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
 
-    @EJB(mappedName = es.caib.enviafib.ejb.InfoSignaturaService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.InfoSignaturaService infoSignaturaEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoSignaturaLogicService infoSignaturaLogicEjb;
 
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
@@ -131,7 +131,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
         long portafibID = Long.valueOf(peticio.getPeticioPortafirmes());
-        
+
         FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafibID, languageUI);
         FirmaAsyncSimpleSignedFileInfo info = firma.getSignedFileInfo();
 
@@ -152,7 +152,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignerInfo signerInfo = info.getSignersInfo().get(0);
         if (signerInfo != null) {
-    //        eniRolFirma = signerInfo.getEniRolFirma();
+            eniRolFirma = signerInfo.getEniRolFirma();
             eniSignerName = signerInfo.getEniSignerName();
             eniSignerAdministrationId = signerInfo.getEniSignerAdministrationId();
             eniSignLevel = signerInfo.getEniSignLevel();
@@ -169,54 +169,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             checkValidationSignature = vi.getCheckValidationSignature();
         }
 
-        log.info("signOperation: " + signOperation);
-        log.info("signType: " + signType);
-        log.info("signAlgorithm: " + signAlgorithm);
-        log.info("signMode: " + signMode);
-        log.info("signaturesTableLocation: " + signaturesTableLocation);
-        log.info("timestampIncluded: " + timestampIncluded);
-        log.info("policyIncluded: " + policyIncluded);
-        log.info("eniTipoFirma: " + eniTipoFirma);
-        log.info("eniPerfilFirma: " + eniPerfilFirma);
-        log.info("eniRolFirma: " + eniRolFirma);
-        log.info("eniSignerName: " + eniSignerName);
-        log.info("eniSignerAdministrationId: " + eniSignerAdministrationId);
-        log.info("eniSignLevel: " + eniSignLevel);
-        log.info("checkAdministrationIdOfSigner: " + checkAdministrationIdOfSigner);
-        log.info("checkDocumentModifications: " + checkDocumentModifications);
-        log.info("checkValidationSignature: " + checkValidationSignature);
-
-        log.info("Tenim checkInfo, i feim create");
-
-        InfoSignaturaJPA is = new InfoSignaturaJPA(signOperation, signType,
-                signAlgorithm, signMode, signaturesTableLocation,
-                timestampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma,
-                eniRolFirma, eniSignerName, eniSignerAdministrationId,
-                eniSignLevel, checkAdministrationIdOfSigner,
+        InfoSignaturaJPA is = new InfoSignaturaJPA(signOperation, signType, signAlgorithm, signMode,
+                signaturesTableLocation, timestampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, eniRolFirma,
+                eniSignerName, eniSignerAdministrationId, eniSignLevel, checkAdministrationIdOfSigner,
                 checkDocumentModifications, checkValidationSignature);
 
-        is = (InfoSignaturaJPA) infoSignaturaEjb.create(is);
+        is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
 
-//        InfoSignatura is = infoSignaturaEjb.create(
-//                signOperation, 
-//                signType, 
-//                signAlgorithm, 
-//                signMode,
-//                signaturesTableLocation, 
-//                timestampIncluded, 
-//                policyIncluded, 
-//                eniTipoFirma, 
-//                eniPerfilFirma, 
-//                eniRolFirma,
-//                eniSignerName, 
-//                eniSignerAdministrationId, 
-//                eniSignLevel, 
-//                checkAdministrationIdOfSigner,
-//                checkDocumentModifications, 
-//                checkValidationSignature);
+        long infoSignaturaID = is.getInfosignaturaid();
+        log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
+        peticio.setInfosignaturaid(infoSignaturaID);
 
-        log.info("Create fet. ID= " + is.getInfosignaturaid());
-        return is.getInfosignaturaid();
+        return infoSignaturaID;
     }
 
     @Override
@@ -252,11 +216,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     @PermitAll
     public void deleteFull(Peticio instance) throws I18NException {
+        log.info("Borrarem peticio: " + instance.getPeticioID());
         Long infoSignID = instance.getInfosignaturaid();
-        if (infoSignID != null) {
-            infoSignaturaEjb.delete(infoSignID);
-        }
+
         super.delete(instance);
+
+        if (infoSignID != null) {
+            infoSignaturaLogicEjb.delete(infoSignID);
+        }
     }
 
     public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,
