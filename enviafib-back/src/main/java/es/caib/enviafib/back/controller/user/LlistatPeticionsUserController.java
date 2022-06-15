@@ -3,24 +3,19 @@ package es.caib.enviafib.back.controller.user;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.query.Field;
-import org.fundaciobit.genapp.common.query.GroupByItem;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +24,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.FileDownloadController;
-import es.caib.enviafib.back.controller.webdb.PeticioController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginException;
@@ -39,38 +33,25 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
-import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
-import es.caib.enviafib.persistence.PeticioJPA;
 
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 
 /**
  * 
  * @author fbosch
+ * @author anadal
  *
  */
 @Controller
-@RequestMapping(value = EnviarPeticioUserController.CONTEXT_WEB)
+@RequestMapping(value = LlistatPeticionsUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class EnviarPeticioUserController extends PeticioController {
+public class LlistatPeticionsUserController extends AbstractPeticioUserController {
 
     public static final String CONTEXT_WEB = "/user/peticio";
 
-    @EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.UsuariService usuariEjb;
 
-    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
-    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
-
-    @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
-
-    @Override
-    public String getTileForm() {
-        return "peticioFormUser";
-    }
 
     @Override
     public String getTileList() {
@@ -89,63 +70,33 @@ public class EnviarPeticioUserController extends PeticioController {
                 UsuariFields.USERNAME.equal(userName));
         return PeticioFields.SOLICITANTID.equal(userId);
     }
-
+    
     @Override
-    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
-            ModelAndView mav) throws I18NException {
-        PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
-        peticioForm.getPeticio().setDatacreacio(new Timestamp(System.currentTimeMillis()));
-        peticioForm.getPeticio().setEstat(Constants.ESTAT_PETICIO_CREADA);
-        peticioForm.addReadOnlyField(PeticioFields.DATACREACIO);
-        String userName = request.getRemoteUser();
-        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID,
-                UsuariFields.USERNAME.equal(userName));
-        peticioForm.getPeticio().setSolicitantID(userId);
-        peticioForm.addReadOnlyField(SOLICITANTID);
-
-        if (peticioForm.isNou()) {
-            peticioForm.addHiddenField(FITXERFIRMATID);
-            peticioForm.addHiddenField(ESTAT);
-        } else {
-            if (peticioForm.getPeticio().getFitxerFirmatID() == null) {
-                peticioForm.addHiddenField(FITXERFIRMATID);
-            }
-        }
-
-        peticioForm.addHiddenField(PETICIOPORTAFIRMES);
-        
-        //Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context autmaticament.
-        peticioForm.addHiddenField(IDIOMAID);
-        peticioForm.getPeticio().setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
-        
-        //Idioma per defecte per els documents, catala.
-        peticioForm.getPeticio().setIdiomadoc("ca");
-
-        return peticioForm;
+    public boolean isActiveList() {
+        return true;
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
-            ModelAndView mav, PeticioFilterForm peticioFilterForm, List<Peticio> list,
-            Map<Field<?>, GroupByItem> _groupByItemsMap, Where where) throws I18NException {
-        if (peticioFilterForm.isHiddenField(ESTAT) && !peticioFilterForm.isGroupByField(ESTAT)) {
-            return EMPTY_STRINGKEYVALUE_LIST;
-        }
-        Where _w = null;
-        return getReferenceListForEstat(request, mav, Where.AND(where, _w));
+    public boolean isActiveDelete() {
+        return true;
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
-            ModelAndView mav, Where where) throws I18NException {
-        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-        for (int i = 0; i < Constants.ESTATS_PETICIO.length; i++) {
-            __tmp.add(new StringKeyValue(String.valueOf(Constants.ESTATS_PETICIO[i]),
-                    I18NUtils.tradueix("estat." + Constants.ESTATS_PETICIO[i])));
-        }
-        return __tmp;
+    public boolean isActiveFormNew() {
+        return false;
     }
 
+    @Override
+    public boolean isActiveFormEdit() {
+        return false;
+    }
+
+
+    @Override
+    public boolean isActiveFormView() {
+        return false;
+    }
+    
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav,
             HttpServletRequest request) throws I18NException {
@@ -157,6 +108,10 @@ public class EnviarPeticioUserController extends PeticioController {
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
             peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
             peticioFilterForm.setAttachedAdditionalJspCode(true);
+            
+            peticioFilterForm.setAddButtonVisible(false);
+            peticioFilterForm.setEditButtonVisible(false);
+            peticioFilterForm.setDeleteButtonVisible(false);
         }
         return peticioFilterForm;
     }
@@ -168,9 +123,8 @@ public class EnviarPeticioUserController extends PeticioController {
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
         filterForm.getAdditionalButtonsByPK().clear();
+        
 
-        filterForm.setEditButtonVisible(false);
-        filterForm.setDeleteButtonVisible(false);
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
@@ -179,7 +133,7 @@ public class EnviarPeticioUserController extends PeticioController {
                 case Constants.ESTAT_PETICIO_CREADA:
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-edit", "genapp.edit",
-                                    getContextWeb() + "/" + peticioID + "/edit/", "btn-warning"));
+                                    getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
                                     "javascript: openModal('" + request.getContextPath()
@@ -188,7 +142,7 @@ public class EnviarPeticioUserController extends PeticioController {
                                     "btn-danger"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-play", "peticio.posarenmarxa",
-                                    getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
+                                    getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
@@ -203,16 +157,17 @@ public class EnviarPeticioUserController extends PeticioController {
 
                     Fitxer file = peticio.getFitxerFirmat();
 
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
-                            "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-file-download", "descarregar_firma",
+                                    FileDownloadController.fileUrl(file), "btn-warning"));
 
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
-                            "email_firma", "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-envelope icon-white", "email_firma",
+                                    "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
 
                     // filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas
                     // fa-envelope icon-white",
-                    // "email_firma", getContextWeb() + "/enviaremail/"+peticioID, "btn-primary"));
-
+                    // "email_firma", getContextWebByTipus(peticio.getTipus()) + "/enviaremail/"+peticioID, "btn-primary"));
 
                 }
                 break;
@@ -228,11 +183,34 @@ public class EnviarPeticioUserController extends PeticioController {
             }
         }
     }
+    
+    
+    protected String getContextWebByTipus(int tipus) {
+        
+        
+        String cw = firmaPathByTipus.get(tipus);
+        
+        
+        if (cw == null) {
+            
+            throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus + " en el bloc static {}  de la classe " + AbstractPeticioUserController.class.getSimpleName());
+            
+        }
+        
+        return cw;
+        
+    }
+    
+    
 
-    @RequestMapping(value = "/enviaremail/{peticioId}/{email}/{windowUrl}", method = RequestMethod.GET)
+    @RequestMapping(
+            value = "/enviaremail/{peticioId}/{email}/{windowUrl}",
+            method = RequestMethod.GET)
     public String enviarEmail(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") long peticioId, @PathVariable("email") String email,
-            @PathVariable("windowUrl") String windowUrl) {
+            @PathVariable("peticioId")
+            long peticioId, @PathVariable("email")
+            String email, @PathVariable("windowUrl")
+            String windowUrl) {
         boolean isHTML = true;
 
         // Decodificam el email arriba en base64
@@ -259,9 +237,11 @@ public class EnviarPeticioUserController extends PeticioController {
             map.put("fileUrl", fileUrl);
 
             String subject = I18NUtils.tradueix("email.download.file.subject");
-            String message = "<h4>" + I18NUtils.tradueix("email.download.file.title") + "</h4>" + "<div>" + "<p>"
-                    + I18NUtils.tradueix("email.download.file.message") + "<br/><a href='${fileUrl}'>"
-                    + I18NUtils.tradueix("email.download.file.linktext") + "</a>" + "</p>" + "</div>";
+            String message = "<h4>" + I18NUtils.tradueix("email.download.file.title") + "</h4>"
+                    + "<div>" + "<p>" + I18NUtils.tradueix("email.download.file.message")
+                    + "<br/><a href='${fileUrl}'>"
+                    + I18NUtils.tradueix("email.download.file.linktext") + "</a>" + "</p>"
+                    + "</div>";
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
@@ -284,7 +264,7 @@ public class EnviarPeticioUserController extends PeticioController {
             log.error(msg, e);
         }
 
-        return "redirect:" + getContextWeb() + "/list/1";
+        return "redirect:" + getContextWeb() + "/list";
     }
 
     @RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
@@ -310,27 +290,6 @@ public class EnviarPeticioUserController extends PeticioController {
         return "redirect:" + getContextWeb() + "/list";
     }
 
-    @Override
-    public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
-            ModelAndView mav, Where where) throws I18NException {
-
-        return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, Where.AND(where,
-                Where.OR(IdiomaFields.IDIOMAID.equal("es"), IdiomaFields.IDIOMAID.equal("ca"))));
-    }
-
-    @Override
-    public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
-            ModelAndView mav, Where where) throws I18NException {
-        // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
-        // de PortaFIB per obtenir els tipus de documents que gestiona:
-
-        String lang = LocaleContextHolder.getLocale().getLanguage();
-        List<StringKeyValue> tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
-        // TODO: Traduir "Qualsevol valor" ->
-        // tmpList.add(new StringKeyValue("","Qualsevol valor"));
-
-        return tmpList;
-    }
 
     @Override
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {

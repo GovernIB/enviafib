@@ -33,14 +33,10 @@
     
     
     <li style="list-style-type: disc; list-style-position: inside;">
-      <a href="<c:url value="/user/peticio/new"/>">
-        <span style="${(fn:contains(url, 'user/peticio/new'))? "font-weight: bold;" : ""}">Enviar firma per NIF</span>
+      <a href="<c:url value="/user/firmapernif/new"/>">
+        <span style="${(fn:contains(url, '/user/firmapernif/new'))? "font-weight: bold;" : ""}">Enviar firma per NIF XYZ </span>
       </a>
     </li>
-    
-    
-    
-
    
   </ul>
 </div>
