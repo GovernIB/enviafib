@@ -58,7 +58,7 @@ public class InfoSignaturaJPAManager
         return list.toArray(new InfoSignatura[list.size()]);
     };
 
-    public InfoSignatura create( int _signoperation_, java.lang.String _signtype_, java.lang.String _signalgorithm_, java.lang.Integer _signmode_, java.lang.Integer _signaturestablelocation_, boolean _timestampincluded_, boolean _policyincluded_, java.lang.String _enitipofirma_, java.lang.String _eniperfilfirma_, java.lang.String _enirolfirma_, java.lang.String _enisignername_, java.lang.String _enisigneradministrationid_, java.lang.String _enisignlevel_, boolean _checkadministrationidofsigner_, boolean _checkdocumentmodifications_, boolean _checkvalidationsignature_) throws I18NException {
+    public InfoSignatura create( int _signoperation_, java.lang.String _signtype_, java.lang.String _signalgorithm_, java.lang.Integer _signmode_, java.lang.Integer _signaturestablelocation_, java.lang.Boolean _timestampincluded_, java.lang.Boolean _policyincluded_, java.lang.String _enitipofirma_, java.lang.String _eniperfilfirma_, java.lang.String _enirolfirma_, java.lang.String _enisignername_, java.lang.String _enisigneradministrationid_, java.lang.String _enisignlevel_, java.lang.Boolean _checkadministrationidofsigner_, java.lang.Boolean _checkdocumentmodifications_, java.lang.Boolean _checkvalidationsignature_) throws I18NException {
         InfoSignaturaJPA __bean =  new InfoSignaturaJPA(_signoperation_,_signtype_,_signalgorithm_,_signmode_,_signaturestablelocation_,_timestampincluded_,_policyincluded_,_enitipofirma_,_eniperfilfirma_,_enirolfirma_,_enisignername_,_enisigneradministrationid_,_enisignlevel_,_checkadministrationidofsigner_,_checkdocumentmodifications_,_checkvalidationsignature_);
         return create(__bean);
     }

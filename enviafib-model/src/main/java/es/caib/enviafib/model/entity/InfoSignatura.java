@@ -20,11 +20,11 @@ public interface InfoSignatura extends org.fundaciobit.genapp.common.IGenAppEnti
 	public java.lang.Integer getSignaturestablelocation();
 	public void setSignaturestablelocation(java.lang.Integer _signaturestablelocation_);
 
-	public boolean isTimestampincluded();
-	public void setTimestampincluded(boolean _timestampincluded_);
+	public java.lang.Boolean getTimestampincluded();
+	public void setTimestampincluded(java.lang.Boolean _timestampincluded_);
 
-	public boolean isPolicyincluded();
-	public void setPolicyincluded(boolean _policyincluded_);
+	public java.lang.Boolean getPolicyincluded();
+	public void setPolicyincluded(java.lang.Boolean _policyincluded_);
 
 	public java.lang.String getEnitipofirma();
 	public void setEnitipofirma(java.lang.String _enitipofirma_);
@@ -44,14 +44,14 @@ public interface InfoSignatura extends org.fundaciobit.genapp.common.IGenAppEnti
 	public java.lang.String getEnisignlevel();
 	public void setEnisignlevel(java.lang.String _enisignlevel_);
 
-	public boolean isCheckadministrationidofsigner();
-	public void setCheckadministrationidofsigner(boolean _checkadministrationidofsigner_);
+	public java.lang.Boolean getCheckadministrationidofsigner();
+	public void setCheckadministrationidofsigner(java.lang.Boolean _checkadministrationidofsigner_);
 
-	public boolean isCheckdocumentmodifications();
-	public void setCheckdocumentmodifications(boolean _checkdocumentmodifications_);
+	public java.lang.Boolean getCheckdocumentmodifications();
+	public void setCheckdocumentmodifications(java.lang.Boolean _checkdocumentmodifications_);
 
-	public boolean isCheckvalidationsignature();
-	public void setCheckvalidationsignature(boolean _checkvalidationsignature_);
+	public java.lang.Boolean getCheckvalidationsignature();
+	public void setCheckvalidationsignature(java.lang.Boolean _checkvalidationsignature_);
 
 
 

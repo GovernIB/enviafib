@@ -1,11 +1,5 @@
 package es.caib.enviafib.api.interna;
 
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Contact;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.info.License;
-import io.swagger.v3.oas.annotations.servers.Server;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.ApplicationPath;

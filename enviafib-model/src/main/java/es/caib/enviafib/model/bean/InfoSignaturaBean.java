@@ -16,17 +16,17 @@ private static final long serialVersionUID = 986528854L;
 	java.lang.String signalgorithm;
 	java.lang.Integer signmode;
 	java.lang.Integer signaturestablelocation;
-	boolean timestampincluded;
-	boolean policyincluded;
+	java.lang.Boolean timestampincluded;
+	java.lang.Boolean policyincluded;
 	java.lang.String enitipofirma;
 	java.lang.String eniperfilfirma;
 	java.lang.String enirolfirma;
 	java.lang.String enisignername;
 	java.lang.String enisigneradministrationid;
 	java.lang.String enisignlevel;
-	boolean checkadministrationidofsigner;
-	boolean checkdocumentmodifications;
-	boolean checkvalidationsignature;
+	java.lang.Boolean checkadministrationidofsigner;
+	java.lang.Boolean checkdocumentmodifications;
+	java.lang.Boolean checkvalidationsignature;
 
 
   /** Constructor Buit */
@@ -34,7 +34,7 @@ private static final long serialVersionUID = 986528854L;
   }
 
   /** Constructor amb tots els camps  */
-  public InfoSignaturaBean(long infosignaturaid , int signoperation , java.lang.String signtype , java.lang.String signalgorithm , java.lang.Integer signmode , java.lang.Integer signaturestablelocation , boolean timestampincluded , boolean policyincluded , java.lang.String enitipofirma , java.lang.String eniperfilfirma , java.lang.String enirolfirma , java.lang.String enisignername , java.lang.String enisigneradministrationid , java.lang.String enisignlevel , boolean checkadministrationidofsigner , boolean checkdocumentmodifications , boolean checkvalidationsignature) {
+  public InfoSignaturaBean(long infosignaturaid , int signoperation , java.lang.String signtype , java.lang.String signalgorithm , java.lang.Integer signmode , java.lang.Integer signaturestablelocation , java.lang.Boolean timestampincluded , java.lang.Boolean policyincluded , java.lang.String enitipofirma , java.lang.String eniperfilfirma , java.lang.String enirolfirma , java.lang.String enisignername , java.lang.String enisigneradministrationid , java.lang.String enisignlevel , java.lang.Boolean checkadministrationidofsigner , java.lang.Boolean checkdocumentmodifications , java.lang.Boolean checkvalidationsignature) {
     this.infosignaturaid=infosignaturaid;
     this.signoperation=signoperation;
     this.signtype=signtype;
@@ -54,7 +54,7 @@ private static final long serialVersionUID = 986528854L;
     this.checkvalidationsignature=checkvalidationsignature;
 }
   /** Constructor sense valors autoincrementals */
-  public InfoSignaturaBean(int signoperation , java.lang.String signtype , java.lang.String signalgorithm , java.lang.Integer signmode , java.lang.Integer signaturestablelocation , boolean timestampincluded , boolean policyincluded , java.lang.String enitipofirma , java.lang.String eniperfilfirma , java.lang.String enirolfirma , java.lang.String enisignername , java.lang.String enisigneradministrationid , java.lang.String enisignlevel , boolean checkadministrationidofsigner , boolean checkdocumentmodifications , boolean checkvalidationsignature) {
+  public InfoSignaturaBean(int signoperation , java.lang.String signtype , java.lang.String signalgorithm , java.lang.Integer signmode , java.lang.Integer signaturestablelocation , java.lang.Boolean timestampincluded , java.lang.Boolean policyincluded , java.lang.String enitipofirma , java.lang.String eniperfilfirma , java.lang.String enirolfirma , java.lang.String enisignername , java.lang.String enisigneradministrationid , java.lang.String enisignlevel , java.lang.Boolean checkadministrationidofsigner , java.lang.Boolean checkdocumentmodifications , java.lang.Boolean checkvalidationsignature) {
     this.signoperation=signoperation;
     this.signtype=signtype;
     this.signalgorithm=signalgorithm;
@@ -85,17 +85,17 @@ private static final long serialVersionUID = 986528854L;
     this.setSignalgorithm(__bean.getSignalgorithm());
     this.setSignmode(__bean.getSignmode());
     this.setSignaturestablelocation(__bean.getSignaturestablelocation());
-    this.setTimestampincluded(__bean.isTimestampincluded());
-    this.setPolicyincluded(__bean.isPolicyincluded());
+    this.setTimestampincluded(__bean.getTimestampincluded());
+    this.setPolicyincluded(__bean.getPolicyincluded());
     this.setEnitipofirma(__bean.getEnitipofirma());
     this.setEniperfilfirma(__bean.getEniperfilfirma());
     this.setEnirolfirma(__bean.getEnirolfirma());
     this.setEnisignername(__bean.getEnisignername());
     this.setEnisigneradministrationid(__bean.getEnisigneradministrationid());
     this.setEnisignlevel(__bean.getEnisignlevel());
-    this.setCheckadministrationidofsigner(__bean.isCheckadministrationidofsigner());
-    this.setCheckdocumentmodifications(__bean.isCheckdocumentmodifications());
-    this.setCheckvalidationsignature(__bean.isCheckvalidationsignature());
+    this.setCheckadministrationidofsigner(__bean.getCheckadministrationidofsigner());
+    this.setCheckdocumentmodifications(__bean.getCheckdocumentmodifications());
+    this.setCheckvalidationsignature(__bean.getCheckvalidationsignature());
 	}
 
 	public long getInfosignaturaid() {
@@ -140,17 +140,17 @@ private static final long serialVersionUID = 986528854L;
 		this.signaturestablelocation = _signaturestablelocation_;
 	};
 
-	public boolean isTimestampincluded() {
+	public java.lang.Boolean getTimestampincluded() {
 		return(timestampincluded);
 	};
-	public void setTimestampincluded(boolean _timestampincluded_) {
+	public void setTimestampincluded(java.lang.Boolean _timestampincluded_) {
 		this.timestampincluded = _timestampincluded_;
 	};
 
-	public boolean isPolicyincluded() {
+	public java.lang.Boolean getPolicyincluded() {
 		return(policyincluded);
 	};
-	public void setPolicyincluded(boolean _policyincluded_) {
+	public void setPolicyincluded(java.lang.Boolean _policyincluded_) {
 		this.policyincluded = _policyincluded_;
 	};
 
@@ -196,24 +196,24 @@ private static final long serialVersionUID = 986528854L;
 		this.enisignlevel = _enisignlevel_;
 	};
 
-	public boolean isCheckadministrationidofsigner() {
+	public java.lang.Boolean getCheckadministrationidofsigner() {
 		return(checkadministrationidofsigner);
 	};
-	public void setCheckadministrationidofsigner(boolean _checkadministrationidofsigner_) {
+	public void setCheckadministrationidofsigner(java.lang.Boolean _checkadministrationidofsigner_) {
 		this.checkadministrationidofsigner = _checkadministrationidofsigner_;
 	};
 
-	public boolean isCheckdocumentmodifications() {
+	public java.lang.Boolean getCheckdocumentmodifications() {
 		return(checkdocumentmodifications);
 	};
-	public void setCheckdocumentmodifications(boolean _checkdocumentmodifications_) {
+	public void setCheckdocumentmodifications(java.lang.Boolean _checkdocumentmodifications_) {
 		this.checkdocumentmodifications = _checkdocumentmodifications_;
 	};
 
-	public boolean isCheckvalidationsignature() {
+	public java.lang.Boolean getCheckvalidationsignature() {
 		return(checkvalidationsignature);
 	};
-	public void setCheckvalidationsignature(boolean _checkvalidationsignature_) {
+	public void setCheckvalidationsignature(java.lang.Boolean _checkvalidationsignature_) {
 		this.checkvalidationsignature = _checkvalidationsignature_;
 	};
 
@@ -230,17 +230,17 @@ private static final long serialVersionUID = 986528854L;
     __tmp.setSignalgorithm(__bean.getSignalgorithm());
     __tmp.setSignmode(__bean.getSignmode());
     __tmp.setSignaturestablelocation(__bean.getSignaturestablelocation());
-    __tmp.setTimestampincluded(__bean.isTimestampincluded());
-    __tmp.setPolicyincluded(__bean.isPolicyincluded());
+    __tmp.setTimestampincluded(__bean.getTimestampincluded());
+    __tmp.setPolicyincluded(__bean.getPolicyincluded());
     __tmp.setEnitipofirma(__bean.getEnitipofirma());
     __tmp.setEniperfilfirma(__bean.getEniperfilfirma());
     __tmp.setEnirolfirma(__bean.getEnirolfirma());
     __tmp.setEnisignername(__bean.getEnisignername());
     __tmp.setEnisigneradministrationid(__bean.getEnisigneradministrationid());
     __tmp.setEnisignlevel(__bean.getEnisignlevel());
-    __tmp.setCheckadministrationidofsigner(__bean.isCheckadministrationidofsigner());
-    __tmp.setCheckdocumentmodifications(__bean.isCheckdocumentmodifications());
-    __tmp.setCheckvalidationsignature(__bean.isCheckvalidationsignature());
+    __tmp.setCheckadministrationidofsigner(__bean.getCheckadministrationidofsigner());
+    __tmp.setCheckdocumentmodifications(__bean.getCheckdocumentmodifications());
+    __tmp.setCheckvalidationsignature(__bean.getCheckvalidationsignature());
 		return __tmp;
 	}
 
