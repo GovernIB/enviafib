@@ -55,14 +55,24 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 @Controller
-@RequestMapping(value = "/user/autofirma")
+@RequestMapping(value = AutoFirmaUserController.CONTEXT_WEB )
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class AutoFirmaUserController extends EnviarPeticioUserController {
+public class AutoFirmaUserController extends AbstractFirmaUserController {
+    
+    
+    public static final String CONTEXT_WEB =  "/user/autofirma";
 
+    // XYZ ZZZ LLEVAR
     private static Map<String, Long> peticioIdByTransactionId = new HashMap<String, Long>();
 
     // Sempre posarem el mateix
     public static final String SIGNID = "SignID_1";
+    
+    
+    @Override
+    public int getTipusPeticio() {
+        return Constants.TIPUS_PETICIO_AUTOFIRMA;
+    }
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
@@ -71,7 +81,7 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
         peticioForm.getPeticio().setDestinatarinif(LoginInfo.getInstance().getUsuari().getNif());
 
-        peticioForm.addReadOnlyField(DESTINATARINIF);
+        peticioForm.addHiddenField(DESTINATARINIF);
 
         return peticioForm;
 
@@ -526,5 +536,7 @@ public class AutoFirmaUserController extends EnviarPeticioUserController {
         return new ApiFirmaWebSimpleJersey(url, username, password);
 
     }
+
+
 
 }
