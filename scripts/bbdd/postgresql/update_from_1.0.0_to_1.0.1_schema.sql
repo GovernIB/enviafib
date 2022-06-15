@@ -78,6 +78,21 @@ ALTER TABLE efi_peticio DROP COLUMN peticioportafib;
 
 COMMENT ON COLUMN efi_peticio.peticioportafirmes IS 'Identificador de la petició dins el sistema de portafirmes';
 
+---
+--- 15/06/2022 -  Eliminar multiples titols per multiples idiomes de la pantalla de creació de petició de firma. #61
+---
+
+ALTER TABLE efi_peticio
+  ADD COLUMN nom character varying(255);
+
+  UPDATE efi_peticio SET  nom=peticioid;
+
+  ALTER TABLE efi_peticio DROP COLUMN titolid;
+
+  DELETE FROM efi_traducciomap;
+  DELETE FROM efi_traduccio;
+
+  COMMENT ON COLUMN efi_peticio.nom IS 'Nom de la peticio a PortaFIB.';
 
 
 

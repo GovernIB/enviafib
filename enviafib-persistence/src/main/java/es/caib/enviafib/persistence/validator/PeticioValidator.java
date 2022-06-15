@@ -7,7 +7,6 @@ import org.fundaciobit.genapp.common.query.Field;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.InfoSignaturaFields;
-import es.caib.enviafib.model.fields.TraduccioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 
 import org.fundaciobit.genapp.common.validation.IValidatorResult;
@@ -34,14 +33,9 @@ public class PeticioValidator<I extends Peticio>
     ,es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager
     ,es.caib.enviafib.model.dao.IInfoSignaturaManager __infoSignaturaManager
     ,es.caib.enviafib.model.dao.IPeticioManager __peticioManager
-    ,es.caib.enviafib.model.dao.ITraduccioManager __traduccioManager
     ,es.caib.enviafib.model.dao.IUsuariManager __usuariManager) {
 
     // Valors Not Null
-    __vr.rejectIfEmptyOrWhitespace(__target__,TITOLID, 
-        "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TITOLID)));
-
     __vr.rejectIfEmptyOrWhitespace(__target__,DATACREACIO, 
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(DATACREACIO)));
@@ -75,6 +69,14 @@ public class PeticioValidator<I extends Peticio>
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
 
     // Check size
+    if (__vr.getFieldErrorCount(NOM) == 0) {
+      java.lang.String __nom = __target__.getNom();
+      if (__nom!= null && __nom.length() > 255) {
+        __vr.rejectValue(NOM, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOM)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
     if (__vr.getFieldErrorCount(IDIOMAID) == 0) {
       java.lang.String __idiomaid = __target__.getIdiomaID();
       if (__idiomaid!= null && __idiomaid.length() > 5) {
@@ -166,18 +168,6 @@ public class PeticioValidator<I extends Peticio>
     }
 
     // Fields with References to Other tables 
-    if (__vr.getFieldErrorCount(TITOLID) == 0) {
-      java.lang.Long __titolid = __target__.getTitolID();
-      Long __count_ = null;
-      try { __count_ = __traduccioManager.count(TraduccioFields.TRADUCCIOID.equal(__titolid)); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
-      if (__count_ == null || __count_ == 0) {        
-        __vr.rejectValue(TITOLID, "error.notfound",
-         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("traduccio.traduccio"),
-         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("traduccio.traduccioID"),
-         new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__titolid)));
-      }
-    }
-
     if (__vr.getFieldErrorCount(SOLICITANTID) == 0) {
       java.lang.Long __solicitantid = __target__.getSolicitantID();
       Long __count_ = null;

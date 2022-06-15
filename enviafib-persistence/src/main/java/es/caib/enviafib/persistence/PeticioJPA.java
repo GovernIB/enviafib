@@ -19,8 +19,6 @@ import javax.persistence.Id;
 
 @Entity(name = "PeticioJPA")
 @Table(name = "efi_peticio" , indexes = { 
-        @Index(name="efi_peticio_titolid_fk_i", columnList = "titolid"),
-        @Index(name="efi_peticio_pk_i", columnList = "peticioid"),
         @Index(name="efi_peticio_fitxerid_fk_i", columnList = "fitxerid"),
         @Index(name="efi_peticio_solicitantid_fk_i", columnList = "solicitantid"),
         @Index(name="efi_peticio_idiomaid_fk_i", columnList = "idiomaid"),
@@ -34,8 +32,9 @@ public class PeticioJPA implements Peticio {
 
 private static final long serialVersionUID = 1230292508L;
 
-    @Column(name="titolid",nullable = false,length = 19)
-    long titolID;
+  /** Nom de la peticio a PortaFIB. */
+    @Column(name="nom",length = 255)
+    java.lang.String nom;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="PETICIO_SEQ")
@@ -97,8 +96,8 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.sql.Timestamp dataFinal , java.lang.String peticioPortafirmes) {
-    this.titolID=titolID;
+  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.sql.Timestamp dataFinal , java.lang.String peticioPortafirmes) {
+    this.nom=nom;
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -117,8 +116,8 @@ private static final long serialVersionUID = 1230292508L;
     this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(long titolID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.sql.Timestamp dataFinal , java.lang.String peticioPortafirmes) {
-    this.titolID=titolID;
+  public PeticioJPA(java.lang.String nom , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.sql.Timestamp dataFinal , java.lang.String peticioPortafirmes) {
+    this.nom=nom;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
     this.solicitantID=solicitantID;
@@ -136,8 +135,7 @@ private static final long serialVersionUID = 1230292508L;
     this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor dels valors Not Null */
-  public PeticioJPA(long titolID , long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc , int tipus) {
-    this.titolID=titolID;
+  public PeticioJPA(long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc , int tipus) {
     this.peticioID=peticioID;
     this.datacreacio=datacreacio;
     this.fitxerID=fitxerID;
@@ -150,7 +148,7 @@ private static final long serialVersionUID = 1230292508L;
     this.tipus=tipus;
 }
   public PeticioJPA(Peticio __bean) {
-    this.setTitolID(__bean.getTitolID());
+    this.setNom(__bean.getNom());
     this.setPeticioID(__bean.getPeticioID());
     this.setDatacreacio(__bean.getDatacreacio());
     this.setFitxerID(__bean.getFitxerID());
@@ -173,11 +171,11 @@ private static final long serialVersionUID = 1230292508L;
     this.setFitxerFirmat(FitxerJPA.toJPA(__bean.getFitxerFirmat()));
 	}
 
-	public long getTitolID() {
-		return(titolID);
+	public java.lang.String getNom() {
+		return(nom);
 	};
-	public void setTitolID(long _titolID_) {
-		this.titolID = _titolID_;
+	public void setNom(java.lang.String _nom_) {
+		this.nom = _nom_;
 	};
 
 	public long getPeticioID() {
@@ -307,30 +305,6 @@ private static final long serialVersionUID = 1230292508L;
     return __result;
   }
 
-// IMP Field:traduccioid | Table: efi_traduccio | Type: 1  
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade=javax.persistence.CascadeType.ALL)
-    @JoinColumn(name = "titolid", referencedColumnName ="traduccioID", nullable = false, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_peticio_traduccio_titl_fk"))
-    private TraduccioJPA titol;
-
-    public TraduccioJPA getTitol() {
-    return this.titol;
-  }
-
-    public  void setTitol(TraduccioJPA titol) {
-    this.titol = titol;
-  }
-
-  @javax.xml.bind.annotation.XmlTransient
-  public java.util.Map<String, es.caib.enviafib.persistence.TraduccioMapJPA> getTitolTraduccions() {
-    return this.titol.getTraduccions();
-  }
-
-  public void setTitolTraduccions(java.util.Map<String, es.caib.enviafib.persistence.TraduccioMapJPA> __traduccions__) {
-    this.titol.setTraduccions(__traduccions__);
-  }
-
-
 // IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -406,7 +380,7 @@ private static final long serialVersionUID = 1230292508L;
   public static PeticioJPA toJPA(Peticio __bean) {
     if (__bean == null) { return null;}
     PeticioJPA __tmp = new PeticioJPA();
-    __tmp.setTitolID(__bean.getTitolID());
+    __tmp.setNom(__bean.getNom());
     __tmp.setPeticioID(__bean.getPeticioID());
     __tmp.setDatacreacio(__bean.getDatacreacio());
     __tmp.setFitxerID(__bean.getFitxerID());
@@ -464,10 +438,6 @@ private static final long serialVersionUID = 1230292508L;
     if(!"UsuariJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.usuari) || org.hibernate.Hibernate.isInitialized(__jpa.getUsuari()) ) ) {
       __tmp.setUsuari(UsuariJPA.copyJPA(__jpa.getUsuari(), __alreadyCopied,"PeticioJPA"));
-    }
-    if(!"TraduccioJPA".equals(origenJPA) && 
-       (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.titol) || org.hibernate.Hibernate.isInitialized(__jpa.getTitol()) ) ) {
-      __tmp.setTitol(TraduccioJPA.copyJPA(__jpa.getTitol(), __alreadyCopied,"PeticioJPA"));
     }
     if(!"InfoSignaturaJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoSignatura) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoSignatura()) ) ) {

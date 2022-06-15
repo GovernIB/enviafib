@@ -7,11 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import java.util.Set;
 import java.util.HashMap;
 import org.hibernate.annotations.Cascade;
-import java.util.HashSet;
 import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
@@ -76,19 +73,6 @@ private static final long serialVersionUID = -326205279L;
     }
     return __result;
   }
-
-// EXP  Field:titolid | Table: efi_peticio | Type: 0  
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "titolID")
-    private Set<PeticioJPA> peticios = new HashSet<PeticioJPA>(0);
-    public  Set<PeticioJPA> getPeticios() {
-    return this.peticios;
-  }
-
-    public void setPeticios(Set<PeticioJPA> peticios) {
-      this.peticios = peticios;
-    }
-
 
   @ElementCollection(fetch= FetchType.EAGER, targetClass = es.caib.enviafib.persistence.TraduccioMapJPA.class)
   @Cascade(value=org.hibernate.annotations.CascadeType.ALL)
@@ -155,10 +139,6 @@ private static final long serialVersionUID = -326205279L;
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
-    if(!"PeticioJPA".equals(origenJPA) 
-       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticios) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticios())) ) {
-      __tmp.setPeticios(PeticioJPA.copyJPA(__jpa.getPeticios(), __alreadyCopied,"TraduccioJPA"));
-    }
     // Copia de beans complexes (IMP)
     // Aquesta linia s'afeix de forma manual
     __tmp.setTraduccions(new HashMap<String, TraduccioMapJPA>(__jpa.getTraduccions()));

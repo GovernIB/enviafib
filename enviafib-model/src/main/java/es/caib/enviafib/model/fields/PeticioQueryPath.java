@@ -11,8 +11,8 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     super(parentQueryPath);
   }
 
-  public LongField TITOLID() {
-    return new LongField(getQueryPath(), PeticioFields.TITOLID);
+  public StringField NOM() {
+    return new StringField(getQueryPath(), PeticioFields.NOM);
   }
 
   public LongField PETICIOID() {
@@ -87,14 +87,6 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
         : this.parentQueryPath.getQueryPath());
   }
 
-
-  public TraduccioQueryPath TITOL() {
-    return new TraduccioQueryPath(new QueryPath() {
-      public String getQueryPath() {
-          return PeticioQueryPath.this.getQueryPath() + "titol" + ".";
-      }
-    });
-  }
 
   public FitxerQueryPath FITXER() {
     return new FitxerQueryPath(new QueryPath() {

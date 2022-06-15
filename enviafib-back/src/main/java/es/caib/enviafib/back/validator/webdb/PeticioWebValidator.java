@@ -42,9 +42,6 @@ public class PeticioWebValidator extends AbstractWebValidator<PeticioForm, Petic
   @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.PeticioService.JNDI_NAME)
   protected es.caib.enviafib.ejb.PeticioService peticioEjb;
 
-  @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.TraduccioService.JNDI_NAME)
-  protected es.caib.enviafib.ejb.TraduccioService traduccioEjb;
-
   @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
   protected es.caib.enviafib.ejb.UsuariService usuariEjb;
 
@@ -67,10 +64,8 @@ public class PeticioWebValidator extends AbstractWebValidator<PeticioForm, Petic
   @Override
   public void validate(PeticioForm __form, Peticio __bean, Errors errors) {
 
-java.util.List<Field<?>> _ignoreFields = new java.util.ArrayList<Field<?>>();
-_ignoreFields.add(TITOLID);
     WebValidationResult<PeticioForm> wvr;
-    wvr = new WebValidationResult<PeticioForm>(errors, _ignoreFields);
+    wvr = new WebValidationResult<PeticioForm>(errors);
 
     boolean isNou;
     {
@@ -90,42 +85,6 @@ _ignoreFields.add(TITOLID);
   public void validate(PeticioForm __form, Peticio __bean, Errors errors,
     WebValidationResult<PeticioForm> wvr, boolean isNou) {
 
-  {
-      es.caib.enviafib.persistence.PeticioJPA __jpa;
-      __jpa = (es.caib.enviafib.persistence.PeticioJPA)__bean;
-    {
-      // IF CAMP ES NOT NULL verificar que totes les traduccions son not null
-      es.caib.enviafib.persistence.TraduccioJPA tradJPA = __jpa.getTitol();
-      if (tradJPA != null) {
-        // TODO ERROR
-        java.util.Map<String,es.caib.enviafib.persistence.TraduccioMapJPA> _trad = tradJPA.getTraduccions();
-        int countNotNull = 0;
-        for (String _idioma : _trad.keySet()) {
-          es.caib.enviafib.persistence.TraduccioMapJPA _map = _trad.get(_idioma);
-          if (_map == null || (_map.getValor() == null || _map.getValor().length() == 0 )) {
-          } else {
-            countNotNull++;
-          }
-        }
-
-          if (countNotNull  == _trad.size()) {
-            // OK Tot esta ple
-          } else {
-            for (String _idioma : _trad.keySet()) {
-              es.caib.enviafib.persistence.TraduccioMapJPA _map = _trad.get(_idioma);
-              if (_map == null || (_map.getValor() == null || _map.getValor().length() == 0 )) {
-                errors.rejectValue("peticio.titol", "genapp.validation.required", new String[] {org.fundaciobit.genapp.common.web.i18n.I18NUtils.tradueix(TITOLID.fullName)}, null);
-                errors.rejectValue("peticio.titol.traduccions["+ _idioma +"].valor",
-                  "genapp.validation.required", new String[] {org.fundaciobit.genapp.common.web.i18n.I18NUtils.tradueix(TITOLID.fullName)}, null);
-              }
-            }
-          }
-      } else {
-        errors.rejectValue("peticio.titol", "genapp.validation.required", new String[] {org.fundaciobit.genapp.common.web.i18n.I18NUtils.tradueix(TITOLID.fullName)}, null);
-      }
-    }
-
-  }
     if (isNou) { // Creacio
       // ================ CREATION
       // Fitxers 
@@ -139,7 +98,7 @@ _ignoreFields.add(TITOLID);
     }
     BeanValidatorResult<Peticio> __vr = new BeanValidatorResult<Peticio>();
     validator.validate(__vr, __bean,
-      isNou, idiomaEjb, infoSignaturaEjb, peticioEjb, traduccioEjb, usuariEjb);
+      isNou, idiomaEjb, infoSignaturaEjb, peticioEjb, usuariEjb);
 
     if (__vr.hasErrors()) {
         List<I18NFieldError> vrErrors = __vr.getErrors();
