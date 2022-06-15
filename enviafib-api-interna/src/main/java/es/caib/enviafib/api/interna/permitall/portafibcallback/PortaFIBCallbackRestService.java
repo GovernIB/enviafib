@@ -133,15 +133,17 @@ public class PortaFIBCallbackRestService {
 
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA: {
                     log.info("NOTIFICACIOAVIS_PETICIO_FIRMADA = " + eventID);
+                    String languageUI = "ca";
 
                     Long portafibID = event.getSigningRequest().getID();
                     Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
                             PeticioFields.PETICIOPORTAFIB.equal(portafibID));
 
                     if (peticioID != null) {
-                        String languageUI = "ca";
                         peticioLogicaEjb.guardarFitxerSignat(peticioID, languageUI);
                         log.info("Guardat fitxer signat de la petició amb ID=" + peticioID + " al FileSystemManager");
+
+                        peticioLogicaEjb.guardaInformacioSignatura(peticioID, languageUI);
 
                         Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
