@@ -2,6 +2,7 @@ package es.caib.enviafib.back.controller.all;
 
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,7 +28,7 @@ public class PublicController {
 		Boolean initialized = (Boolean) session.getAttribute("inicialitzat");
 
 		if (initialized == null) {
-			HtmlUtils.saveMessageInfo(request, "MessageInfo : Benvingut a EnviaFIB");
+			HtmlUtils.saveMessageInfo(request, I18NUtils.tradueix("common.benvinguda.missatge2"));
 			session.setAttribute("inicialitzat", true);
 		}
 
