@@ -35,7 +35,6 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void deleteFull(Peticio instance) throws I18NException;
 
-    public long guardaInformacioSignatura(long peticioID, String languageUI) throws I18NException, AbstractApisIBException;
-    
-    public long guardarFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
+    public void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
+
 }

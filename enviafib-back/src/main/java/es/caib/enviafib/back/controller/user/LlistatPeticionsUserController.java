@@ -142,7 +142,8 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                                     "btn-danger"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-play", "peticio.posarenmarxa",
-                                    getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
+                                    getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
+                                 // getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:

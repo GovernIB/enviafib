@@ -35,7 +35,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     public boolean isActiveDelete() {
         return false;
     }
-    
+
     @Override
     public boolean isActiveFormNew() {
         return true;
@@ -45,7 +45,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     public boolean isActiveFormEdit() {
         return true;
     }
-
 
     @Override
     public boolean isActiveFormView() {
@@ -60,12 +59,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     public abstract int getTipusPeticio();
 
     @Override
-    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
-            ModelAndView mav) throws I18NException {
+    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
+            throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
-        Set<Field<?>> hiddens = new HashSet<Field<?>>(
-                Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
+        Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
         hiddens.remove(NOM);
         hiddens.remove(FITXERID);
@@ -80,8 +78,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         peticio.setEstat(Constants.ESTAT_PETICIO_CREADA);
 
         String userName = request.getRemoteUser();
-        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID,
-                UsuariFields.USERNAME.equal(userName));
+        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
         peticio.setSolicitantID(userId);
 
         peticio.setTipus(getTipusPeticio());
@@ -96,4 +93,22 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return peticioForm;
     }
 
+    @Override
+    public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+    }
+
+    @Override
+    public String getRedirectWhenModified(HttpServletRequest request, PeticioForm peticioForm, Throwable __e) {
+        if (__e == null) {
+            return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+        } else {
+            return getTileForm();
+        }
+    }
+
+    @Override
+    public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long peticioID) {
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+    }
 }
