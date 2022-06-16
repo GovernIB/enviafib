@@ -123,35 +123,42 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
 
+            String codi_enmarxa = "peticio.btn.posarenmarxa";
+            String codi_delete = "peticio.btn.delete";
+            String codi_edit = "peticio.btn.edit";
+            String codi_download = "peticio.btn.download";
+            String codi_email = "peticio.btn.sendmail";
+
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", "genapp.edit",
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", codi_edit,
                             getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
+
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+                            new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play",
-                            "peticio.posarenmarxa", getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
-                // getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID,
-                // "btn-success"));
+
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play", codi_enmarxa,
+                            getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
+//                            getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 break;
                 case Constants.ESTAT_PETICIO_FIRMADA: {
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+                            new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
 
                     Fitxer file = peticio.getFitxerFirmat();
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
-                            "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
+                            codi_download, FileDownloadController.fileUrl(file), "btn-warning"));
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
-                            "email_firma", "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
+                            codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
 
                     // filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas
                     // fa-envelope icon-white",
@@ -163,7 +170,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                 case Constants.ESTAT_PETICIO_REBUTJADA:
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+                            new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
                 break;
