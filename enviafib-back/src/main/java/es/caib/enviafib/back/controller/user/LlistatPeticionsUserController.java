@@ -51,8 +51,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
     public static final String CONTEXT_WEB = "/user/peticio";
 
-
-
     @Override
     public String getTileList() {
         return "peticioListUser";
@@ -66,11 +64,10 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
         String userName = request.getRemoteUser();
-        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID,
-                UsuariFields.USERNAME.equal(userName));
+        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
         return PeticioFields.SOLICITANTID.equal(userId);
     }
-    
+
     @Override
     public boolean isActiveList() {
         return true;
@@ -91,15 +88,14 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         return false;
     }
 
-
     @Override
     public boolean isActiveFormView() {
         return false;
     }
-    
+
     @Override
-    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav,
-            HttpServletRequest request) throws I18NException {
+    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
+            throws I18NException {
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.setVisibleExportList(false);
@@ -108,7 +104,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
             peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
             peticioFilterForm.setAttachedAdditionalJspCode(true);
-            
+
             peticioFilterForm.setAddButtonVisible(false);
             peticioFilterForm.setEditButtonVisible(false);
             peticioFilterForm.setDeleteButtonVisible(false);
@@ -117,101 +113,83 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     }
 
     @Override
-    public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm,
-            List<Peticio> list) throws I18NException {
+    public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
+            throws I18NException {
 
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
         filterForm.getAdditionalButtonsByPK().clear();
-        
-
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
 
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", "genapp.edit",
+                            getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-edit", "genapp.edit",
-                                    getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
-                                    "javascript: openModal('" + request.getContextPath()
-                                            + getContextWeb() + "/" + peticioID
-                                            + "/delete','show')",
+                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-play", "peticio.posarenmarxa",
-                                    getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
-                                 // getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play",
+                            "peticio.posarenmarxa", getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
+                // getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID,
+                // "btn-success"));
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 break;
                 case Constants.ESTAT_PETICIO_FIRMADA: {
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
-                                    "javascript: openModal('" + request.getContextPath()
-                                            + getContextWeb() + "/" + peticioID
-                                            + "/delete','show')",
+                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
 
                     Fitxer file = peticio.getFitxerFirmat();
 
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-file-download", "descarregar_firma",
-                                    FileDownloadController.fileUrl(file), "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download",
+                            "descarregar_firma", FileDownloadController.fileUrl(file), "btn-warning"));
 
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-envelope icon-white", "email_firma",
-                                    "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
+                            "email_firma", "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
 
                     // filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas
                     // fa-envelope icon-white",
-                    // "email_firma", getContextWebByTipus(peticio.getTipus()) + "/enviaremail/"+peticioID, "btn-primary"));
+                    // "email_firma", getContextWebByTipus(peticio.getTipus()) +
+                    // "/enviaremail/"+peticioID, "btn-primary"));
 
                 }
                 break;
 
                 case Constants.ESTAT_PETICIO_REBUTJADA:
                     filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
-                                    "javascript: openModal('" + request.getContextPath()
-                                            + getContextWeb() + "/" + peticioID
-                                            + "/delete','show')",
+                            new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
+                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
                 break;
             }
         }
     }
-    
-    
-    protected String getContextWebByTipus(int tipus) {
-        
-        
-        String cw = firmaPathByTipus.get(tipus);
-        
-        
-        if (cw == null) {
-            
-            throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus + " en el bloc static {}  de la classe " + AbstractPeticioUserController.class.getSimpleName());
-            
-        }
-        
-        return cw;
-        
-    }
-    
-    
 
-    @RequestMapping(
-            value = "/enviaremail/{peticioId}/{email}/{windowUrl}",
-            method = RequestMethod.GET)
+    protected String getContextWebByTipus(int tipus) {
+
+        String cw = firmaPathByTipus.get(tipus);
+
+        if (cw == null) {
+
+            throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus
+                    + " en el bloc static {}  de la classe " + AbstractPeticioUserController.class.getSimpleName());
+
+        }
+
+        return cw;
+
+    }
+
+    @RequestMapping(value = "/enviaremail/{peticioId}/{email}/{windowUrl}", method = RequestMethod.GET)
     public String enviarEmail(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId")
-            long peticioId, @PathVariable("email")
-            String email, @PathVariable("windowUrl")
-            String windowUrl) {
+            @PathVariable("peticioId") long peticioId, @PathVariable("email") String email,
+            @PathVariable("windowUrl") String windowUrl) {
         boolean isHTML = true;
 
         // Decodificam el email arriba en base64
@@ -238,11 +216,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             map.put("fileUrl", fileUrl);
 
             String subject = I18NUtils.tradueix("email.download.file.subject");
-            String message = "<h4>" + I18NUtils.tradueix("email.download.file.title") + "</h4>"
-                    + "<div>" + "<p>" + I18NUtils.tradueix("email.download.file.message")
-                    + "<br/><a href='${fileUrl}'>"
-                    + I18NUtils.tradueix("email.download.file.linktext") + "</a>" + "</p>"
-                    + "</div>";
+            String message = "<h4>" + I18NUtils.tradueix("email.download.file.title") + "</h4>" + "<div>" + "<p>"
+                    + I18NUtils.tradueix("email.download.file.message") + "<br/><a href='${fileUrl}'>"
+                    + I18NUtils.tradueix("email.download.file.linktext") + "</a>" + "</p>" + "</div>";
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
@@ -270,13 +246,11 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
     @RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
     public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioID")
-            Long peticioID) {
+            @PathVariable("peticioID") Long peticioID) {
 
         try {
             peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage());
-            HtmlUtils.saveMessageSuccess(request,
-                    "Peticio amb Id: " + peticioID + " enviada correctament.");
+            HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticioID + " enviada correctament.");
         } catch (LoginException e) {
             String msg = "La sessio de l'usuari ha caducat.";
             HtmlUtils.saveMessageError(request, msg);
@@ -291,10 +265,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         return "redirect:" + getContextWeb() + "/list";
     }
 
-
     @Override
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
         peticioLogicaEjb.deleteFull(peticio);
-      }
+    }
 
 }
