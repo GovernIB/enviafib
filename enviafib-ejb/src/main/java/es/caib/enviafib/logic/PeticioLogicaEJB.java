@@ -222,7 +222,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         super.delete(instance);
 
         if (infoSignID != null) {
-            infoSignaturaLogicEjb.delete(infoSignID);
+            InfoSignaturaJPA is = infoSignaturaLogicEjb.findByPrimaryKey(infoSignID);
+            infoSignaturaLogicEjb.deletePublic(is);
         }
     }
 

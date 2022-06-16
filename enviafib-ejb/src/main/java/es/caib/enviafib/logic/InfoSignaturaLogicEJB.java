@@ -19,7 +19,7 @@ public class InfoSignaturaLogicEJB extends InfoSignaturaEJB implements InfoSigna
 
     @Override
     @PermitAll
-    public void delete(InfoSignatura instance) {
+    public void deletePublic(InfoSignatura instance) {
         super.delete(instance);
     }
 
@@ -28,17 +28,4 @@ public class InfoSignaturaLogicEJB extends InfoSignaturaEJB implements InfoSigna
     public InfoSignatura createPublic(InfoSignatura instance) throws I18NException {
         return super.create(instance);
     }
-
-    @Override
-    @PermitAll
-    public InfoSignatura update(InfoSignatura instance) throws I18NException {
-         return super.update(instance);
-    }
-
-    @Override
-    @PermitAll
-    public InfoSignaturaJPA findByPrimaryKey(Long _ID_) {
-        return (InfoSignaturaJPA)super.findByPrimaryKey(_ID_);
-    }
-
 }
