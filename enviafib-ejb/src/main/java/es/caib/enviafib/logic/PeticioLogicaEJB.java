@@ -103,7 +103,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
         if (peticioList == null || peticioList.size() != 1) {
-            String msg = "S'ha rebut un event de FIRMA amb idportafib=" + portafibID + ", pero no correspón a cap peticio";
+            String msg = "S'ha rebut un event de FIRMA amb idportafib=" + portafibID
+                    + ", pero no correspón a cap peticio";
             log.error(msg);
             throw new I18NException("genapp.comodi", msg);
         }
@@ -205,19 +206,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @Override
     @PermitAll
-    public void esborrarPeticioPortafib(long peticioPortafibId, String languageUI) throws I18NException {
+    public void esborrarPeticioPortafib(long portafibID, String languageUI) {
 
         try {
-            // Peticio peticio = this.findByPrimaryKey(peticioID);
-            // Long peticioPortafibId = peticio.getPeticioPortafib();
-
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-            rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortafibId, languageUI);
+            rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, languageUI);
 
             ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
             api.deleteSignatureRequest(rinfo);
-        } catch (AbstractApisIBException e) {
-            throw new I18NException("portafib.error.delete", String.valueOf(peticioPortafibId));
+        } catch (Throwable t) {
+            log.error("Error esborrant petició portafib: " + portafibID, t);
+//            throw new I18NException("portafib.error.delete", String.valueOf(portafibID));
         }
     }
 
