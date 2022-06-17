@@ -1,21 +1,24 @@
 
 package es.caib.enviafib.logic;
 
-// NO MODIFICAR - DO NOT MODIFY;
 import javax.ejb.Stateless;
 import javax.annotation.security.PermitAll;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.model.entity.InfoSignatura;
-import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
 import es.caib.enviafib.ejb.InfoSignaturaEJB;
 
+/**
+ * 
+ * @author ptrias
+ *
+ */
 @Stateless
 public class InfoSignaturaLogicEJB extends InfoSignaturaEJB implements InfoSignaturaLogicService {
 
     @Override
     @PermitAll
-    public void delete(InfoSignatura instance) {
+    public void deletePublic(InfoSignatura instance) {
         super.delete(instance);
     }
 
@@ -24,17 +27,4 @@ public class InfoSignaturaLogicEJB extends InfoSignaturaEJB implements InfoSigna
     public InfoSignatura createPublic(InfoSignatura instance) throws I18NException {
         return super.create(instance);
     }
-
-    @Override
-    @PermitAll
-    public InfoSignatura update(InfoSignatura instance) throws I18NException {
-         return super.update(instance);
-    }
-
-    @Override
-    @PermitAll
-    public InfoSignaturaJPA findByPrimaryKey(Long _ID_) {
-        return (InfoSignaturaJPA)super.findByPrimaryKey(_ID_);
-    }
-
 }

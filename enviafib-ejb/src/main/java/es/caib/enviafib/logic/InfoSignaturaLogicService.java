@@ -18,4 +18,6 @@ public interface InfoSignaturaLogicService extends InfoSignaturaService{
     public InfoSignaturaJPA findByPrimaryKey(Long _ID_);
     
     public InfoSignatura createPublic(InfoSignatura instance) throws I18NException;
+
+    public void deletePublic(InfoSignatura instance);
 }

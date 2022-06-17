@@ -29,7 +29,7 @@ public interface PeticioLogicaService extends PeticioService {
 
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException;
 
-    public void esborrarPeticioPortafib(long peticioPortafibId, String languageUI) throws Exception;
+    public void esborrarPeticioPortafib(long peticioPortafibId, String languageUI);
 
     public void updatePublic(Peticio peticio) throws I18NException;
 
@@ -37,9 +37,8 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void deleteFull(Peticio instance) throws I18NException;
 
-    public long guardaInformacioSignatura(long peticioID, String languageUI) throws I18NException, AbstractApisIBException;
-    
-    public long guardarFitxerSignat(long peticioID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
-    
     public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException;
+
+    public void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
+
 }

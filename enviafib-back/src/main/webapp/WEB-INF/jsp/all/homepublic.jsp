@@ -13,11 +13,9 @@
 
 <br/>
 <br/>
+<fmt:message key="common.benvinguda.titol"/><br/>
+<fmt:message key="common.benvinguda.missatge"/>
 
-PAGINA PUBLICA <br/>
-
-EnviaFIB és la pàgina per enviar peticions de firma a través del portal de firmes PortaFIB.
-Desenvolupat pel departament de Govern Digital de la Fundació Bit.
 
 <br/>
 <br/>

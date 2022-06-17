@@ -132,28 +132,12 @@ public class PortaFIBCallbackRestService {
 
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA: {
                     log.info("NOTIFICACIOAVIS_PETICIO_FIRMADA = " + eventID);
+
                     String languageUI = "ca";
-
                     Long portafibID = event.getSigningRequest().getID();
-                    Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
-                            PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
-                    if (peticioID != null) {
-                        peticioLogicaEjb.guardarFitxerSignat(peticioID, languageUI);
-                        log.info("Guardat fitxer signat de la petició amb ID=" + peticioID + " al FileSystemManager");
-
-                        peticioLogicaEjb.guardaInformacioSignatura(peticioID, languageUI);
-
-                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-                        peticioTemp.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-                        peticioLogicaEjb.updatePublic(peticioTemp);
-
-                        peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);
-
-                    } else {
-                        log.error("S'ha rebut un event de FIRMA amb idportafib=" + portafibID
-                                + ", pero peticioID es null");
-                    }
+                    peticioLogicaEjb.guardarFitxerInfoFirma(portafibID, languageUI);
+                    peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA: {

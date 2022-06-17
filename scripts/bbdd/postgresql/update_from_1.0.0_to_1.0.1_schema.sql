@@ -15,6 +15,7 @@ create index efi_seriedocumental_pk_i on efi_seriedocumental (seriedocumentalid)
 
 
 
+
 ---
 --- 14/06/2022 - Guardar informació de la firma realitzada en BBDD #41
 ---
@@ -24,8 +25,6 @@ CREATE SEQUENCE efi_infosignatura_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-ALTER TABLE efi_infosignatura_seq OWNER TO enviafib;
 
 CREATE TABLE efi_infosignatura (
     infosignaturaid bigint DEFAULT nextval('efi_infosignatura_seq'::regclass) NOT NULL,
@@ -47,15 +46,13 @@ CREATE TABLE efi_infosignatura (
     checkvalidationsignature boolean
 );
 
-ALTER TABLE efi_infosignatura OWNER TO enviafib;
 ALTER TABLE ONLY efi_infosignatura ADD CONSTRAINT efi_infosignatura_pk PRIMARY KEY (infosignaturaid);
 
 CREATE INDEX efi_infosignatura_pk_i ON efi_infosignatura USING btree (infosignaturaid);
 
-ALTER TABLE efi_peticio ADD COLUMN infosignaturaid bigint;
 ALTER TABLE ONLY efi_peticio ADD CONSTRAINT efi_peticio_infosign_fk FOREIGN KEY (infosignaturaid) REFERENCES efi_infosignatura(infosignaturaid);
 
-create index efi_peticio_infosignid_fk_i on efi_peticio (infosignaturaid);
+CREATE INDEX efi_peticio_infosignid_fk_i on efi_peticio (infosignaturaid);
 
 ---
 --- 15/06/2022 -  Firma de Documents per un Mateix #23 
@@ -91,7 +88,7 @@ ALTER TABLE efi_peticio DROP COLUMN titolid;
 DELETE FROM efi_traducciomap;
 DELETE FROM efi_traduccio;
 
-COMMENT ON COLUMN efi_peticio.nom IS 'Nom de la peticio.';
+COMMENT ON COLUMN efi_peticio.nom IS 'Nom de la peticio a PortaFIB.';
 
 
 

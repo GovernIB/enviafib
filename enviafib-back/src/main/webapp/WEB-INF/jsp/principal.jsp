@@ -15,7 +15,8 @@
 
 <br/>
 <br/>
-This page is generated automatically. Please edit.
+<fmt:message key="common.benvinguda.titol"/><br/>
+<fmt:message key="common.benvinguda.missatge"/>
 
 <br/>
 <br/>

@@ -126,6 +126,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @Override
     public String getRedirectWhenModified(HttpServletRequest request, PeticioForm peticioForm,
             Throwable __e) {
+
         if (__e == null) {
             return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
         } else {
