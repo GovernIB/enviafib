@@ -157,7 +157,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         fos.flush();
         fos.close();
 
-
         return idfitxer;
     }
 
@@ -244,7 +243,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     @Override
-    @PermitAll
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
         Long infoSignID = instance.getInfosignaturaid();
@@ -253,7 +251,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         if (infoSignID != null) {
             InfoSignaturaJPA is = infoSignaturaLogicEjb.findByPrimaryKey(infoSignID);
-            infoSignaturaLogicEjb.deletePublic(is);
+            infoSignaturaLogicEjb.delete(is);
         }
     }
 
