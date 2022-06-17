@@ -51,8 +51,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
     public static final String CONTEXT_WEB = "/user/peticio";
 
-
-
     @Override
     public String getTileList() {
         return "peticioListUser";
@@ -70,7 +68,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                 UsuariFields.USERNAME.equal(userName));
         return PeticioFields.SOLICITANTID.equal(userId);
     }
-    
+
     @Override
     public boolean isActiveList() {
         return true;
@@ -91,12 +89,11 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         return false;
     }
 
-
     @Override
     public boolean isActiveFormView() {
         return false;
     }
-    
+
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav,
             HttpServletRequest request) throws I18NException {
@@ -108,7 +105,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
             peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
             peticioFilterForm.setAttachedAdditionalJspCode(true);
-            
+
             peticioFilterForm.setAddButtonVisible(false);
             peticioFilterForm.setEditButtonVisible(false);
             peticioFilterForm.setDeleteButtonVisible(false);
@@ -123,26 +120,26 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
         filterForm.getAdditionalButtonsByPK().clear();
-        
-
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
 
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-edit", "genapp.edit",
-                                    getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton(
+                            "fas fa-edit", "genapp.edit",
+                            getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/",
+                            "btn-warning"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-trash icon-white", "genapp.delete",
                                     "javascript: openModal('" + request.getContextPath()
                                             + getContextWeb() + "/" + peticioID
                                             + "/delete','show')",
                                     "btn-danger"));
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-play", "peticio.posarenmarxa",
-                                    getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton(
+                            "fas fa-play", "peticio.posarenmarxa",
+                            getContextWeb() + "/arrancar/" + peticioID,
+                            "btn-success"));
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
@@ -167,7 +164,8 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                     // filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas
                     // fa-envelope icon-white",
-                    // "email_firma", getContextWebByTipus(peticio.getTipus()) + "/enviaremail/"+peticioID, "btn-primary"));
+                    // "email_firma", getContextWebByTipus(peticio.getTipus()) +
+                    // "/enviaremail/"+peticioID, "btn-primary"));
 
                 }
                 break;
@@ -183,25 +181,21 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             }
         }
     }
-    
-    
+
+    /**
+     * 
+     * @param tipus
+     * @return
+     */
     protected String getContextWebByTipus(int tipus) {
-        
-        
         String cw = firmaPathByTipus.get(tipus);
-        
-        
         if (cw == null) {
-            
-            throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus + " en el bloc static {}  de la classe " + AbstractPeticioUserController.class.getSimpleName());
-            
+            throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus
+                    + " en el bloc static {}  de la classe "
+                    + AbstractPeticioUserController.class.getSimpleName());
         }
-        
         return cw;
-        
     }
-    
-    
 
     @RequestMapping(
             value = "/enviaremail/{peticioId}/{email}/{windowUrl}",
@@ -290,10 +284,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         return "redirect:" + getContextWeb() + "/list";
     }
 
-
     @Override
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
         peticioLogicaEjb.deleteFull(peticio);
-      }
+    }
 
 }

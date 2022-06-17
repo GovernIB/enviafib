@@ -1,5 +1,6 @@
 package es.caib.enviafib.api.interna.permitall.portafibcallback;
 
+import java.sql.Timestamp;
 import java.util.Locale;
 
 import javax.ejb.EJB;
@@ -166,6 +167,7 @@ public class PortaFIBCallbackRestService {
                         String languageUI = "ca";
 
                         Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+                        peticioTemp.setDataFinal(new Timestamp(System.currentTimeMillis()));
                         peticioTemp.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
                         peticioLogicaEjb.updatePublic(peticioTemp);
 

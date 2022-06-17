@@ -82,7 +82,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         for (int i = 0; i < TIPUS_PETICIONS.length; i++) {
             __tmp.add(new StringKeyValue(String.valueOf(TIPUS_PETICIONS[i]),
-                    "tipuspeticio." + TIPUS_PETICIONS[i]));
+                   I18NUtils.tradueix("tipuspeticio." + TIPUS_PETICIONS[i])));
         }
 
         return __tmp;

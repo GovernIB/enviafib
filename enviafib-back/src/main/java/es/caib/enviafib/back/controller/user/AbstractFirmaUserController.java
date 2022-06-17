@@ -35,7 +35,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     public boolean isActiveDelete() {
         return false;
     }
-    
+
     @Override
     public boolean isActiveFormNew() {
         return true;
@@ -45,7 +45,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     public boolean isActiveFormEdit() {
         return true;
     }
-
 
     @Override
     public boolean isActiveFormView() {
@@ -64,36 +63,79 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             ModelAndView mav) throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
-        Set<Field<?>> hiddens = new HashSet<Field<?>>(
-                Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
+        boolean init = true;
+        if (__isView) {
 
-        hiddens.remove(NOM);
-        hiddens.remove(FITXERID);
-        hiddens.remove(TIPUSDOCUMENTAL);
-        hiddens.remove(IDIOMADOC);
+            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_FIRMADA) {
+                peticioForm.addHiddenField(ERROREXCEPTION);
+                peticioForm.addHiddenField(ERRORMSG);
+                peticioForm.addHiddenField(PETICIOPORTAFIRMES);
+                peticioForm.addHiddenField(INFOSIGNATURAID);
+                init = false;
+            }
+        }
 
-        peticioForm.setHiddenFields(hiddens);
+        if (init) {
+            Set<Field<?>> hiddens = new HashSet<Field<?>>(
+                    Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
-        Peticio peticio = peticioForm.getPeticio();
+            hiddens.remove(NOM);
+            hiddens.remove(FITXERID);
+            hiddens.remove(TIPUSDOCUMENTAL);
+            hiddens.remove(IDIOMADOC);
 
-        peticio.setDatacreacio(new Timestamp(System.currentTimeMillis()));
-        peticio.setEstat(Constants.ESTAT_PETICIO_CREADA);
+            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_REBUTJADA) {
+                hiddens.remove(ESTAT);
+                hiddens.remove(ERRORMSG);
+                hiddens.remove(ERROREXCEPTION);
+            }
 
-        String userName = request.getRemoteUser();
-        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID,
-                UsuariFields.USERNAME.equal(userName));
-        peticio.setSolicitantID(userId);
+            peticioForm.setHiddenFields(hiddens);
+        }
 
-        peticio.setTipus(getTipusPeticio());
+        if (peticioForm.isNou()) {
 
-        // Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context
-        // autmaticament.
-        peticio.setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
+            Peticio peticio = peticioForm.getPeticio();
 
-        // Idioma per defecte per els documents, catala.
-        peticio.setIdiomadoc("ca");
+            peticio.setDatacreacio(new Timestamp(System.currentTimeMillis()));
+            peticio.setEstat(Constants.ESTAT_PETICIO_CREADA);
+
+            String userName = request.getRemoteUser();
+            Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID,
+                    UsuariFields.USERNAME.equal(userName));
+            peticio.setSolicitantID(userId);
+
+            peticio.setTipus(getTipusPeticio());
+
+            // Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context
+            // autmaticament.
+            peticio.setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
+
+            // Idioma per defecte per els documents, catala.
+            peticio.setIdiomadoc("ca");
+        }
 
         return peticioForm;
+    }
+
+    @Override
+    public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+    }
+
+    @Override
+    public String getRedirectWhenModified(HttpServletRequest request, PeticioForm peticioForm,
+            Throwable __e) {
+        if (__e == null) {
+            return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+        } else {
+            return getTileForm();
+        }
+    }
+
+    @Override
+    public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long peticioID) {
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
 
 }
