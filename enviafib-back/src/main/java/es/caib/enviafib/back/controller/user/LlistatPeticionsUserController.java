@@ -51,6 +51,12 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
     public static final String CONTEXT_WEB = "/user/peticio";
 
+    public static final String codi_enmarxa = "peticio.btn.posarenmarxa";
+    public static final String codi_delete = "peticio.btn.delete";
+    public static final String codi_edit = "peticio.btn.edit";
+    public static final String codi_download = "peticio.btn.download";
+    public static final String codi_email = "peticio.btn.sendmail";
+
     @Override
     public String getTileList() {
         return "peticioListUser";
@@ -122,12 +128,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
-
-            String codi_enmarxa = "peticio.btn.posarenmarxa";
-            String codi_delete = "peticio.btn.delete";
-            String codi_edit = "peticio.btn.edit";
-            String codi_download = "peticio.btn.download";
-            String codi_email = "peticio.btn.sendmail";
 
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:

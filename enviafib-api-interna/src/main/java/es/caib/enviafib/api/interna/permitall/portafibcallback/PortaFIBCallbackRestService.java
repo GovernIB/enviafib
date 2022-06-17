@@ -136,7 +136,6 @@ public class PortaFIBCallbackRestService {
                     Long portafibID = event.getSigningRequest().getID();
 
                     peticioLogicaEjb.guardarFitxerInfoFirma(portafibID, languageUI);
-                    
                     peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);
                 }
                 break;

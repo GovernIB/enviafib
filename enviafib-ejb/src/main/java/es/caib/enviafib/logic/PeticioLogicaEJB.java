@@ -215,8 +215,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
             api.deleteSignatureRequest(rinfo);
         } catch (Throwable t) {
-            log.error("Error esborrant petició portafib: " + portafibID, t);
-//            throw new I18NException("portafib.error.delete", String.valueOf(portafibID));
+            log.error("Error esborrant petició portafib " + portafibID + ": " + t.getMessage(), t);
         }
     }
 
