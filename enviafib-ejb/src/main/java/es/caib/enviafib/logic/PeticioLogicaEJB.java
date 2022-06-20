@@ -1,6 +1,7 @@
 package es.caib.enviafib.logic;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -90,18 +91,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         FirmaAsyncSimpleFile fitxerAAnexar = null;
         ApiFirmaAsyncSimple api = null;
         try {
-            api = getApiFirmaAsyncSimple();    
-        }catch(Exception e) {
-            throw new I18NException("genapp.comodi", "Error de conexió amb la API de PortaFIB. Revisar propietats de 'apifirmaasync' de l'arxiu de propietats system.properties: " + e.getMessage());
+            api = getApiFirmaAsyncSimple();
+        } catch (Throwable e) {
+            String msg = "Error de conexió amb la API de PortaFIB. Revisar propietats de 'apifirmaasync' de l'arxiu de propietats system.properties: ";
+            throw new I18NException("genapp.comodi", msg + e.getMessage());
         }
-        
+
         Long idPortafib;
         try {
-            idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil,
-                    fitxerAFirmar, fitxerAAnexar, tipusDoc, idiomaDoc, api);
-        } catch (Exception e) {
-            throw new I18NException("genapp.comodi",
-                    "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
+            idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar,
+                    fitxerAAnexar, tipusDoc, idiomaDoc, api);
+        } catch (Throwable e) {
+            throw new I18NException("genapp.comodi", "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
         }
         peticio.setPeticioPortafirmes(String.valueOf(idPortafib));
         this.update(peticio);
@@ -109,11 +110,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @Override
     @PermitAll
-    public void guardarFitxerInfoFirma(long portafibID, String languageUI)
-            throws I18NException, AbstractApisIBException, IOException {
+    public void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException {
 
-        List<Peticio> peticioList = this
-                .select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
+        List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
         if (peticioList == null || peticioList.size() != 1) {
             String msg = "S'ha rebut un event de FIRMA amb idportafib=" + portafibID
@@ -126,8 +125,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Peticio peticio = peticioList.get(0);
 
         long fitxerID = guardarFitxer(firma);
-        log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID="
-                + peticio.getPeticioID() + " al FileSystemManager");
+        log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID=" + peticio.getPeticioID()
+                + " al FileSystemManager");
         peticio.setFitxerFirmatID(fitxerID);
 
         long infoSignaturaID = guardarInfo(firma);
@@ -136,39 +135,44 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
-  
+
         this.update(peticio);
     }
 
     /**
      * 
      * @param firma
-     * @return
+     * @return fitxerID
      * @throws I18NException
-     * @throws IOException
      */
-    protected long guardarFitxer(FirmaAsyncSimpleSignedFile firma) throws I18NException, IOException {
+    protected long guardarFitxer(FirmaAsyncSimpleSignedFile firma) throws I18NException {
         String nom = firma.getSignedFile().getNom();
         String mime = firma.getSignedFile().getMime();
         byte[] data = firma.getSignedFile().getData();
-
+        
         Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
+        
+        Long fitxerID = fdb.getFitxerID();
 
-        Long idfitxer = fdb.getFitxerID();
+        try {
+            File fitxersignat = FileSystemManager.getFile(fitxerID);
+            FileOutputStream fos = new FileOutputStream(fitxersignat);
+            fos.write(data);
+            fos.flush();
+            fos.close();
 
-        File fitxersignat = FileSystemManager.getFile(idfitxer);
-        FileOutputStream fos = new FileOutputStream(fitxersignat);
-        fos.write(data);
-        fos.flush();
-        fos.close();
+        } catch (Throwable e) {
+            String msg = "Ha hagut un error guardant el fitxer (" + fitxerID + ") al FileSystemManager" + e.getMessage();
+            throw new I18NException("genapp.comodi", msg);
+        }
 
-        return idfitxer;
+        return fitxerID;
     }
 
     /**
      * 
      * @param firma
-     * @return
+     * @return InfoSignaturaID
      * @throws I18NException
      */
     protected long guardarInfo(FirmaAsyncSimpleSignedFile firma) throws I18NException {
@@ -210,14 +214,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
 
         InfoSignaturaJPA is = new InfoSignaturaJPA(signOperation, signType, signAlgorithm, signMode,
-                signaturesTableLocation, timestampIncluded, policyIncluded, eniTipoFirma,
-                eniPerfilFirma, eniRolFirma, eniSignerName, eniSignerAdministrationId, eniSignLevel,
-                checkAdministrationIdOfSigner, checkDocumentModifications,
-                checkValidationSignature);
+                signaturesTableLocation, timestampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, eniRolFirma,
+                eniSignerName, eniSignerAdministrationId, eniSignLevel, checkAdministrationIdOfSigner,
+                checkDocumentModifications, checkValidationSignature);
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
-
-        return is.getInfosignaturaid();
+        long infoAsignaturaID = is.getInfosignaturaid();
+        return infoAsignaturaID; 
     }
 
     @Override
@@ -260,18 +263,16 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari,
-            String perfil, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
-            String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api)
-            throws Exception {
+    public Long createSignatureRequestAndStart(String languageUI, String nifDestinatari, String perfil,
+            FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar, String tipusDocumental,
+            String idiomaDocumental, ApiFirmaAsyncSimple api) throws Exception {
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = null;
 
         String[][] destinataris = new String[][] { { nifDestinatari } };
 
         if (destinataris == null || destinataris.length == 0) {
-            throw new Exception(
-                    "S'ha de definir la propietat nifsDestinataris dins test.properties");
+            throw new Exception("S'ha de definir la propietat nifsDestinataris dins test.properties");
         }
 
         signatureBlocks = new FirmaAsyncSimpleSignatureBlock[destinataris.length];
@@ -281,16 +282,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             if (destinatarisBloc == null || destinatarisBloc.length == 0) {
                 throw new Exception("Els destinataris del bloc " + i + " està buit o val null");
             }
-            System.out.println(
-                    "BLOC[" + i + "] => Destinataris = " + Arrays.toString(destinatarisBloc));
+            System.out.println("BLOC[" + i + "] => Destinataris = " + Arrays.toString(destinatarisBloc));
             List<FirmaAsyncSimpleSignature> signers = new ArrayList<FirmaAsyncSimpleSignature>();
             for (int j = 0; j < destinatarisBloc.length; j++) {
 
                 String nif = destinatarisBloc[j].trim();
 
                 if (nif.trim().length() == 0) {
-                    throw new Exception(
-                            "El destinatari " + j + " del bloc " + i + " està buit o val null");
+                    throw new Exception("El destinatari " + j + " del bloc " + i + " està buit o val null");
                 }
 
                 FirmaAsyncSimpleSigner personToSign;
@@ -308,14 +307,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 minimumNumberOfRevisers = 0;
                 revisers = null;
 
-                signers.add(new FirmaAsyncSimpleSignature(personToSign, required, reason,
-                        minimumNumberOfRevisers, revisers));
+                signers.add(new FirmaAsyncSimpleSignature(personToSign, required, reason, minimumNumberOfRevisers,
+                        revisers));
 
             }
 
             int minimumNumberOfSignaturesRequired = signers.size();
-            signatureBlocks[i] = new FirmaAsyncSimpleSignatureBlock(
-                    minimumNumberOfSignaturesRequired, signers);
+            signatureBlocks[i] = new FirmaAsyncSimpleSignatureBlock(minimumNumberOfSignaturesRequired, signers);
 
         }
 
@@ -340,8 +338,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
 
         String profileCode = perfil;
-        String title = "Peticio de Firma Simple Async - "
-                + ((System.currentTimeMillis() / 1000) % 100000);
+        String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
         String description = "Prova de firma - Desc";
         String reason = "Prova de firma - reason";
         FirmaAsyncSimpleFile originalDetachedSignature = null;
@@ -361,8 +358,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             if (tipusDocumentals == null || (lastRefresh + hora) < System.currentTimeMillis()) {
                 tipusDocumentals = new HashMap<Long, String>();
-                List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api
-                        .getAvailableTypesOfDocuments(languageUI);
+                List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(languageUI);
 
                 for (FirmaAsyncSimpleDocumentTypeInformation f : tipus) {
                     tipusDocumentals.put(f.getDocumentType(), f.getName());
@@ -374,8 +370,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             desc = tipusDocumentals.get(tipusDocumentalID);
 
         } catch (Throwable t) {
-            log.error("Error amb API per obtenir tipus documental ]" + tipusDocumental + "[: "
-                    + t.getMessage(), t);
+            log.error("Error amb API per obtenir tipus documental ]" + tipusDocumental + "[: " + t.getMessage(), t);
         }
 
         String languageDoc = idiomaDocumental;
@@ -394,10 +389,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         List<FirmaAsyncSimpleMetadata> metadadaList = null;
 
         FirmaAsyncSimpleSignatureRequestBase signatureRequestBase;
-        signatureRequestBase = new FirmaAsyncSimpleSignatureRequestBase(profileCode, title,
-                description, reason, fitxerAFirmar, originalDetachedSignature, tipusDocumentalID,
-                desc, languageDoc, languageUI, priority, senderName, senderDescription,
-                expedientCode, expedientName, expedientUrl, procedureCode, procedureName,
+        signatureRequestBase = new FirmaAsyncSimpleSignatureRequestBase(profileCode, title, description, reason,
+                fitxerAFirmar, originalDetachedSignature, tipusDocumentalID, desc, languageDoc, languageUI, priority,
+                senderName, senderDescription, expedientCode, expedientName, expedientUrl, procedureCode, procedureName,
                 additionalInformation, additionalInformationEvaluable, annexs, metadadaList);
 
         // Crear Peticio
@@ -406,8 +400,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         // Utilitzar Blocs de Firmes
         log.info("Petició de Firma emprant Blocs de Firmes");
         FirmaAsyncSimpleSignatureRequestWithSignBlockList signatureRequest;
-        signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(
-                signatureRequestBase, signatureBlocks);
+        signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(signatureRequestBase, signatureBlocks);
         peticioDeFirmaID2 = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
 
         log.info("Creada peticio amb ID = " + peticioDeFirmaID2);
@@ -425,23 +418,22 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         File f = FileSystemManager.getFile(fitxer.getFitxerID());
 
         if (!f.exists()) {
-            throw new I18NException("genapp.comodi",
-                    "No existeix el fitxer " + f.getAbsolutePath());
+            throw new I18NException("genapp.comodi", "No existeix el fitxer " + f.getAbsolutePath());
         }
 
         byte[] data;
         try {
             data = FileUtils.readFromFile(f);
-        } catch (Exception e) {
-            throw new I18NException("genapp.comodi",
-                    "No es pot llegir el fitxer " + f.getAbsolutePath());
+        } catch (Throwable e) {
+            String msg = "No es pot llegir el fitxer " + f.getAbsolutePath() + " - " + e.getMessage();
+            throw new I18NException("genapp.comodi", msg);
         }
 
-        return new FirmaAsyncSimpleFile(fitxer.getNom(), fitxer.getMime(), data);
+        FirmaAsyncSimpleFile file= new FirmaAsyncSimpleFile(fitxer.getNom(), fitxer.getMime(), data);
+        return file;
     }
 
-    public FirmaAsyncSimpleSignedFile getFitxerSignat(long portafibID, String languageUI)
-            throws I18NException, AbstractApisIBException {
+    public FirmaAsyncSimpleSignedFile getFitxerSignat(long portafibID, String languageUI) throws I18NException {
 
         FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
         rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, languageUI);
@@ -449,7 +441,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
         FirmaAsyncSimpleSignedFile fitxerSignat = null;
-        fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
+        try {
+            fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
+        } catch (Throwable t) {
+            String msg = "No es pot obtenir el fitxer signat de la petició de portafib " + portafibID;
+            throw new I18NException("genapp.comodi", msg);
+        }
 
         return fitxerSignat;
     }
@@ -475,8 +472,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
         try {
-            List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api
-                    .getAvailableTypesOfDocuments(lang);
+            List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
 
             List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
             for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
@@ -485,17 +481,16 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             return __tmp;
 
         } catch (AbstractApisIBException e) {
-            throw new I18NException("genapp.comodi",
-                    "Error llegint tipus documentals: " + e.getMessage());
+            throw new I18NException("genapp.comodi", "Error llegint tipus documentals: " + e.getMessage());
         }
 
     }
 
-    /**
-     * 
-     */
-    public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr)
-            throws I18NException {
+
+/**
+ * 
+ */
+    public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
 
         log.info("Autofirma Recuperada Informació de firma: "
                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
@@ -507,11 +502,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         if (fsf == null) {
             // XYZ ZZZ
-            throw new I18NException("genapp.comodi",
-                    "No s'ha pogut recuperar el fitxer signat ...");
+            throw new I18NException("genapp.comodi", "No s'ha pogut recuperar el fitxer signat ...");
 
         } else {
-
             guardaFitxerFirmatAutofirma(pet, fsf);
 
             long infoSignaturaID = guardaInformacioSignaturaAutofirma(fssr.getSignedFileInfo());
@@ -521,9 +514,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
 
             this.update(pet);
-
         }
-
     }
 
     /**
@@ -531,10 +522,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
      * @param info
      * @return
      * @throws I18NException
-     * @throws AbstractApisIBException
      */
-    public long guardaInformacioSignaturaAutofirma(FirmaSimpleSignedFileInfo info)
-            throws I18NException {
+    public long guardaInformacioSignaturaAutofirma(FirmaSimpleSignedFileInfo info) throws I18NException {
 
         int signOperation = info.getSignOperation();
         String signType = info.getSignType();
@@ -571,10 +560,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
 
         InfoSignaturaJPA is = new InfoSignaturaJPA(signOperation, signType, signAlgorithm, signMode,
-                signaturesTableLocation, timestampIncluded, policyIncluded, eniTipoFirma,
-                eniPerfilFirma, eniRolFirma, eniSignerName, eniSignerAdministrationId, eniSignLevel,
-                checkAdministrationIdOfSigner, checkDocumentModifications,
-                checkValidationSignature);
+                signaturesTableLocation, timestampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, eniRolFirma,
+                eniSignerName, eniSignerAdministrationId, eniSignLevel, checkAdministrationIdOfSigner,
+                checkDocumentModifications, checkValidationSignature);
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
 
@@ -591,8 +579,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
      * @param fsf
      * @throws I18NException
      */
-    protected void guardaFitxerFirmatAutofirma(Peticio pet, FirmaSimpleFile fsf)
-            throws I18NException {
+    protected void guardaFitxerFirmatAutofirma(Peticio pet, FirmaSimpleFile fsf) throws I18NException {
         Fitxer fitxer = new FitxerJPA();
 
         fitxer.setNom(fsf.getNom());
