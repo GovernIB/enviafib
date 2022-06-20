@@ -336,7 +336,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         }
 
         // XYZ ZZZ
-
         log.error(errorMsg);
         if (errorException != null) {
             log.error(errorException);
@@ -499,7 +498,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             log.error(msg, e);
 
             // XYZ ZZZ TRA
-            throw new I18NException("genapp.comodi", msg);
+            throw new I18NException(msg);
 
         } catch (Exception e) {
 

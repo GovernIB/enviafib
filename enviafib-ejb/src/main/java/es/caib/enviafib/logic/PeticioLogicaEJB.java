@@ -82,8 +82,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String tipusDoc = peticio.getTipusdocumental();
 
         FirmaAsyncSimpleFile fitxerAAnexar = null;
-        ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
-
+        ApiFirmaAsyncSimple api = null;
+        try {
+            api = getApiFirmaAsyncSimple();    
+        }catch(Exception e) {
+            throw new I18NException("genapp.comodi", "Error de conexió amb la API de PortaFIB. Revisar propietats de 'apifirmaasync' de l'arxiu de propietats system.properties: " + e.getMessage());
+        }
+        
         Long idPortafib;
         try {
             idPortafib = createSignatureRequestAndStart(languageUI, nifDestinatari, perfil, fitxerAFirmar,
