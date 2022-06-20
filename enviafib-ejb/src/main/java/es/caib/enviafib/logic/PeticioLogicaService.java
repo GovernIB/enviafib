@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignatureResult;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
@@ -16,6 +17,7 @@ import es.caib.enviafib.persistence.PeticioJPA;
 /**
  * 
  * @author fbosch
+ * @author anadal
  *
  */
 @Local
@@ -35,5 +37,8 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void deleteFull(Peticio instance) throws I18NException;
 
+    public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException;
+
     public void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
+
 }

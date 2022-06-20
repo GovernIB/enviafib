@@ -5,7 +5,6 @@ import javax.ejb.Stateless;
 import javax.annotation.security.PermitAll;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.model.entity.InfoSignatura;
-import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
 import es.caib.enviafib.ejb.InfoSignaturaEJB;
 

@@ -131,6 +131,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
             switch ((int) peticio.getEstat()) {
                 case Constants.ESTAT_PETICIO_CREADA:
+
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", codi_edit,
                             getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
 
@@ -141,7 +142,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play", codi_enmarxa,
                             getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
-//                            getContextWebByTipus(peticio.getTipus()) + "/arrancar/" + peticioID, "btn-success"));
+
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
@@ -160,11 +161,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
                             codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
 
-                    // filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas
-                    // fa-envelope icon-white",
-                    // "email_firma", getContextWebByTipus(peticio.getTipus()) +
-                    // "/enviaremail/"+peticioID, "btn-primary"));
-
                 }
                 break;
 
@@ -178,19 +174,18 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         }
     }
 
+    /**
+     * 
+     * @param tipus
+     * @return
+     */
     protected String getContextWebByTipus(int tipus) {
-
         String cw = firmaPathByTipus.get(tipus);
-
         if (cw == null) {
-
             throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus
                     + " en el bloc static {}  de la classe " + AbstractPeticioUserController.class.getSimpleName());
-
         }
-
         return cw;
-
     }
 
     @RequestMapping(value = "/enviaremail/{peticioId}/{email}/{windowUrl}", method = RequestMethod.GET)

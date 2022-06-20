@@ -3,6 +3,7 @@ package es.caib.enviafib.back.controller.user;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,6 @@ import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleGetSignatureRes
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleGetTransactionStatusResponse;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignatureResult;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignatureStatus;
-import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignedFileInfo;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleStartTransactionRequest;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleStatus;
 import org.fundaciobit.apisib.apifirmasimple.v1.jersey.ApiFirmaWebSimpleJersey;
@@ -43,10 +43,8 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
-import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -55,28 +53,26 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 @Controller
-@RequestMapping(value = AutoFirmaUserController.CONTEXT_WEB )
+@RequestMapping(value = AutoFirmaUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
 public class AutoFirmaUserController extends AbstractFirmaUserController {
-    
-    
-    public static final String CONTEXT_WEB =  "/user/autofirma";
+
+    public static final String CONTEXT_WEB = "/user/autofirma";
 
     // XYZ ZZZ LLEVAR
     private static Map<String, Long> peticioIdByTransactionId = new HashMap<String, Long>();
 
     // Sempre posarem el mateix
     public static final String SIGNID = "SignID_1";
-    
-    
+
     @Override
     public int getTipusPeticio() {
         return Constants.TIPUS_PETICIO_AUTOFIRMA;
     }
 
     @Override
-    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
-            ModelAndView mav) throws I18NException {
+    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
+            throws I18NException {
 
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
         peticioForm.getPeticio().setDestinatarinif(LoginInfo.getInstance().getUsuari().getNif());
@@ -100,8 +96,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         String transactionID = info[0];
         String redirectUrl = info[1];
 
-        log.info("Afegint transactionID[" + transactionID + "] => " + peticio.getPeticioID()
-                + "    dins mapping");
+        log.info("Afegint transactionID[" + transactionID + "] => " + peticio.getPeticioID() + "    dins mapping");
 
         peticioIdByTransactionId.put(transactionID, peticio.getPeticioID());
 
@@ -111,6 +106,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
     }
 
+    @Override
     public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
         return "redirect:" + getContextWeb() + "/viewiniframe";
     }
@@ -150,9 +146,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
     }
 
     @RequestMapping(value = "/finalWeb/{transactionID}")
-    public ModelAndView finalProcesDeFirmaWeb(HttpServletRequest request,
-            HttpServletResponse response, @PathVariable("transactionID")
-            String transactionID) throws Exception {
+    public ModelAndView finalProcesDeFirmaWeb(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("transactionID") String transactionID) throws Exception {
 
         log.info("Final Web  Consultant transactionID[" + transactionID + "] dins mapping ...");
 
@@ -160,7 +155,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         log.info("Consulta transactionID[" + transactionID + "] => " + peticioID);
 
-        Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
+        // XYZ ZZZ
+        // TODO CHeck de peticioID
 
         String errorMsg;
         String errorException;
@@ -202,8 +198,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 case FirmaSimpleStatus.STATUS_FINAL_ERROR: // = -1;
                 {
                     // XYZ ZZZ
-                    String msg = "Error durant la realització de les firmes de la transacció "
-                            + transactionID + ": " + transactionStatus.getErrorMessage();
+                    String msg = "Error durant la realització de les firmes de la transacció " + transactionID + ": "
+                            + transactionStatus.getErrorMessage();
                     String desc = transactionStatus.getErrorStackTrace();
 
                     errorException = desc;
@@ -217,8 +213,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 {
                     errorException = null;
                     // XYZ ZZZ
-                    errorMsg = "Durant el procés de firmes,"
-                            + " l'usuari ha cancelat la transacció amb ID " + transactionID + ".";
+                    errorMsg = "Durant el procés de firmes," + " l'usuari ha cancelat la transacció amb ID "
+                            + transactionID + ".";
 
                 }
                 break;
@@ -226,8 +222,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 case FirmaSimpleStatus.STATUS_FINAL_OK: // = 2;
                 {
 
-                    List<FirmaSimpleSignatureStatus> results = fullTransactionStatus
-                            .getSignaturesStatusList();
+                    List<FirmaSimpleSignatureStatus> results = fullTransactionStatus.getSignaturesStatusList();
 
                     final boolean isDebug = true; // log.isDebugEnabled();
                     if (isDebug) {
@@ -245,64 +240,29 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         }
 
                         if (!SIGNID.equals(signID)) {
-                            log.warn(
-                                    "S'ha rebut de PortaFIB una petició de firma amb un SIGNID que no s'ha enviat ("
-                                            + signID + ")");
+                            log.warn("S'ha rebut de PortaFIB una petició de firma amb un SIGNID que no s'ha enviat ("
+                                    + signID + ")");
                             continue;
                         }
 
-                        fssr = api.getSignatureResult(
-                                new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
+                        fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
 
                     } // Final for de fitxers firmats
 
                     if (fssr != null && fssr.getSignedFileInfo() != null) {
-                        log.info("Recuperada Informació de firma: "
-                                + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
+                        peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
-                        pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+                        // XYZ ZZZ
+                        HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament");
 
-                        FirmaSimpleFile fsf = fssr.getSignedFile();
-
-                        if (fsf == null) {
-                            errorException = null;
-                            // XYZ ZZZ
-                            errorMsg = "No s'ha pogut recuperar el fitxer signat ...";
-
-                        } else {
-
-                            Fitxer fitxer = new FitxerJPA();
-
-                            fitxer.setNom(fsf.getNom());
-                            fitxer.setMime(fsf.getMime());
-                            byte[] data = fsf.getData();
-                            fitxer.setTamany(data.length);
-
-                            fitxer = fitxerEjb.create(fitxer);
-
-                            pet.setFitxerFirmatID(fitxer.getFitxerID());
-
-                            pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-                            peticioLogicaEjb.update(pet);
-
-                            // XYZ ZZZ ZZZ TODO
-                            // XYZ ZZZ FALTA GUARDAR DADES DE LA FIRMA
-
-                            // XYZ ZZZ
-                            HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament");
-
-                            return new ModelAndView(
-                                    new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB
-                                            + "/view/" + pet.getPeticioID(), true));
-
-                        }
-
+                        return new ModelAndView(new RedirectView(getContextWeb() + "/view/" + peticioID, true));
                     } else {
                         errorException = null;
                         // XYZ ZZZ TRA
                         errorMsg = "No s'ha retornat cap firma amb SIGNID=" + SIGNID;
                     }
-                } // Final Case Firma OK
+
+                }
                 break;
 
                 default:
@@ -344,14 +304,17 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         // ANAR A LLISTAT DE PETICIONS
         HtmlUtils.saveMessageError(request, errorMsg);
 
+        // XYZ ZZZ Només volem saber si existeix !!!!!!
+        Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
+
+        pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
         pet.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
 
         // XYZ ZZZ FALTA POSAR ERROR DINS PETICIO
 
         peticioLogicaEjb.update(pet);
 
-        return new ModelAndView(
-                new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+        return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
 
     }
 
@@ -401,8 +364,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
     // XYZ ZZZ NO ESTA BE A LA CAIB AIXÔ NO FUNCIONA !!!!!!!
     private static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
 
-        return request.getScheme() + "://" + request.getServerName() + ":"
-                + +request.getServerPort() + request.getContextPath() + webContext;
+        return request.getScheme() + "://" + request.getServerName() + ":" + +request.getServerPort()
+                + request.getContextPath() + webContext;
     }
 
     /**
@@ -414,8 +377,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
      * @return
      * @throws I18NException
      */
-    protected String[] autofirma(PeticioJPA peticio, Usuari usuari, String langUI,
-            String absoluteControllerBase) throws I18NException {
+    protected String[] autofirma(PeticioJPA peticio, Usuari usuari, String langUI, String absoluteControllerBase)
+            throws I18NException {
 
         ApiFirmaWebSimple apiWeb = null;
         String transactionID = null;
@@ -444,13 +407,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             FirmaSimpleCommonInfo commonInfoSignature;
             // XYZ ZZZ
             String signProfile = null;
-            commonInfoSignature = new FirmaSimpleCommonInfo(signProfile, langUI, username,
-                    administrationID, signerEmail);
+            commonInfoSignature = new FirmaSimpleCommonInfo(signProfile, langUI, username, administrationID,
+                    signerEmail);
 
             // Enviam la part comu de la transacció
             transactionID = apiWeb.getTransactionID(commonInfoSignature);
             log.info("TransactionID = |" + transactionID + "|");
-
 
             FirmaSimpleFileInfoSignature fileInfoSignature;
             {
@@ -463,17 +425,14 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
                 String nomFitxer = peticio.getFitxer().getNom();
 
-                FirmaSimpleFile fileToSign = new FirmaSimpleFile(nomFitxer, mimeTypeFitxer,
-                        dataFitxer);
+                FirmaSimpleFile fileToSign = new FirmaSimpleFile(nomFitxer, mimeTypeFitxer, dataFitxer);
 
                 long tipusDocumentalID = Long.parseLong(peticio.getTipusdocumental()); // =TD99
 
-                fileInfoSignature = new FirmaSimpleFileInfoSignature(fileToSign, signID,
-                        fileToSign.getNom(), reason, location, signNumber, langDoc,
-                        tipusDocumentalID);
+                fileInfoSignature = new FirmaSimpleFileInfoSignature(fileToSign, signID, fileToSign.getNom(), reason,
+                        location, signNumber, langDoc, tipusDocumentalID);
 
-                apiWeb.addFileToSign(
-                        new FirmaSimpleAddFileToSignRequest(transactionID, fileInfoSignature));
+                apiWeb.addFileToSign(new FirmaSimpleAddFileToSignRequest(transactionID, fileInfoSignature));
 
             }
 
@@ -484,8 +443,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             final String returnUrl = absoluteControllerBase + "/finalWeb/" + transactionID;
 
             FirmaSimpleStartTransactionRequest startTransactionInfo;
-            startTransactionInfo = new FirmaSimpleStartTransactionRequest(transactionID, returnUrl,
-                    view);
+            startTransactionInfo = new FirmaSimpleStartTransactionRequest(transactionID, returnUrl, view);
 
             String redirectUrl = apiWeb.startTransaction(startTransactionInfo);
 
@@ -535,7 +493,5 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         return new ApiFirmaWebSimpleJersey(url, username, password);
 
     }
-
-
 
 }
