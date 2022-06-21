@@ -50,21 +50,16 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav, Where where)
-            throws I18NException {
+    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
+            Where where) throws I18NException {
 
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:
         List<StringKeyValue> tmpList = null;
-        try {
-            tmpList = peticioLogicaEjb
-                    .getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
-            tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
-        }catch(I18NException e) {
-            HtmlUtils.saveMessageError(request, I18NUtils.tradueix("error.tipusdocumentals.obtencio"));
-            log.error(I18NUtils.tradueix("error.tipousdocumentals.correccio") +Constants.ENVIAFIB_PROPERTY_BASE+"system.properties.  -  "+e.getMessage());
-        }
-      
+
+        tmpList = peticioLogicaEjb.getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
+        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
+
         return tmpList;
 
     }
