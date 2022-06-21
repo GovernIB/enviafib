@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
@@ -42,7 +43,9 @@ import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleValidationInfo;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
+import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.i18n.I18NTranslation;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
 import es.caib.enviafib.persistence.FitxerJPA;
@@ -92,14 +95,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleFile fitxerAAnexar = null;
         ApiFirmaAsyncSimple api = null;
-        try {
-            api = getApiFirmaAsyncSimple();
-        } catch (Throwable e) {
-            throw new I18NException("genapp.comodi",
-                    "Error de conexió amb la API de PortaFIB. Revisar propietats de 'apifirmaasync' de l'arxiu de propietats "
-                            + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.   -   " + e.getMessage());
-
-        }
+        api = getApiFirmaAsyncSimple();
+        
 
         Long idPortafib;
         try {
@@ -500,7 +497,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             return __tmp;
 
         } catch (AbstractApisIBException e) {
-            throw new I18NException("genapp.comodi", "Error llegint tipus documentals: " + e.getMessage());
+            log.error("Error obtenint els tipus documentals: " + e.getMessage(), e);
+            throw new I18NException("error.tipusdocumentals.obtencio", e.getMessage());
         }
 
     }

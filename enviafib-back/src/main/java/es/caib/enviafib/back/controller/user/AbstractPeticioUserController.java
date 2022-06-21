@@ -73,11 +73,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
         List<StringKeyValue> tmpList = null;
-        try {
-            tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
-        }catch(I18NException e) {
-            HtmlUtils.saveMessageError(request, I18NUtils.tradueix("error.tipusdocumentals.obtencio"));
-        }
+        tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
+        
         
         // TODO: Traduir "Qualsevol valor" ->
         // tmpList.add(new StringKeyValue("","Qualsevol valor"));
