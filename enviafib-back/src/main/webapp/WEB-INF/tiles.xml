@@ -85,6 +85,10 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/firmasimpleweb_iframe.jsp" />
     </definition>
   
+    <definition name="detallsinfosignatura" extends="admin">
+        <put-attribute name="titol" value="infosignatura.infosignatura" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/detallsinfosignatura.jsp" />
+    </definition>
 
     <!--  ===========  ADMIN  ================== -->
         

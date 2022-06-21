@@ -53,6 +53,23 @@ CREATE INDEX efi_peticio_infosignid_fk_i on efi_peticio (infosignaturaid);
 
 
 ---
+--- 15/06/2022 -  Firma de Documents per un Mateix #23 
+---
+
+ALTER TABLE efi_peticio ADD tipus NUMBER(10) NOT NULL DEFAULT 0;
+ALTER TABLE efi_peticio ADD errormsg VARCHAR2(255);
+ALTER TABLE efi_peticio ADD errorexception text;
+ALTER TABLE efi_peticio ADD datafinal timestamp;
+ALTER TABLE efi_peticio ADD peticioportafirmes VARCHAR2(255);
+  
+UPDATE efi_peticio SET  peticioportafirmes=peticioportafib WHERE peticioportafib is not null;
+
+ALTER TABLE efi_peticio DROP COLUMN peticioportafib;
+
+COMMENT ON COLUMN efi_peticio.peticioportafirmes IS 'Identificador de la petició dins el sistema de portafirmes';
+
+
+---
 --- 15/06/2022 -  Eliminar multiples titols per multiples idiomes de la pantalla de creació de petició de firma. #61
 ---
 

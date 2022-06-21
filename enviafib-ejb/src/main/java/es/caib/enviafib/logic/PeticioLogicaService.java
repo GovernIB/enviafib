@@ -1,12 +1,10 @@
 package es.caib.enviafib.logic;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.Local;
 
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignatureResult;
-import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 
@@ -39,6 +37,6 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException;
 
-    public void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException, AbstractApisIBException, IOException;
+    public void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException;
 
 }
