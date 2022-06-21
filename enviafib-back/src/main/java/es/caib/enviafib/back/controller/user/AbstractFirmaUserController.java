@@ -117,7 +117,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             Peticio peticio = peticioForm.getPeticio();
 
-            peticio.setDatacreacio(new Timestamp(System.currentTimeMillis()));
+            peticio.setDataCreacio(new Timestamp(System.currentTimeMillis()));
             peticio.setEstat(Constants.ESTAT_PETICIO_CREADA);
 
             String userName = request.getRemoteUser();
@@ -131,7 +131,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
 
             // Idioma per defecte per els documents, catala.
-            peticio.setIdiomadoc("ca");
+            peticio.setIdiomaDoc("ca");
         }
 
         return peticioForm;

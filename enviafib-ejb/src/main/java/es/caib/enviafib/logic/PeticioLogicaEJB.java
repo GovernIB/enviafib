@@ -86,12 +86,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 
-        String nifDestinatari = peticio.getDestinatarinif();
+        String nifDestinatari = peticio.getDestinatariNif();
         String perfil = "ENVIAFIB_PADES";
         FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
 
-        String idiomaDoc = peticio.getIdiomadoc();
-        String tipusDoc = peticio.getTipusdocumental();
+        String idiomaDoc = peticio.getIdiomaDoc();
+        String tipusDoc = peticio.getTipusDocumental();
 
         FirmaAsyncSimpleFile fitxerAAnexar = null;
         ApiFirmaAsyncSimple api = null;
@@ -132,7 +132,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         long infoSignaturaID = guardarInfo(firma);
         log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
-        peticio.setInfosignaturaid(infoSignaturaID);
+        peticio.setInfoSignaturaID(infoSignaturaID);
 
         peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
@@ -220,7 +220,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 checkDocumentModifications, checkValidationSignature);
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
-        long infoAsignaturaID = is.getInfosignaturaid();
+        long infoAsignaturaID = is.getInfoSignaturaID();
         return infoAsignaturaID; 
     }
 
@@ -254,7 +254,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
-        Long infoSignID = instance.getInfosignaturaid();
+        Long infoSignID = instance.getInfoSignaturaID();
 
         super.delete(instance);
 
@@ -521,7 +521,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             guardaFitxerFirmatAutofirma(pet, fsf);
 
             long infoSignaturaID = guardaInformacioSignaturaAutofirma(fssr.getSignedFileInfo());
-            pet.setInfosignaturaid(infoSignaturaID);
+            pet.setInfoSignaturaID(infoSignaturaID);
 
             pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
             pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
@@ -579,7 +579,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
 
-        long infoSignaturaID = is.getInfosignaturaid();
+        long infoSignaturaID = is.getInfoSignaturaID();
         log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
 
         return infoSignaturaID;

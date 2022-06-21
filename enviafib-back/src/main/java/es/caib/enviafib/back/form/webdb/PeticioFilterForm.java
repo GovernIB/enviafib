@@ -54,25 +54,25 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.sql.Timestamp datacreacioDesde;
+  private java.sql.Timestamp dataCreacioDesde;
 
-  public java.sql.Timestamp getDatacreacioDesde() {
-    return this.datacreacioDesde;
+  public java.sql.Timestamp getDataCreacioDesde() {
+    return this.dataCreacioDesde;
   }
 
-  public void setDatacreacioDesde(java.sql.Timestamp datacreacioDesde) {
-    this.datacreacioDesde = datacreacioDesde;
+  public void setDataCreacioDesde(java.sql.Timestamp dataCreacioDesde) {
+    this.dataCreacioDesde = dataCreacioDesde;
   }
 
 
-  private java.sql.Timestamp datacreacioFins;
+  private java.sql.Timestamp dataCreacioFins;
 
-  public java.sql.Timestamp getDatacreacioFins() {
-    return this.datacreacioFins;
+  public java.sql.Timestamp getDataCreacioFins() {
+    return this.dataCreacioFins;
   }
 
-  public void setDatacreacioFins(java.sql.Timestamp datacreacioFins) {
-    this.datacreacioFins = datacreacioFins;
+  public void setDataCreacioFins(java.sql.Timestamp dataCreacioFins) {
+    this.dataCreacioFins = dataCreacioFins;
   }
 
 
@@ -131,14 +131,14 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.String destinatarinif;
+  private java.lang.String destinatariNif;
 
-  public java.lang.String getDestinatarinif() {
-    return this.destinatarinif;
+  public java.lang.String getDestinatariNif() {
+    return this.destinatariNif;
   }
 
-  public void setDestinatarinif(java.lang.String destinatarinif) {
-    this.destinatarinif = destinatarinif;
+  public void setDestinatariNif(java.lang.String destinatariNif) {
+    this.destinatariNif = destinatariNif;
   }
 
 
@@ -164,47 +164,47 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.String tipusdocumental;
+  private java.lang.String tipusDocumental;
 
-  public java.lang.String getTipusdocumental() {
-    return this.tipusdocumental;
+  public java.lang.String getTipusDocumental() {
+    return this.tipusDocumental;
   }
 
-  public void setTipusdocumental(java.lang.String tipusdocumental) {
-    this.tipusdocumental = tipusdocumental;
-  }
-
-
-  private java.lang.String idiomadoc;
-
-  public java.lang.String getIdiomadoc() {
-    return this.idiomadoc;
-  }
-
-  public void setIdiomadoc(java.lang.String idiomadoc) {
-    this.idiomadoc = idiomadoc;
+  public void setTipusDocumental(java.lang.String tipusDocumental) {
+    this.tipusDocumental = tipusDocumental;
   }
 
 
-  private java.lang.Long infosignaturaidDesde;
+  private java.lang.String idiomaDoc;
 
-  public java.lang.Long getInfosignaturaidDesde() {
-    return this.infosignaturaidDesde;
+  public java.lang.String getIdiomaDoc() {
+    return this.idiomaDoc;
   }
 
-  public void setInfosignaturaidDesde(java.lang.Long infosignaturaidDesde) {
-    this.infosignaturaidDesde = infosignaturaidDesde;
+  public void setIdiomaDoc(java.lang.String idiomaDoc) {
+    this.idiomaDoc = idiomaDoc;
   }
 
 
-  private java.lang.Long infosignaturaidFins;
+  private java.lang.Long infoSignaturaIDDesde;
 
-  public java.lang.Long getInfosignaturaidFins() {
-    return this.infosignaturaidFins;
+  public java.lang.Long getInfoSignaturaIDDesde() {
+    return this.infoSignaturaIDDesde;
   }
 
-  public void setInfosignaturaidFins(java.lang.Long infosignaturaidFins) {
-    this.infosignaturaidFins = infosignaturaidFins;
+  public void setInfoSignaturaIDDesde(java.lang.Long infoSignaturaIDDesde) {
+    this.infoSignaturaIDDesde = infoSignaturaIDDesde;
+  }
+
+
+  private java.lang.Long infoSignaturaIDFins;
+
+  public java.lang.Long getInfoSignaturaIDFins() {
+    return this.infoSignaturaIDFins;
+  }
+
+  public void setInfoSignaturaIDFins(java.lang.Long infoSignaturaIDFins) {
+    this.infoSignaturaIDFins = infoSignaturaIDFins;
   }
 
 
@@ -271,20 +271,20 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.nom = __toClone.nom;
     this.peticioIDDesde = __toClone.peticioIDDesde;
     this.peticioIDFins = __toClone.peticioIDFins;
-    this.datacreacioDesde = __toClone.datacreacioDesde;
-    this.datacreacioFins = __toClone.datacreacioFins;
+    this.dataCreacioDesde = __toClone.dataCreacioDesde;
+    this.dataCreacioFins = __toClone.dataCreacioFins;
     this.dataFinalDesde = __toClone.dataFinalDesde;
     this.dataFinalFins = __toClone.dataFinalFins;
     this.solicitantIDDesde = __toClone.solicitantIDDesde;
     this.solicitantIDFins = __toClone.solicitantIDFins;
     this.idiomaID = __toClone.idiomaID;
-    this.destinatarinif = __toClone.destinatarinif;
+    this.destinatariNif = __toClone.destinatariNif;
     this.estatDesde = __toClone.estatDesde;
     this.estatFins = __toClone.estatFins;
-    this.tipusdocumental = __toClone.tipusdocumental;
-    this.idiomadoc = __toClone.idiomadoc;
-    this.infosignaturaidDesde = __toClone.infosignaturaidDesde;
-    this.infosignaturaidFins = __toClone.infosignaturaidFins;
+    this.tipusDocumental = __toClone.tipusDocumental;
+    this.idiomaDoc = __toClone.idiomaDoc;
+    this.infoSignaturaIDDesde = __toClone.infoSignaturaIDDesde;
+    this.infoSignaturaIDFins = __toClone.infoSignaturaIDFins;
     this.tipusDesde = __toClone.tipusDesde;
     this.tipusFins = __toClone.tipusFins;
     this.errorMsg = __toClone.errorMsg;
@@ -293,9 +293,9 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
-    this.mapOfValuesForTipusdocumental = __toClone.mapOfValuesForTipusdocumental;
-    this.mapOfValuesForIdiomadoc = __toClone.mapOfValuesForIdiomadoc;
-    this.mapOfInfoSignaturaForInfosignaturaid = __toClone.mapOfInfoSignaturaForInfosignaturaid;
+    this.mapOfValuesForTipusDocumental = __toClone.mapOfValuesForTipusDocumental;
+    this.mapOfValuesForIdiomaDoc = __toClone.mapOfValuesForIdiomaDoc;
+    this.mapOfInfoSignaturaForInfoSignaturaID = __toClone.mapOfInfoSignaturaForInfoSignaturaID;
     this.mapOfValuesForTipus = __toClone.mapOfValuesForTipus;
   }
   
@@ -367,38 +367,38 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
 
 
-  private Map<String, String> mapOfValuesForTipusdocumental;
+  private Map<String, String> mapOfValuesForTipusDocumental;
 
-  public Map<String, String> getMapOfValuesForTipusdocumental() {
-    return this.mapOfValuesForTipusdocumental;
+  public Map<String, String> getMapOfValuesForTipusDocumental() {
+    return this.mapOfValuesForTipusDocumental;
   }
 
-  public void setMapOfValuesForTipusdocumental(Map<String, String> mapOfValuesForTipusdocumental) {
-    this.mapOfValuesForTipusdocumental = mapOfValuesForTipusdocumental;
-  }
-
-
-
-  private Map<String, String> mapOfValuesForIdiomadoc;
-
-  public Map<String, String> getMapOfValuesForIdiomadoc() {
-    return this.mapOfValuesForIdiomadoc;
-  }
-
-  public void setMapOfValuesForIdiomadoc(Map<String, String> mapOfValuesForIdiomadoc) {
-    this.mapOfValuesForIdiomadoc = mapOfValuesForIdiomadoc;
+  public void setMapOfValuesForTipusDocumental(Map<String, String> mapOfValuesForTipusDocumental) {
+    this.mapOfValuesForTipusDocumental = mapOfValuesForTipusDocumental;
   }
 
 
 
-  private Map<String, String> mapOfInfoSignaturaForInfosignaturaid;
+  private Map<String, String> mapOfValuesForIdiomaDoc;
 
-  public Map<String, String> getMapOfInfoSignaturaForInfosignaturaid() {
-    return this.mapOfInfoSignaturaForInfosignaturaid;
+  public Map<String, String> getMapOfValuesForIdiomaDoc() {
+    return this.mapOfValuesForIdiomaDoc;
   }
 
-  public void setMapOfInfoSignaturaForInfosignaturaid(Map<String, String> mapOfInfoSignaturaForInfosignaturaid) {
-    this.mapOfInfoSignaturaForInfosignaturaid = mapOfInfoSignaturaForInfosignaturaid;
+  public void setMapOfValuesForIdiomaDoc(Map<String, String> mapOfValuesForIdiomaDoc) {
+    this.mapOfValuesForIdiomaDoc = mapOfValuesForIdiomaDoc;
+  }
+
+
+
+  private Map<String, String> mapOfInfoSignaturaForInfoSignaturaID;
+
+  public Map<String, String> getMapOfInfoSignaturaForInfoSignaturaID() {
+    return this.mapOfInfoSignaturaForInfoSignaturaID;
+  }
+
+  public void setMapOfInfoSignaturaForInfoSignaturaID(Map<String, String> mapOfInfoSignaturaForInfoSignaturaID) {
+    this.mapOfInfoSignaturaForInfoSignaturaID = mapOfInfoSignaturaForInfoSignaturaID;
   }
 
 

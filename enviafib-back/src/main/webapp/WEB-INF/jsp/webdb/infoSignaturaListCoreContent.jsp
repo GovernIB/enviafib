@@ -9,7 +9,7 @@
         <c:if test="${ __entry.key < 0  && ((empty __entry.value.searchBy)? true : !gen:contains(__theFilterForm.hiddenFields, __entry.value.searchBy)) && ((empty __entry.value.groupBy )? true : !gen:contains(__theFilterForm.hiddenFields, __entry.value.groupBy ))}">
           <td>
              <c:if test="${not empty __entry.value.valueMap }">
-               <c:out escapeXml="${__entry.value.escapeXml}" value="${__entry.value.valueMap[infoSignatura.infosignaturaid]}" />
+               <c:out escapeXml="${__entry.value.escapeXml}" value="${__entry.value.valueMap[infoSignatura.infoSignaturaID]}" />
              </c:if>
              <c:if test="${not empty __entry.value.valueField }">
                <c:set var="__tmp" value="${pageScope}" />
@@ -26,105 +26,105 @@
 
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.INFOSIGNATURAID)}">
           <td>
-          ${infoSignatura.infosignaturaid}
+          ${infoSignatura.infoSignaturaID}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNOPERATION)}">
           <td>
-          <c:set var="tmp">${infoSignatura.signoperation}</c:set>
+          <c:set var="tmp">${infoSignatura.signOperation}</c:set>
           <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForSignoperation[tmp]}
+          ${__theFilterForm.mapOfValuesForSignOperation[tmp]}
           </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNTYPE)}">
           <td>
-          ${infoSignatura.signtype}
+          ${infoSignatura.signType}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNALGORITHM)}">
           <td>
-          ${infoSignatura.signalgorithm}
+          ${infoSignatura.signAlgorithm}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNMODE)}">
           <td>
-          <c:set var="tmp">${infoSignatura.signmode}</c:set>
+          <c:set var="tmp">${infoSignatura.signMode}</c:set>
           <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForSignmode[tmp]}
+          ${__theFilterForm.mapOfValuesForSignMode[tmp]}
           </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNATURESTABLELOCATION)}">
           <td>
-          <c:set var="tmp">${infoSignatura.signaturestablelocation}</c:set>
+          <c:set var="tmp">${infoSignatura.signaturesTableLocation}</c:set>
           <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForSignaturestablelocation[tmp]}
+          ${__theFilterForm.mapOfValuesForSignaturesTableLocation[tmp]}
           </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.TIMESTAMPINCLUDED)}">
           <td>
-            &nbsp;<c:if test="${not empty infoSignatura.timestampincluded}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.timestampincluded?'success':'error'}.png"/>">
+            &nbsp;<c:if test="${not empty infoSignatura.timestampIncluded}">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.timestampIncluded?'success':'error'}.png"/>">
             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.POLICYINCLUDED)}">
           <td>
-            &nbsp;<c:if test="${not empty infoSignatura.policyincluded}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.policyincluded?'success':'error'}.png"/>">
+            &nbsp;<c:if test="${not empty infoSignatura.policyIncluded}">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.policyIncluded?'success':'error'}.png"/>">
             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.ENITIPOFIRMA)}">
           <td>
-          ${infoSignatura.enitipofirma}
+          ${infoSignatura.eniTipoFirma}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.ENIPERFILFIRMA)}">
           <td>
-          ${infoSignatura.eniperfilfirma}
+          ${infoSignatura.eniPerfilFirma}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.ENIROLFIRMA)}">
           <td>
-          ${infoSignatura.enirolfirma}
+          ${infoSignatura.eniRolFirma}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.ENISIGNERNAME)}">
           <td>
-          ${infoSignatura.enisignername}
+          ${infoSignatura.eniSignerName}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.ENISIGNERADMINISTRATIONID)}">
           <td>
-          ${infoSignatura.enisigneradministrationid}
+          ${infoSignatura.eniSignerAdministrationId}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.ENISIGNLEVEL)}">
           <td>
-          ${infoSignatura.enisignlevel}
+          ${infoSignatura.eniSignLevel}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER)}">
           <td>
-            &nbsp;<c:if test="${not empty infoSignatura.checkadministrationidofsigner}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkadministrationidofsigner?'success':'error'}.png"/>">
+            &nbsp;<c:if test="${not empty infoSignatura.checkAdministrationIdOfSigner}">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkAdministrationIdOfSigner?'success':'error'}.png"/>">
             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS)}">
           <td>
-            &nbsp;<c:if test="${not empty infoSignatura.checkdocumentmodifications}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkdocumentmodifications?'success':'error'}.png"/>">
+            &nbsp;<c:if test="${not empty infoSignatura.checkDocumentModifications}">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkDocumentModifications?'success':'error'}.png"/>">
             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.CHECKVALIDATIONSIGNATURE)}">
           <td>
-            &nbsp;<c:if test="${not empty infoSignatura.checkvalidationsignature}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkvalidationsignature?'success':'error'}.png"/>">
+            &nbsp;<c:if test="${not empty infoSignatura.checkValidationSignature}">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkValidationSignature?'success':'error'}.png"/>">
             </c:if>
           </td>
         </c:if>
@@ -135,7 +135,7 @@
         <c:if test="${ __entry.key >= 0  && ((empty __entry.value.searchBy)? true : !gen:contains(__theFilterForm.hiddenFields, __entry.value.searchBy)) && ((empty __entry.value.groupBy )? true : !gen:contains(__theFilterForm.hiddenFields, __entry.value.groupBy ))}">
           <td>
              <c:if test="${not empty __entry.value.valueMap }">
-               <c:out escapeXml="${__entry.value.escapeXml}" value="${__entry.value.valueMap[infoSignatura.infosignaturaid]}" />
+               <c:out escapeXml="${__entry.value.escapeXml}" value="${__entry.value.valueMap[infoSignatura.infoSignaturaID]}" />
              </c:if>
              <c:if test="${not empty __entry.value.valueField }">
                <c:set var="__tmp" value="${pageScope}" />

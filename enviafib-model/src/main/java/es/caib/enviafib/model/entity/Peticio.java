@@ -8,8 +8,8 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public long getPeticioID();
 	public void setPeticioID(long _peticioID_);
 
-	public java.sql.Timestamp getDatacreacio();
-	public void setDatacreacio(java.sql.Timestamp _datacreacio_);
+	public java.sql.Timestamp getDataCreacio();
+	public void setDataCreacio(java.sql.Timestamp _dataCreacio_);
 
 	public java.sql.Timestamp getDataFinal();
 	public void setDataFinal(java.sql.Timestamp _dataFinal_);
@@ -23,8 +23,8 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.String getIdiomaID();
 	public void setIdiomaID(java.lang.String _idiomaID_);
 
-	public java.lang.String getDestinatarinif();
-	public void setDestinatarinif(java.lang.String _destinatarinif_);
+	public java.lang.String getDestinatariNif();
+	public void setDestinatariNif(java.lang.String _destinatariNif_);
 
 	public long getEstat();
 	public void setEstat(long _estat_);
@@ -32,14 +32,14 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.Long getFitxerFirmatID();
 	public void setFitxerFirmatID(java.lang.Long _fitxerFirmatID_);
 
-	public java.lang.String getTipusdocumental();
-	public void setTipusdocumental(java.lang.String _tipusdocumental_);
+	public java.lang.String getTipusDocumental();
+	public void setTipusDocumental(java.lang.String _tipusDocumental_);
 
-	public java.lang.String getIdiomadoc();
-	public void setIdiomadoc(java.lang.String _idiomadoc_);
+	public java.lang.String getIdiomaDoc();
+	public void setIdiomaDoc(java.lang.String _idiomaDoc_);
 
-	public java.lang.Long getInfosignaturaid();
-	public void setInfosignaturaid(java.lang.Long _infosignaturaid_);
+	public java.lang.Long getInfoSignaturaID();
+	public void setInfoSignaturaID(java.lang.Long _infoSignaturaID_);
 
 	public int getTipus();
 	public void setTipus(int _tipus_);

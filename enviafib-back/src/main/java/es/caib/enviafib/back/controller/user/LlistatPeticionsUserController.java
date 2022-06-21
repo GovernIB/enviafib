@@ -138,10 +138,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
 
-        
-        
-        log.info("ORDRE PER DEFECTE: " + filterForm.getOrderBy());
-        
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
         filterForm.getAdditionalButtonsByPK().clear();
@@ -182,9 +178,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
                             codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
 
-                    if (peticio.getInfosignaturaid() != null) {
+                    if (peticio.getInfoSignaturaID() != null) {
                         filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file",
-                                "info.signatura", "/user/infoSignatura/view/" + peticio.getInfosignaturaid(), "btn-info"));
+                                "info.signatura", "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(), "btn-info"));
                     }
                     
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
@@ -310,7 +306,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
         Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
-        Long infoSignaturaID = peticio.getInfosignaturaid();
+        Long infoSignaturaID = peticio.getInfoSignaturaID();
 
         if (infoSignaturaID == null) {
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");

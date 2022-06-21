@@ -47,17 +47,14 @@ CREATE TABLE efi_infosignatura (
 );
 
 ALTER TABLE ONLY efi_infosignatura ADD CONSTRAINT efi_infosignatura_pk PRIMARY KEY (infosignaturaid);
-
+ALTER TABLE efi_peticio ADD COLUMN infosignaturaid bigint;
 CREATE INDEX efi_infosignatura_pk_i ON efi_infosignatura USING btree (infosignaturaid);
-
 ALTER TABLE ONLY efi_peticio ADD CONSTRAINT efi_peticio_infosign_fk FOREIGN KEY (infosignaturaid) REFERENCES efi_infosignatura(infosignaturaid);
-
 CREATE INDEX efi_peticio_infosignid_fk_i on efi_peticio (infosignaturaid);
 
 ---
 --- 15/06/2022 -  Firma de Documents per un Mateix #23 
 ---
-
 ALTER TABLE efi_peticio
   ADD COLUMN tipus integer NOT NULL DEFAULT 0;
 ALTER TABLE efi_peticio
@@ -89,7 +86,3 @@ DELETE FROM efi_traducciomap;
 DELETE FROM efi_traduccio;
 
 COMMENT ON COLUMN efi_peticio.nom IS 'Nom de la peticio a PortaFIB.';
-
-
-
-

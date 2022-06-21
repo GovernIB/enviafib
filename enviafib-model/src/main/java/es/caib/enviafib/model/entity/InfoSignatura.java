@@ -2,56 +2,56 @@ package es.caib.enviafib.model.entity;
 
 public interface InfoSignatura extends org.fundaciobit.genapp.common.IGenAppEntity {
 
-	public long getInfosignaturaid();
-	public void setInfosignaturaid(long _infosignaturaid_);
+	public long getInfoSignaturaID();
+	public void setInfoSignaturaID(long _infoSignaturaID_);
 
-	public int getSignoperation();
-	public void setSignoperation(int _signoperation_);
+	public int getSignOperation();
+	public void setSignOperation(int _signOperation_);
 
-	public java.lang.String getSigntype();
-	public void setSigntype(java.lang.String _signtype_);
+	public java.lang.String getSignType();
+	public void setSignType(java.lang.String _signType_);
 
-	public java.lang.String getSignalgorithm();
-	public void setSignalgorithm(java.lang.String _signalgorithm_);
+	public java.lang.String getSignAlgorithm();
+	public void setSignAlgorithm(java.lang.String _signAlgorithm_);
 
-	public java.lang.Integer getSignmode();
-	public void setSignmode(java.lang.Integer _signmode_);
+	public java.lang.Integer getSignMode();
+	public void setSignMode(java.lang.Integer _signMode_);
 
-	public java.lang.Integer getSignaturestablelocation();
-	public void setSignaturestablelocation(java.lang.Integer _signaturestablelocation_);
+	public java.lang.Integer getSignaturesTableLocation();
+	public void setSignaturesTableLocation(java.lang.Integer _signaturesTableLocation_);
 
-	public java.lang.Boolean getTimestampincluded();
-	public void setTimestampincluded(java.lang.Boolean _timestampincluded_);
+	public java.lang.Boolean getTimestampIncluded();
+	public void setTimestampIncluded(java.lang.Boolean _timestampIncluded_);
 
-	public java.lang.Boolean getPolicyincluded();
-	public void setPolicyincluded(java.lang.Boolean _policyincluded_);
+	public java.lang.Boolean getPolicyIncluded();
+	public void setPolicyIncluded(java.lang.Boolean _policyIncluded_);
 
-	public java.lang.String getEnitipofirma();
-	public void setEnitipofirma(java.lang.String _enitipofirma_);
+	public java.lang.String getEniTipoFirma();
+	public void setEniTipoFirma(java.lang.String _eniTipoFirma_);
 
-	public java.lang.String getEniperfilfirma();
-	public void setEniperfilfirma(java.lang.String _eniperfilfirma_);
+	public java.lang.String getEniPerfilFirma();
+	public void setEniPerfilFirma(java.lang.String _eniPerfilFirma_);
 
-	public java.lang.String getEnirolfirma();
-	public void setEnirolfirma(java.lang.String _enirolfirma_);
+	public java.lang.String getEniRolFirma();
+	public void setEniRolFirma(java.lang.String _eniRolFirma_);
 
-	public java.lang.String getEnisignername();
-	public void setEnisignername(java.lang.String _enisignername_);
+	public java.lang.String getEniSignerName();
+	public void setEniSignerName(java.lang.String _eniSignerName_);
 
-	public java.lang.String getEnisigneradministrationid();
-	public void setEnisigneradministrationid(java.lang.String _enisigneradministrationid_);
+	public java.lang.String getEniSignerAdministrationId();
+	public void setEniSignerAdministrationId(java.lang.String _eniSignerAdministrationId_);
 
-	public java.lang.String getEnisignlevel();
-	public void setEnisignlevel(java.lang.String _enisignlevel_);
+	public java.lang.String getEniSignLevel();
+	public void setEniSignLevel(java.lang.String _eniSignLevel_);
 
-	public java.lang.Boolean getCheckadministrationidofsigner();
-	public void setCheckadministrationidofsigner(java.lang.Boolean _checkadministrationidofsigner_);
+	public java.lang.Boolean getCheckAdministrationIdOfSigner();
+	public void setCheckAdministrationIdOfSigner(java.lang.Boolean _checkAdministrationIdOfSigner_);
 
-	public java.lang.Boolean getCheckdocumentmodifications();
-	public void setCheckdocumentmodifications(java.lang.Boolean _checkdocumentmodifications_);
+	public java.lang.Boolean getCheckDocumentModifications();
+	public void setCheckDocumentModifications(java.lang.Boolean _checkDocumentModifications_);
 
-	public java.lang.Boolean getCheckvalidationsignature();
-	public void setCheckvalidationsignature(java.lang.Boolean _checkvalidationsignature_);
+	public java.lang.Boolean getCheckValidationSignature();
+	public void setCheckValidationSignature(java.lang.Boolean _checkValidationSignature_);
 
 
 
