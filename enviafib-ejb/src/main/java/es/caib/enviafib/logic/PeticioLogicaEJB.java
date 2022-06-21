@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,8 +95,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             api = getApiFirmaAsyncSimple();
         } catch (Throwable e) {
-            String msg = "Error de conexió amb la API de PortaFIB. Revisar propietats de 'apifirmaasync' de l'arxiu de propietats system.properties: ";
-            throw new I18NException("genapp.comodi", msg + e.getMessage());
+            throw new I18NException("genapp.comodi",
+                    "Error de conexió amb la API de PortaFIB. Revisar propietats de 'apifirmaasync' de l'arxiu de propietats "
+                            + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.   -   " + e.getMessage());
+
         }
 
         Long idPortafib;
@@ -347,7 +351,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         try {
             tipusDocumentalID = Long.valueOf(tipusDocumental);
-        } catch (Throwable t) {
+        } catch (NumberFormatException t) {
             throw new I18NException("genapp.comodi",
                     "No s'ha pogut pasar a Long el tipus documental]" + tipusDocumental + "[ ");
         }
@@ -427,6 +431,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         } catch (Throwable e) {
             String msg = "No es pot llegir el fitxer " + f.getAbsolutePath() + " - " + e.getMessage();
             throw new I18NException("genapp.comodi", msg);
+
         }
 
         FirmaAsyncSimpleFile file= new FirmaAsyncSimpleFile(fitxer.getNom(), fitxer.getMime(), data);
@@ -451,14 +456,28 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return fitxerSignat;
     }
 
-    protected ApiFirmaAsyncSimple getApiFirmaAsyncSimple() {
+    protected ApiFirmaAsyncSimple getApiFirmaAsyncSimple() throws I18NException {
 
         String host = Configuracio.getPortafibGatewayV2();
         String username = Configuracio.getPortafibUsername();
         String password = Configuracio.getPortafibPassword();
 
         ApiFirmaAsyncSimpleJersey api;
-        api = new ApiFirmaAsyncSimpleJersey(host, username, password);
+        
+        try {
+            URL hostUrl = new URL(host);
+            api = new ApiFirmaAsyncSimpleJersey(host, username, password);
+           
+        } catch (MalformedURLException urle) {
+            String errorMsg = "Error a la URL de conexió amb PortaFIB. Revisar la URL de la propietat "+Constants.ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url"+" de l'arxiu: "
+                    + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.";
+            throw new I18NException(errorMsg +"   -   " + urle.getMessage());
+        } catch (Exception e) {
+            String errorMsg = "Error de conexió amb la API de PortaFIB. Revisar la conexió amb PortaFIB i les propietats de 'apifirmaasync' de l'arxiu de propietats "
+                    + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.";
+            throw new I18NException("genapp.comodi",
+                    errorMsg +"   -   " + e.getMessage());
+        }
 
         // api.setConnectionTimeoutMs(20000); // 20 segons
         // api.setReadTimeoutMs(20000); // 20 segons
@@ -486,10 +505,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
-
-/**
- * 
- */
     public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
 
         log.info("Autofirma Recuperada Informació de firma: "

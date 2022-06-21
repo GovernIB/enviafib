@@ -111,6 +111,19 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(PETICIOID);
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
             peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
+            peticioFilterForm.addHiddenField(IDIOMADOC);
+            peticioFilterForm.addHiddenField(TIPUSDOCUMENTAL);
+            peticioFilterForm.addHiddenField(IDIOMAID);
+            peticioFilterForm.addHiddenField(ERROREXCEPTION);
+            
+            peticioFilterForm.addHiddenField(ERRORMSG);
+            peticioFilterForm.addHiddenField(INFOSIGNATURAID);
+            peticioFilterForm.addHiddenField(DESTINATARINIF);
+            peticioFilterForm.addHiddenField(FITXERID);
+            
+            peticioFilterForm.setOrderBy(DATACREACIO.javaName);
+            peticioFilterForm.setOrderAsc(false);
+            
             peticioFilterForm.setAttachedAdditionalJspCode(true);
 
             peticioFilterForm.setAddButtonVisible(false);
@@ -124,6 +137,10 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
 
+        
+        
+        log.info("ORDRE PER DEFECTE: " + filterForm.getOrderBy());
+        
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
         filterForm.getAdditionalButtonsByPK().clear();

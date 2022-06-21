@@ -61,8 +61,8 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
                     .getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
             tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
         }catch(I18NException e) {
-            log.error(I18NUtils.tradueix("error.tipousdocumentals.correccio") +Constants.ENVIAFIB_PROPERTY_BASE+"system.properties.");
             HtmlUtils.saveMessageError(request, I18NUtils.tradueix("error.tipusdocumentals.obtencio"));
+            log.error(I18NUtils.tradueix("error.tipousdocumentals.correccio") +Constants.ENVIAFIB_PROPERTY_BASE+"system.properties.  -  "+e.getMessage());
         }
       
         return tmpList;

@@ -56,6 +56,42 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.DATAFINAL)}">
+        <tr id="peticio_dataFinal_rowid">
+          <td id="peticio_dataFinal_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.DATAFINAL])?'peticio.dataFinal':__theForm.labels[PeticioFields.DATAFINAL]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.DATAFINAL]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.DATAFINAL]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_dataFinal_columnvalueid">
+    <form:errors path="peticio.dataFinal" cssClass="errorField alert alert-danger" />
+            <div class="form-group">
+                <div class="input-group date" id="peticio_dataFinal" data-target-input="nearest">
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#peticio_dataFinal" path="peticio.dataFinal" />
+                    <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)}" >
+                    <div class="input-group-append"  data-target="#peticio_dataFinal"  data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                    </c:if>
+                </div>
+            </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#peticio_dataFinal').datetimepicker({
+                    format: '${gen:getJSDateTimePattern()}',
+                    locale: '${lang}',
+                    icons: {
+                       time: 'far fa-clock'
+                    }
+                });
+            });
+        </script>           </td>
+        </tr>
+        </c:if>
+        
         <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.FITXERID)}">
         <tr id="peticio_fitxerID_rowid">
           <td id="peticio_fitxerID_columnlabelid">
@@ -462,42 +498,6 @@
    </tr>
    </table>
            </td>
-        </tr>
-        </c:if>
-        
-        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.DATAFINAL)}">
-        <tr id="peticio_dataFinal_rowid">
-          <td id="peticio_dataFinal_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.DATAFINAL])?'peticio.dataFinal':__theForm.labels[PeticioFields.DATAFINAL]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[PeticioFields.DATAFINAL]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.DATAFINAL]}" ></i>
-              </c:if>
-            </td>
-          <td id="peticio_dataFinal_columnvalueid">
-    <form:errors path="peticio.dataFinal" cssClass="errorField alert alert-danger" />
-            <div class="form-group">
-                <div class="input-group date" id="peticio_dataFinal" data-target-input="nearest">
-                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#peticio_dataFinal" path="peticio.dataFinal" />
-                    <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)}" >
-                    <div class="input-group-append"  data-target="#peticio_dataFinal"  data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                    </c:if>
-                </div>
-            </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#peticio_dataFinal').datetimepicker({
-                    format: '${gen:getJSDateTimePattern()}',
-                    locale: '${lang}',
-                    icons: {
-                       time: 'far fa-clock'
-                    }
-                });
-            });
-        </script>           </td>
         </tr>
         </c:if>
         
