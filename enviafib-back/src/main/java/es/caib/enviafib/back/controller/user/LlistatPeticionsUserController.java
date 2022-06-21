@@ -165,7 +165,8 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                     if (peticio.getInfosignaturaid() != null) {
                         filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file",
-                                "info.signatura", getContextWeb() + "/veureInfoSignatura/" + peticioID, "btn-info"));
+//                                "info.signatura", getContextWeb() + "/veureInfoSignatura/" + peticioID, "btn-info"));
+                                "info.signatura", "/user/infoSignatura/view/" + peticio.getInfosignaturaid(), "btn-info"));
                     }
 
                 }
