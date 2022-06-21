@@ -223,31 +223,31 @@ public class PeticioController
       };
     }
 
-    // Field tipusdocumental
+    // Field tipusDocumental
     {
-      _listSKV = getReferenceListForTipusdocumental(request, mav, filterForm, list, groupByItemsMap, null);
+      _listSKV = getReferenceListForTipusDocumental(request, mav, filterForm, list, groupByItemsMap, null);
       _tmp = Utils.listToMap(_listSKV);
-      filterForm.setMapOfValuesForTipusdocumental(_tmp);
+      filterForm.setMapOfValuesForTipusDocumental(_tmp);
       if (filterForm.getGroupByFields().contains(TIPUSDOCUMENTAL)) {
         fillValuesToGroupByItems(_tmp, groupByItemsMap, TIPUSDOCUMENTAL, false);
       };
     }
 
-    // Field idiomadoc
+    // Field idiomaDoc
     {
-      _listSKV = getReferenceListForIdiomadoc(request, mav, filterForm, list, groupByItemsMap, null);
+      _listSKV = getReferenceListForIdiomaDoc(request, mav, filterForm, list, groupByItemsMap, null);
       _tmp = Utils.listToMap(_listSKV);
-      filterForm.setMapOfValuesForIdiomadoc(_tmp);
+      filterForm.setMapOfValuesForIdiomaDoc(_tmp);
       if (filterForm.getGroupByFields().contains(IDIOMADOC)) {
         fillValuesToGroupByItems(_tmp, groupByItemsMap, IDIOMADOC, false);
       };
     }
 
-    // Field infosignaturaid
+    // Field infoSignaturaID
     {
-      _listSKV = getReferenceListForInfosignaturaid(request, mav, filterForm, list, groupByItemsMap, null);
+      _listSKV = getReferenceListForInfoSignaturaID(request, mav, filterForm, list, groupByItemsMap, null);
       _tmp = Utils.listToMap(_listSKV);
-      filterForm.setMapOfInfoSignaturaForInfosignaturaid(_tmp);
+      filterForm.setMapOfInfoSignaturaForInfoSignaturaID(_tmp);
       if (filterForm.getGroupByFields().contains(INFOSIGNATURAID)) {
         fillValuesToGroupByItems(_tmp, groupByItemsMap, INFOSIGNATURAID, false);
       };
@@ -281,9 +281,9 @@ public class PeticioController
     __mapping.put(SOLICITANTID, filterForm.getMapOfUsuariForSolicitantID());
     __mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
     __mapping.put(ESTAT, filterForm.getMapOfValuesForEstat());
-    __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusdocumental());
-    __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomadoc());
-    __mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfosignaturaid());
+    __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusDocumental());
+    __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomaDoc());
+    __mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfoSignaturaID());
     __mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
@@ -360,31 +360,31 @@ public class PeticioController
       peticioForm.setListOfValuesForEstat(_listSKV);
     }
     // Comprovam si ja esta definida la llista
-    if (peticioForm.getListOfValuesForTipusdocumental() == null) {
-      List<StringKeyValue> _listSKV = getReferenceListForTipusdocumental(request, mav, peticioForm, null);
+    if (peticioForm.getListOfValuesForTipusDocumental() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForTipusDocumental(request, mav, peticioForm, null);
 
       if(_listSKV != null && !_listSKV.isEmpty()) { 
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
-      peticioForm.setListOfValuesForTipusdocumental(_listSKV);
+      peticioForm.setListOfValuesForTipusDocumental(_listSKV);
     }
     // Comprovam si ja esta definida la llista
-    if (peticioForm.getListOfValuesForIdiomadoc() == null) {
-      List<StringKeyValue> _listSKV = getReferenceListForIdiomadoc(request, mav, peticioForm, null);
+    if (peticioForm.getListOfValuesForIdiomaDoc() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForIdiomaDoc(request, mav, peticioForm, null);
 
       if(_listSKV != null && !_listSKV.isEmpty()) { 
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
-      peticioForm.setListOfValuesForIdiomadoc(_listSKV);
+      peticioForm.setListOfValuesForIdiomaDoc(_listSKV);
     }
     // Comprovam si ja esta definida la llista
-    if (peticioForm.getListOfInfoSignaturaForInfosignaturaid() == null) {
-      List<StringKeyValue> _listSKV = getReferenceListForInfosignaturaid(request, mav, peticioForm, null);
+    if (peticioForm.getListOfInfoSignaturaForInfoSignaturaID() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForInfoSignaturaID(request, mav, peticioForm, null);
 
       if(_listSKV != null && !_listSKV.isEmpty()) { 
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
-      peticioForm.setListOfInfoSignaturaForInfosignaturaid(_listSKV);
+      peticioForm.setListOfInfoSignaturaForInfoSignaturaID(_listSKV);
     }
     // Comprovam si ja esta definida la llista
     if (peticioForm.getListOfValuesForTipus() == null) {
@@ -852,16 +852,16 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request,
        ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
     if (peticioForm.isHiddenField(TIPUSDOCUMENTAL)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
-    return getReferenceListForTipusdocumental(request, mav, where);
+    return getReferenceListForTipusDocumental(request, mav, where);
   }
 
 
-  public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request,
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(TIPUSDOCUMENTAL)
@@ -869,11 +869,11 @@ public java.lang.Long stringToPK(String value) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
-    return getReferenceListForTipusdocumental(request, mav, Where.AND(where,_w));
+    return getReferenceListForTipusDocumental(request, mav, Where.AND(where,_w));
   }
 
 
-  public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
     __tmp.add(new StringKeyValue("1" , "1"));
@@ -884,16 +884,16 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForIdiomaDoc(HttpServletRequest request,
        ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
     if (peticioForm.isHiddenField(IDIOMADOC)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
-    return getReferenceListForIdiomadoc(request, mav, where);
+    return getReferenceListForIdiomaDoc(request, mav, where);
   }
 
 
-  public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForIdiomaDoc(HttpServletRequest request,
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(IDIOMADOC)
@@ -901,11 +901,11 @@ public java.lang.Long stringToPK(String value) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
-    return getReferenceListForIdiomadoc(request, mav, Where.AND(where,_w));
+    return getReferenceListForIdiomaDoc(request, mav, Where.AND(where,_w));
   }
 
 
-  public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForIdiomaDoc(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
     __tmp.add(new StringKeyValue("es" , "es"));
@@ -914,20 +914,20 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  public List<StringKeyValue> getReferenceListForInfosignaturaid(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForInfoSignaturaID(HttpServletRequest request,
        ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
     if (peticioForm.isHiddenField(INFOSIGNATURAID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _where = null;
     if (peticioForm.isReadOnlyField(INFOSIGNATURAID)) {
-      _where = InfoSignaturaFields.INFOSIGNATURAID.equal(peticioForm.getPeticio().getInfosignaturaid());
+      _where = InfoSignaturaFields.INFOSIGNATURAID.equal(peticioForm.getPeticio().getInfoSignaturaID());
     }
-    return getReferenceListForInfosignaturaid(request, mav, Where.AND(where, _where));
+    return getReferenceListForInfoSignaturaID(request, mav, Where.AND(where, _where));
   }
 
 
-  public List<StringKeyValue> getReferenceListForInfosignaturaid(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForInfoSignaturaID(HttpServletRequest request,
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(INFOSIGNATURAID)
@@ -939,16 +939,16 @@ public java.lang.Long stringToPK(String value) {
       // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
       java.util.Set<java.lang.Long> _pkList = new java.util.HashSet<java.lang.Long>();
       for (Peticio _item : list) {
-        if(_item.getInfosignaturaid() == null) { continue; };
-        _pkList.add(_item.getInfosignaturaid());
+        if(_item.getInfoSignaturaID() == null) { continue; };
+        _pkList.add(_item.getInfoSignaturaID());
         }
         _w = InfoSignaturaFields.INFOSIGNATURAID.in(_pkList);
       }
-    return getReferenceListForInfosignaturaid(request, mav, Where.AND(where,_w));
+    return getReferenceListForInfoSignaturaID(request, mav, Where.AND(where,_w));
   }
 
 
-  public List<StringKeyValue> getReferenceListForInfosignaturaid(HttpServletRequest request,
+  public List<StringKeyValue> getReferenceListForInfoSignaturaID(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     return infoSignaturaRefList.getReferenceList(InfoSignaturaFields.INFOSIGNATURAID, where );
   }

@@ -11,8 +11,8 @@ public class SerieDocumentalQueryPath extends org.fundaciobit.genapp.common.quer
     super(parentQueryPath);
   }
 
-  public LongField SERIEDOCUID() {
-    return new LongField(getQueryPath(), SerieDocumentalFields.SERIEDOCUID);
+  public LongField SERIEDOCUMENTALID() {
+    return new LongField(getQueryPath(), SerieDocumentalFields.SERIEDOCUMENTALID);
   }
 
   public StringField NOM() {

@@ -58,7 +58,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
+    public List<StringKeyValue> getReferenceListForIdiomaDoc(HttpServletRequest request,
             ModelAndView mav, Where where) throws I18NException {
 
         return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, Where.AND(where,
@@ -66,7 +66,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
+    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request,
             ModelAndView mav, Where where) throws I18NException {
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:

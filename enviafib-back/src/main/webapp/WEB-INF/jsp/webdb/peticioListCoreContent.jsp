@@ -35,7 +35,7 @@
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATACREACIO)}">
-          <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.datacreacio}" /></td>
+          <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.dataCreacio}" /></td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATAFINAL)}">
           <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.dataFinal}" /></td>
@@ -65,7 +65,7 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DESTINATARINIF)}">
           <td>
-          ${peticio.destinatarinif}
+          ${peticio.destinatariNif}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ESTAT)}">
@@ -85,25 +85,25 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
           <td>
-          <c:set var="tmp">${peticio.tipusdocumental}</c:set>
+          <c:set var="tmp">${peticio.tipusDocumental}</c:set>
           <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForTipusdocumental[tmp]}
+          ${__theFilterForm.mapOfValuesForTipusDocumental[tmp]}
           </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.IDIOMADOC)}">
           <td>
-          <c:set var="tmp">${peticio.idiomadoc}</c:set>
+          <c:set var="tmp">${peticio.idiomaDoc}</c:set>
           <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForIdiomadoc[tmp]}
+          ${__theFilterForm.mapOfValuesForIdiomaDoc[tmp]}
           </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.INFOSIGNATURAID)}">
           <td>
-          <c:set var="tmp">${peticio.infosignaturaid}</c:set>
+          <c:set var="tmp">${peticio.infoSignaturaID}</c:set>
           <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfInfoSignaturaForInfosignaturaid[tmp]}
+          ${__theFilterForm.mapOfInfoSignaturaForInfoSignaturaID[tmp]}
           </c:if>
           </td>
         </c:if>

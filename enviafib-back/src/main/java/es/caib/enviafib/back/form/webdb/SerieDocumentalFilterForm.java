@@ -21,25 +21,25 @@ import es.caib.enviafib.model.fields.SerieDocumentalFields;
 @Component
 public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements SerieDocumentalFields {
 
-  private java.lang.Long serieDocuIDDesde;
+  private java.lang.Long serieDocumentalIDDesde;
 
-  public java.lang.Long getSerieDocuIDDesde() {
-    return this.serieDocuIDDesde;
+  public java.lang.Long getSerieDocumentalIDDesde() {
+    return this.serieDocumentalIDDesde;
   }
 
-  public void setSerieDocuIDDesde(java.lang.Long serieDocuIDDesde) {
-    this.serieDocuIDDesde = serieDocuIDDesde;
+  public void setSerieDocumentalIDDesde(java.lang.Long serieDocumentalIDDesde) {
+    this.serieDocumentalIDDesde = serieDocumentalIDDesde;
   }
 
 
-  private java.lang.Long serieDocuIDFins;
+  private java.lang.Long serieDocumentalIDFins;
 
-  public java.lang.Long getSerieDocuIDFins() {
-    return this.serieDocuIDFins;
+  public java.lang.Long getSerieDocumentalIDFins() {
+    return this.serieDocumentalIDFins;
   }
 
-  public void setSerieDocuIDFins(java.lang.Long serieDocuIDFins) {
-    this.serieDocuIDFins = serieDocuIDFins;
+  public void setSerieDocumentalIDFins(java.lang.Long serieDocumentalIDFins) {
+    this.serieDocumentalIDFins = serieDocumentalIDFins;
   }
 
 
@@ -70,8 +70,8 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
   
   public SerieDocumentalFilterForm(SerieDocumentalFilterForm __toClone) {
     super(__toClone);
-    this.serieDocuIDDesde = __toClone.serieDocuIDDesde;
-    this.serieDocuIDFins = __toClone.serieDocuIDFins;
+    this.serieDocumentalIDDesde = __toClone.serieDocumentalIDDesde;
+    this.serieDocumentalIDFins = __toClone.serieDocumentalIDFins;
     this.nom = __toClone.nom;
     this.tipusDocumental = __toClone.tipusDocumental;
     this.mapOfValuesForTipusDocumental = __toClone.mapOfValuesForTipusDocumental;

@@ -25,7 +25,7 @@ private static final long serialVersionUID = -2030187655L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SERIEDOCUMENTAL_SEQ")
     @Column(name="seriedocumentalid",nullable = false,length = 19)
-    long serieDocuID;
+    long serieDocumentalID;
 
     @Column(name="nom",nullable = false,length = 256)
     java.lang.String nom;
@@ -40,8 +40,8 @@ private static final long serialVersionUID = -2030187655L;
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalJPA(long serieDocuID , java.lang.String nom , java.lang.String tipusDocumental) {
-    this.serieDocuID=serieDocuID;
+  public SerieDocumentalJPA(long serieDocumentalID , java.lang.String nom , java.lang.String tipusDocumental) {
+    this.serieDocumentalID=serieDocumentalID;
     this.nom=nom;
     this.tipusDocumental=tipusDocumental;
 }
@@ -51,16 +51,16 @@ private static final long serialVersionUID = -2030187655L;
     this.tipusDocumental=tipusDocumental;
 }
   public SerieDocumentalJPA(SerieDocumental __bean) {
-    this.setSerieDocuID(__bean.getSerieDocuID());
+    this.setSerieDocumentalID(__bean.getSerieDocumentalID());
     this.setNom(__bean.getNom());
     this.setTipusDocumental(__bean.getTipusDocumental());
 	}
 
-	public long getSerieDocuID() {
-		return(serieDocuID);
+	public long getSerieDocumentalID() {
+		return(serieDocumentalID);
 	};
-	public void setSerieDocuID(long _serieDocuID_) {
-		this.serieDocuID = _serieDocuID_;
+	public void setSerieDocumentalID(long _serieDocumentalID_) {
+		this.serieDocumentalID = _serieDocumentalID_;
 	};
 
 	public java.lang.String getNom() {
@@ -85,7 +85,7 @@ private static final long serialVersionUID = -2030187655L;
     if (__obj != null && __obj instanceof SerieDocumental) {
       SerieDocumental __instance = (SerieDocumental)__obj;
       __result = true;
-      __result = __result && (this.getSerieDocuID() == __instance.getSerieDocuID()) ;
+      __result = __result && (this.getSerieDocumentalID() == __instance.getSerieDocumentalID()) ;
     } else {
       __result = false;
     }
@@ -97,7 +97,7 @@ private static final long serialVersionUID = -2030187655L;
   public static SerieDocumentalJPA toJPA(SerieDocumental __bean) {
     if (__bean == null) { return null;}
     SerieDocumentalJPA __tmp = new SerieDocumentalJPA();
-    __tmp.setSerieDocuID(__bean.getSerieDocuID());
+    __tmp.setSerieDocumentalID(__bean.getSerieDocumentalID());
     __tmp.setNom(__bean.getNom());
     __tmp.setTipusDocumental(__bean.getTipusDocumental());
 		return __tmp;

@@ -9,8 +9,8 @@ public interface ISerieDocumentalManager extends org.fundaciobit.genapp.common.q
 
 	public SerieDocumental create( java.lang.String _nom_, java.lang.String _tipusDocumental_) throws I18NException;
 
-	public SerieDocumental findByPrimaryKey(long _serieDocuID_);
+	public SerieDocumental findByPrimaryKey(long _serieDocumentalID_);
 
-	public void delete(long _serieDocuID_);
+	public void delete(long _serieDocumentalID_);
 
 }

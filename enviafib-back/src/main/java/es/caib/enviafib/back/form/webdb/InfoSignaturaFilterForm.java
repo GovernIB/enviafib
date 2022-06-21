@@ -21,179 +21,179 @@ import es.caib.enviafib.model.fields.InfoSignaturaFields;
 @Component
 public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements InfoSignaturaFields {
 
-  private java.lang.Long infosignaturaidDesde;
+  private java.lang.Long infoSignaturaIDDesde;
 
-  public java.lang.Long getInfosignaturaidDesde() {
-    return this.infosignaturaidDesde;
+  public java.lang.Long getInfoSignaturaIDDesde() {
+    return this.infoSignaturaIDDesde;
   }
 
-  public void setInfosignaturaidDesde(java.lang.Long infosignaturaidDesde) {
-    this.infosignaturaidDesde = infosignaturaidDesde;
-  }
-
-
-  private java.lang.Long infosignaturaidFins;
-
-  public java.lang.Long getInfosignaturaidFins() {
-    return this.infosignaturaidFins;
-  }
-
-  public void setInfosignaturaidFins(java.lang.Long infosignaturaidFins) {
-    this.infosignaturaidFins = infosignaturaidFins;
+  public void setInfoSignaturaIDDesde(java.lang.Long infoSignaturaIDDesde) {
+    this.infoSignaturaIDDesde = infoSignaturaIDDesde;
   }
 
 
-  private java.lang.Integer signoperationDesde;
+  private java.lang.Long infoSignaturaIDFins;
 
-  public java.lang.Integer getSignoperationDesde() {
-    return this.signoperationDesde;
+  public java.lang.Long getInfoSignaturaIDFins() {
+    return this.infoSignaturaIDFins;
   }
 
-  public void setSignoperationDesde(java.lang.Integer signoperationDesde) {
-    this.signoperationDesde = signoperationDesde;
-  }
-
-
-  private java.lang.Integer signoperationFins;
-
-  public java.lang.Integer getSignoperationFins() {
-    return this.signoperationFins;
-  }
-
-  public void setSignoperationFins(java.lang.Integer signoperationFins) {
-    this.signoperationFins = signoperationFins;
+  public void setInfoSignaturaIDFins(java.lang.Long infoSignaturaIDFins) {
+    this.infoSignaturaIDFins = infoSignaturaIDFins;
   }
 
 
-  private java.lang.String signtype;
+  private java.lang.Integer signOperationDesde;
 
-  public java.lang.String getSigntype() {
-    return this.signtype;
+  public java.lang.Integer getSignOperationDesde() {
+    return this.signOperationDesde;
   }
 
-  public void setSigntype(java.lang.String signtype) {
-    this.signtype = signtype;
-  }
-
-
-  private java.lang.String signalgorithm;
-
-  public java.lang.String getSignalgorithm() {
-    return this.signalgorithm;
-  }
-
-  public void setSignalgorithm(java.lang.String signalgorithm) {
-    this.signalgorithm = signalgorithm;
+  public void setSignOperationDesde(java.lang.Integer signOperationDesde) {
+    this.signOperationDesde = signOperationDesde;
   }
 
 
-  private java.lang.Integer signmodeDesde;
+  private java.lang.Integer signOperationFins;
 
-  public java.lang.Integer getSignmodeDesde() {
-    return this.signmodeDesde;
+  public java.lang.Integer getSignOperationFins() {
+    return this.signOperationFins;
   }
 
-  public void setSignmodeDesde(java.lang.Integer signmodeDesde) {
-    this.signmodeDesde = signmodeDesde;
-  }
-
-
-  private java.lang.Integer signmodeFins;
-
-  public java.lang.Integer getSignmodeFins() {
-    return this.signmodeFins;
-  }
-
-  public void setSignmodeFins(java.lang.Integer signmodeFins) {
-    this.signmodeFins = signmodeFins;
+  public void setSignOperationFins(java.lang.Integer signOperationFins) {
+    this.signOperationFins = signOperationFins;
   }
 
 
-  private java.lang.Integer signaturestablelocationDesde;
+  private java.lang.String signType;
 
-  public java.lang.Integer getSignaturestablelocationDesde() {
-    return this.signaturestablelocationDesde;
+  public java.lang.String getSignType() {
+    return this.signType;
   }
 
-  public void setSignaturestablelocationDesde(java.lang.Integer signaturestablelocationDesde) {
-    this.signaturestablelocationDesde = signaturestablelocationDesde;
-  }
-
-
-  private java.lang.Integer signaturestablelocationFins;
-
-  public java.lang.Integer getSignaturestablelocationFins() {
-    return this.signaturestablelocationFins;
-  }
-
-  public void setSignaturestablelocationFins(java.lang.Integer signaturestablelocationFins) {
-    this.signaturestablelocationFins = signaturestablelocationFins;
+  public void setSignType(java.lang.String signType) {
+    this.signType = signType;
   }
 
 
-  private java.lang.String enitipofirma;
+  private java.lang.String signAlgorithm;
 
-  public java.lang.String getEnitipofirma() {
-    return this.enitipofirma;
+  public java.lang.String getSignAlgorithm() {
+    return this.signAlgorithm;
   }
 
-  public void setEnitipofirma(java.lang.String enitipofirma) {
-    this.enitipofirma = enitipofirma;
-  }
-
-
-  private java.lang.String eniperfilfirma;
-
-  public java.lang.String getEniperfilfirma() {
-    return this.eniperfilfirma;
-  }
-
-  public void setEniperfilfirma(java.lang.String eniperfilfirma) {
-    this.eniperfilfirma = eniperfilfirma;
+  public void setSignAlgorithm(java.lang.String signAlgorithm) {
+    this.signAlgorithm = signAlgorithm;
   }
 
 
-  private java.lang.String enirolfirma;
+  private java.lang.Integer signModeDesde;
 
-  public java.lang.String getEnirolfirma() {
-    return this.enirolfirma;
+  public java.lang.Integer getSignModeDesde() {
+    return this.signModeDesde;
   }
 
-  public void setEnirolfirma(java.lang.String enirolfirma) {
-    this.enirolfirma = enirolfirma;
-  }
-
-
-  private java.lang.String enisignername;
-
-  public java.lang.String getEnisignername() {
-    return this.enisignername;
-  }
-
-  public void setEnisignername(java.lang.String enisignername) {
-    this.enisignername = enisignername;
+  public void setSignModeDesde(java.lang.Integer signModeDesde) {
+    this.signModeDesde = signModeDesde;
   }
 
 
-  private java.lang.String enisigneradministrationid;
+  private java.lang.Integer signModeFins;
 
-  public java.lang.String getEnisigneradministrationid() {
-    return this.enisigneradministrationid;
+  public java.lang.Integer getSignModeFins() {
+    return this.signModeFins;
   }
 
-  public void setEnisigneradministrationid(java.lang.String enisigneradministrationid) {
-    this.enisigneradministrationid = enisigneradministrationid;
+  public void setSignModeFins(java.lang.Integer signModeFins) {
+    this.signModeFins = signModeFins;
   }
 
 
-  private java.lang.String enisignlevel;
+  private java.lang.Integer signaturesTableLocationDesde;
 
-  public java.lang.String getEnisignlevel() {
-    return this.enisignlevel;
+  public java.lang.Integer getSignaturesTableLocationDesde() {
+    return this.signaturesTableLocationDesde;
   }
 
-  public void setEnisignlevel(java.lang.String enisignlevel) {
-    this.enisignlevel = enisignlevel;
+  public void setSignaturesTableLocationDesde(java.lang.Integer signaturesTableLocationDesde) {
+    this.signaturesTableLocationDesde = signaturesTableLocationDesde;
+  }
+
+
+  private java.lang.Integer signaturesTableLocationFins;
+
+  public java.lang.Integer getSignaturesTableLocationFins() {
+    return this.signaturesTableLocationFins;
+  }
+
+  public void setSignaturesTableLocationFins(java.lang.Integer signaturesTableLocationFins) {
+    this.signaturesTableLocationFins = signaturesTableLocationFins;
+  }
+
+
+  private java.lang.String eniTipoFirma;
+
+  public java.lang.String getEniTipoFirma() {
+    return this.eniTipoFirma;
+  }
+
+  public void setEniTipoFirma(java.lang.String eniTipoFirma) {
+    this.eniTipoFirma = eniTipoFirma;
+  }
+
+
+  private java.lang.String eniPerfilFirma;
+
+  public java.lang.String getEniPerfilFirma() {
+    return this.eniPerfilFirma;
+  }
+
+  public void setEniPerfilFirma(java.lang.String eniPerfilFirma) {
+    this.eniPerfilFirma = eniPerfilFirma;
+  }
+
+
+  private java.lang.String eniRolFirma;
+
+  public java.lang.String getEniRolFirma() {
+    return this.eniRolFirma;
+  }
+
+  public void setEniRolFirma(java.lang.String eniRolFirma) {
+    this.eniRolFirma = eniRolFirma;
+  }
+
+
+  private java.lang.String eniSignerName;
+
+  public java.lang.String getEniSignerName() {
+    return this.eniSignerName;
+  }
+
+  public void setEniSignerName(java.lang.String eniSignerName) {
+    this.eniSignerName = eniSignerName;
+  }
+
+
+  private java.lang.String eniSignerAdministrationId;
+
+  public java.lang.String getEniSignerAdministrationId() {
+    return this.eniSignerAdministrationId;
+  }
+
+  public void setEniSignerAdministrationId(java.lang.String eniSignerAdministrationId) {
+    this.eniSignerAdministrationId = eniSignerAdministrationId;
+  }
+
+
+  private java.lang.String eniSignLevel;
+
+  public java.lang.String getEniSignLevel() {
+    return this.eniSignLevel;
+  }
+
+  public void setEniSignLevel(java.lang.String eniSignLevel) {
+    this.eniSignLevel = eniSignLevel;
   }
 
 
@@ -202,25 +202,25 @@ public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements I
   
   public InfoSignaturaFilterForm(InfoSignaturaFilterForm __toClone) {
     super(__toClone);
-    this.infosignaturaidDesde = __toClone.infosignaturaidDesde;
-    this.infosignaturaidFins = __toClone.infosignaturaidFins;
-    this.signoperationDesde = __toClone.signoperationDesde;
-    this.signoperationFins = __toClone.signoperationFins;
-    this.signtype = __toClone.signtype;
-    this.signalgorithm = __toClone.signalgorithm;
-    this.signmodeDesde = __toClone.signmodeDesde;
-    this.signmodeFins = __toClone.signmodeFins;
-    this.signaturestablelocationDesde = __toClone.signaturestablelocationDesde;
-    this.signaturestablelocationFins = __toClone.signaturestablelocationFins;
-    this.enitipofirma = __toClone.enitipofirma;
-    this.eniperfilfirma = __toClone.eniperfilfirma;
-    this.enirolfirma = __toClone.enirolfirma;
-    this.enisignername = __toClone.enisignername;
-    this.enisigneradministrationid = __toClone.enisigneradministrationid;
-    this.enisignlevel = __toClone.enisignlevel;
-    this.mapOfValuesForSignoperation = __toClone.mapOfValuesForSignoperation;
-    this.mapOfValuesForSignmode = __toClone.mapOfValuesForSignmode;
-    this.mapOfValuesForSignaturestablelocation = __toClone.mapOfValuesForSignaturestablelocation;
+    this.infoSignaturaIDDesde = __toClone.infoSignaturaIDDesde;
+    this.infoSignaturaIDFins = __toClone.infoSignaturaIDFins;
+    this.signOperationDesde = __toClone.signOperationDesde;
+    this.signOperationFins = __toClone.signOperationFins;
+    this.signType = __toClone.signType;
+    this.signAlgorithm = __toClone.signAlgorithm;
+    this.signModeDesde = __toClone.signModeDesde;
+    this.signModeFins = __toClone.signModeFins;
+    this.signaturesTableLocationDesde = __toClone.signaturesTableLocationDesde;
+    this.signaturesTableLocationFins = __toClone.signaturesTableLocationFins;
+    this.eniTipoFirma = __toClone.eniTipoFirma;
+    this.eniPerfilFirma = __toClone.eniPerfilFirma;
+    this.eniRolFirma = __toClone.eniRolFirma;
+    this.eniSignerName = __toClone.eniSignerName;
+    this.eniSignerAdministrationId = __toClone.eniSignerAdministrationId;
+    this.eniSignLevel = __toClone.eniSignLevel;
+    this.mapOfValuesForSignOperation = __toClone.mapOfValuesForSignOperation;
+    this.mapOfValuesForSignMode = __toClone.mapOfValuesForSignMode;
+    this.mapOfValuesForSignaturesTableLocation = __toClone.mapOfValuesForSignaturesTableLocation;
   }
   
   /* ========= UTILS ========== */
@@ -255,38 +255,38 @@ public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements I
    // -----------------------
    // Maps de referencies.
    // -----------------------
-  private Map<String, String> mapOfValuesForSignoperation;
+  private Map<String, String> mapOfValuesForSignOperation;
 
-  public Map<String, String> getMapOfValuesForSignoperation() {
-    return this.mapOfValuesForSignoperation;
+  public Map<String, String> getMapOfValuesForSignOperation() {
+    return this.mapOfValuesForSignOperation;
   }
 
-  public void setMapOfValuesForSignoperation(Map<String, String> mapOfValuesForSignoperation) {
-    this.mapOfValuesForSignoperation = mapOfValuesForSignoperation;
-  }
-
-
-
-  private Map<String, String> mapOfValuesForSignmode;
-
-  public Map<String, String> getMapOfValuesForSignmode() {
-    return this.mapOfValuesForSignmode;
-  }
-
-  public void setMapOfValuesForSignmode(Map<String, String> mapOfValuesForSignmode) {
-    this.mapOfValuesForSignmode = mapOfValuesForSignmode;
+  public void setMapOfValuesForSignOperation(Map<String, String> mapOfValuesForSignOperation) {
+    this.mapOfValuesForSignOperation = mapOfValuesForSignOperation;
   }
 
 
 
-  private Map<String, String> mapOfValuesForSignaturestablelocation;
+  private Map<String, String> mapOfValuesForSignMode;
 
-  public Map<String, String> getMapOfValuesForSignaturestablelocation() {
-    return this.mapOfValuesForSignaturestablelocation;
+  public Map<String, String> getMapOfValuesForSignMode() {
+    return this.mapOfValuesForSignMode;
   }
 
-  public void setMapOfValuesForSignaturestablelocation(Map<String, String> mapOfValuesForSignaturestablelocation) {
-    this.mapOfValuesForSignaturestablelocation = mapOfValuesForSignaturestablelocation;
+  public void setMapOfValuesForSignMode(Map<String, String> mapOfValuesForSignMode) {
+    this.mapOfValuesForSignMode = mapOfValuesForSignMode;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForSignaturesTableLocation;
+
+  public Map<String, String> getMapOfValuesForSignaturesTableLocation() {
+    return this.mapOfValuesForSignaturesTableLocation;
+  }
+
+  public void setMapOfValuesForSignaturesTableLocation(Map<String, String> mapOfValuesForSignaturesTableLocation) {
+    this.mapOfValuesForSignaturesTableLocation = mapOfValuesForSignaturesTableLocation;
   }
 
 

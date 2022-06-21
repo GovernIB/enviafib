@@ -21,22 +21,22 @@
         </c:if>
         
         <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.DATACREACIO)}">
-        <tr id="peticio_datacreacio_rowid">
-          <td id="peticio_datacreacio_columnlabelid">
+        <tr id="peticio_dataCreacio_rowid">
+          <td id="peticio_dataCreacio_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.DATACREACIO])?'peticio.datacreacio':__theForm.labels[PeticioFields.DATACREACIO]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.DATACREACIO])?'peticio.dataCreacio':__theForm.labels[PeticioFields.DATACREACIO]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.DATACREACIO]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.DATACREACIO]}" ></i>
               </c:if>
             </td>
-          <td id="peticio_datacreacio_columnvalueid">
-    <form:errors path="peticio.datacreacio" cssClass="errorField alert alert-danger" />
+          <td id="peticio_dataCreacio_columnvalueid">
+    <form:errors path="peticio.dataCreacio" cssClass="errorField alert alert-danger" />
             <div class="form-group">
-                <div class="input-group date" id="peticio_datacreacio" data-target-input="nearest">
-                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DATACREACIO)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#peticio_datacreacio" path="peticio.datacreacio" />
+                <div class="input-group date" id="peticio_dataCreacio" data-target-input="nearest">
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DATACREACIO)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#peticio_dataCreacio" path="peticio.dataCreacio" />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.DATACREACIO)}" >
-                    <div class="input-group-append"  data-target="#peticio_datacreacio"  data-toggle="datetimepicker">
+                    <div class="input-group-append"  data-target="#peticio_dataCreacio"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
                     </c:if>
@@ -44,7 +44,7 @@
             </div>
         <script type="text/javascript">
             $(function () {
-                $('#peticio_datacreacio').datetimepicker({
+                $('#peticio_dataCreacio').datetimepicker({
                     format: '${gen:getJSDateTimePattern()}',
                     locale: '${lang}',
                     icons: {
@@ -207,18 +207,18 @@
         </c:if>
         
         <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.DESTINATARINIF)}">
-        <tr id="peticio_destinatarinif_rowid">
-          <td id="peticio_destinatarinif_columnlabelid">
+        <tr id="peticio_destinatariNif_rowid">
+          <td id="peticio_destinatariNif_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.DESTINATARINIF])?'peticio.destinatarinif':__theForm.labels[PeticioFields.DESTINATARINIF]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.DESTINATARINIF])?'peticio.destinatariNif':__theForm.labels[PeticioFields.DESTINATARINIF]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.DESTINATARINIF]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.DESTINATARINIF]}" ></i>
               </c:if>
             </td>
-          <td id="peticio_destinatarinif_columnvalueid">
-            <form:errors path="peticio.destinatarinif" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DESTINATARINIF)? 'true' : 'false'}" cssClass="w-75 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.DESTINATARINIF)? ' uneditable-input' : ''}"  style="" maxlength="50" path="peticio.destinatarinif"   />
+          <td id="peticio_destinatariNif_columnvalueid">
+            <form:errors path="peticio.destinatariNif" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DESTINATARINIF)? 'true' : 'false'}" cssClass="w-75 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.DESTINATARINIF)? ' uneditable-input' : ''}"  style="" maxlength="50" path="peticio.destinatariNif"   />
 
            </td>
         </tr>
@@ -312,25 +312,25 @@
         </c:if>
         
         <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.TIPUSDOCUMENTAL)}">
-        <tr id="peticio_tipusdocumental_rowid">
-          <td id="peticio_tipusdocumental_columnlabelid">
+        <tr id="peticio_tipusDocumental_rowid">
+          <td id="peticio_tipusDocumental_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.TIPUSDOCUMENTAL])?'peticio.tipusdocumental':__theForm.labels[PeticioFields.TIPUSDOCUMENTAL]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.TIPUSDOCUMENTAL])?'peticio.tipusDocumental':__theForm.labels[PeticioFields.TIPUSDOCUMENTAL]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.TIPUSDOCUMENTAL]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.TIPUSDOCUMENTAL]}" ></i>
               </c:if>
             </td>
-          <td id="peticio_tipusdocumental_columnvalueid">
-          <form:errors path="peticio.tipusdocumental" cssClass="errorField alert alert-danger" />
+          <td id="peticio_tipusDocumental_columnvalueid">
+          <form:errors path="peticio.tipusDocumental" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.TIPUSDOCUMENTAL)}" >
-          <form:hidden path="peticio.tipusdocumental"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.tipusdocumental,__theForm.listOfValuesForTipusdocumental)}"  />
+          <form:hidden path="peticio.tipusDocumental"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.tipusDocumental,__theForm.listOfValuesForTipusDocumental)}"  />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.TIPUSDOCUMENTAL)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="peticio_tipusdocumental"  onchange="if(typeof onChangeTipusdocumental == 'function') {  onChangeTipusdocumental(this); };"  cssClass="form-control col-md-9-optional" path="peticio.tipusdocumental">
-            <c:forEach items="${__theForm.listOfValuesForTipusdocumental}" var="tmp">
+          <form:select id="peticio_tipusDocumental"  onchange="if(typeof onChangeTipusDocumental == 'function') {  onChangeTipusDocumental(this); };"  cssClass="form-control col-md-9-optional" path="peticio.tipusDocumental">
+            <c:forEach items="${__theForm.listOfValuesForTipusDocumental}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
@@ -343,25 +343,25 @@
         </c:if>
         
         <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.IDIOMADOC)}">
-        <tr id="peticio_idiomadoc_rowid">
-          <td id="peticio_idiomadoc_columnlabelid">
+        <tr id="peticio_idiomaDoc_rowid">
+          <td id="peticio_idiomaDoc_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.IDIOMADOC])?'peticio.idiomadoc':__theForm.labels[PeticioFields.IDIOMADOC]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.IDIOMADOC])?'peticio.idiomaDoc':__theForm.labels[PeticioFields.IDIOMADOC]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.IDIOMADOC]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.IDIOMADOC]}" ></i>
               </c:if>
             </td>
-          <td id="peticio_idiomadoc_columnvalueid">
-          <form:errors path="peticio.idiomadoc" cssClass="errorField alert alert-danger" />
+          <td id="peticio_idiomaDoc_columnvalueid">
+          <form:errors path="peticio.idiomaDoc" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.IDIOMADOC)}" >
-          <form:hidden path="peticio.idiomadoc"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.idiomadoc,__theForm.listOfValuesForIdiomadoc)}"  />
+          <form:hidden path="peticio.idiomaDoc"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.idiomaDoc,__theForm.listOfValuesForIdiomaDoc)}"  />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.IDIOMADOC)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="peticio_idiomadoc"  onchange="if(typeof onChangeIdiomadoc == 'function') {  onChangeIdiomadoc(this); };"  cssClass="form-control col-md-9-optional" path="peticio.idiomadoc">
-            <c:forEach items="${__theForm.listOfValuesForIdiomadoc}" var="tmp">
+          <form:select id="peticio_idiomaDoc"  onchange="if(typeof onChangeIdiomaDoc == 'function') {  onChangeIdiomaDoc(this); };"  cssClass="form-control col-md-9-optional" path="peticio.idiomaDoc">
+            <c:forEach items="${__theForm.listOfValuesForIdiomaDoc}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
@@ -374,25 +374,25 @@
         </c:if>
         
         <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.INFOSIGNATURAID)}">
-        <tr id="peticio_infosignaturaid_rowid">
-          <td id="peticio_infosignaturaid_columnlabelid">
+        <tr id="peticio_infoSignaturaID_rowid">
+          <td id="peticio_infoSignaturaID_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.INFOSIGNATURAID])?'peticio.infosignaturaid':__theForm.labels[PeticioFields.INFOSIGNATURAID]}" />
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.INFOSIGNATURAID])?'peticio.infoSignaturaID':__theForm.labels[PeticioFields.INFOSIGNATURAID]}" />
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.INFOSIGNATURAID]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.INFOSIGNATURAID]}" ></i>
               </c:if>
             </td>
-          <td id="peticio_infosignaturaid_columnvalueid">
-          <form:errors path="peticio.infosignaturaid" cssClass="errorField alert alert-danger" />
+          <td id="peticio_infoSignaturaID_columnvalueid">
+          <form:errors path="peticio.infoSignaturaID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.INFOSIGNATURAID)}" >
-          <form:hidden path="peticio.infosignaturaid"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.infosignaturaid,__theForm.listOfInfoSignaturaForInfosignaturaid)}"  />
+          <form:hidden path="peticio.infoSignaturaID"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.infoSignaturaID,__theForm.listOfInfoSignaturaForInfoSignaturaID)}"  />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.INFOSIGNATURAID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="peticio_infosignaturaid"  onchange="if(typeof onChangeInfosignaturaid == 'function') {  onChangeInfosignaturaid(this); };"  cssClass="form-control col-md-9-optional" path="peticio.infosignaturaid">
-            <c:forEach items="${__theForm.listOfInfoSignaturaForInfosignaturaid}" var="tmp">
+          <form:select id="peticio_infoSignaturaID"  onchange="if(typeof onChangeInfoSignaturaID == 'function') {  onChangeInfoSignaturaID(this); };"  cssClass="form-control col-md-9-optional" path="peticio.infoSignaturaID">
+            <c:forEach items="${__theForm.listOfInfoSignaturaForInfoSignaturaID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
@@ -400,10 +400,10 @@
             </c:forEach>
             <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
             <c:if test="${not containEmptyValue}">
-              <c:if test="${empty __theForm.peticio.infosignaturaid }">
+              <c:if test="${empty __theForm.peticio.infoSignaturaID }">
                   <form:option value="" selected="true" ></form:option>
               </c:if>
-              <c:if test="${not empty __theForm.peticio.infosignaturaid }">
+              <c:if test="${not empty __theForm.peticio.infoSignaturaID }">
                   <form:option value="" ></form:option>
               </c:if>
             </c:if>

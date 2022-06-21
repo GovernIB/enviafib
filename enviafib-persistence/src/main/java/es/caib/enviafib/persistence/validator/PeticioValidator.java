@@ -86,7 +86,7 @@ public class PeticioValidator<I extends Peticio>
     }
 
     if (__vr.getFieldErrorCount(DESTINATARINIF) == 0) {
-      java.lang.String __destinatarinif = __target__.getDestinatarinif();
+      java.lang.String __destinatarinif = __target__.getDestinatariNif();
       if (__destinatarinif!= null && __destinatarinif.length() > 50) {
         __vr.rejectValue(DESTINATARINIF, "genapp.validation.sizeexceeds",
             new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(DESTINATARINIF)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(50)));
@@ -94,7 +94,7 @@ public class PeticioValidator<I extends Peticio>
     }
 
     if (__vr.getFieldErrorCount(DESTINATARINIF) == 0) {
-      String val = __target__.getDestinatarinif();
+      String val = __target__.getDestinatariNif();
       if (val != null && val.trim().length() != 0) {
         java.util.regex.Pattern p = java.util.regex.Pattern.compile("([XYZ][0-9]{7}[A-Z])|([0-9]{8}[A-Z])");
         if (!p.matcher(val).matches()) {
@@ -105,7 +105,7 @@ public class PeticioValidator<I extends Peticio>
     }
 
     if (__vr.getFieldErrorCount(TIPUSDOCUMENTAL) == 0) {
-      java.lang.String __tipusdocumental = __target__.getTipusdocumental();
+      java.lang.String __tipusdocumental = __target__.getTipusDocumental();
       if (__tipusdocumental!= null && __tipusdocumental.length() > 100) {
         __vr.rejectValue(TIPUSDOCUMENTAL, "genapp.validation.sizeexceeds",
             new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCUMENTAL)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(100)));
@@ -113,7 +113,7 @@ public class PeticioValidator<I extends Peticio>
     }
 
     if (__vr.getFieldErrorCount(IDIOMADOC) == 0) {
-      java.lang.String __idiomadoc = __target__.getIdiomadoc();
+      java.lang.String __idiomadoc = __target__.getIdiomaDoc();
       if (__idiomadoc!= null && __idiomadoc.length() > 30) {
         __vr.rejectValue(IDIOMADOC, "genapp.validation.sizeexceeds",
             new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMADOC)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(30)));
@@ -193,14 +193,14 @@ public class PeticioValidator<I extends Peticio>
     }
 
     if (__vr.getFieldErrorCount(INFOSIGNATURAID) == 0) {
-      java.lang.Long __infosignaturaid = __target__.getInfosignaturaid();
+      java.lang.Long __infosignaturaid = __target__.getInfoSignaturaID();
       if (__infosignaturaid != null ) {
         Long __count_ = null;
         try { __count_ = __infoSignaturaManager.count(InfoSignaturaFields.INFOSIGNATURAID.equal(__infosignaturaid)); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
         if (__count_ == null || __count_ == 0) {        
           __vr.rejectValue(INFOSIGNATURAID, "error.notfound",
          new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("infoSignatura.infoSignatura"),
-         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("infoSignatura.infosignaturaid"),
+         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("infoSignatura.infoSignaturaID"),
          new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__infosignaturaid)));
         }
       }

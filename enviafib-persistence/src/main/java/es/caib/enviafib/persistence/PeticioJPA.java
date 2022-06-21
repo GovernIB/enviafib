@@ -42,7 +42,7 @@ private static final long serialVersionUID = 1230292508L;
     long peticioID;
 
     @Column(name="datacreacio",nullable = false,length = 29,precision = 6)
-    java.sql.Timestamp datacreacio;
+    java.sql.Timestamp dataCreacio;
 
     @Column(name="datafinal",length = 29,precision = 6)
     java.sql.Timestamp dataFinal;
@@ -57,7 +57,7 @@ private static final long serialVersionUID = 1230292508L;
     java.lang.String idiomaID;
 
     @Column(name="destinatarinif",nullable = false,length = 50)
-    java.lang.String destinatarinif;
+    java.lang.String destinatariNif;
 
     @Column(name="estat",nullable = false,length = 19)
     long estat;
@@ -66,13 +66,13 @@ private static final long serialVersionUID = 1230292508L;
     java.lang.Long fitxerFirmatID;
 
     @Column(name="tipusdocumental",nullable = false,length = 100)
-    java.lang.String tipusdocumental;
+    java.lang.String tipusDocumental;
 
     @Column(name="idiomadoc",nullable = false,length = 30)
-    java.lang.String idiomadoc;
+    java.lang.String idiomaDoc;
 
     @Column(name="infosignaturaid",length = 19)
-    java.lang.Long infosignaturaid;
+    java.lang.Long infoSignaturaID;
 
     @Column(name="tipus",nullable = false,length = 10)
     int tipus;
@@ -96,71 +96,71 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp datacreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
+  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
     this.nom=nom;
     this.peticioID=peticioID;
-    this.datacreacio=datacreacio;
+    this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
     this.fitxerID=fitxerID;
     this.solicitantID=solicitantID;
     this.idiomaID=idiomaID;
-    this.destinatarinif=destinatarinif;
+    this.destinatariNif=destinatariNif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
-    this.tipusdocumental=tipusdocumental;
-    this.idiomadoc=idiomadoc;
-    this.infosignaturaid=infosignaturaid;
+    this.tipusDocumental=tipusDocumental;
+    this.idiomaDoc=idiomaDoc;
+    this.infoSignaturaID=infoSignaturaID;
     this.tipus=tipus;
     this.errorMsg=errorMsg;
     this.errorException=errorException;
     this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(java.lang.String nom , java.sql.Timestamp datacreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusdocumental , java.lang.String idiomadoc , java.lang.Long infosignaturaid , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
+  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
     this.nom=nom;
-    this.datacreacio=datacreacio;
+    this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
     this.fitxerID=fitxerID;
     this.solicitantID=solicitantID;
     this.idiomaID=idiomaID;
-    this.destinatarinif=destinatarinif;
+    this.destinatariNif=destinatariNif;
     this.estat=estat;
     this.fitxerFirmatID=fitxerFirmatID;
-    this.tipusdocumental=tipusdocumental;
-    this.idiomadoc=idiomadoc;
-    this.infosignaturaid=infosignaturaid;
+    this.tipusDocumental=tipusDocumental;
+    this.idiomaDoc=idiomaDoc;
+    this.infoSignaturaID=infoSignaturaID;
     this.tipus=tipus;
     this.errorMsg=errorMsg;
     this.errorException=errorException;
     this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor dels valors Not Null */
-  public PeticioJPA(long peticioID , java.sql.Timestamp datacreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatarinif , long estat , java.lang.String tipusdocumental , java.lang.String idiomadoc , int tipus) {
+  public PeticioJPA(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , long estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
     this.peticioID=peticioID;
-    this.datacreacio=datacreacio;
+    this.dataCreacio=dataCreacio;
     this.fitxerID=fitxerID;
     this.solicitantID=solicitantID;
     this.idiomaID=idiomaID;
-    this.destinatarinif=destinatarinif;
+    this.destinatariNif=destinatariNif;
     this.estat=estat;
-    this.tipusdocumental=tipusdocumental;
-    this.idiomadoc=idiomadoc;
+    this.tipusDocumental=tipusDocumental;
+    this.idiomaDoc=idiomaDoc;
     this.tipus=tipus;
 }
   public PeticioJPA(Peticio __bean) {
     this.setNom(__bean.getNom());
     this.setPeticioID(__bean.getPeticioID());
-    this.setDatacreacio(__bean.getDatacreacio());
+    this.setDataCreacio(__bean.getDataCreacio());
     this.setDataFinal(__bean.getDataFinal());
     this.setFitxerID(__bean.getFitxerID());
     this.setSolicitantID(__bean.getSolicitantID());
     this.setIdiomaID(__bean.getIdiomaID());
-    this.setDestinatarinif(__bean.getDestinatarinif());
+    this.setDestinatariNif(__bean.getDestinatariNif());
     this.setEstat(__bean.getEstat());
     this.setFitxerFirmatID(__bean.getFitxerFirmatID());
-    this.setTipusdocumental(__bean.getTipusdocumental());
-    this.setIdiomadoc(__bean.getIdiomadoc());
-    this.setInfosignaturaid(__bean.getInfosignaturaid());
+    this.setTipusDocumental(__bean.getTipusDocumental());
+    this.setIdiomaDoc(__bean.getIdiomaDoc());
+    this.setInfoSignaturaID(__bean.getInfoSignaturaID());
     this.setTipus(__bean.getTipus());
     this.setErrorMsg(__bean.getErrorMsg());
     this.setErrorException(__bean.getErrorException());
@@ -185,11 +185,11 @@ private static final long serialVersionUID = 1230292508L;
 		this.peticioID = _peticioID_;
 	};
 
-	public java.sql.Timestamp getDatacreacio() {
-		return(datacreacio);
+	public java.sql.Timestamp getDataCreacio() {
+		return(dataCreacio);
 	};
-	public void setDatacreacio(java.sql.Timestamp _datacreacio_) {
-		this.datacreacio = _datacreacio_;
+	public void setDataCreacio(java.sql.Timestamp _dataCreacio_) {
+		this.dataCreacio = _dataCreacio_;
 	};
 
 	public java.sql.Timestamp getDataFinal() {
@@ -220,11 +220,11 @@ private static final long serialVersionUID = 1230292508L;
 		this.idiomaID = _idiomaID_;
 	};
 
-	public java.lang.String getDestinatarinif() {
-		return(destinatarinif);
+	public java.lang.String getDestinatariNif() {
+		return(destinatariNif);
 	};
-	public void setDestinatarinif(java.lang.String _destinatarinif_) {
-		this.destinatarinif = _destinatarinif_;
+	public void setDestinatariNif(java.lang.String _destinatariNif_) {
+		this.destinatariNif = _destinatariNif_;
 	};
 
 	public long getEstat() {
@@ -241,25 +241,25 @@ private static final long serialVersionUID = 1230292508L;
 		this.fitxerFirmatID = _fitxerFirmatID_;
 	};
 
-	public java.lang.String getTipusdocumental() {
-		return(tipusdocumental);
+	public java.lang.String getTipusDocumental() {
+		return(tipusDocumental);
 	};
-	public void setTipusdocumental(java.lang.String _tipusdocumental_) {
-		this.tipusdocumental = _tipusdocumental_;
-	};
-
-	public java.lang.String getIdiomadoc() {
-		return(idiomadoc);
-	};
-	public void setIdiomadoc(java.lang.String _idiomadoc_) {
-		this.idiomadoc = _idiomadoc_;
+	public void setTipusDocumental(java.lang.String _tipusDocumental_) {
+		this.tipusDocumental = _tipusDocumental_;
 	};
 
-	public java.lang.Long getInfosignaturaid() {
-		return(infosignaturaid);
+	public java.lang.String getIdiomaDoc() {
+		return(idiomaDoc);
 	};
-	public void setInfosignaturaid(java.lang.Long _infosignaturaid_) {
-		this.infosignaturaid = _infosignaturaid_;
+	public void setIdiomaDoc(java.lang.String _idiomaDoc_) {
+		this.idiomaDoc = _idiomaDoc_;
+	};
+
+	public java.lang.Long getInfoSignaturaID() {
+		return(infoSignaturaID);
+	};
+	public void setInfoSignaturaID(java.lang.Long _infoSignaturaID_) {
+		this.infoSignaturaID = _infoSignaturaID_;
 	};
 
 	public int getTipus() {
@@ -364,7 +364,7 @@ private static final long serialVersionUID = 1230292508L;
 // IMP Field:infosignaturaid | Table: efi_infosignatura | Type: 1  
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "infosignaturaid", referencedColumnName ="infosignaturaid", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_peticio_infosign_fk"))
+    @JoinColumn(name = "infosignaturaid", referencedColumnName ="infoSignaturaID", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_peticio_infosign_fk"))
     private InfoSignaturaJPA infoSignatura;
 
     public InfoSignaturaJPA getInfoSignatura() {
@@ -382,17 +382,17 @@ private static final long serialVersionUID = 1230292508L;
     PeticioJPA __tmp = new PeticioJPA();
     __tmp.setNom(__bean.getNom());
     __tmp.setPeticioID(__bean.getPeticioID());
-    __tmp.setDatacreacio(__bean.getDatacreacio());
+    __tmp.setDataCreacio(__bean.getDataCreacio());
     __tmp.setDataFinal(__bean.getDataFinal());
     __tmp.setFitxerID(__bean.getFitxerID());
     __tmp.setSolicitantID(__bean.getSolicitantID());
     __tmp.setIdiomaID(__bean.getIdiomaID());
-    __tmp.setDestinatarinif(__bean.getDestinatarinif());
+    __tmp.setDestinatariNif(__bean.getDestinatariNif());
     __tmp.setEstat(__bean.getEstat());
     __tmp.setFitxerFirmatID(__bean.getFitxerFirmatID());
-    __tmp.setTipusdocumental(__bean.getTipusdocumental());
-    __tmp.setIdiomadoc(__bean.getIdiomadoc());
-    __tmp.setInfosignaturaid(__bean.getInfosignaturaid());
+    __tmp.setTipusDocumental(__bean.getTipusDocumental());
+    __tmp.setIdiomaDoc(__bean.getIdiomaDoc());
+    __tmp.setInfoSignaturaID(__bean.getInfoSignaturaID());
     __tmp.setTipus(__bean.getTipus());
     __tmp.setErrorMsg(__bean.getErrorMsg());
     __tmp.setErrorException(__bean.getErrorException());

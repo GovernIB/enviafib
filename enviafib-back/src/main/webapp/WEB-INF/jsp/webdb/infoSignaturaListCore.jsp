@@ -24,7 +24,7 @@
 
       <c:forEach var="infoSignatura" items="${infoSignaturaItems}">
 
-        <tr id="infoSignatura_rowid_${infoSignatura.infosignaturaid}">
+        <tr id="infoSignatura_rowid_${infoSignatura.infoSignaturaID}">
           <%@include file="infoSignaturaListCoreMultipleSelect.jsp" %>
 
           <%@include file="infoSignaturaListCoreContent.jsp" %>

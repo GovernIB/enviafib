@@ -75,7 +75,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             throws I18NException {
 
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
-        peticioForm.getPeticio().setDestinatarinif(LoginInfo.getInstance().getUsuari().getNif());
+        peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
 
         peticioForm.addHiddenField(DESTINATARINIF);
 
@@ -402,7 +402,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             // Només es suporta una firma
             final int signNumber = 1;
 
-            final String langDoc = peticio.getIdiomadoc();
+            final String langDoc = peticio.getIdiomaDoc();
 
             FirmaSimpleCommonInfo commonInfoSignature;
             // XYZ ZZZ
@@ -427,7 +427,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
                 FirmaSimpleFile fileToSign = new FirmaSimpleFile(nomFitxer, mimeTypeFitxer, dataFitxer);
 
-                long tipusDocumentalID = Long.parseLong(peticio.getTipusdocumental()); // =TD99
+                long tipusDocumentalID = Long.parseLong(peticio.getTipusDocumental()); // =TD99
 
                 fileInfoSignature = new FirmaSimpleFileInfoSignature(fileToSign, signID, fileToSign.getNom(), reason,
                         location, signNumber, langDoc, tipusDocumentalID);

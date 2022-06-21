@@ -12,8 +12,8 @@
         </c:if>
         </c:forEach>
 
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.SERIEDOCUID)}">
-        <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.SERIEDOCUID)}</th>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.SERIEDOCUMENTALID)}">
+        <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.SERIEDOCUMENTALID)}</th>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.NOM)}">
         <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.NOM)}</th>
