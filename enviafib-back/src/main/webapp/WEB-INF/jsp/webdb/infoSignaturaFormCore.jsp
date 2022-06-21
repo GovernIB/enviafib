@@ -13,9 +13,22 @@
               </c:if>
             </td>
           <td id="infoSignatura_signoperation_columnvalueid">
-            <form:errors path="infoSignatura.signoperation" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNOPERATION)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNOPERATION)? ' uneditable-input' : ''}"  style=""  path="infoSignatura.signoperation"   />
-
+          <form:errors path="infoSignatura.signoperation" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNOPERATION)}" >
+          <form:hidden path="infoSignatura.signoperation"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signoperation,__theForm.listOfValuesForSignoperation)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNOPERATION)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="infoSignatura_signoperation"  onchange="if(typeof onChangeSignoperation == 'function') {  onChangeSignoperation(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signoperation">
+            <c:forEach items="${__theForm.listOfValuesForSignoperation}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>
@@ -31,30 +44,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_signtype_columnvalueid">
-              <form:errors path="infoSignatura.signtype" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNTYPE)? 'true' : 'false'}" path="infoSignatura.signtype"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_signtype" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_signtype" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.signtype'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.signtype'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.signtype'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_signtype').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_signtype').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_signtype').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.signtype" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNTYPE)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNTYPE)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.signtype"   />
+
            </td>
         </tr>
         </c:if>
@@ -70,30 +62,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_signalgorithm_columnvalueid">
-              <form:errors path="infoSignatura.signalgorithm" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNALGORITHM)? 'true' : 'false'}" path="infoSignatura.signalgorithm"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_signalgorithm" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_signalgorithm" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.signalgorithm'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.signalgorithm'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.signalgorithm'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_signalgorithm').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_signalgorithm').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_signalgorithm').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.signalgorithm" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNALGORITHM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNALGORITHM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.signalgorithm"   />
+
            </td>
         </tr>
         </c:if>
@@ -109,9 +80,31 @@
               </c:if>
             </td>
           <td id="infoSignatura_signmode_columnvalueid">
-            <form:errors path="infoSignatura.signmode" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNMODE)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNMODE)? ' uneditable-input' : ''}"  style=""  path="infoSignatura.signmode"   />
-
+          <form:errors path="infoSignatura.signmode" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNMODE)}" >
+          <form:hidden path="infoSignatura.signmode"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signmode,__theForm.listOfValuesForSignmode)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNMODE)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="infoSignatura_signmode"  onchange="if(typeof onChangeSignmode == 'function') {  onChangeSignmode(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signmode">
+            <c:forEach items="${__theForm.listOfValuesForSignmode}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.infoSignatura.signmode }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.infoSignatura.signmode }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>
@@ -127,9 +120,31 @@
               </c:if>
             </td>
           <td id="infoSignatura_signaturestablelocation_columnvalueid">
-            <form:errors path="infoSignatura.signaturestablelocation" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNATURESTABLELOCATION)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNATURESTABLELOCATION)? ' uneditable-input' : ''}"  style=""  path="infoSignatura.signaturestablelocation"   />
-
+          <form:errors path="infoSignatura.signaturestablelocation" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNATURESTABLELOCATION)}" >
+          <form:hidden path="infoSignatura.signaturestablelocation"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signaturestablelocation,__theForm.listOfValuesForSignaturestablelocation)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNATURESTABLELOCATION)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="infoSignatura_signaturestablelocation"  onchange="if(typeof onChangeSignaturestablelocation == 'function') {  onChangeSignaturestablelocation(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signaturestablelocation">
+            <c:forEach items="${__theForm.listOfValuesForSignaturestablelocation}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.infoSignatura.signaturestablelocation }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.infoSignatura.signaturestablelocation }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>
@@ -195,30 +210,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_enitipofirma_columnvalueid">
-              <form:errors path="infoSignatura.enitipofirma" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENITIPOFIRMA)? 'true' : 'false'}" path="infoSignatura.enitipofirma"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_enitipofirma" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_enitipofirma" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enitipofirma'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enitipofirma'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enitipofirma'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_enitipofirma').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_enitipofirma').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_enitipofirma').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.enitipofirma" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENITIPOFIRMA)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENITIPOFIRMA)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.enitipofirma"   />
+
            </td>
         </tr>
         </c:if>
@@ -234,30 +228,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_eniperfilfirma_columnvalueid">
-              <form:errors path="infoSignatura.eniperfilfirma" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENIPERFILFIRMA)? 'true' : 'false'}" path="infoSignatura.eniperfilfirma"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_eniperfilfirma" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_eniperfilfirma" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.eniperfilfirma'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.eniperfilfirma'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.eniperfilfirma'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_eniperfilfirma').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_eniperfilfirma').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_eniperfilfirma').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.eniperfilfirma" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENIPERFILFIRMA)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENIPERFILFIRMA)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.eniperfilfirma"   />
+
            </td>
         </tr>
         </c:if>
@@ -273,30 +246,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_enirolfirma_columnvalueid">
-              <form:errors path="infoSignatura.enirolfirma" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENIROLFIRMA)? 'true' : 'false'}" path="infoSignatura.enirolfirma"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_enirolfirma" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_enirolfirma" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enirolfirma'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enirolfirma'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enirolfirma'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_enirolfirma').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_enirolfirma').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_enirolfirma').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.enirolfirma" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENIROLFIRMA)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENIROLFIRMA)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.enirolfirma"   />
+
            </td>
         </tr>
         </c:if>
@@ -312,30 +264,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_enisignername_columnvalueid">
-              <form:errors path="infoSignatura.enisignername" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNERNAME)? 'true' : 'false'}" path="infoSignatura.enisignername"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_enisignername" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_enisignername" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisignername'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisignername'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisignername'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_enisignername').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_enisignername').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_enisignername').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.enisignername" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNERNAME)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNERNAME)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.enisignername"   />
+
            </td>
         </tr>
         </c:if>
@@ -351,30 +282,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_enisigneradministrationid_columnvalueid">
-              <form:errors path="infoSignatura.enisigneradministrationid" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNERADMINISTRATIONID)? 'true' : 'false'}" path="infoSignatura.enisigneradministrationid"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_enisigneradministrationid" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_enisigneradministrationid" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisigneradministrationid'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisigneradministrationid'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisigneradministrationid'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_enisigneradministrationid').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_enisigneradministrationid').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_enisigneradministrationid').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.enisigneradministrationid" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNERADMINISTRATIONID)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNERADMINISTRATIONID)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.enisigneradministrationid"   />
+
            </td>
         </tr>
         </c:if>
@@ -390,30 +300,9 @@
               </c:if>
             </td>
           <td id="infoSignatura_enisignlevel_columnvalueid">
-              <form:errors path="infoSignatura.enisignlevel" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNLEVEL)? 'true' : 'false'}" path="infoSignatura.enisignlevel"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_enisignlevel" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_enisignlevel" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisignlevel'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisignlevel'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('infoSignatura.enisignlevel'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_enisignlevel').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_enisignlevel').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_enisignlevel').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="infoSignatura.enisignlevel" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNLEVEL)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.ENISIGNLEVEL)? ' uneditable-input' : ''}"  style="" maxlength="255" path="infoSignatura.enisignlevel"   />
+
            </td>
         </tr>
         </c:if>

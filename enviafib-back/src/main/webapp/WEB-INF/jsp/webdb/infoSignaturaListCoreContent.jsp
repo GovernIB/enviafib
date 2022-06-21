@@ -31,7 +31,10 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNOPERATION)}">
           <td>
-          ${infoSignatura.signoperation}
+          <c:set var="tmp">${infoSignatura.signoperation}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForSignoperation[tmp]}
+          </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNTYPE)}">
@@ -46,12 +49,18 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNMODE)}">
           <td>
-          ${infoSignatura.signmode}
+          <c:set var="tmp">${infoSignatura.signmode}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForSignmode[tmp]}
+          </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.SIGNATURESTABLELOCATION)}">
           <td>
-          ${infoSignatura.signaturestablelocation}
+          <c:set var="tmp">${infoSignatura.signaturestablelocation}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForSignaturestablelocation[tmp]}
+          </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.TIMESTAMPINCLUDED)}">
