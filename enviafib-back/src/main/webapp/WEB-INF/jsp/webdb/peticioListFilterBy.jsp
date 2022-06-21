@@ -131,6 +131,56 @@
 
     
         </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.DATAFINAL)}">
+<%-- FILTRE DATE-TIME --%>
+            <div class="input-group" style="padding-right:4px;padding-bottom:4px;align-items:center;">
+              <span class="add-on"><fmt:message key="peticio.dataFinal" />:</span>
+              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
+            <div class="form-group">
+                <div class="input-group date" id="dataFinalDesde" data-target-input="nearest">
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFinalDesde" path="dataFinalDesde" />
+                    <c:if test="${!false}" >
+                    <div class="input-group-append"  data-target="#dataFinalDesde"  data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                    </c:if>
+                </div>
+            </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#dataFinalDesde').datetimepicker({
+                    format: '${gen:getJSDateTimePattern()}',
+                    locale: '${lang}',
+                    icons: {
+                       time: 'far fa-clock'
+                    }
+                });
+            });
+        </script>              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
+            <div class="form-group">
+                <div class="input-group date" id="dataFinalFins" data-target-input="nearest">
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFinalFins" path="dataFinalFins" />
+                    <c:if test="${!false}" >
+                    <div class="input-group-append"  data-target="#dataFinalFins"  data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                    </c:if>
+                </div>
+            </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#dataFinalFins').datetimepicker({
+                    format: '${gen:getJSDateTimePattern()}',
+                    locale: '${lang}',
+                    icons: {
+                       time: 'far fa-clock'
+                    }
+                });
+            });
+        </script>            </div>
+
+    
+        </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.SOLICITANTID)}">
             <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
@@ -280,56 +330,6 @@
             </div>
 
 
-        </c:if>
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.DATAFINAL)}">
-<%-- FILTRE DATE-TIME --%>
-            <div class="input-group" style="padding-right:4px;padding-bottom:4px;align-items:center;">
-              <span class="add-on"><fmt:message key="peticio.dataFinal" />:</span>
-              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
-            <div class="form-group">
-                <div class="input-group date" id="dataFinalDesde" data-target-input="nearest">
-                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFinalDesde" path="dataFinalDesde" />
-                    <c:if test="${!false}" >
-                    <div class="input-group-append"  data-target="#dataFinalDesde"  data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                    </c:if>
-                </div>
-            </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#dataFinalDesde').datetimepicker({
-                    format: '${gen:getJSDateTimePattern()}',
-                    locale: '${lang}',
-                    icons: {
-                       time: 'far fa-clock'
-                    }
-                });
-            });
-        </script>              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
-            <div class="form-group">
-                <div class="input-group date" id="dataFinalFins" data-target-input="nearest">
-                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFinalFins" path="dataFinalFins" />
-                    <c:if test="${!false}" >
-                    <div class="input-group-append"  data-target="#dataFinalFins"  data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                    </c:if>
-                </div>
-            </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#dataFinalFins').datetimepicker({
-                    format: '${gen:getJSDateTimePattern()}',
-                    locale: '${lang}',
-                    icons: {
-                       time: 'far fa-clock'
-                    }
-                });
-            });
-        </script>            </div>
-
-    
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.PETICIOPORTAFIRMES)}">
             <%-- FILTRE STRING --%>

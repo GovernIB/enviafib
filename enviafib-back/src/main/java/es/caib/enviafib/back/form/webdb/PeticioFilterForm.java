@@ -76,6 +76,28 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.sql.Timestamp dataFinalDesde;
+
+  public java.sql.Timestamp getDataFinalDesde() {
+    return this.dataFinalDesde;
+  }
+
+  public void setDataFinalDesde(java.sql.Timestamp dataFinalDesde) {
+    this.dataFinalDesde = dataFinalDesde;
+  }
+
+
+  private java.sql.Timestamp dataFinalFins;
+
+  public java.sql.Timestamp getDataFinalFins() {
+    return this.dataFinalFins;
+  }
+
+  public void setDataFinalFins(java.sql.Timestamp dataFinalFins) {
+    this.dataFinalFins = dataFinalFins;
+  }
+
+
   private java.lang.Long solicitantIDDesde;
 
   public java.lang.Long getSolicitantIDDesde() {
@@ -230,28 +252,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.sql.Timestamp dataFinalDesde;
-
-  public java.sql.Timestamp getDataFinalDesde() {
-    return this.dataFinalDesde;
-  }
-
-  public void setDataFinalDesde(java.sql.Timestamp dataFinalDesde) {
-    this.dataFinalDesde = dataFinalDesde;
-  }
-
-
-  private java.sql.Timestamp dataFinalFins;
-
-  public java.sql.Timestamp getDataFinalFins() {
-    return this.dataFinalFins;
-  }
-
-  public void setDataFinalFins(java.sql.Timestamp dataFinalFins) {
-    this.dataFinalFins = dataFinalFins;
-  }
-
-
   private java.lang.String peticioPortafirmes;
 
   public java.lang.String getPeticioPortafirmes() {
@@ -273,6 +273,8 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.peticioIDFins = __toClone.peticioIDFins;
     this.datacreacioDesde = __toClone.datacreacioDesde;
     this.datacreacioFins = __toClone.datacreacioFins;
+    this.dataFinalDesde = __toClone.dataFinalDesde;
+    this.dataFinalFins = __toClone.dataFinalFins;
     this.solicitantIDDesde = __toClone.solicitantIDDesde;
     this.solicitantIDFins = __toClone.solicitantIDFins;
     this.idiomaID = __toClone.idiomaID;
@@ -287,8 +289,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.tipusFins = __toClone.tipusFins;
     this.errorMsg = __toClone.errorMsg;
     this.errorException = __toClone.errorException;
-    this.dataFinalDesde = __toClone.dataFinalDesde;
-    this.dataFinalFins = __toClone.dataFinalFins;
     this.peticioPortafirmes = __toClone.peticioPortafirmes;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
