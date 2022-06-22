@@ -86,8 +86,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 
+        String perfil = Configuracio.getPortafibProfile();
+
         String nifDestinatari = peticio.getDestinatariNif();
-        String perfil = "ENVIAFIB_PADES";
         FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
 
         String idiomaDoc = peticio.getIdiomaDoc();
