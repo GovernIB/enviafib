@@ -8,15 +8,15 @@
   <c:if test="${empty loginInfo}">
         <li style="list-style-type: disc; list-style-position: inside;">
           <a href="<c:url value="/public/index.html"/>">
-            <span style="${(fn:contains(url, 'principal'))? "font-weight: bold;" : ""}">Pàgina Inicial</span>
+            <span style="${(fn:contains(url, 'home'))? "font-weight: bold;" : ""}">Pàgina Inicial</span>
           </a>
         </li>
     </c:if>
     <c:if test="${not empty loginInfo}">
 
     <li style="list-style-type: disc; list-style-position: inside;">
-      <a href="<c:url value="/common/principal.html"/>">
-        <span style="${(fn:contains(url, 'principal'))? "font-weight: bold;" : ""}">Pàgina Inicial</span>
+      <a href="<c:url value="/common/home.html"/>">
+        <span style="${(fn:contains(url, 'home'))? "font-weight: bold;" : ""}">Pàgina Inicial</span>
       </a>
     </li>
 

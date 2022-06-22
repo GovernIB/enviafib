@@ -34,11 +34,14 @@
             <%
             //session.setAttribute("pipella", )
             %>
-
-            <li class="nav-item"><a
-                class="nav-link ${(empty pipella)?'active' : '' }"
-                href="<c:url value="/canviarPipella/"/>"><fmt:message
-                        key="inici" /></a></li>
+			
+			<sec:authorize access="hasRole('ROLE_USER')">
+	            <li class="nav-item"><a
+	                class="nav-link ${(empty pipella)?'active' : '' }"
+	                href="<c:url value="/canviarPipella/"/>"><fmt:message
+	                        key="inici" /></a></li>
+            </sec:authorize>
+                        
 
             <%--  DRAW MENU OPTIONS  XYZ ZZZ
 	    <c:forEach var="rolG" items="${loginInfo.roles}">
