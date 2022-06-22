@@ -54,7 +54,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
         // XYZ ZZZ Posam el de la persona que ho ha solicitat per a que no falli
-        peticioForm.getPeticio().setDestinatarinif(LoginInfo.getInstance().getUsuari().getNif());
+        peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
         peticioForm.addHiddenField(DESTINATARINIF);
 
         return peticioForm;

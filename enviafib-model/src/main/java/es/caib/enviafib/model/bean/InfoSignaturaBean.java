@@ -10,23 +10,23 @@ public class InfoSignaturaBean implements InfoSignatura {
 
 private static final long serialVersionUID = 986528854L;
 
-	long infosignaturaid;// PK
-	int signoperation;
-	java.lang.String signtype;
-	java.lang.String signalgorithm;
-	java.lang.Integer signmode;
-	java.lang.Integer signaturestablelocation;
-	java.lang.Boolean timestampincluded;
-	java.lang.Boolean policyincluded;
-	java.lang.String enitipofirma;
-	java.lang.String eniperfilfirma;
-	java.lang.String enirolfirma;
-	java.lang.String enisignername;
-	java.lang.String enisigneradministrationid;
-	java.lang.String enisignlevel;
-	java.lang.Boolean checkadministrationidofsigner;
-	java.lang.Boolean checkdocumentmodifications;
-	java.lang.Boolean checkvalidationsignature;
+	long infoSignaturaID;// PK
+	int signOperation;
+	java.lang.String signType;
+	java.lang.String signAlgorithm;
+	java.lang.Integer signMode;
+	java.lang.Integer signaturesTableLocation;
+	java.lang.Boolean timestampIncluded;
+	java.lang.Boolean policyIncluded;
+	java.lang.String eniTipoFirma;
+	java.lang.String eniPerfilFirma;
+	java.lang.String eniRolFirma;
+	java.lang.String eniSignerName;
+	java.lang.String eniSignerAdministrationId;
+	java.lang.String eniSignLevel;
+	java.lang.Boolean checkAdministrationIdOfSigner;
+	java.lang.Boolean checkDocumentModifications;
+	java.lang.Boolean checkValidationSignature;
 
 
   /** Constructor Buit */
@@ -34,187 +34,187 @@ private static final long serialVersionUID = 986528854L;
   }
 
   /** Constructor amb tots els camps  */
-  public InfoSignaturaBean(long infosignaturaid , int signoperation , java.lang.String signtype , java.lang.String signalgorithm , java.lang.Integer signmode , java.lang.Integer signaturestablelocation , java.lang.Boolean timestampincluded , java.lang.Boolean policyincluded , java.lang.String enitipofirma , java.lang.String eniperfilfirma , java.lang.String enirolfirma , java.lang.String enisignername , java.lang.String enisigneradministrationid , java.lang.String enisignlevel , java.lang.Boolean checkadministrationidofsigner , java.lang.Boolean checkdocumentmodifications , java.lang.Boolean checkvalidationsignature) {
-    this.infosignaturaid=infosignaturaid;
-    this.signoperation=signoperation;
-    this.signtype=signtype;
-    this.signalgorithm=signalgorithm;
-    this.signmode=signmode;
-    this.signaturestablelocation=signaturestablelocation;
-    this.timestampincluded=timestampincluded;
-    this.policyincluded=policyincluded;
-    this.enitipofirma=enitipofirma;
-    this.eniperfilfirma=eniperfilfirma;
-    this.enirolfirma=enirolfirma;
-    this.enisignername=enisignername;
-    this.enisigneradministrationid=enisigneradministrationid;
-    this.enisignlevel=enisignlevel;
-    this.checkadministrationidofsigner=checkadministrationidofsigner;
-    this.checkdocumentmodifications=checkdocumentmodifications;
-    this.checkvalidationsignature=checkvalidationsignature;
+  public InfoSignaturaBean(long infoSignaturaID , int signOperation , java.lang.String signType , java.lang.String signAlgorithm , java.lang.Integer signMode , java.lang.Integer signaturesTableLocation , java.lang.Boolean timestampIncluded , java.lang.Boolean policyIncluded , java.lang.String eniTipoFirma , java.lang.String eniPerfilFirma , java.lang.String eniRolFirma , java.lang.String eniSignerName , java.lang.String eniSignerAdministrationId , java.lang.String eniSignLevel , java.lang.Boolean checkAdministrationIdOfSigner , java.lang.Boolean checkDocumentModifications , java.lang.Boolean checkValidationSignature) {
+    this.infoSignaturaID=infoSignaturaID;
+    this.signOperation=signOperation;
+    this.signType=signType;
+    this.signAlgorithm=signAlgorithm;
+    this.signMode=signMode;
+    this.signaturesTableLocation=signaturesTableLocation;
+    this.timestampIncluded=timestampIncluded;
+    this.policyIncluded=policyIncluded;
+    this.eniTipoFirma=eniTipoFirma;
+    this.eniPerfilFirma=eniPerfilFirma;
+    this.eniRolFirma=eniRolFirma;
+    this.eniSignerName=eniSignerName;
+    this.eniSignerAdministrationId=eniSignerAdministrationId;
+    this.eniSignLevel=eniSignLevel;
+    this.checkAdministrationIdOfSigner=checkAdministrationIdOfSigner;
+    this.checkDocumentModifications=checkDocumentModifications;
+    this.checkValidationSignature=checkValidationSignature;
 }
   /** Constructor sense valors autoincrementals */
-  public InfoSignaturaBean(int signoperation , java.lang.String signtype , java.lang.String signalgorithm , java.lang.Integer signmode , java.lang.Integer signaturestablelocation , java.lang.Boolean timestampincluded , java.lang.Boolean policyincluded , java.lang.String enitipofirma , java.lang.String eniperfilfirma , java.lang.String enirolfirma , java.lang.String enisignername , java.lang.String enisigneradministrationid , java.lang.String enisignlevel , java.lang.Boolean checkadministrationidofsigner , java.lang.Boolean checkdocumentmodifications , java.lang.Boolean checkvalidationsignature) {
-    this.signoperation=signoperation;
-    this.signtype=signtype;
-    this.signalgorithm=signalgorithm;
-    this.signmode=signmode;
-    this.signaturestablelocation=signaturestablelocation;
-    this.timestampincluded=timestampincluded;
-    this.policyincluded=policyincluded;
-    this.enitipofirma=enitipofirma;
-    this.eniperfilfirma=eniperfilfirma;
-    this.enirolfirma=enirolfirma;
-    this.enisignername=enisignername;
-    this.enisigneradministrationid=enisigneradministrationid;
-    this.enisignlevel=enisignlevel;
-    this.checkadministrationidofsigner=checkadministrationidofsigner;
-    this.checkdocumentmodifications=checkdocumentmodifications;
-    this.checkvalidationsignature=checkvalidationsignature;
+  public InfoSignaturaBean(int signOperation , java.lang.String signType , java.lang.String signAlgorithm , java.lang.Integer signMode , java.lang.Integer signaturesTableLocation , java.lang.Boolean timestampIncluded , java.lang.Boolean policyIncluded , java.lang.String eniTipoFirma , java.lang.String eniPerfilFirma , java.lang.String eniRolFirma , java.lang.String eniSignerName , java.lang.String eniSignerAdministrationId , java.lang.String eniSignLevel , java.lang.Boolean checkAdministrationIdOfSigner , java.lang.Boolean checkDocumentModifications , java.lang.Boolean checkValidationSignature) {
+    this.signOperation=signOperation;
+    this.signType=signType;
+    this.signAlgorithm=signAlgorithm;
+    this.signMode=signMode;
+    this.signaturesTableLocation=signaturesTableLocation;
+    this.timestampIncluded=timestampIncluded;
+    this.policyIncluded=policyIncluded;
+    this.eniTipoFirma=eniTipoFirma;
+    this.eniPerfilFirma=eniPerfilFirma;
+    this.eniRolFirma=eniRolFirma;
+    this.eniSignerName=eniSignerName;
+    this.eniSignerAdministrationId=eniSignerAdministrationId;
+    this.eniSignLevel=eniSignLevel;
+    this.checkAdministrationIdOfSigner=checkAdministrationIdOfSigner;
+    this.checkDocumentModifications=checkDocumentModifications;
+    this.checkValidationSignature=checkValidationSignature;
 }
   /** Constructor dels valors Not Null */
-  public InfoSignaturaBean(long infosignaturaid , int signoperation , java.lang.String signtype) {
-    this.infosignaturaid=infosignaturaid;
-    this.signoperation=signoperation;
-    this.signtype=signtype;
+  public InfoSignaturaBean(long infoSignaturaID , int signOperation , java.lang.String signType) {
+    this.infoSignaturaID=infoSignaturaID;
+    this.signOperation=signOperation;
+    this.signType=signType;
 }
   public InfoSignaturaBean(InfoSignatura __bean) {
-    this.setInfosignaturaid(__bean.getInfosignaturaid());
-    this.setSignoperation(__bean.getSignoperation());
-    this.setSigntype(__bean.getSigntype());
-    this.setSignalgorithm(__bean.getSignalgorithm());
-    this.setSignmode(__bean.getSignmode());
-    this.setSignaturestablelocation(__bean.getSignaturestablelocation());
-    this.setTimestampincluded(__bean.getTimestampincluded());
-    this.setPolicyincluded(__bean.getPolicyincluded());
-    this.setEnitipofirma(__bean.getEnitipofirma());
-    this.setEniperfilfirma(__bean.getEniperfilfirma());
-    this.setEnirolfirma(__bean.getEnirolfirma());
-    this.setEnisignername(__bean.getEnisignername());
-    this.setEnisigneradministrationid(__bean.getEnisigneradministrationid());
-    this.setEnisignlevel(__bean.getEnisignlevel());
-    this.setCheckadministrationidofsigner(__bean.getCheckadministrationidofsigner());
-    this.setCheckdocumentmodifications(__bean.getCheckdocumentmodifications());
-    this.setCheckvalidationsignature(__bean.getCheckvalidationsignature());
+    this.setInfoSignaturaID(__bean.getInfoSignaturaID());
+    this.setSignOperation(__bean.getSignOperation());
+    this.setSignType(__bean.getSignType());
+    this.setSignAlgorithm(__bean.getSignAlgorithm());
+    this.setSignMode(__bean.getSignMode());
+    this.setSignaturesTableLocation(__bean.getSignaturesTableLocation());
+    this.setTimestampIncluded(__bean.getTimestampIncluded());
+    this.setPolicyIncluded(__bean.getPolicyIncluded());
+    this.setEniTipoFirma(__bean.getEniTipoFirma());
+    this.setEniPerfilFirma(__bean.getEniPerfilFirma());
+    this.setEniRolFirma(__bean.getEniRolFirma());
+    this.setEniSignerName(__bean.getEniSignerName());
+    this.setEniSignerAdministrationId(__bean.getEniSignerAdministrationId());
+    this.setEniSignLevel(__bean.getEniSignLevel());
+    this.setCheckAdministrationIdOfSigner(__bean.getCheckAdministrationIdOfSigner());
+    this.setCheckDocumentModifications(__bean.getCheckDocumentModifications());
+    this.setCheckValidationSignature(__bean.getCheckValidationSignature());
 	}
 
-	public long getInfosignaturaid() {
-		return(infosignaturaid);
+	public long getInfoSignaturaID() {
+		return(infoSignaturaID);
 	};
-	public void setInfosignaturaid(long _infosignaturaid_) {
-		this.infosignaturaid = _infosignaturaid_;
-	};
-
-	public int getSignoperation() {
-		return(signoperation);
-	};
-	public void setSignoperation(int _signoperation_) {
-		this.signoperation = _signoperation_;
+	public void setInfoSignaturaID(long _infoSignaturaID_) {
+		this.infoSignaturaID = _infoSignaturaID_;
 	};
 
-	public java.lang.String getSigntype() {
-		return(signtype);
+	public int getSignOperation() {
+		return(signOperation);
 	};
-	public void setSigntype(java.lang.String _signtype_) {
-		this.signtype = _signtype_;
-	};
-
-	public java.lang.String getSignalgorithm() {
-		return(signalgorithm);
-	};
-	public void setSignalgorithm(java.lang.String _signalgorithm_) {
-		this.signalgorithm = _signalgorithm_;
+	public void setSignOperation(int _signOperation_) {
+		this.signOperation = _signOperation_;
 	};
 
-	public java.lang.Integer getSignmode() {
-		return(signmode);
+	public java.lang.String getSignType() {
+		return(signType);
 	};
-	public void setSignmode(java.lang.Integer _signmode_) {
-		this.signmode = _signmode_;
-	};
-
-	public java.lang.Integer getSignaturestablelocation() {
-		return(signaturestablelocation);
-	};
-	public void setSignaturestablelocation(java.lang.Integer _signaturestablelocation_) {
-		this.signaturestablelocation = _signaturestablelocation_;
+	public void setSignType(java.lang.String _signType_) {
+		this.signType = _signType_;
 	};
 
-	public java.lang.Boolean getTimestampincluded() {
-		return(timestampincluded);
+	public java.lang.String getSignAlgorithm() {
+		return(signAlgorithm);
 	};
-	public void setTimestampincluded(java.lang.Boolean _timestampincluded_) {
-		this.timestampincluded = _timestampincluded_;
-	};
-
-	public java.lang.Boolean getPolicyincluded() {
-		return(policyincluded);
-	};
-	public void setPolicyincluded(java.lang.Boolean _policyincluded_) {
-		this.policyincluded = _policyincluded_;
+	public void setSignAlgorithm(java.lang.String _signAlgorithm_) {
+		this.signAlgorithm = _signAlgorithm_;
 	};
 
-	public java.lang.String getEnitipofirma() {
-		return(enitipofirma);
+	public java.lang.Integer getSignMode() {
+		return(signMode);
 	};
-	public void setEnitipofirma(java.lang.String _enitipofirma_) {
-		this.enitipofirma = _enitipofirma_;
-	};
-
-	public java.lang.String getEniperfilfirma() {
-		return(eniperfilfirma);
-	};
-	public void setEniperfilfirma(java.lang.String _eniperfilfirma_) {
-		this.eniperfilfirma = _eniperfilfirma_;
+	public void setSignMode(java.lang.Integer _signMode_) {
+		this.signMode = _signMode_;
 	};
 
-	public java.lang.String getEnirolfirma() {
-		return(enirolfirma);
+	public java.lang.Integer getSignaturesTableLocation() {
+		return(signaturesTableLocation);
 	};
-	public void setEnirolfirma(java.lang.String _enirolfirma_) {
-		this.enirolfirma = _enirolfirma_;
-	};
-
-	public java.lang.String getEnisignername() {
-		return(enisignername);
-	};
-	public void setEnisignername(java.lang.String _enisignername_) {
-		this.enisignername = _enisignername_;
+	public void setSignaturesTableLocation(java.lang.Integer _signaturesTableLocation_) {
+		this.signaturesTableLocation = _signaturesTableLocation_;
 	};
 
-	public java.lang.String getEnisigneradministrationid() {
-		return(enisigneradministrationid);
+	public java.lang.Boolean getTimestampIncluded() {
+		return(timestampIncluded);
 	};
-	public void setEnisigneradministrationid(java.lang.String _enisigneradministrationid_) {
-		this.enisigneradministrationid = _enisigneradministrationid_;
-	};
-
-	public java.lang.String getEnisignlevel() {
-		return(enisignlevel);
-	};
-	public void setEnisignlevel(java.lang.String _enisignlevel_) {
-		this.enisignlevel = _enisignlevel_;
+	public void setTimestampIncluded(java.lang.Boolean _timestampIncluded_) {
+		this.timestampIncluded = _timestampIncluded_;
 	};
 
-	public java.lang.Boolean getCheckadministrationidofsigner() {
-		return(checkadministrationidofsigner);
+	public java.lang.Boolean getPolicyIncluded() {
+		return(policyIncluded);
 	};
-	public void setCheckadministrationidofsigner(java.lang.Boolean _checkadministrationidofsigner_) {
-		this.checkadministrationidofsigner = _checkadministrationidofsigner_;
-	};
-
-	public java.lang.Boolean getCheckdocumentmodifications() {
-		return(checkdocumentmodifications);
-	};
-	public void setCheckdocumentmodifications(java.lang.Boolean _checkdocumentmodifications_) {
-		this.checkdocumentmodifications = _checkdocumentmodifications_;
+	public void setPolicyIncluded(java.lang.Boolean _policyIncluded_) {
+		this.policyIncluded = _policyIncluded_;
 	};
 
-	public java.lang.Boolean getCheckvalidationsignature() {
-		return(checkvalidationsignature);
+	public java.lang.String getEniTipoFirma() {
+		return(eniTipoFirma);
 	};
-	public void setCheckvalidationsignature(java.lang.Boolean _checkvalidationsignature_) {
-		this.checkvalidationsignature = _checkvalidationsignature_;
+	public void setEniTipoFirma(java.lang.String _eniTipoFirma_) {
+		this.eniTipoFirma = _eniTipoFirma_;
+	};
+
+	public java.lang.String getEniPerfilFirma() {
+		return(eniPerfilFirma);
+	};
+	public void setEniPerfilFirma(java.lang.String _eniPerfilFirma_) {
+		this.eniPerfilFirma = _eniPerfilFirma_;
+	};
+
+	public java.lang.String getEniRolFirma() {
+		return(eniRolFirma);
+	};
+	public void setEniRolFirma(java.lang.String _eniRolFirma_) {
+		this.eniRolFirma = _eniRolFirma_;
+	};
+
+	public java.lang.String getEniSignerName() {
+		return(eniSignerName);
+	};
+	public void setEniSignerName(java.lang.String _eniSignerName_) {
+		this.eniSignerName = _eniSignerName_;
+	};
+
+	public java.lang.String getEniSignerAdministrationId() {
+		return(eniSignerAdministrationId);
+	};
+	public void setEniSignerAdministrationId(java.lang.String _eniSignerAdministrationId_) {
+		this.eniSignerAdministrationId = _eniSignerAdministrationId_;
+	};
+
+	public java.lang.String getEniSignLevel() {
+		return(eniSignLevel);
+	};
+	public void setEniSignLevel(java.lang.String _eniSignLevel_) {
+		this.eniSignLevel = _eniSignLevel_;
+	};
+
+	public java.lang.Boolean getCheckAdministrationIdOfSigner() {
+		return(checkAdministrationIdOfSigner);
+	};
+	public void setCheckAdministrationIdOfSigner(java.lang.Boolean _checkAdministrationIdOfSigner_) {
+		this.checkAdministrationIdOfSigner = _checkAdministrationIdOfSigner_;
+	};
+
+	public java.lang.Boolean getCheckDocumentModifications() {
+		return(checkDocumentModifications);
+	};
+	public void setCheckDocumentModifications(java.lang.Boolean _checkDocumentModifications_) {
+		this.checkDocumentModifications = _checkDocumentModifications_;
+	};
+
+	public java.lang.Boolean getCheckValidationSignature() {
+		return(checkValidationSignature);
+	};
+	public void setCheckValidationSignature(java.lang.Boolean _checkValidationSignature_) {
+		this.checkValidationSignature = _checkValidationSignature_;
 	};
 
 
@@ -224,23 +224,23 @@ private static final long serialVersionUID = 986528854L;
   public static InfoSignaturaBean toBean(InfoSignatura __bean) {
     if (__bean == null) { return null;}
     InfoSignaturaBean __tmp = new InfoSignaturaBean();
-    __tmp.setInfosignaturaid(__bean.getInfosignaturaid());
-    __tmp.setSignoperation(__bean.getSignoperation());
-    __tmp.setSigntype(__bean.getSigntype());
-    __tmp.setSignalgorithm(__bean.getSignalgorithm());
-    __tmp.setSignmode(__bean.getSignmode());
-    __tmp.setSignaturestablelocation(__bean.getSignaturestablelocation());
-    __tmp.setTimestampincluded(__bean.getTimestampincluded());
-    __tmp.setPolicyincluded(__bean.getPolicyincluded());
-    __tmp.setEnitipofirma(__bean.getEnitipofirma());
-    __tmp.setEniperfilfirma(__bean.getEniperfilfirma());
-    __tmp.setEnirolfirma(__bean.getEnirolfirma());
-    __tmp.setEnisignername(__bean.getEnisignername());
-    __tmp.setEnisigneradministrationid(__bean.getEnisigneradministrationid());
-    __tmp.setEnisignlevel(__bean.getEnisignlevel());
-    __tmp.setCheckadministrationidofsigner(__bean.getCheckadministrationidofsigner());
-    __tmp.setCheckdocumentmodifications(__bean.getCheckdocumentmodifications());
-    __tmp.setCheckvalidationsignature(__bean.getCheckvalidationsignature());
+    __tmp.setInfoSignaturaID(__bean.getInfoSignaturaID());
+    __tmp.setSignOperation(__bean.getSignOperation());
+    __tmp.setSignType(__bean.getSignType());
+    __tmp.setSignAlgorithm(__bean.getSignAlgorithm());
+    __tmp.setSignMode(__bean.getSignMode());
+    __tmp.setSignaturesTableLocation(__bean.getSignaturesTableLocation());
+    __tmp.setTimestampIncluded(__bean.getTimestampIncluded());
+    __tmp.setPolicyIncluded(__bean.getPolicyIncluded());
+    __tmp.setEniTipoFirma(__bean.getEniTipoFirma());
+    __tmp.setEniPerfilFirma(__bean.getEniPerfilFirma());
+    __tmp.setEniRolFirma(__bean.getEniRolFirma());
+    __tmp.setEniSignerName(__bean.getEniSignerName());
+    __tmp.setEniSignerAdministrationId(__bean.getEniSignerAdministrationId());
+    __tmp.setEniSignLevel(__bean.getEniSignLevel());
+    __tmp.setCheckAdministrationIdOfSigner(__bean.getCheckAdministrationIdOfSigner());
+    __tmp.setCheckDocumentModifications(__bean.getCheckDocumentModifications());
+    __tmp.setCheckValidationSignature(__bean.getCheckValidationSignature());
 		return __tmp;
 	}
 

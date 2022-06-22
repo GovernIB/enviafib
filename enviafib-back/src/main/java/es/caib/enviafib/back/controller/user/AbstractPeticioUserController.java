@@ -47,8 +47,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
-            ModelAndView mav, Where where) throws I18NException {
+    public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request, ModelAndView mav, Where where)
+            throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         for (int i = 0; i < Constants.ESTATS_PETICIO.length; i++) {
             __tmp.add(new StringKeyValue(String.valueOf(Constants.ESTATS_PETICIO[i]),
@@ -58,24 +58,23 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForIdiomadoc(HttpServletRequest request,
-            ModelAndView mav, Where where) throws I18NException {
+    public List<StringKeyValue> getReferenceListForIdiomaDoc(HttpServletRequest request, ModelAndView mav, Where where)
+            throws I18NException {
 
-        return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, Where.AND(where,
-                Where.OR(IdiomaFields.IDIOMAID.equal("es"), IdiomaFields.IDIOMAID.equal("ca"))));
+        return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID,
+                Where.AND(where, Where.OR(IdiomaFields.IDIOMAID.equal("es"), IdiomaFields.IDIOMAID.equal("ca"))));
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForTipusdocumental(HttpServletRequest request,
-            ModelAndView mav, Where where) throws I18NException {
+    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
+            Where where) throws I18NException {
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
         List<StringKeyValue> tmpList = null;
         tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
-        
-        
+
         // TODO: Traduir "Qualsevol valor" ->
         // tmpList.add(new StringKeyValue("","Qualsevol valor"));
 
@@ -83,13 +82,13 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
-            ModelAndView mav, Where where) throws I18NException {
+    public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request, ModelAndView mav, Where where)
+            throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
 
         for (int i = 0; i < TIPUS_PETICIONS.length; i++) {
             __tmp.add(new StringKeyValue(String.valueOf(TIPUS_PETICIONS[i]),
-                   I18NUtils.tradueix("tipuspeticio." + TIPUS_PETICIONS[i])));
+                    I18NUtils.tradueix("tipuspeticio." + TIPUS_PETICIONS[i])));
         }
 
         return __tmp;

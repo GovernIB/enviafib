@@ -75,11 +75,11 @@ public class SerieDocumentalValidator<I extends SerieDocumental>
       // ====== Check Unique MULTIPLES - EDIT  =======
 
       // Check Unique - no PK
-      if (__vr.getFieldErrorCount(TIPUSDOCUMENTAL) == 0 && __vr.getFieldErrorCount(SERIEDOCUID) == 0) {
+      if (__vr.getFieldErrorCount(TIPUSDOCUMENTAL) == 0 && __vr.getFieldErrorCount(SERIEDOCUMENTALID) == 0) {
         java.lang.String __tipusdocumental = __target__.getTipusDocumental();
-        java.lang.Long __seriedocuid = __target__.getSerieDocuID();
+        java.lang.Long __seriedocumentalid = __target__.getSerieDocumentalID();
         Long __count_ = null;
-        try { __count_ = __serieDocumentalManager.count(org.fundaciobit.genapp.common.query.Where.AND(TIPUSDOCUMENTAL.equal(__tipusdocumental), SERIEDOCUID.notEqual(__seriedocuid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        try { __count_ = __serieDocumentalManager.count(org.fundaciobit.genapp.common.query.Where.AND(TIPUSDOCUMENTAL.equal(__tipusdocumental), SERIEDOCUMENTALID.notEqual(__seriedocumentalid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
         if (__count_ == null || __count_ != 0) {        
             __vr.rejectValue(TIPUSDOCUMENTAL, "genapp.validation.unique",
                 new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipusdocumental)),

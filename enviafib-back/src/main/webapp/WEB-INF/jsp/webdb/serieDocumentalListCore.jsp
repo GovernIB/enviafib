@@ -24,7 +24,7 @@
 
       <c:forEach var="serieDocumental" items="${serieDocumentalItems}">
 
-        <tr id="serieDocumental_rowid_${serieDocumental.serieDocuID}">
+        <tr id="serieDocumental_rowid_${serieDocumental.serieDocumentalID}">
           <%@include file="serieDocumentalListCoreMultipleSelect.jsp" %>
 
           <%@include file="serieDocumentalListCoreContent.jsp" %>

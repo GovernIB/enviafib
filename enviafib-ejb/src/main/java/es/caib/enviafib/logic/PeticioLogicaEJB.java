@@ -85,7 +85,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
-        String nifDestinatari = peticio.getDestinatarinif();
+
+        String nifDestinatari = peticio.getDestinatariNif();
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertNifToSignatureBlocks(
                 nifDestinatari);
@@ -106,20 +107,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         arrancarPeticioInterna(peticio, languageUI, signatureBlocks);
 
-        peticio.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
-
-        this.update(peticio);
 
     }
 
     public void arrancarPeticioInterna(Peticio peticio, String languageUI,
             FirmaAsyncSimpleSignatureBlock[] signatureBlocks) throws I18NException {
 
+
         String perfil = "ENVIAFIB_PADES";
         FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
 
-        String idiomaDoc = peticio.getIdiomadoc();
-        String tipusDoc = peticio.getTipusdocumental();
+        String idiomaDoc = peticio.getIdiomaDoc();
+        String tipusDoc = peticio.getTipusDocumental();
 
         FirmaAsyncSimpleFile fitxerAAnexar = null;
         ApiFirmaAsyncSimple api = null;
@@ -134,6 +133,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     "Error creant peticio de firma dins PortaFIB: " + e.getMessage());
         }
         peticio.setPeticioPortafirmes(String.valueOf(idPortafib));
+        
+        peticio.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
         this.update(peticio);
     }
 
@@ -161,7 +162,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         long infoSignaturaID = guardarInfo(firma);
         log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
-        peticio.setInfosignaturaid(infoSignaturaID);
+        peticio.setInfoSignaturaID(infoSignaturaID);
 
         peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
@@ -251,8 +252,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 checkValidationSignature);
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
-        long infoAsignaturaID = is.getInfosignaturaid();
-        return infoAsignaturaID;
+
+        long infoAsignaturaID = is.getInfoSignaturaID();
+        return infoAsignaturaID; 
+
     }
 
     @Override
@@ -285,7 +288,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
-        Long infoSignID = instance.getInfosignaturaid();
+        Long infoSignID = instance.getInfoSignaturaID();
 
         super.delete(instance);
 
@@ -602,7 +605,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             URL hostUrl = new URL(host);
             api = new ApiFirmaAsyncSimpleJersey(host, username, password);
-
         } catch (MalformedURLException urle) {
             String errorMsg = "Error a la URL de conexió amb PortaFIB. Revisar la URL de la propietat "
                     + Constants.ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url"
@@ -662,7 +664,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             guardaFitxerFirmatAutofirma(pet, fsf);
 
             long infoSignaturaID = guardaInformacioSignaturaAutofirma(fssr.getSignedFileInfo());
-            pet.setInfosignaturaid(infoSignaturaID);
+            pet.setInfoSignaturaID(infoSignaturaID);
 
             pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
             pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
@@ -722,7 +724,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
 
-        long infoSignaturaID = is.getInfosignaturaid();
+        long infoSignaturaID = is.getInfoSignaturaID();
         log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
 
         return infoSignaturaID;

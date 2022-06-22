@@ -84,13 +84,13 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.DATACREACIO)}">
 <%-- FILTRE DATE-TIME --%>
             <div class="input-group" style="padding-right:4px;padding-bottom:4px;align-items:center;">
-              <span class="add-on"><fmt:message key="peticio.datacreacio" />:</span>
+              <span class="add-on"><fmt:message key="peticio.dataCreacio" />:</span>
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
             <div class="form-group">
-                <div class="input-group date" id="datacreacioDesde" data-target-input="nearest">
-                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#datacreacioDesde" path="datacreacioDesde" />
+                <div class="input-group date" id="dataCreacioDesde" data-target-input="nearest">
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataCreacioDesde" path="dataCreacioDesde" />
                     <c:if test="${!false}" >
-                    <div class="input-group-append"  data-target="#datacreacioDesde"  data-toggle="datetimepicker">
+                    <div class="input-group-append"  data-target="#dataCreacioDesde"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
                     </c:if>
@@ -98,7 +98,7 @@
             </div>
         <script type="text/javascript">
             $(function () {
-                $('#datacreacioDesde').datetimepicker({
+                $('#dataCreacioDesde').datetimepicker({
                     format: '${gen:getJSDateTimePattern()}',
                     locale: '${lang}',
                     icons: {
@@ -108,10 +108,10 @@
             });
         </script>              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
             <div class="form-group">
-                <div class="input-group date" id="datacreacioFins" data-target-input="nearest">
-                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#datacreacioFins" path="datacreacioFins" />
+                <div class="input-group date" id="dataCreacioFins" data-target-input="nearest">
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataCreacioFins" path="dataCreacioFins" />
                     <c:if test="${!false}" >
-                    <div class="input-group-append"  data-target="#datacreacioFins"  data-toggle="datetimepicker">
+                    <div class="input-group-append"  data-target="#dataCreacioFins"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
                     </c:if>
@@ -119,7 +119,7 @@
             </div>
         <script type="text/javascript">
             $(function () {
-                $('#datacreacioFins').datetimepicker({
+                $('#dataCreacioFins').datetimepicker({
                     format: '${gen:getJSDateTimePattern()}',
                     locale: '${lang}',
                     icons: {
@@ -215,12 +215,12 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.DESTINATARINIF)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
-              <fmt:message key="peticio.destinatarinif" var="destinatarinif" />
-              <fmt:message key="genapp.form.searchby" var="cercaperdestinatarinif" >                
-                 <fmt:param value="${destinatarinif}"/>
+              <fmt:message key="peticio.destinatariNif" var="destinatariNif" />
+              <fmt:message key="genapp.form.searchby" var="cercaperdestinatariNif" >                
+                 <fmt:param value="${destinatariNif}"/>
               </fmt:message>
-              <span class="add-on"><c:out value="${destinatarinif}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperdestinatarinif}" path="destinatarinif" />
+              <span class="add-on"><c:out value="${destinatariNif}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperdestinatariNif}" path="destinatariNif" />
             </div>
 
 
@@ -246,12 +246,12 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.TIPUSDOCUMENTAL)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
-              <fmt:message key="peticio.tipusdocumental" var="tipusdocumental" />
-              <fmt:message key="genapp.form.searchby" var="cercapertipusdocumental" >                
-                 <fmt:param value="${tipusdocumental}"/>
+              <fmt:message key="peticio.tipusDocumental" var="tipusDocumental" />
+              <fmt:message key="genapp.form.searchby" var="cercapertipusDocumental" >                
+                 <fmt:param value="${tipusDocumental}"/>
               </fmt:message>
-              <span class="add-on"><c:out value="${tipusdocumental}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapertipusdocumental}" path="tipusdocumental" />
+              <span class="add-on"><c:out value="${tipusDocumental}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapertipusDocumental}" path="tipusDocumental" />
             </div>
 
 
@@ -259,12 +259,12 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.IDIOMADOC)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
-              <fmt:message key="peticio.idiomadoc" var="idiomadoc" />
-              <fmt:message key="genapp.form.searchby" var="cercaperidiomadoc" >                
-                 <fmt:param value="${idiomadoc}"/>
+              <fmt:message key="peticio.idiomaDoc" var="idiomaDoc" />
+              <fmt:message key="genapp.form.searchby" var="cercaperidiomaDoc" >                
+                 <fmt:param value="${idiomaDoc}"/>
               </fmt:message>
-              <span class="add-on"><c:out value="${idiomadoc}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperidiomadoc}" path="idiomadoc" />
+              <span class="add-on"><c:out value="${idiomaDoc}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperidiomaDoc}" path="idiomaDoc" />
             </div>
 
 
@@ -272,16 +272,16 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.INFOSIGNATURAID)}">
             <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="peticio.infosignaturaid" />:</span>
+              <span class="add-on"><fmt:message key="peticio.infoSignaturaID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
-              <form:input cssClass="input-append input-small" path="infosignaturaidDesde" />
+              <form:input cssClass="input-append input-small" path="infoSignaturaIDDesde" />
 
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
 
-              <form:input cssClass="input-append input-small search-query" path="infosignaturaidFins" />
+              <form:input cssClass="input-append input-small search-query" path="infoSignaturaIDFins" />
 
             </div>
 

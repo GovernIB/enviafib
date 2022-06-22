@@ -109,7 +109,7 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForSignoperation(HttpServletRequest request, ModelAndView mav,
+    public List<StringKeyValue> getReferenceListForSignOperation(HttpServletRequest request, ModelAndView mav,
             Where where) throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         __tmp.add(new StringKeyValue("0", I18NUtils.tradueix("signoperation.0")));
@@ -119,7 +119,7 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForSignmode(HttpServletRequest request, ModelAndView mav, Where where)
+    public List<StringKeyValue> getReferenceListForSignMode(HttpServletRequest request, ModelAndView mav, Where where)
             throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         __tmp.add(new StringKeyValue("0", I18NUtils.tradueix("signomode.0")));
@@ -128,7 +128,7 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForSignaturestablelocation(HttpServletRequest request, ModelAndView mav,
+    public List<StringKeyValue> getReferenceListForSignaturesTableLocation(HttpServletRequest request, ModelAndView mav,
             Where where) throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         __tmp.add(new StringKeyValue("0", I18NUtils.tradueix("signaturestablelocation.0")));
@@ -136,10 +136,10 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
         __tmp.add(new StringKeyValue("-1", I18NUtils.tradueix("signaturestablelocation.-1")));
         return __tmp;
     }
-    
+
     @Override
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long infosignaturaid) {
-        return  AbstractFirmaUserController.getRedirectToList();
-      }
+        return AbstractFirmaUserController.getRedirectToList();
+    }
 
 }

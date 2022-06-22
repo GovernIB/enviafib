@@ -56,6 +56,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public static final String codi_enmarxa = "peticio.btn.posarenmarxa";
     public static final String codi_delete = "peticio.btn.delete";
     public static final String codi_edit = "peticio.btn.edit";
+    public static final String codi_view = "peticio.btn.view";
     public static final String codi_download = "peticio.btn.download";
     public static final String codi_email = "peticio.btn.sendmail";
 
@@ -115,15 +116,15 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(TIPUSDOCUMENTAL);
             peticioFilterForm.addHiddenField(IDIOMAID);
             peticioFilterForm.addHiddenField(ERROREXCEPTION);
-            
+
             peticioFilterForm.addHiddenField(ERRORMSG);
             peticioFilterForm.addHiddenField(INFOSIGNATURAID);
             peticioFilterForm.addHiddenField(DESTINATARINIF);
             peticioFilterForm.addHiddenField(FITXERID);
-            
+
             peticioFilterForm.setOrderBy(DATACREACIO.javaName);
             peticioFilterForm.setOrderAsc(false);
-            
+
             peticioFilterForm.setAttachedAdditionalJspCode(true);
 
             peticioFilterForm.setAddButtonVisible(false);
@@ -137,10 +138,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
 
-        
-        
-        log.info("ORDRE PER DEFECTE: " + filterForm.getOrderBy());
-        
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
         filterForm.getAdditionalButtonsByPK().clear();
@@ -153,24 +150,21 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", codi_edit,
                             getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-warning"));
-
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play", codi_enmarxa,
+                            getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
-
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play", codi_enmarxa,
-                            getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
-
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
+                            getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-light"));
                 break;
                 case Constants.ESTAT_PETICIO_FIRMADA: {
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
-                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-                                    "btn-danger"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
+                            getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-light"));
 
                     Fitxer file = peticio.getFitxerFirmat();
 
@@ -180,16 +174,21 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
                             codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
 
-                    if (peticio.getInfosignaturaid() != null) {
-                        filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file",
-//                                "info.signatura", getContextWeb() + "/veureInfoSignatura/" + peticioID, "btn-info"));
-                                "info.signatura", "/user/infoSignatura/view/" + peticio.getInfosignaturaid(), "btn-info"));
+                    if (peticio.getInfoSignaturaID() != null) {
+                        filterForm.addAdditionalButtonByPK(peticioID,
+                                new AdditionalButton("fas fa-file", "info.signatura",
+                                        "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(), "btn-info"));
                     }
-
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
+                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
+                                    "btn-danger"));
                 }
                 break;
 
                 case Constants.ESTAT_PETICIO_REBUTJADA:
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
+                            getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-light"));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
@@ -303,7 +302,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
         Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
-        Long infoSignaturaID = peticio.getInfosignaturaid();
+        Long infoSignaturaID = peticio.getInfoSignaturaID();
 
         if (infoSignaturaID == null) {
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");

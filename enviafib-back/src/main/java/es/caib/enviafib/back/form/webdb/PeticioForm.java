@@ -31,9 +31,9 @@ public class PeticioForm extends EnviaFIBBaseForm {
     this.listOfUsuariForSolicitantID = __toClone.listOfUsuariForSolicitantID;
     this.listOfIdiomaForIdiomaID = __toClone.listOfIdiomaForIdiomaID;
     this.listOfValuesForEstat = __toClone.listOfValuesForEstat;
-    this.listOfValuesForTipusdocumental = __toClone.listOfValuesForTipusdocumental;
-    this.listOfValuesForIdiomadoc = __toClone.listOfValuesForIdiomadoc;
-    this.listOfInfoSignaturaForInfosignaturaid = __toClone.listOfInfoSignaturaForInfosignaturaid;
+    this.listOfValuesForTipusDocumental = __toClone.listOfValuesForTipusDocumental;
+    this.listOfValuesForIdiomaDoc = __toClone.listOfValuesForIdiomaDoc;
+    this.listOfInfoSignaturaForInfoSignaturaID = __toClone.listOfInfoSignaturaForInfoSignaturaID;
     this.listOfValuesForTipus = __toClone.listOfValuesForTipus;
   }
   
@@ -114,38 +114,38 @@ public class PeticioForm extends EnviaFIBBaseForm {
 
 
 
-  private List<StringKeyValue> listOfValuesForTipusdocumental;
+  private List<StringKeyValue> listOfValuesForTipusDocumental;
 
-  public List<StringKeyValue> getListOfValuesForTipusdocumental() {
-    return this.listOfValuesForTipusdocumental;
+  public List<StringKeyValue> getListOfValuesForTipusDocumental() {
+    return this.listOfValuesForTipusDocumental;
   }
 
-  public void setListOfValuesForTipusdocumental(List<StringKeyValue> listOfValuesForTipusdocumental) {
-    this.listOfValuesForTipusdocumental = listOfValuesForTipusdocumental;
-  }
-
-
-
-  private List<StringKeyValue> listOfValuesForIdiomadoc;
-
-  public List<StringKeyValue> getListOfValuesForIdiomadoc() {
-    return this.listOfValuesForIdiomadoc;
-  }
-
-  public void setListOfValuesForIdiomadoc(List<StringKeyValue> listOfValuesForIdiomadoc) {
-    this.listOfValuesForIdiomadoc = listOfValuesForIdiomadoc;
+  public void setListOfValuesForTipusDocumental(List<StringKeyValue> listOfValuesForTipusDocumental) {
+    this.listOfValuesForTipusDocumental = listOfValuesForTipusDocumental;
   }
 
 
 
-  private List<StringKeyValue> listOfInfoSignaturaForInfosignaturaid;
+  private List<StringKeyValue> listOfValuesForIdiomaDoc;
 
-  public List<StringKeyValue> getListOfInfoSignaturaForInfosignaturaid() {
-    return this.listOfInfoSignaturaForInfosignaturaid;
+  public List<StringKeyValue> getListOfValuesForIdiomaDoc() {
+    return this.listOfValuesForIdiomaDoc;
   }
 
-  public void setListOfInfoSignaturaForInfosignaturaid(List<StringKeyValue> listOfInfoSignaturaForInfosignaturaid) {
-    this.listOfInfoSignaturaForInfosignaturaid = listOfInfoSignaturaForInfosignaturaid;
+  public void setListOfValuesForIdiomaDoc(List<StringKeyValue> listOfValuesForIdiomaDoc) {
+    this.listOfValuesForIdiomaDoc = listOfValuesForIdiomaDoc;
+  }
+
+
+
+  private List<StringKeyValue> listOfInfoSignaturaForInfoSignaturaID;
+
+  public List<StringKeyValue> getListOfInfoSignaturaForInfoSignaturaID() {
+    return this.listOfInfoSignaturaForInfoSignaturaID;
+  }
+
+  public void setListOfInfoSignaturaForInfoSignaturaID(List<StringKeyValue> listOfInfoSignaturaForInfoSignaturaID) {
+    this.listOfInfoSignaturaForInfoSignaturaID = listOfInfoSignaturaForInfoSignaturaID;
   }
 
 
