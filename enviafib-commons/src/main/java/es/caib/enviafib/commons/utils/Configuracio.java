@@ -89,9 +89,7 @@ public class Configuracio implements Constants {
     }
 
     public static String getProperty(String key, String def) {
-
         return getFilesProperties().getProperty(key, def);
-
     }
 
     public static boolean isDesenvolupament() {
@@ -195,7 +193,7 @@ public class Configuracio implements Constants {
     public static String getPortafibProfile() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.profile.pades");
     }
-               
+
     public static String getPortaFIBApiFirmaWebUrl() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.url");
     }

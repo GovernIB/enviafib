@@ -27,8 +27,6 @@ public interface PeticioLogicaService extends PeticioService {
 
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException;
 
-    public void esborrarPeticioPortafib(long peticioPortafibId, String languageUI);
-
     public void updatePublic(Peticio peticio) throws I18NException;
 
     public PeticioJPA findByPrimaryKeyPublic(Long _ID_);
@@ -37,6 +35,8 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException;
 
-    public void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException;
+    public void cosesAFerPeticioFirmada(long portafibID, String languageUI) throws I18NException;
+
+    public void cosesAFerPeticioRebutjada(long portafibID, String languageUI) throws I18NException;
 
 }

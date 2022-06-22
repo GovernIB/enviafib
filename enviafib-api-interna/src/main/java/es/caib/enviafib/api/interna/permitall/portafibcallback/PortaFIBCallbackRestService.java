@@ -136,30 +136,16 @@ public class PortaFIBCallbackRestService {
                     String languageUI = "ca";
                     Long portafibID = event.getSigningRequest().getID();
 
-                    peticioLogicaEjb.guardarFitxerInfoFirma(portafibID, languageUI);
-                    peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);
+                    peticioLogicaEjb.cosesAFerPeticioFirmada(portafibID, languageUI);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA: {
                     log.info("NOTIFICACIOAVIS_PETICIO_REBUTJADA = " + eventID);
 
+                    String languageUI = "ca";
                     Long portafibID = event.getSigningRequest().getID();
-                    Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
-                            PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
-                    if (peticioID != null) {
-                        String languageUI = "ca";
-
-                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-                        peticioTemp.setDataFinal(new Timestamp(System.currentTimeMillis()));
-                        peticioTemp.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
-                        peticioLogicaEjb.updatePublic(peticioTemp);
-
-                        peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);
-                    } else {
-                        log.error("S'ha rebut un event de REBUIG amb idportafib=" + portafibID
-                                + ", pero peticioID es null");
-                    }
+                    peticioLogicaEjb.cosesAFerPeticioRebutjada(portafibID, languageUI);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_PAUSADA: {
