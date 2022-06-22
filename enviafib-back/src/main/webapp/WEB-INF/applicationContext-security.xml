@@ -9,6 +9,10 @@
 				http://www.springframework.org/schema/security/spring-security.xsd">
 
  	<sec:http create-session="never" use-expressions="true" auto-config="false" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
+    
+        <sec:headers>
+            <sec:frame-options policy="SAMEORIGIN"/>
+        </sec:headers>
         
         <sec:csrf disabled="true"/>
         

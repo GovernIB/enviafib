@@ -85,6 +85,27 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/firmasimpleweb_iframe.jsp" />
     </definition>
   
+    <definition name="detallsinfosignatura" extends="user">
+        <put-attribute name="titol" value="infosignatura.infosignatura" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/detallsinfosignatura.jsp" />
+    </definition>
+
+    <definition name="infoSignaturaFormUser" extends="user">
+        <put-attribute name="titol" value="infoSignatura.infoSignatura" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaForm.jsp" />
+    </definition>
+    
+    <definition name="infoSignaturaListUser" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
+    </definition>
+    
+    <definition name="flowview" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/urlflow_iframe.jsp" />
+    </definition>
+    
+        <definition name="finaliframe" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/final_iframe.jsp" />
+    </definition>
 
     <!--  ===========  ADMIN  ================== -->
         

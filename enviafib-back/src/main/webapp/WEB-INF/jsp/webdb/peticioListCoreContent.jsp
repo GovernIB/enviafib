@@ -37,6 +37,9 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATACREACIO)}">
           <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.datacreacio}" /></td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATAFINAL)}">
+          <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.dataFinal}" /></td>
+        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.FITXERID)}">
           <td>
             <c:if test="${not empty peticio.fitxer}">
@@ -121,9 +124,6 @@
           <td>
           ${peticio.errorException}
           </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATAFINAL)}">
-          <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.dataFinal}" /></td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOPORTAFIRMES)}">
           <td>

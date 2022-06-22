@@ -3,6 +3,7 @@ package es.caib.enviafib.back.form.webdb;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -217,6 +218,9 @@ public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements I
     this.enisignername = __toClone.enisignername;
     this.enisigneradministrationid = __toClone.enisigneradministrationid;
     this.enisignlevel = __toClone.enisignlevel;
+    this.mapOfValuesForSignoperation = __toClone.mapOfValuesForSignoperation;
+    this.mapOfValuesForSignmode = __toClone.mapOfValuesForSignmode;
+    this.mapOfValuesForSignaturestablelocation = __toClone.mapOfValuesForSignaturestablelocation;
   }
   
   /* ========= UTILS ========== */
@@ -251,6 +255,42 @@ public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements I
    // -----------------------
    // Maps de referencies.
    // -----------------------
+  private Map<String, String> mapOfValuesForSignoperation;
+
+  public Map<String, String> getMapOfValuesForSignoperation() {
+    return this.mapOfValuesForSignoperation;
+  }
+
+  public void setMapOfValuesForSignoperation(Map<String, String> mapOfValuesForSignoperation) {
+    this.mapOfValuesForSignoperation = mapOfValuesForSignoperation;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForSignmode;
+
+  public Map<String, String> getMapOfValuesForSignmode() {
+    return this.mapOfValuesForSignmode;
+  }
+
+  public void setMapOfValuesForSignmode(Map<String, String> mapOfValuesForSignmode) {
+    this.mapOfValuesForSignmode = mapOfValuesForSignmode;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForSignaturestablelocation;
+
+  public Map<String, String> getMapOfValuesForSignaturestablelocation() {
+    return this.mapOfValuesForSignaturestablelocation;
+  }
+
+  public void setMapOfValuesForSignaturestablelocation(Map<String, String> mapOfValuesForSignaturestablelocation) {
+    this.mapOfValuesForSignaturestablelocation = mapOfValuesForSignaturestablelocation;
+  }
+
+
+
 
    // --------------------------------
    // Camps traduibles de referencies.

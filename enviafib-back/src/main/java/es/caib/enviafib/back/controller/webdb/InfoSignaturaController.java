@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.controller.webdb;
 
+import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.utils.Utils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.GroupByItem;
@@ -173,6 +175,39 @@ public class InfoSignaturaController
       groupByItemsMap.put(groupByItem.getField(),groupByItem);
     }
 
+    Map<String, String> _tmp;
+    List<StringKeyValue> _listSKV;
+
+    // Field signoperation
+    {
+      _listSKV = getReferenceListForSignoperation(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForSignoperation(_tmp);
+      if (filterForm.getGroupByFields().contains(SIGNOPERATION)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, SIGNOPERATION, false);
+      };
+    }
+
+    // Field signmode
+    {
+      _listSKV = getReferenceListForSignmode(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForSignmode(_tmp);
+      if (filterForm.getGroupByFields().contains(SIGNMODE)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, SIGNMODE, false);
+      };
+    }
+
+    // Field signaturestablelocation
+    {
+      _listSKV = getReferenceListForSignaturestablelocation(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForSignaturestablelocation(_tmp);
+      if (filterForm.getGroupByFields().contains(SIGNATURESTABLELOCATION)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, SIGNATURESTABLELOCATION, false);
+      };
+    }
+
 
       fillValuesToGroupByItemsBoolean("genapp.checkbox", groupByItemsMap, TIMESTAMPINCLUDED);
 
@@ -203,6 +238,9 @@ public class InfoSignaturaController
 
     java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
     __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
+    __mapping.put(SIGNOPERATION, filterForm.getMapOfValuesForSignoperation());
+    __mapping.put(SIGNMODE, filterForm.getMapOfValuesForSignmode());
+    __mapping.put(SIGNATURESTABLELOCATION, filterForm.getMapOfValuesForSignaturestablelocation());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -250,6 +288,33 @@ public class InfoSignaturaController
 
   public void fillReferencesForForm(InfoSignaturaForm infoSignaturaForm,
     HttpServletRequest request, ModelAndView mav) throws I18NException {
+    // Comprovam si ja esta definida la llista
+    if (infoSignaturaForm.getListOfValuesForSignoperation() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForSignoperation(request, mav, infoSignaturaForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      infoSignaturaForm.setListOfValuesForSignoperation(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (infoSignaturaForm.getListOfValuesForSignmode() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForSignmode(request, mav, infoSignaturaForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      infoSignaturaForm.setListOfValuesForSignmode(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (infoSignaturaForm.getListOfValuesForSignaturestablelocation() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForSignaturestablelocation(request, mav, infoSignaturaForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      infoSignaturaForm.setListOfValuesForSignaturestablelocation(_listSKV);
+    }
     
   }
 
@@ -550,6 +615,98 @@ public java.lang.Long stringToPK(String value) {
 
   public boolean isActiveFormView() {
     return isActiveFormEdit();
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignoperation(HttpServletRequest request,
+       ModelAndView mav, InfoSignaturaForm infoSignaturaForm, Where where)  throws I18NException {
+    if (infoSignaturaForm.isHiddenField(SIGNOPERATION)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForSignoperation(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignoperation(HttpServletRequest request,
+       ModelAndView mav, InfoSignaturaFilterForm infoSignaturaFilterForm,
+       List<InfoSignatura> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (infoSignaturaFilterForm.isHiddenField(SIGNOPERATION)
+      && !infoSignaturaFilterForm.isGroupByField(SIGNOPERATION)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForSignoperation(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignoperation(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "0"));
+    __tmp.add(new StringKeyValue("1" , "1"));
+    __tmp.add(new StringKeyValue("2" , "2"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignmode(HttpServletRequest request,
+       ModelAndView mav, InfoSignaturaForm infoSignaturaForm, Where where)  throws I18NException {
+    if (infoSignaturaForm.isHiddenField(SIGNMODE)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForSignmode(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignmode(HttpServletRequest request,
+       ModelAndView mav, InfoSignaturaFilterForm infoSignaturaFilterForm,
+       List<InfoSignatura> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (infoSignaturaFilterForm.isHiddenField(SIGNMODE)
+      && !infoSignaturaFilterForm.isGroupByField(SIGNMODE)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForSignmode(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignmode(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "0"));
+    __tmp.add(new StringKeyValue("1" , "1"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignaturestablelocation(HttpServletRequest request,
+       ModelAndView mav, InfoSignaturaForm infoSignaturaForm, Where where)  throws I18NException {
+    if (infoSignaturaForm.isHiddenField(SIGNATURESTABLELOCATION)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForSignaturestablelocation(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignaturestablelocation(HttpServletRequest request,
+       ModelAndView mav, InfoSignaturaFilterForm infoSignaturaFilterForm,
+       List<InfoSignatura> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (infoSignaturaFilterForm.isHiddenField(SIGNATURESTABLELOCATION)
+      && !infoSignaturaFilterForm.isGroupByField(SIGNATURESTABLELOCATION)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForSignaturestablelocation(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForSignaturestablelocation(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("-1" , "-1"));
+    __tmp.add(new StringKeyValue("0" , "0"));
+    __tmp.add(new StringKeyValue("1" , "1"));
+    return __tmp;
   }
 
 

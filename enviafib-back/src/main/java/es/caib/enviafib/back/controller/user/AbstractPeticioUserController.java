@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,11 +34,15 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
 
+    @EJB(mappedName = es.caib.enviafib.ejb.InfoSignaturaService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.InfoSignaturaService infoSignaturaEjb;
+
     public static final Map<Integer, String> firmaPathByTipus = new HashMap<Integer, String>();
 
     static {
         firmaPathByTipus.put(TIPUS_PETICIO_NIF, FirmaPerNifUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_AUTOFIRMA, AutoFirmaUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_FLUX, FluxFirmaUserController.CONTEXT_WEB);
         // XYZ ZZZ FALTEN LA RESTA DE TIPUS
     }
 
@@ -70,11 +73,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
         List<StringKeyValue> tmpList = null;
-        try {
-            tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
-        }catch(I18NException e) {
-            HtmlUtils.saveMessageError(request, I18NUtils.tradueix("error.tipusdocumentals.obtencio"));
-        }
+        tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
+        
         
         // TODO: Traduir "Qualsevol valor" ->
         // tmpList.add(new StringKeyValue("","Qualsevol valor"));

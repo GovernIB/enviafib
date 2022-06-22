@@ -6,10 +6,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
+import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
@@ -57,6 +62,22 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public abstract int getTipusPeticio();
+    
+    /**
+     * Carregar el formulari per un nou Peticio
+     */
+    @Override
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public ModelAndView crearPeticioGet(HttpServletRequest request,
+        HttpServletResponse response) throws I18NException {
+      try {
+          ModelAndView mav = super.crearPeticioGet(request, response);
+          return mav;
+      }catch(I18NException e) {
+          HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+          return new ModelAndView("redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+      }
+    }
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
@@ -136,7 +157,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return getRedirectToList();
     }
 
-    protected String getRedirectToList() {
+    
+    public static String getRedirectToList() {
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
     

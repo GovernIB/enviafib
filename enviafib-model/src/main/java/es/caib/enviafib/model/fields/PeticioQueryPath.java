@@ -23,6 +23,10 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new TimestampField(getQueryPath(), PeticioFields.DATACREACIO);
   }
 
+  public TimestampField DATAFINAL() {
+    return new TimestampField(getQueryPath(), PeticioFields.DATAFINAL);
+  }
+
   public LongField FITXERID() {
     return new LongField(getQueryPath(), PeticioFields.FITXERID);
   }
@@ -69,10 +73,6 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
 
   public StringField ERROREXCEPTION() {
     return new StringField(getQueryPath(), PeticioFields.ERROREXCEPTION);
-  }
-
-  public TimestampField DATAFINAL() {
-    return new TimestampField(getQueryPath(), PeticioFields.DATAFINAL);
   }
 
   public StringField PETICIOPORTAFIRMES() {

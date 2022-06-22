@@ -361,12 +361,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
      * output.close(); } }
      */
 
-    // XYZ ZZZ NO ESTA BE A LA CAIB AIXÔ NO FUNCIONA !!!!!!!
-    private static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
 
-        return request.getScheme() + "://" + request.getServerName() + ":" + +request.getServerPort()
-                + request.getContextPath() + webContext;
-    }
 
     /**
      * 
@@ -488,7 +483,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         String url = Configuracio.getPortaFIBApiFirmaWebUrl();
         String username = Configuracio.getPortaFIBApiFirmaWebUsername();
-        String password = Configuracio.getPortaFIBApiFirmaWebUrlPassword();
+        String password = Configuracio.getPortaFIBApiFirmaWebPassword();
 
         return new ApiFirmaWebSimpleJersey(url, username, password);
 

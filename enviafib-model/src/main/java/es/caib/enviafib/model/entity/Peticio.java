@@ -11,6 +11,9 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.sql.Timestamp getDatacreacio();
 	public void setDatacreacio(java.sql.Timestamp _datacreacio_);
 
+	public java.sql.Timestamp getDataFinal();
+	public void setDataFinal(java.sql.Timestamp _dataFinal_);
+
 	public long getFitxerID();
 	public void setFitxerID(long _fitxerID_);
 
@@ -46,9 +49,6 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 
 	public java.lang.String getErrorException();
 	public void setErrorException(java.lang.String _errorException_);
-
-	public java.sql.Timestamp getDataFinal();
-	public void setDataFinal(java.sql.Timestamp _dataFinal_);
 
 	public java.lang.String getPeticioPortafirmes();
 	public void setPeticioPortafirmes(java.lang.String _peticioPortafirmes_);

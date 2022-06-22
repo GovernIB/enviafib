@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.controller.FileDownloadController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
@@ -32,6 +33,7 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
+import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -109,6 +111,19 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(PETICIOID);
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
             peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
+            peticioFilterForm.addHiddenField(IDIOMADOC);
+            peticioFilterForm.addHiddenField(TIPUSDOCUMENTAL);
+            peticioFilterForm.addHiddenField(IDIOMAID);
+            peticioFilterForm.addHiddenField(ERROREXCEPTION);
+            
+            peticioFilterForm.addHiddenField(ERRORMSG);
+            peticioFilterForm.addHiddenField(INFOSIGNATURAID);
+            peticioFilterForm.addHiddenField(DESTINATARINIF);
+            peticioFilterForm.addHiddenField(FITXERID);
+            
+            peticioFilterForm.setOrderBy(DATACREACIO.javaName);
+            peticioFilterForm.setOrderAsc(false);
+            
             peticioFilterForm.setAttachedAdditionalJspCode(true);
 
             peticioFilterForm.setAddButtonVisible(false);
@@ -122,6 +137,10 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
 
+        
+        
+        log.info("ORDRE PER DEFECTE: " + filterForm.getOrderBy());
+        
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
         filterForm.getAdditionalButtonsByPK().clear();
@@ -160,6 +179,12 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
                             codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-primary"));
+
+                    if (peticio.getInfosignaturaid() != null) {
+                        filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file",
+//                                "info.signatura", getContextWeb() + "/veureInfoSignatura/" + peticioID, "btn-info"));
+                                "info.signatura", "/user/infoSignatura/view/" + peticio.getInfosignaturaid(), "btn-info"));
+                    }
 
                 }
                 break;
@@ -270,6 +295,32 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     @Override
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
         peticioLogicaEjb.deleteFull(peticio);
+    }
+
+    @RequestMapping(value = "/veureInfoSignatura/{peticioID}", method = RequestMethod.GET)
+    public ModelAndView veureInfoSignatura(@PathVariable("peticioID") java.lang.Long peticioID,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
+
+        Long infoSignaturaID = peticio.getInfosignaturaid();
+
+        if (infoSignaturaID == null) {
+            HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
+
+        } else {
+            InfoSignatura is = infoSignaturaEjb.findByPrimaryKey(infoSignaturaID);
+            log.info("      -> InfoSignaturaID: " + infoSignaturaID);
+
+            ModelAndView mav = new ModelAndView("detallsinfosignatura");
+            mav.addObject("is", is);
+            mav.addObject("contexte", getContextWeb());
+            return mav;
+        }
+
+        ModelAndView mav = new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
+        return mav;
+
     }
 
 }

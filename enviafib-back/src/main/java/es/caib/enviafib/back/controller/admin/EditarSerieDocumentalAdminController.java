@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.SerieDocumentalController;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalFilterForm;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalForm;
-import es.caib.enviafib.commons.utils.Constants;
 
 /**
  * 
@@ -50,21 +48,16 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
     }
 
     @Override
-    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav, Where where)
-            throws I18NException {
+    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
+            Where where) throws I18NException {
 
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:
         List<StringKeyValue> tmpList = null;
-        try {
-            tmpList = peticioLogicaEjb
-                    .getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
-            tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
-        }catch(I18NException e) {
-            log.error(I18NUtils.tradueix("error.tipousdocumentals.correccio") +Constants.ENVIAFIB_PROPERTY_BASE+"system.properties.");
-            HtmlUtils.saveMessageError(request, I18NUtils.tradueix("error.tipusdocumentals.obtencio"));
-        }
-      
+
+        tmpList = peticioLogicaEjb.getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
+        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
+
         return tmpList;
 
     }
