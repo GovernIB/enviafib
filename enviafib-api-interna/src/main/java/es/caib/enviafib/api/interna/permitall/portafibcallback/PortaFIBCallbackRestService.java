@@ -151,8 +151,9 @@ public class PortaFIBCallbackRestService {
                         String languageUI = "ca";
 
                         Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+                        peticioTemp.setErrorMsg("Peticio rebutjada XYZ: " +  event.getSigningRequest().getRejectionReason());
                         peticioTemp.setDataFinal(new Timestamp(System.currentTimeMillis()));
-                        peticioTemp.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
+                        peticioTemp.setEstat(Constants.ESTAT_PETICIO_ERROR);
                         peticioLogicaEjb.updatePublic(peticioTemp);
 
                         peticioLogicaEjb.esborrarPeticioPortafib(portafibID, languageUI);

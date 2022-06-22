@@ -307,8 +307,10 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         // XYZ ZZZ Només volem saber si existeix !!!!!!
         Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
+        pet.setErrorMsg(errorMsg);
+        pet.setErrorException(errorException);
         pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
-        pet.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
+        pet.setEstat(Constants.ESTAT_PETICIO_ERROR);
 
         // XYZ ZZZ FALTA POSAR ERROR DINS PETICIO
 

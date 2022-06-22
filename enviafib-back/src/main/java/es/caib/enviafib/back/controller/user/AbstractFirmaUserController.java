@@ -104,7 +104,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             hiddens.remove(TIPUSDOCUMENTAL);
             hiddens.remove(IDIOMADOC);
 
-            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_REBUTJADA) {
+            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_ERROR) {
                 hiddens.remove(ESTAT);
                 hiddens.remove(ERRORMSG);
                 hiddens.remove(ERROREXCEPTION);

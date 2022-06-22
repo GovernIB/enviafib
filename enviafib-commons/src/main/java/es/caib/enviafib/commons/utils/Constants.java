@@ -27,9 +27,9 @@ public interface Constants {
     public static final int ESTAT_PETICIO_CREADA = 1;
     public static final int ESTAT_PETICIO_EN_PROCES = 2;
     public static final int ESTAT_PETICIO_FIRMADA = 3;
-    public static final int ESTAT_PETICIO_REBUTJADA = 4;
+    public static final int ESTAT_PETICIO_ERROR = 4;
     public static final int[] ESTATS_PETICIO = { ESTAT_PETICIO_CREADA, ESTAT_PETICIO_EN_PROCES,
-            ESTAT_PETICIO_FIRMADA, ESTAT_PETICIO_REBUTJADA };
+            ESTAT_PETICIO_FIRMADA, ESTAT_PETICIO_ERROR };
 
     // TIPUS DE PETICIONS DE ENVIAFIB
     public static final int TIPUS_PETICIO_NIF = 0;

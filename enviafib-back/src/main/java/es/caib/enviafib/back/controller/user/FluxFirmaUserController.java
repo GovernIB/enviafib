@@ -315,9 +315,16 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                     LocaleContextHolder.getLocale().getLanguage(),
                     (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
         } catch (I18NException e) {
-            p.setEstat(ESTAT_PETICIO_REBUTJADA);
+            
+            String msg = "Error arrancant petició a partir de flux: " + I18NUtils.getMessage(e);
+
+            log.error(msg, e);
+            
+            p.setEstat(ESTAT_PETICIO_ERROR);
             // XYZ ZZZZZ TRA
-            p.setErrorMsg("Error arrancant petició a partir de flux: " + I18NUtils.getMessage(e));
+            p.setErrorMsg(msg);
+            p.setErrorException(CONTEXT_WEB);
+            
             peticioLogicaEjb.update(p);
         }
 

@@ -186,7 +186,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                 }
                 break;
 
-                case Constants.ESTAT_PETICIO_REBUTJADA:
+                case Constants.ESTAT_PETICIO_ERROR:
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
                             getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-light"));
                     filterForm.addAdditionalButtonByPK(peticioID,
