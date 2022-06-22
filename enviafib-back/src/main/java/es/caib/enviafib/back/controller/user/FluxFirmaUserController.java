@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleGetFlowResultResponse;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleGetTransactionIdRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleStartTransactionRequest;
@@ -75,7 +76,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             api = getApiFlowTemplateSimple();
 
             // Crear Flux
-            final boolean saveOnServer = false;
+            final boolean saveOnServer = true;
 
             String name = "Flux de Firma  - " + System.currentTimeMillis();
             String descr = "SaveOnServer  = |" + saveOnServer + "|";
@@ -117,13 +118,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                     + aaie.getMessage();
             log.error(msg, aaie);
 
-            if (api != null && transactionID != null) {
-                try {
-                    api.closeTransaction(transactionID);
-                } catch (Throwable th) {
-                    th.printStackTrace();
-                }
-            }
+            final String intermediateID = null;
+            cleanFlux(api, transactionID, intermediateID);
 
             return new ModelAndView(getRedirectToList());
 
@@ -140,18 +136,43 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
         ApiFlowTemplateSimple api = getApiFlowTemplateSimple();
         String transactionID = request.getParameter("transactionID");
+        
+        String intermediateID = request.getParameter("intermediateID");
+        
+        log.info("**************new::transactionID= " + transactionID);
+        log.info("**************new::intermediateID=" + intermediateID);
+        
 
         if (api != null && transactionID != null) {
-            try {
-                api.closeTransaction(transactionID);
-            } catch (Throwable th) {
-                /// XYZ ZZZZ
-                th.printStackTrace();
-            }
+            cleanFlux(api, transactionID, intermediateID);
 
         }
 
         return mav;
+    }
+
+    protected void cleanFlux(ApiFlowTemplateSimple api, String transactionID,
+            String intermediateID) {
+        try {
+            api.closeTransaction(transactionID);
+            
+            
+            if (intermediateID != null) {
+            
+            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(LocaleContextHolder.getLocale().getLanguage(), intermediateID);
+
+            boolean esborrat = api.deleteFlowTemplate(flowTemplateRequest);
+            log.error("Resultat esborrat de flux de firma: " + esborrat);
+            
+            }
+            
+           
+
+        } catch (Throwable th) {
+            /// XYZ ZZZZ
+            log.error("Error esborrant flux de firma: " + th.getMessage());
+        }
     }
 
     @RequestMapping(value = "/callbackflux/{transactionID}")
@@ -216,14 +237,17 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                     FlowTemplateSimpleFlowTemplate flux = fullResult.getFlowInfo();
 
                     // XYZ ZZZ DEBUG
+                    log.info(" ======= FLUX ========= ");
                     log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
+                    log.info(" ---------------------- ");
 
+                    log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId() + "|");
                     request.getSession().setAttribute("flux", flux);
 
                     ModelAndView mav = new ModelAndView("finaliframe");
 
                     mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb()
-                            + "/mostrarflux/" + transactionID);
+                            + "/mostrarflux/" + transactionID + "/" + flux.getIntermediateServerFlowTemplateId());
                     return mav;
 
                 } // Final Case Firma OK
@@ -240,13 +264,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             // XYZ ZZZ TRA
             error = "Error desconegut durant la creació del Flux de Firma: " + aaie.getMessage();
             log.error(error, aaie);
-            if (api != null && transactionID != null) {
-                try {
-                    api.closeTransaction(transactionID);
-                } catch (Throwable th) {
-                    th.printStackTrace();
-                }
-            }
+            cleanFlux(api, transactionID, null);
 
         }
 
@@ -262,10 +280,10 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
     }
 
-    @RequestMapping(value = "/mostrarflux/{transactionID}")
+    @RequestMapping(value = "/mostrarflux/{transactionID}/{intermediateID}")
     public ModelAndView mostrarflux(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID")
-            String transactionID) {
+            @PathVariable("transactionID") String transactionID, 
+            @PathVariable("intermediateID") String intermediateID) {
 
         ApiFlowTemplateSimple api = null;
 
@@ -277,7 +295,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
             FlowTemplateSimpleViewFlowTemplateRequest viewFlowRequest;
             viewFlowRequest = new FlowTemplateSimpleViewFlowTemplateRequest(languageUI,
-                    transactionID);
+                    intermediateID);
             String url = api.getUrlToViewFlowTemplate(viewFlowRequest);
 
             log.info("View Flow Template Url = " + url);
@@ -285,7 +303,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             ModelAndView mav = new ModelAndView("flowview");
             mav.addObject("title", "Vista de Flux XYZ");
             mav.addObject("urlflow", url);
-            mav.addObject("continueUrl", getContextWeb() + "/new?transactionId=" + transactionID);
+            mav.addObject("continueUrl", getContextWeb() + "/new?transactionID=" + transactionID + "&intermediateID="+ intermediateID);
             mav.addObject("cancelUrl", getRedirectToList().replace("redirect:", ""));
             return mav;
 
