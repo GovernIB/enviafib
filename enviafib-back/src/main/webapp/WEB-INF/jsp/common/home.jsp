@@ -1,5 +1,7 @@
 <%@page import="org.springframework.security.core.Authentication"
 %><%@page import="org.springframework.context.i18n.LocaleContextHolder"
+%><%@page import="org.springframework.security.core.context.SecurityContext"
+%><%@page import="org.springframework.security.core.context.SecurityContextHolder"
 %><%@ page language="java" 
 %><%@ include file="/WEB-INF/jsp/moduls/includes.jsp" 
 %>
@@ -13,7 +15,6 @@
 
 <br/>
 <br/>
-<fmt:message key="common.benvinguda.titol"/><br/>
 <fmt:message key="common.benvinguda.missatge"/>
 
 

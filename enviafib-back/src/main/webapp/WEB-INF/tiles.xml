@@ -36,10 +36,6 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/all/homepublic.jsp" />
     </definition>
 
-
-    <definition name="homepublic" extends="all">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/all/homepublic.jsp" />
-    </definition>
     <!--  ===========  COMMON  ================== -->
 
     <definition name="common" extends="base.definition">
@@ -51,17 +47,13 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/principal.jsp" />
     </definition>
 
-    <definition name="option1Common" extends="common">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/common/option.jsp" />
-    </definition>
-
-    <definition name="option2Common" extends="common">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/common/option.jsp" />
-    </definition>
-
     <definition name="userFormCommon" template="/WEB-INF/jsp/layout/onlycontentlayout.jsp">
         <put-attribute name="titol" value="EdicioUsuari" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
+    </definition>
+
+    <definition name="home" extends="all">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/common/home.jsp" />
     </definition>
 
     <!--  ===========  USER  ================== -->
