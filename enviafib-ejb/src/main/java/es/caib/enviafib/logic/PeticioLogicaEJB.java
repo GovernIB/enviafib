@@ -603,13 +603,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         ApiFirmaAsyncSimpleJersey api;
 
         try {
-            URL hostUrl = new URL(host);
-            api = new ApiFirmaAsyncSimpleJersey(host, username, password);
+            new URL(host);
         } catch (MalformedURLException urle) {
             String errorMsg = "Error a la URL de conexió amb PortaFIB. Revisar la URL de la propietat "
                     + Constants.ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url"
                     + " de l'arxiu: " + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.";
             throw new I18NException(errorMsg + "   -   " + urle.getMessage());
+        }
+        try {
+            api = new ApiFirmaAsyncSimpleJersey(host, username, password);
         } catch (Exception e) {
             String errorMsg = "Error de conexió amb la API de PortaFIB. Revisar la conexió amb PortaFIB i les propietats de 'apifirmaasync' de l'arxiu de propietats "
                     + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.";
