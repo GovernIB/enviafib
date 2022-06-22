@@ -1,9 +1,7 @@
 package es.caib.enviafib.logic;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -11,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
@@ -43,9 +39,7 @@ import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleValidationInfo;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
-import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.i18n.I18NTranslation;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
 import es.caib.enviafib.persistence.FitxerJPA;
@@ -463,8 +457,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         
         try {
             URL hostUrl = new URL(host);
-            api = new ApiFirmaAsyncSimpleJersey(host, username, password);
-           
+            api = new ApiFirmaAsyncSimpleJersey(hostUrl.toString(), username, password);
         } catch (MalformedURLException urle) {
             String errorMsg = "Error a la URL de conexió amb PortaFIB. Revisar la URL de la propietat "+Constants.ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url"+" de l'arxiu: "
                     + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.";

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.SerieDocumentalController;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalFilterForm;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalForm;
-import es.caib.enviafib.commons.utils.Constants;
 
 /**
  * 

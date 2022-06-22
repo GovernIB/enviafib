@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
-import org.fundaciobit.genapp.common.web.form.Section;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,6 @@ import es.caib.enviafib.back.controller.webdb.InfoSignaturaController;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaForm;
 import es.caib.enviafib.model.entity.InfoSignatura;
-import es.caib.enviafib.model.fields.InfoSignaturaFields;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
 /**
@@ -138,10 +136,10 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
         __tmp.add(new StringKeyValue("-1", I18NUtils.tradueix("signaturestablelocation.-1")));
         return __tmp;
     }
-    
+
     @Override
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long infosignaturaid) {
-        return  AbstractFirmaUserController.getRedirectToList();
-      }
+        return AbstractFirmaUserController.getRedirectToList();
+    }
 
 }
