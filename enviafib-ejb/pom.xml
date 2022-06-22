@@ -53,10 +53,10 @@
             <version>1.0.3</version>
             <exclusions>
                 <exclusion>
-                   <artifactId>log4j</artifactId>
-                   <groupId>log4j</groupId>
-                </exclusion>            
-             </exclusions>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -68,13 +68,31 @@
                     <groupId>log4j</groupId>
                     <artifactId>log4j</artifactId>
                 </exclusion>
-				<exclusion>
-				    <groupId>com.sun.jersey</groupId>
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
                     <artifactId>jersey-client</artifactId>
-				</exclusion>
+                </exclusion>
             </exclusions>
         </dependency>
-<!--
+
+
+        <dependency>
+            <artifactId>apiplantillafluxsimple-jersey</artifactId>
+            <groupId>org.fundaciobit.apisib.apiplantillafluxsimple</groupId>
+            <version>1.0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
+                    <artifactId>jersey-client</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--
         <dependency>
             <artifactId>jersey-apache-client4</artifactId>
             <groupId>com.sun.jersey.contribs</groupId>

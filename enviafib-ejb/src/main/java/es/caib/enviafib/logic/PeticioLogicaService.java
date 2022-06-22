@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignatureResult;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 
@@ -24,6 +25,8 @@ public interface PeticioLogicaService extends PeticioService {
     public static final String JNDI_NAME = "java:app/enviafib-ejb/PeticioLogicaEJB!es.caib.enviafib.logic.PeticioLogicaService";
 
     public void arrancarPeticio(long peticioID, String languageUI) throws I18NException;
+    
+    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux) throws I18NException;
 
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException;
 
@@ -37,6 +40,6 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void cosesAFerPeticioFirmada(long portafibID, String languageUI) throws I18NException;
 
-    public void cosesAFerPeticioRebutjada(long portafibID, String languageUI) throws I18NException;
+    public void cosesAFerPeticioRebutjada(long portafibID, String languageUI, String motiuRebuig) throws I18NException;
 
 }

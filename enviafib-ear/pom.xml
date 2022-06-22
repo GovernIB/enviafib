@@ -4,9 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>es.caib.enviafib</groupId>
 	<artifactId>enviafib-ear</artifactId>
-	<version>1.0.1</version>
 	<packaging>ear</packaging>
 
 	<parent>
@@ -230,125 +228,151 @@
 		<filters>
 			<filter>../config.properties</filter>
 		</filters>
-
-		<plugins>
-
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
-				<!-- Aquest bloc força a netejar sempre -->
-				<executions>
-					<execution>
-						<id>auto-clean</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-ear-plugin</artifactId>
-
-				<!-- configuring the ear plugin -->
-				<configuration>
-
-					<displayName>EnviaFIB</displayName>
-					<description>EnviaFIB</description>
-
-					<generateApplicationXml>true</generateApplicationXml>
-					<defaultLibBundleDir>lib</defaultLibBundleDir>
-					<includeLibInApplicationXml>false</includeLibInApplicationXml>
-					<!--suppress UnresolvedMavenProperty -->
-					<!-- Nom mòduls d'acord amb punt 4.2 de l'Estàndard CAIB -->
-					<outputFileNameMapping>@{artifactId}@-@{version}@.@{extension}@</outputFileNameMapping>
-					<version>8</version>
-
-					<archive>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-						</manifest>
-						<manifestEntries>
-							<project-version>${project.version}</project-version>
-							<project-buildtime>${maven.build.timestamp}</project-buildtime>
-							<scm-revision>${buildNumber}</scm-revision>
-						</manifestEntries>
-					</archive>
-
-					<defaultLibBundleDir>lib</defaultLibBundleDir>
-
-					<modules>
-
-						<webModule>
-							<groupId>es.caib.enviafib</groupId>
-							<artifactId>enviafib-back</artifactId>
-							<contextRoot>enviafib</contextRoot>
-                            <bundleFileName>enviafib-back.war</bundleFileName>
-						</webModule>
-
-						<ejbModule>
-							<groupId>es.caib.enviafib</groupId>
-							<artifactId>enviafib-ejb</artifactId>
-							<bundleFileName>enviafib-ejb.jar</bundleFileName>
-						</ejbModule>
-
-						<!-- API INTERNA START -->
-						<webModule>
-							<groupId>es.caib.enviafib</groupId>
-							<artifactId>enviafib-api-interna</artifactId>
-							<contextRoot>/enviafibapi/interna</contextRoot>
-							<bundleFileName>enviafib-api-interna.war</bundleFileName>
-						</webModule>
-						<!-- API INTERNA END -->
-
-					</modules>
-
-				</configuration>
-			</plugin>
-
-			<!-- Per arrencar/desplegar automàticament l'aplicació. 
-			     Documentació ús: https://codehaus-cargo.github.io/cargo/Maven2+plugin.html 
-				configuració: https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html 
-		   -->
-			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<configuration>
-					<skip>false</skip>
-					<container>
-						<!-- El plugin cargo empra la configuració wildfly13x pel JBoss EAP 
-							7.2 -->
-						<containerId>wildfly13x</containerId>
-						<type>installed</type>
-						<home>${env.JBOSS_HOME}</home>
-					</container>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<!-- Aquest bloc força a netejar sempre -->
+					<executions>
+						<execution>
+							<id>auto-clean</id>
+							<phase>initialize</phase>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ear-plugin</artifactId>
+	
+					<!-- configuring the ear plugin -->
 					<configuration>
-						<!-- Empra la configuració existent del servidor d'aplicacions. -->
-						<type>existing</type>
-						<home>${env.JBOSS_HOME}/standalone</home>
-						<!-- Si volem arrancar el jboss amb cargo:start i amb una configuració 
-							copiada de l'original, fixar el <type> a standalone i llevar el <home> -->
-						<properties>
-							<cargo.hostname>localhost</cargo.hostname>
-							<cargo.port.offset>0</cargo.port.offset>
-							<cargo.remote.username>admin</cargo.remote.username>
-							<cargo.remote.password>admin</cargo.remote.password>
-						</properties>
+	
+						<displayName>EnviaFIB</displayName>
+						<description>EnviaFIB</description>
+	
+						<generateApplicationXml>true</generateApplicationXml>
+						<defaultLibBundleDir>lib</defaultLibBundleDir>
+						<includeLibInApplicationXml>false</includeLibInApplicationXml>
+						<!--suppress UnresolvedMavenProperty -->
+						<!-- Nom mòduls d'acord amb punt 4.2 de l'Estàndard CAIB -->
+						<outputFileNameMapping>@{artifactId}@-@{version}@.@{extension}@</outputFileNameMapping>
+						<version>8</version>
+	
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<project-version>${project.version}</project-version>
+								<project-buildtime>${maven.build.timestamp}</project-buildtime>
+								<scm-revision>${buildNumber}</scm-revision>
+							</manifestEntries>
+						</archive>
+	
+						<defaultLibBundleDir>lib</defaultLibBundleDir>
+	
+						<modules>
+	
+							<webModule>
+								<groupId>es.caib.enviafib</groupId>
+								<artifactId>enviafib-back</artifactId>
+								<contextRoot>enviafib</contextRoot>
+	                            <bundleFileName>enviafib-back.war</bundleFileName>
+							</webModule>
+	
+							<ejbModule>
+								<groupId>es.caib.enviafib</groupId>
+								<artifactId>enviafib-ejb</artifactId>
+								<bundleFileName>enviafib-ejb.jar</bundleFileName>
+							</ejbModule>
+	
+							<!-- API INTERNA START -->
+							<webModule>
+								<groupId>es.caib.enviafib</groupId>
+								<artifactId>enviafib-api-interna</artifactId>
+								<contextRoot>/enviafibapi/interna</contextRoot>
+								<bundleFileName>enviafib-api-interna.war</bundleFileName>
+							</webModule>
+							<!-- API INTERNA END -->
+	
+						</modules>
 					</configuration>
-					<deployables>
-						<deployable>
+				</plugin>
+	
+				<!-- Per arrencar/desplegar automàticament l'aplicació. 
+				     Documentació ús: https://codehaus-cargo.github.io/cargo/Maven2+plugin.html 
+					configuració: https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html 
+			   -->
+				<plugin>
+					<groupId>org.codehaus.cargo</groupId>
+					<artifactId>cargo-maven2-plugin</artifactId>
+					<configuration>
+						<skip>false</skip>
+						<container>
+							<!-- El plugin cargo empra la configuració wildfly13x pel JBoss EAP 
+								7.2 -->
+							<containerId>wildfly13x</containerId>
+							<type>installed</type>
+							<home>${env.JBOSS_HOME}</home>
+						</container>
+						<configuration>
+							<!-- Empra la configuració existent del servidor d'aplicacions. -->
+							<type>existing</type>
+							<home>${env.JBOSS_HOME}/standalone</home>
+							<!-- Si volem arrancar el jboss amb cargo:start i amb una configuració 
+								copiada de l'original, fixar el <type> a standalone i llevar el <home> -->
 							<properties>
-								<name>${project.build.finalName}</name>
+								<cargo.hostname>localhost</cargo.hostname>
+								<cargo.port.offset>0</cargo.port.offset>
+								<cargo.remote.username>admin</cargo.remote.username>
+								<cargo.remote.password>admin</cargo.remote.password>
 							</properties>
-						</deployable>
-					</deployables>
-				</configuration>
-			</plugin>
-
-		</plugins>
+						</configuration>
+						<deployables>
+							<deployable>
+								<properties>
+									<name>${project.build.finalName}</name>
+								</properties>
+							</deployable>
+						</deployables>
+					</configuration>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-clean-plugin
+										</artifactId>
+										<versionRange>
+											[3.1.0,)
+										</versionRange>
+										<goals>
+											<goal>clean</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	
 	

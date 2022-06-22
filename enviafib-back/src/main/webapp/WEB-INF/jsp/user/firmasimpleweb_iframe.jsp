@@ -1,10 +1,6 @@
-
+<%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
 <style>
-    body{
-       background-image: url("<c:url value="/img/bg.png"/>");
-         background-repeat: repeat;
-    }
 </style>
 
 <br/><br/>

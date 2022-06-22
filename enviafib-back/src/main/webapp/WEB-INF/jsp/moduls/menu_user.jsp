@@ -27,7 +27,7 @@
         <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
     <li style="list-style-type: disc; list-style-position: inside;">
       <a href="<c:url value="/user/autofirma/new"/>">
-        <span style="${(fn:contains(url, '/user/autofirma/new'))? "font-weight: bold;" : ""}">Autofirma XYZ ZZZ</span>
+        <span style="${(fn:contains(url, '/user/autofirma'))? "font-weight: bold;" : ""}">Autofirma XYZ ZZZ</span>
       </a>
     </li>
     
@@ -37,6 +37,14 @@
         <span style="${(fn:contains(url, '/user/firmapernif/new'))? "font-weight: bold;" : ""}">Enviar firma per NIF XYZ </span>
       </a>
     </li>
+   
+       
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/flux/crearflux"/>">
+        <span style="${(fn:contains(url, '/user/flux'))? "font-weight: bold;" : ""}">Enviar a firmar emprant flux XYZ</span>
+      </a>
+    </li>
+   
    
   </ul>
 </div>

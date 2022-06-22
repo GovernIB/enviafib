@@ -202,8 +202,23 @@ public class Configuracio implements Constants {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.username");
     }
 
-    public static String getPortaFIBApiFirmaWebUrlPassword() {
+    public static String getPortaFIBApiFirmaWebPassword() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.password");
+    }
+    
+    
+    
+    
+    public static String getPortaFIBApiFlowUrl() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.url");
+    }
+
+    public static String getPortaFIBApiFlowUsername() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.username");
+    }
+
+    public static String getPortaFIBApiFlowPassword() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.password");
     }
 
 }

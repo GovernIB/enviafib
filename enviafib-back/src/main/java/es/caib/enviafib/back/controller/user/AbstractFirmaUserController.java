@@ -104,7 +104,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             hiddens.remove(TIPUSDOCUMENTAL);
             hiddens.remove(IDIOMADOC);
 
-            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_REBUTJADA) {
+            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_ERROR) {
                 hiddens.remove(ESTAT);
                 hiddens.remove(ERRORMSG);
                 hiddens.remove(ERROREXCEPTION);
@@ -156,10 +156,17 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long peticioID) {
         return getRedirectToList();
     }
-    
+
     
     public static String getRedirectToList() {
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+    }
+    
+    // XYZ ZZZ NO ESTA BE A LA CAIB AIXÔ NO FUNCIONA !!!!!!!
+    protected String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
+
+        return request.getScheme() + "://" + request.getServerName() + ":" + +request.getServerPort()
+                + request.getContextPath() + webContext;
     }
 
 }

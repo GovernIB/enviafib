@@ -98,7 +98,14 @@
     <definition name="infoSignaturaListUser" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
     </definition>
-
+    
+    <definition name="flowview" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/urlflow_iframe.jsp" />
+    </definition>
+    
+        <definition name="finaliframe" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/final_iframe.jsp" />
+    </definition>
 
     <!--  ===========  ADMIN  ================== -->
         

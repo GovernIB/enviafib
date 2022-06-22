@@ -144,8 +144,9 @@ public class PortaFIBCallbackRestService {
 
                     String languageUI = "ca";
                     Long portafibID = event.getSigningRequest().getID();
+                    String motiuRebuig = event.getSigningRequest().getRejectionReason();
 
-                    peticioLogicaEjb.cosesAFerPeticioRebutjada(portafibID, languageUI);
+                    peticioLogicaEjb.cosesAFerPeticioRebutjada(portafibID, languageUI, motiuRebuig);
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_PAUSADA: {
