@@ -66,6 +66,7 @@ import es.caib.enviafib.persistence.PeticioJPA;
  * 
  * @author fbosch
  * @author anadal
+ * @author ptrias
  */
 @Stateless(name = "PeticioLogicaEJB")
 public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService {
@@ -105,7 +106,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throws I18NException {
 
         // XYZ ZZZ DEBUG
-        log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
+        // XYZ PAU: Arreglat, abans posaba log.info
+        if (log.isDebugEnabled()) {
+            log.debug(FlowTemplateSimpleFlowTemplate.toString(flux));
+        }
 
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
@@ -265,7 +269,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Peticio peticio = peticioList.get(0);
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
         peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-        peticio.setErrorMsg("Peticio rebutjada XYZ: " + motiuRebuig);
+        
+        peticio.setErrorMsg("Peticio rebutjada: " + motiuRebuig);
         this.update(peticio);
 
         esborrarPeticioPortafib(portafibID, languageUI);
@@ -552,25 +557,30 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
 
         // XYZ ZZZ Només volem saber si existeix !!!!!!
+        // XYZ PAU: Arreglat
         Peticio pet = this.findByPrimaryKey(peticioID);
 
-        FirmaSimpleFile fsf = fssr.getSignedFile();
+        if (pet == null) {
+            // XYZ COMODI
+            // XYZ PAU: Arreglat
+            throw new I18NException("peticio.noexisteix", String.valueOf(peticioID));
+        }
 
+        FirmaSimpleFile fsf = fssr.getSignedFile();
         if (fsf == null) {
-            // XYZ ZZZ
+            // XYZ COMODI
             throw new I18NException("genapp.comodi", "No s'ha pogut recuperar el fitxer signat ...");
 
-        } else {
-            guardaFitxerFirmatAutofirma(pet, fsf);
-
-            long infoSignaturaID = guardaInformacioSignaturaAutofirma(fssr.getSignedFileInfo());
-            pet.setInfoSignaturaID(infoSignaturaID);
-
-            pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
-            pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-
-            this.update(pet);
         }
+        guardaFitxerFirmatAutofirma(pet, fsf);
+
+        long infoSignaturaID = guardaInformacioSignaturaAutofirma(fssr.getSignedFileInfo());
+        pet.setInfoSignaturaID(infoSignaturaID);
+
+        pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
+        pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+
+        this.update(pet);
     }
 
     /**
