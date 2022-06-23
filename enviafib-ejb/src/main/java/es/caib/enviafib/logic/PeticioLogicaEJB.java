@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
@@ -47,6 +48,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleS
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
+import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
@@ -267,8 +269,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Peticio peticio = peticioList.get(0);
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
         peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-        
-        peticio.setErrorMsg("Peticio rebutjada: " + motiuRebuig);
+
+        String msg = I18NCommonUtils.tradueix(new Locale(peticio.getIdiomaID()), "peticio.motiu.rebuig", motiuRebuig);
+        peticio.setErrorMsg(msg);
         this.update(peticio);
 
         esborrarPeticioPortafib(portafibID, languageUI);
@@ -557,6 +560,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Peticio pet = this.findByPrimaryKey(peticioID);
 
         if (pet == null) {
+            // XYZ COMODI
             throw new I18NException("peticio.noexisteix", String.valueOf(peticioID));
         }
 
