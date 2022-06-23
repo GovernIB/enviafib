@@ -43,7 +43,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         firmaPathByTipus.put(TIPUS_PETICIO_NIF, FirmaPerNifUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_AUTOFIRMA, AutoFirmaUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_FLUX, FluxFirmaUserController.CONTEXT_WEB);
-        // XYZ ZZZ FALTEN LA RESTA DE TIPUS
+        // TODO FALTEN LA RESTA DE TIPUS
     }
 
     @Override
