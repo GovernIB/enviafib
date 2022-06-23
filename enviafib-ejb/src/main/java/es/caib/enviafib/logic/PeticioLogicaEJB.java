@@ -105,8 +105,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
             throws I18NException {
 
-        // XYZ ZZZ DEBUG
-        // XYZ PAU: Arreglat, abans posaba log.info
         if (log.isDebugEnabled()) {
             log.debug(FlowTemplateSimpleFlowTemplate.toString(flux));
         }
@@ -556,13 +554,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Autofirma Recuperada Informació de firma: "
                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
 
-        // XYZ ZZZ Només volem saber si existeix !!!!!!
-        // XYZ PAU: Arreglat
         Peticio pet = this.findByPrimaryKey(peticioID);
 
         if (pet == null) {
-            // XYZ COMODI
-            // XYZ PAU: Arreglat
             throw new I18NException("peticio.noexisteix", String.valueOf(peticioID));
         }
 
