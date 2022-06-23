@@ -1,5 +1,6 @@
 <%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
 <%@page import="java.util.Locale"%>
+<%@page import="es.caib.enviafib.back.security.LoginInfo"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%><%@ include
 	file="/WEB-INF/jsp/moduls/includes.jsp"%><%@ taglib prefix="tiles"
 	uri="http://tiles.apache.org/tags-tiles"%>
@@ -36,8 +37,9 @@
 			<div>
 				<div>
 					<strong class="subtitol llevarMobil"><fmt:message
-							key="usuari" />: </strong> <span class="subtitolMay"> <%=request.getUserPrincipal()== null? "ANONIM": request.getUserPrincipal().getName()%>
-						| <%= request.getRemoteUser() %>
+							key="usuari" />: </strong> <span class="subtitolMay"> <%=LoginInfo.getInstance().getUsuari().getNom() +" "+LoginInfo.getInstance().getUsuari().getLlinatge1()%>
+							
+						(<%=request.getRemoteUser()%>)
 					</span>
 				</div>
 			</div>
