@@ -149,7 +149,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             int status = transactionStatus.getStatus();
 
             switch (status) {
-                //status = 0;
+                // status = 0;
                 case FirmaSimpleStatus.STATUS_INITIALIZING: {
                     errorException = "";
                     // XYZ TRADUCCIO
@@ -159,7 +159,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 }
                 break;
 
-                //status = 1;
+                // status = 1;
                 case FirmaSimpleStatus.STATUS_IN_PROGRESS: {
                     errorException = "";
                     // XYZ TRADUCCIO
@@ -169,8 +169,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 }
                 break;
 
-                //status = -1;
-                case FirmaSimpleStatus.STATUS_FINAL_ERROR:{
+                // status = -1;
+                case FirmaSimpleStatus.STATUS_FINAL_ERROR: {
                     // XYZ TRADUCCIO
                     String msg = "Error durant la realització de les firmes de la transacció " + transactionID + ": "
                             + transactionStatus.getErrorMessage();
@@ -183,8 +183,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 }
                 break;
 
-                //status = -2;
-                case FirmaSimpleStatus.STATUS_CANCELLED:{
+                // status = -2;
+                case FirmaSimpleStatus.STATUS_CANCELLED: {
                     errorException = null;
                     // XYZ TRADUCCIO
                     errorMsg = "Durant el procés de firmes," + " l'usuari ha cancelat la transacció amb ID "
@@ -377,20 +377,13 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         } catch (AbstractApisIBException e) {
 
-            String msg = "Error cridant a PortaFIB per a la signatura immediata: " + e.getMessage();
-
-            log.error(msg, e);
-
             // XYZ TRADUCCIO
+            String msg = "Error cridant a PortaFIB per a la signatura immediata: " + e.getMessage();
+            log.error(msg, e);
             throw new I18NException(msg);
-
         } catch (Exception e) {
 
-            String msg = "Error desconegut processant entrada de dades o inicialitzant el proces de firma: "
-                    + e.getMessage();
-
-            log.error(msg, e);
-
+            log.error("Error desconegut processant entrada de dades o inicialitzant el proces de firma ", e);
             try {
                 // Només s'executa si es WEB
                 if (transactionID != null) {
@@ -405,8 +398,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 e2.printStackTrace();
             }
 
-            // XYZ COMODI
-            throw new I18NException("genapp.comodi", msg);
+            throw new I18NException("error.procesdefirma", e.getMessage());
         }
     }
 
