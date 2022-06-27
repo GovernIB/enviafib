@@ -10,7 +10,6 @@
     
     <!-- CSS -->
     <link href="<c:url value="/css/styles.css"/>" rel="stylesheet">
-    <%-- XYZ ZZZ   --%>
     <link href="<c:url value="/css/default.css"/>" rel="stylesheet">
    
     <link href="<c:url value="/css/genapp.css"/>" rel="stylesheet">

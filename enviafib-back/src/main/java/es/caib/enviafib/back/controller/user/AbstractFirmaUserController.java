@@ -162,7 +162,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
     
-    // XYZ ZZZ NO ESTA BE A LA CAIB AIXÔ NO FUNCIONA !!!!!!!
+    // XYZ ANADAL NO ESTA BE A LA CAIB AIXÔ NO FUNCIONA !!!!!!!
     protected String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
 
         return request.getScheme() + "://" + request.getServerName() + ":" + +request.getServerPort()

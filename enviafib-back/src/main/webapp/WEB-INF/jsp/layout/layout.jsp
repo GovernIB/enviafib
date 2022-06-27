@@ -43,7 +43,7 @@
             </sec:authorize>
                         
 
-            <%--  DRAW MENU OPTIONS  XYZ ZZZ
+            <%--  DRAW MENU OPTIONS
 	    <c:forEach var="rolG" items="${loginInfo.roles}">
 	    <c:set var="rol" value="${rolG.authority}"/>
 	    <c:if test="${not(rol eq 'ROLE_USER')}">

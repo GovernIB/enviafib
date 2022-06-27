@@ -54,7 +54,7 @@
 
 			<ul class="navbar-nav mobil">
 
-				<%--  XYZ ZZZ  AQUI VAN ELS MENUS   --%>
+				<%--  AQUI VAN ELS MENUS   --%>
 				<%--
                             <li class="nav-item colorVerd">
                                 <a class="nav-link mobil" href="/listUnitatOrganica"

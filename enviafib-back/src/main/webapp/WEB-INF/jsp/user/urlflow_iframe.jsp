@@ -10,9 +10,12 @@
 </c:if>
 
 <c:if test="${not empty continueUrl}">
-<input type="button" class="btn btn-succes" value="Continuar XYZ " onclick='location.href="<c:url value="${continueUrl}"/>";'>
+<input type="button" class="btn btn-succes" value="<fmt:message key="genapp.continue"/>" onclick='location.href="<c:url value="${continueUrl}"/>";'>
 </c:if>
 <c:if test="${not empty cancelUrl}">
+<!--  XYZ TRADUCCIO 
+	<fmt:message key="genapp.continue" />:
+-->
 <input type="button" class="btn btn-warn" value="Cancel·lar XYZ" onclick='location.href="<c:url value="${cancelUrl}"/>";'>
 </c:if>
 

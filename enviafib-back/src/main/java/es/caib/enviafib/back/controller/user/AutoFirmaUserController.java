@@ -149,49 +149,46 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             int status = transactionStatus.getStatus();
 
             switch (status) {
-
-                case FirmaSimpleStatus.STATUS_INITIALIZING: // = 0;
-
-                {
+                //status = 0;
+                case FirmaSimpleStatus.STATUS_INITIALIZING: {
                     errorException = "";
-                    // XYZ ZZZ
+                    // XYZ TRADUCCIO
                     errorMsg = "S'ha rebut un estat inconsistent del proces de firma"
                             + " (inicialitzant). Pot ser s'hagi produït un error en el Plugin de Firma."
                             + " Consulti amb el seu administrador.";
                 }
                 break;
 
-                case FirmaSimpleStatus.STATUS_IN_PROGRESS: // = 1;
-                {
+                //status = 1;
+                case FirmaSimpleStatus.STATUS_IN_PROGRESS: {
                     errorException = "";
-                    // XYZ ZZZ
+                    // XYZ TRADUCCIO
                     errorMsg = "S'ha rebut un estat inconsistent del proces de firma"
                             + " (en progrés). Pot ser s'hagi produït un error en el Plugin de Firma."
                             + " Consulti amb el seu administrador.";
                 }
                 break;
 
-                case FirmaSimpleStatus.STATUS_FINAL_ERROR: // = -1;
-                {
-                    // XYZ ZZZ
+                //status = -1;
+                case FirmaSimpleStatus.STATUS_FINAL_ERROR:{
+                    // XYZ TRADUCCIO
                     String msg = "Error durant la realització de les firmes de la transacció " + transactionID + ": "
                             + transactionStatus.getErrorMessage();
                     String desc = transactionStatus.getErrorStackTrace();
 
                     errorException = desc;
-                    // XYZ ZZZ
+                    // XYZ TRADUCCIO
                     errorMsg = msg;
 
                 }
                 break;
 
-                case FirmaSimpleStatus.STATUS_CANCELLED: // = -2;
-                {
+                //status = -2;
+                case FirmaSimpleStatus.STATUS_CANCELLED:{
                     errorException = null;
-                    // XYZ ZZZ
+                    // XYZ TRADUCCIO
                     errorMsg = "Durant el procés de firmes," + " l'usuari ha cancelat la transacció amb ID "
                             + transactionID + ".";
-
                 }
                 break;
 
@@ -228,13 +225,13 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     if (fssr != null && fssr.getSignedFileInfo() != null) {
                         peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
-                        // XYZ ZZZ
+                        // XYZ TRADUCCIO
                         HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament");
 
                         return new ModelAndView(new RedirectView(getContextWeb() + "/view/" + peticioID, true));
                     } else {
                         errorException = null;
-                        // XYZ ZZZ TRA
+                        // XYZ TRADUCCIO
                         errorMsg = "No s'ha retornat cap firma amb SIGNID=" + SIGNID;
                     }
 
@@ -271,7 +268,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             }
         }
 
-        // XYZ ZZZ
+        // XYZ TRADUCCIO
         log.error(errorMsg);
         if (errorException != null) {
             log.error(errorException);
@@ -323,7 +320,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             log.info("administrationID: ]" + administrationID + "[");
             log.info("signerEmail: ]" + signerEmail + "[");
 
-            // XYZ ZZZ
+            // XYZ TRADUCCIO
             final String reason = "Prova de reason"; // form.getMotiu();
             final String location = null; // form.getLocation();
 
@@ -333,8 +330,9 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             final String langDoc = peticio.getIdiomaDoc();
 
             FirmaSimpleCommonInfo commonInfoSignature;
-            // XYZ ZZZ
-            String signProfile = null;
+
+            // XYZ PAU: Agafar perfil desde configuracio
+            String signProfile = Configuracio.getPortafibProfile();
             commonInfoSignature = new FirmaSimpleCommonInfo(signProfile, langUI, username, administrationID,
                     signerEmail);
 
@@ -383,7 +381,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
             log.error(msg, e);
 
-            // XYZ ZZZ TRA
+            // XYZ TRADUCCIO
             throw new I18NException(msg);
 
         } catch (Exception e) {
@@ -407,6 +405,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 e2.printStackTrace();
             }
 
+            // XYZ COMODI
             throw new I18NException("genapp.comodi", msg);
         }
     }
