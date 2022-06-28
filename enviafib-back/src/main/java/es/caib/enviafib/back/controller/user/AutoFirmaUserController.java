@@ -235,11 +235,11 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     try {
                         api.closeTransaction(transactionID);
                     } catch (Throwable th) {
-                        th.printStackTrace();
+                        log.error(th.getMessage(),th);
                     }
                 }
             } catch (Exception e2) {
-                e2.printStackTrace();
+                log.error(e2.getMessage(),e2);
             }
         }
 
@@ -360,12 +360,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     try {
                         apiWeb.closeTransaction(transactionID);
                     } catch (Throwable th) {
-                        th.printStackTrace();
+                        log.error(th.getMessage(),th);
                     }
                 }
 
             } catch (Exception e2) {
-                e2.printStackTrace();
+                log.error(e2.getMessage(),e2);
             }
 
             throw new I18NException("error.procesdefirma", e.getMessage());

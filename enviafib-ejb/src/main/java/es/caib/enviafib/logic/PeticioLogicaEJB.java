@@ -739,7 +739,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             if (destinatarisBloc == null || destinatarisBloc.length == 0) {
                 throw new I18NException("error.nifdestinatari.destinatarios", String.valueOf(i));
             }
-            System.out.println("BLOC[" + i + "] => Destinataris = " + Arrays.toString(destinatarisBloc));
+            log.info("BLOC[" + i + "] => Destinataris = " + Arrays.toString(destinatarisBloc));
             List<FirmaAsyncSimpleSignature> signers = new ArrayList<FirmaAsyncSimpleSignature>();
             for (int j = 0; j < destinatarisBloc.length; j++) {
 

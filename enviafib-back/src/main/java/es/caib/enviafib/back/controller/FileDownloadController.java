@@ -141,7 +141,7 @@ public class FileDownloadController {
         try {
           base = base + "?nom=" + URLEncoder.encode(nombre,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
+          log.error(e.getMessage(),e);
           base = base + "?nom=" + nombre;
         } //  
         String mime = arxiu.getMime();
@@ -151,7 +151,7 @@ public class FileDownloadController {
         try {
           base = base + "&mime=" + URLEncoder.encode(mime,"UTF-8");
         } catch (UnsupportedEncodingException e) {          
-          e.printStackTrace();
+          log.error(e.getMessage(),e);
           base = base + "&mime=" + mime;
         }
         return base;
