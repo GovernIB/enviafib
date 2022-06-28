@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
@@ -47,6 +48,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleS
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
+import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
@@ -66,6 +68,7 @@ import es.caib.enviafib.persistence.PeticioJPA;
  * 
  * @author fbosch
  * @author anadal
+ * @author ptrias
  */
 @Stateless(name = "PeticioLogicaEJB")
 public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService {
@@ -104,8 +107,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
             throws I18NException {
 
-        // XYZ ZZZ DEBUG
-        log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
+        if (log.isDebugEnabled()) {
+            log.debug(FlowTemplateSimpleFlowTemplate.toString(flux));
+        }
 
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
@@ -265,7 +269,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Peticio peticio = peticioList.get(0);
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
         peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-        peticio.setErrorMsg("Peticio rebutjada XYZ: " + motiuRebuig);
+
+        String msg = I18NCommonUtils.tradueix(new Locale(peticio.getIdiomaID()), "peticio.motiu.rebuig", motiuRebuig);
+        peticio.setErrorMsg(msg);
         this.update(peticio);
 
         esborrarPeticioPortafib(portafibID, languageUI);
@@ -551,26 +557,28 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Autofirma Recuperada Informació de firma: "
                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
 
-        // XYZ ZZZ Només volem saber si existeix !!!!!!
         Peticio pet = this.findByPrimaryKey(peticioID);
 
-        FirmaSimpleFile fsf = fssr.getSignedFile();
+        if (pet == null) {
+            // XYZ COMODI
+            throw new I18NException("peticio.noexisteix", String.valueOf(peticioID));
+        }
 
+        FirmaSimpleFile fsf = fssr.getSignedFile();
         if (fsf == null) {
-            // XYZ ZZZ
+            // XYZ COMODI
             throw new I18NException("genapp.comodi", "No s'ha pogut recuperar el fitxer signat ...");
 
-        } else {
-            guardaFitxerFirmatAutofirma(pet, fsf);
-
-            long infoSignaturaID = guardaInformacioSignaturaAutofirma(fssr.getSignedFileInfo());
-            pet.setInfoSignaturaID(infoSignaturaID);
-
-            pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
-            pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-
-            this.update(pet);
         }
+        guardaFitxerFirmatAutofirma(pet, fsf);
+
+        long infoSignaturaID = guardaInformacioSignaturaAutofirma(fssr.getSignedFileInfo());
+        pet.setInfoSignaturaID(infoSignaturaID);
+
+        pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
+        pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+
+        this.update(pet);
     }
 
     /**

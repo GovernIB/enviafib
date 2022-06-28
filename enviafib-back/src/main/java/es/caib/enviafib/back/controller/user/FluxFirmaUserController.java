@@ -54,7 +54,6 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         return "flowview";
     }
 
-
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
             ModelAndView mav) throws I18NException {
@@ -63,18 +62,19 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         // XYZ ZZZ Posam el de la persona que ho ha solicitat per a que no falli
         peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
         peticioForm.addHiddenField(DESTINATARINIF);
-        
+
         peticioForm.setTitleCode("emptystring");
-        
+
         mav.addObject("wizardstep", 3);
 
         return peticioForm;
 
     }
-    
+
     @Override
-    public void postValidate(HttpServletRequest request,PeticioForm peticioForm, BindingResult result)  throws I18NException {
-        
+    public void postValidate(HttpServletRequest request, PeticioForm peticioForm,
+            BindingResult result) throws I18NException {
+
         request.setAttribute("wizardstep", 3);
     }
 
@@ -265,6 +265,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                             request.getContextPath() + getContextWeb() + "/mostrarflux/"
                                     + transactionID + "/"
                                     + flux.getIntermediateServerFlowTemplateId());
+
                     return mav;
 
                 } // Final Case Firma OK
@@ -321,9 +322,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             ModelAndView mav = new ModelAndView("flowview");
             mav.addObject("title", "Confirmació del Flux a utilitzar en la Firma del Document XYZ");
             mav.addObject("urlflow", url);
+
             mav.addObject("wizardstep", 2);
             mav.addObject("continueUrl", getContextWeb() + "/new?transactionID=" + transactionID
                     + "&intermediateID=" + intermediateID);
+
             mav.addObject("cancelUrl", getRedirectToList().replace("redirect:", ""));
             return mav;
 
