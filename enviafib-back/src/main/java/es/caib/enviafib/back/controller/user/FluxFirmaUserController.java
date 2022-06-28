@@ -19,6 +19,7 @@ import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,9 +46,14 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
     @Override
     public int getTipusPeticio() {
-
         return TIPUS_PETICIO_FLUX;
     }
+
+    @Override
+    public String getTileForm() {
+        return "flowview";
+    }
+
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
@@ -57,9 +63,19 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         // XYZ ZZZ Posam el de la persona que ho ha solicitat per a que no falli
         peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
         peticioForm.addHiddenField(DESTINATARINIF);
+        
+        peticioForm.setTitleCode("emptystring");
+        
+        mav.addObject("wizardstep", 3);
 
         return peticioForm;
 
+    }
+    
+    @Override
+    public void postValidate(HttpServletRequest request,PeticioForm peticioForm, BindingResult result)  throws I18NException {
+        
+        request.setAttribute("wizardstep", 3);
     }
 
     @RequestMapping(value = "/crearflux", method = RequestMethod.GET)
@@ -109,6 +125,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
             ModelAndView mav = new ModelAndView("flowview");
             mav.addObject("urlflow", redirectUrl);
+            mav.addObject("wizardstep", 1);
             return mav;
 
         } catch (AbstractApisIBException aaie) {
@@ -136,12 +153,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
         ApiFlowTemplateSimple api = getApiFlowTemplateSimple();
         String transactionID = request.getParameter("transactionID");
-        
+
         String intermediateID = request.getParameter("intermediateID");
-        
+
         log.info("**************new::transactionID= " + transactionID);
         log.info("**************new::intermediateID=" + intermediateID);
-        
 
         if (api != null && transactionID != null) {
             cleanFlux(api, transactionID, intermediateID);
@@ -155,19 +171,17 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             String intermediateID) {
         try {
             api.closeTransaction(transactionID);
-            
-            
-            if (intermediateID != null) {
-            
-            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(LocaleContextHolder.getLocale().getLanguage(), intermediateID);
 
-            boolean esborrat = api.deleteFlowTemplate(flowTemplateRequest);
-            log.error("Resultat esborrat de flux de firma: " + esborrat);
-            
+            if (intermediateID != null) {
+
+                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(
+                        LocaleContextHolder.getLocale().getLanguage(), intermediateID);
+
+                boolean esborrat = api.deleteFlowTemplate(flowTemplateRequest);
+                log.error("Resultat esborrat de flux de firma: " + esborrat);
+
             }
-            
-           
 
         } catch (Throwable th) {
             /// XYZ ZZZZ
@@ -241,13 +255,16 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                     log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
                     log.info(" ---------------------- ");
 
-                    log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId() + "|");
+                    log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId()
+                            + "|");
                     request.getSession().setAttribute("flux", flux);
 
                     ModelAndView mav = new ModelAndView("finaliframe");
 
-                    mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb()
-                            + "/mostrarflux/" + transactionID + "/" + flux.getIntermediateServerFlowTemplateId());
+                    mav.addObject("URL_FINAL",
+                            request.getContextPath() + getContextWeb() + "/mostrarflux/"
+                                    + transactionID + "/"
+                                    + flux.getIntermediateServerFlowTemplateId());
                     return mav;
 
                 } // Final Case Firma OK
@@ -271,19 +288,20 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         log.error(error);
 
         HtmlUtils.saveMessageError(request, error);
-        
-        
+
         ModelAndView mav = new ModelAndView("finaliframe");
 
-        mav.addObject("URL_FINAL", request.getContextPath() + getRedirectToList().replace("redirect:", ""));
+        mav.addObject("URL_FINAL",
+                request.getContextPath() + getRedirectToList().replace("redirect:", ""));
         return mav;
 
     }
 
     @RequestMapping(value = "/mostrarflux/{transactionID}/{intermediateID}")
     public ModelAndView mostrarflux(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID") String transactionID, 
-            @PathVariable("intermediateID") String intermediateID) {
+            @PathVariable("transactionID")
+            String transactionID, @PathVariable("intermediateID")
+            String intermediateID) {
 
         ApiFlowTemplateSimple api = null;
 
@@ -301,9 +319,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             log.info("View Flow Template Url = " + url);
 
             ModelAndView mav = new ModelAndView("flowview");
-            mav.addObject("title", "Vista de Flux XYZ");
+            mav.addObject("title", "Confirmació del Flux a utilitzar en la Firma del Document XYZ");
             mav.addObject("urlflow", url);
-            mav.addObject("continueUrl", getContextWeb() + "/new?transactionID=" + transactionID + "&intermediateID="+ intermediateID);
+            mav.addObject("wizardstep", 2);
+            mav.addObject("continueUrl", getContextWeb() + "/new?transactionID=" + transactionID
+                    + "&intermediateID=" + intermediateID);
             mav.addObject("cancelUrl", getRedirectToList().replace("redirect:", ""));
             return mav;
 
@@ -333,16 +353,16 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                     LocaleContextHolder.getLocale().getLanguage(),
                     (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
         } catch (I18NException e) {
-            
+
             String msg = "Error arrancant petició a partir de flux: " + I18NUtils.getMessage(e);
 
             log.error(msg, e);
-            
+
             p.setEstat(ESTAT_PETICIO_ERROR);
             // XYZ ZZZZZ TRA
             p.setErrorMsg(msg);
             p.setErrorException(CONTEXT_WEB);
-            
+
             peticioLogicaEjb.update(p);
         }
 

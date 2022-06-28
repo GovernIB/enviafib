@@ -235,7 +235,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
                         // XYZ ZZZ
-                        HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament");
+                        HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament XYZ");
 
                         return new ModelAndView(
                                 new RedirectView(getContextWeb() + "/view/" + peticioID, true));
