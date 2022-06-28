@@ -47,7 +47,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		Authentication au = sc.getAuthentication();
 
 		if (au == null) {
-			// TODO traduccio
+			// XYZ TRADUCCIO: error.authentication.isnull
+
 			throw new LoginException("NO PUC ACCEDIR A LA INFORMACIO de AUTENTICACIO");
 		}
 
@@ -92,7 +93,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		try {
 			usuariEjb = EjbManager.getUsuariEJB();
 		} catch (Throwable e) {
-			// TODO traduccio
+			// XYZ TRADUCCIO: error.authentication.manager, username, e.getMessage()
+
 			throw new LoginException("No puc accedir al gestor d´obtenció de" + " informació de usuari per " + username
 					+ ": " + e.getMessage(), e);
 		}

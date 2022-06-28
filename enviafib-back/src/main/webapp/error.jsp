@@ -171,5 +171,6 @@ try {
     out.println("<html><body>S'ha produit un error dins error.jsp " +t.getMessage()+"</body></html>");
   } finally {
     // TODO DEBUG
+    
     log.error(" =================  FINAL ERROR.JSP (" + idError + ")");
   }%>

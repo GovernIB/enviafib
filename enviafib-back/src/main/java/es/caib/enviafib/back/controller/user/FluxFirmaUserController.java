@@ -55,8 +55,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
-        // XYZ ZZZ Posam el de la persona que ho ha solicitat per a que no falli
-        // XYZ PAU: Arreglat
+        // XYZ ZZZ Posam el del solicitat per a que no falli - #102
+
         long solicitantID = peticioForm.getPeticio().getSolicitantID();
         String solicitantNif = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
         peticioForm.getPeticio().setDestinatariNif(solicitantNif);
@@ -118,9 +118,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             return mav;
 
         } catch (AbstractApisIBException aaie) {
-
-         // XYZ TRADUCCIO
-            String msg = "Error desconegut durant la creació del Flux de Firma: " + aaie.getMessage();
+            String msg = I18NUtils.tradueix("error.flux.creacio", aaie.getMessage());
             log.error(msg, aaie);
 
             final String intermediateID = null;
@@ -170,8 +168,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             }
 
         } catch (Throwable th) {
-            // XYZ TRADUCCIO
-            log.error("Error esborrant flux de firma: " + th.getMessage());
+            String error = I18NUtils.tradueix("error.flux.esborrar", th.getMessage());
+            log.error(error, th);
         }
     }
 
@@ -198,23 +196,16 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             switch (status) {
 
                 case FlowTemplateSimpleStatus.STATUS_INITIALIZING: // = 0;
-                 // XYZ TRADUCCIO
-                    error = "S'ha rebut un estat inconsistent del procés de construcció del flux."
-                            + " (Inialitzant). Consulti amb el seu administrador.";
+                    error = I18NUtils.tradueix("procesdeflux.status.initializing");
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_IN_PROGRESS: // = 1;
-                 // XYZ TRADUCCIO
-                    error = "S'ha rebut un estat inconsistent de construcció del flux "
-                            + " (En Progrés). Consulti amb el seu administrador.";
-
+                    error = I18NUtils.tradueix("procesdeflux.status.inprogress");
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_FINAL_ERROR: // = -1;
                 {
-                 // XYZ TRADUCCIO
-                    error = "Error durant la construcció del flux: " + transactionStatus.getErrorMessage();
-
+                    error = I18NUtils.tradueix("procesdeflux.status.finalerror", transactionStatus.getErrorMessage());
                     String desc = transactionStatus.getErrorStackTrace();
                     if (desc != null) {
                         log.error(error + "\n" + desc);
@@ -224,9 +215,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_CANCELLED: // = -2;
-
-                 // XYZ TRADUCCIO
-                    error = "L'usuari ha cancelat la construcció del flux";
+                    error = I18NUtils.tradueix("procesdeflux.status.canceled");
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_FINAL_OK: // = 2;
@@ -250,16 +239,14 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                 } // Final Case Firma OK
 
                 default: {
-                 // XYZ TRADUCCIO
-                    error = "Codi d'estat de finalització desconegut (" + status + ")";
+                    error = I18NUtils.tradueix("procesdeflux.status.default", String.valueOf(status));
                 }
 
             } // Final Switch Firma
 
         } catch (AbstractApisIBException aaie) {
 
-         // XYZ TRADUCCIO
-            error = "Error desconegut durant la creació del Flux de Firma: " + aaie.getMessage();
+            error = I18NUtils.tradueix("error.error.flux.creacioflux", aaie.getMessage());
             log.error(error, aaie);
             cleanFlux(api, transactionID, null);
 
@@ -296,7 +283,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             log.info("View Flow Template Url = " + url);
 
             ModelAndView mav = new ModelAndView("flowview");
-            mav.addObject("title", "Vista de Flux XYZ");
+            mav.addObject("title", I18NUtils.tradueix("vista.flux"));
             mav.addObject("urlflow", url);
             mav.addObject("continueUrl",
                     getContextWeb() + "/new?transactionID=" + transactionID + "&intermediateID=" + intermediateID);
@@ -305,10 +292,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
         } catch (AbstractApisIBException aaie) {
 
-         // XYZ TRADUCCIO
-            String error = "Error desconegut durant la creació del Flux de Firma: " + aaie.getMessage();
+            String error = I18NUtils.tradueix("error.flux.creacio", aaie.getMessage());
             log.error(error, aaie);
-
             HtmlUtils.saveMessageError(request, error);
 
             return new ModelAndView(getRedirectToList());
@@ -327,13 +312,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                     (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
         } catch (I18NException e) {
 
-            String msg = "Error arrancant petició a partir de flux: " + I18NUtils.getMessage(e);
-
-            log.error(msg, e);
+            String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
+            log.error(error, e);
 
             p.setEstat(ESTAT_PETICIO_ERROR);
-         // XYZ TRADUCCIO
-            p.setErrorMsg(msg);
+            p.setErrorMsg(error);
             p.setErrorException(CONTEXT_WEB);
 
             peticioLogicaEjb.update(p);
