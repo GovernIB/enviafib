@@ -53,7 +53,6 @@ public class BasePreparer implements ViewPreparer, Constants {
 		}
 
 		// URL
-		// TODO ficarho dins cache (veure Capperpare.java)
 		HttpServletRequest httpRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
 		{
@@ -85,9 +84,9 @@ public class BasePreparer implements ViewPreparer, Constants {
 		// Pipella
 		request.put("pipella", attributeContext.getAttribute("pipella"));
 
-		// TODO GENAPP
 		// Warning for each ROLE
-
+		// Aquí es poden afegir avisos per a cada rol
+		
 		// Avisos
 		Map<String, Long> avisos = new HashMap<String, Long>();
 		// avisos.put(rol, <<Number of warnings>>);

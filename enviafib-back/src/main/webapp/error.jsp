@@ -15,9 +15,6 @@ protected final Logger log = Logger.getLogger(getClass());
 long idError = System.currentTimeMillis() % 100;
 try {
 
-    // TODO DEBUG
-    
-    
     log.error(" =================  ENTRA ERROR.JSP (" + idError 
         + " - " + (String)request.getAttribute("javax.servlet.error.request_uri") 
         + request.getSession().getId() + ") ===================");
@@ -170,7 +167,5 @@ try {
     log.error(t.getMessage(), t);
     out.println("<html><body>S'ha produit un error dins error.jsp " +t.getMessage()+"</body></html>");
   } finally {
-    // TODO DEBUG
-    
     log.error(" =================  FINAL ERROR.JSP (" + idError + ")");
   }%>

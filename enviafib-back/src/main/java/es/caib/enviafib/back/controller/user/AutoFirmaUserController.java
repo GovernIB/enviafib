@@ -294,7 +294,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             log.info("administrationID: ]" + administrationID + "[");
             log.info("signerEmail: ]" + signerEmail + "[");
 
-            // TODO: Afegir a base de dades a la 1.0.2 #101
+            // TODO #101: Afegir a base de dades a la 1.0.2 
             final String reason = "Prova de reason"; // form.getMotiu();
             final String location = null; // form.getLocation();
 

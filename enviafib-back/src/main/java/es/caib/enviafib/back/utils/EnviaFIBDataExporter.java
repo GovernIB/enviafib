@@ -66,8 +66,6 @@ public class  EnviaFIBDataExporter implements IDataExporter {
 	public DataExported exportList(BaseFilterForm filterForm, List<? extends IGenAppEntity> list, Field<?>[] allFields,
 			Map<Field<?>, Map<String, String>> mapValuesByField, Field<?>[] primaryKeys) throws Exception {
 
-		// TODO Falten columnes adicionals
-
 		// 1.- Passar llistat a ExportData
 
 		// 1.1 Columnes Visibles
@@ -149,11 +147,11 @@ public class  EnviaFIBDataExporter implements IDataExporter {
 				break;
 			}
 			AdditionalField<?, ?> adField = additionalFields.get(pos);
-			// TODO Falta Value byField
+			// Falta Value byField
 			Map<?, String> values = adField.getValueMap();
 
 			for (int j = 0; j < len; j++) {
-				// TODO nomes claus primaries uniques
+				// Nomes claus primaries uniques
 				Object keyValue = Utils.getValueOfJavaField(list.get(j), primaryKeys[0].javaName);
 
 				String str = values.get(keyValue);
@@ -208,8 +206,8 @@ public class  EnviaFIBDataExporter implements IDataExporter {
 					item = new ExportItem(obj.toString(), obj);
 				}
 
-				// TODO FALTEN TIPUS TIME, DATE i DATETIME
-				// TODO FALTEN TIPUS FLOAT, DOUBLE I BIGDECINAL
+				// FALTEN TIPUS TIME, DATE i DATETIME
+				// FALTEN TIPUS FLOAT, DOUBLE I BIGDECINAL
 
 				items[j][column] = item;
 			}
@@ -237,7 +235,7 @@ public class  EnviaFIBDataExporter implements IDataExporter {
 					Object value = getRecursiveValueOfJavaField(list.get(j), field);
 					str = String.valueOf(value);
 				} else {
-					// TODO nomes claus primaries uniques
+					// Nomes claus primaries uniques
 					Object primaryKeyValue = Utils.getValueOfJavaField(list.get(j), primaryKeys[0].javaName);
 					str = values.get(primaryKeyValue);
 				}

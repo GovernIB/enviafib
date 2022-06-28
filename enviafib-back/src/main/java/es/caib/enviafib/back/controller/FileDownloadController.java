@@ -127,8 +127,8 @@ public class FileDownloadController {
     
     public static String fileUrl(Fitxer arxiu) {
       if (arxiu == null) {
-        // TODO Llançar error
-        return "/img/blank.gif";
+          log.error("FileDownloadController:: fileUrl: S'ha rebut un arxiu null", new Exception());
+          return null;
       } else {
         // {arxiuId}/{filename}/{contentType}
         String idfile = HibernateFileUtil.encryptFileID(arxiu.getFitxerID());

@@ -77,7 +77,6 @@ public class InitServlet extends HttpServlet {
         }
 
         // Sistema de Traduccions LOGIC
-        // TODO Moure a logic
         try {
             Class.forName(I18NLogicUtils.class.getName());
         } catch (Throwable th) {

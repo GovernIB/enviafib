@@ -143,13 +143,13 @@ ul.nav-wizard.nav-wizard-backnav .active ~ li a:focus {
 
 <ul class='nav nav-wizard'>
   
-  <li ${(wizardstep==1)?"class='active'":""}><a ${(wizardstep>=1)?'href="#step1" data-toggle="tab"':''} >Inicialització i Creació del Flux XYZ</a></li>
+  <li ${(wizardstep==1)?"class='active'":""}><a ${(wizardstep>=1)?'href="#step1" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.init" /></a></li>
   
-  <li ${(wizardstep==2)?"class='active'":""}><a ${(wizardstep>=2)?'href="#step2" data-toggle="tab"':''} >Validació del Flux XYZ</a></li>
+  <li ${(wizardstep==2)?"class='active'":""}><a ${(wizardstep>=2)?'href="#step2" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.validar" /></a></li>
   
-  <li ${(wizardstep==3)?"class='active'":""}><a ${(wizardstep>=3)?'href="#step3" data-toggle="tab"':''} >Fitxer a Signar XYZ</a></li>
+  <li ${(wizardstep==3)?"class='active'":""}><a ${(wizardstep>=3)?'href="#step3" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.fitxer" /></a></li>
 
-  <li ${(wizardstep==4)?"class='active'":""}><a ${(wizardstep>=4)?'href="#step4" data-toggle="tab"':''} >Final XYZ</a></li>
+  <li ${(wizardstep==4)?"class='active'":""}><a ${(wizardstep>=4)?'href="#step4" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.final" /></a></li>
 
 </ul>
 <br/>

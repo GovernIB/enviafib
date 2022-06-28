@@ -61,12 +61,7 @@ public class PrincipalController {
 
 		if (pipella != null && pipella.trim().length() != 0) {
 
-			// TODO GENAPP Afegir altres pipelles !!!!!
-			/*
-			 * if ("ROLE_ADEN".equals(pipella)) { //return new ModelAndView("role_aden");
-			 * return new ModelAndView(new RedirectView("/aden/peticionscaducades/list/1",
-			 * true)); }
-			 */
+			// Es poden afegir altres pipelles !!!!!
 
 			if ("admin".equals(pipella)) {
 				return new ModelAndView(new RedirectView("/admin/usuari/list/1", true));

@@ -2,7 +2,7 @@
 %><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
 <label style="font-size: 1.25rem;font-weight: bold;">
-Petició a partir d'un flux de firmes XYZ
+<fmt:message key="menu.flux.title" />
 </label>
 
 <%@include file="wizard_component.jsp" %>

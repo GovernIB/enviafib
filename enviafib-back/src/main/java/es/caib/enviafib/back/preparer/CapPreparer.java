@@ -23,7 +23,5 @@ public class CapPreparer implements ViewPreparer {
 	@Override
 	public void execute(Request tilesRequest, AttributeContext attributeContext) throws PreparerException {
 
-		// TODO GENAPP Select available languages
-
 	}
 }
