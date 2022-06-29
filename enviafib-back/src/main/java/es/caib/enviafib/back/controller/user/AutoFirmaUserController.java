@@ -111,11 +111,14 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
     @RequestMapping(value = "/viewiniframe", method = RequestMethod.GET)
     public ModelAndView viewInIframe(HttpServletRequest request) throws Exception {
+        log.info("Estamos en viewiniframe");
 
         String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
         if (log.isDebugEnabled()) {
             log.debug("ENTRA A /viewiniframe => redirectUrl: " + redirectUrl);
         }
+
+        log.info("Estamos en viewiniframe. URL: " + redirectUrl);
 
         ModelAndView mav = new ModelAndView("firmasimpleweb_iframe");
         mav.addObject("urlToIFrameCode", redirectUrl);

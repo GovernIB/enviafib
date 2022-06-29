@@ -121,7 +121,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     hiddens.remove(DATAFINAL);
 
                     Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
-                    peticioForm.addAdditionalButton(new AdditionalButton("fas fa-file", "user.infosignatura",
+                    peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
                             "/user/infoSignatura/view/" + infosignaturaID,  "btn-info"));
 
                     
