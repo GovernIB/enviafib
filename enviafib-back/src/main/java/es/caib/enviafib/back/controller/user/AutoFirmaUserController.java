@@ -21,9 +21,12 @@ import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleStatus;
 import org.fundaciobit.apisib.apifirmasimple.v1.jersey.ApiFirmaWebSimpleJersey;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
+import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
+import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -130,9 +133,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 PeticioFields.PETICIOPORTAFIRMES.equal(transactionID));
         // peticioIdByTransactionId.get(transactionID);
 
-        log.info("Consulta transactionID[" + transactionID + "] => " + peticioID);
+        if (peticioID == null) {
+            throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
+                    new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
+        }
 
-        // TODO CHeck de peticioID
+        log.info("Consulta transactionID[" + transactionID + "] => " + peticioID);
 
         String errorMsg;
         String errorException;
@@ -149,55 +155,32 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             int status = transactionStatus.getStatus();
 
             switch (status) {
-
-                case FirmaSimpleStatus.STATUS_INITIALIZING: // = 0;
-
-                {
-                    errorException = "";
-                    // XYZ ZZZ
-                    errorMsg = "S'ha rebut un estat inconsistent del proces de firma"
-                            + " (inicialitzant). Pot ser s'hagi produït un error en el Plugin de Firma."
-                            + " Consulti amb el seu administrador.";
-                }
-                break;
-
-                case FirmaSimpleStatus.STATUS_IN_PROGRESS: // = 1;
-                {
-                    errorException = "";
-                    // XYZ ZZZ
-                    errorMsg = "S'ha rebut un estat inconsistent del proces de firma"
-                            + " (en progrés). Pot ser s'hagi produït un error en el Plugin de Firma."
-                            + " Consulti amb el seu administrador.";
-                }
-                break;
-
-                case FirmaSimpleStatus.STATUS_FINAL_ERROR: // = -1;
-                {
-                    // XYZ ZZZ
-                    String msg = "Error durant la realització de les firmes de la transacció " + transactionID + ": "
-                            + transactionStatus.getErrorMessage();
-                    String desc = transactionStatus.getErrorStackTrace();
-
-                    errorException = desc;
-                    // XYZ ZZZ
-                    errorMsg = msg;
-
-                }
-                break;
-
-                case FirmaSimpleStatus.STATUS_CANCELLED: // = -2;
-                {
+                case FirmaSimpleStatus.STATUS_INITIALIZING: {
                     errorException = null;
-                    // XYZ ZZZ
-                    errorMsg = "Durant el procés de firmes," + " l'usuari ha cancelat la transacció amb ID "
-                            + transactionID + ".";
-
+                    errorMsg = I18NUtils.tradueix("procesdefirma.status.initializing");
                 }
                 break;
 
-                case FirmaSimpleStatus.STATUS_FINAL_OK: // = 2;
-                {
+                case FirmaSimpleStatus.STATUS_IN_PROGRESS: {
+                    errorException = null;
+                    errorMsg = I18NUtils.tradueix("procesdefirma.status.inprogress");
+                }
+                break;
 
+                case FirmaSimpleStatus.STATUS_FINAL_ERROR: {
+                    errorException = transactionStatus.getErrorStackTrace();
+                    errorMsg = I18NUtils.tradueix("procesdefirma.status.finalerror", transactionID,
+                            transactionStatus.getErrorMessage());
+                }
+                break;
+
+                case FirmaSimpleStatus.STATUS_CANCELLED: {
+                    errorException = null;
+                    errorMsg = I18NUtils.tradueix("procesdefirma.status.canceled", transactionID);
+                }
+                break;
+
+                case FirmaSimpleStatus.STATUS_FINAL_OK: {
                     List<FirmaSimpleSignatureStatus> results = fullTransactionStatus.getSignaturesStatusList();
 
                     final boolean isDebug = true; // log.isDebugEnabled();
@@ -206,7 +189,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     }
 
                     FirmaSimpleSignatureResult fssr = null;
-
                     for (FirmaSimpleSignatureStatus signatureStatus : results) {
 
                         String signID = signatureStatus.getSignID();
@@ -220,58 +202,47 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                                     + signID + ")");
                             continue;
                         }
-
                         fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
-
-                    } // Final for de fitxers firmats
+                    }
+                    // Final for de fitxers firmats
 
                     if (fssr != null && fssr.getSignedFileInfo() != null) {
                         peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageSuccess(request, "Realitzada firma correctament");
+                        String msg = I18NUtils.tradueix("procesdefirma.status.final.firmatok");
+                        HtmlUtils.saveMessageSuccess(request, msg);
 
                         return new ModelAndView(new RedirectView(getContextWeb() + "/view/" + peticioID, true));
                     } else {
                         errorException = null;
-                        // XYZ ZZZ TRA
-                        errorMsg = "No s'ha retornat cap firma amb SIGNID=" + SIGNID;
+                        errorMsg = I18NUtils.tradueix("procesdefirma.status.final.firmaterror", SIGNID);
                     }
-
                 }
                 break;
 
                 default:
                     errorException = null;
-                    errorMsg = "Estat desconegut enviat per PortaIFB: " + status;
-
-            } // Final Switch Global
-
-        } catch (
-
-        Exception e) {
-
-            errorMsg = "Rebut un error intentant processar el resultat de la transacció de firma de fitxers: "
-                    + e.getMessage();
+                    errorMsg = I18NUtils.tradueix("procesdefirma.status.default", String.valueOf(status));
+            }
+            // Final Switch Global
+        } catch (Exception e) {
             errorException = ExceptionUtils.getStackTrace(e);
+            errorMsg = I18NUtils.tradueix("procesdefirma.error", e.getMessage());
 
         } finally {
             try {
-
                 if (api != null && transactionID != null) {
                     try {
                         api.closeTransaction(transactionID);
                     } catch (Throwable th) {
-                        th.printStackTrace();
+                        log.error(th.getMessage(),th);
                     }
                 }
-
             } catch (Exception e2) {
-                e2.printStackTrace();
+                log.error(e2.getMessage(),e2);
             }
         }
 
-        // XYZ ZZZ
         log.error(errorMsg);
         if (errorException != null) {
             log.error(errorException);
@@ -280,20 +251,20 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         // ANAR A LLISTAT DE PETICIONS
         HtmlUtils.saveMessageError(request, errorMsg);
 
-        // XYZ ZZZ Només volem saber si existeix !!!!!!
         Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
+        if (pet == null) {
+            log.error("No existeix la petició");
+            throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
+                    new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
+        }
         pet.setErrorMsg(errorMsg);
         pet.setErrorException(errorException);
         pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
         pet.setEstat(Constants.ESTAT_PETICIO_ERROR);
 
-        // XYZ ZZZ FALTA POSAR ERROR DINS PETICIO
-
         peticioLogicaEjb.update(pet);
-
         return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
-
     }
 
     /**
@@ -323,7 +294,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             log.info("administrationID: ]" + administrationID + "[");
             log.info("signerEmail: ]" + signerEmail + "[");
 
-            // XYZ ZZZ
+            // TODO #101: Afegir a base de dades a la 1.0.2 
             final String reason = "Prova de reason"; // form.getMotiu();
             final String location = null; // form.getLocation();
 
@@ -333,8 +304,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             final String langDoc = peticio.getIdiomaDoc();
 
             FirmaSimpleCommonInfo commonInfoSignature;
-            // XYZ ZZZ
-            String signProfile = null;
+
+            String signProfile = Configuracio.getPortafibProfile();
             commonInfoSignature = new FirmaSimpleCommonInfo(signProfile, langUI, username, administrationID,
                     signerEmail);
 
@@ -378,36 +349,26 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             return new String[] { transactionID, redirectUrl };
 
         } catch (AbstractApisIBException e) {
-
-            String msg = "Error cridant a PortaFIB per a la signatura immediata: " + e.getMessage();
-
-            log.error(msg, e);
-
-            // XYZ ZZZ TRA
-            throw new I18NException(msg);
-
+            log.error("Error cridant a PortaFIB per a la signatura immediata", e);
+            throw new I18NException("error.signaturainmediata", e.getMessage());
         } catch (Exception e) {
 
-            String msg = "Error desconegut processant entrada de dades o inicialitzant el proces de firma: "
-                    + e.getMessage();
-
-            log.error(msg, e);
-
+            log.error("Error desconegut processant entrada de dades o inicialitzant el proces de firma ", e);
             try {
                 // Només s'executa si es WEB
                 if (transactionID != null) {
                     try {
                         apiWeb.closeTransaction(transactionID);
                     } catch (Throwable th) {
-                        th.printStackTrace();
+                        log.error(th.getMessage(),th);
                     }
                 }
 
             } catch (Exception e2) {
-                e2.printStackTrace();
+                log.error(e2.getMessage(),e2);
             }
 
-            throw new I18NException("genapp.comodi", msg);
+            throw new I18NException("error.procesdefirma", e.getMessage());
         }
     }
 

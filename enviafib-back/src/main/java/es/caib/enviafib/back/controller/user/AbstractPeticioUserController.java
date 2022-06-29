@@ -50,7 +50,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         firmaPathByTipus.put(TIPUS_PETICIO_NIF, FirmaPerNifUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_AUTOFIRMA, AutoFirmaUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_FLUX, FluxFirmaUserController.CONTEXT_WEB);
-        // TODO FALTEN LA RESTA DE TIPUS
+        // TODO AFTER: FALTEN LA RESTA DE TIPUS
     }
 
     @Override
@@ -82,8 +82,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         List<StringKeyValue> tmpList = null;
         tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
 
-        // TODO: Traduir "Qualsevol valor" ->
-        // tmpList.add(new StringKeyValue("","Qualsevol valor"));
+        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
 
         return tmpList;
     }

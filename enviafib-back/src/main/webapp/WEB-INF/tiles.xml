@@ -16,6 +16,11 @@
         <put-attribute name="contingut" value="base.contingut" />
         <put-attribute name="peu" value="base.peu" />
     </definition>
+    
+    
+    <definition name="fullview" template="/WEB-INF/jsp/layout/onlycontentlayout.jsp" preparer="es.caib.enviafib.back.preparer.BasePreparer">
+        <put-attribute name="contingut" value="base.contingut" />
+    </definition>
 
 
     <definition name="principal.body" template="/WEB-INF/web/tiles/principal/principal.jsp"/>
@@ -57,7 +62,7 @@
     </definition>
 
     <!--  ===========  USER  ================== -->
-        
+
     <definition name="user" extends="base.definition">
         <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_user.jsp" />
          <put-attribute name="pipella" value="user" />
@@ -95,7 +100,7 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/urlflow_iframe.jsp" />
     </definition>
     
-        <definition name="finaliframe" extends="user">
+    <definition name="finaliframe" extends="fullview">
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/final_iframe.jsp" />
     </definition>
 

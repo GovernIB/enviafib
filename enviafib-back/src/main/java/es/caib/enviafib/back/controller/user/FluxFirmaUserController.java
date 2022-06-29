@@ -19,6 +19,7 @@ import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,7 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -45,21 +47,43 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
     @Override
     public int getTipusPeticio() {
-
         return TIPUS_PETICIO_FLUX;
     }
 
     @Override
-    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
-            throws I18NException {
+    public String getTileForm() {
+        return "flowview";
+    }
+
+    @Override
+    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
+            ModelAndView mav) throws I18NException {
 
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
-        // XYZ ZZZ Posam el de la persona que ho ha solicitat per a que no falli
-        peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
+
+        // XYZ ZZZ Posam el del solicitat per a que no falli - #102
+
+        long solicitantID = peticioForm.getPeticio().getSolicitantID();
+        String solicitantNif = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
+        peticioForm.getPeticio().setDestinatariNif(solicitantNif);
+
+        // peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
+
         peticioForm.addHiddenField(DESTINATARINIF);
+
+        peticioForm.setTitleCode("emptystring");
+
+        mav.addObject("wizardstep", 3);
 
         return peticioForm;
 
+    }
+
+    @Override
+    public void postValidate(HttpServletRequest request, PeticioForm peticioForm,
+            BindingResult result) throws I18NException {
+
+        request.setAttribute("wizardstep", 3);
     }
 
     @RequestMapping(value = "/crearflux", method = RequestMethod.GET)
@@ -83,8 +107,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             final boolean visibleDescription = false;
 
             FlowTemplateSimpleGetTransactionIdRequest transactionRequest;
-            transactionRequest = new FlowTemplateSimpleGetTransactionIdRequest(languageUI, saveOnServer, name, descr,
-                    visibleDescription);
+            transactionRequest = new FlowTemplateSimpleGetTransactionIdRequest(languageUI,
+                    saveOnServer, name, descr, visibleDescription);
 
             // Enviam informació bàsica
             transactionID = api.getTransactionID(transactionRequest);
@@ -93,12 +117,13 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             log.info("SaveOnServer  = |" + saveOnServer + "|");
             log.info("TransactionID = |" + transactionID + "|");
 
-            final String callBackUrl = getAbsoluteControllerBase(request, getContextWeb()) + "/callbackflux/"
-                    + transactionID;
+            final String callBackUrl = getAbsoluteControllerBase(request, getContextWeb())
+                    + "/callbackflux/" + transactionID;
 
             // Per ara només suportam FULLVIEW
             FlowTemplateSimpleStartTransactionRequest startTransactionInfo;
-            startTransactionInfo = new FlowTemplateSimpleStartTransactionRequest(transactionID, callBackUrl);
+            startTransactionInfo = new FlowTemplateSimpleStartTransactionRequest(transactionID,
+                    callBackUrl);
 
             String redirectUrl = api.startTransaction(startTransactionInfo);
 
@@ -108,12 +133,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
             ModelAndView mav = new ModelAndView("flowview");
             mav.addObject("urlflow", redirectUrl);
+            mav.addObject("wizardstep", 1);
             return mav;
 
         } catch (AbstractApisIBException aaie) {
-
-            // XYZ ZZZ TRA
-            String msg = "Error desconegut durant la creació del Flux de Firma: " + aaie.getMessage();
+            String msg = I18NUtils.tradueix("error.flux.creacio", aaie.getMessage());
             log.error(msg, aaie);
 
             final String intermediateID = null;
@@ -127,7 +151,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public ModelAndView crearPeticioGet(HttpServletRequest request, HttpServletResponse response) throws I18NException {
+    public ModelAndView crearPeticioGet(HttpServletRequest request, HttpServletResponse response)
+            throws I18NException {
 
         ModelAndView mav = super.crearPeticioGet(request, response);
 
@@ -147,7 +172,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         return mav;
     }
 
-    protected void cleanFlux(ApiFlowTemplateSimple api, String transactionID, String intermediateID) {
+    protected void cleanFlux(ApiFlowTemplateSimple api, String transactionID,
+            String intermediateID) {
         try {
             api.closeTransaction(transactionID);
 
@@ -163,14 +189,15 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             }
 
         } catch (Throwable th) {
-            /// XYZ ZZZZ
-            log.error("Error esborrant flux de firma: " + th.getMessage());
+            String error = I18NUtils.tradueix("error.flux.esborrar", th.getMessage());
+            log.error(error, th);
         }
     }
 
     @RequestMapping(value = "/callbackflux/{transactionID}")
     public ModelAndView finalProcesDeFlux(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID") String transactionID) {
+            @PathVariable("transactionID")
+            String transactionID) {
 
         log.info("CallBackFlux transactionID[" + transactionID + "] dins mapping ...");
 
@@ -182,7 +209,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
             api = getApiFlowTemplateSimple();
 
-            FlowTemplateSimpleGetFlowResultResponse fullResult = api.getFlowTemplateResult(transactionID);
+            FlowTemplateSimpleGetFlowResultResponse fullResult = api
+                    .getFlowTemplateResult(transactionID);
 
             FlowTemplateSimpleStatus transactionStatus = fullResult.getStatus();
 
@@ -191,23 +219,16 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             switch (status) {
 
                 case FlowTemplateSimpleStatus.STATUS_INITIALIZING: // = 0;
-                    // XYZ ZZZ TRA
-                    error = "S'ha rebut un estat inconsistent del procés de construcció del flux."
-                            + " (Inialitzant). Consulti amb el seu administrador.";
+                    error = I18NUtils.tradueix("procesdeflux.status.initializing");
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_IN_PROGRESS: // = 1;
-                    // XYZ ZZZ TRA
-                    error = "S'ha rebut un estat inconsistent de construcció del flux "
-                            + " (En Progrés). Consulti amb el seu administrador.";
-
+                    error = I18NUtils.tradueix("procesdeflux.status.inprogress");
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_FINAL_ERROR: // = -1;
                 {
-                    // XYZ ZZZ TRA
-                    error = "Error durant la construcció del flux: " + transactionStatus.getErrorMessage();
-
+                    error = I18NUtils.tradueix("procesdeflux.status.finalerror", transactionStatus.getErrorMessage());
                     String desc = transactionStatus.getErrorStackTrace();
                     if (desc != null) {
                         log.error(error + "\n" + desc);
@@ -217,42 +238,42 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_CANCELLED: // = -2;
-
-                    // XYZ ZZZ TRA
-                    error = "L'usuari ha cancelat la construcció del flux";
+                    error = I18NUtils.tradueix("procesdeflux.status.canceled");
                 break;
 
                 case FlowTemplateSimpleStatus.STATUS_FINAL_OK: // = 2;
                 {
                     FlowTemplateSimpleFlowTemplate flux = fullResult.getFlowInfo();
 
-                    // XYZ ZZZ DEBUG
+                    // XYZ Debug a partir de setembre
                     log.info(" ======= FLUX ========= ");
                     log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
                     log.info(" ---------------------- ");
 
-                    log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId() + "|");
+                    log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId()
+                            + "|");
                     request.getSession().setAttribute("flux", flux);
 
                     ModelAndView mav = new ModelAndView("finaliframe");
 
-                    mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/mostrarflux/"
-                            + transactionID + "/" + flux.getIntermediateServerFlowTemplateId());
+                    mav.addObject("URL_FINAL",
+                            request.getContextPath() + getContextWeb() + "/mostrarflux/"
+                                    + transactionID + "/"
+                                    + flux.getIntermediateServerFlowTemplateId());
+
                     return mav;
 
                 } // Final Case Firma OK
 
                 default: {
-                    // XYZ ZZZ TRA
-                    error = "Codi d'estat de finalització desconegut (" + status + ")";
+                    error = I18NUtils.tradueix("procesdeflux.status.default", String.valueOf(status));
                 }
 
             } // Final Switch Firma
 
         } catch (AbstractApisIBException aaie) {
 
-            // XYZ ZZZ TRA
-            error = "Error desconegut durant la creació del Flux de Firma: " + aaie.getMessage();
+            error = I18NUtils.tradueix("error.error.flux.creacioflux", aaie.getMessage());
             log.error(error, aaie);
             cleanFlux(api, transactionID, null);
 
@@ -264,15 +285,17 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
         ModelAndView mav = new ModelAndView("finaliframe");
 
-        mav.addObject("URL_FINAL", request.getContextPath() + getRedirectToList().replace("redirect:", ""));
+        mav.addObject("URL_FINAL",
+                request.getContextPath() + getRedirectToList().replace("redirect:", ""));
         return mav;
 
     }
 
     @RequestMapping(value = "/mostrarflux/{transactionID}/{intermediateID}")
     public ModelAndView mostrarflux(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID") String transactionID,
-            @PathVariable("intermediateID") String intermediateID) {
+            @PathVariable("transactionID")
+            String transactionID, @PathVariable("intermediateID")
+            String intermediateID) {
 
         ApiFlowTemplateSimple api = null;
 
@@ -283,25 +306,27 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
             FlowTemplateSimpleViewFlowTemplateRequest viewFlowRequest;
-            viewFlowRequest = new FlowTemplateSimpleViewFlowTemplateRequest(languageUI, intermediateID);
+            viewFlowRequest = new FlowTemplateSimpleViewFlowTemplateRequest(languageUI,
+                    intermediateID);
             String url = api.getUrlToViewFlowTemplate(viewFlowRequest);
 
             log.info("View Flow Template Url = " + url);
 
             ModelAndView mav = new ModelAndView("flowview");
-            mav.addObject("title", "Vista de Flux XYZ");
+            mav.addObject("title", I18NUtils.tradueix("vista.flux"));
             mav.addObject("urlflow", url);
-            mav.addObject("continueUrl",
-                    getContextWeb() + "/new?transactionID=" + transactionID + "&intermediateID=" + intermediateID);
+
+            mav.addObject("wizardstep", 2);
+            mav.addObject("continueUrl", getContextWeb() + "/new?transactionID=" + transactionID
+                    + "&intermediateID=" + intermediateID);
+
             mav.addObject("cancelUrl", getRedirectToList().replace("redirect:", ""));
             return mav;
 
         } catch (AbstractApisIBException aaie) {
 
-            // XYZ ZZZ TRA
-            String error = "Error desconegut durant la creació del Flux de Firma: " + aaie.getMessage();
+            String error = I18NUtils.tradueix("error.flux.creacio", aaie.getMessage());
             log.error(error, aaie);
-
             HtmlUtils.saveMessageError(request, error);
 
             return new ModelAndView(getRedirectToList());
@@ -316,18 +341,15 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         PeticioJPA p = super.create(request, peticio);
 
         try {
-            // XYZ ZZZ Falta provar
             peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), LocaleContextHolder.getLocale().getLanguage(),
                     (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
         } catch (I18NException e) {
 
-            String msg = "Error arrancant petició a partir de flux: " + I18NUtils.getMessage(e);
-
-            log.error(msg, e);
+            String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
+            log.error(error, e);
 
             p.setEstat(ESTAT_PETICIO_ERROR);
-            // XYZ ZZZZZ TRA
-            p.setErrorMsg(msg);
+            p.setErrorMsg(error);
             p.setErrorException(CONTEXT_WEB);
 
             peticioLogicaEjb.update(p);

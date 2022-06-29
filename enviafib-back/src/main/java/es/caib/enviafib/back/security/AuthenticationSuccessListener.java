@@ -47,8 +47,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		Authentication au = sc.getAuthentication();
 
 		if (au == null) {
-			// TODO traduccio
-			throw new LoginException("NO PUC ACCEDIR A LA INFORMACIO de AUTENTICACIO");
+		    String msg = I18NUtils.tradueix("error.authentication.isnull");
+			throw new LoginException(msg);
 		}
 
 		User user = (User) au.getPrincipal();
@@ -92,9 +92,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		try {
 			usuariEjb = EjbManager.getUsuariEJB();
 		} catch (Throwable e) {
-			// TODO traduccio
-			throw new LoginException("No puc accedir al gestor d´obtenció de" + " informació de usuari per " + username
-					+ ": " + e.getMessage(), e);
+            String msg = I18NUtils.tradueix("error.authentication.manager", username, e.getMessage());
+            throw new LoginException(msg, e);
 		}
 
 		List<Usuari> listUsuariPersona;
@@ -146,7 +145,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 						}
 					}
 					persona.setNom(nom);
-					// TODO: Falta idioma d'usuari (idiomaId)
+					// TODO #103: Falta idioma d'usuari (idiomaId) Afegir IdiomaId al a taula efi_usuari 
 					persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
 					persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
 					persona.setUsername(username);
@@ -200,7 +199,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
 		);
 
-		// TODO GENAPP Obtenir idioma de l'usuari. Null = idioma per defecte.
+		// TODO #103: Obtenir idioma de l'usuari. Null = idioma per defecte. 
 		String language = "ca";
 
 		LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona,
@@ -209,8 +208,6 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		// and set the authentication of the current Session context
 		SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());
 
-		// TODO: Mirar usuari - Executar pluguin de UserInformation - Introduir la info
-		// al attribut de usuari sol·licitant
 		log.info(">>>>>> Final del Process d'autenticació.");
 		log.info(" =================================================================");
 

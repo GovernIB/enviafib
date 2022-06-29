@@ -102,8 +102,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public boolean isActiveFormView() {
         return false;
     }
-    
-    
 
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
@@ -147,20 +145,24 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
-            
+
             switch (peticio.getTipus()) {
                 case Constants.TIPUS_PETICIO_NIF:
 
                     switch ((int) peticio.getEstat()) {
                         case Constants.ESTAT_PETICIO_CREADA:
-                            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", codi_edit,
-                                    getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-primary"));
-                            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play", codi_enmarxa,
-                                    getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
                             filterForm.addAdditionalButtonByPK(peticioID,
-                                    new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
-                                            + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-                                            "btn-danger"));
+                                    new AdditionalButton("fas fa-edit", codi_edit,
+                                            getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/",
+                                            "btn-primary"));
+                            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play",
+                                    codi_enmarxa, getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
+                            filterForm
+                                    .addAdditionalButtonByPK(peticioID,
+                                            new AdditionalButton("fas fa-trash icon-white", codi_delete,
+                                                    "javascript: openModal('" + request.getContextPath()
+                                                            + getContextWeb() + "/" + peticioID + "/delete','show')",
+                                                    "btn-danger"));
                         break;
                         case Constants.ESTAT_PETICIO_EN_PROCES:
                             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
@@ -172,32 +174,38 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                             Fitxer file = peticio.getFitxerFirmat();
 
-                            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
-                                    codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
-                            
+                            filterForm.addAdditionalButtonByPK(peticioID,
+                                    new AdditionalButton("fas fa-envelope icon-white", codi_email,
+                                            "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+
                             if (peticio.getInfoSignaturaID() != null) {
                                 filterForm.addAdditionalButtonByPK(peticioID,
                                         new AdditionalButton("fas fa-file", "info.signatura",
-                                                "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(), "btn-info"));
+                                                "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(),
+                                                "btn-info"));
                             }
-                            filterForm.addAdditionalButtonByPK(peticioID,
-                                    new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
-                                            + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-                                            "btn-danger"));
+                            filterForm
+                                    .addAdditionalButtonByPK(peticioID,
+                                            new AdditionalButton("fas fa-trash icon-white", codi_delete,
+                                                    "javascript: openModal('" + request.getContextPath()
+                                                            + getContextWeb() + "/" + peticioID + "/delete','show')",
+                                                    "btn-danger"));
                         }
                         break;
 
                         case Constants.ESTAT_PETICIO_ERROR:
                             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
                                     getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
-                            filterForm.addAdditionalButtonByPK(peticioID,
-                                    new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
-                                            + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-                                            "btn-danger"));
+                            filterForm
+                                    .addAdditionalButtonByPK(peticioID,
+                                            new AdditionalButton("fas fa-trash icon-white", codi_delete,
+                                                    "javascript: openModal('" + request.getContextPath()
+                                                            + getContextWeb() + "/" + peticioID + "/delete','show')",
+                                                    "btn-danger"));
                         break;
                     }
-                
-                    break;
+
+                break;
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
@@ -206,9 +214,8 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                             new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
-                    
-                
-                    break;
+
+                break;
                 case Constants.TIPUS_PETICIO_FLUX:
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
@@ -217,12 +224,12 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                             new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
-                
-                    break;
+
+                break;
                 case Constants.TIPUS_PETICIO_DIRECTOR:
-                    break;
+                break;
                 case Constants.TIPUS_PETICIO_SECRETARI:
-                    break;
+                break;
             }
         }
     }
@@ -350,7 +357,5 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         return mav;
 
     }
-    
-    
 
 }

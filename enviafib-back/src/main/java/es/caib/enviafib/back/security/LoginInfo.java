@@ -3,6 +3,7 @@ package es.caib.enviafib.back.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -35,8 +36,7 @@ public class LoginInfo {
 	
 	protected boolean necesitaConfigurar;
 
-
-	// TODO Add your fields HERE
+	// Add your fields HERE
 
 	/**
 	 * @param usuari
@@ -101,21 +101,20 @@ public class LoginInfo {
 		try {
 			obj = SecurityContextHolder.getContext().getAuthentication().getDetails();
 		} catch (Exception e) {
-			// TODO traduccio
-			throw new LoginException("Error intentant obtenir informació de Login.", e);
+		    String msg = I18NUtils.tradueix("error.logininfo.obtenirinformacio");
+			throw new LoginException(msg, e);
 		}
 
 		if (obj == null) {
-			// TODO traduccio
-			throw new LoginException("La informació de Login és buida");
+            String msg = I18NUtils.tradueix("error.logininfo.informaciobuida");
+            throw new LoginException(msg);
 		}
 
 		if (obj instanceof LoginInfo) {
 			return (LoginInfo) obj;
 		} else {
-			// TODO traduccio
-			throw new LoginException("La informació de Login no és del tipus esperat." + " Hauria de ser de tipus "
-					+ LoginInfo.class.getName() + " i és del tipus " + obj.getClass().getName());
+            String msg = I18NUtils.tradueix("error.logininfo.unexpectedtypeinfo", LoginInfo.class.getName(), obj.getClass().getName());
+			throw new LoginException(msg);
 		}
 	}
 	

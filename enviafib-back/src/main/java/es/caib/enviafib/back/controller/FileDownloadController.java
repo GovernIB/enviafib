@@ -7,6 +7,8 @@ import es.caib.enviafib.model.entity.Fitxer;
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.crypt.FileIDEncrypter;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
+import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,8 +59,8 @@ public class FileDownloadController {
         log.error("+ Key = ]"+ new String(enc.getKey().getEncoded()) + "[");
         log.error("+ Algorithm = " + enc.getAlgorithm());
         log.error("+ EncryptedArxiuId = ]"+ encryptedArxiuId + "[");
-        // TODO TRADUIR Identificador no trobar
-        String msg = "Identificador no s'ha pogut desencriptar";
+
+        String msg = I18NUtils.tradueix("filedownload.cant.desencriptar");
         response.setHeader("MsgEnviaFIB", msg);
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
       } else {
@@ -84,7 +86,7 @@ public class FileDownloadController {
         File file = FileSystemManager.getFile(arxiuId);
 
         if (!file.exists()) {
-          // TODO TRADUIR Fitxer no trobat
+          I18NUtils.tradueix("error.fitxer.noexist", file.getAbsolutePath());
           String msg = "Fitxer amb ID=" + arxiuId + " no existeix.";
           response.setHeader("MsgEnviaFIB", msg);
           response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -125,8 +127,8 @@ public class FileDownloadController {
     
     public static String fileUrl(Fitxer arxiu) {
       if (arxiu == null) {
-        // TODO Llançar error
-        return "/img/blank.gif";
+          log.error("FileDownloadController:: fileUrl: S'ha rebut un arxiu null", new Exception());
+          return null;
       } else {
         // {arxiuId}/{filename}/{contentType}
         String idfile = HibernateFileUtil.encryptFileID(arxiu.getFitxerID());
@@ -139,7 +141,7 @@ public class FileDownloadController {
         try {
           base = base + "?nom=" + URLEncoder.encode(nombre,"UTF-8");
         } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
+          log.error(e.getMessage(),e);
           base = base + "?nom=" + nombre;
         } //  
         String mime = arxiu.getMime();
@@ -149,7 +151,7 @@ public class FileDownloadController {
         try {
           base = base + "&mime=" + URLEncoder.encode(mime,"UTF-8");
         } catch (UnsupportedEncodingException e) {          
-          e.printStackTrace();
+          log.error(e.getMessage(),e);
           base = base + "&mime=" + mime;
         }
         return base;
