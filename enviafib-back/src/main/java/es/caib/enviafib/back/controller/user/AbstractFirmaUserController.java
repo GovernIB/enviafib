@@ -11,14 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -115,7 +119,17 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     hiddens.remove(FITXERFIRMATID);
                     hiddens.remove(DATAFINAL);
-                break;
+
+                    Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
+                    peticioForm.addAdditionalButton(new AdditionalButton("fas fa-file", "user.infosignatura",
+                            "/user/infoSignatura/view/" + infosignaturaID,  "btn-info"));
+
+                    
+//                    new AdditionalButton("fas fa-file", "info.signatura",
+//                            "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(),
+//                           )
+                    
+                    break;
             }
 
         }
@@ -174,6 +188,28 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         return request.getScheme() + "://" + request.getServerName() + ":" + +request.getServerPort()
                 + request.getContextPath() + webContext;
+    }
+
+    @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
+    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID") java.lang.Long infoSignaturaID,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        if (infoSignaturaID == null) {
+            HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
+
+        } else {
+            InfoSignatura is = infoSignaturaEjb.findByPrimaryKey(infoSignaturaID);
+            log.info("      -> InfoSignaturaID: " + is.getInfoSignaturaID());
+
+            ModelAndView mav = new ModelAndView("detallsinfosignatura");
+            mav.addObject("is", is);
+            mav.addObject("contexte", getContextWeb());
+            return mav;
+        }
+
+        ModelAndView mav = new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
+        return mav;
+
     }
 
 }

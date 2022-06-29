@@ -221,4 +221,17 @@ public class Configuracio implements Constants {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.password");
     }
 
+    
+    public static String getTelefonAjuda() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.telefon");
+    }
+
+    public static String getWebAjuda() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.web");
+    }
+
+    public static String getEmailAjuda() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
+    }
+
 }

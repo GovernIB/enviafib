@@ -45,8 +45,8 @@
 		</div>
 
 		<!-- Dreta -->
-		<div class="col-4 text-right" >
-			<a href="http://otaeweb.ibit.org/" style="padding-top: 10px" target="_blank"> <img
+		<div class="col-4 text-right" style="padding-top: 10px">
+			<a href="http://otaeweb.ibit.org/"  target="_blank"> <img
 				src="<c:url value="/img/fundaciobit-logo-peu.png"/>"
 				alt="Fundacio Bit" />
 			</a> <br />
@@ -77,11 +77,20 @@
                         <fmt:message key="ajuda.missatge" />
                     </p>
                     <ul>
-                        <li><fmt:message key="ajuda.viatelefon" />123456789</li>
-                        <li><fmt:message key="ajuda.viaweb" />http://www.help.hl/help</li>
-                        <li><fmt:message key="ajuda.viaemail" />
-                            <a href="mailto: help@help.hl"> help@help.hl</a>
-                        </li>
+                    	<c:if test="${not empty ajudatelefon}">
+ 	                       <li><fmt:message key="ajuda.viatelefon" /> ${ajudatelefon}</li>
+                    	</c:if>
+    
+                    	<c:if test="${not empty ajudaweb}">
+	                        <li><fmt:message key="ajuda.viaweb" /> ${ajudaweb}</li>
+                    	</c:if>
+    
+                    	<c:if test="${not empty ajudaemail}">
+	                        <li><fmt:message key="ajuda.viaemail" />
+	                            <a href="mailto: ${ajudaemail}"> ${ajudaemail}</a>
+	                        </li>
+                    	</c:if>
+
                     </ul>
                 </div>
                 <div class="modal-footer">

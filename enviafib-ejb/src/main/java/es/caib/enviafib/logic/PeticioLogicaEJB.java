@@ -529,6 +529,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
                 __tmp.add(new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName()));
             }
+
             return __tmp;
 
         } catch (AbstractApisIBException e) {

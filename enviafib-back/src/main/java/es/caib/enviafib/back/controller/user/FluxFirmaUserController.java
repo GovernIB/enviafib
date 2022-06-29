@@ -44,6 +44,10 @@ import es.caib.enviafib.persistence.PeticioJPA;
 public class FluxFirmaUserController extends AbstractFirmaUserController {
 
     public static final String CONTEXT_WEB = "/user/flux";
+    
+    private ThreadLocal<Boolean> threadLocalTileForm = new ThreadLocal<>();
+    
+   
 
     @Override
     public int getTipusPeticio() {
@@ -52,7 +56,21 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
     @Override
     public String getTileForm() {
-        return "flowview";
+        if(threadLocalTileForm.get() == null) {
+            return "flowview";
+        }else {
+            return super.getTileForm();
+        }
+        
+    }
+    
+    @Override
+    @RequestMapping(value = "/view/{peticioID}", method = RequestMethod.GET)
+    public ModelAndView veurePeticioGet(@PathVariable("peticioID") java.lang.Long peticioID,
+        HttpServletRequest request,
+        HttpServletResponse response) throws I18NException {
+        threadLocalTileForm.set(true);
+        return super.veurePeticioGet(peticioID, request, response);
     }
 
     @Override
@@ -70,8 +88,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         // peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
 
         peticioForm.addHiddenField(DESTINATARINIF);
-
-        peticioForm.setTitleCode("emptystring");
+        
+        if(!__isView) {
+            peticioForm.setTitleCode("emptystring");
+        }
+        
 
         mav.addObject("wizardstep", 3);
 
