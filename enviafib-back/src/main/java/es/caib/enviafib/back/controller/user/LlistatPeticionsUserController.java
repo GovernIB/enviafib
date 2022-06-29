@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.controller.FileDownloadController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
@@ -33,11 +32,9 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
-import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
-import es.caib.enviafib.persistence.PeticioJPA;
 
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 
@@ -172,18 +169,10 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
                                     getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
 
-                            Fitxer file = peticio.getFitxerFirmat();
-
                             filterForm.addAdditionalButtonByPK(peticioID,
                                     new AdditionalButton("fas fa-envelope icon-white", codi_email,
                                             "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
 
-                            if (peticio.getInfoSignaturaID() != null) {
-                                filterForm.addAdditionalButtonByPK(peticioID,
-                                        new AdditionalButton("fas fa-file", "info.signatura",
-                                                "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(),
-                                                "btn-info"));
-                            }
                             filterForm
                                     .addAdditionalButtonByPK(peticioID,
                                             new AdditionalButton("fas fa-trash icon-white", codi_delete,
