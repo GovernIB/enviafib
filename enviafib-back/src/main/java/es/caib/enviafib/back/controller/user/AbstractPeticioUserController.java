@@ -6,20 +6,27 @@ import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.controller.webdb.PeticioController;
+import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.IdiomaFields;
+import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
- * 
+ * Codi comú per llistat i per edició/vista/creació de Peticions.
  * @author anadal
  *
  */
@@ -118,4 +125,5 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     public boolean isActiveDelete() {
         return false;
     }
+
 }
