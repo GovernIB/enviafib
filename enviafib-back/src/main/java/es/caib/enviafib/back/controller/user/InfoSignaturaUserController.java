@@ -2,11 +2,15 @@ package es.caib.enviafib.back.controller.user;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.query.selectcolumn.Select2Columns;
+import org.fundaciobit.genapp.common.query.selectcolumn.Select2Values;
+import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.InfoSignaturaController;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaForm;
+import es.caib.enviafib.logic.PeticioLogicaEJB;
 import es.caib.enviafib.model.entity.InfoSignatura;
+import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
 /**
@@ -28,6 +35,34 @@ import es.caib.enviafib.persistence.InfoSignaturaJPA;
 @RequestMapping(value = "/user/infoSignatura")
 @SessionAttributes(types = { InfoSignatura.class, InfoSignatura.class })
 public class InfoSignaturaUserController extends InfoSignaturaController {
+
+    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+
+    @Override
+    public boolean isActiveList() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveDelete() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveFormNew() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveFormEdit() {
+        return false;
+    }
+
+    @Override
+    public boolean isActiveFormView() {
+        return true;
+    }
 
     @Override
     public String getTileForm() {
@@ -139,7 +174,29 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
 
     @Override
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long infosignaturaid) {
-        return AbstractFirmaUserController.getRedirectToList();
+
+        try {
+            Select2Columns<Long, Integer> s2c;
+            s2c = new Select2Columns<Long, Integer>(PeticioFields.PETICIOID.select, PeticioFields.TIPUS.select);
+            List<Select2Values<Long, Integer>> list;
+            list = peticioLogicaEjb.executeQuery(s2c, PeticioFields.INFOSIGNATURAID.equal(infosignaturaid));
+            
+            
+            if (list == null || list.size() != 1) {
+//            HtmlUtils.saveMessageError(request, msg);
+                log.error("InfoSignaturaUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat", new Exception());
+                return AbstractFirmaUserController.getRedirectToList();
+            }
+
+            Long peticioID = list.get(0).getValue1();
+            Integer tipus = list.get(0).getValue2();
+            String context = AbstractPeticioUserController.firmaPathByTipus.get(tipus);
+            return "redirect:" + context + "/view/" + peticioID;
+        } catch (I18NException e) {
+            log.error("InfoSignaturaUserController:: getRedirectWhenCancel: La consulta no no ha be", e);
+            return AbstractFirmaUserController.getRedirectToList();
+        }
+
     }
 
 }

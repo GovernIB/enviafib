@@ -332,30 +332,4 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
         peticioLogicaEjb.deleteFull(peticio);
     }
 
-    @RequestMapping(value = "/veureInfoSignatura/{peticioID}", method = RequestMethod.GET)
-    public ModelAndView veureInfoSignatura(@PathVariable("peticioID") java.lang.Long peticioID,
-            HttpServletRequest request, HttpServletResponse response) {
-
-        Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
-
-        Long infoSignaturaID = peticio.getInfoSignaturaID();
-
-        if (infoSignaturaID == null) {
-            HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
-
-        } else {
-            InfoSignatura is = infoSignaturaEjb.findByPrimaryKey(infoSignaturaID);
-            log.info("      -> InfoSignaturaID: " + infoSignaturaID);
-
-            ModelAndView mav = new ModelAndView("detallsinfosignatura");
-            mav.addObject("is", is);
-            mav.addObject("contexte", getContextWeb());
-            return mav;
-        }
-
-        ModelAndView mav = new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
-        return mav;
-
-    }
-
 }

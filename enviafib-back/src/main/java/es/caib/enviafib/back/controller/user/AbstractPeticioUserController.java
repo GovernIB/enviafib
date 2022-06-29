@@ -82,7 +82,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         List<StringKeyValue> tmpList = null;
         tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
 
-        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
+        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
 
         return tmpList;
     }
