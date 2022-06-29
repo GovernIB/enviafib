@@ -25,7 +25,8 @@ import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
- *
+ * Coid comú per formulari dels diferents tipus de peticions.
+ * 
  * @author anadal
  *
  */
@@ -62,21 +63,20 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public abstract int getTipusPeticio();
-    
+
     /**
      * Carregar el formulari per un nou Peticio
      */
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public ModelAndView crearPeticioGet(HttpServletRequest request,
-        HttpServletResponse response) throws I18NException {
-      try {
-          ModelAndView mav = super.crearPeticioGet(request, response);
-          return mav;
-      }catch(I18NException e) {
-          HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
-          return new ModelAndView("redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
-      }
+    public ModelAndView crearPeticioGet(HttpServletRequest request, HttpServletResponse response) throws I18NException {
+        try {
+            ModelAndView mav = super.crearPeticioGet(request, response);
+            return mav;
+        } catch (I18NException e) {
+            HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+            return new ModelAndView("redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+        }
     }
 
     @Override
@@ -84,34 +84,43 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
-        boolean init = true;
+        Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
+
+        hiddens.remove(NOM);
+        hiddens.remove(FITXERID);
+        hiddens.remove(TIPUSDOCUMENTAL);
+        hiddens.remove(IDIOMADOC);
+
         if (__isView) {
-
-            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_FIRMADA) {
-                peticioForm.addHiddenField(ERROREXCEPTION);
-                peticioForm.addHiddenField(ERRORMSG);
-                peticioForm.addHiddenField(PETICIOPORTAFIRMES);
-                peticioForm.addHiddenField(INFOSIGNATURAID);
-                init = false;
-            }
-        }
-
-        if (init) {
-            Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
-
-            hiddens.remove(NOM);
+            hiddens.remove(DATACREACIO);
+            hiddens.remove(TIPUS);
+            hiddens.remove(IDIOMAID);
+            hiddens.remove(ESTAT);
             hiddens.remove(FITXERID);
-            hiddens.remove(TIPUSDOCUMENTAL);
-            hiddens.remove(IDIOMADOC);
 
-            if (peticioForm.getPeticio().getEstat() == ESTAT_PETICIO_ERROR) {
-                hiddens.remove(ESTAT);
-                hiddens.remove(ERRORMSG);
-                hiddens.remove(ERROREXCEPTION);
+            switch ((int) peticioForm.getPeticio().getEstat()) {
+
+                case Constants.ESTAT_PETICIO_CREADA:
+                break;
+                case Constants.ESTAT_PETICIO_EN_PROCES:
+                break;
+                case Constants.ESTAT_PETICIO_ERROR:
+                    hiddens.remove(ERRORMSG);
+                    if (peticioForm.getPeticio().getErrorException() != null) {
+                        hiddens.remove(ERROREXCEPTION);
+                    }
+                    hiddens.remove(DATAFINAL);
+
+                break;
+                case Constants.ESTAT_PETICIO_FIRMADA:
+                    hiddens.remove(FITXERFIRMATID);
+                    hiddens.remove(DATAFINAL);
+                break;
             }
 
-            peticioForm.setHiddenFields(hiddens);
         }
+
+        peticioForm.setHiddenFields(hiddens);
 
         if (peticioForm.isNou()) {
 
@@ -157,12 +166,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return getRedirectToList();
     }
 
-    
     public static String getRedirectToList() {
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
-    
-    // XYZ ANADAL NO ESTA BE A LA CAIB AIXÔ NO FUNCIONA !!!!!!!
+
     protected String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
 
         return request.getScheme() + "://" + request.getServerName() + ":" + +request.getServerPort()
