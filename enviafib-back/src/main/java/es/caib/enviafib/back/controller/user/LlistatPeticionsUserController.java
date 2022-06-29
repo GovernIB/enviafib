@@ -37,7 +37,6 @@ import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
-import es.caib.enviafib.persistence.PeticioJPA;
 
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 
@@ -147,7 +146,11 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             long peticioID = peticio.getPeticioID();
 
             switch (peticio.getTipus()) {
+                
+                case Constants.TIPUS_PETICIO_FLUX:
                 case Constants.TIPUS_PETICIO_NIF:
+                case Constants.TIPUS_PETICIO_DIRECTOR:
+                case Constants.TIPUS_PETICIO_SECRETARI:
 
                     switch ((int) peticio.getEstat()) {
                         case Constants.ESTAT_PETICIO_CREADA:
@@ -216,8 +219,8 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                                     "btn-danger"));
 
                 break;
-                case Constants.TIPUS_PETICIO_FLUX:
-
+                
+/*
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
                             getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID,
@@ -225,11 +228,12 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                     "btn-danger"));
 
-                break;
-                case Constants.TIPUS_PETICIO_DIRECTOR:
+                break;        case Constants.TIPUS_PETICIO_DIRECTOR:
                 break;
                 case Constants.TIPUS_PETICIO_SECRETARI:
                 break;
+                */
+        
             }
         }
     }
