@@ -1,4 +1,5 @@
 <%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
+<%@page import="es.caib.enviafib.commons.utils.Configuracio"%>
 <%@page import="java.util.Locale"%>
 <%@page import="es.caib.enviafib.back.security.LoginInfo"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%><%@ include
@@ -37,8 +38,8 @@
 			<div>
 				<div>
 					<strong class="subtitol llevarMobil"><fmt:message
-							key="usuari" />: </strong> <span class="subtitolMay"> <%=LoginInfo.getInstance().getUsuari().getNom() +" "+LoginInfo.getInstance().getUsuari().getLlinatge1()%>
-							
+							key="usuari" />: </strong> <span class="subtitolMay"> <%=LoginInfo.getInstance().getUsuari().getNom() + " " + LoginInfo.getInstance().getUsuari().getLlinatge1()%>
+
 						(<%=request.getRemoteUser()%>)
 					</span>
 				</div>
@@ -56,7 +57,7 @@
 
 				<%--  AQUI VAN ELS MENUS   --%>
 				<%--
-                            <li class="nav-item colorVerd">
+                            <li class="nav-item colorTaronja">
                                 <a class="nav-link mobil" href="/listUnitatOrganica"
                                             title="{labels.listUnitatOrganica_link}">                                                                    
                                     <span class="oi oi-briefcase" title="{labels.listUnitatOrganica_link}"
@@ -66,26 +67,23 @@
                             </li>
                              --%>
 
-				
-				<%--  MENU D'IDIOMES, ELS AGAFA DE LA BASE DE DADES--%>
-				<li class="dropdown colorVerd">
 
-					<button class="btn colorVerd dropdown-toggle" type="button"
+				<%--  MENU D'IDIOMES, ELS AGAFA DE LA BASE DE DADES--%>
+				<li class="dropdown colorTaronja">
+
+					<button class="btn colorTaronja dropdown-toggle" type="button"
 						id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">
 						<i class="fas fa-language fa-lg"></i>
 						<fmt:message key="idiomes" />
 					</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-						<c:forEach var="idioma" items="${idiomes}"
-							varStatus="status">
+						<c:forEach var="idioma" items="${idiomes}" varStatus="status">
 							<c:set var="idiomaID" value="${idioma.idiomaID}" />
-							<a class="dropdown-item"
-								href="?lang=${idiomaID}">
-
-								<img
+							<a class="dropdown-item" href="?lang=${idiomaID}"> <img
 								src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>"
-								alt="${idiomaID}" width="17" height="14" border="0" />${idioma.nom}
+								alt="${idiomaID}" style="margin-right: 0.5rem;" width="17"
+								height="14" border="0" />${idioma.nom}
 							</a>
 						</c:forEach>
 
@@ -95,9 +93,9 @@
 
 
 				<%--   OPCIONS  --%>
-				<li class="dropdown colorVerd">
+				<li class="dropdown colorTaronja">
 
-					<button class="btn colorVerd dropdown-toggle" type="button"
+					<button class="btn colorTaronja dropdown-toggle" type="button"
 						id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">
 						<i class="fas fa-ellipsis-v"></i>
@@ -116,13 +114,15 @@
 						<c:if test="${ not empty loginInfo  }">
 
 							<a class="dropdown-item"
-								href="<c:url value="/configuracio"></c:url>"> <i
-								class="fas fa-cog"></i> <fmt:message key="configuracio" />
+								href="<c:url value="/common/usuari/<%=LoginInfo.getInstance().getUsuari().getUsuariID()%>/edit"></c:url>">
+								<i class="fas fa-cog"></i> <fmt:message key="configuracio" />
 							</a>
 
-							<a class="dropdown-item" href="<c:url value="/logout"></c:url>">
-								<i class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
-							</a>
+							<c:if test="${not empty url_sortida}">
+								<a class="dropdown-item" href="<c:url value="${url_sortida}"></c:url>">
+									<i class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
+								</a>
+							</c:if>
 						</c:if>
 
 
