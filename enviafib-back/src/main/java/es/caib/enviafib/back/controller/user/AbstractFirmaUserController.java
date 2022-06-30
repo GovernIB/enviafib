@@ -32,7 +32,7 @@ import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
- * Coid comú per formulari dels diferents tipus de peticions.
+ * Codi comú per formulari dels diferents tipus de peticions.
  * 
  * @author anadal
  *
@@ -56,7 +56,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     public boolean isActiveFormEdit() {
-        return true;
+        return false;
     }
 
     @Override
@@ -232,6 +232,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     peticioLogicaEjb.arrancarPeticio(peticio.getPeticioID(),
                             LocaleContextHolder.getLocale().getLanguage());
                 }
+                // XYZ ZZZ TRA
+                HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
             } catch (I18NException e) {
 
                 // XYZ ZZZ Error generic
