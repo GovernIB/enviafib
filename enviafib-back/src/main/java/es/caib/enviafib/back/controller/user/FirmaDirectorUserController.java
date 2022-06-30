@@ -3,6 +3,8 @@ package es.caib.enviafib.back.controller.user;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -18,22 +20,31 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 @Controller
-@RequestMapping(value = FirmaPerNifUserController.CONTEXT_WEB)
+@RequestMapping(value = FirmaDirectorUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class FirmaPerNifUserController extends AbstractFirmaUserController {
+public class FirmaDirectorUserController extends AbstractFirmaUserController {
 
-    public static final String CONTEXT_WEB = "/user/firmapernif";
+    public static final String CONTEXT_WEB = "/user/firmadirector";
 
     @Override
-    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
-            ModelAndView mav) throws I18NException {
+    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
+            throws I18NException {
+
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
+
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
+
+        if (peticioForm.isNou()) {
+            HtmlUtils.saveMessageWarning(request, I18NUtils.tradueix("user.error.directornotrobat"));
+        }
+
         return peticioForm;
+
     }
 
+    @Override
     public int getTipusPeticio() {
-        return TIPUS_PETICIO_NIF;
+        return TIPUS_PETICIO_DIRECTOR;
     }
 
 }

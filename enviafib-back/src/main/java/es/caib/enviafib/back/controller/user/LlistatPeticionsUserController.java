@@ -219,15 +219,6 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                         codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
             }
 
-            if (peticio.getEstat() == Constants.ESTAT_PETICIO_CREADA
-                    && peticio.getTipus() == Constants.TIPUS_PETICIO_NIF) {
-
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play", codi_enmarxa,
-                        getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
-
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", codi_edit,
-                        getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-primary"));
-            }
         }
     }
 
@@ -309,7 +300,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
         try {
             peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage());
-            HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticioID + " enviada correctament.");
+            
         } catch (LoginException e) {
             String msg = "La sessio de l'usuari ha caducat.";
             HtmlUtils.saveMessageError(request, msg);

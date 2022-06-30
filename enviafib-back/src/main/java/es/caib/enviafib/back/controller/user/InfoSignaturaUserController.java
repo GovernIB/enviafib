@@ -10,7 +10,6 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.query.selectcolumn.Select2Columns;
 import org.fundaciobit.genapp.common.query.selectcolumn.Select2Values;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.InfoSignaturaController;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaForm;
-import es.caib.enviafib.logic.PeticioLogicaEJB;
 import es.caib.enviafib.model.entity.InfoSignatura;
-import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
