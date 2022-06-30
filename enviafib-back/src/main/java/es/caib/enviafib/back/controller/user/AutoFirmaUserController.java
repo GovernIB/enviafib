@@ -111,19 +111,14 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
     @RequestMapping(value = "/viewiniframe", method = RequestMethod.GET)
     public ModelAndView viewInIframe(HttpServletRequest request) throws Exception {
-        log.info("Estamos en viewiniframe");
-
         String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
         if (log.isDebugEnabled()) {
             log.debug("ENTRA A /viewiniframe => redirectUrl: " + redirectUrl);
         }
 
-        log.info("Estamos en viewiniframe. URL: " + redirectUrl);
-
         ModelAndView mav = new ModelAndView("firmasimpleweb_iframe");
         mav.addObject("urlToIFrameCode", redirectUrl);
         return mav;
-
     }
 
     @RequestMapping(value = "/finalWeb/{transactionID}")
@@ -215,7 +210,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         String msg = I18NUtils.tradueix("procesdefirma.status.final.firmatok");
                         HtmlUtils.saveMessageSuccess(request, msg);
 
-                        return new ModelAndView(new RedirectView(getContextWeb() + "/view/" + peticioID, true));
+                        return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
                     } else {
                         errorException = null;
                         errorMsg = I18NUtils.tradueix("procesdefirma.status.final.firmaterror", SIGNID);

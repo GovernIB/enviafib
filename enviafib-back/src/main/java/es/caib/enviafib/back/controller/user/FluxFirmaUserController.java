@@ -61,7 +61,6 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         }else {
             return super.getTileForm();
         }
-        
     }
     
     @Override
@@ -165,9 +164,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             cleanFlux(api, transactionID, intermediateID);
 
             return new ModelAndView(getRedirectToList());
-
         }
-
     }
 
     @Override
@@ -297,7 +294,6 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             error = I18NUtils.tradueix("error.error.flux.creacioflux", aaie.getMessage());
             log.error(error, aaie);
             cleanFlux(api, transactionID, null);
-
         }
 
         log.error(error);
@@ -351,9 +347,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             HtmlUtils.saveMessageError(request, error);
 
             return new ModelAndView(getRedirectToList());
-
         }
-
     }
 
     @Override
@@ -377,7 +371,6 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         }
 
         return p;
-
     }
 
     /*
