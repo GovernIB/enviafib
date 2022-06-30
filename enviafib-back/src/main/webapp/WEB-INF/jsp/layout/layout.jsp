@@ -35,7 +35,7 @@
             //session.setAttribute("pipella", )
             %>
 			
-			<sec:authorize access="hasRole('ROLE_USER')">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
 	            <li class="nav-item"><a
 	                class="nav-link ${(empty pipella)?'active' : '' }"
 	                href="<c:url value="/canviarPipella/"/>"><fmt:message

@@ -57,7 +57,7 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
     </definition>
 
-    <definition name="home" extends="all">
+    <definition name="home" extends="common">
         <put-attribute name="contingut" value="/WEB-INF/jsp/common/home.jsp" />
     </definition>
 
