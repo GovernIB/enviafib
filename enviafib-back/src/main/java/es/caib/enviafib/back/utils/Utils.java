@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.utils;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -137,6 +139,14 @@ public class Utils {
   
   public static void sortStringKeyValueList(List<StringKeyValue> listNovaFirma) {
     Collections.sort(listNovaFirma, STRINGKEYVALUECOMPARATOR);
+  }
+  
+  
+  public static String stackTrace2String(Throwable th) {
+      StringWriter sw = new StringWriter();
+      th.printStackTrace(new PrintWriter(sw));
+      String exceptionAsString = sw.toString();
+      return exceptionAsString;
   }
 
  

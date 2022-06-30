@@ -14,7 +14,6 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleV
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.jersey.ApiFlowTemplateSimpleJersey;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -28,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
-import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
@@ -350,28 +348,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         }
     }
 
-    @Override
-    public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
-            throws I18NException, I18NValidationException {
-        PeticioJPA p = super.create(request, peticio);
 
-        try {
-            peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), LocaleContextHolder.getLocale().getLanguage(),
-                    (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
-        } catch (I18NException e) {
-
-            String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
-            log.error(error, e);
-
-            p.setEstat(ESTAT_PETICIO_ERROR);
-            p.setErrorMsg(error);
-            p.setErrorException(CONTEXT_WEB);
-
-            peticioLogicaEjb.update(p);
-        }
-
-        return p;
-    }
 
     /*
      * protected static void editarFluxDeFirmes(ApiFlowTemplateSimple api, final

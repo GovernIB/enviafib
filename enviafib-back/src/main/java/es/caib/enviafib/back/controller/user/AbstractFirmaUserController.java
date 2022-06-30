@@ -8,7 +8,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
+import es.caib.enviafib.back.utils.Utils;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
@@ -104,8 +107,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             switch ((int) peticioForm.getPeticio().getEstat()) {
 
-                case Constants.ESTAT_PETICIO_CREADA:
-                break;
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
@@ -122,14 +123,13 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                     Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
-                            "/user/infoSignatura/view/" + infosignaturaID,  "btn-info"));
+                            "/user/infoSignatura/view/" + infosignaturaID, "btn-info"));
 
-                    
 //                    new AdditionalButton("fas fa-file", "info.signatura",
 //                            "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(),
 //                           )
-                    
-                    break;
+
+                break;
             }
 
         }
@@ -141,7 +141,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             Peticio peticio = peticioForm.getPeticio();
 
             peticio.setDataCreacio(new Timestamp(System.currentTimeMillis()));
-            peticio.setEstat(Constants.ESTAT_PETICIO_CREADA);
+            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
+            peticio.setErrorMsg(
+                    "XYZ ZZZ Error desconegut. El procés de creació de la petició de firma s'ha aturat de forma inesperada.");
 
             String userName = request.getRemoteUser();
             Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
@@ -191,8 +193,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
-    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID") java.lang.Long infoSignaturaID,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID")
+    java.lang.Long infoSignaturaID, HttpServletRequest request, HttpServletResponse response) {
 
         if (infoSignaturaID == null) {
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
@@ -210,6 +212,41 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         ModelAndView mav = new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
         return mav;
 
+    }
+
+    @Override
+    public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
+            throws I18NException, I18NValidationException {
+        PeticioJPA p = super.create(request, peticio);
+
+        final int tipus = getTipusPeticio();
+        if (tipus != TIPUS_PETICIO_AUTOFIRMA) {
+
+            try {
+
+                if (tipus == TIPUS_PETICIO_FLUX) {
+                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(),
+                            LocaleContextHolder.getLocale().getLanguage(),
+                            (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
+                } else {
+                    peticioLogicaEjb.arrancarPeticio(peticio.getPeticioID(),
+                            LocaleContextHolder.getLocale().getLanguage());
+                }
+            } catch (I18NException e) {
+
+                // XYZ ZZZ Error generic
+                String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
+                log.error(error, e);
+
+                p.setEstat(ESTAT_PETICIO_ERROR);
+                p.setErrorMsg(error);
+                p.setErrorException(Utils.stackTrace2String(e));
+
+                peticioLogicaEjb.update(p);
+            }
+        }
+
+        return p;
     }
 
 }

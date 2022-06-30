@@ -151,6 +151,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                 case Constants.TIPUS_PETICIO_SECRETARI:
 
                     switch ((int) peticio.getEstat()) {
+                        /*
                         case Constants.ESTAT_PETICIO_CREADA:
                             filterForm.addAdditionalButtonByPK(peticioID,
                                     new AdditionalButton("fas fa-edit", codi_edit,
@@ -165,6 +166,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                                                             + getContextWeb() + "/" + peticioID + "/delete','show')",
                                                     "btn-danger"));
                         break;
+                        */
                         case Constants.ESTAT_PETICIO_EN_PROCES:
                             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
                                     getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
