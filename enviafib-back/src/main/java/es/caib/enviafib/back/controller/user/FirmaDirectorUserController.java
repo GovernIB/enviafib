@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
+import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -36,6 +37,9 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
 
         if (peticioForm.isNou()) {
             HtmlUtils.saveMessageWarning(request, I18NUtils.tradueix("user.error.directornotrobat"));
+
+            peticioForm.setTitleCode("title.firma.director");
+            peticioForm.addLabel(PeticioFields.DESTINATARINIF, "firmadirector.destinatarinif");
         }
 
         return peticioForm;
