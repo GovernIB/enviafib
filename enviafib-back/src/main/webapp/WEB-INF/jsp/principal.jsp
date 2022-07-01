@@ -18,7 +18,7 @@
 				<td valign="top"><a
 					href="http://blog.fundaciobit.org/category/admindigital/"
 					target="_blank"> <img
-						src="<c:url value="/img/fundaciobit.png"/>" alt="Fundaci� Bit"
+						src="<c:url value="/img/https://www.caib.es/sites/manualdidentitatcorporativa/es/govern_de_les_illes_balears/archivopub.do?ctrl=MCRST9545ZI292840&id=292840"/>" alt="Fundaci� Bit"
 						title="Fundació Bit" />
 				</a></td>
 			</tr>
