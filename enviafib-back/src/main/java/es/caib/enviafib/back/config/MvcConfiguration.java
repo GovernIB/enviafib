@@ -10,6 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -122,6 +124,14 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         urlPathHelper.setUrlDecode(false);
         configurer.setUrlPathHelper(urlPathHelper);
     }
+	
+	
+	@Bean
+	public HttpFirewall getHttpFirewall() {
+	    StrictHttpFirewall strictHttpFirewall = new StrictHttpFirewall();
+	    strictHttpFirewall.setAllowSemicolon(true);
+	    return strictHttpFirewall;
+	}
 
 	/*
 	 * @Bean public LocalValidatorFactoryBean validator() {

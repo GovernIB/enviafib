@@ -1,5 +1,8 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,6 +49,9 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
     private ThreadLocal<Boolean> threadLocalTileForm = new ThreadLocal<>();
     
    
+    // XYZ ZZZ Si es queda a mitges com ho esborraramm ??? 
+    // transactionID => FluxInfo
+   private static final Map<String, FlowTemplateSimpleFlowTemplate> fluxInfoByTransactonID = new HashMap<String, FlowTemplateSimpleFlowTemplate>();
 
     @Override
     public int getTipusPeticio() {
@@ -179,10 +185,15 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
         log.info("**************new::transactionID= " + transactionID);
         log.info("**************new::intermediateID=" + intermediateID);
+        
+        FlowTemplateSimpleFlowTemplate flux = fluxInfoByTransactonID.get(transactionID);
+        log.info("**************new::flux= " + flux);
+        request.getSession().setAttribute("flux", flux);
+        fluxInfoByTransactonID.remove(transactionID);
+        
 
         if (api != null && transactionID != null) {
             cleanFlux(api, transactionID, intermediateID);
-
         }
 
         return mav;
@@ -268,7 +279,10 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
                     log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId()
                             + "|");
-                    request.getSession().setAttribute("flux", flux);
+                    
+                    //request.getSession().setAttribute("flux", flux);
+                    fluxInfoByTransactonID.put(transactionID, flux);
+
 
                     ModelAndView mav = new ModelAndView("finaliframe");
 

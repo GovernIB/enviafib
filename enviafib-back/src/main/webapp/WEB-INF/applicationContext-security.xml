@@ -23,7 +23,12 @@
 		<sec:intercept-url pattern="/img/**" access="permitAll"/>
 		<sec:intercept-url pattern="/css/**" access="permitAll"/>
 		<sec:intercept-url pattern="/error.jsp" access="permitAll"/>
-		<sec:intercept-url pattern="/index.jsp" access="permitAll"/>
+        <sec:intercept-url pattern="/user/autofirma/finalWeb/**" access="permitAll"/>
+        <sec:intercept-url pattern="/user/flux/mostrarflux/**" access="permitAll"/>
+        <sec:intercept-url pattern="/user/flux/callbackflux/**" access="permitAll"/>
+        
+
+		<sec:intercept-url pattern="/index.jsp" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
 	
         <sec:intercept-url pattern="/common/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         
