@@ -1,12 +1,9 @@
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
-<style>
-</style>
-
-<br/><br/>
-
+<br />
+<br />
 <center>
-<iframe id="iframediv" src="${urlToIFrameCode}" width="600px" height="700px"></iframe>
+    <iframe id="iframediv" src="${urlToIFrameCode}" width="100%"
+        height="600px"></iframe>
 </center>
-
 
