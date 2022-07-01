@@ -21,9 +21,10 @@
 		<!-- Logo i nom aplicació -->
 		<div class="navbar-brand menuGovern">
 			<div class="logoGovern">
-				<a href="http://www.fundaciobit.org"> <img
-					src="<c:url value="/img/fundaciobit-logo-cap.png"/>"
-					alt="FundacioBit-Govern Digital" />
+				<a href="http://www.caib.es/"> <img
+					src="<c:url value="/img/logo-caib.png"/>"
+					style="height: 60px;"
+					alt="Govern de les Illes Balears" />
 				</a>
 			</div>
 
@@ -119,9 +120,8 @@
 							</a>
 
 							<c:if test="${not empty url_sortida}">
-								<a class="dropdown-item"
-									href="<c:url value="${url_sortida}"></c:url>"> <i
-									class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
+								<a class="dropdown-item" href="<c:url value="${url_sortida}"></c:url>">
+									<i class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
 								</a>
 							</c:if>
 						</c:if>

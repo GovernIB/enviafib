@@ -40,11 +40,18 @@
 
 		<!-- Dreta -->
 		<div class="col-4 text-right" style="padding-top: 10px">
-			<a href="http://otaeweb.ibit.org/" target="_blank"> <img
+
+			<a href="http://www.caib.es/"> <img
+				src="<c:url value="/img/logo-caib.png"/>"
+				style="height: 45px; filter: grayscale(100%);"
+				alt="Govern de les Illes Balears" />
+			</a>
+
+			<!-- 		<a href="http://otaeweb.ibit.org/" target="_blank"> <img
 				src="<c:url value="/img/fundaciobit-logo-peu.png"/>"
 				alt="Fundacio Bit" />
-			</a> <br />
-
+			</a>-->
+			 <br /> 
 			<!-- Button to trigger modal -->
 			<small><a href="#modalAjuda" role="button"
 				data-toggle="modal"><fmt:message key="ajuda.necessitau" /></a></small>
