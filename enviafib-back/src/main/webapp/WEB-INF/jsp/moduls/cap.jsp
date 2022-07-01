@@ -119,8 +119,9 @@
 							</a>
 
 							<c:if test="${not empty url_sortida}">
-								<a class="dropdown-item" href="<c:url value="${url_sortida}"></c:url>">
-									<i class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
+								<a class="dropdown-item"
+									href="<c:url value="${url_sortida}"></c:url>"> <i
+									class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
 								</a>
 							</c:if>
 						</c:if>
