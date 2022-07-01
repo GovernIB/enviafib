@@ -11,6 +11,7 @@ import org.apache.tiles.preparer.ViewPreparer;
 import org.apache.tiles.request.Request;
 import org.springframework.stereotype.Component;
 
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 
@@ -28,6 +29,6 @@ public class CapPreparer implements ViewPreparer {
 	public void execute(Request tilesRequest, AttributeContext attributeContext) throws PreparerException {
         Map<String, Object> request = tilesRequest.getContext("request");
         request.put("url_sortida", Configuracio.getSortirURL());
-
+//        LoginInfo.getInstance().getUsuari().
 	}
 }

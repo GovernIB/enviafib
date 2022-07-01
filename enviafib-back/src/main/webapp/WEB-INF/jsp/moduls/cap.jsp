@@ -114,7 +114,7 @@
 						<c:if test="${ not empty loginInfo  }">
 
 							<a class="dropdown-item"
-								href="<c:url value="/common/usuari/<%=LoginInfo.getInstance().getUsuari().getUsuariID()%>/edit"></c:url>">
+								href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit"></c:url>">
 								<i class="fas fa-cog"></i> <fmt:message key="configuracio" />
 							</a>
 
