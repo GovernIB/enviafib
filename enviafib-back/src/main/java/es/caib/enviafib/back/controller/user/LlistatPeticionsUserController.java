@@ -15,6 +15,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,8 @@ import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 public class LlistatPeticionsUserController extends AbstractPeticioUserController {
 
     public static final String CONTEXT_WEB = "/user/peticio";
+
+    public static final int COLUMN_ESTAT_IMG = 1;
 
     public static final String codi_enmarxa = "peticio.btn.posarenmarxa";
     public static final String codi_delete = "peticio.btn.delete";
@@ -119,6 +122,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(INFOSIGNATURAID);
             peticioFilterForm.addHiddenField(DESTINATARINIF);
             peticioFilterForm.addHiddenField(FITXERID);
+            peticioFilterForm.addHiddenField(ESTAT);
 
             peticioFilterForm.setOrderBy(DATACREACIO.javaName);
             peticioFilterForm.setOrderAsc(false);
@@ -128,76 +132,62 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.setAddButtonVisible(false);
             peticioFilterForm.setEditButtonVisible(false);
             peticioFilterForm.setDeleteButtonVisible(false);
+
+            {
+
+                AdditionalField<Long, String> additionalField = new AdditionalField<Long, String>();
+                additionalField.setCodeName(PeticioFields.ESTAT.codeLabel);
+                additionalField.setPosition(COLUMN_ESTAT_IMG);
+                additionalField.setOrderBy(ESTAT);
+                additionalField.setEscapeXml(false);
+                // Els valors s'ompliran al mètode postList()
+                additionalField.setValueMap(new HashMap<Long, String>());
+                // Per ordenar feim servir el mateix camp de nom del remitent
+
+                peticioFilterForm.addAdditionalField(additionalField);
+            }
+
         }
         return peticioFilterForm;
     }
-//
-//    @Override
-//    public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
-//            throws I18NException {
-//
-//        // Mostrar boto per editar usuaris que poden veure les meves plantilles
-//
-//        filterForm.getAdditionalButtonsByPK().clear();
-//
-//        for (Peticio peticio : list) {
-//            long peticioID = peticio.getPeticioID();
-//
-//            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
-//                    getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
-//
-//            switch ((int) peticio.getEstat()) {
-//                case Constants.ESTAT_PETICIO_CREADA:
-//                    if (peticio.getTipus() == Constants.TIPUS_PETICIO_NIF) {
-//                        filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-play", codi_enmarxa,
-//                                getContextWeb() + "/arrancar/" + peticioID, "btn-success"));
-//
-//                        filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-edit", codi_edit,
-//                                getContextWebByTipus(peticio.getTipus()) + "/" + peticioID + "/edit/", "btn-primary"));
-//                    }
-//                break;
-//
-//                case Constants.ESTAT_PETICIO_EN_PROCES:
-//                break;
-//
-//                case Constants.ESTAT_PETICIO_FIRMADA: {
-//                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
-//                            codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
-//                }
-//                break;
-//
-//                case Constants.ESTAT_PETICIO_ERROR:
-//                break;
-//            }
-//
-//            filterForm.addAdditionalButtonByPK(peticioID,
-//                    new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
-//                            + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-//                            "btn-danger"));
-//
-//            switch (peticio.getTipus()) {
-//                case Constants.TIPUS_PETICIO_NIF:
-//                break;
-//
-//                case Constants.TIPUS_PETICIO_AUTOFIRMA:
-//                break;
-//
-//                case Constants.TIPUS_PETICIO_FLUX:
-//                break;
-//
-//                case Constants.TIPUS_PETICIO_DIRECTOR:
-//                break;
-//
-//                case Constants.TIPUS_PETICIO_SECRETARI:
-//                break;
-//            }
-//
-//        }
-//    }
 
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
+
+        Map<Long, String> mapRemitent = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_ESTAT_IMG)
+                .getValueMap();
+        mapRemitent.clear();
+
+        for (Peticio pf : list) {
+            String color;
+            String icon;
+            switch ((int) pf.getEstat()) {
+                case Constants.ESTAT_PETICIO_EN_PROCES:
+                    icon = "fas fa-user-clock";
+                    color = "orange";
+                break;
+
+                case Constants.ESTAT_PETICIO_ERROR:
+                    icon = "fas fa-exclamation-triangle";
+                    color = "red";
+                break;
+
+                case Constants.ESTAT_PETICIO_FIRMADA:
+                    color = "green";
+                    icon = "fas fa-file-signature";
+                break;
+
+                default:
+                    color = "#f128";
+                    icon = "fas fa-question";
+
+            }
+
+            mapRemitent.put(pf.getPeticioID(), "<center><i class=\"" + icon + "\" style=\"color:" + color
+                    + ";\"   title=\"" + I18NUtils.tradueix("estat." + pf.getEstat()) + "\"></i></center>");
+
+        }
 
         // Mostrar boto per editar usuaris que poden veure les meves plantilles
 
@@ -217,6 +207,10 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
                         codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download icon-white",
+                        "peticio.btn.download", FileDownloadController.fileUrl(peticio.getFitxerFirmat()), "btn-info"));
+
             }
 
         }
@@ -237,9 +231,10 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     }
 
     @RequestMapping(value = "/enviaremail/{peticioId}/{email}/{windowUrl}", method = RequestMethod.GET)
-    public String enviarEmail(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") long peticioId, @PathVariable("email") String email,
-            @PathVariable("windowUrl") String windowUrl) {
+    public String enviarEmail(HttpServletRequest request, HttpServletResponse response, @PathVariable("peticioId")
+    long peticioId, @PathVariable("email")
+    String email, @PathVariable("windowUrl")
+    String windowUrl) {
         boolean isHTML = true;
 
         // Decodificam el email arriba en base64
@@ -295,12 +290,12 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     }
 
     @RequestMapping(value = "/arrancar/{peticioID}", method = RequestMethod.GET)
-    public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioID") Long peticioID) {
+    public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response, @PathVariable("peticioID")
+    Long peticioID) {
 
         try {
             peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage());
-            
+
         } catch (LoginException e) {
             String msg = "La sessio de l'usuari ha caducat.";
             HtmlUtils.saveMessageError(request, msg);

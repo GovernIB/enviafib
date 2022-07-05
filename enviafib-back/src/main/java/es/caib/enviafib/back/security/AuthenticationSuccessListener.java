@@ -149,11 +149,15 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 					persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
 					persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
 					persona.setUsername(username);
+					
+					persona.setNif(info.getAdministrationID());
+					/*
 					persona.setNif(!info.getAttributes().containsKey("nif") || info.getAttributes().get("nif") == null
 							|| info.getAttributes().get("nif").isEmpty() ? ""
 									: info.getAttributes().get("nif").toUpperCase());
 					persona.setNif(info.getAttributes().get("nif") == null ? ""
 							: info.getAttributes().get("nif").toUpperCase());
+							*/
 					persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
 
 					usuariPersona = usuariEjb.create(persona);
@@ -164,14 +168,10 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 					}
 
 				}
-				if (usuariPersona.getNif() == null || usuariPersona.getNif().isEmpty()) {
-					necesitaConfigurar = true;
-
-				}
+				//if (usuariPersona.getNif() == null || usuariPersona.getNif().isEmpty()) 
+				necesitaConfigurar = true;
 
 			} catch (Throwable e) {
-				usuariPersona = null;
-				necesitaConfigurar = true;
 				String msg;
 				if (e instanceof I18NException) {
 					msg = I18NUtils.getMessage((I18NException) e);

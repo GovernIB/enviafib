@@ -1,5 +1,6 @@
 package es.caib.enviafib.logic;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
@@ -556,6 +557,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
+    @Override
     public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
 
         log.info("Autofirma Recuperada Informació de firma: "
@@ -650,10 +652,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         fitxer.setNom(fsf.getNom());
         fitxer.setMime(fsf.getMime());
-        byte[] data = fsf.getData();
+        final byte[] data = fsf.getData();
         fitxer.setTamany(data.length);
 
         fitxer = fitxerEjb.create(fitxer);
+        
+        FileSystemManager.crearFitxer(new ByteArrayInputStream(data), fitxer.getFitxerID());
 
         pet.setFitxerFirmatID(fitxer.getFitxerID());
     }

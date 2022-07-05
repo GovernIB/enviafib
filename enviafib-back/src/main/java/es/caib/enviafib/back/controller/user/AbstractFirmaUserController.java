@@ -24,6 +24,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.utils.Utils;
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
@@ -186,11 +187,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
 
-    //XYZ TODO XYZ Això no esta bé, s'ha d'obtenir la adressa de sa pagina web.
-    public static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
-
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-                + request.getContextPath() + webContext;
+    protected String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
+        return Configuracio.getUrlBase() + webContext;
     }
 
     @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
