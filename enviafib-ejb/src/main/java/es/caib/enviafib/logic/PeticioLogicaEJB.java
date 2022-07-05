@@ -16,7 +16,6 @@ import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
-import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
@@ -341,9 +340,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             Long solicitantID = executeQueryOne(PeticioFields.SOLICITANTID,
                     PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
             
-            String urlBase = Configuracio.getUrlBase().replace("'", "`");
-            log.info("XYZ UrlBase = " + urlBase);
-            log.info("XYZ NomPeticio = " + nomPeticio);
+            String urlBase = Configuracio.getUrlBase();
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
             String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
             String message = I18NCommonUtils.tradueix(loc, "email.peticio.body", nomPeticio, estats.get((int) estatPeticio),
@@ -514,7 +511,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         ApiFirmaAsyncSimpleJersey api;
 
         try {
-            URL hostUrl = new URL(host);
+            new URL(host);
             api = new ApiFirmaAsyncSimpleJersey(host, username, password);
 
         } catch (MalformedURLException urle) {
