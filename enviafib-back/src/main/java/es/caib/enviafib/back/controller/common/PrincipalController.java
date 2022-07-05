@@ -82,7 +82,7 @@ public class PrincipalController {
 			log.error("S'ha accedit a canviarPipella amb un paràmetre desconegut: " + pipella);
 		}
 
-		return new ModelAndView("home");
+		return new ModelAndView(new RedirectView("/admin/home", true));
 	}
 
 }

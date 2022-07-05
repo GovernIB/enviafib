@@ -1,8 +1,10 @@
 <%@page import="org.springframework.security.core.Authentication"%><%@page
 	import="org.springframework.context.i18n.LocaleContextHolder"%><%@page
 	import="org.springframework.security.core.context.SecurityContext"%><%@page
-	import="org.springframework.security.core.context.SecurityContextHolder"%><%@ page
+	import="org.springframework.security.core.context.SecurityContextHolder"%><%@page
+	import="es.caib.enviafib.back.security.LoginInfo"%><%@ page
 	language="java"%><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
+	
 <div class="clear"></div>
 <div class="spacer"></div>
 
@@ -33,15 +35,35 @@
 
 <br />
 
-LOGIN ANONIM
+<c:if test="${efi:isDesenvolupament()}">
+<br />
+<br />
+&#36;{efi:hasRole(ROLE_ADMIN)}= ${efi:hasRole('ROLE_ADMIN')}
+<br />
+&#36;{efi:hasRole(ROLE_USER) }= ${efi:hasRole('ROLE_USER') }
 <br />
 Locale =
 <%=LocaleContextHolder.getLocale()%>
 <br />
 lang = ${lang}
 <br />
-<br />
-
-<c:if test="${efi:isDesenvolupament()}">
 Only in Development Mode
+</c:if>
+
+<br />
+Username: ${loginInfo.username}
+<br />
+<br />
+> UserInformation:
+<br />
+<c:if test="${not empty loginInfo.usuari}">
+	name= ${loginInfo.usuari.nom} <br /> 
+ 	surname1= ${loginInfo.usuari.llinatge1} <br />
+ 	surname2= ${loginInfo.usuari.llinatge2} <br />
+ 	email= ${loginInfo.usuari.email} <br />
+ 	nif= ${loginInfo.usuari.nif} <br />
+	<br />
+</c:if>
+<c:if test="${empty loginInfo.usuari}">
+	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br />
 </c:if>
