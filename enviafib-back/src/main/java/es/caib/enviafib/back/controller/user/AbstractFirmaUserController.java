@@ -186,9 +186,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
 
-    protected String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
+    //XYZ TODO XYZ Això no esta bé, s'ha d'obtenir la adressa de sa pagina web.
+    public static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
 
-        return request.getScheme() + "://" + request.getServerName() + ":" + +request.getServerPort()
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
                 + request.getContextPath() + webContext;
     }
 

@@ -233,5 +233,9 @@ public class Configuracio implements Constants {
     public static String getEmailAjuda() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
     }
+    
+    public static String getUrlBase() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "url");
+    }
 
 }

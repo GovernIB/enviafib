@@ -10,11 +10,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
@@ -249,7 +251,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void cosesAFerPeticioFirmada(long portafibID, String languageUI) throws I18NException {
         guardarFitxerInfoFirma(portafibID, languageUI);
         esborrarPeticioPortafib(portafibID, languageUI);
-        enviarMailSolicitant(portafibID, "FIRMADA");
+        enviarMailSolicitant(portafibID, "FIRMADA", languageUI);
     }
 
     @Override
@@ -272,7 +274,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         this.update(peticio);
 
         esborrarPeticioPortafib(portafibID, languageUI);
-        enviarMailSolicitant(portafibID, "REBUTJADA");
+        enviarMailSolicitant(portafibID, "REBUTJADA", languageUI);
     }
 
     protected void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException {
@@ -315,7 +317,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    protected void enviarMailSolicitant(long portafibID, String estat) {
+    protected void enviarMailSolicitant(long portafibID, String estat, String idiomaId) {
+
+        final Locale loc = new Locale(idiomaId);
 
         try {
             List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
@@ -325,17 +329,30 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 throw new I18NException("error.portafib.peticionull", "FIRMA", String.valueOf(portafibID));
             }
 
+            String nomPeticio = peticioList.get(0).getNom().replace("'", "`");
+
+            long estatPeticio = peticioList.get(0).getEstat();
+
+            Map<Integer, String> estats = new HashMap<Integer, String>();
+            estats.put(Constants.ESTAT_PETICIO_EN_PROCES, "en proces");
+            estats.put(Constants.ESTAT_PETICIO_FIRMADA, "firmada");
+            estats.put(Constants.ESTAT_PETICIO_ERROR, "rebutjada");
+
             Long solicitantID = executeQueryOne(PeticioFields.SOLICITANTID,
                     PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
-
+            
+            String urlBase = Configuracio.getUrlBase().replace("'", "`");
+            log.info("XYZ UrlBase = " + urlBase);
+            log.info("XYZ NomPeticio = " + nomPeticio);
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
-
-            String subject = "Petició finalitzada";
-            String message = "<h1>La seva petició d'EnviaFIB L'estat de la seva petició es: " + estat + " </h1>";
+            String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
+            String message = I18NCommonUtils.tradueix(loc, "email.peticio.body", nomPeticio, estats.get((int) estatPeticio),
+                    urlBase);
+            log.info("Message Obtingut");
             boolean isHTML = true;
-
+            
             String from = Configuracio.getAppEmail();
-
+            log.info("XYZ SENDER: "+from);
             EmailUtil.postMail(subject, message, isHTML, from, email);
 
         } catch (Throwable t) {
