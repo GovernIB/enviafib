@@ -148,19 +148,19 @@
             <url-pattern>/js/*</url-pattern>
             <url-pattern>/doc/*</url-pattern>
             <url-pattern>/error.jsp</url-pattern>
-            <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/user/autofirma/finalWeb/*</url-pattern>
+            <url-pattern>/user/flux/mostrarflux/*/*</url-pattern>
+            <url-pattern>/user/flux/callbackflux/*</url-pattern>
+            
         </web-resource-collection>
         <!-- No auth-constraint means everybody has access! -->
-        <auth-constraint>
-            <role-name>EFI_USER</role-name>
-            <role-name>EFI_ADMIN</role-name>
-        </auth-constraint>
     </security-constraint>
 	
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>enviafib_back-common</web-resource-name>
             <url-pattern>/common/*</url-pattern>
+            <url-pattern>/index.jsp</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>EFI_USER</role-name>

@@ -238,4 +238,8 @@ public class Configuracio implements Constants {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "url");
     }
 
+    public static String getSortirURL() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "url_sortida");
+    }
+
 }

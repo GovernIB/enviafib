@@ -2,7 +2,7 @@
 %><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <c:set var="url" value="${urlActual}" />
 <div>
-  <h5>Menú ROLE_USER</h5>
+  <h5><fmt:message key="user.menu.title"/></h5>
   <ul class="tree" style="margin: 3px; padding: 0px;">
 
    <%-- Example with security: virtual roles  --%>
@@ -17,7 +17,6 @@
     --%>
 
 
-    <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
     <li style="list-style-type: disc; list-style-position: inside;">
       <a href="<c:url value="/user/peticio/list"/>">
         <span style="${(fn:contains(url, 'user/peticio/list'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.peticionsusuari"/></span>

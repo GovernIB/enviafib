@@ -120,9 +120,22 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         mav.addObject("urlToIFrameCode", redirectUrl);
         return mav;
     }
-
+    
+    
     @RequestMapping(value = "/finalWeb/{transactionID}")
     public ModelAndView finalProcesDeFirmaWeb(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("transactionID") String transactionID) throws Exception {
+        ModelAndView mav = new ModelAndView("finaliframe"); 
+        mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/finalWebAuth/" + transactionID);
+        return mav;
+    }
+    
+    
+    
+    
+
+    @RequestMapping(value = "/finalWebAuth/{transactionID}")
+    public ModelAndView finalProcesDeFirmaWebAuth(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("transactionID") String transactionID) throws Exception {
 
         log.info("Final Web  Consultant transactionID[" + transactionID + "] dins Peticions ...");
@@ -211,6 +224,10 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         HtmlUtils.saveMessageSuccess(request, msg);
 
                         return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                        
+//                        ModelAndView mav = new ModelAndView("finaliframe"); 
+//                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+//                        return mav;
                     } else {
                         errorException = null;
                         errorMsg = I18NUtils.tradueix("procesdefirma.status.final.firmaterror", SIGNID);
@@ -252,7 +269,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
         if (pet == null) {
-            log.error("No existeix la petició");
+            log.error("No existeix la petició"); // XYZ ZZZ Falta més info
             throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
                     new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
         }
@@ -262,7 +279,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         pet.setEstat(Constants.ESTAT_PETICIO_ERROR);
 
         peticioLogicaEjb.update(pet);
+        
         return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+        
+//        ModelAndView mav = new ModelAndView("finaliframe"); 
+//        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+//        return mav;
     }
 
     /**
@@ -334,7 +356,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             }
 
             // Es Web
-            final String view = FirmaSimpleStartTransactionRequest.VIEW_IFRAME;
+            final String view = FirmaSimpleStartTransactionRequest.VIEW_FULLSCREEN;
 //          FirmaSimpleStartTransactionRequest.VIEW_FULLSCREEN.equals(view)
 
             final String returnUrl = absoluteControllerBase + "/finalWeb/" + transactionID;

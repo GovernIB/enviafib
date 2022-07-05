@@ -26,11 +26,11 @@ a:hover{
 .bg-white {
 	background-color: #fff !important;
 }
-.colorVerd{
+.colorTaronja{
 	background-color: #BB6100;
 	margin-left: 5px;
 }
-.colorVerd:hover:enabled{
+.colorTaronja:hover:enabled{
 	background-color: #0000;
 }
 .desactivat{
@@ -109,11 +109,11 @@ a:hover{
 
 /* APLICA QUAN WIDTH MENOR DE 768px */
 @media only screen and (max-width : 767px) {
-	.colorVerd{
+	.colorTaronja{
 		background-color: #FF9523 !important;
 		margin-left: 0px !important;
 	}
-	.colorVerd:hover{
+	.colorTaronja:hover{
 		background-color: #FF9523 !important;
 	}
 	.mobil li a:hover{
