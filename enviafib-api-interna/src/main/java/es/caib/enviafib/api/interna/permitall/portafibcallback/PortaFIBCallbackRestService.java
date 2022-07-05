@@ -1,6 +1,5 @@
 package es.caib.enviafib.api.interna.permitall.portafibcallback;
 
-import java.sql.Timestamp;
 import java.util.Locale;
 
 import javax.ejb.EJB;

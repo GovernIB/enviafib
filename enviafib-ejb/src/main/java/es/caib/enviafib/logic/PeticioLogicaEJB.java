@@ -17,7 +17,6 @@ import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
-import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
@@ -334,21 +333,22 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             long estatPeticio = peticioList.get(0).getEstat();
 
-            Map<Integer, String> estats = new HashMap<Integer, String>();
-            estats.put(Constants.ESTAT_PETICIO_EN_PROCES, "en proces");
-            estats.put(Constants.ESTAT_PETICIO_FIRMADA, "firmada");
-            estats.put(Constants.ESTAT_PETICIO_ERROR, "rebutjada");
-
+           
             Long solicitantID = executeQueryOne(PeticioFields.SOLICITANTID,
                     PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
             
-            String urlBase = Configuracio.getUrlBase().replace("'", "`");
-            log.info("XYZ UrlBase = " + urlBase);
-            log.info("XYZ NomPeticio = " + nomPeticio);
+            String urlBase = Configuracio.getUrlBase();
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
             String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
-            String message = I18NCommonUtils.tradueix(loc, "email.peticio.body", nomPeticio, estats.get((int) estatPeticio),
-                    urlBase);
+            String message;
+            if(estatPeticio == Constants.ESTAT_PETICIO_FIRMADA) {
+                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.success", nomPeticio, urlBase);
+            }else if(estatPeticio == Constants.ESTAT_PETICIO_ERROR){
+                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.error", nomPeticio, urlBase);
+            }else {
+                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.process", nomPeticio, urlBase);
+            }
+            
             log.info("Message Obtingut");
             boolean isHTML = true;
             
@@ -515,7 +515,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         ApiFirmaAsyncSimpleJersey api;
 
         try {
-            URL hostUrl = new URL(host);
+            new URL(host);
             api = new ApiFirmaAsyncSimpleJersey(host, username, password);
 
         } catch (MalformedURLException urle) {
