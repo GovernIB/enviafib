@@ -48,7 +48,7 @@ Locale =
 lang = ${lang}
 <br />
 Only in Development Mode
-</c:if>
+
 
 <br />
 Username: ${loginInfo.username}
@@ -66,4 +66,5 @@ Username: ${loginInfo.username}
 </c:if>
 <c:if test="${empty loginInfo.usuari}">
 	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br />
+</c:if>
 </c:if>
