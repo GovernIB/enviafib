@@ -1,5 +1,6 @@
 -- create index efi_fitxer_pk_i on efi_fitxer (fitxerid);
-create index efi_peticio_titolid_fk_i on efi_peticio (titolid);
-create index efi_peticio_fitxerid_fk_i on efi_peticio (fitxerid);
-create index efi_peticio_idiomaid_fk_i on efi_peticio (idiomaid);
+-- create index efi_infosignatura_pk_i on efi_infosignatura (infosignaturaid);
+create index efi_peticio_solicitantid_fk_i on efi_peticio (solicitantid);
+create index efi_peticio_fitxer_firma_fk_i on efi_peticio (fitxer_firmatid);
+-- create index efi_plugin_pk_i on efi_plugin (pluginid);
 -- create index efi_usuari_pk_i on efi_usuari (usuariid);

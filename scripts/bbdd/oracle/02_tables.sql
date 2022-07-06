@@ -14,19 +14,44 @@
         suportat number(1,0) not null
     );
 
+    create table efi_infosignatura (
+       infosignaturaid number(19,0) not null,
+        checkadministrationidofsigner number(1,0),
+        checkdocumentmodifications number(1,0),
+        checkvalidationsignature number(1,0),
+        eniperfilfirma varchar2(255 char),
+        enirolfirma varchar2(255 char),
+        enisignlevel varchar2(255 char),
+        enisigneradministrationid varchar2(255 char),
+        enisignername varchar2(255 char),
+        enitipofirma varchar2(255 char),
+        policyincluded number(1,0),
+        signalgorithm varchar2(255 char),
+        signmode number(10,0),
+        signoperation number(10,0) not null,
+        signtype varchar2(255 char) not null,
+        signaturestablelocation number(10,0),
+        timestampincluded number(1,0)
+    );
+
     create table efi_peticio (
        peticioid number(19,0) not null,
         datacreacio timestamp not null,
+        datafinal timestamp,
         destinatarinif varchar2(50 char) not null,
+        errorexception clob,
+        errormsg varchar2(255 char),
         estat number(19,0) not null,
         fitxer_firmatid number(19,0),
         fitxerid number(19,0) not null,
-        idiomaid varchar2(5 char) not null,
         idiomadoc varchar2(30 char) not null,
-        peticioportafib number(19,0),
+        idiomaid varchar2(5 char) not null,
+        infosignaturaid number(19,0),
+        nom varchar2(255 char),
+        peticioportafirmes varchar2(255 char),
         solicitantid number(19,0) not null,
-        tipusdocumental varchar2(100 char) not null,
-        titolid number(19,0) not null
+        tipus number(10,0) not null,
+        tipusdocumental varchar2(100 char) not null
     );
 
     create table efi_plugin (
@@ -39,10 +64,10 @@
         tipus number(10,0) not null
     );
 
-    create table efi_seriedocu (
-       seriedocuid number(19,0) not null,
+    create table efi_seriedocumental (
+       seriedocumentalid number(19,0) not null,
         nom varchar2(256 char) not null,
-        tipusdocu varchar2(256 char)
+        tipusdocumental varchar2(256 char)
     );
 
     create table efi_traduccio (
