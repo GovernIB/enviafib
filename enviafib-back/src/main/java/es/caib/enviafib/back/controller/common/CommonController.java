@@ -19,19 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/common")
 public class CommonController {
 
-    @RequestMapping(value = "/home.html")
-    public ModelAndView principal(HttpSession session, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-
-        Boolean initialized = (Boolean) session.getAttribute("inicialitzat");
-
-        if (initialized == null) {
-            HtmlUtils.saveMessageInfo(request, I18NUtils.tradueix("common.benvinguda.missatge2"));
-            session.setAttribute("inicialitzat", true);
-        }
-
-        return new ModelAndView("home");
-
-    }
+    
 
 }

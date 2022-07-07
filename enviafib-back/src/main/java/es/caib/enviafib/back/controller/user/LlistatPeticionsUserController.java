@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
@@ -314,5 +315,13 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
         peticioLogicaEjb.deleteFull(peticio);
     }
+    @RequestMapping(value = "/home")
+    public ModelAndView principal(HttpSession session,
+        HttpServletRequest request, HttpServletResponse response)
+        throws Exception {
+      ModelAndView mav = new ModelAndView("homeUser");
+      return mav;
+      
+    }   
 
 }

@@ -1,5 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"
-%><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
+%>
+<%@page import="org.springframework.security.core.Authentication"%><%@page
+	import="org.springframework.context.i18n.LocaleContextHolder"%><%@page
+	import="org.springframework.security.core.context.SecurityContext"%><%@page
+	import="org.springframework.security.core.context.SecurityContextHolder"%><%@page
+	import="es.caib.enviafib.back.security.LoginInfo"%>
+<%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <c:set var="url" value="${urlActual}" />
 <div>
   <h5><fmt:message key="user.menu.title"/></h5>
@@ -52,11 +58,19 @@
       </a>
     </li>
    
-       <li style="list-style-type: disc; list-style-position: inside;">
+    <li style="list-style-type: disc; list-style-position: inside;">
       <a href="<c:url value="/user/firmasecretari/new"/>">
         <span style="${(fn:contains(url, '/firmasecretari'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmasecretari"/></span>
       </a>
     </li>
+    
+    <c:if test = "${LoginInfo.getInstance().getRoles() == '[ROLE_USER]'}">
+    	<li style="list-style-type: disc; list-style-position: inside;">
+      		<a href="<c:url value="/user/peticio/home"/>">
+        		<span style="${(fn:contains(url, '/home'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.home"/></span>
+      		</a>
+    	</li>
+    </c:if>
    
   </ul>
 </div>
