@@ -52,11 +52,13 @@ public class EmailUtil {
     MimeMessage msg = new MimeMessage(session);
 
     InternetAddress addressFrom = new InternetAddress(from);
+    System.out.println("XYZ AdressFrom = "+addressFrom);
     msg.setFrom(addressFrom);
 
     // Indicamos los destinatarios
     InternetAddress[] addressTo = new InternetAddress[recipients.length];
     for (int i = 0; i < recipients.length; i++) {
+      System.out.println("XYZ AdressTo = "+recipients[i]);
       addressTo[i] = new InternetAddress(recipients[i]);
     }
     
