@@ -26,8 +26,8 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.String getDestinatariNif();
 	public void setDestinatariNif(java.lang.String _destinatariNif_);
 
-	public long getEstat();
-	public void setEstat(long _estat_);
+	public int getEstat();
+	public void setEstat(int _estat_);
 
 	public java.lang.Long getFitxerFirmatID();
 	public void setFitxerFirmatID(java.lang.Long _fitxerFirmatID_);

@@ -18,7 +18,7 @@ private static final long serialVersionUID = -515854961L;
 	long solicitantID;
 	java.lang.String idiomaID;
 	java.lang.String destinatariNif;
-	long estat;
+	int estat;
 	java.lang.Long fitxerFirmatID;
 	java.lang.String tipusDocumental;
 	java.lang.String idiomaDoc;
@@ -34,7 +34,7 @@ private static final long serialVersionUID = -515854961L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioBean(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
+  public PeticioBean(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
     this.nom=nom;
     this.peticioID=peticioID;
     this.dataCreacio=dataCreacio;
@@ -54,7 +54,7 @@ private static final long serialVersionUID = -515854961L;
     this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioBean(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , long estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
+  public PeticioBean(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
     this.nom=nom;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
@@ -73,7 +73,7 @@ private static final long serialVersionUID = -515854961L;
     this.peticioPortafirmes=peticioPortafirmes;
 }
   /** Constructor dels valors Not Null */
-  public PeticioBean(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , long estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
+  public PeticioBean(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
     this.peticioID=peticioID;
     this.dataCreacio=dataCreacio;
     this.fitxerID=fitxerID;
@@ -165,10 +165,10 @@ private static final long serialVersionUID = -515854961L;
 		this.destinatariNif = _destinatariNif_;
 	};
 
-	public long getEstat() {
+	public int getEstat() {
 		return(estat);
 	};
-	public void setEstat(long _estat_) {
+	public void setEstat(int _estat_) {
 		this.estat = _estat_;
 	};
 
