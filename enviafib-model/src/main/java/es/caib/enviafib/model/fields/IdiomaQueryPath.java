@@ -50,4 +50,18 @@ public class IdiomaQueryPath extends org.fundaciobit.genapp.common.query.QueryPa
   }
 */
 
+/* L'ús d'aquest camp (OneToMany) llança una exception:
+ [Illegal attempt to dereference a collection]
+
+ // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
+
+  public UsuariQueryPath USUARIS() {
+    return new UsuariQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return IdiomaQueryPath.this.getQueryPath() + "usuaris" + ".";
+      }
+    });
+  }
+*/
+
 }

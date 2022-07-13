@@ -17,6 +17,7 @@ private static final long serialVersionUID = 79037649L;
 	java.lang.String llinatge2;
 	java.lang.String nif;
 	java.lang.String email;
+	java.lang.String idiomaID;
 
 
   /** Constructor Buit */
@@ -24,7 +25,7 @@ private static final long serialVersionUID = 79037649L;
   }
 
   /** Constructor amb tots els camps  */
-  public UsuariBean(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email) {
+  public UsuariBean(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
     this.usuariID=usuariID;
     this.username=username;
     this.nom=nom;
@@ -32,15 +33,17 @@ private static final long serialVersionUID = 79037649L;
     this.llinatge2=llinatge2;
     this.nif=nif;
     this.email=email;
+    this.idiomaID=idiomaID;
 }
   /** Constructor sense valors autoincrementals */
-  public UsuariBean(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email) {
+  public UsuariBean(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
     this.username=username;
     this.nom=nom;
     this.llinatge1=llinatge1;
     this.llinatge2=llinatge2;
     this.nif=nif;
     this.email=email;
+    this.idiomaID=idiomaID;
 }
   public UsuariBean(Usuari __bean) {
     this.setUsuariID(__bean.getUsuariID());
@@ -50,6 +53,7 @@ private static final long serialVersionUID = 79037649L;
     this.setLlinatge2(__bean.getLlinatge2());
     this.setNif(__bean.getNif());
     this.setEmail(__bean.getEmail());
+    this.setIdiomaID(__bean.getIdiomaID());
 	}
 
 	public long getUsuariID() {
@@ -101,6 +105,13 @@ private static final long serialVersionUID = 79037649L;
 		this.email = _email_;
 	};
 
+	public java.lang.String getIdiomaID() {
+		return(idiomaID);
+	};
+	public void setIdiomaID(java.lang.String _idiomaID_) {
+		this.idiomaID = _idiomaID_;
+	};
+
 
 
   // ======================================
@@ -115,6 +126,7 @@ private static final long serialVersionUID = 79037649L;
     __tmp.setLlinatge2(__bean.getLlinatge2());
     __tmp.setNif(__bean.getNif());
     __tmp.setEmail(__bean.getEmail());
+    __tmp.setIdiomaID(__bean.getIdiomaID());
 		return __tmp;
 	}
 

@@ -3,15 +3,18 @@ package es.caib.enviafib.persistence;
 import es.caib.enviafib.model.entity.*;
 import javax.persistence.Table;
 import javax.persistence.Column;
-import java.util.HashSet;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.Set;
+import java.util.HashSet;
 import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import java.util.Set;
 import javax.persistence.Id;
 
 
@@ -49,6 +52,9 @@ private static final long serialVersionUID = -1105822054L;
     @Column(name="email",nullable = false,length = 256)
     java.lang.String email;
 
+    @Column(name="idiomaid",nullable = false,length = 5)
+    java.lang.String idiomaID;
+
 
 
   /** Constructor Buit */
@@ -56,7 +62,7 @@ private static final long serialVersionUID = -1105822054L;
   }
 
   /** Constructor amb tots els camps  */
-  public UsuariJPA(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email) {
+  public UsuariJPA(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
     this.usuariID=usuariID;
     this.username=username;
     this.nom=nom;
@@ -64,15 +70,17 @@ private static final long serialVersionUID = -1105822054L;
     this.llinatge2=llinatge2;
     this.nif=nif;
     this.email=email;
+    this.idiomaID=idiomaID;
 }
   /** Constructor sense valors autoincrementals */
-  public UsuariJPA(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email) {
+  public UsuariJPA(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
     this.username=username;
     this.nom=nom;
     this.llinatge1=llinatge1;
     this.llinatge2=llinatge2;
     this.nif=nif;
     this.email=email;
+    this.idiomaID=idiomaID;
 }
   public UsuariJPA(Usuari __bean) {
     this.setUsuariID(__bean.getUsuariID());
@@ -82,6 +90,7 @@ private static final long serialVersionUID = -1105822054L;
     this.setLlinatge2(__bean.getLlinatge2());
     this.setNif(__bean.getNif());
     this.setEmail(__bean.getEmail());
+    this.setIdiomaID(__bean.getIdiomaID());
 	}
 
 	public long getUsuariID() {
@@ -133,6 +142,13 @@ private static final long serialVersionUID = -1105822054L;
 		this.email = _email_;
 	};
 
+	public java.lang.String getIdiomaID() {
+		return(idiomaID);
+	};
+	public void setIdiomaID(java.lang.String _idiomaID_) {
+		this.idiomaID = _idiomaID_;
+	};
+
 
 
   @Override
@@ -161,6 +177,20 @@ private static final long serialVersionUID = -1105822054L;
     }
 
 
+// IMP Field:idiomaid | Table: efi_idioma | Type: 1  
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idiomaid", referencedColumnName ="idiomaID", nullable = false, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_usuari_idioma_fk"))
+    private IdiomaJPA idioma;
+
+    public IdiomaJPA getIdioma() {
+    return this.idioma;
+  }
+
+    public  void setIdioma(IdiomaJPA idioma) {
+    this.idioma = idioma;
+  }
+
 
  // ---------------  STATIC METHODS ------------------
   public static UsuariJPA toJPA(Usuari __bean) {
@@ -173,6 +203,7 @@ private static final long serialVersionUID = -1105822054L;
     __tmp.setLlinatge2(__bean.getLlinatge2());
     __tmp.setNif(__bean.getNif());
     __tmp.setEmail(__bean.getEmail());
+    __tmp.setIdiomaID(__bean.getIdiomaID());
 		return __tmp;
 	}
 
@@ -207,6 +238,10 @@ private static final long serialVersionUID = -1105822054L;
       __tmp.setPeticios(PeticioJPA.copyJPA(__jpa.getPeticios(), __alreadyCopied,"UsuariJPA"));
     }
     // Copia de beans complexes (IMP)
+    if(!"IdiomaJPA".equals(origenJPA) && 
+       (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.idioma) || org.hibernate.Hibernate.isInitialized(__jpa.getIdioma()) ) ) {
+      __tmp.setIdioma(IdiomaJPA.copyJPA(__jpa.getIdioma(), __alreadyCopied,"UsuariJPA"));
+    }
 
     return __tmp;
   }

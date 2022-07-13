@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.form.webdb;
 
+import java.util.List;
+import org.fundaciobit.genapp.common.StringKeyValue;
 import es.caib.enviafib.back.form.EnviaFIBBaseForm;
 import es.caib.enviafib.persistence.UsuariJPA;
 
@@ -17,6 +19,7 @@ public class UsuariForm extends EnviaFIBBaseForm {
   public UsuariForm(UsuariForm __toClone) {
     super(__toClone);
       this.usuari = __toClone.usuari;
+    this.listOfIdiomaForIdiomaID = __toClone.listOfIdiomaForIdiomaID;
   }
   
   public UsuariForm(UsuariJPA usuari, boolean nou) {
@@ -32,5 +35,17 @@ public class UsuariForm extends EnviaFIBBaseForm {
   }
   
   
+  private List<StringKeyValue> listOfIdiomaForIdiomaID;
+
+  public List<StringKeyValue> getListOfIdiomaForIdiomaID() {
+    return this.listOfIdiomaForIdiomaID;
+  }
+
+  public void setListOfIdiomaForIdiomaID(List<StringKeyValue> listOfIdiomaForIdiomaID) {
+    this.listOfIdiomaForIdiomaID = listOfIdiomaForIdiomaID;
+  }
+
+
+
   
 } // Final de Classe 

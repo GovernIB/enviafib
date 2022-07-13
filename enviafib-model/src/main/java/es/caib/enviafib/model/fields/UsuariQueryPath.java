@@ -39,6 +39,10 @@ public class UsuariQueryPath extends org.fundaciobit.genapp.common.query.QueryPa
     return new StringField(getQueryPath(), UsuariFields.EMAIL);
   }
 
+  public StringField IDIOMAID() {
+    return new StringField(getQueryPath(), UsuariFields.IDIOMAID);
+  }
+
 
 
   @Override
@@ -61,5 +65,13 @@ public class UsuariQueryPath extends org.fundaciobit.genapp.common.query.QueryPa
     });
   }
 */
+
+  public IdiomaQueryPath IDIOMA() {
+    return new IdiomaQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return UsuariQueryPath.this.getQueryPath() + "idioma" + ".";
+      }
+    });
+  }
 
 }

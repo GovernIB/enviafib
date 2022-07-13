@@ -3,6 +3,7 @@ package es.caib.enviafib.back.form.webdb;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -108,6 +109,17 @@ public class UsuariFilterForm extends EnviaFIBBaseFilterForm implements UsuariFi
   }
 
 
+  private java.lang.String idiomaID;
+
+  public java.lang.String getIdiomaID() {
+    return this.idiomaID;
+  }
+
+  public void setIdiomaID(java.lang.String idiomaID) {
+    this.idiomaID = idiomaID;
+  }
+
+
   public UsuariFilterForm() {
   }
   
@@ -121,6 +133,8 @@ public class UsuariFilterForm extends EnviaFIBBaseFilterForm implements UsuariFi
     this.llinatge2 = __toClone.llinatge2;
     this.nif = __toClone.nif;
     this.email = __toClone.email;
+    this.idiomaID = __toClone.idiomaID;
+    this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
   }
   
   /* ========= UTILS ========== */
@@ -155,6 +169,18 @@ public class UsuariFilterForm extends EnviaFIBBaseFilterForm implements UsuariFi
    // -----------------------
    // Maps de referencies.
    // -----------------------
+  private Map<String, String> mapOfIdiomaForIdiomaID;
+
+  public Map<String, String> getMapOfIdiomaForIdiomaID() {
+    return this.mapOfIdiomaForIdiomaID;
+  }
+
+  public void setMapOfIdiomaForIdiomaID(Map<String, String> mapOfIdiomaForIdiomaID) {
+    this.mapOfIdiomaForIdiomaID = mapOfIdiomaForIdiomaID;
+  }
+
+
+
 
    // --------------------------------
    // Camps traduibles de referencies.

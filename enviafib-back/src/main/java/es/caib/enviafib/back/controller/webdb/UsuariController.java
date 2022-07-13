@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.controller.webdb;
 
+import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.utils.Utils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.GroupByItem;
@@ -55,6 +57,10 @@ public class UsuariController
 
   @Autowired
   protected UsuariRefList usuariRefList;
+
+  // References 
+  @Autowired
+  protected IdiomaRefList idiomaRefList;
 
   /**
    * Llistat de totes Usuari
@@ -173,6 +179,19 @@ public class UsuariController
       groupByItemsMap.put(groupByItem.getField(),groupByItem);
     }
 
+    Map<String, String> _tmp;
+    List<StringKeyValue> _listSKV;
+
+    // Field idiomaID
+    {
+      _listSKV = getReferenceListForIdiomaID(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfIdiomaForIdiomaID(_tmp);
+      if (filterForm.getGroupByFields().contains(IDIOMAID)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, IDIOMAID, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -188,6 +207,7 @@ public class UsuariController
 
     java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
     __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
+    __mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -235,6 +255,15 @@ public class UsuariController
 
   public void fillReferencesForForm(UsuariForm usuariForm,
     HttpServletRequest request, ModelAndView mav) throws I18NException {
+    // Comprovam si ja esta definida la llista
+    if (usuariForm.getListOfIdiomaForIdiomaID() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForIdiomaID(request, mav, usuariForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariForm.setListOfIdiomaForIdiomaID(_listSKV);
+    }
     
   }
 
@@ -535,6 +564,45 @@ public java.lang.Long stringToPK(String value) {
 
   public boolean isActiveFormView() {
     return isActiveFormEdit();
+  }
+
+
+  public List<StringKeyValue> getReferenceListForIdiomaID(HttpServletRequest request,
+       ModelAndView mav, UsuariForm usuariForm, Where where)  throws I18NException {
+    if (usuariForm.isHiddenField(IDIOMAID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _where = null;
+    if (usuariForm.isReadOnlyField(IDIOMAID)) {
+      _where = IdiomaFields.IDIOMAID.equal(usuariForm.getUsuari().getIdiomaID());
+    }
+    return getReferenceListForIdiomaID(request, mav, Where.AND(where, _where));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForIdiomaID(HttpServletRequest request,
+       ModelAndView mav, UsuariFilterForm usuariFilterForm,
+       List<Usuari> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariFilterForm.isHiddenField(IDIOMAID)
+      && !usuariFilterForm.isGroupByField(IDIOMAID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    if (!_groupByItemsMap.containsKey(IDIOMAID)) {
+      // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
+      java.util.Set<java.lang.String> _pkList = new java.util.HashSet<java.lang.String>();
+      for (Usuari _item : list) {
+        _pkList.add(_item.getIdiomaID());
+        }
+        _w = IdiomaFields.IDIOMAID.in(_pkList);
+      }
+    return getReferenceListForIdiomaID(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForIdiomaID(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, where );
   }
 
 

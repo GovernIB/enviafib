@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import es.caib.enviafib.model.entity.Usuari;
 import org.fundaciobit.genapp.common.query.Field;
 import es.caib.enviafib.model.fields.UsuariFields;
+import es.caib.enviafib.model.fields.IdiomaFields;
 
 import org.fundaciobit.genapp.common.validation.IValidatorResult;
 
@@ -27,6 +28,7 @@ public class UsuariValidator<I extends Usuari>
 
   /** Constructor */
   public void validate(IValidatorResult<I> __vr,I __target__, boolean __isNou__
+    ,es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager
     ,es.caib.enviafib.model.dao.IUsuariManager __usuariManager) {
 
     // Valors Not Null
@@ -49,6 +51,10 @@ public class UsuariValidator<I extends Usuari>
     __vr.rejectIfEmptyOrWhitespace(__target__,EMAIL, 
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(EMAIL)));
+
+    __vr.rejectIfEmptyOrWhitespace(__target__,IDIOMAID, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMAID)));
 
     // Check size
     if (__vr.getFieldErrorCount(USERNAME) == 0) {
@@ -121,6 +127,14 @@ public class UsuariValidator<I extends Usuari>
       }
     }
 
+    if (__vr.getFieldErrorCount(IDIOMAID) == 0) {
+      java.lang.String __idiomaid = __target__.getIdiomaID();
+      if (__idiomaid!= null && __idiomaid.length() > 5) {
+        __vr.rejectValue(IDIOMAID, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMAID)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(5)));
+      }
+    }
+
     if (__isNou__) { // Creació
       // ================ CREATION
       // Fitxers 
@@ -160,6 +174,18 @@ public class UsuariValidator<I extends Usuari>
     }
 
     // Fields with References to Other tables 
+    if (__vr.getFieldErrorCount(IDIOMAID) == 0) {
+      java.lang.String __idiomaid = __target__.getIdiomaID();
+      Long __count_ = null;
+      try { __count_ = __idiomaManager.count(IdiomaFields.IDIOMAID.equal(__idiomaid)); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+      if (__count_ == null || __count_ == 0) {        
+        __vr.rejectValue(IDIOMAID, "error.notfound",
+         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("idioma.idioma"),
+         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode("idioma.idiomaID"),
+         new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__idiomaid)));
+      }
+    }
+
   } // Final de mètode
   public String get(Field<?> field) {
     return field.fullName;

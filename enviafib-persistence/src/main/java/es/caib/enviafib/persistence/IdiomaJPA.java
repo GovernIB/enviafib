@@ -118,6 +118,19 @@ private static final long serialVersionUID = 1367253670L;
     }
 
 
+// EXP  Field:idiomaid | Table: efi_usuari | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idioma")
+    private Set<UsuariJPA> usuaris = new HashSet<UsuariJPA>(0);
+    public  Set<UsuariJPA> getUsuaris() {
+    return this.usuaris;
+  }
+
+    public void setUsuaris(Set<UsuariJPA> usuaris) {
+      this.usuaris = usuaris;
+    }
+
+
 
  // ---------------  STATIC METHODS ------------------
   public static IdiomaJPA toJPA(Idioma __bean) {
@@ -159,6 +172,10 @@ private static final long serialVersionUID = 1367253670L;
     if(!"PeticioJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticios) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticios())) ) {
       __tmp.setPeticios(PeticioJPA.copyJPA(__jpa.getPeticios(), __alreadyCopied,"IdiomaJPA"));
+    }
+    if(!"UsuariJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.usuaris) || org.hibernate.Hibernate.isInitialized(__jpa.getUsuaris())) ) {
+      __tmp.setUsuaris(UsuariJPA.copyJPA(__jpa.getUsuaris(), __alreadyCopied,"IdiomaJPA"));
     }
     // Copia de beans complexes (IMP)
 
