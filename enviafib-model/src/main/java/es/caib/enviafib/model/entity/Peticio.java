@@ -53,6 +53,9 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.String getPeticioPortafirmes();
 	public void setPeticioPortafirmes(java.lang.String _peticioPortafirmes_);
 
+	public java.lang.String getReason();
+	public void setReason(java.lang.String _reason_);
+
   // Fitxer
   public <F extends Fitxer> F getFitxer();
   // Fitxer

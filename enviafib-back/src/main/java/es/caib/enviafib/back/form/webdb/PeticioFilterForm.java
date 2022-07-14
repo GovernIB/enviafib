@@ -263,6 +263,17 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.String reason;
+
+  public java.lang.String getReason() {
+    return this.reason;
+  }
+
+  public void setReason(java.lang.String reason) {
+    this.reason = reason;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -290,6 +301,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.errorMsg = __toClone.errorMsg;
     this.errorException = __toClone.errorException;
     this.peticioPortafirmes = __toClone.peticioPortafirmes;
+    this.reason = __toClone.reason;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;

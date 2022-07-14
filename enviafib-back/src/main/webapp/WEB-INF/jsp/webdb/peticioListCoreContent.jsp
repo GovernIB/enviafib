@@ -130,6 +130,11 @@
           ${peticio.peticioPortafirmes}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.REASON)}">
+          <td>
+          ${peticio.reason}
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

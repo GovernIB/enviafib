@@ -1051,13 +1051,13 @@ public java.lang.Long stringToPK(String value) {
 
 
   public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
-    throws I18NException, I18NValidationException {
+    throws Exception,I18NException, I18NValidationException {
     return (PeticioJPA) peticioEjb.create(peticio);
   }
 
 
   public PeticioJPA update(HttpServletRequest request, PeticioJPA peticio)
-    throws I18NException, I18NValidationException {
+    throws Exception,I18NException, I18NValidationException {
     return (PeticioJPA) peticioEjb.update(peticio);
   }
 

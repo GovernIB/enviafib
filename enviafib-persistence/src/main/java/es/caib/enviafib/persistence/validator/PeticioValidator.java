@@ -48,10 +48,6 @@ public class PeticioValidator<I extends Peticio>
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(IDIOMAID)));
 
-    __vr.rejectIfEmptyOrWhitespace(__target__,DESTINATARINIF, 
-        "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(DESTINATARINIF)));
-
     __vr.rejectIfEmptyOrWhitespace(__target__,ESTAT, 
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ESTAT)));
@@ -141,6 +137,14 @@ public class PeticioValidator<I extends Peticio>
       if (__peticioportafirmes!= null && __peticioportafirmes.length() > 255) {
         __vr.rejectValue(PETICIOPORTAFIRMES, "genapp.validation.sizeexceeds",
             new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(PETICIOPORTAFIRMES)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(REASON) == 0) {
+      java.lang.String __reason = __target__.getReason();
+      if (__reason!= null && __reason.length() > 255) {
+        __vr.rejectValue(REASON, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(REASON)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
       }
     }
 

@@ -29,6 +29,7 @@ public interface PeticioFields extends java.io.Serializable {
 	 public static final StringField ERRORMSG = new StringField(_TABLE_MODEL, "errorMsg", "errormsg");
 	 public static final StringField ERROREXCEPTION = new StringField(_TABLE_MODEL, "errorException", "errorexception");
 	 public static final StringField PETICIOPORTAFIRMES = new StringField(_TABLE_MODEL, "peticioPortafirmes", "peticioportafirmes");
+	 public static final StringField REASON = new StringField(_TABLE_MODEL, "reason", "reason");
 
 
   public static final Field<?>[] ALL_PETICIO_FIELDS = {
@@ -48,7 +49,8 @@ public interface PeticioFields extends java.io.Serializable {
     TIPUS,
     ERRORMSG,
     ERROREXCEPTION,
-    PETICIOPORTAFIRMES
+    PETICIOPORTAFIRMES,
+    REASON
   };
 
 

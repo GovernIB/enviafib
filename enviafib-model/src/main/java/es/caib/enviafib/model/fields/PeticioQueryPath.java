@@ -79,6 +79,10 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new StringField(getQueryPath(), PeticioFields.PETICIOPORTAFIRMES);
   }
 
+  public StringField REASON() {
+    return new StringField(getQueryPath(), PeticioFields.REASON);
+  }
+
 
 
   @Override

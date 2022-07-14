@@ -135,6 +135,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         }
 
+//        if (peticioForm.getPeticio().getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
+//            hiddens.remove(REASON);
+//        }
+        
         peticioForm.setHiddenFields(hiddens);
 
         if (peticioForm.isNou()) {
@@ -215,7 +219,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
-            throws I18NException, I18NValidationException {
+            throws Exception, I18NException, I18NValidationException {
         PeticioJPA p = super.create(request, peticio);
 
         final int tipus = getTipusPeticio();

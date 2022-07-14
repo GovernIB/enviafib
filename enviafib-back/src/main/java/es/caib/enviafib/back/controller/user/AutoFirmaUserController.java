@@ -74,14 +74,16 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
 
         peticioForm.addHiddenField(DESTINATARINIF);
-
+        peticioForm.getHiddenFields().remove(PeticioFields.REASON);
+//        peticioForm.
+        
         return peticioForm;
 
     }
 
     @Override
     public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
-            throws I18NException, I18NValidationException {
+            throws Exception, I18NException, I18NValidationException {
         PeticioJPA p = super.create(request, peticio);
 
         final String absoluteControllerBase = getAbsoluteControllerBase(request, getContextWeb());
@@ -314,8 +316,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             log.info("administrationID: ]" + administrationID + "[");
             log.info("signerEmail: ]" + signerEmail + "[");
 
-            // TODO #101: Afegir a base de dades a la 1.0.2 
-            final String reason = "Prova de reason"; // form.getMotiu();
+            final String reason = peticio.getReason();
             final String location = null; // form.getLocation();
 
             // Només es suporta una firma

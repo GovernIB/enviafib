@@ -57,7 +57,7 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="idiomaid",nullable = false,length = 5)
     java.lang.String idiomaID;
 
-    @Column(name="destinatarinif",nullable = false,length = 50)
+    @Column(name="destinatarinif",length = 50)
     java.lang.String destinatariNif;
 
     @Column(name="estat",nullable = false,length = 10)
@@ -90,6 +90,9 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="peticioportafirmes",length = 255)
     java.lang.String peticioPortafirmes;
 
+    @Column(name="reason",length = 255)
+    java.lang.String reason;
+
 
 
   /** Constructor Buit */
@@ -97,7 +100,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
+  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason) {
     this.nom=nom;
     this.peticioID=peticioID;
     this.dataCreacio=dataCreacio;
@@ -115,9 +118,10 @@ private static final long serialVersionUID = 1230292508L;
     this.errorMsg=errorMsg;
     this.errorException=errorException;
     this.peticioPortafirmes=peticioPortafirmes;
+    this.reason=reason;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes) {
+  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason) {
     this.nom=nom;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
@@ -134,15 +138,15 @@ private static final long serialVersionUID = 1230292508L;
     this.errorMsg=errorMsg;
     this.errorException=errorException;
     this.peticioPortafirmes=peticioPortafirmes;
+    this.reason=reason;
 }
   /** Constructor dels valors Not Null */
-  public PeticioJPA(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
+  public PeticioJPA(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , int estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
     this.peticioID=peticioID;
     this.dataCreacio=dataCreacio;
     this.fitxerID=fitxerID;
     this.solicitantID=solicitantID;
     this.idiomaID=idiomaID;
-    this.destinatariNif=destinatariNif;
     this.estat=estat;
     this.tipusDocumental=tipusDocumental;
     this.idiomaDoc=idiomaDoc;
@@ -166,6 +170,7 @@ private static final long serialVersionUID = 1230292508L;
     this.setErrorMsg(__bean.getErrorMsg());
     this.setErrorException(__bean.getErrorException());
     this.setPeticioPortafirmes(__bean.getPeticioPortafirmes());
+    this.setReason(__bean.getReason());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -291,6 +296,13 @@ private static final long serialVersionUID = 1230292508L;
 		this.peticioPortafirmes = _peticioPortafirmes_;
 	};
 
+	public java.lang.String getReason() {
+		return(reason);
+	};
+	public void setReason(java.lang.String _reason_) {
+		this.reason = _reason_;
+	};
+
 
 
   @Override
@@ -398,6 +410,7 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setErrorMsg(__bean.getErrorMsg());
     __tmp.setErrorException(__bean.getErrorException());
     __tmp.setPeticioPortafirmes(__bean.getPeticioPortafirmes());
+    __tmp.setReason(__bean.getReason());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer

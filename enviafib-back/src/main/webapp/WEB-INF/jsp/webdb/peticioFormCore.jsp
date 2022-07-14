@@ -210,7 +210,7 @@
         <tr id="peticio_destinatariNif_rowid">
           <td id="peticio_destinatariNif_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.DESTINATARINIF])?'peticio.destinatariNif':__theForm.labels[PeticioFields.DESTINATARINIF]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.DESTINATARINIF])?'peticio.destinatariNif':__theForm.labels[PeticioFields.DESTINATARINIF]}" />
              </label>
               <c:if test="${not empty __theForm.help[PeticioFields.DESTINATARINIF]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.DESTINATARINIF]}" ></i>
@@ -515,6 +515,45 @@
             <form:errors path="peticio.peticioPortafirmes" cssClass="errorField alert alert-danger" />
             <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIRMES)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.PETICIOPORTAFIRMES)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.peticioPortafirmes"   />
 
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.REASON)}">
+        <tr id="peticio_reason_rowid">
+          <td id="peticio_reason_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.REASON])?'peticio.reason':__theForm.labels[PeticioFields.REASON]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.REASON]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.REASON]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_reason_columnvalueid">
+              <form:errors path="peticio.reason" cssClass="errorField alert alert-danger" />
+  <table style="width:100%">
+  <tr>
+  <td>
+       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.REASON)? 'true' : 'false'}" path="peticio.reason"  />
+   </td>
+   <td style="width:40px">
+      <div id="dropdownMenuButton_reason" style="vertical-align:top;display:inline;position:relative;">
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <div id="dropdownMenuContainer_reason" class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.reason'); ta.wrap='off';" >No Wrap</a>
+          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.reason'); ta.wrap='soft';">Soft Wrap</a>
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.reason'); ta.wrap='hard';">Hard Wrap</a>
+        </div>
+      </div>
+      <script type="text/javascript">
+			$('#dropdownMenuButton_reason').on('click', function(){
+					var valor = ($('#dropdownMenuContainer_reason').css('display') != 'none') ? 'none' : 'block';
+                 $('#dropdownMenuContainer_reason').css('display', valor);
+                 return false;
+				});
+      </script>   </td>
+   </tr>
+   </table>
            </td>
         </tr>
         </c:if>
