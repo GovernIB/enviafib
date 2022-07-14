@@ -19,6 +19,7 @@ import javax.persistence.Id;
 
 @Entity(name = "PeticioJPA")
 @Table(name = "efi_peticio" , indexes = { 
+        @Index(name="efi_peticio_pk_i", columnList = "peticioid"),
         @Index(name="efi_peticio_fitxerid_fk_i", columnList = "fitxerid"),
         @Index(name="efi_peticio_solicitantid_fk_i", columnList = "solicitantid"),
         @Index(name="efi_peticio_idiomaid_fk_i", columnList = "idiomaid"),

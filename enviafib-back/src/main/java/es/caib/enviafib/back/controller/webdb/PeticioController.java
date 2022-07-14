@@ -987,13 +987,6 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  @Override
-  /** Ha de ser igual que el RequestMapping de la Classe */
-  public String getContextWeb() {
-    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
-    return rm.value()[0];
-  }
-
   public void preValidate(HttpServletRequest request,PeticioForm peticioForm , BindingResult result)  throws I18NException {
   }
 
@@ -1034,6 +1027,13 @@ public java.lang.Long stringToPK(String value) {
     return "peticioListWebDB";
   }
 
+  @Override
+  /** Ha de ser igual que el RequestMapping de la Classe */
+  public String getContextWeb() {
+    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+    return rm.value()[0];
+  }
+
   public String getSessionAttributeFilterForm() {
     return "PeticioWebDB_FilterForm";
   }
@@ -1062,7 +1062,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
+  public void delete(HttpServletRequest request, Peticio peticio) throws Exception,I18NException {
     peticioEjb.delete(peticio);
   }
 

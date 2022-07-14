@@ -538,13 +538,6 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
-  @Override
-  /** Ha de ser igual que el RequestMapping de la Classe */
-  public String getContextWeb() {
-    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
-    return rm.value()[0];
-  }
-
   public void preValidate(HttpServletRequest request,TraduccioForm traduccioForm , BindingResult result)  throws I18NException {
   }
 
@@ -585,6 +578,13 @@ public java.lang.Long stringToPK(String value) {
     return "traduccioListWebDB";
   }
 
+  @Override
+  /** Ha de ser igual que el RequestMapping de la Classe */
+  public String getContextWeb() {
+    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+    return rm.value()[0];
+  }
+
   public String getSessionAttributeFilterForm() {
     return "TraduccioWebDB_FilterForm";
   }
@@ -602,18 +602,18 @@ public java.lang.Long stringToPK(String value) {
 
 
   public TraduccioJPA create(HttpServletRequest request, TraduccioJPA traduccio)
-    throws I18NException, I18NValidationException {
+    throws Exception,I18NException, I18NValidationException {
     return (TraduccioJPA) traduccioEjb.create(traduccio);
   }
 
 
   public TraduccioJPA update(HttpServletRequest request, TraduccioJPA traduccio)
-    throws I18NException, I18NValidationException {
+    throws Exception,I18NException, I18NValidationException {
     return (TraduccioJPA) traduccioEjb.update(traduccio);
   }
 
 
-  public void delete(HttpServletRequest request, Traduccio traduccio) throws I18NException {
+  public void delete(HttpServletRequest request, Traduccio traduccio) throws Exception,I18NException {
     traduccioEjb.delete(traduccio);
   }
 
