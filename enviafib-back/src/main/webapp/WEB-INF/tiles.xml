@@ -186,6 +186,16 @@
     </definition>
 
 
+    <definition name="infoCustodyFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="infoCustody.infoCustody" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoCustodyForm.jsp" />
+    </definition>
+    
+    <definition name="infoCustodyListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoCustodyList.jsp" />
+    </definition>
+
+
     <definition name="infoSignaturaFormWebDB" extends="webdb">
         <put-attribute name="titol" value="infoSignatura.infoSignatura" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaForm.jsp" />

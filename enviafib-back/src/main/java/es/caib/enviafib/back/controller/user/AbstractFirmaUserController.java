@@ -219,7 +219,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
-            throws Exception, I18NException, I18NValidationException {
+            throws I18NException, I18NValidationException {
         PeticioJPA p = super.create(request, peticio);
 
         final int tipus = getTipusPeticio();

@@ -4,22 +4,24 @@ import es.caib.enviafib.model.entity.*;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GenerationType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.Set;
+import org.hibernate.annotations.Type;
+import java.util.HashSet;
+import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
-import org.hibernate.annotations.Type;
 import javax.persistence.Id;
 
 
 @Entity(name = "PeticioJPA")
 @Table(name = "efi_peticio" , indexes = { 
-        @Index(name="efi_peticio_pk_i", columnList = "peticioid"),
         @Index(name="efi_peticio_fitxerid_fk_i", columnList = "fitxerid"),
         @Index(name="efi_peticio_solicitantid_fk_i", columnList = "solicitantid"),
         @Index(name="efi_peticio_idiomaid_fk_i", columnList = "idiomaid"),
@@ -318,6 +320,19 @@ private static final long serialVersionUID = 1230292508L;
     return __result;
   }
 
+// EXP  Field:peticioid | Table: efi_infocustody | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "peticio")
+    private Set<InfoCustodyJPA> infoCustodys = new HashSet<InfoCustodyJPA>(0);
+    public  Set<InfoCustodyJPA> getInfoCustodys() {
+    return this.infoCustodys;
+  }
+
+    public void setInfoCustodys(Set<InfoCustodyJPA> infoCustodys) {
+      this.infoCustodys = infoCustodys;
+    }
+
+
 // IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -444,6 +459,10 @@ private static final long serialVersionUID = 1230292508L;
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
+    if(!"InfoCustodyJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoCustodys) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoCustodys())) ) {
+      __tmp.setInfoCustodys(InfoCustodyJPA.copyJPA(__jpa.getInfoCustodys(), __alreadyCopied,"PeticioJPA"));
+    }
     // Copia de beans complexes (IMP)
     if(!"IdiomaJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.idioma) || org.hibernate.Hibernate.isInitialized(__jpa.getIdioma()) ) ) {

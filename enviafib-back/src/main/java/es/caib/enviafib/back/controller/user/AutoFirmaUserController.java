@@ -83,7 +83,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
     @Override
     public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
-            throws Exception, I18NException, I18NValidationException {
+            throws I18NException, I18NValidationException {
         PeticioJPA p = super.create(request, peticio);
 
         final String absoluteControllerBase = getAbsoluteControllerBase(request, getContextWeb());

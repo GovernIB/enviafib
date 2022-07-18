@@ -710,6 +710,13 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
+  @Override
+  /** Ha de ser igual que el RequestMapping de la Classe */
+  public String getContextWeb() {
+    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+    return rm.value()[0];
+  }
+
   public void preValidate(HttpServletRequest request,InfoSignaturaForm infoSignaturaForm , BindingResult result)  throws I18NException {
   }
 
@@ -750,13 +757,6 @@ public java.lang.Long stringToPK(String value) {
     return "infoSignaturaListWebDB";
   }
 
-  @Override
-  /** Ha de ser igual que el RequestMapping de la Classe */
-  public String getContextWeb() {
-    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
-    return rm.value()[0];
-  }
-
   public String getSessionAttributeFilterForm() {
     return "InfoSignaturaWebDB_FilterForm";
   }
@@ -774,18 +774,18 @@ public java.lang.Long stringToPK(String value) {
 
 
   public InfoSignaturaJPA create(HttpServletRequest request, InfoSignaturaJPA infoSignatura)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (InfoSignaturaJPA) infoSignaturaEjb.create(infoSignatura);
   }
 
 
   public InfoSignaturaJPA update(HttpServletRequest request, InfoSignaturaJPA infoSignatura)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (InfoSignaturaJPA) infoSignaturaEjb.update(infoSignatura);
   }
 
 
-  public void delete(HttpServletRequest request, InfoSignatura infoSignatura) throws Exception,I18NException {
+  public void delete(HttpServletRequest request, InfoSignatura infoSignatura) throws I18NException {
     infoSignaturaEjb.delete(infoSignatura);
   }
 
