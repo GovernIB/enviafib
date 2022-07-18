@@ -59,12 +59,7 @@ ALTER TABLE efi_infocustody
 ALTER TABLE efi_infocustody
   ADD COLUMN peticioid bigint;
 ALTER TABLE efi_infocustody
-  ADD CONSTRAINT efi_infocust_peticio_fk FOREIGN KEY (peticioid) REFERENCES efi_peticio (peticioid) ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-
-ALTER TABLE efi_infocustody DROP CONSTRAINT efi_infocust_peticio_fk;
-ALTER TABLE efi_infocustody ADD CONSTRAINT efi_infocus_peticio_petid_fk  FOREIGN KEY (peticioid)  REFERENCES efi_peticio (peticioid);
-
+  ADD CONSTRAINT efi_infocus_peticio_petid_fk FOREIGN KEY (peticioid) REFERENCES efi_peticio (peticioid) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 
 
