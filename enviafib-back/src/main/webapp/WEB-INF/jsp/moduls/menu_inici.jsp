@@ -15,7 +15,7 @@
     <c:if test="${not empty loginInfo}">
 
     <li style="list-style-type: disc; list-style-position: inside;">
-      <a href="<c:url value="/common/home.html"/>">
+      <a href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit" />">
         <span style="${(fn:contains(url, 'home'))? "font-weight: bold;" : ""}">Pàgina Inicial</span>
       </a>
     </li>

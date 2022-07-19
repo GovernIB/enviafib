@@ -25,10 +25,16 @@ public class FirmaPerNifUserController extends AbstractFirmaUserController {
     public static final String CONTEXT_WEB = "/user/firmapernif";
 
     @Override
-    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request,
-            ModelAndView mav) throws I18NException {
+    public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
+            throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
+
+        if (!__isView) {
+            mav.addObject("dragdrop", true);
+        }
+        peticioForm.setAttachedAdditionalJspCode(true);
+
         return peticioForm;
     }
 
