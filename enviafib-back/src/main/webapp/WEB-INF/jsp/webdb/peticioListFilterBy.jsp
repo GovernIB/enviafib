@@ -357,6 +357,193 @@
 
 
         </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUFUNCIONARIUSERNAME)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuFuncionariUsername" var="arxiuFuncionariUsername" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuFuncionariUsername" >                
+                 <fmt:param value="${arxiuFuncionariUsername}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuFuncionariUsername}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuFuncionariUsername}" path="arxiuFuncionariUsername" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUPARAMFUNCIONARINOM)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuParamFuncionariNom" var="arxiuParamFuncionariNom" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuParamFuncionariNom" >                
+                 <fmt:param value="${arxiuParamFuncionariNom}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuParamFuncionariNom}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuParamFuncionariNom}" path="arxiuParamFuncionariNom" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUPARAMFUNCIONARINIF)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuParamFuncionariNif" var="arxiuParamFuncionariNif" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuParamFuncionariNif" >                
+                 <fmt:param value="${arxiuParamFuncionariNif}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuParamFuncionariNif}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuParamFuncionariNif}" path="arxiuParamFuncionariNif" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUPARAMFUNCIONARIDIR3)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuParamFuncionariDir3" var="arxiuParamFuncionariDir3" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuParamFuncionariDir3" >                
+                 <fmt:param value="${arxiuParamFuncionariDir3}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuParamFuncionariDir3}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuParamFuncionariDir3}" path="arxiuParamFuncionariDir3" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuReqParamDocEstatElabora" var="arxiuReqParamDocEstatElabora" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuReqParamDocEstatElabora" >                
+                 <fmt:param value="${arxiuReqParamDocEstatElabora}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuReqParamDocEstatElabora}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuReqParamDocEstatElabora}" path="arxiuReqParamDocEstatElabora" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUREQPARAMINTERESSATS)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuReqParamInteressats" var="arxiuReqParamInteressats" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuReqParamInteressats" >                
+                 <fmt:param value="${arxiuReqParamInteressats}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuReqParamInteressats}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuReqParamInteressats}" path="arxiuReqParamInteressats" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUREQPARAMCIUTADANIF)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuReqParamCiutadaNif" var="arxiuReqParamCiutadaNif" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuReqParamCiutadaNif" >                
+                 <fmt:param value="${arxiuReqParamCiutadaNif}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuReqParamCiutadaNif}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuReqParamCiutadaNif}" path="arxiuReqParamCiutadaNif" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUREQPARAMCIUTADANOM)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuReqParamCiutadaNom" var="arxiuReqParamCiutadaNom" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuReqParamCiutadaNom" >                
+                 <fmt:param value="${arxiuReqParamCiutadaNom}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuReqParamCiutadaNom}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuReqParamCiutadaNom}" path="arxiuReqParamCiutadaNom" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUREQPARAMORGANS)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuReqParamOrgans" var="arxiuReqParamOrgans" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuReqParamOrgans" >                
+                 <fmt:param value="${arxiuReqParamOrgans}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuReqParamOrgans}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuReqParamOrgans}" path="arxiuReqParamOrgans" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuOptParamProcedimentCodi" var="arxiuOptParamProcedimentCodi" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuOptParamProcedimentCodi" >                
+                 <fmt:param value="${arxiuOptParamProcedimentCodi}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuOptParamProcedimentCodi}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuOptParamProcedimentCodi}" path="arxiuOptParamProcedimentCodi" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuOptParamProcedimentNom" var="arxiuOptParamProcedimentNom" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuOptParamProcedimentNom" >                
+                 <fmt:param value="${arxiuOptParamProcedimentNom}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuOptParamProcedimentNom}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuOptParamProcedimentNom}" path="arxiuOptParamProcedimentNom" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuOptParamSerieDocumental" var="arxiuOptParamSerieDocumental" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuOptParamSerieDocumental" >                
+                 <fmt:param value="${arxiuOptParamSerieDocumental}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuOptParamSerieDocumental}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuOptParamSerieDocumental}" path="arxiuOptParamSerieDocumental" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUOPTPARAMEXPEDIENTID)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="peticio.arxiuOptParamExpedientId" var="arxiuOptParamExpedientId" />
+              <fmt:message key="genapp.form.searchby" var="cercaperarxiuOptParamExpedientId" >                
+                 <fmt:param value="${arxiuOptParamExpedientId}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${arxiuOptParamExpedientId}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperarxiuOptParamExpedientId}" path="arxiuOptParamExpedientId" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUREQPARAMORIGEN)}">
+            <%-- FILTRE NUMERO --%>      
+            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+              <span class="add-on"><fmt:message key="peticio.arxiuReqParamOrigen" />:</span>
+
+              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
+              
+              <form:input cssClass="input-append input-small" path="arxiuReqParamOrigenDesde" />
+
+
+              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
+
+              <form:input cssClass="input-append input-small search-query" path="arxiuReqParamOrigenFins" />
+
+            </div>
+
+
+        </c:if>
 
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key >= 0 && not empty __entry.value.searchBy }">

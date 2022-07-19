@@ -30,6 +30,20 @@ public interface PeticioFields extends java.io.Serializable {
 	 public static final StringField ERROREXCEPTION = new StringField(_TABLE_MODEL, "errorException", "errorexception");
 	 public static final StringField PETICIOPORTAFIRMES = new StringField(_TABLE_MODEL, "peticioPortafirmes", "peticioportafirmes");
 	 public static final StringField REASON = new StringField(_TABLE_MODEL, "reason", "reason");
+	 public static final StringField ARXIUFUNCIONARIUSERNAME = new StringField(_TABLE_MODEL, "arxiuFuncionariUsername", "arxiufuncionariusername");
+	 public static final StringField ARXIUPARAMFUNCIONARINOM = new StringField(_TABLE_MODEL, "arxiuParamFuncionariNom", "arxiuparamfuncionarinom");
+	 public static final StringField ARXIUPARAMFUNCIONARINIF = new StringField(_TABLE_MODEL, "arxiuParamFuncionariNif", "arxiuparamfuncionarinif");
+	 public static final StringField ARXIUPARAMFUNCIONARIDIR3 = new StringField(_TABLE_MODEL, "arxiuParamFuncionariDir3", "arxiuparamfuncionaridir3");
+	 public static final StringField ARXIUREQPARAMDOCESTATELABORA = new StringField(_TABLE_MODEL, "arxiuReqParamDocEstatElabora", "arxiureqparamdocestatelabora");
+	 public static final StringField ARXIUREQPARAMINTERESSATS = new StringField(_TABLE_MODEL, "arxiuReqParamInteressats", "arxiureqparaminteressats");
+	 public static final StringField ARXIUREQPARAMCIUTADANIF = new StringField(_TABLE_MODEL, "arxiuReqParamCiutadaNif", "arxiureqparamciutadanif");
+	 public static final StringField ARXIUREQPARAMCIUTADANOM = new StringField(_TABLE_MODEL, "arxiuReqParamCiutadaNom", "arxiureqparamciutadanom");
+	 public static final StringField ARXIUREQPARAMORGANS = new StringField(_TABLE_MODEL, "arxiuReqParamOrgans", "arxiureqparamorgans");
+	 public static final StringField ARXIUOPTPARAMPROCEDIMENTCODI = new StringField(_TABLE_MODEL, "arxiuOptParamProcedimentCodi", "arxiuoptparamprocedimentcodi");
+	 public static final StringField ARXIUOPTPARAMPROCEDIMENTNOM = new StringField(_TABLE_MODEL, "arxiuOptParamProcedimentNom", "arxiuoptparamprocedimentnom");
+	 public static final StringField ARXIUOPTPARAMSERIEDOCUMENTAL = new StringField(_TABLE_MODEL, "arxiuOptParamSerieDocumental", "arxiuoptparamseriedocumental");
+	 public static final StringField ARXIUOPTPARAMEXPEDIENTID = new StringField(_TABLE_MODEL, "arxiuOptParamExpedientId", "arxiuoptparamexpedientid");
+	 public static final IntegerField ARXIUREQPARAMORIGEN = new IntegerField(_TABLE_MODEL, "arxiuReqParamOrigen", "arxiureqparamorigen");
 
 
   public static final Field<?>[] ALL_PETICIO_FIELDS = {
@@ -50,7 +64,21 @@ public interface PeticioFields extends java.io.Serializable {
     ERRORMSG,
     ERROREXCEPTION,
     PETICIOPORTAFIRMES,
-    REASON
+    REASON,
+    ARXIUFUNCIONARIUSERNAME,
+    ARXIUPARAMFUNCIONARINOM,
+    ARXIUPARAMFUNCIONARINIF,
+    ARXIUPARAMFUNCIONARIDIR3,
+    ARXIUREQPARAMDOCESTATELABORA,
+    ARXIUREQPARAMINTERESSATS,
+    ARXIUREQPARAMCIUTADANIF,
+    ARXIUREQPARAMCIUTADANOM,
+    ARXIUREQPARAMORGANS,
+    ARXIUOPTPARAMPROCEDIMENTCODI,
+    ARXIUOPTPARAMPROCEDIMENTNOM,
+    ARXIUOPTPARAMSERIEDOCUMENTAL,
+    ARXIUOPTPARAMEXPEDIENTID,
+    ARXIUREQPARAMORIGEN
   };
 
 

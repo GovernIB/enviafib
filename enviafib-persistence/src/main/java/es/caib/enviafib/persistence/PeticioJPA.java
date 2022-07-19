@@ -95,6 +95,48 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="reason",length = 255)
     java.lang.String reason;
 
+    @Column(name="arxiufuncionariusername",length = 255)
+    java.lang.String arxiuFuncionariUsername;
+
+    @Column(name="arxiuparamfuncionarinom",length = 255)
+    java.lang.String arxiuParamFuncionariNom;
+
+    @Column(name="arxiuparamfuncionarinif",length = 255)
+    java.lang.String arxiuParamFuncionariNif;
+
+    @Column(name="arxiuparamfuncionaridir3",length = 255)
+    java.lang.String arxiuParamFuncionariDir3;
+
+    @Column(name="arxiureqparamdocestatelabora",length = 4)
+    java.lang.String arxiuReqParamDocEstatElabora;
+
+    @Column(name="arxiureqparaminteressats",length = 255)
+    java.lang.String arxiuReqParamInteressats;
+
+    @Column(name="arxiureqparamciutadanif",length = 15)
+    java.lang.String arxiuReqParamCiutadaNif;
+
+    @Column(name="arxiureqparamciutadanom",length = 255)
+    java.lang.String arxiuReqParamCiutadaNom;
+
+    @Column(name="arxiureqparamorgans",length = 255)
+    java.lang.String arxiuReqParamOrgans;
+
+    @Column(name="arxiuoptparamprocedimentcodi",length = 255)
+    java.lang.String arxiuOptParamProcedimentCodi;
+
+    @Column(name="arxiuoptparamprocedimentnom",length = 255)
+    java.lang.String arxiuOptParamProcedimentNom;
+
+    @Column(name="arxiuoptparamseriedocumental",length = 255)
+    java.lang.String arxiuOptParamSerieDocumental;
+
+    @Column(name="arxiuoptparamexpedientid",length = 255)
+    java.lang.String arxiuOptParamExpedientId;
+
+    @Column(name="arxiureqparamorigen",length = 10)
+    java.lang.Integer arxiuReqParamOrigen;
+
 
 
   /** Constructor Buit */
@@ -102,7 +144,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason) {
+  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen) {
     this.nom=nom;
     this.peticioID=peticioID;
     this.dataCreacio=dataCreacio;
@@ -121,9 +163,23 @@ private static final long serialVersionUID = 1230292508L;
     this.errorException=errorException;
     this.peticioPortafirmes=peticioPortafirmes;
     this.reason=reason;
+    this.arxiuFuncionariUsername=arxiuFuncionariUsername;
+    this.arxiuParamFuncionariNom=arxiuParamFuncionariNom;
+    this.arxiuParamFuncionariNif=arxiuParamFuncionariNif;
+    this.arxiuParamFuncionariDir3=arxiuParamFuncionariDir3;
+    this.arxiuReqParamDocEstatElabora=arxiuReqParamDocEstatElabora;
+    this.arxiuReqParamInteressats=arxiuReqParamInteressats;
+    this.arxiuReqParamCiutadaNif=arxiuReqParamCiutadaNif;
+    this.arxiuReqParamCiutadaNom=arxiuReqParamCiutadaNom;
+    this.arxiuReqParamOrgans=arxiuReqParamOrgans;
+    this.arxiuOptParamProcedimentCodi=arxiuOptParamProcedimentCodi;
+    this.arxiuOptParamProcedimentNom=arxiuOptParamProcedimentNom;
+    this.arxiuOptParamSerieDocumental=arxiuOptParamSerieDocumental;
+    this.arxiuOptParamExpedientId=arxiuOptParamExpedientId;
+    this.arxiuReqParamOrigen=arxiuReqParamOrigen;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason) {
+  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen) {
     this.nom=nom;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
@@ -141,6 +197,20 @@ private static final long serialVersionUID = 1230292508L;
     this.errorException=errorException;
     this.peticioPortafirmes=peticioPortafirmes;
     this.reason=reason;
+    this.arxiuFuncionariUsername=arxiuFuncionariUsername;
+    this.arxiuParamFuncionariNom=arxiuParamFuncionariNom;
+    this.arxiuParamFuncionariNif=arxiuParamFuncionariNif;
+    this.arxiuParamFuncionariDir3=arxiuParamFuncionariDir3;
+    this.arxiuReqParamDocEstatElabora=arxiuReqParamDocEstatElabora;
+    this.arxiuReqParamInteressats=arxiuReqParamInteressats;
+    this.arxiuReqParamCiutadaNif=arxiuReqParamCiutadaNif;
+    this.arxiuReqParamCiutadaNom=arxiuReqParamCiutadaNom;
+    this.arxiuReqParamOrgans=arxiuReqParamOrgans;
+    this.arxiuOptParamProcedimentCodi=arxiuOptParamProcedimentCodi;
+    this.arxiuOptParamProcedimentNom=arxiuOptParamProcedimentNom;
+    this.arxiuOptParamSerieDocumental=arxiuOptParamSerieDocumental;
+    this.arxiuOptParamExpedientId=arxiuOptParamExpedientId;
+    this.arxiuReqParamOrigen=arxiuReqParamOrigen;
 }
   /** Constructor dels valors Not Null */
   public PeticioJPA(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , int estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
@@ -173,6 +243,20 @@ private static final long serialVersionUID = 1230292508L;
     this.setErrorException(__bean.getErrorException());
     this.setPeticioPortafirmes(__bean.getPeticioPortafirmes());
     this.setReason(__bean.getReason());
+    this.setArxiuFuncionariUsername(__bean.getArxiuFuncionariUsername());
+    this.setArxiuParamFuncionariNom(__bean.getArxiuParamFuncionariNom());
+    this.setArxiuParamFuncionariNif(__bean.getArxiuParamFuncionariNif());
+    this.setArxiuParamFuncionariDir3(__bean.getArxiuParamFuncionariDir3());
+    this.setArxiuReqParamDocEstatElabora(__bean.getArxiuReqParamDocEstatElabora());
+    this.setArxiuReqParamInteressats(__bean.getArxiuReqParamInteressats());
+    this.setArxiuReqParamCiutadaNif(__bean.getArxiuReqParamCiutadaNif());
+    this.setArxiuReqParamCiutadaNom(__bean.getArxiuReqParamCiutadaNom());
+    this.setArxiuReqParamOrgans(__bean.getArxiuReqParamOrgans());
+    this.setArxiuOptParamProcedimentCodi(__bean.getArxiuOptParamProcedimentCodi());
+    this.setArxiuOptParamProcedimentNom(__bean.getArxiuOptParamProcedimentNom());
+    this.setArxiuOptParamSerieDocumental(__bean.getArxiuOptParamSerieDocumental());
+    this.setArxiuOptParamExpedientId(__bean.getArxiuOptParamExpedientId());
+    this.setArxiuReqParamOrigen(__bean.getArxiuReqParamOrigen());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -305,6 +389,104 @@ private static final long serialVersionUID = 1230292508L;
 		this.reason = _reason_;
 	};
 
+	public java.lang.String getArxiuFuncionariUsername() {
+		return(arxiuFuncionariUsername);
+	};
+	public void setArxiuFuncionariUsername(java.lang.String _arxiuFuncionariUsername_) {
+		this.arxiuFuncionariUsername = _arxiuFuncionariUsername_;
+	};
+
+	public java.lang.String getArxiuParamFuncionariNom() {
+		return(arxiuParamFuncionariNom);
+	};
+	public void setArxiuParamFuncionariNom(java.lang.String _arxiuParamFuncionariNom_) {
+		this.arxiuParamFuncionariNom = _arxiuParamFuncionariNom_;
+	};
+
+	public java.lang.String getArxiuParamFuncionariNif() {
+		return(arxiuParamFuncionariNif);
+	};
+	public void setArxiuParamFuncionariNif(java.lang.String _arxiuParamFuncionariNif_) {
+		this.arxiuParamFuncionariNif = _arxiuParamFuncionariNif_;
+	};
+
+	public java.lang.String getArxiuParamFuncionariDir3() {
+		return(arxiuParamFuncionariDir3);
+	};
+	public void setArxiuParamFuncionariDir3(java.lang.String _arxiuParamFuncionariDir3_) {
+		this.arxiuParamFuncionariDir3 = _arxiuParamFuncionariDir3_;
+	};
+
+	public java.lang.String getArxiuReqParamDocEstatElabora() {
+		return(arxiuReqParamDocEstatElabora);
+	};
+	public void setArxiuReqParamDocEstatElabora(java.lang.String _arxiuReqParamDocEstatElabora_) {
+		this.arxiuReqParamDocEstatElabora = _arxiuReqParamDocEstatElabora_;
+	};
+
+	public java.lang.String getArxiuReqParamInteressats() {
+		return(arxiuReqParamInteressats);
+	};
+	public void setArxiuReqParamInteressats(java.lang.String _arxiuReqParamInteressats_) {
+		this.arxiuReqParamInteressats = _arxiuReqParamInteressats_;
+	};
+
+	public java.lang.String getArxiuReqParamCiutadaNif() {
+		return(arxiuReqParamCiutadaNif);
+	};
+	public void setArxiuReqParamCiutadaNif(java.lang.String _arxiuReqParamCiutadaNif_) {
+		this.arxiuReqParamCiutadaNif = _arxiuReqParamCiutadaNif_;
+	};
+
+	public java.lang.String getArxiuReqParamCiutadaNom() {
+		return(arxiuReqParamCiutadaNom);
+	};
+	public void setArxiuReqParamCiutadaNom(java.lang.String _arxiuReqParamCiutadaNom_) {
+		this.arxiuReqParamCiutadaNom = _arxiuReqParamCiutadaNom_;
+	};
+
+	public java.lang.String getArxiuReqParamOrgans() {
+		return(arxiuReqParamOrgans);
+	};
+	public void setArxiuReqParamOrgans(java.lang.String _arxiuReqParamOrgans_) {
+		this.arxiuReqParamOrgans = _arxiuReqParamOrgans_;
+	};
+
+	public java.lang.String getArxiuOptParamProcedimentCodi() {
+		return(arxiuOptParamProcedimentCodi);
+	};
+	public void setArxiuOptParamProcedimentCodi(java.lang.String _arxiuOptParamProcedimentCodi_) {
+		this.arxiuOptParamProcedimentCodi = _arxiuOptParamProcedimentCodi_;
+	};
+
+	public java.lang.String getArxiuOptParamProcedimentNom() {
+		return(arxiuOptParamProcedimentNom);
+	};
+	public void setArxiuOptParamProcedimentNom(java.lang.String _arxiuOptParamProcedimentNom_) {
+		this.arxiuOptParamProcedimentNom = _arxiuOptParamProcedimentNom_;
+	};
+
+	public java.lang.String getArxiuOptParamSerieDocumental() {
+		return(arxiuOptParamSerieDocumental);
+	};
+	public void setArxiuOptParamSerieDocumental(java.lang.String _arxiuOptParamSerieDocumental_) {
+		this.arxiuOptParamSerieDocumental = _arxiuOptParamSerieDocumental_;
+	};
+
+	public java.lang.String getArxiuOptParamExpedientId() {
+		return(arxiuOptParamExpedientId);
+	};
+	public void setArxiuOptParamExpedientId(java.lang.String _arxiuOptParamExpedientId_) {
+		this.arxiuOptParamExpedientId = _arxiuOptParamExpedientId_;
+	};
+
+	public java.lang.Integer getArxiuReqParamOrigen() {
+		return(arxiuReqParamOrigen);
+	};
+	public void setArxiuReqParamOrigen(java.lang.Integer _arxiuReqParamOrigen_) {
+		this.arxiuReqParamOrigen = _arxiuReqParamOrigen_;
+	};
+
 
 
   @Override
@@ -426,6 +608,20 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setErrorException(__bean.getErrorException());
     __tmp.setPeticioPortafirmes(__bean.getPeticioPortafirmes());
     __tmp.setReason(__bean.getReason());
+    __tmp.setArxiuFuncionariUsername(__bean.getArxiuFuncionariUsername());
+    __tmp.setArxiuParamFuncionariNom(__bean.getArxiuParamFuncionariNom());
+    __tmp.setArxiuParamFuncionariNif(__bean.getArxiuParamFuncionariNif());
+    __tmp.setArxiuParamFuncionariDir3(__bean.getArxiuParamFuncionariDir3());
+    __tmp.setArxiuReqParamDocEstatElabora(__bean.getArxiuReqParamDocEstatElabora());
+    __tmp.setArxiuReqParamInteressats(__bean.getArxiuReqParamInteressats());
+    __tmp.setArxiuReqParamCiutadaNif(__bean.getArxiuReqParamCiutadaNif());
+    __tmp.setArxiuReqParamCiutadaNom(__bean.getArxiuReqParamCiutadaNom());
+    __tmp.setArxiuReqParamOrgans(__bean.getArxiuReqParamOrgans());
+    __tmp.setArxiuOptParamProcedimentCodi(__bean.getArxiuOptParamProcedimentCodi());
+    __tmp.setArxiuOptParamProcedimentNom(__bean.getArxiuOptParamProcedimentNom());
+    __tmp.setArxiuOptParamSerieDocumental(__bean.getArxiuOptParamSerieDocumental());
+    __tmp.setArxiuOptParamExpedientId(__bean.getArxiuOptParamExpedientId());
+    __tmp.setArxiuReqParamOrigen(__bean.getArxiuReqParamOrigen());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer

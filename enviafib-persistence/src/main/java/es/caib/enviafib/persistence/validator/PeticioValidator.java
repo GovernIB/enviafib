@@ -148,6 +148,110 @@ public class PeticioValidator<I extends Peticio>
       }
     }
 
+    if (__vr.getFieldErrorCount(ARXIUFUNCIONARIUSERNAME) == 0) {
+      java.lang.String __arxiufuncionariusername = __target__.getArxiuFuncionariUsername();
+      if (__arxiufuncionariusername!= null && __arxiufuncionariusername.length() > 255) {
+        __vr.rejectValue(ARXIUFUNCIONARIUSERNAME, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUFUNCIONARIUSERNAME)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUPARAMFUNCIONARINOM) == 0) {
+      java.lang.String __arxiuparamfuncionarinom = __target__.getArxiuParamFuncionariNom();
+      if (__arxiuparamfuncionarinom!= null && __arxiuparamfuncionarinom.length() > 255) {
+        __vr.rejectValue(ARXIUPARAMFUNCIONARINOM, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUPARAMFUNCIONARINOM)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUPARAMFUNCIONARINIF) == 0) {
+      java.lang.String __arxiuparamfuncionarinif = __target__.getArxiuParamFuncionariNif();
+      if (__arxiuparamfuncionarinif!= null && __arxiuparamfuncionarinif.length() > 255) {
+        __vr.rejectValue(ARXIUPARAMFUNCIONARINIF, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUPARAMFUNCIONARINIF)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUPARAMFUNCIONARIDIR3) == 0) {
+      java.lang.String __arxiuparamfuncionaridir3 = __target__.getArxiuParamFuncionariDir3();
+      if (__arxiuparamfuncionaridir3!= null && __arxiuparamfuncionaridir3.length() > 255) {
+        __vr.rejectValue(ARXIUPARAMFUNCIONARIDIR3, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUPARAMFUNCIONARIDIR3)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUREQPARAMDOCESTATELABORA) == 0) {
+      java.lang.String __arxiureqparamdocestatelabora = __target__.getArxiuReqParamDocEstatElabora();
+      if (__arxiureqparamdocestatelabora!= null && __arxiureqparamdocestatelabora.length() > 4) {
+        __vr.rejectValue(ARXIUREQPARAMDOCESTATELABORA, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUREQPARAMDOCESTATELABORA)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(4)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUREQPARAMINTERESSATS) == 0) {
+      java.lang.String __arxiureqparaminteressats = __target__.getArxiuReqParamInteressats();
+      if (__arxiureqparaminteressats!= null && __arxiureqparaminteressats.length() > 255) {
+        __vr.rejectValue(ARXIUREQPARAMINTERESSATS, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUREQPARAMINTERESSATS)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUREQPARAMCIUTADANIF) == 0) {
+      java.lang.String __arxiureqparamciutadanif = __target__.getArxiuReqParamCiutadaNif();
+      if (__arxiureqparamciutadanif!= null && __arxiureqparamciutadanif.length() > 15) {
+        __vr.rejectValue(ARXIUREQPARAMCIUTADANIF, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUREQPARAMCIUTADANIF)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(15)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUREQPARAMCIUTADANOM) == 0) {
+      java.lang.String __arxiureqparamciutadanom = __target__.getArxiuReqParamCiutadaNom();
+      if (__arxiureqparamciutadanom!= null && __arxiureqparamciutadanom.length() > 255) {
+        __vr.rejectValue(ARXIUREQPARAMCIUTADANOM, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUREQPARAMCIUTADANOM)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUREQPARAMORGANS) == 0) {
+      java.lang.String __arxiureqparamorgans = __target__.getArxiuReqParamOrgans();
+      if (__arxiureqparamorgans!= null && __arxiureqparamorgans.length() > 255) {
+        __vr.rejectValue(ARXIUREQPARAMORGANS, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUREQPARAMORGANS)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUOPTPARAMPROCEDIMENTCODI) == 0) {
+      java.lang.String __arxiuoptparamprocedimentcodi = __target__.getArxiuOptParamProcedimentCodi();
+      if (__arxiuoptparamprocedimentcodi!= null && __arxiuoptparamprocedimentcodi.length() > 255) {
+        __vr.rejectValue(ARXIUOPTPARAMPROCEDIMENTCODI, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUOPTPARAMPROCEDIMENTCODI)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUOPTPARAMPROCEDIMENTNOM) == 0) {
+      java.lang.String __arxiuoptparamprocedimentnom = __target__.getArxiuOptParamProcedimentNom();
+      if (__arxiuoptparamprocedimentnom!= null && __arxiuoptparamprocedimentnom.length() > 255) {
+        __vr.rejectValue(ARXIUOPTPARAMPROCEDIMENTNOM, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUOPTPARAMPROCEDIMENTNOM)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUOPTPARAMSERIEDOCUMENTAL) == 0) {
+      java.lang.String __arxiuoptparamseriedocumental = __target__.getArxiuOptParamSerieDocumental();
+      if (__arxiuoptparamseriedocumental!= null && __arxiuoptparamseriedocumental.length() > 255) {
+        __vr.rejectValue(ARXIUOPTPARAMSERIEDOCUMENTAL, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUOPTPARAMSERIEDOCUMENTAL)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(ARXIUOPTPARAMEXPEDIENTID) == 0) {
+      java.lang.String __arxiuoptparamexpedientid = __target__.getArxiuOptParamExpedientId();
+      if (__arxiuoptparamexpedientid!= null && __arxiuoptparamexpedientid.length() > 255) {
+        __vr.rejectValue(ARXIUOPTPARAMEXPEDIENTID, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUOPTPARAMEXPEDIENTID)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
     if (__isNou__) { // Creació
       // ================ CREATION
       // Fitxers 

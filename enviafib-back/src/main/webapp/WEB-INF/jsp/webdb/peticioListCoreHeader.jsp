@@ -66,6 +66,48 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.REASON)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.REASON)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUFUNCIONARIUSERNAME)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUFUNCIONARIUSERNAME)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUPARAMFUNCIONARINOM)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUPARAMFUNCIONARINOM)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUPARAMFUNCIONARINIF)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUPARAMFUNCIONARINIF)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUPARAMFUNCIONARIDIR3)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUPARAMFUNCIONARIDIR3)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMINTERESSATS)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUREQPARAMINTERESSATS)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMCIUTADANIF)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUREQPARAMCIUTADANIF)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMCIUTADANOM)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUREQPARAMCIUTADANOM)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMORGANS)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUREQPARAMORGANS)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMEXPEDIENTID)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUOPTPARAMEXPEDIENTID)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMORIGEN)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUREQPARAMORIGEN)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

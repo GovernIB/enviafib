@@ -124,6 +124,23 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(DESTINATARINIF);
             peticioFilterForm.addHiddenField(FITXERID);
             peticioFilterForm.addHiddenField(ESTAT);
+            
+            peticioFilterForm.addHiddenField(ARXIUFUNCIONARIUSERNAME);
+            peticioFilterForm.addHiddenField(ARXIUPARAMFUNCIONARINOM);
+            peticioFilterForm.addHiddenField(ARXIUPARAMFUNCIONARINIF);
+            peticioFilterForm.addHiddenField(ARXIUPARAMFUNCIONARIDIR3);
+            peticioFilterForm.addHiddenField(ARXIUREQPARAMDOCESTATELABORA);
+            peticioFilterForm.addHiddenField(ARXIUREQPARAMINTERESSATS);
+            peticioFilterForm.addHiddenField(ARXIUREQPARAMCIUTADANIF);
+            peticioFilterForm.addHiddenField(ARXIUREQPARAMCIUTADANOM);
+            peticioFilterForm.addHiddenField(ARXIUREQPARAMORGANS);
+            peticioFilterForm.addHiddenField(ARXIUOPTPARAMPROCEDIMENTCODI);
+            peticioFilterForm.addHiddenField(ARXIUOPTPARAMPROCEDIMENTNOM);
+            peticioFilterForm.addHiddenField(ARXIUOPTPARAMSERIEDOCUMENTAL);
+            peticioFilterForm.addHiddenField(ARXIUOPTPARAMEXPEDIENTID);
+            peticioFilterForm.addHiddenField(ARXIUREQPARAMORIGEN);
+            
+            peticioFilterForm.addHiddenField(REASON);
 
             peticioFilterForm.setOrderBy(DATACREACIO.javaName);
             peticioFilterForm.setOrderAsc(false);
