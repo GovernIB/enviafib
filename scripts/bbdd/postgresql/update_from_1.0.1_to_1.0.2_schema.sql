@@ -30,3 +30,74 @@ ALTER TABLE efi_peticio
 ALTER TABLE efi_peticio
    ADD COLUMN reason character varying(255);
 
+---
+--- 15/07/2022 - Prepara BBDD per guardar informació retornada de la cridada a Arxiu #40
+---
+
+
+  CREATE SEQUENCE public.efi_infocustody_seq;
+
+  CREATE TABLE public.efi_infocustody
+(
+   infocustodyid bigint NOT NULL DEFAULT nextval('efi_infocustody_seq'::regclass), 
+   custodyid character varying(255), 
+   originalfileurl character varying(255), 
+   csv character varying(255), 
+   csvgenerationdefinition character varying(255), 
+   csvvalidationweb character varying(255), 
+   arxiuexpedientid character varying(255), 
+   arxiudocumentid character varying(255), 
+   printableurl character varying(255), 
+   enifileurl character varying(255), 
+   validationfileurl character varying(255), 
+   peticioid character varying(255)
+);
+
+ALTER TABLE efi_infocustody
+  ADD CONSTRAINT efi_infocustody_pk PRIMARY KEY (infocustodyid);
+
+  ALTER TABLE efi_infocustody
+  DROP COLUMN peticioid;
+ALTER TABLE efi_infocustody
+  ADD COLUMN peticioid bigint;
+ALTER TABLE efi_infocustody
+  ADD CONSTRAINT efi_infocus_peticio_petid_fk FOREIGN KEY (peticioid) REFERENCES efi_peticio (peticioid) ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+---
+--- 15/07/2022 - Preparar la BBDD per suportar enviament a Plugin d'Arxiu #32
+---
+
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiufuncionariusername" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiuparamfuncionarinom" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiuparamfuncionarinif" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiuparamfuncionaridir3" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiureqparamdocestatelabora" character varying(4);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiureqparamorigen" integer;
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiureqparaminteressats" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiureqparamciutadanif" character varying(15);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiureqparamciutadanom" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiureqparamorgans" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiuoptparamprocedimentcodi" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiuoptparamprocedimentnom" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiuoptparamseriedocumental" character varying(255);
+ALTER TABLE efi_peticio
+  ADD COLUMN "arxiuoptparamexpedientid" character varying(255);
+
+
+
+
+

@@ -8,6 +8,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
    private final FitxerJPAManager efi_fitxer;
    private final IdiomaJPAManager efi_idioma;
+   private final InfoCustodyJPAManager efi_infocustody;
    private final InfoSignaturaJPAManager efi_infosignatura;
    private final PeticioJPAManager efi_peticio;
    private final PluginJPAManager efi_plugin;
@@ -18,6 +19,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
   public  EnviaFIBJPADaoManagers(EntityManager __em) {
     this.efi_fitxer = new FitxerJPAManager(__em);
     this.efi_idioma = new IdiomaJPAManager(__em);
+    this.efi_infocustody = new InfoCustodyJPAManager(__em);
     this.efi_infosignatura = new InfoSignaturaJPAManager(__em);
     this.efi_peticio = new PeticioJPAManager(__em);
     this.efi_plugin = new PluginJPAManager(__em);
@@ -32,6 +34,10 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
     public IIdiomaManager getIdiomaManager() {
         return this.efi_idioma;
+    };
+
+    public IInfoCustodyManager getInfoCustodyManager() {
+        return this.efi_infocustody;
     };
 
     public IInfoSignaturaManager getInfoSignaturaManager() {

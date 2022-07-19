@@ -83,6 +83,62 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new StringField(getQueryPath(), PeticioFields.REASON);
   }
 
+  public StringField ARXIUFUNCIONARIUSERNAME() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUFUNCIONARIUSERNAME);
+  }
+
+  public StringField ARXIUPARAMFUNCIONARINOM() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUPARAMFUNCIONARINOM);
+  }
+
+  public StringField ARXIUPARAMFUNCIONARINIF() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUPARAMFUNCIONARINIF);
+  }
+
+  public StringField ARXIUPARAMFUNCIONARIDIR3() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
+  }
+
+  public StringField ARXIUREQPARAMDOCESTATELABORA() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUREQPARAMDOCESTATELABORA);
+  }
+
+  public StringField ARXIUREQPARAMINTERESSATS() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUREQPARAMINTERESSATS);
+  }
+
+  public StringField ARXIUREQPARAMCIUTADANIF() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUREQPARAMCIUTADANIF);
+  }
+
+  public StringField ARXIUREQPARAMCIUTADANOM() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUREQPARAMCIUTADANOM);
+  }
+
+  public StringField ARXIUREQPARAMORGANS() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUREQPARAMORGANS);
+  }
+
+  public StringField ARXIUOPTPARAMPROCEDIMENTCODI() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI);
+  }
+
+  public StringField ARXIUOPTPARAMPROCEDIMENTNOM() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM);
+  }
+
+  public StringField ARXIUOPTPARAMSERIEDOCUMENTAL() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL);
+  }
+
+  public StringField ARXIUOPTPARAMEXPEDIENTID() {
+    return new StringField(getQueryPath(), PeticioFields.ARXIUOPTPARAMEXPEDIENTID);
+  }
+
+  public IntegerField ARXIUREQPARAMORIGEN() {
+    return new IntegerField(getQueryPath(), PeticioFields.ARXIUREQPARAMORIGEN);
+  }
+
 
 
   @Override
@@ -91,6 +147,20 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
         : this.parentQueryPath.getQueryPath());
   }
 
+
+/* L'ús d'aquest camp (OneToMany) llança una exception:
+ [Illegal attempt to dereference a collection]
+
+ // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
+
+  public InfoCustodyQueryPath INFOCUSTODYS() {
+    return new InfoCustodyQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return PeticioQueryPath.this.getQueryPath() + "infoCustodys" + ".";
+      }
+    });
+  }
+*/
 
   public FitxerQueryPath FITXER() {
     return new FitxerQueryPath(new QueryPath() {

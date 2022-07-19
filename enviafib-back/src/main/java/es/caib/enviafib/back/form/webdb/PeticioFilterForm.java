@@ -274,6 +274,171 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.String arxiuFuncionariUsername;
+
+  public java.lang.String getArxiuFuncionariUsername() {
+    return this.arxiuFuncionariUsername;
+  }
+
+  public void setArxiuFuncionariUsername(java.lang.String arxiuFuncionariUsername) {
+    this.arxiuFuncionariUsername = arxiuFuncionariUsername;
+  }
+
+
+  private java.lang.String arxiuParamFuncionariNom;
+
+  public java.lang.String getArxiuParamFuncionariNom() {
+    return this.arxiuParamFuncionariNom;
+  }
+
+  public void setArxiuParamFuncionariNom(java.lang.String arxiuParamFuncionariNom) {
+    this.arxiuParamFuncionariNom = arxiuParamFuncionariNom;
+  }
+
+
+  private java.lang.String arxiuParamFuncionariNif;
+
+  public java.lang.String getArxiuParamFuncionariNif() {
+    return this.arxiuParamFuncionariNif;
+  }
+
+  public void setArxiuParamFuncionariNif(java.lang.String arxiuParamFuncionariNif) {
+    this.arxiuParamFuncionariNif = arxiuParamFuncionariNif;
+  }
+
+
+  private java.lang.String arxiuParamFuncionariDir3;
+
+  public java.lang.String getArxiuParamFuncionariDir3() {
+    return this.arxiuParamFuncionariDir3;
+  }
+
+  public void setArxiuParamFuncionariDir3(java.lang.String arxiuParamFuncionariDir3) {
+    this.arxiuParamFuncionariDir3 = arxiuParamFuncionariDir3;
+  }
+
+
+  private java.lang.String arxiuReqParamDocEstatElabora;
+
+  public java.lang.String getArxiuReqParamDocEstatElabora() {
+    return this.arxiuReqParamDocEstatElabora;
+  }
+
+  public void setArxiuReqParamDocEstatElabora(java.lang.String arxiuReqParamDocEstatElabora) {
+    this.arxiuReqParamDocEstatElabora = arxiuReqParamDocEstatElabora;
+  }
+
+
+  private java.lang.String arxiuReqParamInteressats;
+
+  public java.lang.String getArxiuReqParamInteressats() {
+    return this.arxiuReqParamInteressats;
+  }
+
+  public void setArxiuReqParamInteressats(java.lang.String arxiuReqParamInteressats) {
+    this.arxiuReqParamInteressats = arxiuReqParamInteressats;
+  }
+
+
+  private java.lang.String arxiuReqParamCiutadaNif;
+
+  public java.lang.String getArxiuReqParamCiutadaNif() {
+    return this.arxiuReqParamCiutadaNif;
+  }
+
+  public void setArxiuReqParamCiutadaNif(java.lang.String arxiuReqParamCiutadaNif) {
+    this.arxiuReqParamCiutadaNif = arxiuReqParamCiutadaNif;
+  }
+
+
+  private java.lang.String arxiuReqParamCiutadaNom;
+
+  public java.lang.String getArxiuReqParamCiutadaNom() {
+    return this.arxiuReqParamCiutadaNom;
+  }
+
+  public void setArxiuReqParamCiutadaNom(java.lang.String arxiuReqParamCiutadaNom) {
+    this.arxiuReqParamCiutadaNom = arxiuReqParamCiutadaNom;
+  }
+
+
+  private java.lang.String arxiuReqParamOrgans;
+
+  public java.lang.String getArxiuReqParamOrgans() {
+    return this.arxiuReqParamOrgans;
+  }
+
+  public void setArxiuReqParamOrgans(java.lang.String arxiuReqParamOrgans) {
+    this.arxiuReqParamOrgans = arxiuReqParamOrgans;
+  }
+
+
+  private java.lang.String arxiuOptParamProcedimentCodi;
+
+  public java.lang.String getArxiuOptParamProcedimentCodi() {
+    return this.arxiuOptParamProcedimentCodi;
+  }
+
+  public void setArxiuOptParamProcedimentCodi(java.lang.String arxiuOptParamProcedimentCodi) {
+    this.arxiuOptParamProcedimentCodi = arxiuOptParamProcedimentCodi;
+  }
+
+
+  private java.lang.String arxiuOptParamProcedimentNom;
+
+  public java.lang.String getArxiuOptParamProcedimentNom() {
+    return this.arxiuOptParamProcedimentNom;
+  }
+
+  public void setArxiuOptParamProcedimentNom(java.lang.String arxiuOptParamProcedimentNom) {
+    this.arxiuOptParamProcedimentNom = arxiuOptParamProcedimentNom;
+  }
+
+
+  private java.lang.String arxiuOptParamSerieDocumental;
+
+  public java.lang.String getArxiuOptParamSerieDocumental() {
+    return this.arxiuOptParamSerieDocumental;
+  }
+
+  public void setArxiuOptParamSerieDocumental(java.lang.String arxiuOptParamSerieDocumental) {
+    this.arxiuOptParamSerieDocumental = arxiuOptParamSerieDocumental;
+  }
+
+
+  private java.lang.String arxiuOptParamExpedientId;
+
+  public java.lang.String getArxiuOptParamExpedientId() {
+    return this.arxiuOptParamExpedientId;
+  }
+
+  public void setArxiuOptParamExpedientId(java.lang.String arxiuOptParamExpedientId) {
+    this.arxiuOptParamExpedientId = arxiuOptParamExpedientId;
+  }
+
+
+  private java.lang.Integer arxiuReqParamOrigenDesde;
+
+  public java.lang.Integer getArxiuReqParamOrigenDesde() {
+    return this.arxiuReqParamOrigenDesde;
+  }
+
+  public void setArxiuReqParamOrigenDesde(java.lang.Integer arxiuReqParamOrigenDesde) {
+    this.arxiuReqParamOrigenDesde = arxiuReqParamOrigenDesde;
+  }
+
+
+  private java.lang.Integer arxiuReqParamOrigenFins;
+
+  public java.lang.Integer getArxiuReqParamOrigenFins() {
+    return this.arxiuReqParamOrigenFins;
+  }
+
+  public void setArxiuReqParamOrigenFins(java.lang.Integer arxiuReqParamOrigenFins) {
+    this.arxiuReqParamOrigenFins = arxiuReqParamOrigenFins;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -302,6 +467,21 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.errorException = __toClone.errorException;
     this.peticioPortafirmes = __toClone.peticioPortafirmes;
     this.reason = __toClone.reason;
+    this.arxiuFuncionariUsername = __toClone.arxiuFuncionariUsername;
+    this.arxiuParamFuncionariNom = __toClone.arxiuParamFuncionariNom;
+    this.arxiuParamFuncionariNif = __toClone.arxiuParamFuncionariNif;
+    this.arxiuParamFuncionariDir3 = __toClone.arxiuParamFuncionariDir3;
+    this.arxiuReqParamDocEstatElabora = __toClone.arxiuReqParamDocEstatElabora;
+    this.arxiuReqParamInteressats = __toClone.arxiuReqParamInteressats;
+    this.arxiuReqParamCiutadaNif = __toClone.arxiuReqParamCiutadaNif;
+    this.arxiuReqParamCiutadaNom = __toClone.arxiuReqParamCiutadaNom;
+    this.arxiuReqParamOrgans = __toClone.arxiuReqParamOrgans;
+    this.arxiuOptParamProcedimentCodi = __toClone.arxiuOptParamProcedimentCodi;
+    this.arxiuOptParamProcedimentNom = __toClone.arxiuOptParamProcedimentNom;
+    this.arxiuOptParamSerieDocumental = __toClone.arxiuOptParamSerieDocumental;
+    this.arxiuOptParamExpedientId = __toClone.arxiuOptParamExpedientId;
+    this.arxiuReqParamOrigenDesde = __toClone.arxiuReqParamOrigenDesde;
+    this.arxiuReqParamOrigenFins = __toClone.arxiuReqParamOrigenFins;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;

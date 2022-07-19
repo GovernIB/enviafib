@@ -595,6 +595,13 @@ public java.lang.Long stringToPK(String value) {
   }
 
 
+  @Override
+  /** Ha de ser igual que el RequestMapping de la Classe */
+  public String getContextWeb() {
+    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+    return rm.value()[0];
+  }
+
   public void preValidate(HttpServletRequest request,SerieDocumentalForm serieDocumentalForm , BindingResult result)  throws I18NException {
   }
 
@@ -635,13 +642,6 @@ public java.lang.Long stringToPK(String value) {
     return "serieDocumentalListWebDB";
   }
 
-  @Override
-  /** Ha de ser igual que el RequestMapping de la Classe */
-  public String getContextWeb() {
-    RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
-    return rm.value()[0];
-  }
-
   public String getSessionAttributeFilterForm() {
     return "SerieDocumentalWebDB_FilterForm";
   }
@@ -659,18 +659,18 @@ public java.lang.Long stringToPK(String value) {
 
 
   public SerieDocumentalJPA create(HttpServletRequest request, SerieDocumentalJPA serieDocumental)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (SerieDocumentalJPA) serieDocumentalEjb.create(serieDocumental);
   }
 
 
   public SerieDocumentalJPA update(HttpServletRequest request, SerieDocumentalJPA serieDocumental)
-    throws Exception,I18NException, I18NValidationException {
+    throws I18NException, I18NValidationException {
     return (SerieDocumentalJPA) serieDocumentalEjb.update(serieDocumental);
   }
 
 
-  public void delete(HttpServletRequest request, SerieDocumental serieDocumental) throws Exception,I18NException {
+  public void delete(HttpServletRequest request, SerieDocumental serieDocumental) throws I18NException {
     serieDocumentalEjb.delete(serieDocumental);
   }
 

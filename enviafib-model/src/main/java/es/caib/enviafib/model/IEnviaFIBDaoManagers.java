@@ -5,6 +5,7 @@ import es.caib.enviafib.model.dao.*;
 public interface IEnviaFIBDaoManagers {
 	public IFitxerManager getFitxerManager();
 	public IIdiomaManager getIdiomaManager();
+	public IInfoCustodyManager getInfoCustodyManager();
 	public IInfoSignaturaManager getInfoSignaturaManager();
 	public IPeticioManager getPeticioManager();
 	public IPluginManager getPluginManager();

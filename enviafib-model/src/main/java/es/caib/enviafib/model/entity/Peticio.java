@@ -56,6 +56,48 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.String getReason();
 	public void setReason(java.lang.String _reason_);
 
+	public java.lang.String getArxiuFuncionariUsername();
+	public void setArxiuFuncionariUsername(java.lang.String _arxiuFuncionariUsername_);
+
+	public java.lang.String getArxiuParamFuncionariNom();
+	public void setArxiuParamFuncionariNom(java.lang.String _arxiuParamFuncionariNom_);
+
+	public java.lang.String getArxiuParamFuncionariNif();
+	public void setArxiuParamFuncionariNif(java.lang.String _arxiuParamFuncionariNif_);
+
+	public java.lang.String getArxiuParamFuncionariDir3();
+	public void setArxiuParamFuncionariDir3(java.lang.String _arxiuParamFuncionariDir3_);
+
+	public java.lang.String getArxiuReqParamDocEstatElabora();
+	public void setArxiuReqParamDocEstatElabora(java.lang.String _arxiuReqParamDocEstatElabora_);
+
+	public java.lang.String getArxiuReqParamInteressats();
+	public void setArxiuReqParamInteressats(java.lang.String _arxiuReqParamInteressats_);
+
+	public java.lang.String getArxiuReqParamCiutadaNif();
+	public void setArxiuReqParamCiutadaNif(java.lang.String _arxiuReqParamCiutadaNif_);
+
+	public java.lang.String getArxiuReqParamCiutadaNom();
+	public void setArxiuReqParamCiutadaNom(java.lang.String _arxiuReqParamCiutadaNom_);
+
+	public java.lang.String getArxiuReqParamOrgans();
+	public void setArxiuReqParamOrgans(java.lang.String _arxiuReqParamOrgans_);
+
+	public java.lang.String getArxiuOptParamProcedimentCodi();
+	public void setArxiuOptParamProcedimentCodi(java.lang.String _arxiuOptParamProcedimentCodi_);
+
+	public java.lang.String getArxiuOptParamProcedimentNom();
+	public void setArxiuOptParamProcedimentNom(java.lang.String _arxiuOptParamProcedimentNom_);
+
+	public java.lang.String getArxiuOptParamSerieDocumental();
+	public void setArxiuOptParamSerieDocumental(java.lang.String _arxiuOptParamSerieDocumental_);
+
+	public java.lang.String getArxiuOptParamExpedientId();
+	public void setArxiuOptParamExpedientId(java.lang.String _arxiuOptParamExpedientId_);
+
+	public java.lang.Integer getArxiuReqParamOrigen();
+	public void setArxiuReqParamOrigen(java.lang.Integer _arxiuReqParamOrigen_);
+
   // Fitxer
   public <F extends Fitxer> F getFitxer();
   // Fitxer

@@ -135,6 +135,76 @@
           ${peticio.reason}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUFUNCIONARIUSERNAME)}">
+          <td>
+          ${peticio.arxiuFuncionariUsername}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUPARAMFUNCIONARINOM)}">
+          <td>
+          ${peticio.arxiuParamFuncionariNom}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUPARAMFUNCIONARINIF)}">
+          <td>
+          ${peticio.arxiuParamFuncionariNif}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUPARAMFUNCIONARIDIR3)}">
+          <td>
+          ${peticio.arxiuParamFuncionariDir3}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)}">
+          <td>
+          ${peticio.arxiuReqParamDocEstatElabora}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMINTERESSATS)}">
+          <td>
+          ${peticio.arxiuReqParamInteressats}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMCIUTADANIF)}">
+          <td>
+          ${peticio.arxiuReqParamCiutadaNif}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMCIUTADANOM)}">
+          <td>
+          ${peticio.arxiuReqParamCiutadaNom}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMORGANS)}">
+          <td>
+          ${peticio.arxiuReqParamOrgans}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI)}">
+          <td>
+          ${peticio.arxiuOptParamProcedimentCodi}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM)}">
+          <td>
+          ${peticio.arxiuOptParamProcedimentNom}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL)}">
+          <td>
+          ${peticio.arxiuOptParamSerieDocumental}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUOPTPARAMEXPEDIENTID)}">
+          <td>
+          ${peticio.arxiuOptParamExpedientId}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMORIGEN)}">
+          <td>
+          ${peticio.arxiuReqParamOrigen}
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->
