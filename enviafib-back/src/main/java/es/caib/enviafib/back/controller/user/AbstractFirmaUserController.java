@@ -13,9 +13,13 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.genapp.common.web.validation.ValidationWebUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +30,7 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.utils.Utils;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
@@ -138,7 +143,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 //        if (peticioForm.getPeticio().getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
 //            hiddens.remove(REASON);
 //        }
-        
+
         peticioForm.setHiddenFields(hiddens);
 
         if (peticioForm.isNou()) {
@@ -196,8 +201,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
-    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID")
-    java.lang.Long infoSignaturaID, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID") java.lang.Long infoSignaturaID,
+            HttpServletRequest request, HttpServletResponse response) {
 
         if (infoSignaturaID == null) {
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
@@ -236,7 +241,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                             LocaleContextHolder.getLocale().getLanguage());
                 }
                 // XYZ ZZZ TRA
-                HtmlUtils.saveMessageSuccess(request, "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
+                HtmlUtils.saveMessageSuccess(request,
+                        "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
             } catch (I18NException e) {
 
                 // XYZ ZZZ Error generic
