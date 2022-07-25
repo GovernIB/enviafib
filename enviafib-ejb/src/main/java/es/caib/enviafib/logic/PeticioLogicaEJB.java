@@ -344,14 +344,21 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             String urlBase = Configuracio.getUrlBase();
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
             String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
-            String message;
-            if (estatPeticio == Constants.ESTAT_PETICIO_FIRMADA) {
-                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.success", nomPeticio, urlBase);
-            } else if (estatPeticio == Constants.ESTAT_PETICIO_ERROR) {
-                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.error", nomPeticio, urlBase);
-            } else {
-                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.process", nomPeticio, urlBase);
+
+            String code = "";
+            switch ((int) estatPeticio) {
+                case Constants.ESTAT_PETICIO_FIRMADA:
+                    code = "email.peticio.body.success";
+                break;
+                case Constants.ESTAT_PETICIO_ERROR:
+                    code = "email.peticio.body.error";
+                break;
+                case Constants.ESTAT_PETICIO_EN_PROCES:
+                    code = "email.peticio.body.process";
+                break;
             }
+
+            String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
 
             log.info("Message Obtingut");
             boolean isHTML = true;
