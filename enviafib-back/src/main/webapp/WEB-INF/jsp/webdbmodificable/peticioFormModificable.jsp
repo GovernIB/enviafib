@@ -1,6 +1,6 @@
-
 <c:if test="${not empty dragdrop}">
 
+<%-- 	<input type="hidden" name="dragndrop" value="true"/> --%> 
 
 	<div class="droparea">
 
@@ -107,7 +107,7 @@
 	position: absolute;
 	width: 100%;
 	z-index: 1000;
-	background: #fcfcfc url("https://im5.ezgif.com/tmp/ezgif-5-e14acb9e98.gif") no-repeat
+	background: #fcfcfc url("https://cdn.dribbble.com/users/765253/screenshots/2540865/loader.gif") no-repeat
 		scroll center center;
 	top: 0;
 	left: 0;

@@ -138,7 +138,13 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 break;
             }
 
+        } else {
+            if (getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
+                mav.addObject("dragdrop", true);
+            }
         }
+        
+        peticioForm.setAttachedAdditionalJspCode(true);
 
 //        if (peticioForm.getPeticio().getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
 //            hiddens.remove(REASON);
@@ -258,6 +264,20 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
 
         return p;
+    }
+
+    @Override
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public String crearPeticioPost(@ModelAttribute PeticioForm peticioForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String ret = super.crearPeticioPost(peticioForm, result, request, response);
+
+        if (result.hasErrors() && getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
+
+            request.setAttribute("dragdrop", true);
+        }
+        return ret;
     }
 
 }

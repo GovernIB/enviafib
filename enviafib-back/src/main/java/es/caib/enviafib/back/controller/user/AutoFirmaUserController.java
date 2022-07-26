@@ -81,11 +81,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         peticioForm.addHiddenField(DESTINATARINIF);
         peticioForm.getHiddenFields().remove(PeticioFields.REASON);
 
-        if (!__isView) {
-            mav.addObject("dragdrop", true);
-        }
-        peticioForm.setAttachedAdditionalJspCode(true);
-
         return peticioForm;
 
     }
