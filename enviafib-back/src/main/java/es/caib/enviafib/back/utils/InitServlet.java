@@ -94,7 +94,7 @@ public class InitServlet extends HttpServlet {
             Context ctx = new InitialContext();
             Session session = (javax.mail.Session) ctx.lookup(Constants.MAIL_SERVICE);
         } catch (Throwable th) {
-            final String msg = "Error amb la configuració del servidor de correu. Revisi el manual d'instalació: " + th.getMessage();
+            final String msg = "Error en la configuració del servidor de correu. Revisi el manual d'instalació: " + th.getMessage();
             log.error(msg, th);
             throw new ServletException(msg, th);
         }
