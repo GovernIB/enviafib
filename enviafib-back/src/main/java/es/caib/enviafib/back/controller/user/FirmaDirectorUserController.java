@@ -40,6 +40,7 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
 
             peticioForm.setTitleCode("title.firma.director");
             peticioForm.addLabel(PeticioFields.DESTINATARINIF, "firmadirector.destinatarinif");
+
         }
 
         return peticioForm;

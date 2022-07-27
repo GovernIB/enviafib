@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.security.RunAs;
+import javax.mail.Session;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +27,7 @@ import es.caib.enviafib.hibernate.HibernateFileUtil;
 import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.commons.utils.Constants;
 
 
 /**
@@ -83,6 +87,22 @@ public class InitServlet extends HttpServlet {
             log.error("Error inicialitzant el sistema de traduccions logic: " + th.getMessage(), th);
         }
 
+        
+        
+        // Sistema de Traduccions LOGIC
+        try {
+            Context ctx = new InitialContext();
+            Session session = (javax.mail.Session) ctx.lookup(Constants.MAIL_SERVICE);
+        } catch (Throwable th) {
+            final String msg = "Error amb la configuració del servidor de correu. Revisi el manual d'instalació: " + th.getMessage();
+            log.error(msg, th);
+            throw new ServletException(msg, th);
+        }
+        
+
+        
+        
+        
         // Encriptador d'identificador de Fitxer
         try {
             FileIDEncrypter encrypter = new FileIDEncrypter(Configuracio.getEncryptKey(),

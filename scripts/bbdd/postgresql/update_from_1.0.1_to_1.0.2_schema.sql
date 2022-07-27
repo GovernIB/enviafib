@@ -16,6 +16,8 @@ ALTER TABLE efi_usuari
 ALTER TABLE efi_usuari
   ADD CONSTRAINT efi_usuari_idioma_fk FOREIGN KEY (idiomaid) REFERENCES efi_idioma (idiomaid) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
+
+
 ---
 --- 14/07/2022 - Posar el camp destinatariNif nullable #102
 ---
@@ -84,7 +86,8 @@ ALTER TABLE efi_peticio
    arxiudocumentid character varying(255), 
    printableurl character varying(255), 
    enifileurl character varying(255), 
-   validationfileurl character varying(255) 
+   validationfileurl character varying(255), 
+   peticioid character varying(255)
 );
 
 ALTER TABLE efi_infoarxiu

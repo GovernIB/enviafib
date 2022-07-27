@@ -9,12 +9,19 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+
+import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
+import javax.transaction.Status;
+import javax.transaction.Synchronization;
+import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
@@ -354,27 +361,33 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             long estatPeticio = peticioList.get(0).getEstat();
 
-           
             Long solicitantID = executeQueryOne(PeticioFields.SOLICITANTID,
                     PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
-            
+
             String urlBase = Configuracio.getUrlBase();
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
             String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
-            String message;
-            if(estatPeticio == Constants.ESTAT_PETICIO_FIRMADA) {
-                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.success", nomPeticio, urlBase);
-            }else if(estatPeticio == Constants.ESTAT_PETICIO_ERROR){
-                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.error", nomPeticio, urlBase);
-            }else {
-                message = I18NCommonUtils.tradueix(loc, "email.peticio.body.process", nomPeticio, urlBase);
+
+            String code = "";
+            switch ((int) estatPeticio) {
+                case Constants.ESTAT_PETICIO_FIRMADA:
+                    code = "email.peticio.body.success";
+                break;
+                case Constants.ESTAT_PETICIO_ERROR:
+                    code = "email.peticio.body.error";
+                break;
+                case Constants.ESTAT_PETICIO_EN_PROCES:
+                    code = "email.peticio.body.process";
+                break;
             }
-            
+
+            String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
+
             log.info("Message Obtingut");
             boolean isHTML = true;
-            
+
             String from = Configuracio.getAppEmail();
-            log.info("XYZ SENDER: "+from);
+            log.info("XYZ SENDER: " + from);
             EmailUtil.postMail(subject, message, isHTML, from, email);
 
         } catch (Throwable t) {
@@ -478,10 +491,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return (PeticioJPA) super.findByPrimaryKey(_ID_);
     }
 
+    @Resource
+    private TransactionSynchronizationRegistry tsRegistry;
+
     @Override
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
         Long infoSignID = instance.getInfoSignaturaID();
+        Long[] fitxers = new Long[] { instance.getFitxerID(), instance.getFitxerFirmatID() };
 
         super.delete(instance);
 
@@ -489,7 +506,39 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             InfoSignaturaJPA is = infoSignaturaLogicEjb.findByPrimaryKey(infoSignID);
             infoSignaturaLogicEjb.delete(is);
         }
+
+        Set<Long> fitxersEsborrar = new HashSet<Long>();
+
+        // Borram fitxers a BD
+        for (Long f : fitxers) {
+            if (f != null) {
+                fitxerEjb.delete(f);
+                fitxersEsborrar.add(f);
+            }
+        }
+
+        // Borram fitxers fisic
+        tsRegistry.registerInterposedSynchronization(new PreCommitFiles(fitxersEsborrar));
     }
+
+    public class PreCommitFiles implements Synchronization {
+        public final Set<Long> files;
+
+        public PreCommitFiles(Set<Long> filesToDelete) {
+            this.files = filesToDelete;
+        }
+
+        @Override
+        public void beforeCompletion() {
+        }
+
+        @Override
+        public void afterCompletion(int status) {
+            if (status == Status.STATUS_COMMITTED) {
+                FileSystemManager.eliminarArxius(files);
+            }
+        }
+    };
 
     protected FirmaAsyncSimpleFile getFitxer(Fitxer fitxer) throws I18NException {
 
@@ -677,7 +726,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         fitxer.setTamany(data.length);
 
         fitxer = fitxerEjb.create(fitxer);
-        
+
         FileSystemManager.crearFitxer(new ByteArrayInputStream(data), fitxer.getFitxerID());
 
         pet.setFitxerFirmatID(fitxer.getFitxerID());

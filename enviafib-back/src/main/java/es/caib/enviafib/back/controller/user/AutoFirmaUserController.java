@@ -26,9 +26,13 @@ import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.genapp.common.web.validation.ValidationWebUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +45,7 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
@@ -75,8 +80,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         peticioForm.addHiddenField(DESTINATARINIF);
         peticioForm.getHiddenFields().remove(PeticioFields.REASON);
-//        peticioForm.
-        
+
         return peticioForm;
 
     }
@@ -122,19 +126,14 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         mav.addObject("urlToIFrameCode", redirectUrl);
         return mav;
     }
-    
-    
+
     @RequestMapping(value = "/finalWeb/{transactionID}")
     public ModelAndView finalProcesDeFirmaWeb(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("transactionID") String transactionID) throws Exception {
-        ModelAndView mav = new ModelAndView("finaliframe"); 
+        ModelAndView mav = new ModelAndView("finaliframe");
         mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/finalWebAuth/" + transactionID);
         return mav;
     }
-    
-    
-    
-    
 
     @RequestMapping(value = "/finalWebAuth/{transactionID}")
     public ModelAndView finalProcesDeFirmaWebAuth(HttpServletRequest request, HttpServletResponse response,
@@ -225,8 +224,9 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         String msg = I18NUtils.tradueix("procesdefirma.status.final.firmatok");
                         HtmlUtils.saveMessageSuccess(request, msg);
 
-                        return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
-                        
+                        return new ModelAndView(
+                                new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+
 //                        ModelAndView mav = new ModelAndView("finaliframe"); 
 //                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
 //                        return mav;
@@ -252,11 +252,11 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     try {
                         api.closeTransaction(transactionID);
                     } catch (Throwable th) {
-                        log.error(th.getMessage(),th);
+                        log.error(th.getMessage(), th);
                     }
                 }
             } catch (Exception e2) {
-                log.error(e2.getMessage(),e2);
+                log.error(e2.getMessage(), e2);
             }
         }
 
@@ -281,9 +281,9 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         pet.setEstat(Constants.ESTAT_PETICIO_ERROR);
 
         peticioLogicaEjb.update(pet);
-        
+
         return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
-        
+
 //        ModelAndView mav = new ModelAndView("finaliframe"); 
 //        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
 //        return mav;
@@ -381,12 +381,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     try {
                         apiWeb.closeTransaction(transactionID);
                     } catch (Throwable th) {
-                        log.error(th.getMessage(),th);
+                        log.error(th.getMessage(), th);
                     }
                 }
 
             } catch (Exception e2) {
-                log.error(e2.getMessage(),e2);
+                log.error(e2.getMessage(), e2);
             }
 
             throw new I18NException("error.procesdefirma", e.getMessage());
@@ -402,4 +402,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         return new ApiFirmaWebSimpleJersey(url, username, password);
     }
 
+
+    
+    
 }

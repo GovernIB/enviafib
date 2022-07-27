@@ -68,7 +68,10 @@ public class EditarUsuariCommonController extends UsuariController {
 		if(userForm.getUsuari().getUsername() != null) {
 		    userForm.addReadOnlyField(USERNAME);
 		}
-		if(userForm.getUsuari().getNif() != null) {
+		
+		String nif = userForm.getUsuari().getNif();
+		        
+		if(nif != null && nif.trim().length() > 0) {
             userForm.addReadOnlyField(NIF);
         }
 		return userForm;
