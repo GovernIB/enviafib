@@ -19,8 +19,6 @@ import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
-import javax.transaction.Status;
-import javax.transaction.Synchronization;
 import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
@@ -64,6 +62,7 @@ import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
+import es.caib.enviafib.ejb.utils.CleanFilesSynchronization;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
@@ -468,40 +467,39 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return (PeticioJPA) super.findByPrimaryKey(_ID_);
     }
 
-    @Resource
-    private TransactionSynchronizationRegistry tsRegistry;
-
     @Override
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
         Long infoSignID = instance.getInfoSignaturaID();
-        Long[] fitxers = new Long[] { instance.getFitxerID(), instance.getFitxerFirmatID() };
+//        Long[] fitxers = new Long[] { instance.getFitxerID(), instance.getFitxerFirmatID() };
 
-        super.delete(instance);
-
+//        super.delete(instance);
+        deleteIncludingFiles(instance);
+        
         if (infoSignID != null) {
             InfoSignaturaJPA is = infoSignaturaLogicEjb.findByPrimaryKey(infoSignID);
             infoSignaturaLogicEjb.delete(is);
         }
 
-        Set<Long> fitxersEsborrar = new HashSet<Long>();
-
-        // Borram fitxers a BD
-        for (Long f : fitxers) {
-            if (f != null) {
-                fitxerEjb.delete(f);
-                fitxersEsborrar.add(f);
-            }
-        }
-
-        // Borram fitxers fisic
-        tsRegistry.registerInterposedSynchronization(new PreCommitFiles(fitxersEsborrar));
+//        Set<Long> fitxersEsborrar = new HashSet<Long>();
+//
+//        // Borram fitxers a BD
+//        for (Long f : fitxers) {
+//            if (f != null) {
+//                fitxerEjb.delete(f);
+//                fitxersEsborrar.add(f);
+//            }
+//        }
+//
+//        // Borram fitxers fisic
+//        tsRegistry.registerInterposedSynchronization(new CleanFilesSynchronization(fitxersEsborrar));
     }
 
-    public class PreCommitFiles implements Synchronization {
+    /*
+    public class CleanFilesSynchronization implements Synchronization {
         public final Set<Long> files;
 
-        public PreCommitFiles(Set<Long> filesToDelete) {
+        public CleanFilesSynchronization(Set<Long> filesToDelete) {
             this.files = filesToDelete;
         }
 
@@ -511,12 +509,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         @Override
         public void afterCompletion(int status) {
+            log.info("Inici CleanFilesSynchronization::afterCompletion()");
             if (status == Status.STATUS_COMMITTED) {
-                FileSystemManager.eliminarArxius(files);
+                if (!FileSystemManager.eliminarArxius(files)) {
+                    log.error("No s'ha pogut esborrar alguns dels següents fitxers: "
+                            + Arrays.toString(files.toArray()));
+                }
             }
+            log.info("Final CleanFilesSynchronization::afterCompletion()");
         }
     };
-
+*/
     protected FirmaAsyncSimpleFile getFitxer(Fitxer fitxer) throws I18NException {
 
         File f = FileSystemManager.getFile(fitxer.getFitxerID());
@@ -843,6 +846,25 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         }
         return signatureBlocks;
+    }
+
+    public void deleteIncludingFiles(Peticio instance) throws I18NException {
+        Long[] fitxers = new Long[] { instance.getFitxerID(), instance.getFitxerFirmatID() };
+        
+        super.delete(instance);
+
+        Set<Long> fitxersEsborrar = new HashSet<Long>();
+
+        // Borram fitxers a BD
+        for (Long f : fitxers) {
+            if (f != null) {
+                fitxerEjb.delete(f);
+                fitxersEsborrar.add(f);
+            }
+        }
+
+        // Borram fitxers fisic
+        tsRegistry.registerInterposedSynchronization(new CleanFilesSynchronization(fitxersEsborrar));
     }
 
 }

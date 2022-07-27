@@ -3,6 +3,8 @@ package es.caib.enviafib.ejb;
 
 // NO MODIFICAR - DO NOT MODIFY;
 import javax.ejb.Stateless;
+import javax.transaction.TransactionSynchronizationRegistry;
+import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.model.entity.Peticio;
@@ -13,6 +15,9 @@ import es.caib.enviafib.commons.utils.Constants;
 
 @Stateless
 public class PeticioEJB extends PeticioJPAManager implements PeticioService {
+
+    @Resource
+    protected TransactionSynchronizationRegistry tsRegistry;
 
     @Override
     @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS})
@@ -37,5 +42,5 @@ public class PeticioEJB extends PeticioJPAManager implements PeticioService {
     public PeticioJPA findByPrimaryKey(Long _ID_) {
         return (PeticioJPA)super.findByPrimaryKey(_ID_);
     }
-
+    
 }
