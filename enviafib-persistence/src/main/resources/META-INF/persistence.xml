@@ -12,7 +12,7 @@
         
 		<class>es.caib.enviafib.persistence.FitxerJPA</class>
 		<class>es.caib.enviafib.persistence.IdiomaJPA</class>
-		<class>es.caib.enviafib.persistence.InfoCustodyJPA</class>
+		<class>es.caib.enviafib.persistence.InfoArxiuJPA</class>
 		<class>es.caib.enviafib.persistence.InfoSignaturaJPA</class>
 		<class>es.caib.enviafib.persistence.PeticioJPA</class>
 		<class>es.caib.enviafib.persistence.PluginJPA</class>

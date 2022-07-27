@@ -186,13 +186,13 @@
     </definition>
 
 
-    <definition name="infoCustodyFormWebDB" extends="webdb">
-        <put-attribute name="titol" value="infoCustody.infoCustody" />
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoCustodyForm.jsp" />
+    <definition name="infoArxiuFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="infoArxiu.infoArxiu" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuForm.jsp" />
     </definition>
     
-    <definition name="infoCustodyListWebDB" extends="webdb">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoCustodyList.jsp" />
+    <definition name="infoArxiuListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuList.jsp" />
     </definition>
 
 

@@ -4,29 +4,28 @@ import es.caib.enviafib.model.entity.*;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GenerationType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import java.util.Set;
-import org.hibernate.annotations.Type;
-import java.util.HashSet;
-import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
+import org.hibernate.annotations.Type;
 import javax.persistence.Id;
 
 
 @Entity(name = "PeticioJPA")
 @Table(name = "efi_peticio" , indexes = { 
+        @Index(name="efi_peticio_pk_i", columnList = "peticioid"),
         @Index(name="efi_peticio_fitxerid_fk_i", columnList = "fitxerid"),
         @Index(name="efi_peticio_solicitantid_fk_i", columnList = "solicitantid"),
         @Index(name="efi_peticio_idiomaid_fk_i", columnList = "idiomaid"),
         @Index(name="efi_peticio_fitxer_firma_fk_i", columnList = "fitxer_firmatid"),
-        @Index(name="efi_peticio_infosignid_fk_i", columnList = "infosignaturaid")})
+        @Index(name="efi_peticio_infosignid_fk_i", columnList = "infosignaturaid"),
+        @Index(name="efi_peticio_infoarxiuid_fk_i", columnList = "infoarxiuid")})
 @SequenceGenerator(name="PETICIO_SEQ", sequenceName="efi_peticio_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class PeticioJPA implements Peticio {
@@ -137,6 +136,9 @@ private static final long serialVersionUID = 1230292508L;
     @Column(name="arxiureqparamorigen",length = 10)
     java.lang.Integer arxiuReqParamOrigen;
 
+    @Column(name="infoarxiuid",length = 19)
+    java.lang.Long infoArxiuID;
+
 
 
   /** Constructor Buit */
@@ -144,7 +146,7 @@ private static final long serialVersionUID = 1230292508L;
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen) {
+  public PeticioJPA(java.lang.String nom , long peticioID , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID) {
     this.nom=nom;
     this.peticioID=peticioID;
     this.dataCreacio=dataCreacio;
@@ -177,9 +179,10 @@ private static final long serialVersionUID = 1230292508L;
     this.arxiuOptParamSerieDocumental=arxiuOptParamSerieDocumental;
     this.arxiuOptParamExpedientId=arxiuOptParamExpedientId;
     this.arxiuReqParamOrigen=arxiuReqParamOrigen;
+    this.infoArxiuID=infoArxiuID;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen) {
+  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID) {
     this.nom=nom;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
@@ -211,6 +214,7 @@ private static final long serialVersionUID = 1230292508L;
     this.arxiuOptParamSerieDocumental=arxiuOptParamSerieDocumental;
     this.arxiuOptParamExpedientId=arxiuOptParamExpedientId;
     this.arxiuReqParamOrigen=arxiuReqParamOrigen;
+    this.infoArxiuID=infoArxiuID;
 }
   /** Constructor dels valors Not Null */
   public PeticioJPA(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , int estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
@@ -257,6 +261,7 @@ private static final long serialVersionUID = 1230292508L;
     this.setArxiuOptParamSerieDocumental(__bean.getArxiuOptParamSerieDocumental());
     this.setArxiuOptParamExpedientId(__bean.getArxiuOptParamExpedientId());
     this.setArxiuReqParamOrigen(__bean.getArxiuReqParamOrigen());
+    this.setInfoArxiuID(__bean.getInfoArxiuID());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -487,6 +492,13 @@ private static final long serialVersionUID = 1230292508L;
 		this.arxiuReqParamOrigen = _arxiuReqParamOrigen_;
 	};
 
+	public java.lang.Long getInfoArxiuID() {
+		return(infoArxiuID);
+	};
+	public void setInfoArxiuID(java.lang.Long _infoArxiuID_) {
+		this.infoArxiuID = _infoArxiuID_;
+	};
+
 
 
   @Override
@@ -501,19 +513,6 @@ private static final long serialVersionUID = 1230292508L;
     }
     return __result;
   }
-
-// EXP  Field:peticioid | Table: efi_infocustody | Type: 0  
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "peticio")
-    private Set<InfoCustodyJPA> infoCustodys = new HashSet<InfoCustodyJPA>(0);
-    public  Set<InfoCustodyJPA> getInfoCustodys() {
-    return this.infoCustodys;
-  }
-
-    public void setInfoCustodys(Set<InfoCustodyJPA> infoCustodys) {
-      this.infoCustodys = infoCustodys;
-    }
-
 
 // IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
 
@@ -585,6 +584,20 @@ private static final long serialVersionUID = 1230292508L;
     this.infoSignatura = infoSignatura;
   }
 
+// IMP Field:infoarxiuid | Table: efi_infoarxiu | Type: 1  
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "infoarxiuid", referencedColumnName ="infoArxiuID", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_peticio_infoarxiu_infoa_fk"))
+    private InfoArxiuJPA infoArxiu;
+
+    public InfoArxiuJPA getInfoArxiu() {
+    return this.infoArxiu;
+  }
+
+    public  void setInfoArxiu(InfoArxiuJPA infoArxiu) {
+    this.infoArxiu = infoArxiu;
+  }
+
 
  // ---------------  STATIC METHODS ------------------
   public static PeticioJPA toJPA(Peticio __bean) {
@@ -622,6 +635,7 @@ private static final long serialVersionUID = 1230292508L;
     __tmp.setArxiuOptParamSerieDocumental(__bean.getArxiuOptParamSerieDocumental());
     __tmp.setArxiuOptParamExpedientId(__bean.getArxiuOptParamExpedientId());
     __tmp.setArxiuReqParamOrigen(__bean.getArxiuReqParamOrigen());
+    __tmp.setInfoArxiuID(__bean.getInfoArxiuID());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -655,14 +669,14 @@ private static final long serialVersionUID = 1230292508L;
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
-    if(!"InfoCustodyJPA".equals(origenJPA) 
-       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoCustodys) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoCustodys())) ) {
-      __tmp.setInfoCustodys(InfoCustodyJPA.copyJPA(__jpa.getInfoCustodys(), __alreadyCopied,"PeticioJPA"));
-    }
     // Copia de beans complexes (IMP)
     if(!"IdiomaJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.idioma) || org.hibernate.Hibernate.isInitialized(__jpa.getIdioma()) ) ) {
       __tmp.setIdioma(IdiomaJPA.copyJPA(__jpa.getIdioma(), __alreadyCopied,"PeticioJPA"));
+    }
+    if(!"InfoArxiuJPA".equals(origenJPA) && 
+       (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoArxiu) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoArxiu()) ) ) {
+      __tmp.setInfoArxiu(InfoArxiuJPA.copyJPA(__jpa.getInfoArxiu(), __alreadyCopied,"PeticioJPA"));
     }
     if(!"UsuariJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.usuari) || org.hibernate.Hibernate.isInitialized(__jpa.getUsuari()) ) ) {

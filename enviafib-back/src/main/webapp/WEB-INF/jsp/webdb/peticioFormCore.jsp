@@ -1041,3 +1041,43 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.INFOARXIUID)}">
+        <tr id="peticio_infoArxiuID_rowid">
+          <td id="peticio_infoArxiuID_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.INFOARXIUID])?'peticio.infoArxiuID':__theForm.labels[PeticioFields.INFOARXIUID]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.INFOARXIUID]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.INFOARXIUID]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_infoArxiuID_columnvalueid">
+          <form:errors path="peticio.infoArxiuID" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.INFOARXIUID)}" >
+          <form:hidden path="peticio.infoArxiuID"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.infoArxiuID,__theForm.listOfInfoArxiuForInfoArxiuID)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.INFOARXIUID)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_infoArxiuID"  onchange="if(typeof onChangeInfoArxiuID == 'function') {  onChangeInfoArxiuID(this); };"  cssClass="form-control col-md-9-optional" path="peticio.infoArxiuID">
+            <c:forEach items="${__theForm.listOfInfoArxiuForInfoArxiuID}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.peticio.infoArxiuID }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.peticio.infoArxiuID }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        

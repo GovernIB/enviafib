@@ -73,6 +73,10 @@ public class PeticioController
   @Autowired
   protected InfoSignaturaRefList infoSignaturaRefList;
 
+  // References 
+  @Autowired
+  protected InfoArxiuRefList infoArxiuRefList;
+
   /**
    * Llistat de totes Peticio
    */
@@ -263,6 +267,16 @@ public class PeticioController
       };
     }
 
+    // Field infoArxiuID
+    {
+      _listSKV = getReferenceListForInfoArxiuID(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfInfoArxiuForInfoArxiuID(_tmp);
+      if (filterForm.getGroupByFields().contains(INFOARXIUID)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, INFOARXIUID, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -285,6 +299,7 @@ public class PeticioController
     __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomaDoc());
     __mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfoSignaturaID());
     __mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
+    __mapping.put(INFOARXIUID, filterForm.getMapOfInfoArxiuForInfoArxiuID());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -394,6 +409,15 @@ public class PeticioController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       peticioForm.setListOfValuesForTipus(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (peticioForm.getListOfInfoArxiuForInfoArxiuID() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForInfoArxiuID(request, mav, peticioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      peticioForm.setListOfInfoArxiuForInfoArxiuID(_listSKV);
     }
     
   }
@@ -984,6 +1008,46 @@ public java.lang.Long stringToPK(String value) {
     __tmp.add(new StringKeyValue("3" , "3"));
     __tmp.add(new StringKeyValue("4" , "4"));
     return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForInfoArxiuID(HttpServletRequest request,
+       ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
+    if (peticioForm.isHiddenField(INFOARXIUID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _where = null;
+    if (peticioForm.isReadOnlyField(INFOARXIUID)) {
+      _where = InfoArxiuFields.INFOARXIUID.equal(peticioForm.getPeticio().getInfoArxiuID());
+    }
+    return getReferenceListForInfoArxiuID(request, mav, Where.AND(where, _where));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForInfoArxiuID(HttpServletRequest request,
+       ModelAndView mav, PeticioFilterForm peticioFilterForm,
+       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (peticioFilterForm.isHiddenField(INFOARXIUID)
+      && !peticioFilterForm.isGroupByField(INFOARXIUID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    if (!_groupByItemsMap.containsKey(INFOARXIUID)) {
+      // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
+      java.util.Set<java.lang.Long> _pkList = new java.util.HashSet<java.lang.Long>();
+      for (Peticio _item : list) {
+        if(_item.getInfoArxiuID() == null) { continue; };
+        _pkList.add(_item.getInfoArxiuID());
+        }
+        _w = InfoArxiuFields.INFOARXIUID.in(_pkList);
+      }
+    return getReferenceListForInfoArxiuID(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForInfoArxiuID(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    return infoArxiuRefList.getReferenceList(InfoArxiuFields.INFOARXIUID, where );
   }
 
 

@@ -98,6 +98,9 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.Integer getArxiuReqParamOrigen();
 	public void setArxiuReqParamOrigen(java.lang.Integer _arxiuReqParamOrigen_);
 
+	public java.lang.Long getInfoArxiuID();
+	public void setInfoArxiuID(java.lang.Long _infoArxiuID_);
+
   // Fitxer
   public <F extends Fitxer> F getFitxer();
   // Fitxer

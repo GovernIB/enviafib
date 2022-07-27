@@ -439,6 +439,28 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.Long infoArxiuIDDesde;
+
+  public java.lang.Long getInfoArxiuIDDesde() {
+    return this.infoArxiuIDDesde;
+  }
+
+  public void setInfoArxiuIDDesde(java.lang.Long infoArxiuIDDesde) {
+    this.infoArxiuIDDesde = infoArxiuIDDesde;
+  }
+
+
+  private java.lang.Long infoArxiuIDFins;
+
+  public java.lang.Long getInfoArxiuIDFins() {
+    return this.infoArxiuIDFins;
+  }
+
+  public void setInfoArxiuIDFins(java.lang.Long infoArxiuIDFins) {
+    this.infoArxiuIDFins = infoArxiuIDFins;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -482,6 +504,8 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.arxiuOptParamExpedientId = __toClone.arxiuOptParamExpedientId;
     this.arxiuReqParamOrigenDesde = __toClone.arxiuReqParamOrigenDesde;
     this.arxiuReqParamOrigenFins = __toClone.arxiuReqParamOrigenFins;
+    this.infoArxiuIDDesde = __toClone.infoArxiuIDDesde;
+    this.infoArxiuIDFins = __toClone.infoArxiuIDFins;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
@@ -489,6 +513,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.mapOfValuesForIdiomaDoc = __toClone.mapOfValuesForIdiomaDoc;
     this.mapOfInfoSignaturaForInfoSignaturaID = __toClone.mapOfInfoSignaturaForInfoSignaturaID;
     this.mapOfValuesForTipus = __toClone.mapOfValuesForTipus;
+    this.mapOfInfoArxiuForInfoArxiuID = __toClone.mapOfInfoArxiuForInfoArxiuID;
   }
   
   /* ========= UTILS ========== */
@@ -603,6 +628,18 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setMapOfValuesForTipus(Map<String, String> mapOfValuesForTipus) {
     this.mapOfValuesForTipus = mapOfValuesForTipus;
+  }
+
+
+
+  private Map<String, String> mapOfInfoArxiuForInfoArxiuID;
+
+  public Map<String, String> getMapOfInfoArxiuForInfoArxiuID() {
+    return this.mapOfInfoArxiuForInfoArxiuID;
+  }
+
+  public void setMapOfInfoArxiuForInfoArxiuID(Map<String, String> mapOfInfoArxiuForInfoArxiuID) {
+    this.mapOfInfoArxiuForInfoArxiuID = mapOfInfoArxiuForInfoArxiuID;
   }
 
 

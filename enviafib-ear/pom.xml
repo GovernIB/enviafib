@@ -218,6 +218,24 @@
 			<version>2.0</version>
 		</dependency>
 		-->
+
+		<!-- DEPENDENCIES DE ARXIU-->
+
+		<dependency>
+    	<groupId>org.fundaciobit.pluginsib.arxiu</groupId>
+	    <artifactId>pluginsib-arxiu-caib</artifactId>
+	    <version>${pluginsib.arxiu.version}</version>
+		<exclusions>
+				<exclusion>
+					<groupId>org.fundaciobit.pluginsib.core</groupId>
+					<artifactId>pluginsib-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-client</artifactId>
+				</exclusion>
+			</exclusions>
+    </dependency>
 	</dependencies>
 
 

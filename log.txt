@@ -1,0 +1,58 @@
+[27/07/2022, 13:57:38,28] 
+[27/07/2022, 14:01:17,07] 
+[27/07/2022, 14:02:28,89] 
+[27/07/2022, 14:02:44,72] 
+depth=2 C = ES, CN = Autoridad de Certificacion Firmaprofesional CIF A62634068
+verify error:num=19:self-signed certificate in certificate chain
+verify return:1
+depth=2 C = ES, CN = Autoridad de Certificacion Firmaprofesional CIF A62634068
+verify return:1
+depth=1 C = ES, O = Firmaprofesional S.A., organizationIdentifier = VATES-A62634068, OU = Security Services, CN = AC Firmaprofesional - Secure Web 2021
+verify return:1
+depth=0 C = ES, L = PALMA, O = COMUNITAT AUT\C3\92NOMA DE LES ILLES BALEARS, organizationIdentifier = VATES-S0711001H, serialNumber = S0711001H, CN = dev.caib.es, businessCategory = Government Entity, jurisdictionC = ES
+verify return:1
+CC240000:error:0A000172:SSL routines:tls12_check_peer_sigalg:wrong signature type:ssl\t1_lib.c:1572:
+Warning: use -cacerts option to access cacerts keystore
+keytool error: java.lang.Exception: Alias <dev_caib_es> does not exist
+Warning: use -cacerts option to access cacerts keystore
+Certificate was added to keystore
+depth=2 C = ES, CN = Autoridad de Certificacion Firmaprofesional CIF A62634068
+verify error:num=19:self-signed certificate in certificate chain
+verify return:1
+depth=2 C = ES, CN = Autoridad de Certificacion Firmaprofesional CIF A62634068
+verify return:1
+depth=1 C = ES, O = Firmaprofesional S.A., organizationIdentifier = VATES-A62634068, OU = Security Services, CN = AC Firmaprofesional - Secure Web 2021
+verify return:1
+depth=0 C = ES, ST = ILLES BALEARS, L = PALMA, O = COMUNITAT AUT\C3\92NOMA DE LES ILLES BALEARS, organizationIdentifier = VATES-S0711001H, serialNumber = S0711001H, CN = intranet.caib.es, businessCategory = Government Entity, jurisdictionC = ES
+verify return:1
+DONE
+Warning: use -cacerts option to access cacerts keystore
+keytool error: java.lang.Exception: Alias <intranet_caib_es> does not exist
+Warning: use -cacerts option to access cacerts keystore
+Certificate was added to keystore
+98520000:error:10080002:BIO routines:BIO_lookup_ex:system lib:crypto\bio\bio_addr.c:738:Host desconocido. 
+connect:errno=11001
+depth=1 C = ES, ST = ILLES BALEARS, L = PALMA, O = COMUNITAT AUT\C3\92NOMA DE LES ILLES BALEARS, OU = DIRECCI\C3\93 GENERAL DE MODERNITZACI\C3\93 I ADMINISTRACI\C3\93 DIGITAL, CN = AUTORITAT INTERNA DE CERTIFICACI\C3\93 DE LA CAIB
+verify error:num=19:self-signed certificate in certificate chain
+verify return:1
+depth=1 C = ES, ST = ILLES BALEARS, L = PALMA, O = COMUNITAT AUT\C3\92NOMA DE LES ILLES BALEARS, OU = DIRECCI\C3\93 GENERAL DE MODERNITZACI\C3\93 I ADMINISTRACI\C3\93 DIGITAL, CN = AUTORITAT INTERNA DE CERTIFICACI\C3\93 DE LA CAIB
+verify return:1
+depth=0 C = ES, ST = ILLES BALEARS, L = PALMA, O = COMUNITAT AUT\C3\92NOMA DE LES ILLES BALEARS, OU = DIRECCI\C3\93 GENERAL DE MODERNITZACI\C3\93 I ADMINISTRACI\C3\93 DIGITAL, CN = afirmades2.caib.es
+verify return:1
+DONE
+Warning: use -cacerts option to access cacerts keystore
+keytool error: java.lang.Exception: Alias <afirmades2_caib_es> does not exist
+Warning: use -cacerts option to access cacerts keystore
+Certificate was added to keystore
+depth=1 C = ES, O = Firmaprofesional S.A., organizationIdentifier = VATES-A62634068, OU = Security Services, CN = AC Firmaprofesional - Secure Web 2021
+verify error:num=20:unable to get local issuer certificate
+verify return:1
+depth=0 C = ES, ST = BARCELONA, L = BARCELONA, O = "FIRMAPROFESIONAL, SA", organizationIdentifier = VATES-A62634068, serialNumber = A62634068, CN = *.firmacloud.com
+verify return:1
+Warning: use -cacerts option to access cacerts keystore
+keytool error: java.lang.Exception: Alias <pre_firmacloud_com> does not exist
+Warning: use -cacerts option to access cacerts keystore
+Certificate was added to keystore
+082A0000:error:8000274C:system library:BIO_connect:Unknown error:crypto\bio\bio_sock2.c:114:calling connect()
+082A0000:error:10000067:BIO routines:BIO_connect:connect error:crypto\bio\bio_sock2.c:116:
+connect:errno=0

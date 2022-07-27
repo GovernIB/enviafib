@@ -20,7 +20,8 @@ import javax.persistence.Id;
 
 @Entity(name = "UsuariJPA")
 @Table(name = "efi_usuari" , indexes = { 
-        @Index(name="efi_usuari_pk_i", columnList = "usuariid")})
+        @Index(name="efi_usuari_pk_i", columnList = "usuariid"),
+        @Index(name="efi_usuari_idiomaid_fk_i", columnList = "idiomaid")})
 @SequenceGenerator(name="USUARI_SEQ", sequenceName="efi_usuari_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class UsuariJPA implements Usuari {

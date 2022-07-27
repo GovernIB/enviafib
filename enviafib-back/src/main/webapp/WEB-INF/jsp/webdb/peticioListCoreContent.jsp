@@ -205,6 +205,14 @@
           ${peticio.arxiuReqParamOrigen}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.INFOARXIUID)}">
+          <td>
+          <c:set var="tmp">${peticio.infoArxiuID}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfInfoArxiuForInfoArxiuID[tmp]}
+          </c:if>
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

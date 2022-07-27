@@ -241,5 +241,9 @@ public class Configuracio implements Constants {
     public static String getSortirURL() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "url_sortida");
     }
+    
+    public static String getPluginArxiuClass() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "plugin.arxiu.class");
+    }
 
 }
