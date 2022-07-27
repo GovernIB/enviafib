@@ -108,6 +108,9 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMORIGEN)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.ARXIUREQPARAMORIGEN)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.INFOARXIUID)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.INFOARXIUID)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

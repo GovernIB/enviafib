@@ -21,9 +21,9 @@ ${entityname}
         </span></a>
         </li>
 
-    <%-- InfoCustody --%>
-       <fmt:message var="entityname" key="infoCustody.infoCustody.plural"/>
-        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/infoCustody/list/1"/>" ><span style="${(fn:contains(url, 'infoCustody/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+    <%-- InfoArxiu --%>
+       <fmt:message var="entityname" key="infoArxiu.infoArxiu.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/infoArxiu/list/1"/>" ><span style="${(fn:contains(url, 'infoArxiu/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
 ${entityname}
         </span></a>
         </li>

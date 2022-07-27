@@ -137,6 +137,9 @@
 		
 		<pluginsib.userinformation.impl.version>3.0.0-SNAPSHOT</pluginsib.userinformation.impl.version>
 		
+		<pluginsib.arxiu.version>2.0.17</pluginsib.arxiu.version>
+
+		
 	</properties>
 
 

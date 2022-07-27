@@ -11,8 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
@@ -83,6 +81,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicService.JNDI_NAME)
     protected es.caib.enviafib.logic.InfoSignaturaLogicService infoSignaturaLogicEjb;
+    
+    @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
+    
 
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
@@ -249,8 +251,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     @PermitAll
     public void cosesAFerPeticioFirmada(long portafibID, String languageUI) throws I18NException {
-        guardarFitxerInfoFirma(portafibID, languageUI);
+        InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(portafibID, languageUI);
         esborrarPeticioPortafib(portafibID, languageUI);
+        
+        //XYZ Funcionalitat de guardar document a Arxiu amb la API
+        //guardarFitxerArxiu(portafibID, languageUI, infoSignatura);
+        
         enviarMailSolicitant(portafibID, "FIRMADA", languageUI);
     }
 
@@ -276,25 +282,27 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         esborrarPeticioPortafib(portafibID, languageUI);
         enviarMailSolicitant(portafibID, "REBUTJADA", languageUI);
     }
+    
+    protected void guardarFitxerArxiu(long portafibID, String languageUI, InfoSignaturaJPA infoSignatura) throws I18NException {
+        
+        Peticio peticio = getPeticioFromPortafibId(portafibID);
+        
+        pluginArxiuLogicaEjb.custodiaAmbApiArxiu(peticio, peticio.getFitxerFirmat(), new Locale(languageUI), infoSignatura);
+    }
+    
+    protected InfoSignaturaJPA guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException {
 
-    protected void guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException {
-
-        List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
-
-        if (peticioList == null || peticioList.size() != 1) {
-            log.error("Event de FIRMA amb portafibid = " + portafibID + " i Petició no trobada");
-            throw new I18NException("error.portafib.peticionull", "FIRMA", String.valueOf(portafibID));
-        }
+        Peticio peticio = getPeticioFromPortafibId(portafibID);
 
         FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafibID, languageUI);
-        Peticio peticio = peticioList.get(0);
 
         long fitxerID = guardarFitxer(firma);
         log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID=" + peticio.getPeticioID()
                 + " al FileSystemManager");
         peticio.setFitxerFirmatID(fitxerID);
-
-        long infoSignaturaID = guardarInfo(firma);
+        
+        InfoSignaturaJPA info = guardarInfo(firma);
+        long infoSignaturaID = info.getInfoSignaturaID();
         log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
         peticio.setInfoSignaturaID(infoSignaturaID);
 
@@ -302,6 +310,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
 
         this.update(peticio);
+        return info;
+    }
+
+    private Peticio getPeticioFromPortafibId(long portafibID) throws I18NException {
+        List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
+
+        if (peticioList == null || peticioList.size() != 1) {
+            log.error("Event de FIRMA amb portafibid = " + portafibID + " i Petició no trobada");
+            throw new I18NException("error.portafib.peticionull", "FIRMA", String.valueOf(portafibID));
+        }
+
+        Peticio peticio = peticioList.get(0);
+        return peticio;
     }
 
     protected void esborrarPeticioPortafib(long portafibID, String languageUI) {
@@ -397,7 +418,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
      * @return InfoSignaturaID
      * @throws I18NException
      */
-    protected long guardarInfo(FirmaAsyncSimpleSignedFile firma) throws I18NException {
+    protected InfoSignaturaJPA guardarInfo(FirmaAsyncSimpleSignedFile firma) throws I18NException {
 
         FirmaAsyncSimpleSignedFileInfo info = firma.getSignedFileInfo();
 
@@ -441,8 +462,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 checkDocumentModifications, checkValidationSignature);
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
-        long infoAsignaturaID = is.getInfoSignaturaID();
-        return infoAsignaturaID;
+        //long infoAsignaturaID = is.getInfoSignaturaID();
+        return is;
     }
 
     @Override
