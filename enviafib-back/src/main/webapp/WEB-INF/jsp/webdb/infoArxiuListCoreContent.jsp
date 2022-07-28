@@ -31,7 +31,7 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.ORIGINALFILEURL)}">
           <td>
-          ${infoArxiu.originalfileurl}
+          ${infoArxiu.originalFileUrl}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.CSV)}">
@@ -41,37 +41,37 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.CSVGENERATIONDEFINITION)}">
           <td>
-          ${infoArxiu.csvgenerationdefinition}
+          ${infoArxiu.csvGenerationDefinition}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.CSVVALIDATIONWEB)}">
           <td>
-          ${infoArxiu.csvvalidationweb}
+          ${infoArxiu.csvValidationWeb}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.ARXIUEXPEDIENTID)}">
           <td>
-          ${infoArxiu.arxiuexpedientid}
+          ${infoArxiu.arxiuExpedientID}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.ARXIUDOCUMENTID)}">
           <td>
-          ${infoArxiu.arxiudocumentid}
+          ${infoArxiu.arxiuDocumentID}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.PRINTABLEURL)}">
           <td>
-          ${infoArxiu.printableurl}
+          ${infoArxiu.printableUrl}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.ENIFILEURL)}">
           <td>
-          ${infoArxiu.enifileurl}
+          ${infoArxiu.eniFileUrl}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoArxiuFields.VALIDATIONFILEURL)}">
           <td>
-          ${infoArxiu.validationfileurl}
+          ${infoArxiu.validationFileUrl}
           </td>
         </c:if>
 

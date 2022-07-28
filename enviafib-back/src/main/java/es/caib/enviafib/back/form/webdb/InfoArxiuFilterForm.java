@@ -42,14 +42,14 @@ public class InfoArxiuFilterForm extends EnviaFIBBaseFilterForm implements InfoA
   }
 
 
-  private java.lang.String originalfileurl;
+  private java.lang.String originalFileUrl;
 
-  public java.lang.String getOriginalfileurl() {
-    return this.originalfileurl;
+  public java.lang.String getOriginalFileUrl() {
+    return this.originalFileUrl;
   }
 
-  public void setOriginalfileurl(java.lang.String originalfileurl) {
-    this.originalfileurl = originalfileurl;
+  public void setOriginalFileUrl(java.lang.String originalFileUrl) {
+    this.originalFileUrl = originalFileUrl;
   }
 
 
@@ -64,80 +64,80 @@ public class InfoArxiuFilterForm extends EnviaFIBBaseFilterForm implements InfoA
   }
 
 
-  private java.lang.String csvgenerationdefinition;
+  private java.lang.String csvGenerationDefinition;
 
-  public java.lang.String getCsvgenerationdefinition() {
-    return this.csvgenerationdefinition;
+  public java.lang.String getCsvGenerationDefinition() {
+    return this.csvGenerationDefinition;
   }
 
-  public void setCsvgenerationdefinition(java.lang.String csvgenerationdefinition) {
-    this.csvgenerationdefinition = csvgenerationdefinition;
-  }
-
-
-  private java.lang.String csvvalidationweb;
-
-  public java.lang.String getCsvvalidationweb() {
-    return this.csvvalidationweb;
-  }
-
-  public void setCsvvalidationweb(java.lang.String csvvalidationweb) {
-    this.csvvalidationweb = csvvalidationweb;
+  public void setCsvGenerationDefinition(java.lang.String csvGenerationDefinition) {
+    this.csvGenerationDefinition = csvGenerationDefinition;
   }
 
 
-  private java.lang.String arxiuexpedientid;
+  private java.lang.String csvValidationWeb;
 
-  public java.lang.String getArxiuexpedientid() {
-    return this.arxiuexpedientid;
+  public java.lang.String getCsvValidationWeb() {
+    return this.csvValidationWeb;
   }
 
-  public void setArxiuexpedientid(java.lang.String arxiuexpedientid) {
-    this.arxiuexpedientid = arxiuexpedientid;
-  }
-
-
-  private java.lang.String arxiudocumentid;
-
-  public java.lang.String getArxiudocumentid() {
-    return this.arxiudocumentid;
-  }
-
-  public void setArxiudocumentid(java.lang.String arxiudocumentid) {
-    this.arxiudocumentid = arxiudocumentid;
+  public void setCsvValidationWeb(java.lang.String csvValidationWeb) {
+    this.csvValidationWeb = csvValidationWeb;
   }
 
 
-  private java.lang.String printableurl;
+  private java.lang.String arxiuExpedientID;
 
-  public java.lang.String getPrintableurl() {
-    return this.printableurl;
+  public java.lang.String getArxiuExpedientID() {
+    return this.arxiuExpedientID;
   }
 
-  public void setPrintableurl(java.lang.String printableurl) {
-    this.printableurl = printableurl;
-  }
-
-
-  private java.lang.String enifileurl;
-
-  public java.lang.String getEnifileurl() {
-    return this.enifileurl;
-  }
-
-  public void setEnifileurl(java.lang.String enifileurl) {
-    this.enifileurl = enifileurl;
+  public void setArxiuExpedientID(java.lang.String arxiuExpedientID) {
+    this.arxiuExpedientID = arxiuExpedientID;
   }
 
 
-  private java.lang.String validationfileurl;
+  private java.lang.String arxiuDocumentID;
 
-  public java.lang.String getValidationfileurl() {
-    return this.validationfileurl;
+  public java.lang.String getArxiuDocumentID() {
+    return this.arxiuDocumentID;
   }
 
-  public void setValidationfileurl(java.lang.String validationfileurl) {
-    this.validationfileurl = validationfileurl;
+  public void setArxiuDocumentID(java.lang.String arxiuDocumentID) {
+    this.arxiuDocumentID = arxiuDocumentID;
+  }
+
+
+  private java.lang.String printableUrl;
+
+  public java.lang.String getPrintableUrl() {
+    return this.printableUrl;
+  }
+
+  public void setPrintableUrl(java.lang.String printableUrl) {
+    this.printableUrl = printableUrl;
+  }
+
+
+  private java.lang.String eniFileUrl;
+
+  public java.lang.String getEniFileUrl() {
+    return this.eniFileUrl;
+  }
+
+  public void setEniFileUrl(java.lang.String eniFileUrl) {
+    this.eniFileUrl = eniFileUrl;
+  }
+
+
+  private java.lang.String validationFileUrl;
+
+  public java.lang.String getValidationFileUrl() {
+    return this.validationFileUrl;
+  }
+
+  public void setValidationFileUrl(java.lang.String validationFileUrl) {
+    this.validationFileUrl = validationFileUrl;
   }
 
 
@@ -148,15 +148,15 @@ public class InfoArxiuFilterForm extends EnviaFIBBaseFilterForm implements InfoA
     super(__toClone);
     this.infoArxiuIDDesde = __toClone.infoArxiuIDDesde;
     this.infoArxiuIDFins = __toClone.infoArxiuIDFins;
-    this.originalfileurl = __toClone.originalfileurl;
+    this.originalFileUrl = __toClone.originalFileUrl;
     this.csv = __toClone.csv;
-    this.csvgenerationdefinition = __toClone.csvgenerationdefinition;
-    this.csvvalidationweb = __toClone.csvvalidationweb;
-    this.arxiuexpedientid = __toClone.arxiuexpedientid;
-    this.arxiudocumentid = __toClone.arxiudocumentid;
-    this.printableurl = __toClone.printableurl;
-    this.enifileurl = __toClone.enifileurl;
-    this.validationfileurl = __toClone.validationfileurl;
+    this.csvGenerationDefinition = __toClone.csvGenerationDefinition;
+    this.csvValidationWeb = __toClone.csvValidationWeb;
+    this.arxiuExpedientID = __toClone.arxiuExpedientID;
+    this.arxiuDocumentID = __toClone.arxiuDocumentID;
+    this.printableUrl = __toClone.printableUrl;
+    this.eniFileUrl = __toClone.eniFileUrl;
+    this.validationFileUrl = __toClone.validationFileUrl;
   }
   
   /* ========= UTILS ========== */

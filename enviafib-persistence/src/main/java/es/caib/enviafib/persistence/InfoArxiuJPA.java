@@ -32,31 +32,31 @@ private static final long serialVersionUID = -1940754442L;
     long infoArxiuID;
 
     @Column(name="originalfileurl",length = 255)
-    java.lang.String originalfileurl;
+    java.lang.String originalFileUrl;
 
     @Column(name="csv",length = 255)
     java.lang.String csv;
 
     @Column(name="csvgenerationdefinition",length = 255)
-    java.lang.String csvgenerationdefinition;
+    java.lang.String csvGenerationDefinition;
 
     @Column(name="csvvalidationweb",length = 255)
-    java.lang.String csvvalidationweb;
+    java.lang.String csvValidationWeb;
 
     @Column(name="arxiuexpedientid",length = 255)
-    java.lang.String arxiuexpedientid;
+    java.lang.String arxiuExpedientID;
 
     @Column(name="arxiudocumentid",length = 255)
-    java.lang.String arxiudocumentid;
+    java.lang.String arxiuDocumentID;
 
     @Column(name="printableurl",length = 255)
-    java.lang.String printableurl;
+    java.lang.String printableUrl;
 
     @Column(name="enifileurl",length = 255)
-    java.lang.String enifileurl;
+    java.lang.String eniFileUrl;
 
     @Column(name="validationfileurl",length = 255)
-    java.lang.String validationfileurl;
+    java.lang.String validationFileUrl;
 
 
 
@@ -65,29 +65,29 @@ private static final long serialVersionUID = -1940754442L;
   }
 
   /** Constructor amb tots els camps  */
-  public InfoArxiuJPA(long infoArxiuID , java.lang.String originalfileurl , java.lang.String csv , java.lang.String csvgenerationdefinition , java.lang.String csvvalidationweb , java.lang.String arxiuexpedientid , java.lang.String arxiudocumentid , java.lang.String printableurl , java.lang.String enifileurl , java.lang.String validationfileurl) {
+  public InfoArxiuJPA(long infoArxiuID , java.lang.String originalFileUrl , java.lang.String csv , java.lang.String csvGenerationDefinition , java.lang.String csvValidationWeb , java.lang.String arxiuExpedientID , java.lang.String arxiuDocumentID , java.lang.String printableUrl , java.lang.String eniFileUrl , java.lang.String validationFileUrl) {
     this.infoArxiuID=infoArxiuID;
-    this.originalfileurl=originalfileurl;
+    this.originalFileUrl=originalFileUrl;
     this.csv=csv;
-    this.csvgenerationdefinition=csvgenerationdefinition;
-    this.csvvalidationweb=csvvalidationweb;
-    this.arxiuexpedientid=arxiuexpedientid;
-    this.arxiudocumentid=arxiudocumentid;
-    this.printableurl=printableurl;
-    this.enifileurl=enifileurl;
-    this.validationfileurl=validationfileurl;
+    this.csvGenerationDefinition=csvGenerationDefinition;
+    this.csvValidationWeb=csvValidationWeb;
+    this.arxiuExpedientID=arxiuExpedientID;
+    this.arxiuDocumentID=arxiuDocumentID;
+    this.printableUrl=printableUrl;
+    this.eniFileUrl=eniFileUrl;
+    this.validationFileUrl=validationFileUrl;
 }
   /** Constructor sense valors autoincrementals */
-  public InfoArxiuJPA(java.lang.String originalfileurl , java.lang.String csv , java.lang.String csvgenerationdefinition , java.lang.String csvvalidationweb , java.lang.String arxiuexpedientid , java.lang.String arxiudocumentid , java.lang.String printableurl , java.lang.String enifileurl , java.lang.String validationfileurl) {
-    this.originalfileurl=originalfileurl;
+  public InfoArxiuJPA(java.lang.String originalFileUrl , java.lang.String csv , java.lang.String csvGenerationDefinition , java.lang.String csvValidationWeb , java.lang.String arxiuExpedientID , java.lang.String arxiuDocumentID , java.lang.String printableUrl , java.lang.String eniFileUrl , java.lang.String validationFileUrl) {
+    this.originalFileUrl=originalFileUrl;
     this.csv=csv;
-    this.csvgenerationdefinition=csvgenerationdefinition;
-    this.csvvalidationweb=csvvalidationweb;
-    this.arxiuexpedientid=arxiuexpedientid;
-    this.arxiudocumentid=arxiudocumentid;
-    this.printableurl=printableurl;
-    this.enifileurl=enifileurl;
-    this.validationfileurl=validationfileurl;
+    this.csvGenerationDefinition=csvGenerationDefinition;
+    this.csvValidationWeb=csvValidationWeb;
+    this.arxiuExpedientID=arxiuExpedientID;
+    this.arxiuDocumentID=arxiuDocumentID;
+    this.printableUrl=printableUrl;
+    this.eniFileUrl=eniFileUrl;
+    this.validationFileUrl=validationFileUrl;
 }
   /** Constructor dels valors Not Null */
   public InfoArxiuJPA(long infoArxiuID) {
@@ -95,15 +95,15 @@ private static final long serialVersionUID = -1940754442L;
 }
   public InfoArxiuJPA(InfoArxiu __bean) {
     this.setInfoArxiuID(__bean.getInfoArxiuID());
-    this.setOriginalfileurl(__bean.getOriginalfileurl());
+    this.setOriginalFileUrl(__bean.getOriginalFileUrl());
     this.setCsv(__bean.getCsv());
-    this.setCsvgenerationdefinition(__bean.getCsvgenerationdefinition());
-    this.setCsvvalidationweb(__bean.getCsvvalidationweb());
-    this.setArxiuexpedientid(__bean.getArxiuexpedientid());
-    this.setArxiudocumentid(__bean.getArxiudocumentid());
-    this.setPrintableurl(__bean.getPrintableurl());
-    this.setEnifileurl(__bean.getEnifileurl());
-    this.setValidationfileurl(__bean.getValidationfileurl());
+    this.setCsvGenerationDefinition(__bean.getCsvGenerationDefinition());
+    this.setCsvValidationWeb(__bean.getCsvValidationWeb());
+    this.setArxiuExpedientID(__bean.getArxiuExpedientID());
+    this.setArxiuDocumentID(__bean.getArxiuDocumentID());
+    this.setPrintableUrl(__bean.getPrintableUrl());
+    this.setEniFileUrl(__bean.getEniFileUrl());
+    this.setValidationFileUrl(__bean.getValidationFileUrl());
 	}
 
 	public long getInfoArxiuID() {
@@ -113,11 +113,11 @@ private static final long serialVersionUID = -1940754442L;
 		this.infoArxiuID = _infoArxiuID_;
 	};
 
-	public java.lang.String getOriginalfileurl() {
-		return(originalfileurl);
+	public java.lang.String getOriginalFileUrl() {
+		return(originalFileUrl);
 	};
-	public void setOriginalfileurl(java.lang.String _originalfileurl_) {
-		this.originalfileurl = _originalfileurl_;
+	public void setOriginalFileUrl(java.lang.String _originalFileUrl_) {
+		this.originalFileUrl = _originalFileUrl_;
 	};
 
 	public java.lang.String getCsv() {
@@ -127,53 +127,53 @@ private static final long serialVersionUID = -1940754442L;
 		this.csv = _csv_;
 	};
 
-	public java.lang.String getCsvgenerationdefinition() {
-		return(csvgenerationdefinition);
+	public java.lang.String getCsvGenerationDefinition() {
+		return(csvGenerationDefinition);
 	};
-	public void setCsvgenerationdefinition(java.lang.String _csvgenerationdefinition_) {
-		this.csvgenerationdefinition = _csvgenerationdefinition_;
-	};
-
-	public java.lang.String getCsvvalidationweb() {
-		return(csvvalidationweb);
-	};
-	public void setCsvvalidationweb(java.lang.String _csvvalidationweb_) {
-		this.csvvalidationweb = _csvvalidationweb_;
+	public void setCsvGenerationDefinition(java.lang.String _csvGenerationDefinition_) {
+		this.csvGenerationDefinition = _csvGenerationDefinition_;
 	};
 
-	public java.lang.String getArxiuexpedientid() {
-		return(arxiuexpedientid);
+	public java.lang.String getCsvValidationWeb() {
+		return(csvValidationWeb);
 	};
-	public void setArxiuexpedientid(java.lang.String _arxiuexpedientid_) {
-		this.arxiuexpedientid = _arxiuexpedientid_;
-	};
-
-	public java.lang.String getArxiudocumentid() {
-		return(arxiudocumentid);
-	};
-	public void setArxiudocumentid(java.lang.String _arxiudocumentid_) {
-		this.arxiudocumentid = _arxiudocumentid_;
+	public void setCsvValidationWeb(java.lang.String _csvValidationWeb_) {
+		this.csvValidationWeb = _csvValidationWeb_;
 	};
 
-	public java.lang.String getPrintableurl() {
-		return(printableurl);
+	public java.lang.String getArxiuExpedientID() {
+		return(arxiuExpedientID);
 	};
-	public void setPrintableurl(java.lang.String _printableurl_) {
-		this.printableurl = _printableurl_;
-	};
-
-	public java.lang.String getEnifileurl() {
-		return(enifileurl);
-	};
-	public void setEnifileurl(java.lang.String _enifileurl_) {
-		this.enifileurl = _enifileurl_;
+	public void setArxiuExpedientID(java.lang.String _arxiuExpedientID_) {
+		this.arxiuExpedientID = _arxiuExpedientID_;
 	};
 
-	public java.lang.String getValidationfileurl() {
-		return(validationfileurl);
+	public java.lang.String getArxiuDocumentID() {
+		return(arxiuDocumentID);
 	};
-	public void setValidationfileurl(java.lang.String _validationfileurl_) {
-		this.validationfileurl = _validationfileurl_;
+	public void setArxiuDocumentID(java.lang.String _arxiuDocumentID_) {
+		this.arxiuDocumentID = _arxiuDocumentID_;
+	};
+
+	public java.lang.String getPrintableUrl() {
+		return(printableUrl);
+	};
+	public void setPrintableUrl(java.lang.String _printableUrl_) {
+		this.printableUrl = _printableUrl_;
+	};
+
+	public java.lang.String getEniFileUrl() {
+		return(eniFileUrl);
+	};
+	public void setEniFileUrl(java.lang.String _eniFileUrl_) {
+		this.eniFileUrl = _eniFileUrl_;
+	};
+
+	public java.lang.String getValidationFileUrl() {
+		return(validationFileUrl);
+	};
+	public void setValidationFileUrl(java.lang.String _validationFileUrl_) {
+		this.validationFileUrl = _validationFileUrl_;
 	};
 
 
@@ -210,15 +210,15 @@ private static final long serialVersionUID = -1940754442L;
     if (__bean == null) { return null;}
     InfoArxiuJPA __tmp = new InfoArxiuJPA();
     __tmp.setInfoArxiuID(__bean.getInfoArxiuID());
-    __tmp.setOriginalfileurl(__bean.getOriginalfileurl());
+    __tmp.setOriginalFileUrl(__bean.getOriginalFileUrl());
     __tmp.setCsv(__bean.getCsv());
-    __tmp.setCsvgenerationdefinition(__bean.getCsvgenerationdefinition());
-    __tmp.setCsvvalidationweb(__bean.getCsvvalidationweb());
-    __tmp.setArxiuexpedientid(__bean.getArxiuexpedientid());
-    __tmp.setArxiudocumentid(__bean.getArxiudocumentid());
-    __tmp.setPrintableurl(__bean.getPrintableurl());
-    __tmp.setEnifileurl(__bean.getEnifileurl());
-    __tmp.setValidationfileurl(__bean.getValidationfileurl());
+    __tmp.setCsvGenerationDefinition(__bean.getCsvGenerationDefinition());
+    __tmp.setCsvValidationWeb(__bean.getCsvValidationWeb());
+    __tmp.setArxiuExpedientID(__bean.getArxiuExpedientID());
+    __tmp.setArxiuDocumentID(__bean.getArxiuDocumentID());
+    __tmp.setPrintableUrl(__bean.getPrintableUrl());
+    __tmp.setEniFileUrl(__bean.getEniFileUrl());
+    __tmp.setValidationFileUrl(__bean.getValidationFileUrl());
 		return __tmp;
 	}
 
