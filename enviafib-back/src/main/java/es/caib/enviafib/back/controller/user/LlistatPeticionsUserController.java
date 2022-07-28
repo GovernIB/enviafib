@@ -140,6 +140,8 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(ARXIUOPTPARAMEXPEDIENTID);
             peticioFilterForm.addHiddenField(ARXIUREQPARAMORIGEN);
             
+            peticioFilterForm.addHiddenField(INFOARXIUID);
+            
             peticioFilterForm.addHiddenField(REASON);
 
             peticioFilterForm.setOrderBy(DATACREACIO.javaName);

@@ -58,8 +58,8 @@ public class InfoArxiuJPAManager
         return list.toArray(new InfoArxiu[list.size()]);
     };
 
-    public InfoArxiu create( java.lang.String _originalfileurl_, java.lang.String _csv_, java.lang.String _csvgenerationdefinition_, java.lang.String _csvvalidationweb_, java.lang.String _arxiuexpedientid_, java.lang.String _arxiudocumentid_, java.lang.String _printableurl_, java.lang.String _enifileurl_, java.lang.String _validationfileurl_) throws I18NException {
-        InfoArxiuJPA __bean =  new InfoArxiuJPA(_originalfileurl_,_csv_,_csvgenerationdefinition_,_csvvalidationweb_,_arxiuexpedientid_,_arxiudocumentid_,_printableurl_,_enifileurl_,_validationfileurl_);
+    public InfoArxiu create( java.lang.String _originalFileUrl_, java.lang.String _csv_, java.lang.String _csvGenerationDefinition_, java.lang.String _csvValidationWeb_, java.lang.String _arxiuExpedientID_, java.lang.String _arxiuDocumentID_, java.lang.String _printableUrl_, java.lang.String _eniFileUrl_, java.lang.String _validationFileUrl_) throws I18NException {
+        InfoArxiuJPA __bean =  new InfoArxiuJPA(_originalFileUrl_,_csv_,_csvGenerationDefinition_,_csvValidationWeb_,_arxiuExpedientID_,_arxiuDocumentID_,_printableUrl_,_eniFileUrl_,_validationFileUrl_);
         return create(__bean);
     }
 
