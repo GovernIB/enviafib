@@ -52,6 +52,14 @@ public class UsuariQueryPath extends org.fundaciobit.genapp.common.query.QueryPa
   }
 
 
+  public GrupUsuariQueryPath GRUPUSUARI() {
+    return new GrupUsuariQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return UsuariQueryPath.this.getQueryPath() + "grupUsuari" + ".";
+      }
+    });
+  }
+
 /* L'ús d'aquest camp (OneToMany) llança una exception:
  [Illegal attempt to dereference a collection]
 

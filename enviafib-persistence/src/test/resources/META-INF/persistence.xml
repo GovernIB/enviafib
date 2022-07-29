@@ -8,6 +8,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 		<class>es.caib.enviafib.persistence.FitxerJPA</class>
+		<class>es.caib.enviafib.persistence.GrupJPA</class>
+		<class>es.caib.enviafib.persistence.GrupUsuariJPA</class>
 		<class>es.caib.enviafib.persistence.IdiomaJPA</class>
 		<class>es.caib.enviafib.persistence.InfoArxiuJPA</class>
 		<class>es.caib.enviafib.persistence.InfoSignaturaJPA</class>

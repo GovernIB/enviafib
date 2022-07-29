@@ -103,3 +103,86 @@ create index efi_peticio_infoarxiuid_fk_i on efi_peticio (infoarxiuid);
 
 
 
+
+
+
+---
+--- 28/07/2022 - Gestió de grups d'usuaris #135
+---
+
+
+  CREATE SEQUENCE efi_grup_seq START WITH 1000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+  CREATE TABLE efi_grup
+(
+   grupid bigint NOT NULL DEFAULT nextval('efi_grup_seq'::regclass), 
+   nom character varying(255), 
+   descripcio character varying(255)
+);
+
+ALTER TABLE efi_grup
+  ADD CONSTRAINT efi_grup_pk PRIMARY KEY (grupid);
+
+
+
+
+  CREATE SEQUENCE efi_grupusuari_seq START WITH 1000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+  CREATE TABLE efi_grupusuari
+(
+   grupusuariid bigint NOT NULL DEFAULT nextval('efi_grupusuari_seq'::regclass), 
+   grupid bigint, 
+   usuariid bigint 
+);
+
+ALTER TABLE efi_grupusuari
+  ADD CONSTRAINT efi_grupusuari_grup_grupid_fk FOREIGN KEY (grupid) REFERENCES efi_grup (grupid) ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE efi_grupusuari
+  ADD CONSTRAINT efi_grupusuari_usuari_usuar_fk FOREIGN KEY (usuariid) REFERENCES efi_usuari (usuariid) ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE efi_grupusuari
+  ADD CONSTRAINT efi_grupusuari_pk PRIMARY KEY (grupusuariid);
+
+
+ALTER TABLE efi_grupusuari
+  ADD CONSTRAINT efi_grupusuari_grupid_uk UNIQUE (grupid);
+ALTER TABLE efi_grupusuari
+  ADD CONSTRAINT efi_grupusuari_usuariid_uk UNIQUE (usuariid);
+
+
+
+ -- =============== CHECKS ==============
+ -- Es recomanable tenir un index de la clau primaria.
+ create index efi_grup_pk_i on efi_grup (grupid);
+
+ -- Es recomanable tenir un index de la clau primaria.
+ create index efi_grupusuari_pk_i on efi_grupusuari (grupusuariid);
+
+ -- Es recomanable tenir un index de la clau forania.
+ create index efi_grupusuari_grupid_fk_i on efi_grupusuari (grupid);
+
+ -- Es recomanable tenir un index de la clau forania.
+ create index efi_grupusuari_usuariid_fk_i on efi_grupusuari (usuariid);
+
+ -- Es recomanable tenir un index de la clau primaria.
+ create index efi_infoarxiu_pk_i on efi_infoarxiu (infoarxiuid);
+
+ -- Es recomanable tenir un index de la clau primaria.
+ create index efi_infocustody_pk_i on efi_infocustody (infocustodyid);
+
+ -- Es recomanable tenir un index de la clau forania.
+ create index efi_infocustody_peticioid_fk_i on efi_infocustody (peticioid);
+
+ -- Es recomanable tenir un index de la clau forania.
+ create index efi_usuari_idiomaid_fk_i on efi_usuari (idiomaid);
+
+ 
