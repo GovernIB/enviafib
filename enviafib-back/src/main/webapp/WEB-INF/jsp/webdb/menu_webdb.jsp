@@ -14,6 +14,20 @@ ${entityname}
         </span></a>
         </li>
 
+    <%-- Grup --%>
+       <fmt:message var="entityname" key="grup.grup.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/grup/list/1"/>" ><span style="${(fn:contains(url, 'grup/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
+
+    <%-- GrupUsuari --%>
+       <fmt:message var="entityname" key="grupUsuari.grupUsuari.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/grupUsuari/list/1"/>" ><span style="${(fn:contains(url, 'grupUsuari/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
+
     <%-- Idioma --%>
        <fmt:message var="entityname" key="idioma.idioma.plural"/>
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/idioma/list/1"/>" ><span style="${(fn:contains(url, 'idioma/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >

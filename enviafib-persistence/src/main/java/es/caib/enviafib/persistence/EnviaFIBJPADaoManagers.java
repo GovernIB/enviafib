@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
    private final FitxerJPAManager efi_fitxer;
+   private final GrupJPAManager efi_grup;
+   private final GrupUsuariJPAManager efi_grupusuari;
    private final IdiomaJPAManager efi_idioma;
    private final InfoArxiuJPAManager efi_infoarxiu;
    private final InfoSignaturaJPAManager efi_infosignatura;
@@ -18,6 +20,8 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
   public  EnviaFIBJPADaoManagers(EntityManager __em) {
     this.efi_fitxer = new FitxerJPAManager(__em);
+    this.efi_grup = new GrupJPAManager(__em);
+    this.efi_grupusuari = new GrupUsuariJPAManager(__em);
     this.efi_idioma = new IdiomaJPAManager(__em);
     this.efi_infoarxiu = new InfoArxiuJPAManager(__em);
     this.efi_infosignatura = new InfoSignaturaJPAManager(__em);
@@ -30,6 +34,14 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
     public IFitxerManager getFitxerManager() {
         return this.efi_fitxer;
+    };
+
+    public IGrupManager getGrupManager() {
+        return this.efi_grup;
+    };
+
+    public IGrupUsuariManager getGrupUsuariManager() {
+        return this.efi_grupusuari;
     };
 
     public IIdiomaManager getIdiomaManager() {

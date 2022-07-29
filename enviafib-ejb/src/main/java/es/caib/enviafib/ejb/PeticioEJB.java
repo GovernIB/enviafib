@@ -18,7 +18,6 @@ public class PeticioEJB extends PeticioJPAManager implements PeticioService {
 
     @Resource
     protected TransactionSynchronizationRegistry tsRegistry;
-
     @Override
     @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS})
     public void delete(Peticio instance) {
@@ -42,5 +41,5 @@ public class PeticioEJB extends PeticioJPAManager implements PeticioService {
     public PeticioJPA findByPrimaryKey(Long _ID_) {
         return (PeticioJPA)super.findByPrimaryKey(_ID_);
     }
-    
+
 }
