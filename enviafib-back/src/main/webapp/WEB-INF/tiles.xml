@@ -185,6 +185,26 @@
     </definition>
 
 
+    <definition name="grupFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="grup.grup" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupForm.jsp" />
+    </definition>
+    
+    <definition name="grupListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupList.jsp" />
+    </definition>
+
+
+    <definition name="grupUsuariFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="grupUsuari.grupUsuari" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariForm.jsp" />
+    </definition>
+    
+    <definition name="grupUsuariListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariList.jsp" />
+    </definition>
+
+
     <definition name="idiomaFormWebDB" extends="webdb">
         <put-attribute name="titol" value="idioma.idioma" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/idiomaForm.jsp" />

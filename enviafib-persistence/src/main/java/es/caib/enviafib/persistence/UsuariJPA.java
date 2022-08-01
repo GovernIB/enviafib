@@ -9,6 +9,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.Set;
+import javax.persistence.OneToOne;
 import java.util.HashSet;
 import javax.persistence.GenerationType;
 import javax.persistence.Index;
@@ -165,6 +166,19 @@ private static final long serialVersionUID = -1105822054L;
     return __result;
   }
 
+// EXP  Field:usuariid | Table: efi_grupusuari | Type: 0  
+
+    @OneToOne(mappedBy="usuari")
+    private GrupUsuariJPA grupUsuari;
+    public GrupUsuariJPA getGrupUsuari()    {
+      return this.grupUsuari;
+    }
+
+    public  void setGrupUsuari(GrupUsuariJPA grupUsuari) {
+      this.grupUsuari = grupUsuari;
+    }
+
+
 // EXP  Field:solicitantid | Table: efi_peticio | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuari")
@@ -234,6 +248,10 @@ private static final long serialVersionUID = -1105822054L;
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
+    if(!"GrupUsuariJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.grupUsuari) || org.hibernate.Hibernate.isInitialized(__jpa.getGrupUsuari())) ) {
+      __tmp.setGrupUsuari(GrupUsuariJPA.copyJPA(__jpa.getGrupUsuari(), __alreadyCopied,"UsuariJPA"));
+    }
     if(!"PeticioJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticios) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticios())) ) {
       __tmp.setPeticios(PeticioJPA.copyJPA(__jpa.getPeticios(), __alreadyCopied,"UsuariJPA"));
