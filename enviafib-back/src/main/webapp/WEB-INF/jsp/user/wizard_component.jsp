@@ -156,7 +156,4 @@ ul.nav-wizard.nav-wizard-backnav .active ~ li a:focus {
 
 </c:if>
 
-<c:if test="${empty wizardstep}">
-<h1> ERROR !!!! No DEFINIT 'wizardstep'</h1>
-</c:if>
 

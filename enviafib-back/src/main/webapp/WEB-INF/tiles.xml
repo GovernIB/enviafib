@@ -62,10 +62,19 @@
     </definition>
 
     <!--  ===========  USER  ================== -->
-
+    
     <definition name="user" extends="base.definition">
         <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_user.jsp" />
          <put-attribute name="pipella" value="user" />
+    </definition>
+    
+    <definition name="plantillesfluxfirmesFormUser" extends="user">
+        <put-attribute name="titol" value="usuari.usuari" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
+    </definition>
+    
+    <definition name="plantillesfluxfirmesListUser" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
     </definition>
 
     <definition name="peticioFormUser" extends="user">
