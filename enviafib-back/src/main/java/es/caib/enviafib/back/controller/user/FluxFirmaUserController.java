@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
@@ -124,10 +126,14 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             api = getApiFlowTemplateSimple();
 
             // Crear Flux
-            final boolean saveOnServer = true;
+            
 
             String name = "Flux de Firma  - " + System.currentTimeMillis();
-            String descr = "SaveOnServer  = |" + saveOnServer + "|";
+            String descr = "{temporal=true}\n"
+                    + "{creation=" + System.currentTimeMillis() + "}\n"
+                    + "{owner=" + LoginInfo.getInstance().getUsername() + "}";
+            
+            final boolean saveOnServer = true;
             final boolean visibleDescription = false;
 
             FlowTemplateSimpleGetTransactionIdRequest transactionRequest;
@@ -165,7 +171,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             log.error(msg, aaie);
 
             final String intermediateID = null;
-            cleanFlux(api, transactionID, intermediateID);
+            cleanFlux(api, transactionID, intermediateID, log);
 
             return new ModelAndView(getRedirectToList());
         }
@@ -193,14 +199,14 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         
 
         if (api != null && transactionID != null) {
-            cleanFlux(api, transactionID, intermediateID);
+            cleanFlux(api, transactionID, intermediateID, log);
         }
 
         return mav;
     }
 
-    protected void cleanFlux(ApiFlowTemplateSimple api, String transactionID,
-            String intermediateID) {
+    public static void cleanFlux(ApiFlowTemplateSimple api, String transactionID,
+            String intermediateID, Logger log) {
         try {
             api.closeTransaction(transactionID);
 
@@ -305,7 +311,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
             error = I18NUtils.tradueix("error.error.flux.creacioflux", aaie.getMessage());
             log.error(error, aaie);
-            cleanFlux(api, transactionID, null);
+            cleanFlux(api, transactionID, null, log);
         }
 
         log.error(error);
@@ -506,12 +512,12 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
      * @return
      * @throws Exception
      */
-    protected ApiFlowTemplateSimple getApiFlowTemplateSimple() {
+    public static ApiFlowTemplateSimple getApiFlowTemplateSimple() {
 
         String url = Configuracio.getPortaFIBApiFlowUrl();
         String username = Configuracio.getPortaFIBApiFlowUsername();
         String password = Configuracio.getPortaFIBApiFlowPassword();
-        log.info(" Connectant amb " + url + " emprant l'usuari " + username);
+        //log.info(" Connectant amb " + url + " emprant l'usuari " + username);
 
         return new ApiFlowTemplateSimpleJersey(url, username, password);
 

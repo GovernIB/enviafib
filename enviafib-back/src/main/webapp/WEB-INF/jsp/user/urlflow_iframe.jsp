@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"
 %><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
+<c:if test="${not empty wizardstep}">
+
 <label style="font-size: 1.25rem;font-weight: bold;">
 <fmt:message key="menu.flux.title" />
 </label>
+
 
 <%@include file="wizard_component.jsp" %>
 
@@ -19,9 +22,11 @@
 </c:if>
 <br/>
 
+</c:if>
+
 <c:if test="${not empty urlflow}">
 <center>
-<iframe id="iframediv" src="${urlflow}" width="100%" height="900px"></iframe>
+<iframe id="iframediv" src="${urlflow}" width="100%" height="900px" ${(empty wizardstep)?'style="border-style:none;"':''}></iframe>
 </center>
 </c:if>
 

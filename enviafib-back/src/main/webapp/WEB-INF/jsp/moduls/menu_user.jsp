@@ -30,7 +30,7 @@
     </li>
     
     
-        <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
+    <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
     <li style="list-style-type: disc; list-style-position: inside;">
       <a href="<c:url value="/user/autofirma/new"/>">
         <span style="${(fn:contains(url, '/user/autofirma'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.autofirma"/></span>
@@ -64,7 +64,18 @@
       </a>
     </li>
     
+    
+    <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
+   
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/plantillesfluxfirmes/list"/>">
+        <span style="${(fn:contains(url, '/user/plantillesfluxfirmes'))? "font-weight: bold;" : ""}"><fmt:message key="plantillesfluxfirmes.plural"/></span>
+      </a>
+    </li>
+    
+    
     <c:if test = "${LoginInfo.getInstance().getRoles() == '[ROLE_USER]'}">
+        <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
     	<li style="list-style-type: disc; list-style-position: inside;">
       		<a href="<c:url value="/user/peticio/home"/>">
         		<span style="${(fn:contains(url, '/home'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.home"/></span>
