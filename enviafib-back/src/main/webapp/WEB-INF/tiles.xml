@@ -98,6 +98,30 @@
     <definition name="infoSignaturaListUser" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
     </definition>
+
+
+    
+    <definition name="grupFormUser" extends="user">
+        <put-attribute name="titol" value="grup.grup" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupForm.jsp" />
+    </definition>
+    
+    <definition name="grupListUser" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupList.jsp" />
+    </definition>
+
+    
+    <definition name="grupUsuariFormUser" extends="user">
+        <put-attribute name="titol" value="grupUsuari.grupUsuari" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariForm.jsp" />
+    </definition>
+    
+    <definition name="grupUsuariListUser" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariList.jsp" />
+    </definition>
+
+
+    
     
     <definition name="flowview" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/urlflow_iframe.jsp" />

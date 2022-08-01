@@ -33,7 +33,7 @@ public class GrupRefList extends RefListBase
     this.grupEjb = __clone.grupEjb;
   }
   public GrupRefList() {
-    setSelects(new Select<?>[] { GRUPID.select });
+    setSelects(new Select<?>[] { NOM.select });
   }
   public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
     Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());

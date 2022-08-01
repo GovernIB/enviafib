@@ -105,3 +105,6 @@ hs_err_pid*
 /back.bat
 /ejb.bat
 /mixed.bat
+/enviafib-back/src/main/java/es/caib/enviafib/back/controller/common/*.bak
+/enviafib-commons/src/main/java/es/caib/enviafib/commons/utils/*.bak
+/scripts/config/*.bak

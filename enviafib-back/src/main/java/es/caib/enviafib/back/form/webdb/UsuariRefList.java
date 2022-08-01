@@ -33,7 +33,7 @@ public class UsuariRefList extends RefListBase
     this.usuariEjb = __clone.usuariEjb;
   }
   public UsuariRefList() {
-    setSelects(new Select<?>[] { NOM.select, LLINATGE1.select, LLINATGE2.select, IDIOMAID.select });
+    setSelects(new Select<?>[] { NOM.select, LLINATGE1.select, LLINATGE2.select, NIF.select });
   }
   public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
     Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
