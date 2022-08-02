@@ -99,7 +99,7 @@ ALTER TABLE efi_peticio ADD COLUMN infoarxiuid bigint;
 ALTER TABLE efi_peticio
   ADD CONSTRAINT efi_peticio_infoarxiu_infoa_fk FOREIGN KEY (infoarxiuid) REFERENCES efi_infoarxiu (infoarxiuid) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
-create index efi_peticio_infoarxiuid_fk_i on efi_peticio (infoarxiuid);
+CREATE INDEX efi_peticio_infoarxiuid_fk_i ON efi_peticio (infoarxiuid);
 
 
 
@@ -127,7 +127,7 @@ create index efi_peticio_infoarxiuid_fk_i on efi_peticio (infoarxiuid);
 ALTER TABLE efi_grup
   ADD CONSTRAINT efi_grup_pk PRIMARY KEY (grupid);
 
- create index efi_grup_pk_i on efi_grup (grupid);
+ CREATE INDEX efi_grup_pk_i ON efi_grup (grupid);
 
 
   CREATE SEQUENCE efi_grupusuari_seq START WITH 1000
@@ -139,8 +139,8 @@ ALTER TABLE efi_grup
   CREATE TABLE efi_grupusuari
 (
    grupusuariid bigint NOT NULL DEFAULT nextval('efi_grupusuari_seq'::regclass), 
-   grupid bigint, 
-   usuariid bigint 
+   grupid bigint NOT NULL, 
+   usuariid bigint NOT NULL 
 );
 
 ALTER TABLE efi_grupusuari
@@ -155,6 +155,6 @@ ALTER TABLE efi_grupusuari
 ALTER TABLE efi_grupusuari
   ADD CONSTRAINT efi_grupusuari_usuari_grup_uk UNIQUE (usuariid, grupid);
 
- create index efi_grupusuari_pk_i on efi_grupusuari (grupusuariid);
- create index efi_grupusuari_grupid_fk_i on efi_grupusuari (grupid);
- create index efi_grupusuari_usuariid_fk_i on efi_grupusuari (usuariid);
+ CREATE INDEX efi_grupusuari_pk_i ON efi_grupusuari (grupusuariid);
+ CREATE INDEX efi_grupusuari_grupid_fk_i ON efi_grupusuari (grupid);
+ CREATE INDEX efi_grupusuari_usuariid_fk_i ON efi_grupusuari (usuariid);

@@ -58,3 +58,49 @@ ALTER TABLE efi_infocustody ADD CONSTRAINT efi_infocustody_pk PRIMARY KEY (infoc
 
 ALTER TABLE efi_infocustody ADD CONSTRAINT efi_infocus_peticio_petid_fk FOREIGN KEY (peticioid) REFERENCES efi_peticio;
 
+
+
+
+---
+--- 28/07/2022 - Gestió de grups d'usuaris #135
+---
+
+  CREATE SEQUENCE efi_grup_seq 
+    START WITH 1000
+    INCREMENT BY 1;
+
+  CREATE TABLE efi_grup
+(
+   grupid NUMBER(19) DEFAULT efi_grup_seq.nextval NOT NULL,
+   nom VARCHAR(255), 
+   descripcio VARCHAR(255), 
+);
+
+ALTER TABLE efi_grup ADD CONSTRAINT efi_grup_pk PRIMARY KEY (grupid);
+
+CREATE INDEX efi_grup_pk_i ON efi_grup (grupid);
+
+
+
+CREATE SEQUENCE efi_grupusuari_seq 
+   START WITH 1000
+   INCREMENT BY 1;
+
+   CREATE TABLE efi_grupusuari
+(
+   grupusuariid NUMBER(19) DEFAULT efi_grupusuari_seq.nextval NOT NULL,
+   grupid NUMBER(19) NOT NULL, 
+   usuariid NUMBER(19) NOT NULL 
+);
+
+ALTER TABLE efi_grupusuari ADD CONSTRAINT efi_grupusuari_pk PRIMARY KEY (grupusuariid);
+
+ALTER TABLE efi_grupusuari ADD CONSTRAINT efi_grupusuari_grup_grupid_fk FOREIGN KEY (grupid) REFERENCES efi_grup (grupid);
+ALTER TABLE efi_grupusuari ADD CONSTRAINT efi_grupusuari_usuari_usuar_fk FOREIGN KEY (usuariid) REFERENCES efi_usuari (usuariid);
+
+ALTER TABLE efi_grupusuari ADD CONSTRAINT efi_grupusuari_usuari_grup_uk UNIQUE (usuariid, grupid);
+
+CREATE INDEX efi_grupusuari_pk_i ON efi_grupusuari (grupusuariid);
+CREATE INDEX efi_grupusuari_grupid_fk_i ON efi_grupusuari (grupid);
+CREATE INDEX efi_grupusuari_usuariid_fk_i ON efi_grupusuari (usuariid);
+
