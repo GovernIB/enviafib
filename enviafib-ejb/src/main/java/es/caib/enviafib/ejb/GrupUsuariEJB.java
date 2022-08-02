@@ -3,8 +3,6 @@ package es.caib.enviafib.ejb;
 
 // NO MODIFICAR - DO NOT MODIFY;
 import javax.ejb.Stateless;
-import javax.transaction.TransactionSynchronizationRegistry;
-import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.model.entity.GrupUsuari;
@@ -16,8 +14,6 @@ import es.caib.enviafib.commons.utils.Constants;
 @Stateless
 public class GrupUsuariEJB extends GrupUsuariJPAManager implements GrupUsuariService {
 
-    @Resource
-    protected TransactionSynchronizationRegistry tsRegistry;
     @Override
     @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS})
     public void delete(GrupUsuari instance) {

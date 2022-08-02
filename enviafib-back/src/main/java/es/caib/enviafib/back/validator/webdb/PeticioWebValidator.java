@@ -88,6 +88,17 @@ public class PeticioWebValidator extends AbstractWebValidator<PeticioForm, Petic
   public void validate(PeticioForm __form, Peticio __bean, Errors errors,
     WebValidationResult<PeticioForm> wvr, boolean isNou) {
 
+    if (isNou) { // Creacio
+      // ================ CREATION
+      // Fitxers 
+      CommonsMultipartFile fitxerID = ((PeticioForm)__form).getFitxerID();
+      if (fitxerID == null || fitxerID.isEmpty()) {
+        errors.rejectValue(get(FITXERID), "genapp.validation.required",
+          new String[]{ org.fundaciobit.genapp.common.web.i18n.I18NUtils.tradueix(get(FITXERID)) },
+          null);
+      }
+
+    }
     BeanValidatorResult<Peticio> __vr = new BeanValidatorResult<Peticio>();
     validator.validate(__vr, __bean,
       isNou, idiomaEjb, infoArxiuEjb, infoSignaturaEjb, peticioEjb, usuariEjb);
@@ -99,19 +110,6 @@ public class PeticioWebValidator extends AbstractWebValidator<PeticioForm, Petic
         }
     }
 
-    if (isNou) { // Creacio
-      // ================ CREATION
-      // Fitxers 
-        if (!errors.hasFieldErrors(get(FITXERID))){
-            CommonsMultipartFile fitxerID = ((PeticioForm)__form).getFitxerID();
-            if (fitxerID == null || fitxerID.isEmpty()) {
-                errors.rejectValue(get(FITXERID), "genapp.validation.required",
-                new String[]{ org.fundaciobit.genapp.common.web.i18n.I18NUtils.tradueix(get(FITXERID)) },
-                null);
-            }
-        }
-
-    }
 
   } // Final de metode
 
