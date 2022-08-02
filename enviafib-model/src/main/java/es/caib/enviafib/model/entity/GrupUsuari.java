@@ -5,11 +5,11 @@ public interface GrupUsuari extends org.fundaciobit.genapp.common.IGenAppEntity 
 	public long getGrupUsuariID();
 	public void setGrupUsuariID(long _grupUsuariID_);
 
-	public java.lang.Long getGrupID();
-	public void setGrupID(java.lang.Long _grupID_);
+	public long getGrupID();
+	public void setGrupID(long _grupID_);
 
-	public java.lang.Long getUsuariID();
-	public void setUsuariID(java.lang.Long _usuariID_);
+	public long getUsuariID();
+	public void setUsuariID(long _usuariID_);
 
 
 

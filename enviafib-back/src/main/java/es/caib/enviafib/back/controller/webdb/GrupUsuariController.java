@@ -616,7 +616,6 @@ public java.lang.Long stringToPK(String value) {
       // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
       java.util.Set<java.lang.Long> _pkList = new java.util.HashSet<java.lang.Long>();
       for (GrupUsuari _item : list) {
-        if(_item.getGrupID() == null) { continue; };
         _pkList.add(_item.getGrupID());
         }
         _w = GrupFields.GRUPID.in(_pkList);
@@ -656,7 +655,6 @@ public java.lang.Long stringToPK(String value) {
       // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
       java.util.Set<java.lang.Long> _pkList = new java.util.HashSet<java.lang.Long>();
       for (GrupUsuari _item : list) {
-        if(_item.getUsuariID() == null) { continue; };
         _pkList.add(_item.getUsuariID());
         }
         _w = UsuariFields.USUARIID.in(_pkList);

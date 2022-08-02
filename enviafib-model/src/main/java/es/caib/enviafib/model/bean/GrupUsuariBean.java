@@ -11,8 +11,8 @@ public class GrupUsuariBean implements GrupUsuari {
 private static final long serialVersionUID = -2016371145L;
 
 	long grupUsuariID;// PK
-	java.lang.Long grupID;
-	java.lang.Long usuariID;
+	long grupID;
+	long usuariID;
 
 
   /** Constructor Buit */
@@ -20,19 +20,15 @@ private static final long serialVersionUID = -2016371145L;
   }
 
   /** Constructor amb tots els camps  */
-  public GrupUsuariBean(long grupUsuariID , java.lang.Long grupID , java.lang.Long usuariID) {
+  public GrupUsuariBean(long grupUsuariID , long grupID , long usuariID) {
     this.grupUsuariID=grupUsuariID;
     this.grupID=grupID;
     this.usuariID=usuariID;
 }
   /** Constructor sense valors autoincrementals */
-  public GrupUsuariBean(java.lang.Long grupID , java.lang.Long usuariID) {
+  public GrupUsuariBean(long grupID , long usuariID) {
     this.grupID=grupID;
     this.usuariID=usuariID;
-}
-  /** Constructor dels valors Not Null */
-  public GrupUsuariBean(long grupUsuariID) {
-    this.grupUsuariID=grupUsuariID;
 }
   public GrupUsuariBean(GrupUsuari __bean) {
     this.setGrupUsuariID(__bean.getGrupUsuariID());
@@ -47,17 +43,17 @@ private static final long serialVersionUID = -2016371145L;
 		this.grupUsuariID = _grupUsuariID_;
 	};
 
-	public java.lang.Long getGrupID() {
+	public long getGrupID() {
 		return(grupID);
 	};
-	public void setGrupID(java.lang.Long _grupID_) {
+	public void setGrupID(long _grupID_) {
 		this.grupID = _grupID_;
 	};
 
-	public java.lang.Long getUsuariID() {
+	public long getUsuariID() {
 		return(usuariID);
 	};
-	public void setUsuariID(java.lang.Long _usuariID_) {
+	public void setUsuariID(long _usuariID_) {
 		this.usuariID = _usuariID_;
 	};
 

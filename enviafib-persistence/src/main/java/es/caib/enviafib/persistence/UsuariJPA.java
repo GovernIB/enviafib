@@ -9,7 +9,6 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.Set;
-import javax.persistence.OneToOne;
 import java.util.HashSet;
 import javax.persistence.GenerationType;
 import javax.persistence.Index;
@@ -21,8 +20,7 @@ import javax.persistence.Id;
 
 @Entity(name = "UsuariJPA")
 @Table(name = "efi_usuari" , indexes = { 
-        @Index(name="efi_usuari_pk_i", columnList = "usuariid"),
-        @Index(name="efi_usuari_idiomaid_fk_i", columnList = "idiomaid")})
+        @Index(name="efi_usuari_pk_i", columnList = "usuariid")})
 @SequenceGenerator(name="USUARI_SEQ", sequenceName="efi_usuari_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class UsuariJPA implements Usuari {
@@ -168,14 +166,14 @@ private static final long serialVersionUID = -1105822054L;
 
 // EXP  Field:usuariid | Table: efi_grupusuari | Type: 0  
 
-    @OneToOne(mappedBy="usuari")
-    private GrupUsuariJPA grupUsuari;
-    public GrupUsuariJPA getGrupUsuari()    {
-      return this.grupUsuari;
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuari")
+    private Set<GrupUsuariJPA> grupUsuaris = new HashSet<GrupUsuariJPA>(0);
+    public  Set<GrupUsuariJPA> getGrupUsuaris() {
+    return this.grupUsuaris;
+  }
 
-    public  void setGrupUsuari(GrupUsuariJPA grupUsuari) {
-      this.grupUsuari = grupUsuari;
+    public void setGrupUsuaris(Set<GrupUsuariJPA> grupUsuaris) {
+      this.grupUsuaris = grupUsuaris;
     }
 
 
@@ -249,8 +247,8 @@ private static final long serialVersionUID = -1105822054L;
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
     if(!"GrupUsuariJPA".equals(origenJPA) 
-       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.grupUsuari) || org.hibernate.Hibernate.isInitialized(__jpa.getGrupUsuari())) ) {
-      __tmp.setGrupUsuari(GrupUsuariJPA.copyJPA(__jpa.getGrupUsuari(), __alreadyCopied,"UsuariJPA"));
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.grupUsuaris) || org.hibernate.Hibernate.isInitialized(__jpa.getGrupUsuaris())) ) {
+      __tmp.setGrupUsuaris(GrupUsuariJPA.copyJPA(__jpa.getGrupUsuaris(), __alreadyCopied,"UsuariJPA"));
     }
     if(!"PeticioJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticios) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticios())) ) {

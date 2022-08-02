@@ -58,7 +58,7 @@ public class GrupUsuariJPAManager
         return list.toArray(new GrupUsuari[list.size()]);
     };
 
-    public GrupUsuari create( java.lang.Long _grupID_, java.lang.Long _usuariID_) throws I18NException {
+    public GrupUsuari create( long _grupID_, long _usuariID_) throws I18NException {
         GrupUsuariJPA __bean =  new GrupUsuariJPA(_grupID_,_usuariID_);
         return create(__bean);
     }

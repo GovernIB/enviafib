@@ -3,10 +3,11 @@ package es.caib.enviafib.persistence;
 import es.caib.enviafib.model.entity.*;
 import javax.persistence.Table;
 import javax.persistence.Column;
-import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Index;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.ForeignKey;
@@ -19,7 +20,9 @@ import javax.persistence.Id;
 @Table(name = "efi_grupusuari" , indexes = { 
         @Index(name="efi_grupusuari_pk_i", columnList = "grupusuariid"),
         @Index(name="efi_grupusuari_grupid_fk_i", columnList = "grupid"),
-        @Index(name="efi_grupusuari_usuariid_fk_i", columnList = "usuariid")})
+        @Index(name="efi_grupusuari_usuariid_fk_i", columnList = "usuariid")},
+           uniqueConstraints = {
+            @UniqueConstraint(name="efi_grupusuari_usuari_grup_uk", columnNames={"usuariid","grupid"}) } )
 @SequenceGenerator(name="GRUPUSUARI_SEQ", sequenceName="efi_grupusuari_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class GrupUsuariJPA implements GrupUsuari {
@@ -33,11 +36,11 @@ private static final long serialVersionUID = 1043341428L;
     @Column(name="grupusuariid",nullable = false,length = 19)
     long grupUsuariID;
 
-    @Column(name="grupid",unique = true,length = 19)
-    java.lang.Long grupID;
+    @Column(name="grupid",nullable = false,length = 19)
+    long grupID;
 
-    @Column(name="usuariid",unique = true,length = 19)
-    java.lang.Long usuariID;
+    @Column(name="usuariid",nullable = false,length = 19)
+    long usuariID;
 
 
 
@@ -46,19 +49,15 @@ private static final long serialVersionUID = 1043341428L;
   }
 
   /** Constructor amb tots els camps  */
-  public GrupUsuariJPA(long grupUsuariID , java.lang.Long grupID , java.lang.Long usuariID) {
+  public GrupUsuariJPA(long grupUsuariID , long grupID , long usuariID) {
     this.grupUsuariID=grupUsuariID;
     this.grupID=grupID;
     this.usuariID=usuariID;
 }
   /** Constructor sense valors autoincrementals */
-  public GrupUsuariJPA(java.lang.Long grupID , java.lang.Long usuariID) {
+  public GrupUsuariJPA(long grupID , long usuariID) {
     this.grupID=grupID;
     this.usuariID=usuariID;
-}
-  /** Constructor dels valors Not Null */
-  public GrupUsuariJPA(long grupUsuariID) {
-    this.grupUsuariID=grupUsuariID;
 }
   public GrupUsuariJPA(GrupUsuari __bean) {
     this.setGrupUsuariID(__bean.getGrupUsuariID());
@@ -73,17 +72,17 @@ private static final long serialVersionUID = 1043341428L;
 		this.grupUsuariID = _grupUsuariID_;
 	};
 
-	public java.lang.Long getGrupID() {
+	public long getGrupID() {
 		return(grupID);
 	};
-	public void setGrupID(java.lang.Long _grupID_) {
+	public void setGrupID(long _grupID_) {
 		this.grupID = _grupID_;
 	};
 
-	public java.lang.Long getUsuariID() {
+	public long getUsuariID() {
 		return(usuariID);
 	};
-	public void setUsuariID(java.lang.Long _usuariID_) {
+	public void setUsuariID(long _usuariID_) {
 		this.usuariID = _usuariID_;
 	};
 
@@ -104,8 +103,8 @@ private static final long serialVersionUID = 1043341428L;
 
 // IMP Field:grupid | Table: efi_grup | Type: 1  
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "grupid", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_grupusuari_grup_grupid_fk"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grupid", referencedColumnName ="grupID", nullable = false, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_grupusuari_grup_grupid_fk"))
     private GrupJPA grup;
 
     public GrupJPA getGrup() {
@@ -118,8 +117,8 @@ private static final long serialVersionUID = 1043341428L;
 
 // IMP Field:usuariid | Table: efi_usuari | Type: 1  
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuariid", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_grupusuari_usuari_usuar_fk"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuariid", referencedColumnName ="usuariID", nullable = false, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_grupusuari_usuari_usuar_fk"))
     private UsuariJPA usuari;
 
     public UsuariJPA getUsuari() {

@@ -3,13 +3,15 @@ package es.caib.enviafib.persistence;
 import es.caib.enviafib.model.entity.*;
 import javax.persistence.Table;
 import javax.persistence.Column;
-import javax.persistence.OneToOne;
+import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import java.util.Set;
 import javax.persistence.Id;
 
 
@@ -100,14 +102,14 @@ private static final long serialVersionUID = 1963437333L;
 
 // EXP  Field:grupid | Table: efi_grupusuari | Type: 0  
 
-    @OneToOne(mappedBy="grup")
-    private GrupUsuariJPA grupUsuari;
-    public GrupUsuariJPA getGrupUsuari()    {
-      return this.grupUsuari;
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "grup")
+    private Set<GrupUsuariJPA> grupUsuaris = new HashSet<GrupUsuariJPA>(0);
+    public  Set<GrupUsuariJPA> getGrupUsuaris() {
+    return this.grupUsuaris;
+  }
 
-    public  void setGrupUsuari(GrupUsuariJPA grupUsuari) {
-      this.grupUsuari = grupUsuari;
+    public void setGrupUsuaris(Set<GrupUsuariJPA> grupUsuaris) {
+      this.grupUsuaris = grupUsuaris;
     }
 
 
@@ -149,8 +151,8 @@ private static final long serialVersionUID = 1963437333L;
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
     if(!"GrupUsuariJPA".equals(origenJPA) 
-       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.grupUsuari) || org.hibernate.Hibernate.isInitialized(__jpa.getGrupUsuari())) ) {
-      __tmp.setGrupUsuari(GrupUsuariJPA.copyJPA(__jpa.getGrupUsuari(), __alreadyCopied,"GrupJPA"));
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.grupUsuaris) || org.hibernate.Hibernate.isInitialized(__jpa.getGrupUsuaris())) ) {
+      __tmp.setGrupUsuaris(GrupUsuariJPA.copyJPA(__jpa.getGrupUsuaris(), __alreadyCopied,"GrupJPA"));
     }
     // Copia de beans complexes (IMP)
 

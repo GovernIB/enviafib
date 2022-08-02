@@ -124,10 +124,7 @@
         <put-attribute name="titol" value="grupUsuari.grupUsuari" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariForm.jsp" />
     </definition>
-    
-    <definition name="grupUsuariListUser" extends="user">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariList.jsp" />
-    </definition>
+
 
 
     

@@ -26,11 +26,11 @@ import es.caib.enviafib.persistence.GrupJPA;
 
 @Controller
 @RequestMapping(value = GrupUserController.CONTEXT_WEB)
-@SessionAttributes(types = { Grup.class, Grup.class })
+@SessionAttributes(types = { GrupForm.class, GrupFilterForm.class })
 public class GrupUserController extends GrupController {
 
     public static final String CONTEXT_WEB = "/user/grup";
-    
+
     @Override
     public boolean isActiveList() {
         return true;
@@ -86,18 +86,10 @@ public class GrupUserController extends GrupController {
         if (grupFilterForm.isNou()) {
             grupFilterForm.addHiddenField(GrupFields.GRUPID);
             grupFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-user-plus", "grup.afegir.usuari",
-                    getContextWeb() + "/afegirUsuariGrup/{0}", "btn-primary"));
+                    GrupUsuariUserController.CONTEXT_WEB + "/afegirUsuariGrup/{0}", "btn-primary"));
         }
         return grupFilterForm;
     }
 
-    @RequestMapping(value = "/afegirUsuariGrup/{grupID}")
-    public String afegirUsuariGrup(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("grupID") long grupID) {
-
-        request.getSession().setAttribute("GRUPID_DE_GRUPUSUARI_A_CREAR", grupID);
-
-        return "redirect:" + GrupUsuariUserController.CONTEXT_WEB + "/new";
-    }
 
 }

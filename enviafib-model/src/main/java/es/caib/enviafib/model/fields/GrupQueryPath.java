@@ -32,12 +32,18 @@ public class GrupQueryPath extends org.fundaciobit.genapp.common.query.QueryPath
   }
 
 
-  public GrupUsuariQueryPath GRUPUSUARI() {
+/* L'ús d'aquest camp (OneToMany) llança una exception:
+ [Illegal attempt to dereference a collection]
+
+ // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
+
+  public GrupUsuariQueryPath GRUPUSUARIS() {
     return new GrupUsuariQueryPath(new QueryPath() {
       public String getQueryPath() {
-          return GrupQueryPath.this.getQueryPath() + "grupUsuari" + ".";
+          return GrupQueryPath.this.getQueryPath() + "grupUsuaris" + ".";
       }
     });
   }
+*/
 
 }
