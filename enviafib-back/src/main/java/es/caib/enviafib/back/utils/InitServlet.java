@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.security.RunAs;
-import javax.mail.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletConfig;
@@ -92,7 +91,7 @@ public class InitServlet extends HttpServlet {
         // Sistema de Traduccions LOGIC
         try {
             Context ctx = new InitialContext();
-            Session session = (javax.mail.Session) ctx.lookup(Constants.MAIL_SERVICE);
+            ctx.lookup(Constants.MAIL_SERVICE);
         } catch (Throwable th) {
             final String msg = "Error en la configuració del servidor de correu. Revisi el manual d'instalació: " + th.getMessage();
             log.error(msg, th);

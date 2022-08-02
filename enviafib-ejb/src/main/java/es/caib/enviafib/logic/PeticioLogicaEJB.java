@@ -14,12 +14,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
-import javax.transaction.TransactionSynchronizationRegistry;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
@@ -257,7 +255,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     @PermitAll
     public void cosesAFerPeticioFirmada(long portafibID, String languageUI) throws I18NException {
-        InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(portafibID, languageUI);
+        guardarFitxerInfoFirma(portafibID, languageUI);
         esborrarPeticioPortafib(portafibID, languageUI);
         
         //XYZ Funcionalitat de guardar document a Arxiu amb la API
