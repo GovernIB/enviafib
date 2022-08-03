@@ -3,8 +3,7 @@ package es.caib.enviafib.ejb;
 
 // NO MODIFICAR - DO NOT MODIFY;
 import javax.ejb.Stateless;
-import javax.transaction.TransactionSynchronizationRegistry;
-import javax.annotation.Resource;
+import java.util.ArrayList;
 import javax.annotation.security.RolesAllowed;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.model.entity.Peticio;
@@ -16,8 +15,9 @@ import es.caib.enviafib.commons.utils.Constants;
 @Stateless
 public class PeticioEJB extends PeticioJPAManager implements PeticioService {
 
-    @Resource
-    protected TransactionSynchronizationRegistry tsRegistry;
+    @javax.annotation.Resource
+    protected javax.transaction.TransactionSynchronizationRegistry __tsRegistry;
+
     @Override
     @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS})
     public void delete(Peticio instance) {
@@ -34,6 +34,29 @@ public class PeticioEJB extends PeticioJPAManager implements PeticioService {
     @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS})
     public Peticio update(Peticio instance) throws I18NException {
          return super.update(instance);
+    }
+
+    public void deleteIncludingFiles(Peticio instance, es.caib.enviafib.ejb.FitxerService fitxerEjb)
+            throws I18NException {
+
+        ArrayList<Long> fitxers = new ArrayList<Long>();
+        fitxers.add(instance.getFitxerID());
+        fitxers.add(instance.getFitxerFirmatID());
+
+        this.delete(instance);
+
+        java.util.Set<Long> fitxersEsborrar = new java.util.HashSet<Long>();
+
+        // Borram fitxers a BD
+        for (Long f : fitxers) {
+            if (f != null) {
+                fitxerEjb.delete(f);
+                fitxersEsborrar.add(f);
+            }
+        }
+
+        // Borram fitxers fisic
+        __tsRegistry.registerInterposedSynchronization(new es.caib.enviafib.ejb.utils.CleanFilesSynchronization(fitxersEsborrar));
     }
 
     @Override

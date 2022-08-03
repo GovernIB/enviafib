@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
@@ -87,10 +88,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicService.JNDI_NAME)
     protected es.caib.enviafib.logic.InfoSignaturaLogicService infoSignaturaLogicEjb;
-    
+
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
-    
 
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
@@ -259,10 +259,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void cosesAFerPeticioFirmada(long portafibID, String languageUI) throws I18NException {
         InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(portafibID, languageUI);
         esborrarPeticioPortafib(portafibID, languageUI);
-        
-        //XYZ Funcionalitat de guardar document a Arxiu amb la API
-        //guardarFitxerArxiu(portafibID, languageUI, infoSignatura);
-        
+
+        // XYZ Funcionalitat de guardar document a Arxiu amb la API
+        // guardarFitxerArxiu(portafibID, languageUI, infoSignatura);
+
         enviarMailSolicitant(portafibID, "FIRMADA", languageUI);
     }
 
@@ -288,14 +288,16 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         esborrarPeticioPortafib(portafibID, languageUI);
         enviarMailSolicitant(portafibID, "REBUTJADA", languageUI);
     }
-    
-    protected void guardarFitxerArxiu(long portafibID, String languageUI, InfoSignaturaJPA infoSignatura) throws I18NException {
-        
+
+    protected void guardarFitxerArxiu(long portafibID, String languageUI, InfoSignaturaJPA infoSignatura)
+            throws I18NException {
+
         Peticio peticio = getPeticioFromPortafibId(portafibID);
-        
-        pluginArxiuLogicaEjb.custodiaAmbApiArxiu(peticio, peticio.getFitxerFirmat(), new Locale(languageUI), infoSignatura);
+
+        pluginArxiuLogicaEjb.custodiaAmbApiArxiu(peticio, peticio.getFitxerFirmat(), new Locale(languageUI),
+                infoSignatura);
     }
-    
+
     protected InfoSignaturaJPA guardarFitxerInfoFirma(long portafibID, String languageUI) throws I18NException {
 
         Peticio peticio = getPeticioFromPortafibId(portafibID);
@@ -306,7 +308,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID=" + peticio.getPeticioID()
                 + " al FileSystemManager");
         peticio.setFitxerFirmatID(fitxerID);
-        
+
         InfoSignaturaJPA info = guardarInfo(firma);
         long infoSignaturaID = info.getInfoSignaturaID();
         log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
@@ -474,14 +476,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 checkDocumentModifications, checkValidationSignature);
 
         is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
-        //long infoAsignaturaID = is.getInfoSignaturaID();
+        // long infoAsignaturaID = is.getInfoSignaturaID();
         return is;
     }
 
     @Override
     @PermitAll
     public void updatePublic(Peticio peticio) throws I18NException {
-        super.update(peticio);
+        this.update(peticio);
     }
 
     @Override
@@ -494,55 +496,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
         Long infoSignID = instance.getInfoSignaturaID();
-//        Long[] fitxers = new Long[] { instance.getFitxerID(), instance.getFitxerFirmatID() };
 
-//        super.delete(instance);
-        deleteIncludingFiles(instance);
-        
+        this.deleteIncludingFiles(instance, fitxerEjb);
+
         if (infoSignID != null) {
             InfoSignaturaJPA is = infoSignaturaLogicEjb.findByPrimaryKey(infoSignID);
             infoSignaturaLogicEjb.delete(is);
         }
-
-//        Set<Long> fitxersEsborrar = new HashSet<Long>();
-//
-//        // Borram fitxers a BD
-//        for (Long f : fitxers) {
-//            if (f != null) {
-//                fitxerEjb.delete(f);
-//                fitxersEsborrar.add(f);
-//            }
-//        }
-//
-//        // Borram fitxers fisic
-//        tsRegistry.registerInterposedSynchronization(new CleanFilesSynchronization(fitxersEsborrar));
     }
-
-    /*
-    public class CleanFilesSynchronization implements Synchronization {
-        public final Set<Long> files;
-
-        public CleanFilesSynchronization(Set<Long> filesToDelete) {
-            this.files = filesToDelete;
-        }
-
-        @Override
-        public void beforeCompletion() {
-        }
-
-        @Override
-        public void afterCompletion(int status) {
-            log.info("Inici CleanFilesSynchronization::afterCompletion()");
-            if (status == Status.STATUS_COMMITTED) {
-                if (!FileSystemManager.eliminarArxius(files)) {
-                    log.error("No s'ha pogut esborrar alguns dels següents fitxers: "
-                            + Arrays.toString(files.toArray()));
-                }
-            }
-            log.info("Final CleanFilesSynchronization::afterCompletion()");
-        }
-    };
-*/
+    
     protected FirmaAsyncSimpleFile getFitxer(Fitxer fitxer) throws I18NException {
 
         File f = FileSystemManager.getFile(fitxer.getFitxerID());
@@ -869,25 +831,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         }
         return signatureBlocks;
-    }
-
-    public void deleteIncludingFiles(Peticio instance) throws I18NException {
-        Long[] fitxers = new Long[] { instance.getFitxerID(), instance.getFitxerFirmatID() };
-        
-        super.delete(instance);
-
-        Set<Long> fitxersEsborrar = new HashSet<Long>();
-
-        // Borram fitxers a BD
-        for (Long f : fitxers) {
-            if (f != null) {
-                fitxerEjb.delete(f);
-                fitxersEsborrar.add(f);
-            }
-        }
-
-        // Borram fitxers fisic
-        tsRegistry.registerInterposedSynchronization(new CleanFilesSynchronization(fitxersEsborrar));
     }
 
 }
