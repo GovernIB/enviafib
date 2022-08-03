@@ -1,0 +1,15 @@
+
+
+# Fundaciobit
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.codidir3byusername=A04027052
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.gerentpresident=aroig
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomareaconselleriabyusername.ca=Innovació
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomareaconselleriabyusername.es=Innovación
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.capareaconsellerbyusername=jtramullas
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomdepartamentdirecciogeneralbyusername.es=Govern Digital
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomdepartamentdirecciogeneralbyusername.ca=Gobierno Digital
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.capdepartamentdirectorgeneralbyusername=<#switch username><#case "anadal"><#case "ptrias"><#case "fbosch"><#case "bverges">atrobat<#break><#case "jsastre">xtous<#break><#default>ellado</#switch>
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.secretaribyusername=
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.encarregatcompresbyusername=jfernandez
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.recursoshumansbyusername=rdiaz
+

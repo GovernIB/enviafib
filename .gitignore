@@ -108,3 +108,13 @@ hs_err_pid*
 /enviafib-back/src/main/java/es/caib/enviafib/back/controller/common/*.bak
 /enviafib-commons/src/main/java/es/caib/enviafib/commons/utils/*.bak
 /scripts/config/*.bak
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/mock/mock.properties
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/api/target
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/api/.classpath
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/api/.project
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/api/.settings
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/api/bin
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/mock/.project
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/mock/.settings
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/mock/target
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/mock/.classpath
