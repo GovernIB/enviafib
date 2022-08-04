@@ -41,6 +41,7 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
@@ -270,7 +271,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
                     new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
         }
-        pet.setErrorMsg(errorMsg);
+        pet.setErrorMsg(LogicUtils.split255(errorMsg));
         pet.setErrorException(errorException);
         pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
         pet.setEstat(Constants.ESTAT_PETICIO_ERROR);

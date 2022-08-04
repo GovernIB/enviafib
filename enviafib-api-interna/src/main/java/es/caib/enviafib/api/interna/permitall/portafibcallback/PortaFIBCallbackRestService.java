@@ -81,6 +81,8 @@ public class PortaFIBCallbackRestService {
             log.info("Entity ID: " + event.getEntityID());
             log.info("Version: " + event.getVersion());
 
+            //peticioLogicaEjb.metodeAsync(String.valueOf(event.getEventTypeID()));
+
             int eventID = event.getEventTypeID();
 
             switch (eventID) {
@@ -159,7 +161,7 @@ public class PortaFIBCallbackRestService {
                 break;
             }
 
-            log.info("XYZ **************************************************** XYZ ");
+            log.info("XYZ **************************************************** XYZ "); 
 
             // Assignacio de l'estat a la peticio corresponent.
             if (event != null && event.getSign() != null) {
