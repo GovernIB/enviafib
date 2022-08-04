@@ -161,6 +161,18 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalList.jsp" />
     </definition>
     
+    
+    
+    <definition name="EstructuraOrganitzativaPluginFormAdmin" extends="admin">
+        <put-attribute name="titol" value="EstructuraOrganitzativa.EstructuraOrganitzativa" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginForm.jsp" />
+    </definition>
+    
+    <definition name="EstructuraOrganitzativaPluginListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
+    </definition>
+    
+    
     <!--  ===========  DESENVOLUPAMENT ================== -->
     
     <definition name="desenvolupament" extends="base.definition">

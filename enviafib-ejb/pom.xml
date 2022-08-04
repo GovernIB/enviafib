@@ -152,6 +152,13 @@
         </exclusions>
     </dependency>
 
+
+	<dependency>
+		<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
+		<artifactId>pluginsib-estructuraorganitzativa-api</artifactId>
+		<version>1.0.2</version>
+	</dependency>
+	
         <!--
         <dependency>
             <artifactId>jersey-apache-client4</artifactId>

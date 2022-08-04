@@ -17,6 +17,7 @@ import es.caib.enviafib.persistence.PeticioJPA;
  * 
  * @author fbosch
  * @author anadal
+ * @author ptrias
  *
  */
 @Local

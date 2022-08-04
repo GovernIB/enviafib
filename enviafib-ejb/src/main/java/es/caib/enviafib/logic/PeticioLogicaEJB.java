@@ -9,13 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
@@ -61,7 +58,6 @@ import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
-import es.caib.enviafib.ejb.utils.CleanFilesSynchronization;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;

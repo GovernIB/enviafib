@@ -43,7 +43,12 @@ public interface Constants {
             TIPUS_PETICIO_FLUX, TIPUS_PETICIO_DIRECTOR, TIPUS_PETICIO_SECRETARI };
     
     
+    // TIPUS DE PLUGINS DE ENVIAFIB
+    public static final int TIPUS_PLUGIN_ESTRUCTURAORGANITZATIVA= 1;
 
+    
+    
+    // FORMATS DE FITXERS
     public static final int FORMAT_FILE_PDF = 0; // "pdf";
 
     public static final int FORMAT_FILE_JPG = 1; // "jpg";
