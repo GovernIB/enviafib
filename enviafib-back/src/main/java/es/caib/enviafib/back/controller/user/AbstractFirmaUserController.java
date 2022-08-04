@@ -25,9 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
-import es.caib.enviafib.back.utils.Utils;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
@@ -113,12 +113,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
+                    hiddens.remove(DATAFINAL);
                     hiddens.remove(ERRORMSG);
                     if (peticioForm.getPeticio().getErrorException() != null) {
                         hiddens.remove(ERROREXCEPTION);
                     }
-                    hiddens.remove(DATAFINAL);
-
+                break;
+                case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
+                    hiddens.remove(ERRORMSG);
+                    if (peticioForm.getPeticio().getErrorException() != null) {
+                        hiddens.remove(ERROREXCEPTION);
+                    }
+                    hiddens.remove(FITXERFIRMATID);
                 break;
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     hiddens.remove(FITXERFIRMATID);
@@ -127,11 +133,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
                             "/user/infoSignatura/view/" + infosignaturaID, "btn-info"));
-
-//                    new AdditionalButton("fas fa-file", "info.signatura",
-//                            "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(),
-//                           )
-
                 break;
             }
 
@@ -155,8 +156,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             peticio.setDataCreacio(new Timestamp(System.currentTimeMillis()));
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            peticio.setErrorMsg(
-                    "XYZ ZZZ Error desconegut. El procés de creació de la petició de firma s'ha aturat de forma inesperada.");
+            peticio.setErrorMsg(LogicUtils.split255(
+                    "XYZ ZZZ Error desconegut. El procés de creació de la petició de firma s'ha aturat de forma inesperada."));
 
             String userName = request.getRemoteUser();
             Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
@@ -253,8 +254,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 log.error(error, e);
 
                 p.setEstat(ESTAT_PETICIO_ERROR);
-                p.setErrorMsg(error);
-                p.setErrorException(Utils.stackTrace2String(e));
+                p.setErrorMsg(LogicUtils.split255(error));
+                p.setErrorException(LogicUtils.stackTrace2String(e));
 
                 peticioLogicaEjb.update(p);
             }
