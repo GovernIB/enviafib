@@ -43,47 +43,25 @@ public class PluginFilterForm extends EnviaFIBBaseFilterForm implements PluginFi
   }
 
 
-  private java.lang.Long nomidDesde;
+  private java.lang.String nom;
 
-  public java.lang.Long getNomidDesde() {
-    return this.nomidDesde;
+  public java.lang.String getNom() {
+    return this.nom;
   }
 
-  public void setNomidDesde(java.lang.Long nomidDesde) {
-    this.nomidDesde = nomidDesde;
-  }
-
-
-  private java.lang.Long nomidFins;
-
-  public java.lang.Long getNomidFins() {
-    return this.nomidFins;
-  }
-
-  public void setNomidFins(java.lang.Long nomidFins) {
-    this.nomidFins = nomidFins;
+  public void setNom(java.lang.String nom) {
+    this.nom = nom;
   }
 
 
-  private java.lang.Long descripciocurtaidDesde;
+  private java.lang.String descripcio;
 
-  public java.lang.Long getDescripciocurtaidDesde() {
-    return this.descripciocurtaidDesde;
+  public java.lang.String getDescripcio() {
+    return this.descripcio;
   }
 
-  public void setDescripciocurtaidDesde(java.lang.Long descripciocurtaidDesde) {
-    this.descripciocurtaidDesde = descripciocurtaidDesde;
-  }
-
-
-  private java.lang.Long descripciocurtaidFins;
-
-  public java.lang.Long getDescripciocurtaidFins() {
-    return this.descripciocurtaidFins;
-  }
-
-  public void setDescripciocurtaidFins(java.lang.Long descripciocurtaidFins) {
-    this.descripciocurtaidFins = descripciocurtaidFins;
+  public void setDescripcio(java.lang.String descripcio) {
+    this.descripcio = descripcio;
   }
 
 
@@ -138,10 +116,8 @@ public class PluginFilterForm extends EnviaFIBBaseFilterForm implements PluginFi
     super(__toClone);
     this.pluginIDDesde = __toClone.pluginIDDesde;
     this.pluginIDFins = __toClone.pluginIDFins;
-    this.nomidDesde = __toClone.nomidDesde;
-    this.nomidFins = __toClone.nomidFins;
-    this.descripciocurtaidDesde = __toClone.descripciocurtaidDesde;
-    this.descripciocurtaidFins = __toClone.descripciocurtaidFins;
+    this.nom = __toClone.nom;
+    this.descripcio = __toClone.descripcio;
     this.classe = __toClone.classe;
     this.properties = __toClone.properties;
     this.tipusDesde = __toClone.tipusDesde;

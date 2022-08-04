@@ -15,12 +15,12 @@ public class PluginQueryPath extends org.fundaciobit.genapp.common.query.QueryPa
     return new LongField(getQueryPath(), PluginFields.PLUGINID);
   }
 
-  public LongField NOMID() {
-    return new LongField(getQueryPath(), PluginFields.NOMID);
+  public StringField NOM() {
+    return new StringField(getQueryPath(), PluginFields.NOM);
   }
 
-  public LongField DESCRIPCIOCURTAID() {
-    return new LongField(getQueryPath(), PluginFields.DESCRIPCIOCURTAID);
+  public StringField DESCRIPCIO() {
+    return new StringField(getQueryPath(), PluginFields.DESCRIPCIO);
   }
 
   public StringField CLASSE() {

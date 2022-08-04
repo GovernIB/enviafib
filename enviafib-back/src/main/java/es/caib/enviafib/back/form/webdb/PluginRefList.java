@@ -33,7 +33,7 @@ public class PluginRefList extends RefListBase
     this.pluginEjb = __clone.pluginEjb;
   }
   public PluginRefList() {
-    setSelects(new Select<?>[] { PLUGINID.select });
+    setSelects(new Select<?>[] { PLUGINID.select, NOM.select });
   }
   public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
     Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());

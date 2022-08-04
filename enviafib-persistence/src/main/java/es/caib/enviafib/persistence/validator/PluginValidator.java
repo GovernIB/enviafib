@@ -30,13 +30,13 @@ public class PluginValidator<I extends Plugin>
     ,es.caib.enviafib.model.dao.IPluginManager __pluginManager) {
 
     // Valors Not Null
-    __vr.rejectIfEmptyOrWhitespace(__target__,NOMID, 
+    __vr.rejectIfEmptyOrWhitespace(__target__,NOM, 
         "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOMID)));
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOM)));
 
-    __vr.rejectIfEmptyOrWhitespace(__target__,DESCRIPCIOCURTAID, 
+    __vr.rejectIfEmptyOrWhitespace(__target__,DESCRIPCIO, 
         "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(DESCRIPCIOCURTAID)));
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(DESCRIPCIO)));
 
     __vr.rejectIfEmptyOrWhitespace(__target__,ACTIU, 
         "genapp.validation.required",
@@ -47,6 +47,22 @@ public class PluginValidator<I extends Plugin>
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
 
     // Check size
+    if (__vr.getFieldErrorCount(NOM) == 0) {
+      java.lang.String __nom = __target__.getNom();
+      if (__nom!= null && __nom.length() > 255) {
+        __vr.rejectValue(NOM, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOM)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(DESCRIPCIO) == 0) {
+      java.lang.String __descripcio = __target__.getDescripcio();
+      if (__descripcio!= null && __descripcio.length() > 255) {
+        __vr.rejectValue(DESCRIPCIO, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(DESCRIPCIO)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
     if (__vr.getFieldErrorCount(CLASSE) == 0) {
       java.lang.String __classe = __target__.getClasse();
       if (__classe!= null && __classe.length() > 255) {

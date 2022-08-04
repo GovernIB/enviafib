@@ -29,11 +29,11 @@ private static final long serialVersionUID = 190357384L;
     @Column(name="pluginid",nullable = false,length = 19)
     long pluginID;
 
-    @Column(name="nomid",nullable = false,length = 19)
-    long nomid;
+    @Column(name="nom",nullable = false,length = 255)
+    java.lang.String nom;
 
-    @Column(name="descripciocurtaid",nullable = false,length = 19)
-    long descripciocurtaid;
+    @Column(name="descripcio",nullable = false,length = 255)
+    java.lang.String descripcio;
 
     @Column(name="classe",length = 255)
     java.lang.String classe;
@@ -56,36 +56,36 @@ private static final long serialVersionUID = 190357384L;
   }
 
   /** Constructor amb tots els camps  */
-  public PluginJPA(long pluginID , long nomid , long descripciocurtaid , java.lang.String classe , java.lang.String properties , boolean actiu , int tipus) {
+  public PluginJPA(long pluginID , java.lang.String nom , java.lang.String descripcio , java.lang.String classe , java.lang.String properties , boolean actiu , int tipus) {
     this.pluginID=pluginID;
-    this.nomid=nomid;
-    this.descripciocurtaid=descripciocurtaid;
+    this.nom=nom;
+    this.descripcio=descripcio;
     this.classe=classe;
     this.properties=properties;
     this.actiu=actiu;
     this.tipus=tipus;
 }
   /** Constructor sense valors autoincrementals */
-  public PluginJPA(long nomid , long descripciocurtaid , java.lang.String classe , java.lang.String properties , boolean actiu , int tipus) {
-    this.nomid=nomid;
-    this.descripciocurtaid=descripciocurtaid;
+  public PluginJPA(java.lang.String nom , java.lang.String descripcio , java.lang.String classe , java.lang.String properties , boolean actiu , int tipus) {
+    this.nom=nom;
+    this.descripcio=descripcio;
     this.classe=classe;
     this.properties=properties;
     this.actiu=actiu;
     this.tipus=tipus;
 }
   /** Constructor dels valors Not Null */
-  public PluginJPA(long pluginID , long nomid , long descripciocurtaid , boolean actiu , int tipus) {
+  public PluginJPA(long pluginID , java.lang.String nom , java.lang.String descripcio , boolean actiu , int tipus) {
     this.pluginID=pluginID;
-    this.nomid=nomid;
-    this.descripciocurtaid=descripciocurtaid;
+    this.nom=nom;
+    this.descripcio=descripcio;
     this.actiu=actiu;
     this.tipus=tipus;
 }
   public PluginJPA(Plugin __bean) {
     this.setPluginID(__bean.getPluginID());
-    this.setNomid(__bean.getNomid());
-    this.setDescripciocurtaid(__bean.getDescripciocurtaid());
+    this.setNom(__bean.getNom());
+    this.setDescripcio(__bean.getDescripcio());
     this.setClasse(__bean.getClasse());
     this.setProperties(__bean.getProperties());
     this.setActiu(__bean.isActiu());
@@ -99,18 +99,18 @@ private static final long serialVersionUID = 190357384L;
 		this.pluginID = _pluginID_;
 	};
 
-	public long getNomid() {
-		return(nomid);
+	public java.lang.String getNom() {
+		return(nom);
 	};
-	public void setNomid(long _nomid_) {
-		this.nomid = _nomid_;
+	public void setNom(java.lang.String _nom_) {
+		this.nom = _nom_;
 	};
 
-	public long getDescripciocurtaid() {
-		return(descripciocurtaid);
+	public java.lang.String getDescripcio() {
+		return(descripcio);
 	};
-	public void setDescripciocurtaid(long _descripciocurtaid_) {
-		this.descripciocurtaid = _descripciocurtaid_;
+	public void setDescripcio(java.lang.String _descripcio_) {
+		this.descripcio = _descripcio_;
 	};
 
 	public java.lang.String getClasse() {
@@ -162,8 +162,8 @@ private static final long serialVersionUID = 190357384L;
     if (__bean == null) { return null;}
     PluginJPA __tmp = new PluginJPA();
     __tmp.setPluginID(__bean.getPluginID());
-    __tmp.setNomid(__bean.getNomid());
-    __tmp.setDescripciocurtaid(__bean.getDescripciocurtaid());
+    __tmp.setNom(__bean.getNom());
+    __tmp.setDescripcio(__bean.getDescripcio());
     __tmp.setClasse(__bean.getClasse());
     __tmp.setProperties(__bean.getProperties());
     __tmp.setActiu(__bean.isActiu());
