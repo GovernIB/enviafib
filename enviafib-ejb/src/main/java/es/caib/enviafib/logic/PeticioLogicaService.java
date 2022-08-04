@@ -1,6 +1,7 @@
 package es.caib.enviafib.logic;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 import javax.ejb.Local;
 
@@ -11,6 +12,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.ejb.PeticioService;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -42,5 +44,12 @@ public interface PeticioLogicaService extends PeticioService {
     public void cosesAFerPeticioFirmada(long portafibID, String languageUI) throws I18NException;
 
     public void cosesAFerPeticioRebutjada(long portafibID, String languageUI, String motiuRebuig) throws I18NException;
+
+    public Future<Peticio> guardarFitxerArxiuAsync(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
+            throws I18NException;
+    
+    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI)
+            throws I18NException;
+ 
 
 }

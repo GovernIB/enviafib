@@ -89,8 +89,9 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
     }
 
     @Override
-    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Fitxer fitxerFirmat, Locale locale, InfoSignaturaJPA infoSignatura) {
+    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura) {
 
+        Fitxer fitxerFirmat = peticio.getFitxerFirmat();
         IArxiuPlugin plugin;
         try {
 
@@ -101,15 +102,15 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
 
             final String msg = "XYZ ZZZ Error Instanciant PLugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
 
-            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            peticio.setErrorMsg(msg);
-            peticio.setErrorException(e1.getMessage());
+            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+            peticio.setErrorMsg(LogicUtils.split255(msg));
+            peticio.setErrorException(LogicUtils.stackTrace2String(e1));
 
             return null;
         }
 
         try {
-
+            
             // ============ CALCULATS
             // ----- Format i Extensio
             DocumentFormat documentFormat;
@@ -149,18 +150,16 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
              */
 
             // XYZ ZZZ On es fica això !!!!!!
-            //String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); // "Subvenciones
+            String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); // "Subvenciones
                                                                               // empleo";
-            // if (procedimentNom == null) {
-            // procedimentNom =
-            // prop.getProperty(TransaccioFields.ARXIUOPTPARAMPROCEDIMENTNOM.javaName);
-            // }
+            if (procedimentNom == null) {
+               procedimentNom = Configuracio.getProcedimentNom();
+            }
 
             String procedimentCodi = peticio.getArxiuOptParamProcedimentCodi();
-            // if (procedimentCodi == null) {
-            // procedimentCodi =
-            // prop.getProperty(TransaccioFields.ARXIUOPTPARAMPROCEDIMENTCODI.javaName);
-            // }
+            if (procedimentCodi == null) {
+              procedimentCodi =  Configuracio.getProcedimentCodi();               
+            }
 
             // No hauria de ser null
             List<String> organs;
@@ -197,10 +196,9 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
             }
 
             String serieDocumental = peticio.getArxiuOptParamSerieDocumental(); // "S0001";
-            // if (serieDocumental == null) {
-            // serieDocumental =
-            // prop.getProperty(TransaccioFields.ARXIUOPTPARAMSERIEDOCUMENTAL.javaName);
-            // }
+            if (serieDocumental == null) {
+                serieDocumental = Configuracio.getSerieDocumental();
+            }
 
             // XYZ ZZZ Això és per quan l'usuari pugui indicar el nom de l'expedient on vol
             // el
@@ -468,9 +466,9 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
 
             log.error("Error intenant enviar a API d'Arxiu: " + msg, e);
 
-            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            peticio.setErrorMsg(msg);
-            peticio.setErrorException(e.getMessage());
+            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+            peticio.setErrorMsg(LogicUtils.split255(msg));
+            peticio.setErrorException(LogicUtils.stackTrace2String(e));
 
             // Cridades de Plugin
             // pluginCridada.postCridadaError(monitorIntegracions, msg + "\n\n" +

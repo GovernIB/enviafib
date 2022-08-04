@@ -1,7 +1,8 @@
 package es.caib.enviafib.logic.utils;
 
-
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,36 +20,56 @@ import es.caib.enviafib.commons.utils.StaticVersion;
  */
 public class LogicUtils {
 
-	protected static Logger log = Logger.getLogger(LogicUtils.class);
+    protected static Logger log = Logger.getLogger(LogicUtils.class);
 
-	public static String getVersio() {
-		return StaticVersion.VERSION + (Configuracio.isCAIB() ? "-caib" : "");
-	}
-	
-	public static Properties stringToProperties(String propertiesStr) {
-	    Properties prop = new Properties();
-	    if (propertiesStr != null && propertiesStr.trim().length() != 0) {
-	      try {
-	        prop.load(new StringReader(propertiesStr));
-	      } catch (Exception e) {
-	        // TODO Crec que no es cridarà mai
-	        e.printStackTrace();
-	      }
-	    }
-	    return prop;
-	  }
-	
-	public static List<String> stringToListString(String listStr) {
+    public static String getVersio() {
+        return StaticVersion.VERSION + (Configuracio.isCAIB() ? "-caib" : "");
+    }
 
-	    List<String> list;
-	    if (listStr != null && listStr.trim().length() != 0) {
-	       String[] values = listStr.split(",");
-	       list = new ArrayList<String>(Arrays.asList(values));
-	    } else {
-	      list = null;
-	    }
-	    
-	   return list;
-	  }
+    public static Properties stringToProperties(String propertiesStr) {
+        Properties prop = new Properties();
+        if (propertiesStr != null && propertiesStr.trim().length() != 0) {
+            try {
+                prop.load(new StringReader(propertiesStr));
+            } catch (Exception e) {
+                // TODO Crec que no es cridarà mai
+                e.printStackTrace();
+            }
+        }
+        return prop;
+    }
+
+    public static List<String> stringToListString(String listStr) {
+
+        List<String> list;
+        if (listStr != null && listStr.trim().length() != 0) {
+            String[] values = listStr.split(",");
+            list = new ArrayList<String>(Arrays.asList(values));
+        } else {
+            list = null;
+        }
+
+        return list;
+    }
+
+    public static String stackTrace2String(Throwable th) {
+        StringWriter sw = new StringWriter();
+        th.printStackTrace(new PrintWriter(sw));
+        String exceptionAsString = sw.toString();
+        return exceptionAsString;
+    }
+    
+    
+    
+    public static String split255(String value) {
+        
+        if (value == null) {
+            return null;
+        } else {
+            return value.length() < 255? value : value.substring(0,254);
+        }
+        
+    }
+    
 
 }

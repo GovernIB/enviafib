@@ -18,6 +18,7 @@ import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -124,7 +125,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(DESTINATARINIF);
             peticioFilterForm.addHiddenField(FITXERID);
             peticioFilterForm.addHiddenField(ESTAT);
-            
+
             peticioFilterForm.addHiddenField(ARXIUFUNCIONARIUSERNAME);
             peticioFilterForm.addHiddenField(ARXIUPARAMFUNCIONARINOM);
             peticioFilterForm.addHiddenField(ARXIUPARAMFUNCIONARINIF);
@@ -139,9 +140,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             peticioFilterForm.addHiddenField(ARXIUOPTPARAMSERIEDOCUMENTAL);
             peticioFilterForm.addHiddenField(ARXIUOPTPARAMEXPEDIENTID);
             peticioFilterForm.addHiddenField(ARXIUREQPARAMORIGEN);
-            
+
             peticioFilterForm.addHiddenField(INFOARXIUID);
-            
+
             peticioFilterForm.addHiddenField(REASON);
 
             peticioFilterForm.setOrderBy(DATACREACIO.javaName);
@@ -181,31 +182,47 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
         for (Peticio pf : list) {
             String color;
-            String icon;
+            String[] icon;
             switch ((int) pf.getEstat()) {
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-                    icon = "fas fa-user-clock";
+                    icon = new String[] { "fas fa-user-clock" };
                     color = "orange";
                 break;
 
                 case Constants.ESTAT_PETICIO_ERROR:
-                    icon = "fas fa-exclamation-triangle";
+                    icon = new String[] { "fas fa-exclamation-triangle" };
                     color = "red";
                 break;
 
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     color = "green";
-                    icon = "fas fa-file-signature";
+                    icon = new String[] { "fas fa-file-signature" };
+                break;
+
+                case Constants.ESTAT_PETICIO_ARXIVANT:
+                    color = "orange";
+                    icon = new String[] { "fas fa-spinner", "fas fa-archive" };
+                break;
+
+                case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
+                    color = "red";
+                    icon = new String[] { "fas fa-exclamation-triangle", "fas fa-archive" };
                 break;
 
                 default:
                     color = "#f128";
-                    icon = "fas fa-question";
+                    icon = new String[] { "fas fa-question" };
 
             }
 
-            mapRemitent.put(pf.getPeticioID(), "<center><i class=\"" + icon + "\" style=\"color:" + color
-                    + ";\"   title=\"" + I18NUtils.tradueix("estat." + pf.getEstat()) + "\"></i></center>");
+            StringBuffer iconsStr = new StringBuffer();
+
+            for (String i : icon) {
+                iconsStr.append("<i class=\"" + i + "\" style=\"color:" + color + ";\"   title=\""
+                        + I18NUtils.tradueix("estat." + pf.getEstat()) + "\"></i>");
+            }
+
+            mapRemitent.put(pf.getPeticioID(), "<center>" + iconsStr.toString() + "</center>");
 
         }
 
@@ -219,14 +236,25 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
                     getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
 
-            filterForm.addAdditionalButtonByPK(peticioID,
+            if(peticio.getInfoArxiuID() == null) {
+              filterForm.addAdditionalButtonByPK(peticioID,
                     new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
                             + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                             "btn-danger"));
+            }
+            
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt icon-white",
+                        "arxiu.reintentar", getContextWeb() + "/reintentararxivat/" + peticioID, "btn-warning"));
+            }
 
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
                         codi_email, "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+            }
+
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA
+                    || peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
 
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-download icon-white",
                         "peticio.btn.download", FileDownloadController.fileUrl(peticio.getFitxerFirmat()), "btn-info"));
@@ -234,6 +262,29 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             }
 
         }
+    }
+
+    @RequestMapping(value = "/reintentararxivat/{peticioId}", method = RequestMethod.GET)
+    public String reintentarArxivat(HttpServletRequest request, HttpServletResponse response, @PathVariable("peticioId")
+    Long peticioId) {
+
+        try {
+            String msg = peticioLogicaEjb.reintentarGuardarFitxerArxiu(peticioId,
+                    LocaleContextHolder.getLocale().getLanguage());
+
+            if (msg == null) {
+                // XYZ ZZZ TRA
+                HtmlUtils.saveMessageError(request, "Reintent finalitzat correctament");
+            } else {
+                HtmlUtils.saveMessageError(request, msg);
+            }
+
+        } catch (I18NException e) {
+            HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+        }
+
+        return "redirect:" + getContextWeb() + "/list";
+
     }
 
     /**
@@ -255,7 +306,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     long peticioId, @PathVariable("email")
     String email, @PathVariable("windowUrl")
     String windowUrl) {
-        boolean isHTML = true;
+        final boolean isHTML = true;
 
         // Decodificam el email arriba en base64
         String decodedEmail = new String(Base64.getDecoder().decode(email));
@@ -334,13 +385,13 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
         peticioLogicaEjb.deleteFull(peticio);
     }
+
     @RequestMapping(value = "/home")
-    public ModelAndView principal(HttpSession session,
-        HttpServletRequest request, HttpServletResponse response)
-        throws Exception {
-      ModelAndView mav = new ModelAndView("homeUser");
-      return mav;
-      
-    }   
+    public ModelAndView principal(HttpSession session, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        ModelAndView mav = new ModelAndView("homeUser");
+        return mav;
+
+    }
 
 }
