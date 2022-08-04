@@ -107,7 +107,11 @@
     <definition name="infoSignaturaListUser" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
     </definition>
-
+	
+	<definition name="infoArxiuFormUser" extends="user">
+        <put-attribute name="titol" value="infoArxiu.infoArxiu" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuForm.jsp" />
+    </definition>
 
     
     <definition name="grupFormUser" extends="user">
