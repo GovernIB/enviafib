@@ -9,21 +9,16 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import javax.annotation.security.PermitAll;
 
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -618,38 +613,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Borrarem peticio: " + instance.getPeticioID());
         Long infoSignID = instance.getInfoSignaturaID();
 
-<<<<<<< HEAD
-//        super.delete(instance);
-        deleteIncludingFiles(instance);
-=======
         this.deleteIncludingFiles(instance, fitxerEjb);
->>>>>>> 1c758cdd9acc1c76c7d56fdd36cdb3f5f012658b
 
         if (infoSignID != null) {
             InfoSignaturaJPA is = infoSignaturaLogicEjb.findByPrimaryKey(infoSignID);
             infoSignaturaLogicEjb.delete(is);
         }
-    }<<<<<<<HEAD
-
-    /*
-     * public class CleanFilesSynchronization implements Synchronization { public
-     * final Set<Long> files;
-     * 
-     * public CleanFilesSynchronization(Set<Long> filesToDelete) { this.files =
-     * filesToDelete; }
-     * 
-     * @Override public void beforeCompletion() { }
-     * 
-     * @Override public void afterCompletion(int status) {
-     * log.info("Inici CleanFilesSynchronization::afterCompletion()"); if (status ==
-     * Status.STATUS_COMMITTED) { if (!FileSystemManager.eliminarArxius(files)) {
-     * log.error("No s'ha pogut esborrar alguns dels següents fitxers: " +
-     * Arrays.toString(files.toArray())); } }
-     * log.info("Final CleanFilesSynchronization::afterCompletion()"); } };
-     */
-    =======
-
-    >>>>>>>1 c758cdd9acc1c76c7d56fdd36cdb3f5f012658b
+    }
 
     protected FirmaAsyncSimpleFile getFitxer(Fitxer fitxer) throws I18NException {
 
