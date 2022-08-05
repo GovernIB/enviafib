@@ -12,7 +12,9 @@
 	<c:redirect url="/user/peticio/list/1"/>
 </c:if>
 <c:if test = "${!efi:hasRole('ROLE_USER')}">
-	<c:redirect url="/common/home.html"/>
+	<c:if test = "${efi:hasRole('ROLE_ADMIN')}">
+		<c:redirect url="/admin/home"/>
+	</c:if>
 </c:if>
 
 </body>
