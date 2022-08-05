@@ -1,10 +1,7 @@
 package es.caib.enviafib.logic;
 
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
 
 import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
@@ -12,7 +9,6 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.IPlugin;
 import org.fundaciobit.pluginsib.core.utils.PluginsManager;
-import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PluginEJB;
