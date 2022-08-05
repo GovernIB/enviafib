@@ -5,11 +5,11 @@ public interface Plugin extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public long getPluginID();
 	public void setPluginID(long _pluginID_);
 
-	public long getNomid();
-	public void setNomid(long _nomid_);
+	public java.lang.String getNom();
+	public void setNom(java.lang.String _nom_);
 
-	public long getDescripciocurtaid();
-	public void setDescripciocurtaid(long _descripciocurtaid_);
+	public java.lang.String getDescripcio();
+	public void setDescripcio(java.lang.String _descripcio_);
 
 	public java.lang.String getClasse();
 	public void setClasse(java.lang.String _classe_);

@@ -455,9 +455,30 @@
               </c:if>
             </td>
           <td id="peticio_errorMsg_columnvalueid">
-            <form:errors path="peticio.errorMsg" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ERRORMSG)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ERRORMSG)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.errorMsg"   />
-
+              <form:errors path="peticio.errorMsg" cssClass="errorField alert alert-danger" />
+  <table style="width:100%">
+  <tr>
+  <td>
+       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ERRORMSG)? 'true' : 'false'}" path="peticio.errorMsg"  />
+   </td>
+   <td style="width:40px">
+      <div id="dropdownMenuButton_errorMsg" style="vertical-align:top;display:inline;position:relative;">
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <div id="dropdownMenuContainer_errorMsg" class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.errorMsg'); ta.wrap='off';" >No Wrap</a>
+          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.errorMsg'); ta.wrap='soft';">Soft Wrap</a>
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.errorMsg'); ta.wrap='hard';">Hard Wrap</a>
+        </div>
+      </div>
+      <script type="text/javascript">
+			$('#dropdownMenuButton_errorMsg').on('click', function(){
+					var valor = ($('#dropdownMenuContainer_errorMsg').css('display') != 'none') ? 'none' : 'block';
+                 $('#dropdownMenuContainer_errorMsg').css('display', valor);
+                 return false;
+				});
+      </script>   </td>
+   </tr>
+   </table>
            </td>
         </tr>
         </c:if>
@@ -530,30 +551,9 @@
               </c:if>
             </td>
           <td id="peticio_reason_columnvalueid">
-              <form:errors path="peticio.reason" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.REASON)? 'true' : 'false'}" path="peticio.reason"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_reason" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_reason" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.reason'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.reason'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.reason'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_reason').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_reason').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_reason').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.reason" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.REASON)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.REASON)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.reason"   />
+
            </td>
         </tr>
         </c:if>
@@ -569,30 +569,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuFuncionariUsername_columnvalueid">
-              <form:errors path="peticio.arxiuFuncionariUsername" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUFUNCIONARIUSERNAME)? 'true' : 'false'}" path="peticio.arxiuFuncionariUsername"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuFuncionariUsername" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuFuncionariUsername" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuFuncionariUsername'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuFuncionariUsername'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuFuncionariUsername'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuFuncionariUsername').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuFuncionariUsername').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuFuncionariUsername').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuFuncionariUsername" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUFUNCIONARIUSERNAME)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUFUNCIONARIUSERNAME)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuFuncionariUsername"   />
+
            </td>
         </tr>
         </c:if>
@@ -608,30 +587,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuParamFuncionariNom_columnvalueid">
-              <form:errors path="peticio.arxiuParamFuncionariNom" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARINOM)? 'true' : 'false'}" path="peticio.arxiuParamFuncionariNom"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuParamFuncionariNom" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuParamFuncionariNom" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariNom'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariNom'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariNom'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuParamFuncionariNom').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuParamFuncionariNom').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuParamFuncionariNom').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuParamFuncionariNom" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARINOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARINOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuParamFuncionariNom"   />
+
            </td>
         </tr>
         </c:if>
@@ -647,30 +605,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuParamFuncionariNif_columnvalueid">
-              <form:errors path="peticio.arxiuParamFuncionariNif" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARINIF)? 'true' : 'false'}" path="peticio.arxiuParamFuncionariNif"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuParamFuncionariNif" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuParamFuncionariNif" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariNif'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariNif'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariNif'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuParamFuncionariNif').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuParamFuncionariNif').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuParamFuncionariNif').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuParamFuncionariNif" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARINIF)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARINIF)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuParamFuncionariNif"   />
+
            </td>
         </tr>
         </c:if>
@@ -686,30 +623,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuParamFuncionariDir3_columnvalueid">
-              <form:errors path="peticio.arxiuParamFuncionariDir3" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARIDIR3)? 'true' : 'false'}" path="peticio.arxiuParamFuncionariDir3"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuParamFuncionariDir3" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuParamFuncionariDir3" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariDir3'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariDir3'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuParamFuncionariDir3'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuParamFuncionariDir3').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuParamFuncionariDir3').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuParamFuncionariDir3').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuParamFuncionariDir3" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARIDIR3)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUPARAMFUNCIONARIDIR3)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuParamFuncionariDir3"   />
+
            </td>
         </tr>
         </c:if>
@@ -725,9 +641,31 @@
               </c:if>
             </td>
           <td id="peticio_arxiuReqParamDocEstatElabora_columnvalueid">
-            <form:errors path="peticio.arxiuReqParamDocEstatElabora" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)? ' uneditable-input' : ''}"  style="" maxlength="4" path="peticio.arxiuReqParamDocEstatElabora"   />
-
+          <form:errors path="peticio.arxiuReqParamDocEstatElabora" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)}" >
+          <form:hidden path="peticio.arxiuReqParamDocEstatElabora"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.arxiuReqParamDocEstatElabora,__theForm.listOfValuesForArxiuReqParamDocEstatElabora)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_arxiuReqParamDocEstatElabora"  onchange="if(typeof onChangeArxiuReqParamDocEstatElabora == 'function') {  onChangeArxiuReqParamDocEstatElabora(this); };"  cssClass="form-control col-md-9-optional" path="peticio.arxiuReqParamDocEstatElabora">
+            <c:forEach items="${__theForm.listOfValuesForArxiuReqParamDocEstatElabora}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.peticio.arxiuReqParamDocEstatElabora }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.peticio.arxiuReqParamDocEstatElabora }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>
@@ -743,30 +681,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuReqParamInteressats_columnvalueid">
-              <form:errors path="peticio.arxiuReqParamInteressats" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMINTERESSATS)? 'true' : 'false'}" path="peticio.arxiuReqParamInteressats"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuReqParamInteressats" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuReqParamInteressats" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamInteressats'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamInteressats'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamInteressats'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuReqParamInteressats').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuReqParamInteressats').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuReqParamInteressats').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuReqParamInteressats" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMINTERESSATS)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMINTERESSATS)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuReqParamInteressats"   />
+
            </td>
         </tr>
         </c:if>
@@ -800,30 +717,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuReqParamCiutadaNom_columnvalueid">
-              <form:errors path="peticio.arxiuReqParamCiutadaNom" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMCIUTADANOM)? 'true' : 'false'}" path="peticio.arxiuReqParamCiutadaNom"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuReqParamCiutadaNom" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuReqParamCiutadaNom" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamCiutadaNom'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamCiutadaNom'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamCiutadaNom'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuReqParamCiutadaNom').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuReqParamCiutadaNom').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuReqParamCiutadaNom').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuReqParamCiutadaNom" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMCIUTADANOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMCIUTADANOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuReqParamCiutadaNom"   />
+
            </td>
         </tr>
         </c:if>
@@ -839,30 +735,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuReqParamOrgans_columnvalueid">
-              <form:errors path="peticio.arxiuReqParamOrgans" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMORGANS)? 'true' : 'false'}" path="peticio.arxiuReqParamOrgans"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuReqParamOrgans" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuReqParamOrgans" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamOrgans'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamOrgans'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuReqParamOrgans'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuReqParamOrgans').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuReqParamOrgans').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuReqParamOrgans').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuReqParamOrgans" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMORGANS)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMORGANS)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuReqParamOrgans"   />
+
            </td>
         </tr>
         </c:if>
@@ -878,30 +753,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuOptParamProcedimentCodi_columnvalueid">
-              <form:errors path="peticio.arxiuOptParamProcedimentCodi" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI)? 'true' : 'false'}" path="peticio.arxiuOptParamProcedimentCodi"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuOptParamProcedimentCodi" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuOptParamProcedimentCodi" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamProcedimentCodi'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamProcedimentCodi'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamProcedimentCodi'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuOptParamProcedimentCodi').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuOptParamProcedimentCodi').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuOptParamProcedimentCodi').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuOptParamProcedimentCodi" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTCODI)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuOptParamProcedimentCodi"   />
+
            </td>
         </tr>
         </c:if>
@@ -917,30 +771,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuOptParamProcedimentNom_columnvalueid">
-              <form:errors path="peticio.arxiuOptParamProcedimentNom" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM)? 'true' : 'false'}" path="peticio.arxiuOptParamProcedimentNom"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuOptParamProcedimentNom" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuOptParamProcedimentNom" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamProcedimentNom'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamProcedimentNom'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamProcedimentNom'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuOptParamProcedimentNom').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuOptParamProcedimentNom').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuOptParamProcedimentNom').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuOptParamProcedimentNom" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMPROCEDIMENTNOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuOptParamProcedimentNom"   />
+
            </td>
         </tr>
         </c:if>
@@ -956,30 +789,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuOptParamSerieDocumental_columnvalueid">
-              <form:errors path="peticio.arxiuOptParamSerieDocumental" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL)? 'true' : 'false'}" path="peticio.arxiuOptParamSerieDocumental"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuOptParamSerieDocumental" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuOptParamSerieDocumental" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamSerieDocumental'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamSerieDocumental'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamSerieDocumental'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuOptParamSerieDocumental').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuOptParamSerieDocumental').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuOptParamSerieDocumental').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuOptParamSerieDocumental" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuOptParamSerieDocumental"   />
+
            </td>
         </tr>
         </c:if>
@@ -995,30 +807,9 @@
               </c:if>
             </td>
           <td id="peticio_arxiuOptParamExpedientId_columnvalueid">
-              <form:errors path="peticio.arxiuOptParamExpedientId" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMEXPEDIENTID)? 'true' : 'false'}" path="peticio.arxiuOptParamExpedientId"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_arxiuOptParamExpedientId" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_arxiuOptParamExpedientId" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamExpedientId'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamExpedientId'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('peticio.arxiuOptParamExpedientId'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_arxiuOptParamExpedientId').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_arxiuOptParamExpedientId').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_arxiuOptParamExpedientId').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="peticio.arxiuOptParamExpedientId" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMEXPEDIENTID)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUOPTPARAMEXPEDIENTID)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.arxiuOptParamExpedientId"   />
+
            </td>
         </tr>
         </c:if>
@@ -1034,9 +825,31 @@
               </c:if>
             </td>
           <td id="peticio_arxiuReqParamOrigen_columnvalueid">
-            <form:errors path="peticio.arxiuReqParamOrigen" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMORIGEN)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMORIGEN)? ' uneditable-input' : ''}"  style=""  path="peticio.arxiuReqParamOrigen"   />
-
+          <form:errors path="peticio.arxiuReqParamOrigen" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMORIGEN)}" >
+          <form:hidden path="peticio.arxiuReqParamOrigen"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.arxiuReqParamOrigen,__theForm.listOfValuesForArxiuReqParamOrigen)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.ARXIUREQPARAMORIGEN)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_arxiuReqParamOrigen"  onchange="if(typeof onChangeArxiuReqParamOrigen == 'function') {  onChangeArxiuReqParamOrigen(this); };"  cssClass="form-control col-md-9-optional" path="peticio.arxiuReqParamOrigen">
+            <c:forEach items="${__theForm.listOfValuesForArxiuReqParamOrigen}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.peticio.arxiuReqParamOrigen }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.peticio.arxiuReqParamOrigen }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>

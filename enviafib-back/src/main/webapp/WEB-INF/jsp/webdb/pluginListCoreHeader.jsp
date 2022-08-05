@@ -15,11 +15,11 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.PLUGINID)}">
         <th>${efi:getSortIcons(__theFilterForm,PluginFields.PLUGINID)}</th>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.NOMID)}">
-        <th>${efi:getSortIcons(__theFilterForm,PluginFields.NOMID)}</th>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.NOM)}">
+        <th>${efi:getSortIcons(__theFilterForm,PluginFields.NOM)}</th>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.DESCRIPCIOCURTAID)}">
-        <th>${efi:getSortIcons(__theFilterForm,PluginFields.DESCRIPCIOCURTAID)}</th>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.DESCRIPCIO)}">
+        <th>${efi:getSortIcons(__theFilterForm,PluginFields.DESCRIPCIO)}</th>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.CLASSE)}">
         <th>${efi:getSortIcons(__theFilterForm,PluginFields.CLASSE)}</th>

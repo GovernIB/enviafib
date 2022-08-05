@@ -158,3 +158,18 @@ ALTER TABLE efi_grupusuari
  CREATE INDEX efi_grupusuari_pk_i ON efi_grupusuari (grupusuariid);
  CREATE INDEX efi_grupusuari_grupid_fk_i ON efi_grupusuari (grupid);
  CREATE INDEX efi_grupusuari_usuariid_fk_i ON efi_grupusuari (usuariid);
+
+
+
+
+---
+--- 04/08/2022 - Gestió de PLugins de Estructura Organitzativa #142
+---
+
+ALTER TABLE efi_plugin DROP COLUMN descripciocurtaid;
+ALTER TABLE efi_plugin DROP COLUMN nomid;
+
+ALTER TABLE efi_plugin
+   ADD COLUMN nom character varying(255) NOT NULL;
+ALTER TABLE efi_plugin
+   ADD COLUMN descripcio character varying(255) NOT NULL;

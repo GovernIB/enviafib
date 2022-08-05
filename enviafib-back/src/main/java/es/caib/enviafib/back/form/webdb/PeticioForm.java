@@ -35,6 +35,8 @@ public class PeticioForm extends EnviaFIBBaseForm {
     this.listOfValuesForIdiomaDoc = __toClone.listOfValuesForIdiomaDoc;
     this.listOfInfoSignaturaForInfoSignaturaID = __toClone.listOfInfoSignaturaForInfoSignaturaID;
     this.listOfValuesForTipus = __toClone.listOfValuesForTipus;
+    this.listOfValuesForArxiuReqParamDocEstatElabora = __toClone.listOfValuesForArxiuReqParamDocEstatElabora;
+    this.listOfValuesForArxiuReqParamOrigen = __toClone.listOfValuesForArxiuReqParamOrigen;
     this.listOfInfoArxiuForInfoArxiuID = __toClone.listOfInfoArxiuForInfoArxiuID;
   }
   
@@ -159,6 +161,30 @@ public class PeticioForm extends EnviaFIBBaseForm {
 
   public void setListOfValuesForTipus(List<StringKeyValue> listOfValuesForTipus) {
     this.listOfValuesForTipus = listOfValuesForTipus;
+  }
+
+
+
+  private List<StringKeyValue> listOfValuesForArxiuReqParamDocEstatElabora;
+
+  public List<StringKeyValue> getListOfValuesForArxiuReqParamDocEstatElabora() {
+    return this.listOfValuesForArxiuReqParamDocEstatElabora;
+  }
+
+  public void setListOfValuesForArxiuReqParamDocEstatElabora(List<StringKeyValue> listOfValuesForArxiuReqParamDocEstatElabora) {
+    this.listOfValuesForArxiuReqParamDocEstatElabora = listOfValuesForArxiuReqParamDocEstatElabora;
+  }
+
+
+
+  private List<StringKeyValue> listOfValuesForArxiuReqParamOrigen;
+
+  public List<StringKeyValue> getListOfValuesForArxiuReqParamOrigen() {
+    return this.listOfValuesForArxiuReqParamOrigen;
+  }
+
+  public void setListOfValuesForArxiuReqParamOrigen(List<StringKeyValue> listOfValuesForArxiuReqParamOrigen) {
+    this.listOfValuesForArxiuReqParamOrigen = listOfValuesForArxiuReqParamOrigen;
   }
 
 

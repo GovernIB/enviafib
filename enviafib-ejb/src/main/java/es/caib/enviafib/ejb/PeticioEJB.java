@@ -3,7 +3,6 @@ package es.caib.enviafib.ejb;
 
 // NO MODIFICAR - DO NOT MODIFY;
 import javax.ejb.Stateless;
-import java.util.ArrayList;
 import javax.annotation.security.RolesAllowed;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.model.entity.Peticio;
@@ -39,7 +38,7 @@ public class PeticioEJB extends PeticioJPAManager implements PeticioService {
     public void deleteIncludingFiles(Peticio instance, es.caib.enviafib.ejb.FitxerService fitxerEjb)
             throws I18NException {
 
-        ArrayList<Long> fitxers = new ArrayList<Long>();
+        java.util.ArrayList<Long> fitxers = new java.util.ArrayList<Long>();
         fitxers.add(instance.getFitxerID());
         fitxers.add(instance.getFitxerFirmatID());
 

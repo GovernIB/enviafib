@@ -2,38 +2,59 @@
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <un:useConstants var="PluginFields" className="es.caib.enviafib.model.fields.PluginFields"/>
   
-        <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.NOMID)}">
-        <tr id="plugin_nomid_rowid">
-          <td id="plugin_nomid_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.NOM)}">
+        <tr id="plugin_nom_rowid">
+          <td id="plugin_nom_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PluginFields.NOMID])?'plugin.nomid':__theForm.labels[PluginFields.NOMID]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PluginFields.NOM])?'plugin.nom':__theForm.labels[PluginFields.NOM]}" /> &nbsp;(*)
              </label>
-              <c:if test="${not empty __theForm.help[PluginFields.NOMID]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[PluginFields.NOMID]}" ></i>
+              <c:if test="${not empty __theForm.help[PluginFields.NOM]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PluginFields.NOM]}" ></i>
               </c:if>
             </td>
-          <td id="plugin_nomid_columnvalueid">
-            <form:errors path="plugin.nomid" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)? ' uneditable-input' : ''}"  style=""  path="plugin.nomid"   />
+          <td id="plugin_nom_columnvalueid">
+            <form:errors path="plugin.nom" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.NOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.NOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="plugin.nom"   />
 
            </td>
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.DESCRIPCIOCURTAID)}">
-        <tr id="plugin_descripciocurtaid_rowid">
-          <td id="plugin_descripciocurtaid_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.DESCRIPCIO)}">
+        <tr id="plugin_descripcio_rowid">
+          <td id="plugin_descripcio_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PluginFields.DESCRIPCIOCURTAID])?'plugin.descripciocurtaid':__theForm.labels[PluginFields.DESCRIPCIOCURTAID]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PluginFields.DESCRIPCIO])?'plugin.descripcio':__theForm.labels[PluginFields.DESCRIPCIO]}" /> &nbsp;(*)
              </label>
-              <c:if test="${not empty __theForm.help[PluginFields.DESCRIPCIOCURTAID]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[PluginFields.DESCRIPCIOCURTAID]}" ></i>
+              <c:if test="${not empty __theForm.help[PluginFields.DESCRIPCIO]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PluginFields.DESCRIPCIO]}" ></i>
               </c:if>
             </td>
-          <td id="plugin_descripciocurtaid_columnvalueid">
-            <form:errors path="plugin.descripciocurtaid" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)? ' uneditable-input' : ''}"  style=""  path="plugin.descripciocurtaid"   />
-
+          <td id="plugin_descripcio_columnvalueid">
+              <form:errors path="plugin.descripcio" cssClass="errorField alert alert-danger" />
+  <table style="width:100%">
+  <tr>
+  <td>
+       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIO)? 'true' : 'false'}" path="plugin.descripcio"  />
+   </td>
+   <td style="width:40px">
+      <div id="dropdownMenuButton_descripcio" style="vertical-align:top;display:inline;position:relative;">
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <div id="dropdownMenuContainer_descripcio" class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.descripcio'); ta.wrap='off';" >No Wrap</a>
+          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('plugin.descripcio'); ta.wrap='soft';">Soft Wrap</a>
+          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.descripcio'); ta.wrap='hard';">Hard Wrap</a>
+        </div>
+      </div>
+      <script type="text/javascript">
+			$('#dropdownMenuButton_descripcio').on('click', function(){
+					var valor = ($('#dropdownMenuContainer_descripcio').css('display') != 'none') ? 'none' : 'block';
+                 $('#dropdownMenuContainer_descripcio').css('display', valor);
+                 return false;
+				});
+      </script>   </td>
+   </tr>
+   </table>
            </td>
         </tr>
         </c:if>
@@ -49,30 +70,9 @@
               </c:if>
             </td>
           <td id="plugin_classe_columnvalueid">
-              <form:errors path="plugin.classe" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.CLASSE)? 'true' : 'false'}" path="plugin.classe"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_classe" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_classe" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.classe'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('plugin.classe'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.classe'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_classe').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_classe').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_classe').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="plugin.classe" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.CLASSE)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.CLASSE)? ' uneditable-input' : ''}"  style="" maxlength="255" path="plugin.classe"   />
+
            </td>
         </tr>
         </c:if>

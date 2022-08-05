@@ -1,6 +1,5 @@
 package es.caib.enviafib.logic;
 
-
 import java.util.Locale;
 
 import javax.ejb.Local;

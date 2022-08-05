@@ -29,14 +29,14 @@
           ${plugin.pluginID}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.NOMID)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.NOM)}">
           <td>
-          ${plugin.nomid}
+          ${plugin.nom}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.DESCRIPCIOCURTAID)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.DESCRIPCIO)}">
           <td>
-          ${plugin.descripciocurtaid}
+          ${plugin.descripcio}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.CLASSE)}">

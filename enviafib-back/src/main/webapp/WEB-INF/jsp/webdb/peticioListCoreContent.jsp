@@ -24,14 +24,14 @@
           </c:forEach>
 
 
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
-          <td>
-          ${peticio.nom}
-          </td>
-        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOID)}">
           <td>
           ${peticio.peticioID}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
+          <td>
+          ${peticio.nom}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATACREACIO)}">
@@ -157,7 +157,10 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMDOCESTATELABORA)}">
           <td>
-          ${peticio.arxiuReqParamDocEstatElabora}
+          <c:set var="tmp">${peticio.arxiuReqParamDocEstatElabora}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForArxiuReqParamDocEstatElabora[tmp]}
+          </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMINTERESSATS)}">
@@ -202,7 +205,10 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.ARXIUREQPARAMORIGEN)}">
           <td>
-          ${peticio.arxiuReqParamOrigen}
+          <c:set var="tmp">${peticio.arxiuReqParamOrigen}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForArxiuReqParamOrigen[tmp]}
+          </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.INFOARXIUID)}">
