@@ -13,30 +13,9 @@
               </c:if>
             </td>
           <td id="plugin_nom_columnvalueid">
-              <form:errors path="plugin.nom" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.NOM)? 'true' : 'false'}" path="plugin.nom"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_nom" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_nom" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.nom'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('plugin.nom'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.nom'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_nom').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_nom').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_nom').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="plugin.nom" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.NOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.NOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="plugin.nom"   />
+
            </td>
         </tr>
         </c:if>
@@ -91,30 +70,9 @@
               </c:if>
             </td>
           <td id="plugin_classe_columnvalueid">
-              <form:errors path="plugin.classe" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.CLASSE)? 'true' : 'false'}" path="plugin.classe"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_classe" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_classe" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.classe'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('plugin.classe'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.classe'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_classe').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_classe').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_classe').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+            <form:errors path="plugin.classe" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PluginFields.CLASSE)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.CLASSE)? ' uneditable-input' : ''}"  style="" maxlength="255" path="plugin.classe"   />
+
            </td>
         </tr>
         </c:if>

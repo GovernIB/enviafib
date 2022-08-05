@@ -21,17 +21,6 @@ import es.caib.enviafib.model.fields.PeticioFields;
 @Component
 public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements PeticioFields {
 
-  private java.lang.String nom;
-
-  public java.lang.String getNom() {
-    return this.nom;
-  }
-
-  public void setNom(java.lang.String nom) {
-    this.nom = nom;
-  }
-
-
   private java.lang.Long peticioIDDesde;
 
   public java.lang.Long getPeticioIDDesde() {
@@ -51,6 +40,17 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setPeticioIDFins(java.lang.Long peticioIDFins) {
     this.peticioIDFins = peticioIDFins;
+  }
+
+
+  private java.lang.String nom;
+
+  public java.lang.String getNom() {
+    return this.nom;
+  }
+
+  public void setNom(java.lang.String nom) {
+    this.nom = nom;
   }
 
 
@@ -466,9 +466,9 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   
   public PeticioFilterForm(PeticioFilterForm __toClone) {
     super(__toClone);
-    this.nom = __toClone.nom;
     this.peticioIDDesde = __toClone.peticioIDDesde;
     this.peticioIDFins = __toClone.peticioIDFins;
+    this.nom = __toClone.nom;
     this.dataCreacioDesde = __toClone.dataCreacioDesde;
     this.dataCreacioFins = __toClone.dataCreacioFins;
     this.dataFinalDesde = __toClone.dataFinalDesde;
@@ -513,6 +513,8 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.mapOfValuesForIdiomaDoc = __toClone.mapOfValuesForIdiomaDoc;
     this.mapOfInfoSignaturaForInfoSignaturaID = __toClone.mapOfInfoSignaturaForInfoSignaturaID;
     this.mapOfValuesForTipus = __toClone.mapOfValuesForTipus;
+    this.mapOfValuesForArxiuReqParamDocEstatElabora = __toClone.mapOfValuesForArxiuReqParamDocEstatElabora;
+    this.mapOfValuesForArxiuReqParamOrigen = __toClone.mapOfValuesForArxiuReqParamOrigen;
     this.mapOfInfoArxiuForInfoArxiuID = __toClone.mapOfInfoArxiuForInfoArxiuID;
   }
   
@@ -628,6 +630,30 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setMapOfValuesForTipus(Map<String, String> mapOfValuesForTipus) {
     this.mapOfValuesForTipus = mapOfValuesForTipus;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForArxiuReqParamDocEstatElabora;
+
+  public Map<String, String> getMapOfValuesForArxiuReqParamDocEstatElabora() {
+    return this.mapOfValuesForArxiuReqParamDocEstatElabora;
+  }
+
+  public void setMapOfValuesForArxiuReqParamDocEstatElabora(Map<String, String> mapOfValuesForArxiuReqParamDocEstatElabora) {
+    this.mapOfValuesForArxiuReqParamDocEstatElabora = mapOfValuesForArxiuReqParamDocEstatElabora;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForArxiuReqParamOrigen;
+
+  public Map<String, String> getMapOfValuesForArxiuReqParamOrigen() {
+    return this.mapOfValuesForArxiuReqParamOrigen;
+  }
+
+  public void setMapOfValuesForArxiuReqParamOrigen(Map<String, String> mapOfValuesForArxiuReqParamOrigen) {
+    this.mapOfValuesForArxiuReqParamOrigen = mapOfValuesForArxiuReqParamOrigen;
   }
 
 
