@@ -50,6 +50,8 @@ public interface Constants {
     
     // TIPUS DE PLUGINS DE ENVIAFIB
     public static final int TIPUS_PLUGIN_ESTRUCTURAORGANITZATIVA= 1;
+    
+    public static final int TIPUS_PLUGIN_ARXIU = 2;
 
     
     
@@ -69,10 +71,9 @@ public interface Constants {
     public static final int ORIGEN_ADMINISTRACIO = 0;
     public static final int ORIGEN_CIUTADA = 1;
     
-    
+   
 
-    //TIPUS DE PLUGINS
-    
-    public static final int TIPUS_PLUGIN_ARXIU = 3;
+
+
 
 }

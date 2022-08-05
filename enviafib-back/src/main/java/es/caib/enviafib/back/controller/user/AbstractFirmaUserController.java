@@ -3,20 +3,24 @@ package es.caib.enviafib.back.controller.user;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
+import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
+import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +29,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.commons.utils.NifUtils;
+import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
@@ -100,6 +107,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         hiddens.remove(FITXERID);
         hiddens.remove(TIPUSDOCUMENTAL);
         hiddens.remove(IDIOMADOC);
+        hiddens.remove(ARXIUPARAMFUNCIONARIDIR3);
+        hiddens.remove(ARXIUREQPARAMDOCESTATELABORA);
+        hiddens.remove(ARXIUREQPARAMORIGEN);
+        hiddens.remove(ARXIUREQPARAMINTERESSATS);
+        hiddens.remove(ARXIUREQPARAMORGANS);
+       
 
         if (__isView) {
             hiddens.remove(DATACREACIO);
@@ -132,7 +145,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                     Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
-                            "/user/infoSignatura/view/" + infosignaturaID, "btn-info"));                    
+                            "/user/infoSignatura/view/" + infosignaturaID, "btn-info"));
                     Long infoArxiuID = peticioForm.getPeticio().getInfoArxiuID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "user.infoarxiu",
                             "/user/infoArxiu/view/" + infoArxiuID, "btn-info"));
@@ -140,7 +153,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 //                    new AdditionalButton("fas fa-file", "info.signatura",
 //                            "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(),
 //                           )
-
 
                 break;
             }
@@ -150,7 +162,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 mav.addObject("dragdrop", true);
             }
         }
-        
+
         peticioForm.setAttachedAdditionalJspCode(true);
 
 //        if (peticioForm.getPeticio().getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
@@ -180,6 +192,40 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             // Idioma per defecte per els documents, catala.
             peticio.setIdiomaDoc("ca");
+
+            LoginInfo li = LoginInfo.getInstance();            
+
+            // COIDDIR3
+            // XYZ ZZZ S'ha de llegir de Plugin Estructura Organitzativa
+            peticio.setArxiuParamFuncionariDir3("A04027052 XYZ ZZZ");
+            peticio.setArxiuFuncionariUsername(LoginInfo.getInstance().getUsername());
+
+            String nomcomplet = li.getUsuari().getNom() + " " + li.getUsuari().getLlinatge1();
+            if (li.getUsuari().getLlinatge2() != null) {
+                nomcomplet = nomcomplet + li.getUsuari().getLlinatge2() ;
+            }
+            peticio.setArxiuParamFuncionariNom(nomcomplet.trim());
+            peticio.setArxiuParamFuncionariNif(li.getUsuari().getNif());
+            peticio.setArxiuReqParamOrigen(Constants.ORIGEN_ADMINISTRACIO);
+
+
+            // XYZ ZZZ ZZZ S'ha d'obtenir del Mapeig de Series Documentals
+            // XYZ ZZZ PostValidate validar que pel tipus de document hi ha seria documental
+            peticio.setArxiuOptParamSerieDocumental(Configuracio.getSerieDocumental());
+            peticio.setArxiuOptParamProcedimentCodi(Configuracio.getProcedimentCodi());
+            peticio.setArxiuOptParamProcedimentNom(Configuracio.getProcedimentNom());
+
+            // Ha d'escriure els DNIs, CIFs o NIFs de les persones interessades separats per
+            // coma.
+            String msgIn = I18NUtils.tradueix("transaccio.interessats.ajuda");
+            peticioForm.addHelpToField(ARXIUREQPARAMINTERESSATS, msgIn);
+
+            // Ha d'escriure la unitat DIR3 del funcionari. Pot esbrinar aquest codi
+            // accedint a la pàgina web
+            // https://intranet.caib.es/dir3caib i introduint les dades requerides.";
+            String msgFD3 = I18NUtils.tradueix("transaccio.fundacionaridir3.ajuda");
+            peticioForm.addHelpToField(ARXIUPARAMFUNCIONARIDIR3, msgFD3);
+
         }
 
         return peticioForm;
@@ -205,6 +251,30 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return getRedirectToList();
     }
 
+    @Override
+    public List<StringKeyValue> getReferenceListForArxiuReqParamDocEstatElabora(HttpServletRequest request,
+            ModelAndView mav, Where where) throws I18NException {
+        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+
+        __tmp.add(new StringKeyValue("EE01", I18NUtils.tradueix("estatelaboracio.ee01")));
+        __tmp.add(new StringKeyValue("EE02", I18NUtils.tradueix("estatelaboracio.ee02")));
+        __tmp.add(new StringKeyValue("EE03", I18NUtils.tradueix("estatelaboracio.ee03")));
+        __tmp.add(new StringKeyValue("EE04", I18NUtils.tradueix("estatelaboracio.ee04")));
+        __tmp.add(new StringKeyValue("EE99", I18NUtils.tradueix("estatelaboracio.ee99")));
+
+        return __tmp;
+    }
+
+    @Override
+    public List<StringKeyValue> getReferenceListForArxiuReqParamOrigen(HttpServletRequest request, ModelAndView mav,
+            Where where) throws I18NException {
+        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+        __tmp.add(new StringKeyValue(String.valueOf(Constants.ORIGEN_CIUTADA), I18NUtils.tradueix("origen.ciutada")));
+        __tmp.add(new StringKeyValue(String.valueOf(Constants.ORIGEN_ADMINISTRACIO),
+                I18NUtils.tradueix("origen.administracio")));
+        return __tmp;
+    }
+
     public static String getRedirectToList() {
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
@@ -214,8 +284,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
-    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID") java.lang.Long infoSignaturaID,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID")
+    java.lang.Long infoSignaturaID, HttpServletRequest request, HttpServletResponse response) {
 
         if (infoSignaturaID == null) {
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
@@ -275,8 +345,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String crearPeticioPost(@ModelAttribute PeticioForm peticioForm, BindingResult result,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String crearPeticioPost(@ModelAttribute
+    PeticioForm peticioForm, BindingResult result, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
 
         String ret = super.crearPeticioPost(peticioForm, result, request, response);
 
@@ -285,6 +356,63 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             request.setAttribute("dragdrop", true);
         }
         return ret;
+    }
+
+    @Override
+    public void postValidate(HttpServletRequest request, PeticioForm peticioForm, BindingResult result)
+            throws I18NException {
+
+        super.postValidate(request, peticioForm, result);
+
+        {
+
+            // XYZ ZZZ Aqui falta el camp de DIR3Unit !!!
+            Field<?>[] signFields = { ARXIUPARAMFUNCIONARINIF, ARXIUPARAMFUNCIONARINOM, ARXIUPARAMFUNCIONARIDIR3 };
+
+            for (Field<?> field : signFields) {
+                ValidationUtils.rejectIfEmptyOrWhitespace(result, field.fullName, "genapp.validation.required",
+                        new Object[] { I18NUtils.tradueix(field.fullName) });
+            }
+
+        }
+
+        {
+
+            Field<?>[] reqFields = { ARXIUREQPARAMDOCESTATELABORA, ARXIUREQPARAMORIGEN };
+
+            for (Field<?> field : reqFields) {
+                ValidationUtils.rejectIfEmptyOrWhitespace(result, field.fullName, "genapp.validation.required",
+                        new Object[] { I18NUtils.tradueix(field.fullName) });
+            }
+
+            /*
+             * if (isPublic()) { // Si la petició arriba des d'APP llavors, requerim que ens
+             * afegeixin quin organ ValidationUtils.rejectIfEmptyOrWhitespace(result,
+             * TransaccioFields.ARXIUREQPARAMORGANS.fullName, "genapp.validation.required",
+             * new Object[] { I18NUtils
+             * .tradueix(TransaccioFields.ARXIUREQPARAMORGANS.fullName) }); }
+             */
+
+            if (!result.hasFieldErrors(get(ARXIUREQPARAMINTERESSATS))) {
+
+                String interessats = peticioForm.getPeticio().getArxiuReqParamInteressats();
+
+                log.info("\n XXX Validar NIFs interessats ... " + interessats);
+
+                if (interessats != null) {
+
+                    CheckNifResult cnr = NifUtils.validateNifsSeparatedByCommas(interessats);
+
+                    peticioForm.getPeticio().setArxiuReqParamInteressats(cnr.getNifListFormatted());
+
+                    if (!cnr.isValid()) {
+                        result.rejectValue(get(ARXIUREQPARAMINTERESSATS), "error.interessats",
+                                new String[] { (cnr.getNifs() == null) ? interessats : cnr.getNifs().toString() },
+                                null);
+                    }
+                }
+            }
+        }
     }
 
 }

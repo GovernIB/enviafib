@@ -267,6 +267,26 @@ public class PeticioController
       };
     }
 
+    // Field arxiuReqParamDocEstatElabora
+    {
+      _listSKV = getReferenceListForArxiuReqParamDocEstatElabora(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForArxiuReqParamDocEstatElabora(_tmp);
+      if (filterForm.getGroupByFields().contains(ARXIUREQPARAMDOCESTATELABORA)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, ARXIUREQPARAMDOCESTATELABORA, false);
+      };
+    }
+
+    // Field arxiuReqParamOrigen
+    {
+      _listSKV = getReferenceListForArxiuReqParamOrigen(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForArxiuReqParamOrigen(_tmp);
+      if (filterForm.getGroupByFields().contains(ARXIUREQPARAMORIGEN)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, ARXIUREQPARAMORIGEN, false);
+      };
+    }
+
     // Field infoArxiuID
     {
       _listSKV = getReferenceListForInfoArxiuID(request, mav, filterForm, list, groupByItemsMap, null);
@@ -299,6 +319,8 @@ public class PeticioController
     __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomaDoc());
     __mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfoSignaturaID());
     __mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
+    __mapping.put(ARXIUREQPARAMDOCESTATELABORA, filterForm.getMapOfValuesForArxiuReqParamDocEstatElabora());
+    __mapping.put(ARXIUREQPARAMORIGEN, filterForm.getMapOfValuesForArxiuReqParamOrigen());
     __mapping.put(INFOARXIUID, filterForm.getMapOfInfoArxiuForInfoArxiuID());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
@@ -409,6 +431,24 @@ public class PeticioController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       peticioForm.setListOfValuesForTipus(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (peticioForm.getListOfValuesForArxiuReqParamDocEstatElabora() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForArxiuReqParamDocEstatElabora(request, mav, peticioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      peticioForm.setListOfValuesForArxiuReqParamDocEstatElabora(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (peticioForm.getListOfValuesForArxiuReqParamOrigen() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForArxiuReqParamOrigen(request, mav, peticioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      peticioForm.setListOfValuesForArxiuReqParamOrigen(_listSKV);
     }
     // Comprovam si ja esta definida la llista
     if (peticioForm.getListOfInfoArxiuForInfoArxiuID() == null) {
@@ -868,10 +908,14 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForEstat(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "0"));
     __tmp.add(new StringKeyValue("1" , "1"));
     __tmp.add(new StringKeyValue("2" , "2"));
     __tmp.add(new StringKeyValue("3" , "3"));
     __tmp.add(new StringKeyValue("4" , "4"));
+    __tmp.add(new StringKeyValue("5" , "5"));
+    __tmp.add(new StringKeyValue("6" , "6"));
+    __tmp.add(new StringKeyValue("7" , "7"));
     return __tmp;
   }
 
@@ -1002,11 +1046,75 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-    __tmp.add(new StringKeyValue("0" , "0"));
     __tmp.add(new StringKeyValue("1" , "1"));
     __tmp.add(new StringKeyValue("2" , "2"));
     __tmp.add(new StringKeyValue("3" , "3"));
     __tmp.add(new StringKeyValue("4" , "4"));
+    __tmp.add(new StringKeyValue("5" , "5"));
+    __tmp.add(new StringKeyValue("6" , "6"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForArxiuReqParamDocEstatElabora(HttpServletRequest request,
+       ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
+    if (peticioForm.isHiddenField(ARXIUREQPARAMDOCESTATELABORA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForArxiuReqParamDocEstatElabora(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForArxiuReqParamDocEstatElabora(HttpServletRequest request,
+       ModelAndView mav, PeticioFilterForm peticioFilterForm,
+       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (peticioFilterForm.isHiddenField(ARXIUREQPARAMDOCESTATELABORA)
+      && !peticioFilterForm.isGroupByField(ARXIUREQPARAMDOCESTATELABORA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForArxiuReqParamDocEstatElabora(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForArxiuReqParamDocEstatElabora(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("EE01" , "EE01"));
+    __tmp.add(new StringKeyValue("EE02" , "EE02"));
+    __tmp.add(new StringKeyValue("EE03" , "EE03"));
+    __tmp.add(new StringKeyValue("EE04" , "EE04"));
+    __tmp.add(new StringKeyValue("EE99" , "EE99"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForArxiuReqParamOrigen(HttpServletRequest request,
+       ModelAndView mav, PeticioForm peticioForm, Where where)  throws I18NException {
+    if (peticioForm.isHiddenField(ARXIUREQPARAMORIGEN)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForArxiuReqParamOrigen(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForArxiuReqParamOrigen(HttpServletRequest request,
+       ModelAndView mav, PeticioFilterForm peticioFilterForm,
+       List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (peticioFilterForm.isHiddenField(ARXIUREQPARAMORIGEN)
+      && !peticioFilterForm.isGroupByField(ARXIUREQPARAMORIGEN)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForArxiuReqParamOrigen(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForArxiuReqParamOrigen(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "0"));
+    __tmp.add(new StringKeyValue("1" , "1"));
     return __tmp;
   }
 
