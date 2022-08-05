@@ -51,7 +51,7 @@ public class EnviaFIBPluginsManager implements Constants {
                     Constants.ENVIAFIB_PROPERTY_BASE, propTmp);
 
             if (pluginInstance == null) {
-                throw new I18NException("plugin.donotinstantiateplugin", new I18NArgumentCode("plugin.userinfo"));
+                throw new I18NException("error.plugin.donotinstantiate", new I18NArgumentCode("plugin.userinfo"));
             }
             loginPlugin = (IUserInformationPlugin) pluginInstance;
         }
