@@ -87,8 +87,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
     protected es.caib.enviafib.ejb.UsuariService usuariEjb;
 
-    @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicService.JNDI_NAME)
-    protected es.caib.enviafib.logic.InfoSignaturaLogicService infoSignaturaLogicEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoSignaturaLogicaService infoSignaturaLogicaEjb;
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
@@ -313,9 +313,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             this.update(peticio);
         }
 
-        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOARXIUID,
+        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
                 PeticioFields.PETICIOID.equal(peticioID));
-        InfoSignaturaJPA infoSignatura = infoSignaturaLogicEjb.findByPrimaryKey(infoSignaturaId);
+        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
 
         Future<Peticio> future = guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
 
@@ -552,11 +552,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignedFileInfo info = firma.getSignedFileInfo();
 
-        int signOperation = info.getSignOperation();
+        Integer signOperation = info.getSignOperation();
         String signType = info.getSignType();
         String signAlgorithm = info.getSignAlgorithm();
-        int signMode = info.getSignMode();
-        int signaturesTableLocation = info.getSignaturesTableLocation();
+        Integer signMode = info.getSignMode();
+        Integer signaturesTableLocation = info.getSignaturesTableLocation();
         Boolean timestampIncluded = info.getTimeStampIncluded();
         Boolean policyIncluded = info.getPolicyIncluded();
         String eniTipoFirma = info.getEniTipoFirma();
@@ -591,7 +591,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 eniSignerName, eniSignerAdministrationId, eniSignLevel, checkAdministrationIdOfSigner,
                 checkDocumentModifications, checkValidationSignature);
 
-        is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
+        is = (InfoSignaturaJPA) infoSignaturaLogicaEjb.createPublic(is);
         // long infoAsignaturaID = is.getInfoSignaturaID();
         return is;
     }
@@ -616,8 +616,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         this.deleteIncludingFiles(instance, fitxerEjb);
 
         if (infoSignID != null) {
-            InfoSignaturaJPA is = infoSignaturaLogicEjb.findByPrimaryKey(infoSignID);
-            infoSignaturaLogicEjb.delete(is);
+            InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignID);
+            infoSignaturaLogicaEjb.delete(is);
         }
     }
 
@@ -785,7 +785,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 eniSignerName, eniSignerAdministrationId, eniSignLevel, checkAdministrationIdOfSigner,
                 checkDocumentModifications, checkValidationSignature);
 
-        is = (InfoSignaturaJPA) infoSignaturaLogicEjb.createPublic(is);
+        is = (InfoSignaturaJPA) infoSignaturaLogicaEjb.createPublic(is);
 
         long infoSignaturaID = is.getInfoSignaturaID();
         log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);

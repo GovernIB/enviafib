@@ -14,7 +14,7 @@ import es.caib.enviafib.ejb.InfoSignaturaEJB;
  *
  */
 @Stateless
-public class InfoSignaturaLogicEJB extends InfoSignaturaEJB implements InfoSignaturaLogicService {
+public class InfoSignaturaLogicaEJB extends InfoSignaturaEJB implements InfoSignaturaLogicaService {
 
     @Override
     @PermitAll

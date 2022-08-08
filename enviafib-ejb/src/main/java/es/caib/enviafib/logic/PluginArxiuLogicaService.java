@@ -34,8 +34,8 @@ public interface PluginArxiuLogicaService extends InfoArxiuService {
      * @return
      */
     public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura) throws I18NException;
-    
-    
+
+
     /**
      * 
      * @param transaccio

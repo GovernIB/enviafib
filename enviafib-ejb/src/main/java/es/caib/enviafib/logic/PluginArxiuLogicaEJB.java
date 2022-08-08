@@ -1,5 +1,6 @@
 package es.caib.enviafib.logic;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -24,6 +25,9 @@ import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.plugins.arxiu.api.ArxiuException;
 import es.caib.plugins.arxiu.api.ArxiuNotFoundException;
+import es.caib.plugins.arxiu.api.ConsultaFiltre;
+import es.caib.plugins.arxiu.api.ConsultaOperacio;
+import es.caib.plugins.arxiu.api.ConsultaResultat;
 import es.caib.plugins.arxiu.api.ContingutArxiu;
 import es.caib.plugins.arxiu.api.ContingutOrigen;
 import es.caib.plugins.arxiu.api.Document;
@@ -51,14 +55,22 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 
+ * @author anadal
+ *
+ */
 @Stateless(name = "PluginArxiuLogicaEJB")
 public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLogicaService {
 
-    @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
+    @EJB(mappedName = InfoArxiuLogicaService.JNDI_NAME)
+    protected InfoArxiuLogicaService infoArxiuEjb;
 
     @EJB(mappedName = PeticioLogicaService.JNDI_NAME)
     protected PeticioLogicaService peticioLogicaEjb;
+    
+    @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
 
     @Override
     public void tancarExpedient(Long infoCustodyID, String expedientID, Locale locale) throws I18NException {
@@ -88,10 +100,11 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
 
     }
 
+    @PermitAll
     @Override
     public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura) {
 
-        Fitxer fitxerFirmat = peticio.getFitxerFirmat();
+        
         IArxiuPlugin plugin;
         try {
 
@@ -100,7 +113,7 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
 
         } catch (I18NException e1) {
 
-            final String msg = "XYZ ZZZ Error Instanciant PLugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
+            final String msg = "XYZ ZZZ Error Instanciant Plugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
 
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
             peticio.setErrorMsg(LogicUtils.split255(msg));
@@ -201,14 +214,12 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
             }
 
             // XYZ ZZZ Això és per quan l'usuari pugui indicar el nom de l'expedient on vol
-            // el
-            // document
-            // String custodyOrExpedientID = prop
+            // el document String custodyOrExpedientID = prop
             // .getProperty(TransaccioFields.ARXIUOPTPARAMCUSTODYOREXPEDIENTID.javaName);
             final String interessatsStr = peticio.getArxiuReqParamInteressats();
 
             // XYZ ZZZ Fer un tiquet per posar-ho en una propietat del PLugin ????
-            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID();
+            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP";
 
             ExpedientMetadades expedientMetadades = new ExpedientMetadades();
             expedientMetadades.setClassificacio(procedimentCodi);
@@ -234,27 +245,70 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
             }
 
             log.info("XYZ ZZZ  Creant expedient... ");
-            ContingutArxiu expedientCreat = plugin.expedientCrear(expedient);
+            
+            
+            //ContingutArxiu expedientCreat = plugin.expedientCrear(expedient);
+            ContingutArxiu expedientCreat;
+            String expedientId = null;
+            
+            try {
+               expedientCreat = plugin.expedientCrear(expedient);
+               expedientId = expedientCreat.getIdentificador();
+               log.info("XYZ ZZZ  Creat expedient amd ID = " + expedientId);
+            } catch(Throwable th) {
+                
+                log.error(" Error Creant Expedient: " + th.getMessage()+ ".Consultam si l'expedient ja està creat ...");
+                
+                // Comprovar si l'expedient ja existeix
+                ConsultaResultat resultat;
+                resultat = plugin.expedientConsulta(getLlistaFiltresExpedienteMetadatos(nomExpedient, serieDocumental), 0, 111);
+                
+                if (resultat.getResultats() != null && resultat.getResultats().size() != 0) {
+                    
+                    
+                    for (ContingutArxiu ca : resultat.getResultats()) {
+                        
+                        if (nomExpedient.equals(ca.getNom())) {
+                             expedientId = ca.getIdentificador();
+                             log.info("XYZ ZZZ  Expedient ja existia (ID = " + expedientId + ")");
+                        }                        
+                    }                    
+                }
+                
+                if (expedientId == null) {
+                  log.error("No hem trobat expedient amb nom " + nomExpedient+ ". Llançan excepció original.");
+                  throw th;
+                }
+                
+            }
 
-            final String expedientId = expedientCreat.getIdentificador();
-
-            log.info("XYZ ZZZ  Creat expedient amd ID = " + expedientId);
+            
 
             log.info("XYZ ZZZ  Creant document ... ");
             final DocumentMetadades documentMetadades = new DocumentMetadades();
 
-            final ContingutOrigen origen = (peticio.getArxiuReqParamOrigen() == Constants.ORIGEN_ADMINISTRACIO)
-                    ? ContingutOrigen.ADMINISTRACIO
-                    : ContingutOrigen.CIUTADA;
-            documentMetadades.setOrigen(origen);
+            
             documentMetadades.setOrgans(organs);
             documentMetadades.setDataCaptura(new Date());
 
+            String elabora = peticio.getArxiuReqParamDocEstatElabora();
+            
             documentMetadades
-                    .setEstatElaboracio(DocumentEstatElaboracio.toEnum(peticio.getArxiuReqParamDocEstatElabora()));
-            documentMetadades.setTipusDocumental(DocumentTipus.toEnum(peticio.getTipusDocumental()));
+                    .setEstatElaboracio(DocumentEstatElaboracio.toEnum(elabora));
+            documentMetadades.setTipusDocumental(getDocumentTipusEnum(peticio.getTipusDocumental()));
             documentMetadades.setFormat(documentFormat);
             documentMetadades.setExtensio(documentExtensio);
+            
+            final ContingutOrigen origen;
+            if (elabora.equals("EE02") || elabora.equals("EE04")) {
+                origen = null;
+            } else {
+                origen = (peticio.getArxiuReqParamOrigen() == Constants.ORIGEN_ADMINISTRACIO)
+                    ? ContingutOrigen.ADMINISTRACIO
+                    : ContingutOrigen.CIUTADA;
+              
+            }
+            documentMetadades.setOrigen(origen);
 
             // ================== METADADES ==================
 
@@ -278,15 +332,21 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
 
             final FirmaTipus firmaTipus;
             final FirmaPerfil firmaPerfil;
-            final Integer signMode;
+
+            
+            // XYZ ZZZ TRA TODO
+            final String commonError = "Comprovi que el procés de firma realitza la validació de la mateixa.";
 
             if (infoSignatura == null) {
                 firmaTipus = null;
                 firmaPerfil = null;
-                signMode = null;
+                
+                // XYZ ZZZ TRA TODO
+                String msg = "InfoSignatura és null. Es requereix per saber el valor de firmaTipus, firmaPerfil i SignMode." + commonError;
+                log.error(msg, new Exception());
+                throw new I18NException("genapp.comodi", msg);
+                
             } else {
-
-                signMode = infoSignatura.getSignMode();
 
                 /*
                  * CSV("TF01"), XADES_DET("TF02"), XADES_ENV("TF03"), CADES_DET("TF04"),
@@ -298,15 +358,8 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
 
             }
 
-            // XYZ ZZZ TRA TODO
-            final String commonError = "Comprovi que el procés de firma realitza la validació de la mateixa.";
+            
 
-            if (signMode == null) {
-                // XYZ ZZZ TRA TODO
-                String msg = "SignMode val null." + commonError;
-                log.error(msg, new Exception());
-                throw new I18NException("genapp.comodi", msg);
-            }
 
             if (firmaTipus == null) {
                 // XYZ ZZZ TRA TODO
@@ -351,6 +404,9 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
             }
 
             // FITXER SIGNAT
+            long fitxerFirmatID = peticio.getFitxerFirmatID();
+            
+            Fitxer fitxerFirmat = fitxerEjb.findByPrimaryKey(fitxerFirmatID);
 
             byte[] signedData = FileSystemManager.getFileContent(fitxerFirmat.getFitxerID());
 
@@ -380,6 +436,8 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
             documentPerCrear.setMetadades(documentMetadades);
 
             documentPerCrear.setNom(nomDocument);
+            
+            log.info("XYZ ZZZ  Creant document ... ");
 
             ContingutArxiu documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
 
@@ -396,9 +454,13 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
                 // }
 
                 plugin.expedientTancar(expedientId);
-                log.info("XYZ ZZZ  Expedient Tancat... ");
+                log.info("XYZ ZZZ  Tancat Expedient ... ");
             } catch (Throwable th) {
+                // TODO XYZ ZZZ
                 log.error("Error tancant Expedient " + expedientId + ": " + th.getMessage(), th);
+                
+                // XYZ ZZZ AQUI NECESSITAM UN ALTRE ESTAT DE PETICIO PER REINTENTAR TANCAR EXPEDIENT
+                throw th;
             }
 
             String uuidDoc = documentCreat.getIdentificador();
@@ -446,7 +508,7 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
                 i++;
             } while (i < 4);
 
-            infoCust = (InfoArxiuJPA) infoArxiuEjb.create(infoCust);
+            infoCust = (InfoArxiuJPA) infoArxiuEjb.createPublic(infoCust);
 
             peticio.setInfoArxiuID(infoCust.getInfoArxiuID());
 
@@ -478,6 +540,68 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
         return null;
 
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    protected  DocumentTipus getDocumentTipusEnum(String tipusDocumental) {
+        
+        switch(tipusDocumental) {
+            
+            case "1": return DocumentTipus.RESOLUCIO;
+            case "2": return DocumentTipus.ACORD;
+            case "3": return DocumentTipus.CONTRACTE;
+            case "4": return DocumentTipus.CONVENI;
+            case "5": return DocumentTipus.DECLARACIO;
+            case "6": return DocumentTipus.COMUNICACIO;
+            case "7": return DocumentTipus.NOTIFICACIO;
+            case "8": return DocumentTipus.PUBLICACIO;
+            case "9": return DocumentTipus.JUSTIFICANT_RECEPCIO;
+            case "10": return DocumentTipus.ACTA;
+            case "11": return DocumentTipus.CERTIFICAT;
+            case "12": return DocumentTipus.DILIGENCIA;
+            case "13": return DocumentTipus.INFORME;
+            case "14": return DocumentTipus.SOLICITUD;
+            case "15": return DocumentTipus.DENUNCIA;
+            case "16": return DocumentTipus.ALEGACIO;
+            case "17": return DocumentTipus.RECURS;
+            case "18": return DocumentTipus.COMUNICACIO_CIUTADA;
+            case "19": return DocumentTipus.FACTURA;
+            case "20": return DocumentTipus.ALTRES_INCAUTATS;
+            case "51": return DocumentTipus.LLEI;
+            case "52": return DocumentTipus.MOCIO;
+            case "53": return DocumentTipus.INSTRUCCIO;
+            case "54": return DocumentTipus.CONVOCATORIA;
+            case "55": return DocumentTipus.ORDRE_DIA;
+            case "56": return DocumentTipus.INFORME_PONENCIA;
+            case "57": return DocumentTipus.DICTAMEN_COMISSIO;
+            case "58": return DocumentTipus.INICIATIVA_LEGISLATIVA;
+            case "59": return DocumentTipus.PREGUNTA;
+            case "60": return DocumentTipus.INTERPELACIO;
+            case "61": return DocumentTipus.RESPOSTA;
+            case "62": return DocumentTipus.PROPOSICIO_NO_LLEI;
+            case "63": return DocumentTipus.ESQUEMA; // Enmienda o Esmena
+            case "64": return DocumentTipus.PROPOSTA_RESOLUCIO;
+            case "65": return DocumentTipus.COMPAREIXENSA;
+            case "66": return DocumentTipus.SOLICITUD_INFORMACIO;
+            case "67": return DocumentTipus.ESCRIT;
+            case "68": return DocumentTipus.INICIATIVA_LEGISLATIVA;
+            case "69": return DocumentTipus.PETICIO;
+            
+            case "99":
+            default:
+                return DocumentTipus.ALTRES; // DocumentTipus.Otros tipus de documentos;
+            
+        }
+    }
+    
+    
 
     public FirmaPerfil firmaPerfilToEnum(String perfil) throws I18NException {
 
@@ -643,5 +767,138 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
          */
         return metadadesAddicionals;
     }
+    
+    
+    
+    private static List<ConsultaFiltre> getLlistaFiltresExpedienteMetadatos(String expedientNom, String serieDocumental) {
+        List<ConsultaFiltre> listaFiltros = new ArrayList<>();
+        ConsultaFiltre filtro = null;
 
+        /*filtro = new ConsultaFiltre();
+        filtro.setMetadada("eni:organo");
+        filtro.setOperacio(ConsultaOperacio.IGUAL);
+        filtro.setValorOperacio1("A04019281");
+        listaFiltros.add(filtro);*/
+     
+        filtro = new ConsultaFiltre();
+        filtro.setMetadada("name");
+        filtro.setOperacio(ConsultaOperacio.IGUAL);
+        filtro.setValorOperacio1(expedientNom);
+        listaFiltros.add(filtro);
+        
+        filtro = new ConsultaFiltre();
+        filtro.setMetadada("eni:cod_clasificacion");
+        filtro.setOperacio(ConsultaOperacio.IGUAL);
+        filtro.setValorOperacio1(serieDocumental);
+        listaFiltros.add(filtro);
+/*
+        filtro = new ConsultaFiltre();
+        filtro.setMetadada("eni:fecha_inicio");
+        filtro.setOperacio(ConsultaOperacio.ENTRE);
+        filtro.setValorOperacio1(getStringDatetoStringISO8601("01/10/2021"));
+        filtro.setValorOperacio2(getStringDatetoStringISO8601("30/11/2021"));
+        listaFiltros.add(filtro);
+*/
+        return listaFiltros;
+    }
+    
+    
+    /*
+    public void crearExpedient() {
+        
+        
+       
+         MetadatosExpediente.CODIGO_APLICACION_TRAMITE,
+                aplicacioCodi);
+        
+
+        //ExpedientMetadades
+        
+        // Només miram si existeix l'expedient 
+        Expediente expedientCercat = null;
+        
+        if (isSearchIfExpedientExistsInReserve()) {
+
+          FiltroBusquedaFacilExpedientes filtrosRequeridos = new FiltroBusquedaFacilExpedientes();
+          filtrosRequeridos.setName(nomExpedient);
+          filtrosRequeridos.setAppName(getPropertyCodiAplicacio());
+          String serieDocumental = processEL(getPropertySerieDocumentalEL(), custodyParameters);
+          filtrosRequeridos.setDocSeries(serieDocumental);
+          
+          if (debug) {
+            log.info(" CERCA[Name] => " + filtrosRequeridos.getName() );
+            log.info(" CERCA[AppName] => " + filtrosRequeridos.getAppName() );
+            log.info(" CERCA[serieDocumental] => " + filtrosRequeridos.getDocSeries());
+          }
+
+          ResultadoBusqueda<Expediente> res;
+          res = api.busquedaFacilExpedientes(filtrosRequeridos, null, 0);
+          if (hiHaErrorEnCerca(res.getCodigoResultado())) {
+            throw new CustodyException("Error Consultant si Expedient " + nomExpedient
+                + " existeix: " + res.getCodigoResultado() + "-" + res.getMsjResultado());
+          }
+    
+          List<Expediente> llista2 = res.getListaResultado();
+
+          if (llista2 == null || llista2.size() == 0) {
+            log.info(" CERCA[].size() = Llista null o buida (" + llista2.size() + ")");
+            expedientCercat = null;
+          } else {
+            log.info(" CERCA[].size() = " + llista2.size());
+            // TODO la cerca es fa del nom parescut al fitxer, per exemple
+            // si cerques "Registre_20" et pot trobar Registre_20,
+            // Registre_200, Registre_202, ...
+            int countTrobats = 0;
+            final int total = res.getNumeroTotalResultados();
+            int parcial = 0;
+            int pagina = 0;
+            do {
+              for (Expediente expediente : llista2) {
+                parcial++;
+                if (nomExpedient.equals(expediente.getName())) {
+                  countTrobats++;
+                  if (countTrobats > 1) {
+                    log.error(" S'ha trobat coincidencia multiple " + expediente.getName() + " ("
+                        + expediente.getId() + ") per la cerca de nomExpedient " + nomExpedient
+                        + ")");
+                  } else {
+                    expedientCercat = expediente;
+                  }
+                }
+              }
+              
+              if (countTrobats != 0) {
+                break;
+              }
+              
+              if (parcial <= total) {
+                break;
+              }
+              pagina++;
+              res = api.busquedaFacilExpedientes(filtrosRequeridos, null, pagina);
+              if (hiHaErrorEnCerca(res.getCodigoResultado())) {
+                throw new CustodyException("Error Consultant si Expedient " + nomExpedient
+                    + " existeix: " + res.getCodigoResultado() + "-" + res.getMsjResultado());
+              }
+              
+              llista2 = res.getListaResultado();
+            } while(true);
+    
+            if (countTrobats == 0) {
+              expedientCercat = null;
+            } else if (countTrobats == 1) {
+              // expedientCercat ja conté el valor
+            } else if (countTrobats > 1) {
+              // Hi ha multiple instancies que s'ajusten. No se quin triar
+              String msg = "S'ha trobat coincidencia multiple " + expedientCercat.getName() + " ("
+                  + expedientCercat.getId() + ") per la cerca de nomExpedient " + nomExpedient
+                  + "). Veure logs per la resta de coincidències.";
+              log.error(msg);
+              throw new CustodyException(msg);
+            }
+          }
+        }
+
+    }
+*/
 }
