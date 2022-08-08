@@ -75,10 +75,10 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
 //            pluginFilterForm.addHiddenField(PluginFields.CLASSE);
             pluginFilterForm.addHiddenField(PluginFields.TIPUS);
             
-            pluginFilterForm.setTitleCode("EstructuraOrganitzativaPlugin.title");
+            pluginFilterForm.setTitleCode("estructuraorganitzativaplugin.title");
 
             pluginFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-check",
-                    "EstructuraOrganitzativaPlugin.button", getContextWeb() + "/provar/{0}", "btn-primary"));
+                    "estructuraorganitzativaplugin.button", getContextWeb() + "/provar/{0}", "btn-primary"));
         }
 
         return pluginFilterForm;
@@ -96,7 +96,7 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
 
     @Override
     public String getCodeName() {
-        return "EstructuraOrganitzativaPlugin";
+        return "estructuraorganitzativaplugin";
     }
 
     @RequestMapping(value = "/provar/{pluginID}", method = RequestMethod.GET)
