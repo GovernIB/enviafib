@@ -20,6 +20,7 @@ import es.caib.enviafib.back.form.webdb.PluginFilterForm;
 import es.caib.enviafib.back.form.webdb.PluginForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.persistence.PluginJPA;
 
 /**
@@ -69,6 +70,11 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
 
         if (pluginFilterForm.isNou()) {
 
+            pluginFilterForm.addHiddenField(PluginFields.PLUGINID);
+            pluginFilterForm.addHiddenField(PluginFields.DESCRIPCIO);
+//            pluginFilterForm.addHiddenField(PluginFields.CLASSE);
+            pluginFilterForm.addHiddenField(PluginFields.TIPUS);
+            
             pluginFilterForm.setTitleCode("EstructuraOrganitzativaPlugin.title");
 
             pluginFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-check",
