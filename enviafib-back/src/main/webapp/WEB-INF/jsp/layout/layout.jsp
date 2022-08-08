@@ -33,12 +33,10 @@
 <c:if test = "${!(efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN'))}">
         <ul class="nav nav-tabs custom-submenu">
 			
-			<sec:authorize access="hasRole('ROLE_USER')">
 	            <li class="nav-item"><a
 	                class="nav-link ${(empty pipella)?'active' : '' }"
 	                href="<c:url value="/canviarPipella/"/>"><fmt:message
 	                        key="inici" /></a></li>
-            </sec:authorize>
                         
 
             <sec:authorize access="hasRole('ROLE_USER')">
