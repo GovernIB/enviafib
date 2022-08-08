@@ -41,7 +41,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 	@Override
 	public synchronized void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
 
-		log.info("\n Entram a AuthenticationSuccessListener \n");
+		log.info("Entram a AuthenticationSuccessListener");
 
 		SecurityContext sc = SecurityContextHolder.getContext();
 		Authentication au = sc.getAuthentication();
@@ -195,9 +195,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		}
 
 		log.info("LoginInfo:\n" + "\tuser: " + user + "\n" + "\tusuariPersona: " + usuariPersona + "\n"
-				+ "\tnecesitaConfigurar: " + necesitaConfigurar + "\n"
-
-		);
+				+ "\tnecesitaConfigurar: " + necesitaConfigurar);
 
 		// TODO #103: Obtenir idioma de l'usuari. Null = idioma per defecte. 
 		String language = "ca";
@@ -211,7 +209,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		log.info(">>>>>> Final del Process d'autenticació.");
 		log.info(" =================================================================");
 
-		log.info("\n Sortim de AuthenticationSuccessListener \n");
+		log.info("Sortim de AuthenticationSuccessListener");
 
 	}
 

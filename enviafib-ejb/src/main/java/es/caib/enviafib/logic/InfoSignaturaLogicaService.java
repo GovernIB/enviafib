@@ -11,9 +11,9 @@ import es.caib.enviafib.ejb.InfoSignaturaService;
 import es.caib.enviafib.model.entity.InfoSignatura;
 
 @Local
-public interface InfoSignaturaLogicService extends InfoSignaturaService{
+public interface InfoSignaturaLogicaService extends InfoSignaturaService{
 
-    public static final String JNDI_NAME = "java:app/enviafib-ejb/InfoSignaturaLogicEJB!es.caib.enviafib.logic.InfoSignaturaLogicService";
+    public static final String JNDI_NAME = "java:app/enviafib-ejb/InfoSignaturaLogicaEJB!es.caib.enviafib.logic.InfoSignaturaLogicaService";
 
     public InfoSignaturaJPA findByPrimaryKey(Long _ID_);
     

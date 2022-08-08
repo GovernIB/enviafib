@@ -274,7 +274,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
             if (msg == null) {
                 // XYZ ZZZ TRA
-                HtmlUtils.saveMessageError(request, "Reintent finalitzat correctament");
+                HtmlUtils.saveMessageSuccess(request, "Reintent finalitzat correctament");
             } else {
                 HtmlUtils.saveMessageError(request, msg);
             }

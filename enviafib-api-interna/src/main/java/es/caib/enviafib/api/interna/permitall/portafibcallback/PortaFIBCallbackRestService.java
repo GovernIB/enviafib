@@ -11,10 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.PeticioLogicaService;
-import es.caib.enviafib.model.entity.Peticio;
-import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -87,6 +84,8 @@ public class PortaFIBCallbackRestService {
 
             switch (eventID) {
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES: {
+                    // JA NO ES NECESSARI. LA PETICIO ES POSA DIRECTAMENT A ESTAT EN PROCÉS
+                    /*                     
                     log.info("NOTIFICACIOAVIS_PETICIO_EN_PROCES = " + eventID);
 
                     Long portafibID = event.getSigningRequest().getID();
@@ -100,6 +99,7 @@ public class PortaFIBCallbackRestService {
                     } else {
 //                        log.error(I18NUtils.tradueix("callback.event.enproces.error") + IDsToString);
                     }
+                    */
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR: {
