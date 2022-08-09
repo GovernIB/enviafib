@@ -19,4 +19,4 @@ es.caib.enviafib.pluginsib.estructuraorganizativa.mock.nomdepartamentdirecciogen
 es.caib.enviafib.pluginsib.estructuraorganizativa.mock.capdepartamentdirectorgeneralbyusername=<#switch username><#case "anadal"><#case "ptrias"><#case "fbosch"><#case "bverges">atrobat<#break><#case "jsastre">xtous<#break><#default>ellado</#switch>
 es.caib.enviafib.pluginsib.estructuraorganizativa.mock.secretaribyusername=
 es.caib.enviafib.pluginsib.estructuraorganizativa.mock.encarregatcompresbyusername=jfernandez
-es.caib.enviafib.pluginsib.estructuraorganizativa.mock.recursoshumansbyusername=rdiaz', true, 1, 'Plugin Mock', 'Plugin Mock que simula entitat Fundació Bit');
+es.caib.enviafib.pluginsib.estructuraorganizativa.mock.recursoshumansbyusername=rdiaz', 1, 1, 'Plugin Mock', 'Plugin Mock que simula entitat Fundació Bit');
