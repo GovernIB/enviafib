@@ -173,3 +173,14 @@ ALTER TABLE efi_plugin
    ADD COLUMN nom character varying(255) NOT NULL;
 ALTER TABLE efi_plugin
    ADD COLUMN descripcio character varying(255) NOT NULL;
+
+---
+---09/08/2022 - Errors de BBDD al Actualitzar el Projecte amb GenAPP #144
+---
+
+CREATE INDEX efi_infoarxiu_pk_i
+  ON efi_infoarxiu (infoarxiuid);
+
+CREATE INDEX efi_usuari_idiomaid_fk_i
+  ON efi_usuari (idiomaid);
+
