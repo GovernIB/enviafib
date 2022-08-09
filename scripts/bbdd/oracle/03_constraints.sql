@@ -2,7 +2,13 @@
  -- INICI PKs
     alter table efi_fitxer add constraint efi_fitxer_pk primary key (fitxerid);
 
+    alter table efi_grup add constraint efi_grup_pk primary key (grupid);
+
+    alter table efi_grupusuari add constraint efi_grupusuari_pk primary key (grupusuariid);
+
     alter table efi_idioma add constraint efi_idioma_pk primary key (idiomaid);
+
+    alter table efi_infoarxiu add constraint efi_infoarxiu_pk primary key (infoarxiuid);
 
     alter table efi_infosignatura add constraint efi_infosignatura_pk primary key (infosignaturaid);
 
@@ -23,6 +29,16 @@
 
  -- INICI FKs
 
+    alter table efi_grupusuari 
+       add constraint efi_grupusuari_grup_grupid_fk 
+       foreign key (grupid) 
+       references efi_grup;
+
+    alter table efi_grupusuari 
+       add constraint efi_grupusuari_usuari_usuar_fk 
+       foreign key (usuariid) 
+       references efi_usuari;
+
     alter table efi_peticio 
        add constraint efi_peticio_fitxer_fitxer_fk 
        foreign key (fitxerid) 
@@ -39,6 +55,11 @@
        references efi_idioma;
 
     alter table efi_peticio 
+       add constraint efi_peticio_infoarxiu_infoa_fk 
+       foreign key (infoarxiuid) 
+       references efi_infoarxiu;
+
+    alter table efi_peticio 
        add constraint efi_peticio_infosign_fk 
        foreign key (infosignaturaid) 
        references efi_infosignatura;
@@ -52,10 +73,18 @@
        add constraint efi_traducmap_traduccio_fk 
        foreign key (traducciomapid) 
        references efi_traduccio;
+
+    alter table efi_usuari 
+       add constraint efi_usuari_idioma_fk 
+       foreign key (idiomaid) 
+       references efi_idioma;
  -- FINAL FKs
 
 
  -- INICI UNIQUEs
+
+    alter table efi_grupusuari 
+       add constraint efi_grupusuari_usuari_grup_uk unique (usuariid, grupid);
 
     alter table efi_seriedocumental 
        add constraint UK_ox1aosn2t9fscv2lv01lr10tg unique (tipusdocumental);
