@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.PluginController;
+import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PluginFilterForm;
 import es.caib.enviafib.back.form.webdb.PluginForm;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PluginService;
+import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Plugin;
 import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.persistence.PluginJPA;
@@ -87,6 +89,25 @@ public abstract class AbstractPluginAdminController extends PluginController {
     }
 
     @Override
+    public void postList(HttpServletRequest request, ModelAndView mav, PluginFilterForm filterForm, List<Plugin> list)
+            throws I18NException {
+
+        filterForm.getAdditionalButtonsByPK().clear();
+
+        for (Plugin p : list) {
+            long pluginID = p.getPluginID();
+            if (p.isActiu()) {
+                filterForm.addAdditionalButtonByPK(pluginID, new AdditionalButton("fas fa-ban icon-white",
+                        "plugin.desactivar", getContextWebPlugin() + "/desactivarplugin/" + pluginID, "btn-warning"));
+            } else {
+                filterForm.addAdditionalButtonByPK(pluginID, new AdditionalButton("far fa-check-circle icon-white",
+                        "plugin.activar", getContextWebPlugin() + "/activarplugin/" + p.getPluginID(), "btn-success"));
+            }
+
+        }
+    }
+
+    @Override
     public PluginForm getPluginForm(PluginJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
         PluginForm pluginForm = super.getPluginForm(_jpa, __isView, request, mav);
@@ -96,20 +117,10 @@ public abstract class AbstractPluginAdminController extends PluginController {
         if (pluginForm.isNou()) {
             p.setActiu(true);
             p.setTipus(getTipusDePlugin());
+
         } else {
-            if (p.isActiu()) {
-                pluginForm.addAdditionalButton(new AdditionalButton("icon-ban-circle icon-white", "plugin.desactivar",
-                        getContextWebPlugin() + "/desactivarplugin/" + p.getPluginID(), "btn-warning"));
-            } else {
-                pluginForm.addAdditionalButton(new AdditionalButton("icon-ok-circle icon-white", "plugin.activar",
-                        getContextWebPlugin() + "/activarplugin/" + p.getPluginID(), "btn-success"));
-            }
+            pluginForm.addReadOnlyField(ACTIU);
         }
-
-        Set<Field<?>> readOnly = new HashSet<Field<?>>();
-        readOnly.add(ACTIU);
-
-        pluginForm.setReadOnlyFields(readOnly);
 
         pluginForm.addHiddenField(TIPUS);
 
@@ -135,8 +146,8 @@ public abstract class AbstractPluginAdminController extends PluginController {
     public String pluginDeactivate(HttpServletRequest request, HttpServletResponse response,
             @PathVariable Long pluginid) throws I18NException {
 
-        //TODO: Modificar métode per les necessitas que facin falta
-        
+        // TODO: Modificar métode per les necessitas que facin falta
+
         PluginJPA p = pluginLogicaEjb.findByPrimaryKey(pluginid);
 
         int tipusPlugin = getTipusDePlugin();
@@ -149,7 +160,7 @@ public abstract class AbstractPluginAdminController extends PluginController {
 
             default:
                 String msg = I18NUtils.tradueix("plugin.tipus.notrobat", String.valueOf(tipusPlugin));
-                throw new I18NException("genapp.comodi",msg);
+                throw new I18NException("genapp.comodi", msg);
         }
 
         p.setActiu(false);
