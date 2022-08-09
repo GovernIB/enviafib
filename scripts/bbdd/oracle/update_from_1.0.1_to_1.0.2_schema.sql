@@ -11,7 +11,6 @@ ALTER TABLE efi_peticio
 
 ALTER TABLE efi_usuari 
 ADD idiomaid VARCHAR(5) NOT NULL DEFAULT 'ca';
-
 ALTER TABLE efi_usuari
   ADD CONSTRAINT efi_usuari_idioma_fk FOREIGN KEY (idiomaid) REFERENCES efi_idioma (idiomaid);
 
@@ -28,6 +27,43 @@ ALTER TABLE efi_peticio
 --
 ALTER TABLE efi_peticio
    ADD reason VARCHAR(255);
+
+
+
+---
+--- 15/07/2022 - Preparar la BBDD per suportar enviament a Plugin d'Arxiu #32
+---
+
+ALTER TABLE efi_peticio
+  ADD arxiufuncionariusername VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuparamfuncionarinom VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuparamfuncionarinif VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuparamfuncionaridir3 VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamdocestatelabora VARCHAR(4);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamorigen INTEGER;
+ALTER TABLE efi_peticio
+  ADD arxiureqparaminteressats VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamciutadanif VARCHAR(15);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamciutadanom VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamorgans VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamprocedimentcodi VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamprocedimentnom VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamseriedocumental VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamexpedientid VARCHAR(255);
+
+
 
 
 ---
@@ -55,7 +91,7 @@ ALTER TABLE efi_peticio
 ALTER TABLE efi_infoarxiu ADD CONSTRAINT efi_infoarxiu_pk PRIMARY KEY (infoarxiuid);
 
 ALTER TABLE efi_peticio
-   ADD COLUMN infoarxiuid NUMBER(19);
+   ADD infoarxiuid NUMBER(19);
 
 ALTER TABLE efi_peticio
   ADD CONSTRAINT efi_peticio_infoarxiu_infoa_fk FOREIGN KEY (infoarxiuid) REFERENCES efi_infoarxiu (infoarxiuid);
