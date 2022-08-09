@@ -76,7 +76,7 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
                 PluginFields.ACTIU.equal(true));
         
         if (pluginID == null) {
-            throw new I18NException("genapp.comodi", "No hi ha cap plugin d'Estructura Organitzativa actiu");
+            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu", "Director");
         }
 
         IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
@@ -88,7 +88,6 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
         } catch (Exception e) {
             throw new I18NException("error.plugin.estructuraorganitzativa", "Director", e.getMessage());
         }
-
         log.info("El meu cap es: " + CapDepartamentDirectorGeneral);
 
         String directorNIF;
