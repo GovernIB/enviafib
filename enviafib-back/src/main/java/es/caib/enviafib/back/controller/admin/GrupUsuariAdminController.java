@@ -1,4 +1,4 @@
-package es.caib.enviafib.back.controller.user;
+package es.caib.enviafib.back.controller.admin;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController;
 import es.caib.enviafib.back.controller.webdb.GrupUsuariController;
 import es.caib.enviafib.back.form.webdb.GrupUsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.GrupUsuariForm;
@@ -29,11 +30,11 @@ import es.caib.enviafib.persistence.GrupUsuariJPA;
  */
 
 @Controller
-@RequestMapping(value = GrupUsuariUserController.CONTEXT_WEB)
+@RequestMapping(value = GrupUsuariAdminController.CONTEXT_WEB)
 @SessionAttributes(types = { GrupUsuariForm.class, GrupUsuariFilterForm.class })
-public class GrupUsuariUserController extends GrupUsuariController {
+public class GrupUsuariAdminController extends GrupUsuariController {
 
-    public static final String CONTEXT_WEB = "/user/grupusuari";
+    public static final String CONTEXT_WEB = "/admin/grupusuari";
 
     private static final String GRUPID_DE_GRUPUSUARI_A_CREAR = "GRUPID_DE_GRUPUSUARI_A_CREAR";
 
@@ -64,7 +65,7 @@ public class GrupUsuariUserController extends GrupUsuariController {
 
     @Override
     public String getTileForm() {
-        return "grupUsuariFormUser";
+        return "grupUsuariFormAdmin";
     }
 
     @Override
@@ -78,7 +79,7 @@ public class GrupUsuariUserController extends GrupUsuariController {
         Long grupID = (Long) request.getSession().getAttribute(GRUPID_DE_GRUPUSUARI_A_CREAR);
 
         if (grupID == null) {
-            mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list"));
+            mav.setView(new RedirectView(GrupAdminController.CONTEXT_WEB + "/list"));
         }
         log.info("GRUPID_DE_GRUPUSUARI_A_CREAR: " + grupID);
 
@@ -100,12 +101,12 @@ public class GrupUsuariUserController extends GrupUsuariController {
 
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, GrupUsuariForm grupUsuariForm) {
-        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+        return "redirect:" + GrupAdminController.CONTEXT_WEB + "/list";
     }
 
     @Override
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long grupUsuariID) {
-        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+        return "redirect:" + GrupAdminController.CONTEXT_WEB + "/list";
     }
 
     @PostConstruct

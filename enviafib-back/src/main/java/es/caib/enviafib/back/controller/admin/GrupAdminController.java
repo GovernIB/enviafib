@@ -1,4 +1,4 @@
-package es.caib.enviafib.back.controller.user;
+package es.caib.enviafib.back.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,11 +22,11 @@ import es.caib.enviafib.persistence.GrupJPA;
  */
 
 @Controller
-@RequestMapping(value = GrupUserController.CONTEXT_WEB)
+@RequestMapping(value = GrupAdminController.CONTEXT_WEB)
 @SessionAttributes(types = { GrupForm.class, GrupFilterForm.class })
-public class GrupUserController extends GrupController {
+public class GrupAdminController extends GrupController {
 
-    public static final String CONTEXT_WEB = "/user/grup";
+    public static final String CONTEXT_WEB = "/admin/grup";
 
     @Override
     public boolean isActiveList() {
@@ -55,12 +55,12 @@ public class GrupUserController extends GrupController {
 
     @Override
     public String getTileForm() {
-        return "grupFormUser";
+        return "grupFormAdmin";
     }
 
     @Override
     public String getTileList() {
-        return "grupListUser";
+        return "grupListAdmin";
     }
 
     @Override
@@ -83,7 +83,7 @@ public class GrupUserController extends GrupController {
         if (grupFilterForm.isNou()) {
             grupFilterForm.addHiddenField(GrupFields.GRUPID);
             grupFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-user-plus", "grup.afegir.usuari",
-                    GrupUsuariUserController.CONTEXT_WEB + "/afegirUsuariGrup/{0}", "btn-primary"));
+                    GrupUsuariAdminController.CONTEXT_WEB + "/afegirUsuariGrup/{0}", "btn-primary"));
         }
         return grupFilterForm;
     }

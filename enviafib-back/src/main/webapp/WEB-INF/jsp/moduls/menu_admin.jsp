@@ -37,6 +37,15 @@
       </a>
     </li>
 
+   
+         <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
+ 
+      <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/admin/grup/list"/>">
+        <span style="${(fn:contains(url, '/grup'))? "font-weight: bold;" : ""}"><fmt:message key="admin.menu.grup"/></span>
+      </a>
+    </li>
+
   </ul>
 </div>
 
