@@ -11,7 +11,6 @@ ALTER TABLE efi_peticio
 
 ALTER TABLE efi_usuari 
 ADD idiomaid VARCHAR(5) NOT NULL DEFAULT 'ca';
-
 ALTER TABLE efi_usuari
   ADD CONSTRAINT efi_usuari_idioma_fk FOREIGN KEY (idiomaid) REFERENCES efi_idioma (idiomaid);
 
@@ -30,18 +29,54 @@ ALTER TABLE efi_peticio
    ADD reason VARCHAR(255);
 
 
+
 ---
---- 15/07/2022 - Prepara BBDD per guardar informació retornada de la cridada a Arxiu #40
+--- 15/07/2022 - Preparar la BBDD per suportar enviament a Plugin d'Arxiu #32
 ---
 
-  CREATE SEQUENCE efi_infocustody_seq
+ALTER TABLE efi_peticio
+  ADD arxiufuncionariusername VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuparamfuncionarinom VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuparamfuncionarinif VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuparamfuncionaridir3 VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamdocestatelabora VARCHAR(4);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamorigen INTEGER;
+ALTER TABLE efi_peticio
+  ADD arxiureqparaminteressats VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamciutadanif VARCHAR(15);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamciutadanom VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiureqparamorgans VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamprocedimentcodi VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamprocedimentnom VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamseriedocumental VARCHAR(255);
+ALTER TABLE efi_peticio
+  ADD arxiuoptparamexpedientid VARCHAR(255);
+
+
+
+
+---
+--- 27/07/2022 - Prepara BBDD per guardar informació retornada de la cridada a Arxiu #40
+---
+
+  CREATE SEQUENCE efi_infoarxiu_seq
     START WITH 1000
     INCREMENT BY 1;
 
-  CREATE TABLE public.efi_infocustody
+  CREATE TABLE public.efi_infoarxiu
 (
-   infocustodyid NUMBER(19) DEFAULT efi_infocustody_seq.nextval NOT NULL,
-   custodyid VARCHAR(255), 
+   infoarxiuid NUMBER(19) DEFAULT efi_infoarxiu_seq.nextval NOT NULL,
    originalfileurl VARCHAR(255), 
    csv VARCHAR(255), 
    csvgenerationdefinition VARCHAR(255), 
@@ -50,14 +85,22 @@ ALTER TABLE efi_peticio
    arxiudocumentid VARCHAR(255), 
    printableurl VARCHAR(255), 
    enifileurl VARCHAR(255), 
-   validationfileurl VARCHAR(255), 
-   peticioid NUMBER(19)
+   validationfileurl VARCHAR(255)
 )
 
-ALTER TABLE efi_infocustody ADD CONSTRAINT efi_infocustody_pk PRIMARY KEY (infocustodyid);
+ALTER TABLE efi_infoarxiu ADD CONSTRAINT efi_infoarxiu_pk PRIMARY KEY (infoarxiuid);
 
-ALTER TABLE efi_infocustody ADD CONSTRAINT efi_infocus_peticio_petid_fk FOREIGN KEY (peticioid) REFERENCES efi_peticio;
+ALTER TABLE efi_peticio
+   ADD infoarxiuid NUMBER(19);
 
+ALTER TABLE efi_peticio
+  ADD CONSTRAINT efi_peticio_infoarxiu_infoa_fk FOREIGN KEY (infoarxiuid) REFERENCES efi_infoarxiu (infoarxiuid);
+
+CREATE INDEX efi_infoarxiu_pk_i
+  ON efi_infoarxiu (infoarxiuid);
+
+CREATE INDEX efi_usuari_idiomaid_fk_i
+  ON efi_usuari (idiomaid);
 
 
 
@@ -118,14 +161,6 @@ ALTER TABLE efi_plugin
    ADD COLUMN descripcio VARCHAR(255) NOT NULL;
 
 
----
----09/08/2022 - Errors de BBDD al Actualitzar el Projecte amb GenAPP #144
----
 
-CREATE INDEX efi_infoarxiu_pk_i
-  ON efi_infoarxiu (infoarxiuid);
-
-CREATE INDEX efi_usuari_idiomaid_fk_i
-  ON efi_usuari (idiomaid);
 
 
