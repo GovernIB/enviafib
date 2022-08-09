@@ -76,7 +76,7 @@ public class FirmaSecretariUserController extends AbstractFirmaUserController {
                 PluginFields.ACTIU.equal(true));
 
         if (pluginID == null) {
-            throw new I18NException("genapp.comodi", "No hi ha cap plugin d'Estructura Organitzativa actiu");
+            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu", "Secretari");
         }
 
         IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
@@ -93,7 +93,8 @@ public class FirmaSecretariUserController extends AbstractFirmaUserController {
         String secretariNIF;
 
         // Provam a BBDD a veure si està el NIF
-        secretariNIF = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USERNAME.equal(secretari));
+        secretariNIF = usuariEjb.executeQueryOne(UsuariFields.NIF, 
+                UsuariFields.USERNAME.equal(secretari));
         if (secretariNIF != null) {
             return secretariNIF;
         }
@@ -116,5 +117,4 @@ public class FirmaSecretariUserController extends AbstractFirmaUserController {
         log.info("El NIF del meu secretari es: " + secretariNIF);
         return secretariNIF;
     }
-
 }
