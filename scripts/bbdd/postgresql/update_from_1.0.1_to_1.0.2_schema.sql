@@ -86,7 +86,7 @@ ALTER TABLE efi_peticio
    arxiudocumentid character varying(255), 
    printableurl character varying(255), 
    enifileurl character varying(255), 
-   validationfileurl character varying(255), 
+   validationfileurl character varying(255)
 );
 
 ALTER TABLE efi_infoarxiu
