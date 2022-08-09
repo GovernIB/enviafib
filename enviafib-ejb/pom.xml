@@ -7,7 +7,7 @@
     <parent>
         <groupId>es.caib.enviafib</groupId>
         <artifactId>enviafib</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
     </parent>
 
     <name>EnviaFIB - EJB</name>
@@ -162,7 +162,7 @@
 	<dependency>
 		<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
 		<artifactId>pluginsib-estructuraorganitzativa-api</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.3</version>
 	</dependency>
 	
         <!--

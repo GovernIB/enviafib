@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.caib.enviafib</groupId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<artifactId>enviafib</artifactId>
 	<packaging>pom</packaging>
 	<name>EnviaFIB</name>
@@ -350,7 +350,6 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			
 			<!-- Gestió de versions de dependències/plugins -->
 			<!-- Veure: https://www.mojohaus.org/versions-maven-plugin/ -->
 			<plugin>
@@ -419,8 +418,66 @@
 					</replacements>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<altDeploymentRepository>
+            internal.repo::default::file://${project.build.directory}/mvn-repo
+          </altDeploymentRepository>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.12</version>
+				<configuration>
+					<!-- git commit message -->
+					<message>Maven artifacts for ${project.version}</message>
+					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+					<noJekyll>true</noJekyll>
+					<!-- remote branch name -->
+					<branch>refs/heads/gh-pages</branch>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<path>maven</path>
+					<!-- github repo name -->
+					<repositoryName>maven</repositoryName>
+					<!-- github username or organization  -->
+					<repositoryOwner>GovernIB</repositoryOwner>
+					<server>github_governib_maven</server>
+					<merge>true</merge>
+					<dryRun>false</dryRun>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<repository>
+			<id>github_governib_maven</id>
+			<name>GitHub GovernIB Maven Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
+	<!--   COM UTILITZAR: AFEGIR AQUEST CODI AL pom.xml    -->
+	<!--
+        <repositories>
+           <repository>
+             <id>github-governib-maven-repos</id>
+             <name>GitHub GovernIB Maven Repository</name>
+             <url>https://governib.github.io/maven/maven/</url>
+           </repository>
+        </repositories>
+  -->
 	<profiles>
 		<profile>
 			<id>revisionnumber</id>
