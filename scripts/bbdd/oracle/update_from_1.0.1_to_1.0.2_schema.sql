@@ -31,7 +31,7 @@ ALTER TABLE efi_peticio
 
 
 ---
---- 15/07/2022 - Prepara BBDD per guardar informació retornada de la cridada a Arxiu #40
+--- 27/07/2022 - Prepara BBDD per guardar informació retornada de la cridada a Arxiu #40
 ---
 
   CREATE SEQUENCE efi_infoarxiu_seq
@@ -49,14 +49,16 @@ ALTER TABLE efi_peticio
    arxiudocumentid VARCHAR(255), 
    printableurl VARCHAR(255), 
    enifileurl VARCHAR(255), 
-   validationfileurl VARCHAR(255), 
-   peticioid NUMBER(19)
+   validationfileurl VARCHAR(255)
 )
 
-ALTER TABLE efi_infoarxiu ADD CONSTRAINT efi_infoarxiu_pk PRIMARY KEY (infocustodyid);
+ALTER TABLE efi_infoarxiu ADD CONSTRAINT efi_infoarxiu_pk PRIMARY KEY (infoarxiuid);
 
-ALTER TABLE efi_infocustody ADD CONSTRAINT efi_infocus_peticio_petid_fk FOREIGN KEY (peticioid) REFERENCES efi_peticio;
+ALTER TABLE efi_peticio
+   ADD COLUMN infoarxiuid NUMBER(19);
 
+ALTER TABLE efi_peticio
+  ADD CONSTRAINT efi_peticio_infoarxiu_infoa_fk FOREIGN KEY (infoarxiuid) REFERENCES efi_infoarxiu (infoarxiuid);
 
 CREATE INDEX efi_infoarxiu_pk_i
   ON efi_infoarxiu (infoarxiuid);
@@ -122,10 +124,6 @@ ALTER TABLE efi_plugin
 ALTER TABLE efi_plugin 
    ADD COLUMN descripcio VARCHAR(255) NOT NULL;
 
-
----
----09/08/2022 - Errors de BBDD al Actualitzar el Projecte amb GenAPP #144
----
 
 
 
