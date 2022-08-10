@@ -30,10 +30,6 @@ private static final long serialVersionUID = 736798134L;
     this.nom=nom;
     this.descripcio=descripcio;
 }
-  /** Constructor dels valors Not Null */
-  public GrupBean(long grupID) {
-    this.grupID=grupID;
-}
   public GrupBean(Grup __bean) {
     this.setGrupID(__bean.getGrupID());
     this.setNom(__bean.getNom());

@@ -30,6 +30,10 @@ public class GrupValidator<I extends Grup>
     ,es.caib.enviafib.model.dao.IGrupManager __grupManager) {
 
     // Valors Not Null
+    __vr.rejectIfEmptyOrWhitespace(__target__,NOM, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOM)));
+
     // Check size
     if (__vr.getFieldErrorCount(NOM) == 0) {
       java.lang.String __nom = __target__.getNom();

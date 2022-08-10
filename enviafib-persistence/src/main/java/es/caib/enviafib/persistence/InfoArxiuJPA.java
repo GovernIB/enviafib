@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
-import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.FetchType;
@@ -16,8 +15,7 @@ import javax.persistence.Id;
 
 
 @Entity(name = "InfoArxiuJPA")
-@Table(name = "efi_infoarxiu" , indexes = { 
-        @Index(name="efi_infoarxiu_pk_i", columnList = "infoarxiuid")})
+@Table(name = "efi_infoarxiu" )
 @SequenceGenerator(name="INFOARXIU_SEQ", sequenceName="efi_infoarxiu_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class InfoArxiuJPA implements InfoArxiu {

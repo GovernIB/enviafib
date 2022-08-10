@@ -31,7 +31,7 @@ private static final long serialVersionUID = 1963437333L;
     @Column(name="grupid",nullable = false,length = 19)
     long grupID;
 
-    @Column(name="nom",length = 255)
+    @Column(name="nom",nullable = false,length = 255)
     java.lang.String nom;
 
     @Column(name="descripcio",length = 255)
@@ -53,10 +53,6 @@ private static final long serialVersionUID = 1963437333L;
   public GrupJPA(java.lang.String nom , java.lang.String descripcio) {
     this.nom=nom;
     this.descripcio=descripcio;
-}
-  /** Constructor dels valors Not Null */
-  public GrupJPA(long grupID) {
-    this.grupID=grupID;
 }
   public GrupJPA(Grup __bean) {
     this.setGrupID(__bean.getGrupID());

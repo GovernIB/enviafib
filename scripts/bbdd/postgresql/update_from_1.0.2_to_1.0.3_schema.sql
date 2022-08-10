@@ -1,0 +1,2 @@
+ALTER TABLE efi_grup
+   ALTER COLUMN nom SET NOT NULL;
