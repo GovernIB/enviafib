@@ -21,5 +21,6 @@ IF %jver% LSS 11 (
   echo Java version is too low, echo at least 11 is needed
   exit /b 1
 ) ELSE (
-  call mvn exec:java
+  set MAVEN_OPTS=-Dfile.encoding=UTF-8
+  mvn exec:java
 )
