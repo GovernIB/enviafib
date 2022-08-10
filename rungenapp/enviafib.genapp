@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="11" class="java.beans.XMLDecoder">
+<java version="11.0.11" class="java.beans.XMLDecoder">
  <object class="org.fundaciobit.genapp.Project" id="Project0">
   <void class="org.fundaciobit.genapp.Project" method="getField">
    <string>projectName</string>
@@ -7813,14 +7813,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field1" method="getField">
  <string>labels</string>
  <void id="HashMap0" method="get">
-  <object idref="FieldInfo7"/>
+  <object idref="FieldInfo28"/>
   <void method="put">
    <string>ca</string>
-   <string>Descripció</string>
+   <string>Algorisme de signatura</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Descripción</string>
+   <string>Algoritmo de firma</string>
   </void>
  </void>
 </void>
@@ -7828,6 +7828,21 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field2" method="getField">
  <string>labels</string>
  <void id="HashMap1" method="get">
+  <object idref="FieldInfo26"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Operació de firma</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Operación de firma</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap1"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field3" method="getField">
+ <string>labels</string>
+ <void id="HashMap2" method="get">
   <object idref="FieldInfo2"/>
   <void method="put">
    <string>en</string>
@@ -7847,41 +7862,18 @@
   </void>
  </void>
 </void>
-<void idref="HashMap1"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field3" method="getField">
- <string>labels</string>
- <void id="HashMap2" method="get">
-  <object idref="FieldInfo39"/>
-  <void method="put">
-   <string>es</string>
-   <string>Check NIF firmante</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Check NIF signant</string>
-  </void>
- </void>
-</void>
 <void idref="HashMap2"/>
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field4" method="getField">
  <string>labels</string>
  <void id="HashMap3" method="get">
-  <object idref="FieldInfo12"/>
-  <void method="put">
-   <string>en</string>
-   <string>Name</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
-  </void>
+  <object idref="FieldInfo76"/>
   <void method="put">
    <string>es</string>
    <string>Nombre</string>
   </void>
   <void method="put">
-   <string>de</string>
-   <string>Name</string>
+   <string>ca</string>
+   <string>Nom</string>
   </void>
  </void>
 </void>
@@ -7889,22 +7881,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field5" method="getField">
  <string>labels</string>
  <void id="HashMap4" method="get">
-  <object idref="FieldInfo1"/>
-  <void method="put">
-   <string>en</string>
-   <string>Name</string>
-  </void>
+  <object idref="FieldInfo38"/>
   <void method="put">
    <string>ca</string>
-   <string>Nom</string>
+   <string>Nivell de signatura ENI</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Nombre</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>Name</string>
+   <string>Nivel de firma ENI</string>
   </void>
  </void>
 </void>
@@ -7912,14 +7896,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field6" method="getField">
  <string>labels</string>
  <void id="HashMap5" method="get">
-  <object idref="FieldInfo95"/>
-  <void method="put">
-   <string>es</string>
-   <string>Email</string>
-  </void>
+  <object idref="FieldInfo68"/>
   <void method="put">
    <string>ca</string>
-   <string>Email</string>
+   <string>Codis DIR3 dels òrgans afectats</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Códigos DIR3 de los òrganos afectados</string>
   </void>
  </void>
 </void>
@@ -7927,14 +7911,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field7" method="getField">
  <string>labels</string>
  <void id="HashMap6" method="get">
-  <object idref="FieldInfo54"/>
+  <object idref="FieldInfo79"/>
   <void method="put">
    <string>es</string>
-   <string>InfoSignaturaID</string>
+   <string>Properties</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>InfoSignaturaID</string>
+   <string>Properties</string>
   </void>
  </void>
 </void>
@@ -7942,14 +7926,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field8" method="getField">
  <string>labels</string>
  <void id="HashMap7" method="get">
-  <object idref="FieldInfo72"/>
+  <object idref="FieldInfo49"/>
   <void method="put">
    <string>es</string>
-   <string>Expediente ID</string>
+   <string>NIF destinatario</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Expedient ID</string>
+   <string>NIF destinatari</string>
   </void>
  </void>
 </void>
@@ -7957,7 +7941,7 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field9" method="getField">
  <string>labels</string>
  <void id="HashMap8" method="get">
-  <object idref="FieldInfo75"/>
+  <object idref="FieldInfo89"/>
   <void method="put">
    <string>ca</string>
    <string>ID</string>
@@ -7972,14 +7956,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field10" method="getField">
  <string>labels</string>
  <void id="HashMap9" method="get">
-  <object idref="FieldInfo51"/>
-  <void method="put">
-   <string>es</string>
-   <string>FitxerFirmatID</string>
-  </void>
+  <object idref="FieldInfo41"/>
   <void method="put">
    <string>ca</string>
-   <string>FitxerFirmatID</string>
+   <string>Check validació firma</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Check validación firma</string>
   </void>
  </void>
 </void>
@@ -7987,14 +7971,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field11" method="getField">
  <string>labels</string>
  <void id="HashMap10" method="get">
-  <object idref="FieldInfo71"/>
-  <void method="put">
-   <string>es</string>
-   <string>Serie Documental</string>
-  </void>
+  <object idref="FieldInfo67"/>
   <void method="put">
    <string>ca</string>
-   <string>Serie Documental</string>
+   <string>Ciutadà Nom</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Ciudadano Nombre</string>
   </void>
  </void>
 </void>
@@ -8002,14 +7986,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field12" method="getField">
  <string>labels</string>
  <void id="HashMap11" method="get">
-  <object idref="FieldInfo18"/>
-  <void method="put">
-   <string>es</string>
-   <string>Definició de Generació del CSV</string>
-  </void>
+  <object idref="FieldInfo83"/>
   <void method="put">
    <string>ca</string>
-   <string>Definició de Generació del CSV</string>
+   <string>Nom</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
   </void>
  </void>
 </void>
@@ -8017,559 +8001,6 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field13" method="getField">
  <string>labels</string>
  <void id="HashMap12" method="get">
-  <object idref="FieldInfo42"/>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap12"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field14" method="getField">
- <string>labels</string>
- <void id="HashMap13" method="get">
-  <object idref="FieldInfo22"/>
-  <void method="put">
-   <string>es</string>
-   <string>URL al Fitxer Imprimible</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>URL al Fichero Imprimible</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap13"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field15" method="getField">
- <string>labels</string>
- <void id="HashMap14" method="get">
-  <object idref="FieldInfo67"/>
-  <void method="put">
-   <string>es</string>
-   <string>Ciudadano Nombre</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Ciutadà Nom</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap14"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field16" method="getField">
- <string>labels</string>
- <void id="HashMap15" method="get">
-  <object idref="FieldInfo20"/>
-  <void method="put">
-   <string>es</string>
-   <string>ID de Expediente</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID d´Expedient</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap15"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field17" method="getField">
- <string>labels</string>
- <void id="HashMap16" method="get">
-  <object idref="FieldInfo23"/>
-  <void method="put">
-   <string>es</string>
-   <string>URL al Document ENI</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>URL al Document ENI</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap16"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field18" method="getField">
- <string>labels</string>
- <void id="HashMap17" method="get">
-  <object idref="FieldInfo79"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Properties</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Properties</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap17"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field19" method="getField">
- <string>labels</string>
- <void id="HashMap18" method="get">
-  <object idref="FieldInfo9"/>
-  <void method="put">
-   <string>es</string>
-   <string>Grupo</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Grup</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap18"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field20" method="getField">
- <string>labels</string>
- <void id="HashMap19" method="get">
-  <object idref="FieldInfo47"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Sol·licitant</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Solicitante</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap19"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field21" method="getField">
- <string>labels</string>
- <void id="HashMap20" method="get">
-  <object idref="FieldInfo38"/>
-  <void method="put">
-   <string>es</string>
-   <string>Nivel de firma ENI</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Nivell de signatura ENI</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap20"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field22" method="getField">
- <string>labels</string>
- <void id="HashMap21" method="get">
-  <object idref="FieldInfo44"/>
-  <void method="put">
-   <string>es</string>
-   <string>Creada</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Creada</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap21"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field23" method="getField">
- <string>labels</string>
- <void id="HashMap22" method="get">
-  <object idref="FieldInfo89"/>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap22"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field24" method="getField">
- <string>labels</string>
- <void id="HashMap23" method="get">
-  <object idref="FieldInfo53"/>
-  <void method="put">
-   <string>es</string>
-   <string>Idioma Documento</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Idioma Document</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap23"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field25" method="getField">
- <string>labels</string>
- <void id="HashMap24" method="get">
-  <object idref="FieldInfo78"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Classe</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Clase</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap24"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field26" method="getField">
- <string>labels</string>
- <void id="HashMap25" method="get">
-  <object idref="FieldInfo59"/>
-  <void method="put">
-   <string>es</string>
-   <string>Reason</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Reason</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap25"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field27" method="getField">
- <string>labels</string>
- <void id="HashMap26" method="get">
-  <object idref="FieldInfo91"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Nombre</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap26"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field28" method="getField">
- <string>labels</string>
- <void id="HashMap27" method="get">
-  <object idref="FieldInfo4"/>
-  <void method="put">
-   <string>en</string>
-   <string>Description</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Descripció</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Descripcion</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>Description</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap27"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field29" method="getField">
- <string>labels</string>
- <void id="HashMap28" method="get">
-  <object idref="FieldInfo83"/>
-  <void method="put">
-   <string>es</string>
-   <string>Nombre</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap28"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field30" method="getField">
- <string>labels</string>
- <void id="HashMap29" method="get">
-  <object idref="FieldInfo36"/>
-  <void method="put">
-   <string>es</string>
-   <string>Nombre firmante ENI</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom signant ENI</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap29"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field31" method="getField">
- <string>labels</string>
- <void id="HashMap30" method="get">
-  <object idref="FieldInfo27"/>
-  <void method="put">
-   <string>es</string>
-   <string>Tipo de firma</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Tipus de signatura</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap30"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field32" method="getField">
- <string>labels</string>
- <void id="HashMap31" method="get">
-  <object idref="FieldInfo86"/>
-  <void method="put">
-   <string>ca</string>
-   <string>idiomadoc</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>idiomadoc</string>
-  </void>
-  <void method="put">
-   <string>en</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap31"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field33" method="getField">
- <string>labels</string>
- <void id="HashMap32" method="get">
-  <object idref="FieldInfo69"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Procediment Codi</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Procedimiento Código</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap32"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field34" method="getField">
- <string>labels</string>
- <void id="HashMap33" method="get">
-  <object idref="FieldInfo28"/>
-  <void method="put">
-   <string>es</string>
-   <string>Algoritmo de firma</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Algorisme de signatura</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap33"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field35" method="getField">
- <string>labels</string>
- <void id="HashMap34" method="get">
-  <object idref="FieldInfo16"/>
-  <void method="put">
-   <string>ca</string>
-   <string>URL al Fitxer Original</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>URL al Fichero Original</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap34"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field36" method="getField">
- <string>labels</string>
- <void id="HashMap35" method="get">
-  <object idref="FieldInfo6"/>
-  <void method="put">
-   <string>es</string>
-   <string>Nombre</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap35"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field37" method="getField">
- <string>labels</string>
- <void id="HashMap36" method="get">
-  <object idref="FieldInfo0"/>
-  <void method="put">
-   <string>en</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap36"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field38" method="getField">
- <string>labels</string>
- <void id="HashMap37" method="get">
-  <object idref="FieldInfo48"/>
-  <void method="put">
-   <string>es</string>
-   <string>Idioma</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Idioma</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap37"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field39" method="getField">
- <string>labels</string>
- <void id="HashMap38" method="get">
-  <object idref="FieldInfo65"/>
-  <void method="put">
-   <string>es</string>
-   <string>NIF de interesados, separados por comas</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>NIF d´interessats, separats per comes</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap38"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field40" method="getField">
- <string>labels</string>
- <void id="HashMap39" method="get">
-  <object idref="FieldInfo63"/>
-  <void method="put">
-   <string>es</string>
-   <string>Funcionario Unidad Dir3</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Funcionari Unitat Dir3</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap39"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field41" method="getField">
- <string>labels</string>
- <void id="HashMap40" method="get">
-  <object idref="FieldInfo60"/>
-  <void method="put">
-   <string>es</string>
-   <string>Funcionario Username</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Funcionari Username</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap40"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field42" method="getField">
- <string>labels</string>
- <void id="HashMap41" method="get">
-  <object idref="FieldInfo21"/>
-  <void method="put">
-   <string>ca</string>
-   <string>ID de Document</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>ID de Documento</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap41"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field43" method="getField">
- <string>labels</string>
- <void id="HashMap42" method="get">
-  <object idref="FieldInfo30"/>
-  <void method="put">
-   <string>es</string>
-   <string>Posición tabla de firmas</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Posició taula de firmes</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap42"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field44" method="getField">
- <string>labels</string>
- <void id="HashMap43" method="get">
-  <object idref="FieldInfo80"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Actiu</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Activo</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap43"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field45" method="getField">
- <string>labels</string>
- <void id="HashMap44" method="get">
-  <object idref="FieldInfo87"/>
-  <void method="put">
-   <string>en</string>
-   <string>idiomaID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>idiomaID</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>idiomaID</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>idiomaid</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap44"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field46" method="getField">
- <string>labels</string>
- <void id="HashMap45" method="get">
-  <object idref="FieldInfo92"/>
-  <void method="put">
-   <string>es</string>
-   <string>Apellido</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Llintage</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap45"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field47" method="getField">
- <string>labels</string>
- <void id="HashMap46" method="get">
-  <object idref="FieldInfo15"/>
-  <void method="put">
-   <string>es</string>
-   <string>InfoArxiuID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>InfoArxiuID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap46"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field48" method="getField">
- <string>labels</string>
- <void id="HashMap47" method="get">
   <object idref="FieldInfo14"/>
   <void method="put">
    <string>en</string>
@@ -8589,146 +8020,70 @@
   </void>
  </void>
 </void>
-<void idref="HashMap47"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field49" method="getField">
+<void idref="HashMap12"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field14" method="getField">
  <string>labels</string>
- <void id="HashMap48" method="get">
-  <object idref="FieldInfo52"/>
-  <void method="put">
-   <string>es</string>
-   <string>Tipo documental</string>
-  </void>
+ <void id="HashMap13" method="get">
+  <object idref="FieldInfo54"/>
   <void method="put">
    <string>ca</string>
-   <string>Tipus documental</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap48"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field50" method="getField">
- <string>labels</string>
- <void id="HashMap49" method="get">
-  <object idref="FieldInfo64"/>
-  <void method="put">
-   <string>es</string>
-   <string>Documento Estato Elaboración</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Document Estat Elaboració</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap49"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field51" method="getField">
- <string>labels</string>
- <void id="HashMap50" method="get">
-  <object idref="FieldInfo40"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Té modificacions</string>
+   <string>InfoSignaturaID</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Tiene modificaciones</string>
+   <string>InfoSignaturaID</string>
   </void>
  </void>
 </void>
-<void idref="HashMap50"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field52" method="getField">
+<void idref="HashMap13"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field15" method="getField">
  <string>labels</string>
- <void id="HashMap51" method="get">
-  <object idref="FieldInfo45"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Finalitzada</string>
-  </void>
+ <void id="HashMap14" method="get">
+  <object idref="FieldInfo80"/>
   <void method="put">
    <string>es</string>
-   <string>Finalizada</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap51"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field53" method="getField">
- <string>labels</string>
- <void id="HashMap52" method="get">
-  <object idref="FieldInfo88"/>
-  <void method="put">
-   <string>en</string>
-   <string>Value</string>
+   <string>Activo</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Valor</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Valor</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>Value</string>
+   <string>Actiu</string>
   </void>
  </void>
 </void>
-<void idref="HashMap52"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field54" method="getField">
+<void idref="HashMap14"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field16" method="getField">
  <string>labels</string>
- <void id="HashMap53" method="get">
-  <object idref="FieldInfo3"/>
+ <void id="HashMap15" method="get">
+  <object idref="FieldInfo70"/>
   <void method="put">
-   <string>en</string>
-   <string>Size</string>
+   <string>es</string>
+   <string>Procedimiento Nombre</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Tamany</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Tamaño</string>
-  </void>
-  <void method="put">
-   <string>de</string>
-   <string>Size</string>
+   <string>Procediment Nom</string>
   </void>
  </void>
 </void>
-<void idref="HashMap53"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field55" method="getField">
+<void idref="HashMap15"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field17" method="getField">
  <string>labels</string>
- <void id="HashMap54" method="get">
-  <object idref="FieldInfo33"/>
-  <void method="put">
-   <string>es</string>
-   <string>TIpo firma ENI</string>
-  </void>
+ <void id="HashMap16" method="get">
+  <object idref="FieldInfo32"/>
   <void method="put">
    <string>ca</string>
-   <string>Tipus signatura ENI</string>
+   <string>Inclou politica de signatura</string>
   </void>
- </void>
-</void>
-<void idref="HashMap54"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field56" method="getField">
- <string>labels</string>
- <void id="HashMap55" method="get">
-  <object idref="FieldInfo84"/>
   <void method="put">
    <string>es</string>
-   <string>Tipo Documental</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Tipus Documental</string>
+   <string>Incluye política de firma</string>
   </void>
  </void>
 </void>
-<void idref="HashMap55"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field57" method="getField">
+<void idref="HashMap16"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field18" method="getField">
  <string>labels</string>
- <void id="HashMap56" method="get">
+ <void id="HashMap17" method="get">
   <object idref="FieldInfo11"/>
   <void method="put">
    <string>en</string>
@@ -8748,146 +8103,11 @@
   </void>
  </void>
 </void>
-<void idref="HashMap56"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field58" method="getField">
+<void idref="HashMap17"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field19" method="getField">
  <string>labels</string>
- <void id="HashMap57" method="get">
-  <object idref="FieldInfo26"/>
-  <void method="put">
-   <string>es</string>
-   <string>Operación de firma</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Operació de firma</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap57"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field59" method="getField">
- <string>labels</string>
- <void id="HashMap58" method="get">
-  <object idref="FieldInfo90"/>
-  <void method="put">
-   <string>es</string>
-   <string>Username</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Username</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap58"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field60" method="getField">
- <string>labels</string>
- <void id="HashMap59" method="get">
-  <object idref="FieldInfo66"/>
-  <void method="put">
-   <string>es</string>
-   <string>Ciudadano Nif</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Ciutada Nif</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap59"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field61" method="getField">
- <string>labels</string>
- <void id="HashMap60" method="get">
-  <object idref="FieldInfo70"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Procediment Nom</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Procedimiento Nombre</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap60"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field62" method="getField">
- <string>labels</string>
- <void id="HashMap61" method="get">
-  <object idref="FieldInfo31"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Inclou segell de temps</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Incluye sello de tiempo</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap61"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field63" method="getField">
- <string>labels</string>
- <void id="HashMap62" method="get">
-  <object idref="FieldInfo37"/>
-  <void method="put">
-   <string>ca</string>
-   <string>NIF signant ENI</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>NIF firmante ENI</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap62"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field64" method="getField">
- <string>labels</string>
- <void id="HashMap63" method="get">
-  <object idref="FieldInfo32"/>
-  <void method="put">
-   <string>es</string>
-   <string>Incluye política de firma</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Inclou politica de signatura</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap63"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field65" method="getField">
- <string>labels</string>
- <void id="HashMap64" method="get">
-  <object idref="FieldInfo82"/>
-  <void method="put">
-   <string>es</string>
-   <string>ID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>ID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap64"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field66" method="getField">
- <string>labels</string>
- <void id="HashMap65" method="get">
-  <object idref="FieldInfo93"/>
-  <void method="put">
-   <string>es</string>
-   <string>Segundo Apellido</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Segon Llinatge</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap65"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field67" method="getField">
- <string>labels</string>
- <void id="HashMap66" method="get">
-  <object idref="FieldInfo81"/>
+ <void id="HashMap18" method="get">
+  <object idref="FieldInfo55"/>
   <void method="put">
    <string>ca</string>
    <string>Tipus</string>
@@ -8898,10 +8118,499 @@
   </void>
  </void>
 </void>
-<void idref="HashMap66"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field68" method="getField">
+<void idref="HashMap18"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field20" method="getField">
  <string>labels</string>
- <void id="HashMap67" method="get">
+ <void id="HashMap19" method="get">
+  <object idref="FieldInfo36"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom signant ENI</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre firmante ENI</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap19"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field21" method="getField">
+ <string>labels</string>
+ <void id="HashMap20" method="get">
+  <object idref="FieldInfo48"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Idioma</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Idioma</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap20"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field22" method="getField">
+ <string>labels</string>
+ <void id="HashMap21" method="get">
+  <object idref="FieldInfo58"/>
+  <void method="put">
+   <string>es</string>
+   <string>Peticio Portafirmas</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Petició Portafirmes</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap21"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field23" method="getField">
+ <string>labels</string>
+ <void id="HashMap22" method="get">
+  <object idref="FieldInfo60"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Funcionari Username</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Funcionario Username</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap22"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field24" method="getField">
+ <string>labels</string>
+ <void id="HashMap23" method="get">
+  <object idref="FieldInfo15"/>
+  <void method="put">
+   <string>ca</string>
+   <string>InfoArxiuID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>InfoArxiuID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap23"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field25" method="getField">
+ <string>labels</string>
+ <void id="HashMap24" method="get">
+  <object idref="FieldInfo12"/>
+  <void method="put">
+   <string>en</string>
+   <string>Name</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Name</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap24"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field26" method="getField">
+ <string>labels</string>
+ <void id="HashMap25" method="get">
+  <object idref="FieldInfo3"/>
+  <void method="put">
+   <string>en</string>
+   <string>Size</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Tamany</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Tamaño</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Size</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap25"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field27" method="getField">
+ <string>labels</string>
+ <void id="HashMap26" method="get">
+  <object idref="FieldInfo43"/>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap26"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field28" method="getField">
+ <string>labels</string>
+ <void id="HashMap27" method="get">
+  <object idref="FieldInfo50"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Estat</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Estado</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap27"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field29" method="getField">
+ <string>labels</string>
+ <void id="HashMap28" method="get">
+  <object idref="FieldInfo31"/>
+  <void method="put">
+   <string>es</string>
+   <string>Incluye sello de tiempo</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Inclou segell de temps</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap28"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field30" method="getField">
+ <string>labels</string>
+ <void id="HashMap29" method="get">
+  <object idref="FieldInfo53"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Idioma Document</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Idioma Documento</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap29"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field31" method="getField">
+ <string>labels</string>
+ <void id="HashMap30" method="get">
+  <object idref="FieldInfo23"/>
+  <void method="put">
+   <string>ca</string>
+   <string>URL al Document ENI</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>URL al Document ENI</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap30"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field32" method="getField">
+ <string>labels</string>
+ <void id="HashMap31" method="get">
+  <object idref="FieldInfo39"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Check NIF signant</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Check NIF firmante</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap31"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field33" method="getField">
+ <string>labels</string>
+ <void id="HashMap32" method="get">
+  <object idref="FieldInfo27"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Tipus de signatura</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Tipo de firma</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap32"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field34" method="getField">
+ <string>labels</string>
+ <void id="HashMap33" method="get">
+  <object idref="FieldInfo20"/>
+  <void method="put">
+   <string>ca</string>
+   <string>ID d´Expedient</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>ID de Expediente</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap33"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field35" method="getField">
+ <string>labels</string>
+ <void id="HashMap34" method="get">
+  <object idref="FieldInfo51"/>
+  <void method="put">
+   <string>ca</string>
+   <string>FitxerFirmatID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>FitxerFirmatID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap34"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field36" method="getField">
+ <string>labels</string>
+ <void id="HashMap35" method="get">
+  <object idref="FieldInfo24"/>
+  <void method="put">
+   <string>ca</string>
+   <string>URL de Validació del Document</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>URL de Validación del Documento</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap35"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field37" method="getField">
+ <string>labels</string>
+ <void id="HashMap36" method="get">
+  <object idref="FieldInfo34"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Perfil signatura ENI</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Perfil firma ENI</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap36"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field38" method="getField">
+ <string>labels</string>
+ <void id="HashMap37" method="get">
+  <object idref="FieldInfo18"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Definició de Generació del CSV</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Definició de Generació del CSV</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap37"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field39" method="getField">
+ <string>labels</string>
+ <void id="HashMap38" method="get">
+  <object idref="FieldInfo92"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Llintage</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Apellido</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap38"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field40" method="getField">
+ <string>labels</string>
+ <void id="HashMap39" method="get">
+  <object idref="FieldInfo57"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Excepció de l&apos;error</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Excepción del error</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap39"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field41" method="getField">
+ <string>labels</string>
+ <void id="HashMap40" method="get">
+  <object idref="FieldInfo6"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap40"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field42" method="getField">
+ <string>labels</string>
+ <void id="HashMap41" method="get">
+  <object idref="FieldInfo96"/>
+  <void method="put">
+   <string>es</string>
+   <string>Idioma</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Idioma</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap41"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field43" method="getField">
+ <string>labels</string>
+ <void id="HashMap42" method="get">
+  <object idref="FieldInfo21"/>
+  <void method="put">
+   <string>es</string>
+   <string>ID de Documento</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>ID de Document</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap42"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field44" method="getField">
+ <string>labels</string>
+ <void id="HashMap43" method="get">
+  <object idref="FieldInfo77"/>
+  <void method="put">
+   <string>es</string>
+   <string>Descripción</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Descripció</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap43"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field45" method="getField">
+ <string>labels</string>
+ <void id="HashMap44" method="get">
+  <object idref="FieldInfo82"/>
+  <void method="put">
+   <string>ca</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap44"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field46" method="getField">
+ <string>labels</string>
+ <void id="HashMap45" method="get">
+  <object idref="FieldInfo0"/>
+  <void method="put">
+   <string>en</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap45"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field47" method="getField">
+ <string>labels</string>
+ <void id="HashMap46" method="get">
+  <object idref="FieldInfo33"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Tipus signatura ENI</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>TIpo firma ENI</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap46"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field48" method="getField">
+ <string>labels</string>
+ <void id="HashMap47" method="get">
+  <object idref="FieldInfo63"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Funcionari Unitat Dir3</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Funcionario Unidad Dir3</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap47"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field49" method="getField">
+ <string>labels</string>
+ <void id="HashMap48" method="get">
+  <object idref="FieldInfo66"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Ciutada Nif</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Ciudadano Nif</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap48"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field50" method="getField">
+ <string>labels</string>
+ <void id="HashMap49" method="get">
+  <object idref="FieldInfo72"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Expedient ID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Expediente ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap49"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field51" method="getField">
+ <string>labels</string>
+ <void id="HashMap50" method="get">
   <object idref="FieldInfo85"/>
   <void method="put">
    <string>en</string>
@@ -8921,205 +8630,131 @@
   </void>
  </void>
 </void>
-<void idref="HashMap67"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field69" method="getField">
+<void idref="HashMap50"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field52" method="getField">
  <string>labels</string>
- <void id="HashMap68" method="get">
-  <object idref="FieldInfo29"/>
+ <void id="HashMap51" method="get">
+  <object idref="FieldInfo75"/>
   <void method="put">
    <string>es</string>
-   <string>Modo de firma</string>
+   <string>ID</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Mode de signatura</string>
+   <string>ID</string>
   </void>
  </void>
 </void>
-<void idref="HashMap68"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field70" method="getField">
+<void idref="HashMap51"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field53" method="getField">
  <string>labels</string>
- <void id="HashMap69" method="get">
-  <object idref="FieldInfo55"/>
-  <void method="put">
-   <string>es</string>
-   <string>Tipo</string>
-  </void>
+ <void id="HashMap52" method="get">
+  <object idref="FieldInfo93"/>
   <void method="put">
    <string>ca</string>
-   <string>Tipus</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap69"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field71" method="getField">
- <string>labels</string>
- <void id="HashMap70" method="get">
-  <object idref="FieldInfo5"/>
-  <void method="put">
-   <string>es</string>
-   <string>grupID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>grupID</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap70"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field72" method="getField">
- <string>labels</string>
- <void id="HashMap71" method="get">
-  <object idref="FieldInfo43"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Nom</string>
+   <string>Segon Llinatge</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Nombre</string>
+   <string>Segundo Apellido</string>
   </void>
  </void>
 </void>
-<void idref="HashMap71"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field73" method="getField">
+<void idref="HashMap52"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field54" method="getField">
  <string>labels</string>
- <void id="HashMap72" method="get">
-  <object idref="FieldInfo73"/>
+ <void id="HashMap53" method="get">
+  <object idref="FieldInfo90"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Username</string>
+  </void>
   <void method="put">
    <string>es</string>
-   <string>Origen</string>
+   <string>Username</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap53"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field55" method="getField">
+ <string>labels</string>
+ <void id="HashMap54" method="get">
+  <object idref="FieldInfo87"/>
+  <void method="put">
+   <string>en</string>
+   <string>idiomaID</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Origen</string>
+   <string>idiomaID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>idiomaID</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>idiomaid</string>
   </void>
  </void>
 </void>
-<void idref="HashMap72"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field74" method="getField">
+<void idref="HashMap54"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field56" method="getField">
  <string>labels</string>
- <void id="HashMap73" method="get">
-  <object idref="FieldInfo77"/>
+ <void id="HashMap55" method="get">
+  <object idref="FieldInfo45"/>
+  <void method="put">
+   <string>es</string>
+   <string>Finalizada</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Finalitzada</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap55"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field57" method="getField">
+ <string>labels</string>
+ <void id="HashMap56" method="get">
+  <object idref="FieldInfo4"/>
+  <void method="put">
+   <string>en</string>
+   <string>Description</string>
+  </void>
   <void method="put">
    <string>ca</string>
    <string>Descripció</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Descripción</string>
+   <string>Descripcion</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Description</string>
   </void>
  </void>
 </void>
-<void idref="HashMap73"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field75" method="getField">
+<void idref="HashMap56"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field58" method="getField">
  <string>labels</string>
- <void id="HashMap74" method="get">
-  <object idref="FieldInfo41"/>
+ <void id="HashMap57" method="get">
+  <object idref="FieldInfo37"/>
   <void method="put">
    <string>es</string>
-   <string>Check validación firma</string>
+   <string>NIF firmante ENI</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Check validació firma</string>
+   <string>NIF signant ENI</string>
   </void>
  </void>
 </void>
-<void idref="HashMap74"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field76" method="getField">
+<void idref="HashMap57"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field59" method="getField">
  <string>labels</string>
- <void id="HashMap75" method="get">
-  <object idref="FieldInfo17"/>
-  <void method="put">
-   <string>es</string>
-   <string>Código Seguro Verificación (CSV)</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Codi Segur Verificació (CSV)</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap75"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field77" method="getField">
- <string>labels</string>
- <void id="HashMap76" method="get">
-  <object idref="FieldInfo35"/>
-  <void method="put">
-   <string>es</string>
-   <string>Rol firma ENI</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Rol signatura ENI</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap76"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field78" method="getField">
- <string>labels</string>
- <void id="HashMap77" method="get">
-  <object idref="FieldInfo10"/>
-  <void method="put">
-   <string>es</string>
-   <string>Usuario</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Usuari</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap77"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field79" method="getField">
- <string>labels</string>
- <void id="HashMap78" method="get">
-  <object idref="FieldInfo94"/>
-  <void method="put">
-   <string>es</string>
-   <string>NIF</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>NIF</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap78"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field80" method="getField">
- <string>labels</string>
- <void id="HashMap79" method="get">
-  <object idref="FieldInfo58"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Petició Portafirmes</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Peticio Portafirmas</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap79"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field81" method="getField">
- <string>labels</string>
- <void id="HashMap80" method="get">
-  <object idref="FieldInfo96"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Idioma</string>
-  </void>
-  <void method="put">
-   <string>es</string>
-   <string>Idioma</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap80"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field82" method="getField">
- <string>labels</string>
- <void id="HashMap81" method="get">
+ <void id="HashMap58" method="get">
   <object idref="FieldInfo13"/>
   <void method="put">
    <string>en</string>
@@ -9139,146 +8774,248 @@
   </void>
  </void>
 </void>
-<void idref="HashMap81"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field83" method="getField">
+<void idref="HashMap58"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field60" method="getField">
  <string>labels</string>
- <void id="HashMap82" method="get">
-  <object idref="FieldInfo19"/>
+ <void id="HashMap59" method="get">
+  <object idref="FieldInfo88"/>
   <void method="put">
-   <string>es</string>
-   <string>Web de validación del CSV</string>
+   <string>en</string>
+   <string>Value</string>
   </void>
   <void method="put">
    <string>ca</string>
-   <string>Web de validació del CSV</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap82"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field84" method="getField">
- <string>labels</string>
- <void id="HashMap83" method="get">
-  <object idref="FieldInfo49"/>
-  <void method="put">
-   <string>ca</string>
-   <string>NIF destinatari</string>
+   <string>Valor</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>NIF destinatario</string>
+   <string>Valor</string>
+  </void>
+  <void method="put">
+   <string>de</string>
+   <string>Value</string>
   </void>
  </void>
 </void>
-<void idref="HashMap83"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field85" method="getField">
+<void idref="HashMap59"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field61" method="getField">
  <string>labels</string>
- <void id="HashMap84" method="get">
+ <void id="HashMap60" method="get">
+  <object idref="FieldInfo17"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Codi Segur Verificació (CSV)</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Código Seguro Verificación (CSV)</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap60"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field62" method="getField">
+ <string>labels</string>
+ <void id="HashMap61" method="get">
+  <object idref="FieldInfo40"/>
+  <void method="put">
+   <string>es</string>
+   <string>Tiene modificaciones</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Té modificacions</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap61"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field63" method="getField">
+ <string>labels</string>
+ <void id="HashMap62" method="get">
+  <object idref="FieldInfo30"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Posició taula de firmes</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Posición tabla de firmas</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap62"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field64" method="getField">
+ <string>labels</string>
+ <void id="HashMap63" method="get">
+  <object idref="FieldInfo61"/>
+  <void method="put">
+   <string>es</string>
+   <string>Funcionario Nombre</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Funcionari Nom</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap63"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field65" method="getField">
+ <string>labels</string>
+ <void id="HashMap64" method="get">
+  <object idref="FieldInfo59"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Reason</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Reason</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap64"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field66" method="getField">
+ <string>labels</string>
+ <void id="HashMap65" method="get">
+  <object idref="FieldInfo22"/>
+  <void method="put">
+   <string>ca</string>
+   <string>URL al Fichero Imprimible</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>URL al Fitxer Imprimible</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap65"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field67" method="getField">
+ <string>labels</string>
+ <void id="HashMap66" method="get">
+  <object idref="FieldInfo42"/>
+  <void method="put">
+   <string>ca</string>
+   <string>ID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap66"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field68" method="getField">
+ <string>labels</string>
+ <void id="HashMap67" method="get">
+  <object idref="FieldInfo35"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Rol signatura ENI</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Rol firma ENI</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap67"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field69" method="getField">
+ <string>labels</string>
+ <void id="HashMap68" method="get">
+  <object idref="FieldInfo62"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Funcionari NIF</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Funcionario NIF</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap68"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field70" method="getField">
+ <string>labels</string>
+ <void id="HashMap69" method="get">
+  <object idref="FieldInfo7"/>
+  <void method="put">
+   <string>es</string>
+   <string>Descripción</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Descripció</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap69"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field71" method="getField">
+ <string>labels</string>
+ <void id="HashMap70" method="get">
   <object idref="FieldInfo46"/>
-  <void method="put">
-   <string>es</string>
-   <string>Fichero</string>
-  </void>
   <void method="put">
    <string>ca</string>
    <string>Fitxer</string>
   </void>
- </void>
-</void>
-<void idref="HashMap84"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field86" method="getField">
- <string>labels</string>
- <void id="HashMap85" method="get">
-  <object idref="FieldInfo25"/>
   <void method="put">
    <string>es</string>
-   <string>InfoSignaturaID</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>InfoSignaturaID</string>
+   <string>Fichero</string>
   </void>
  </void>
 </void>
-<void idref="HashMap85"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field87" method="getField">
+<void idref="HashMap70"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field72" method="getField">
  <string>labels</string>
- <void id="HashMap86" method="get">
-  <object idref="FieldInfo57"/>
-  <void method="put">
-   <string>es</string>
-   <string>Excepción del error</string>
-  </void>
+ <void id="HashMap71" method="get">
+  <object idref="FieldInfo19"/>
   <void method="put">
    <string>ca</string>
-   <string>Excepció de l&apos;error</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap86"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field88" method="getField">
- <string>labels</string>
- <void id="HashMap87" method="get">
-  <object idref="FieldInfo50"/>
-  <void method="put">
-   <string>es</string>
-   <string>Estado</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>Estat</string>
-  </void>
- </void>
-</void>
-<void idref="HashMap87"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field89" method="getField">
- <string>labels</string>
- <void id="HashMap88" method="get">
-  <object idref="FieldInfo74"/>
-  <void method="put">
-   <string>ca</string>
-   <string>Informació Arxivat</string>
+   <string>Web de validació del CSV</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Información Archivado</string>
+   <string>Web de validación del CSV</string>
   </void>
  </void>
 </void>
-<void idref="HashMap88"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field90" method="getField">
+<void idref="HashMap71"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field73" method="getField">
  <string>labels</string>
- <void id="HashMap89" method="get">
-  <object idref="FieldInfo34"/>
-  <void method="put">
-   <string>es</string>
-   <string>Perfil firma ENI</string>
-  </void>
+ <void id="HashMap72" method="get">
+  <object idref="FieldInfo10"/>
   <void method="put">
    <string>ca</string>
-   <string>Perfil signatura ENI</string>
+   <string>Usuari</string>
   </void>
- </void>
-</void>
-<void idref="HashMap89"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field91" method="getField">
- <string>labels</string>
- <void id="HashMap90" method="get">
-  <object idref="FieldInfo24"/>
   <void method="put">
    <string>es</string>
-   <string>URL de Validación del Documento</string>
-  </void>
-  <void method="put">
-   <string>ca</string>
-   <string>URL de Validació del Document</string>
+   <string>Usuario</string>
   </void>
  </void>
 </void>
-<void idref="HashMap90"/>
-<void class="org.fundaciobit.genapp.FieldInfo" id="Field92" method="getField">
+<void idref="HashMap72"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field74" method="getField">
  <string>labels</string>
- <void id="HashMap91" method="get">
-  <object idref="FieldInfo76"/>
+ <void id="HashMap73" method="get">
+  <object idref="FieldInfo65"/>
+  <void method="put">
+   <string>ca</string>
+   <string>NIF d´interessats, separats per comes</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>NIF de interesados, separados por comas</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap73"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field75" method="getField">
+ <string>labels</string>
+ <void id="HashMap74" method="get">
+  <object idref="FieldInfo1"/>
+  <void method="put">
+   <string>en</string>
+   <string>Name</string>
+  </void>
   <void method="put">
    <string>ca</string>
    <string>Nom</string>
@@ -9287,20 +9024,283 @@
    <string>es</string>
    <string>Nombre</string>
   </void>
+  <void method="put">
+   <string>de</string>
+   <string>Name</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap74"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field76" method="getField">
+ <string>labels</string>
+ <void id="HashMap75" method="get">
+  <object idref="FieldInfo9"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Grup</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Grupo</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap75"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field77" method="getField">
+ <string>labels</string>
+ <void id="HashMap76" method="get">
+  <object idref="FieldInfo29"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Mode de signatura</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Modo de firma</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap76"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field78" method="getField">
+ <string>labels</string>
+ <void id="HashMap77" method="get">
+  <object idref="FieldInfo8"/>
+  <void method="put">
+   <string>es</string>
+   <string>GrupoUsuarioID</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>GrupUsuariID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap77"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field79" method="getField">
+ <string>labels</string>
+ <void id="HashMap78" method="get">
+  <object idref="FieldInfo95"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Email</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Email</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap78"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field80" method="getField">
+ <string>labels</string>
+ <void id="HashMap79" method="get">
+  <object idref="FieldInfo69"/>
+  <void method="put">
+   <string>es</string>
+   <string>Procedimiento Código</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Procediment Codi</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap79"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field81" method="getField">
+ <string>labels</string>
+ <void id="HashMap80" method="get">
+  <object idref="FieldInfo52"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Tipus documental</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Tipo documental</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap80"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field82" method="getField">
+ <string>labels</string>
+ <void id="HashMap81" method="get">
+  <object idref="FieldInfo81"/>
+  <void method="put">
+   <string>es</string>
+   <string>Tipo</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Tipus</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap81"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field83" method="getField">
+ <string>labels</string>
+ <void id="HashMap82" method="get">
+  <object idref="FieldInfo78"/>
+  <void method="put">
+   <string>es</string>
+   <string>Clase</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Classe</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap82"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field84" method="getField">
+ <string>labels</string>
+ <void id="HashMap83" method="get">
+  <object idref="FieldInfo47"/>
+  <void method="put">
+   <string>es</string>
+   <string>Solicitante</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Sol·licitant</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap83"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field85" method="getField">
+ <string>labels</string>
+ <void id="HashMap84" method="get">
+  <object idref="FieldInfo86"/>
+  <void method="put">
+   <string>ca</string>
+   <string>idiomadoc</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>idiomadoc</string>
+  </void>
+  <void method="put">
+   <string>en</string>
+   <string>ID</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap84"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field86" method="getField">
+ <string>labels</string>
+ <void id="HashMap85" method="get">
+  <object idref="FieldInfo74"/>
+  <void method="put">
+   <string>es</string>
+   <string>Información Archivado</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Informació Arxivat</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap85"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field87" method="getField">
+ <string>labels</string>
+ <void id="HashMap86" method="get">
+  <object idref="FieldInfo91"/>
+  <void method="put">
+   <string>es</string>
+   <string>Nombre</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>Nom</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap86"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field88" method="getField">
+ <string>labels</string>
+ <void id="HashMap87" method="get">
+  <object idref="FieldInfo73"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Origen</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Origen</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap87"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field89" method="getField">
+ <string>labels</string>
+ <void id="HashMap88" method="get">
+  <object idref="FieldInfo71"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Serie Documental</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Serie Documental</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap88"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field90" method="getField">
+ <string>labels</string>
+ <void id="HashMap89" method="get">
+  <object idref="FieldInfo94"/>
+  <void method="put">
+   <string>ca</string>
+   <string>NIF</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>NIF</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap89"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field91" method="getField">
+ <string>labels</string>
+ <void id="HashMap90" method="get">
+  <object idref="FieldInfo56"/>
+  <void method="put">
+   <string>ca</string>
+   <string>Missatge d´error</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Mensaje de Error</string>
+  </void>
+ </void>
+</void>
+<void idref="HashMap90"/>
+<void class="org.fundaciobit.genapp.FieldInfo" id="Field92" method="getField">
+ <string>labels</string>
+ <void id="HashMap91" method="get">
+  <object idref="FieldInfo16"/>
+  <void method="put">
+   <string>es</string>
+   <string>URL al Fichero Original</string>
+  </void>
+  <void method="put">
+   <string>ca</string>
+   <string>URL al Fitxer Original</string>
+  </void>
  </void>
 </void>
 <void idref="HashMap91"/>
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field93" method="getField">
  <string>labels</string>
  <void id="HashMap92" method="get">
-  <object idref="FieldInfo56"/>
-  <void method="put">
-   <string>es</string>
-   <string>Mensaje de Error</string>
-  </void>
+  <object idref="FieldInfo25"/>
   <void method="put">
    <string>ca</string>
-   <string>Missatge d´error</string>
+   <string>InfoSignaturaID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>InfoSignaturaID</string>
   </void>
  </void>
 </void>
@@ -9308,14 +9308,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field94" method="getField">
  <string>labels</string>
  <void id="HashMap93" method="get">
-  <object idref="FieldInfo61"/>
+  <object idref="FieldInfo84"/>
   <void method="put">
    <string>ca</string>
-   <string>Funcionari Nom</string>
+   <string>Tipus Documental</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>Funcionario Nombre</string>
+   <string>Tipo Documental</string>
   </void>
  </void>
 </void>
@@ -9323,14 +9323,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field95" method="getField">
  <string>labels</string>
  <void id="HashMap94" method="get">
-  <object idref="FieldInfo62"/>
-  <void method="put">
-   <string>es</string>
-   <string>Funcionario NIF</string>
-  </void>
+  <object idref="FieldInfo5"/>
   <void method="put">
    <string>ca</string>
-   <string>Funcionari NIF</string>
+   <string>grupID</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>grupID</string>
   </void>
  </void>
 </void>
@@ -9338,14 +9338,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field96" method="getField">
  <string>labels</string>
  <void id="HashMap95" method="get">
-  <object idref="FieldInfo8"/>
+  <object idref="FieldInfo64"/>
   <void method="put">
    <string>ca</string>
-   <string>GrupUsuariID</string>
+   <string>Document Estat Elaboració</string>
   </void>
   <void method="put">
    <string>es</string>
-   <string>GrupoUsuarioID</string>
+   <string>Documento Estato Elaboración</string>
   </void>
  </void>
 </void>
@@ -9353,14 +9353,14 @@
 <void class="org.fundaciobit.genapp.FieldInfo" id="Field97" method="getField">
  <string>labels</string>
  <void id="HashMap96" method="get">
-  <object idref="FieldInfo68"/>
-  <void method="put">
-   <string>es</string>
-   <string>Códigos DIR3 de los òrganos afectados</string>
-  </void>
+  <object idref="FieldInfo44"/>
   <void method="put">
    <string>ca</string>
-   <string>Codis DIR3 dels òrgans afectats</string>
+   <string>Creada</string>
+  </void>
+  <void method="put">
+   <string>es</string>
+   <string>Creada</string>
   </void>
  </void>
 </void>
