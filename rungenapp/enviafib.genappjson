@@ -1,0 +1,3019 @@
+{
+  "packageName": "es.caib.enviafib",
+  "projectName": "EnviaFIB",
+  "dataBaseInfo": {
+    "url": "jdbc:postgresql://localhost:5432/enviafib",
+    "driver": "org.postgresql.Driver",
+    "usr": "enviafib",
+    "pwd": "enviafib"
+  },
+  "modulSeguretat": "keycloak",
+  "prefix": "efi",
+  "prefixDirectori": "enviafib-",
+  "schema": "public",
+  "tables": [
+    {
+      "name": "efi_fitxer",
+      "nameJava": "Fitxer",
+      "shortName": "fitxer",
+      "labels": {
+        "de": "Datei",
+        "en": "File",
+        "ca": "Fitxer",
+        "es": "Fichero"
+      },
+      "labelsPlural": {
+        "de": "Datein",
+        "en": "Files",
+        "ca": "Fitxers",
+        "es": "Ficheros"
+      },
+      "generate": true,
+      "fileMappingEntity": true,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_fitxer_pk",
+          "index": "efi_fitxer_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "fitxerid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "ID",
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "fitxerID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_fitxer_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_fitxer_ffirm_fk",
+              "table": "efi_peticio",
+              "field": "fitxer_firmatid",
+              "type": 0
+            },
+            {
+              "name": "efi_peticio_fitxer_fitxer_fk",
+              "table": "efi_peticio",
+              "field": "fitxerid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Name",
+            "en": "Name",
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "mime",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "mime",
+            "en": "mime",
+            "ca": "mime",
+            "es": "mime"
+          },
+          "javaName": "mime",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tamany",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Size",
+            "en": "Size",
+            "ca": "Tamany",
+            "es": "Tamaño"
+          },
+          "javaName": "tamany",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 1000,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "de": "Description",
+            "en": "Description",
+            "ca": "Descripció",
+            "es": "Descripcion"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "NULL::character varying",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_grup",
+      "nameJava": "Grup",
+      "shortName": "grup",
+      "labels": {
+        "ca": "Grup",
+        "es": "Grupo"
+      },
+      "labelsPlural": {
+        "ca": "Grups",
+        "es": "Grupos"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_grup_pk",
+          "index": "efi_grup_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "grupid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "grupID",
+            "ca": "grupID"
+          },
+          "javaName": "grupID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_grup_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_grupusuari_grup_grupid_fk",
+              "table": "efi_grupusuari",
+              "field": "grupid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Nombre",
+            "ca": "Nom"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Descripció",
+            "es": "Descripción"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_grupusuari",
+      "nameJava": "GrupUsuari",
+      "shortName": "grupusuari",
+      "labels": {
+        "ca": "Grup usuari",
+        "es": "Grupo usuario"
+      },
+      "labelsPlural": {
+        "ca": "Grups usuaris",
+        "es": "Grupos usuarios"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_grupusuari_pk",
+          "index": "efi_grupusuari_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "grupusuariid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "GrupUsuariID",
+            "es": "GrupoUsuarioID"
+          },
+          "javaName": "grupUsuariID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_grupusuari_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_grupusuari_grupid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "grupid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Grupo",
+            "ca": "Grup"
+          },
+          "javaName": "grupID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_usrgrup_grup_grupid_fk",
+              "table": "efi_grup",
+              "field": "grupid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_grupusuari_grup_grupid_fk",
+              "table": "efi_grup",
+              "field": "grupid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_grupusuari_usuariid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usuariid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Usuario",
+            "ca": "Usuari"
+          },
+          "javaName": "usuariID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_usrgrup_usuari_usuariid_fk",
+              "table": "efi_usuari",
+              "field": "usuariid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_grupusuari_usuari_usuar_fk",
+              "table": "efi_usuari",
+              "field": "usuariid",
+              "type": 1
+            }
+          ]
+        }
+      ],
+      "multipleUniques": [
+        {
+          "name": "efi_grupusuari_usuari_grup_uk",
+          "sqlColumns": [
+            "usuariid",
+            "grupid"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "efi_idioma",
+      "nameJava": "Idioma",
+      "shortName": "idioma",
+      "labels": {
+        "de": "Sprache",
+        "en": "Language",
+        "ca": "Idioma",
+        "es": "Idioma"
+      },
+      "labelsPlural": {
+        "de": "Idiom",
+        "en": "Language",
+        "ca": "Idioma",
+        "es": "Idioma"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": true,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_idioma_pk",
+          "index": "efi_idioma_pk_i",
+          "isAutoIncrement": false,
+          "sqlName": "idiomaid",
+          "sqlType": 12,
+          "size": 5,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "ID",
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "idiomaID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_idioma_idiid_fk",
+              "table": "efi_peticio",
+              "field": "idiomaid",
+              "type": 0
+            },
+            {
+              "name": "efi_usuari_idioma_fk",
+              "table": "efi_usuari",
+              "field": "idiomaid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Name",
+            "en": "Name",
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "suportat",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "suportat",
+            "en": "Suported",
+            "ca": "Suportat",
+            "es": "Suportado"
+          },
+          "javaName": "suportat",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "true",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "ordre",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Order",
+            "en": "Order",
+            "ca": "Ordre",
+            "es": "ordre"
+          },
+          "javaName": "ordre",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "0",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_infoarxiu",
+      "nameJava": "InfoArxiu",
+      "shortName": "infoarxiu",
+      "labels": {
+        "ca": "Informació d\u0027Arxivat",
+        "es": "Información Arxivada"
+      },
+      "labelsPlural": {
+        "ca": "Informació d\u0027Arxivats",
+        "es": "Información Arxivada"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_infoarxiu_pk",
+          "index": "efi_infoarxiu_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "infoarxiuid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "InfoArxiuID",
+            "ca": "InfoArxiuID"
+          },
+          "javaName": "infoArxiuID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_infoarxiu_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_infoarxiu_infoa_fk",
+              "table": "efi_peticio",
+              "field": "infoarxiuid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "originalfileurl",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "URL al Fitxer Original",
+            "es": "URL al Fichero Original"
+          },
+          "javaName": "originalFileUrl",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "csv",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Código Seguro Verificación (CSV)",
+            "ca": "Codi Segur Verificació (CSV)"
+          },
+          "javaName": "csv",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "csvgenerationdefinition",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Definició de Generació del CSV",
+            "ca": "Definició de Generació del CSV"
+          },
+          "javaName": "csvGenerationDefinition",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "csvvalidationweb",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Web de validación del CSV",
+            "ca": "Web de validació del CSV"
+          },
+          "javaName": "csvValidationWeb",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuexpedientid",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "ID de Expediente",
+            "ca": "ID d´Expedient"
+          },
+          "javaName": "arxiuExpedientID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiudocumentid",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "ID de Document",
+            "es": "ID de Documento"
+          },
+          "javaName": "arxiuDocumentID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "printableurl",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "URL al Fitxer Imprimible",
+            "ca": "URL al Fichero Imprimible"
+          },
+          "javaName": "printableUrl",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enifileurl",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "URL al Document ENI",
+            "ca": "URL al Document ENI"
+          },
+          "javaName": "eniFileUrl",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "validationfileurl",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "URL de Validación del Documento",
+            "ca": "URL de Validació del Document"
+          },
+          "javaName": "validationFileUrl",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_infosignatura",
+      "nameJava": "InfoSignatura",
+      "shortName": "infosign",
+      "labels": {
+        "ca": "Info Signatura",
+        "es": "Info Firma"
+      },
+      "labelsPlural": {
+        "ca": "Info Signatures",
+        "es": "Info Firmas"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_infosignatura_pk",
+          "index": "efi_infosignatura_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "infosignaturaid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "InfoSignaturaID",
+            "ca": "InfoSignaturaID"
+          },
+          "javaName": "infoSignaturaID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_infosignatura_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_infosign_fk",
+              "table": "efi_peticio",
+              "field": "infosignaturaid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "signoperation",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Operación de firma",
+            "ca": "Operació de firma"
+          },
+          "javaName": "signOperation",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0,1,2",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "signtype",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Tipo de firma",
+            "ca": "Tipus de signatura"
+          },
+          "javaName": "signType",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "signalgorithm",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Algoritmo de firma",
+            "ca": "Algorisme de signatura"
+          },
+          "javaName": "signAlgorithm",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "signmode",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Modo de firma",
+            "ca": "Mode de signatura"
+          },
+          "javaName": "signMode",
+          "javaType": "java.lang.Integer",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0,1",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "signaturestablelocation",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Posición tabla de firmas",
+            "ca": "Posició taula de firmes"
+          },
+          "javaName": "signaturesTableLocation",
+          "javaType": "java.lang.Integer",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "-1,0,1",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "timestampincluded",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Inclou segell de temps",
+            "es": "Incluye sello de tiempo"
+          },
+          "javaName": "timestampIncluded",
+          "javaType": "java.lang.Boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "policyincluded",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Incluye política de firma",
+            "ca": "Inclou politica de signatura"
+          },
+          "javaName": "policyIncluded",
+          "javaType": "java.lang.Boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enitipofirma",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "TIpo firma ENI",
+            "ca": "Tipus signatura ENI"
+          },
+          "javaName": "eniTipoFirma",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "eniperfilfirma",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Perfil firma ENI",
+            "ca": "Perfil signatura ENI"
+          },
+          "javaName": "eniPerfilFirma",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enirolfirma",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Rol firma ENI",
+            "ca": "Rol signatura ENI"
+          },
+          "javaName": "eniRolFirma",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enisignername",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Nombre firmante ENI",
+            "ca": "Nom signant ENI"
+          },
+          "javaName": "eniSignerName",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enisigneradministrationid",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "NIF signant ENI",
+            "es": "NIF firmante ENI"
+          },
+          "javaName": "eniSignerAdministrationId",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enisignlevel",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Nivel de firma ENI",
+            "ca": "Nivell de signatura ENI"
+          },
+          "javaName": "eniSignLevel",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "checkadministrationidofsigner",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Check NIF firmante",
+            "ca": "Check NIF signant"
+          },
+          "javaName": "checkAdministrationIdOfSigner",
+          "javaType": "java.lang.Boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "checkdocumentmodifications",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Té modificacions",
+            "es": "Tiene modificaciones"
+          },
+          "javaName": "checkDocumentModifications",
+          "javaType": "java.lang.Boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "checkvalidationsignature",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Check validación firma",
+            "ca": "Check validació firma"
+          },
+          "javaName": "checkValidationSignature",
+          "javaType": "java.lang.Boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_peticio",
+      "nameJava": "Peticio",
+      "shortName": "peticio",
+      "labels": {
+        "ca": "Petició",
+        "es": "Petición"
+      },
+      "labelsPlural": {
+        "ca": "Peticions",
+        "es": "Peticiones"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_peticio_pk",
+          "index": "efi_peticio_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "peticioid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "ID",
+            "ca": "ID"
+          },
+          "javaName": "peticioID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_peticio_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "descripcio": "Nom de la peticio a PortaFIB.",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "datacreacio",
+          "sqlType": 93,
+          "size": 29,
+          "digits": 6,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Creada",
+            "ca": "Creada"
+          },
+          "javaName": "dataCreacio",
+          "javaType": "java.sql.Timestamp",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 7
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "datafinal",
+          "sqlType": 93,
+          "size": 29,
+          "digits": 6,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Finalitzada",
+            "es": "Finalizada"
+          },
+          "javaName": "dataFinal",
+          "javaType": "java.sql.Timestamp",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 7
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_peticio_fitxerid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "fitxerid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Fichero",
+            "ca": "Fitxer"
+          },
+          "javaName": "fitxerID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_peticio_fitxer_fitxer_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_fitxer_fitxer_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_peticio_solicitantid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "solicitantid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Sol·licitant",
+            "es": "Solicitante"
+          },
+          "javaName": "solicitantID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_peticio_usuari_soli_fk",
+              "table": "efi_usuari",
+              "field": "usuariid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_usuari_soli_fk",
+              "table": "efi_usuari",
+              "field": "usuariid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_peticio_idiomaid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "idiomaid",
+          "sqlType": 12,
+          "size": 5,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Idioma",
+            "ca": "Idioma"
+          },
+          "javaName": "idiomaID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_peticio_idioma_idiid_fk",
+              "table": "efi_idioma",
+              "field": "idiomaid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_idioma_idiid_fk",
+              "table": "efi_idioma",
+              "field": "idiomaid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "destinatarinif",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "NIF destinatari",
+            "es": "NIF destinatario"
+          },
+          "javaName": "destinatariNif",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "([XYZ][0-9]{7}[A-Z])|([0-9]{8}[A-Z])",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "estat",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Estado",
+            "ca": "Estat"
+          },
+          "javaName": "estat",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "1",
+          "minAllowedValue": "0,1,2,3,4,5,6,7",
+          "filter": false,
+          "orderBy": 1,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_peticio_fitxer_firma_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "fitxer_firmatid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "FitxerFirmatID",
+            "ca": "FitxerFirmatID"
+          },
+          "javaName": "fitxerFirmatID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": false,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_peticio_fitxer_ffirm_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_fitxer_ffirm_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipusdocumental",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Tipo documental",
+            "ca": "Tipus documental"
+          },
+          "javaName": "tipusDocumental",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "1,2,3,4",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "idiomadoc",
+          "sqlType": 12,
+          "size": 30,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Idioma Documento",
+            "ca": "Idioma Document"
+          },
+          "javaName": "idiomaDoc",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "es,ca",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_peticio_infosignid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "infosignaturaid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "InfoSignaturaID",
+            "ca": "InfoSignaturaID"
+          },
+          "javaName": "infoSignaturaID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_peticio_infosign_fk",
+              "table": "efi_infosignatura",
+              "field": "infosignaturaid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_infosign_fk",
+              "table": "efi_infosignatura",
+              "field": "infosignaturaid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipus",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Tipo",
+            "ca": "Tipus"
+          },
+          "javaName": "tipus",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "0",
+          "minAllowedValue": "1,2,3,4,5,6",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": true,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "errormsg",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Mensaje de Error",
+            "ca": "Missatge d´error"
+          },
+          "javaName": "errorMsg",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "errorexception",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Excepción del error",
+            "ca": "Excepció de l\u0027error"
+          },
+          "javaName": "errorException",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "peticioportafirmes",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Petició Portafirmes",
+            "es": "Peticio Portafirmas"
+          },
+          "javaName": "peticioPortafirmes",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "Identificador de la petició dins el sistema de portafirmes",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "reason",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Reason",
+            "ca": "Reason"
+          },
+          "javaName": "reason",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiufuncionariusername",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Funcionario Username",
+            "ca": "Funcionari Username"
+          },
+          "javaName": "arxiuFuncionariUsername",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuparamfuncionarinom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Funcionari Nom",
+            "es": "Funcionario Nombre"
+          },
+          "javaName": "arxiuParamFuncionariNom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuparamfuncionarinif",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Funcionario NIF",
+            "ca": "Funcionari NIF"
+          },
+          "javaName": "arxiuParamFuncionariNif",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuparamfuncionaridir3",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Funcionario Unidad Dir3",
+            "ca": "Funcionari Unitat Dir3"
+          },
+          "javaName": "arxiuParamFuncionariDir3",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiureqparamdocestatelabora",
+          "sqlType": 12,
+          "size": 4,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Documento Estato Elaboración",
+            "ca": "Document Estat Elaboració"
+          },
+          "javaName": "arxiuReqParamDocEstatElabora",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "EE01,EE02,EE03,EE04,EE99",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiureqparaminteressats",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "NIF de interesados, separados por comas",
+            "ca": "NIF d´interessats, separats per comes"
+          },
+          "javaName": "arxiuReqParamInteressats",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiureqparamciutadanif",
+          "sqlType": 12,
+          "size": 15,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Ciudadano Nif",
+            "ca": "Ciutada Nif"
+          },
+          "javaName": "arxiuReqParamCiutadaNif",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiureqparamciutadanom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Ciudadano Nombre",
+            "ca": "Ciutadà Nom"
+          },
+          "javaName": "arxiuReqParamCiutadaNom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiureqparamorgans",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Códigos DIR3 de los òrganos afectados",
+            "ca": "Codis DIR3 dels òrgans afectats"
+          },
+          "javaName": "arxiuReqParamOrgans",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuoptparamprocedimentcodi",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Procediment Codi",
+            "es": "Procedimiento Código"
+          },
+          "javaName": "arxiuOptParamProcedimentCodi",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuoptparamprocedimentnom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Procediment Nom",
+            "es": "Procedimiento Nombre"
+          },
+          "javaName": "arxiuOptParamProcedimentNom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuoptparamseriedocumental",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Serie Documental",
+            "ca": "Serie Documental"
+          },
+          "javaName": "arxiuOptParamSerieDocumental",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiuoptparamexpedientid",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Expediente ID",
+            "ca": "Expedient ID"
+          },
+          "javaName": "arxiuOptParamExpedientId",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "arxiureqparamorigen",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Origen",
+            "ca": "Origen"
+          },
+          "javaName": "arxiuReqParamOrigen",
+          "javaType": "java.lang.Integer",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0,1",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_peticio_infoarxiuid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "infoarxiuid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Informació Arxivat",
+            "es": "Información Archivado"
+          },
+          "javaName": "infoArxiuID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_peticio_infoarx_infoarx_fk",
+              "table": "efi_infoarxiu",
+              "field": "infoarxiuid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_peticio_infoarxiu_infoa_fk",
+              "table": "efi_infoarxiu",
+              "field": "infoarxiuid",
+              "type": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "efi_plugin",
+      "nameJava": "Plugin",
+      "shortName": "efi_plugin",
+      "labels": {
+        "ca": "Plugin",
+        "es": "Plugin"
+      },
+      "labelsPlural": {
+        "ca": "Plugins",
+        "es": "Plugins"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_plugin_pk",
+          "index": "efi_plugin_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "pluginid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "pluginID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_plugin_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Descripció",
+            "es": "Descripción"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "classe",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Classe",
+            "es": "Clase"
+          },
+          "javaName": "classe",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "properties",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Properties",
+            "es": "Properties"
+          },
+          "javaName": "properties",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "actiu",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Actiu",
+            "es": "Activo"
+          },
+          "javaName": "actiu",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipus",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus",
+            "es": "Tipo"
+          },
+          "javaName": "tipus",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "1,2,3,4",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_seriedocumental",
+      "nameJava": "SerieDocumental",
+      "shortName": "seriedocu",
+      "labels": {
+        "ca": "Sèrie Documental",
+        "es": "Serie Documental"
+      },
+      "labelsPlural": {
+        "ca": "Sèries Documentals",
+        "es": "Series Documentales"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_seriedocumental_pk",
+          "index": "efi_seriedocumental_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "seriedocumentalid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "ID",
+            "ca": "ID"
+          },
+          "javaName": "serieDocumentalID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_seriedocumental_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Nombre",
+            "ca": "Nom"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "unique": "efi_seriedocu_tipusdocu_uk",
+          "isAutoIncrement": false,
+          "sqlName": "tipusdocumental",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Tipo Documental",
+            "ca": "Tipus Documental"
+          },
+          "javaName": "tipusDocumental",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "1,2,3,4",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_traduccio",
+      "nameJava": "Traduccio",
+      "shortName": "traduccio",
+      "labels": {
+        "de": "Übersetzung",
+        "en": "Translation",
+        "ca": "Traducció",
+        "es": "Traducción"
+      },
+      "labelsPlural": {
+        "de": "Translations",
+        "en": "Translations",
+        "ca": "Traduccions",
+        "es": "Traducciones"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": true,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_traduccio_pk",
+          "index": "efi_traduccio_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "traduccioid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "ID",
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "traduccioID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "descripcio": "",
+          "defaultValue": "nextval(\u0027efi_traduccio_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_traducmap_traduccio_fk",
+              "table": "efi_traducciomap",
+              "field": "traducciomapid",
+              "type": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "efi_traducciomap",
+      "nameJava": "TraduccioMap",
+      "shortName": "traducmap",
+      "labels": {
+        "de": "TraduccioMap",
+        "en": "TraduccioMap",
+        "ca": "TraduccioMap",
+        "es": "TraduccioMap"
+      },
+      "labelsPlural": {
+        "de": "",
+        "en": "",
+        "ca": "",
+        "es": ""
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": true,
+      "fields": [
+        {
+          "PK": "efi_traducmap_pk",
+          "index": "efi_traducciomap_pk_i",
+          "isAutoIncrement": false,
+          "sqlName": "traducciomapid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "ID",
+            "ca": "idiomadoc",
+            "es": "idiomadoc"
+          },
+          "javaName": "traduccioMapID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_traducmap_traduccio_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_traducmap_traduccio_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "PK": "efi_traducmap_pk",
+          "index": "efi_traducciomap_idiomaid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "idiomaid",
+          "sqlType": 12,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "idiomaid",
+            "en": "idiomaID",
+            "ca": "idiomaID",
+            "es": "idiomaID"
+          },
+          "javaName": "idiomaID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "descripcio": "",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "valor",
+          "sqlType": 12,
+          "size": 4000,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "de": "Value",
+            "en": "Value",
+            "ca": "Valor",
+            "es": "Valor"
+          },
+          "javaName": "valor",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "descripcio": "",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_usuari",
+      "nameJava": "Usuari",
+      "shortName": "usuari",
+      "labels": {
+        "ca": "Usuari",
+        "es": "Usuario"
+      },
+      "labelsPlural": {
+        "ca": "Usuaris",
+        "es": "Usuarios"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_usuari_pk",
+          "index": "efi_usuari_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "usuariid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "ID",
+            "ca": "ID"
+          },
+          "javaName": "usuariID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_usuari_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_grupusuari_usuari_usuar_fk",
+              "table": "efi_grupusuari",
+              "field": "usuariid",
+              "type": 0
+            },
+            {
+              "name": "efi_peticio_usuari_soli_fk",
+              "table": "efi_peticio",
+              "field": "solicitantid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "username",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Username",
+            "ca": "Username"
+          },
+          "javaName": "username",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "llinatge1",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Apellido",
+            "ca": "Llintage"
+          },
+          "javaName": "llinatge1",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "llinatge2",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "es": "Segundo Apellido",
+            "ca": "Segon Llinatge"
+          },
+          "javaName": "llinatge2",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "unique": "efi_usuari_nif_uk",
+          "isAutoIncrement": false,
+          "sqlName": "nif",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "NIF",
+            "ca": "NIF"
+          },
+          "javaName": "nif",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "minAllowedValue": "([XYZ][0-9]{7}[A-Z])|([0-9]{8}[A-Z])",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "email",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "es": "Email",
+            "ca": "Email"
+          },
+          "javaName": "email",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "[a-z0-9!#$%\u0026;\u0027;*+/\u003d?^_`{|}~-]+(?:\\.[a-z0-9!#$%\u0026;\u0027;*+/\u003d?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_usuari_idiomaid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "idiomaid",
+          "sqlType": 12,
+          "size": 5,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Idioma",
+            "es": "Idioma"
+          },
+          "javaName": "idiomaID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "\u0027ca\u0027::character varying",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_usuari_idioma_fk",
+              "table": "efi_idioma",
+              "field": "idiomaid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_usuari_idioma_fk",
+              "table": "efi_idioma",
+              "field": "idiomaid",
+              "type": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "languages": [
+    "ca",
+    "es"
+  ],
+  "generateBack": true,
+  "generateWS": false
+}
