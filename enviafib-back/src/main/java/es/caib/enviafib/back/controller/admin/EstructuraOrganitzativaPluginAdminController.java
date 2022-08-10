@@ -1,5 +1,8 @@
 package es.caib.enviafib.back.controller.admin;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -74,11 +77,17 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
             pluginFilterForm.addHiddenField(PluginFields.DESCRIPCIO);
 //            pluginFilterForm.addHiddenField(PluginFields.CLASSE);
             pluginFilterForm.addHiddenField(PluginFields.TIPUS);
-            
+
             pluginFilterForm.setTitleCode("estructuraorganitzativaplugin.title");
 
             pluginFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-check",
-                    "estructuraorganitzativaplugin.button", getContextWeb() + "/provar/{0}", "btn-primary"));
+                    "estructuraorganitzativaplugin.button", "javascript: provarPlugin({0})",
+
+                    // getContextWeb() + "/provar/{0}",
+                    "btn-primary"));
+
+            pluginFilterForm.setAttachedAdditionalJspCode(true);
+
         }
 
         return pluginFilterForm;
@@ -99,35 +108,68 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
         return "estructuraorganitzativaplugin";
     }
 
-    @RequestMapping(value = "/provar/{pluginID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/provar/{pluginID}/{username}", method = RequestMethod.GET)
     public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("pluginID") Long pluginID) {
+            @PathVariable("pluginID") Long pluginID, @PathVariable("username") String username) {
 
         try {
-            String username = LoginInfo.getInstance().getUsername();
+//            String username = LoginInfo.getInstance().getUsername();
+            String lang = "ca";
 
             IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
 
-            String CapAreaConseller = instance.getCapAreaConsellerByUsername(username);
-            String CapDepartamentDirectorGeneral = instance.getCapDepartamentDirectorGeneralByUsername(username);
-            String CodiDIR3ByUsername = instance.getCodiDIR3ByUsername(username);
-            String EncarregatCompresByUsername = instance.getEncarregatCompresByUsername(username);
-
-            String msg = "Dades organitzatives de " + username + ": <br>"
-            + "CapAreaConseller: " + CapAreaConseller + "<br>"
-            + "CapDepartamentDirectorGeneral: " + CapDepartamentDirectorGeneral + "<br>"
-            + "CodiDIR3ByUsername: " + CodiDIR3ByUsername + "<br>"
-            + "EncarregatCompresByUsername: " + EncarregatCompresByUsername + "<br>";
+            String CapAreaConseller =  campBuit( instance.getCapAreaConsellerByUsername(username));
+            String CapDepartamentDirectorGeneral = campBuit(instance.getCapDepartamentDirectorGeneralByUsername(username));
+            String CodiDIR3ByUsername = campBuit(instance.getCodiDIR3ByUsername(username));
+            String EncarregatCompresByUsername = campBuit(instance.getEncarregatCompresByUsername(username));
+            String GerentPresident = campBuit(instance.getGerentPresident());
+            String NomAreaConselleria = campBuit(instance.getNomAreaConselleriaByUsername(username, lang));
+            String NomDepartamentDireccioGeneral = campBuit(instance.getNomDepartamentDireccioGeneralByUsername(username, lang));
+            String RecursosHumans = campBuit(instance.getRecursosHumansByUsername(username));
+            String Secretari = campBuit(instance.getSecretariByUsername(username));
+            
+            String msg = "<b>Dades organitzatives de " + username + ": </b>";
+                msg += "<br>" + "Cap Area/Conseller: " + CapAreaConseller + "<br>" 
+                    + "Cap Departament/Director General: " + CapDepartamentDirectorGeneral + "<br>"
+                    + "Codi DIR3: " + CodiDIR3ByUsername + "<br>" 
+                    + "Encarregat Compres: " + EncarregatCompresByUsername + "<br>"
+                    + "Gerent/President: " + GerentPresident + "<br>"
+                    + "Area/Conselleria: " + NomAreaConselleria + "<br>"
+                    + "Departament/Direccio General: " + NomDepartamentDireccioGeneral + "<br>" 
+                    + "Recursos Humans: " + RecursosHumans + "<br>"
+                    + "Secretari: " + Secretari + "<br>";
 
             HtmlUtils.saveMessageInfo(request, msg);
 
+            
+//            
+//            Map<String, String> map = new HashMap<String, String>();
+//
+//            map.put("Cap Area/Conseller", instance.getCapAreaConsellerByUsername(username));
+//            map.put("Cap Departament/Director General", instance.getCapDepartamentDirectorGeneralByUsername(username));
+//            map.put("Codi DIR3", instance.getCodiDIR3ByUsername(username));
+//            map.put("Encarregat Compres", instance.getEncarregatCompresByUsername(username));
+//            map.put("Gerent/President", instance.getGerentPresident());
+//            map.put("Area/Conselleria", instance.getNomAreaConselleriaByUsername(username, lang));
+//            map.put("Departament/Direccio General", instance.getNomDepartamentDireccioGeneralByUsername(username, lang));
+//            map.put("Recursos Humans", instance.getRecursosHumansByUsername(username));
+//            map.put("Secretari", instance.getSecretariByUsername(username));
+//            
+//            msg = "<b>Dades organitzatives de " + username + ": </b>";
+//
+//            for (Map.Entry<String, String> entry : map.entrySet()) {
+//                msg += "<br>" + entry.getKey() + ": " + campBuit(entry.getValue());                
+//            }
+//            
+//            HtmlUtils.saveMessageInfo(request, msg);
+
+            
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);
             HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
 
         } catch (Exception e) {
-//            String msg = I18NUtils.getMessage(e);
             String msg = e.getMessage();
             HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
@@ -136,4 +178,11 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
         return "redirect:" + getContextWeb() + "/list";
     }
 
+    public String campBuit(String valor) {
+        if (valor == null) {
+            return "<b>No definit</b>";
+        } else {
+            return valor;
+        }
+    }
 }
