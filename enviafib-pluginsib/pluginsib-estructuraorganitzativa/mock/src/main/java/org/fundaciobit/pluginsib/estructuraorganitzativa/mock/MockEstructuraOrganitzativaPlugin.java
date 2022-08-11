@@ -89,6 +89,9 @@ public class MockEstructuraOrganitzativaPlugin extends AbstractPluginProperties
         String plantilla = valorPropietat;
         String generat = TemplateEngine.processExpressionLanguage(plantilla, map, new Locale("ca"));
 
+        if (generat != null && generat.trim().length() == 0) {
+            return null;
+        }
         return generat;
     }
 

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
@@ -18,6 +19,9 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
+import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
+import org.fundaciobit.pluginsib.userinformation.UserInfo;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ValidationUtils;
@@ -34,10 +38,12 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
+import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
+import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -112,7 +118,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         hiddens.remove(ARXIUREQPARAMORIGEN);
         hiddens.remove(ARXIUREQPARAMINTERESSATS);
         hiddens.remove(ARXIUREQPARAMORGANS);
-       
 
         if (__isView) {
             hiddens.remove(DATACREACIO);
@@ -193,21 +198,33 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             // Idioma per defecte per els documents, catala.
             peticio.setIdiomaDoc("ca");
 
-            LoginInfo li = LoginInfo.getInstance();            
+            LoginInfo li = LoginInfo.getInstance();
 
             // COIDDIR3
             // XYZ ZZZ S'ha de llegir de Plugin Estructura Organitzativa
-            peticio.setArxiuParamFuncionariDir3("A04027052 XYZ ZZZ");
+       //     peticio.setArxiuParamFuncionariDir3("A04027052 XYZ ZZZ");
+
+            try {
+                String codiDIR3 = getCodiDIR3();
+                peticioForm.getPeticio().setArxiuParamFuncionariDir3(codiDIR3);
+                peticioForm.addHiddenField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
+                peticioForm.addReadOnlyField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
+
+            } catch (I18NException e) {
+                String msg = I18NUtils.getMessage(e);
+                log.error(msg, e);
+                HtmlUtils.saveMessageWarning(request, msg);
+            }
+
             peticio.setArxiuFuncionariUsername(LoginInfo.getInstance().getUsername());
 
             String nomcomplet = li.getUsuari().getNom() + " " + li.getUsuari().getLlinatge1();
             if (li.getUsuari().getLlinatge2() != null) {
-                nomcomplet = nomcomplet + li.getUsuari().getLlinatge2() ;
+                nomcomplet = nomcomplet + li.getUsuari().getLlinatge2();
             }
             peticio.setArxiuParamFuncionariNom(nomcomplet.trim());
             peticio.setArxiuParamFuncionariNif(li.getUsuari().getNif());
             peticio.setArxiuReqParamOrigen(Constants.ORIGEN_ADMINISTRACIO);
-
 
             // XYZ ZZZ ZZZ S'ha d'obtenir del Mapeig de Series Documentals
             // XYZ ZZZ PostValidate validar que pel tipus de document hi ha seria documental
@@ -229,6 +246,30 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
 
         return peticioForm;
+    }
+
+    public String getCodiDIR3() throws I18NException {
+
+        Long pluginID = pluginEstructuraOrganitzativaEjb.executeQueryOne(PluginFields.PLUGINID,
+                PluginFields.ACTIU.equal(true));
+
+        if (pluginID == null) {
+            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu", new I18NArgumentCode(PeticioFields.ARXIUPARAMFUNCIONARIDIR3.codeLabel));
+        }
+
+        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
+
+        String codiDIR3;
+        try {
+            String username = LoginInfo.getInstance().getUsername();
+            codiDIR3 = instance.getCodiDIR3ByUsername(username);
+            log.info("El meu codiDIR3 es: " + codiDIR3);
+            return codiDIR3;
+            
+        } catch (Exception e) {
+            throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());
+        }
+
     }
 
     @Override
@@ -284,8 +325,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
-    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID")
-    java.lang.Long infoSignaturaID, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID") java.lang.Long infoSignaturaID,
+            HttpServletRequest request, HttpServletResponse response) {
 
         if (infoSignaturaID == null) {
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
@@ -345,9 +386,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String crearPeticioPost(@ModelAttribute
-    PeticioForm peticioForm, BindingResult result, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public String crearPeticioPost(@ModelAttribute PeticioForm peticioForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String ret = super.crearPeticioPost(peticioForm, result, request, response);
 
