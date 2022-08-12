@@ -2,6 +2,7 @@ package es.caib.enviafib.back.controller.user;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PluginFields;
@@ -45,7 +48,7 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
         if (peticioForm.isNou()) {
 
             try {
-                String directorNIF = getDirectorNIF();
+                String directorNIF = getCarrecNIF(Constants.CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL);
                 peticioForm.getPeticio().setDestinatariNif(directorNIF);
                 peticioForm.addReadOnlyField(PeticioFields.DESTINATARINIF);
 
@@ -53,7 +56,8 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
                 HtmlUtils.saveMessageWarning(request, msg);
-                HtmlUtils.saveMessageWarning(request, I18NUtils.tradueix("user.error.directornotrobat"));
+                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                return peticioForm;
             }
 
             peticioForm.setTitleCode("title.firma.director");
@@ -72,11 +76,14 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
 
     public String getDirectorNIF() throws I18NException {
 
+        String rol = "Director";
+
         Long pluginID = pluginEstructuraOrganitzativaEjb.executeQueryOne(PluginFields.PLUGINID,
                 PluginFields.ACTIU.equal(true));
         
         if (pluginID == null) {
-            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu", "Director");
+            String error = I18NUtils.tradueix("error.plugin.estructuraorganitzativa.noactiu");
+            throw new I18NException("error.plugin.estructuraorganitzativa", rol, error);
         }
 
         IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
@@ -86,7 +93,8 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
             String username = LoginInfo.getInstance().getUsername();
             CapDepartamentDirectorGeneral = instance.getCapDepartamentDirectorGeneralByUsername(username);
         } catch (Exception e) {
-            throw new I18NException("error.plugin.estructuraorganitzativa", "Director", e.getMessage());
+            String error = e.getMessage();
+            throw new I18NException("error.plugin.estructuraorganitzativa", rol, error);
         }
         log.info("El meu cap es: " + CapDepartamentDirectorGeneral);
 
@@ -105,14 +113,18 @@ public class FirmaDirectorUserController extends AbstractFirmaUserController {
         try {
             infoDirector = plugin.getUserInfoByUserName(CapDepartamentDirectorGeneral);
             log.info("infoDirector :" + infoDirector);
-            directorNIF = infoDirector.getAdministrationID();
-
         } catch (Exception e) {
-            throw new I18NException("error.logininfo.usuarinotfound", CapDepartamentDirectorGeneral);
+            String error = e.getMessage();
+            String username = CapDepartamentDirectorGeneral;
+            throw new I18NException("error.logininfo.usuarinotfound", username, error);
         }
 
+        directorNIF = infoDirector.getAdministrationID();
         if (directorNIF == null) {
-            throw new I18NException("error.logininfo.NIFnotfound", CapDepartamentDirectorGeneral);
+            String field = I18NUtils.tradueix(UsuariFields.NIF.codeLabel);
+            String username = CapDepartamentDirectorGeneral;
+            String error = I18NUtils.tradueix("nifisnull");
+            throw new I18NException("error.logininfo", field, rol, username, error);
         }
         log.info("El NIF del meu cap es: " + directorNIF);
         return directorNIF;

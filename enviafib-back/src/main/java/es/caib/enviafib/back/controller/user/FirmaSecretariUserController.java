@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PluginFields;
@@ -45,15 +47,17 @@ public class FirmaSecretariUserController extends AbstractFirmaUserController {
         if (peticioForm.isNou()) {
 
             try {
-                String directorNIF = getSecretariNIF();
-                peticioForm.getPeticio().setDestinatariNif(directorNIF);
+                
+                String secretariNIF = getCarrecNIF(Constants.CARREC_SECRETARI);
+                peticioForm.getPeticio().setDestinatariNif(secretariNIF);
                 peticioForm.addReadOnlyField(PeticioFields.DESTINATARINIF);
 
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
                 HtmlUtils.saveMessageWarning(request, msg);
-                HtmlUtils.saveMessageWarning(request, I18NUtils.tradueix("user.error.secretarinotrobat"));
+                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                return peticioForm;
             }
 
             peticioForm.setTitleCode("title.firma.secretari");
@@ -70,51 +74,5 @@ public class FirmaSecretariUserController extends AbstractFirmaUserController {
         return TIPUS_PETICIO_SECRETARI;
     }
 
-    public String getSecretariNIF() throws I18NException {
 
-        Long pluginID = pluginEstructuraOrganitzativaEjb.executeQueryOne(PluginFields.PLUGINID,
-                PluginFields.ACTIU.equal(true));
-
-        if (pluginID == null) {
-            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu", "Secretari");
-        }
-
-        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
-
-        String secretari;
-        try {
-            String username = LoginInfo.getInstance().getUsername();
-            secretari = instance.getCapDepartamentDirectorGeneralByUsername(username);
-        } catch (Exception e) {
-            throw new I18NException("error.plugin.estructuraorganitzativa", "Secretari", e.getMessage());
-        }
-        log.info("El meu cap es: " + secretari);
-
-        String secretariNIF;
-
-        // Provam a BBDD a veure si està el NIF
-        secretariNIF = usuariEjb.executeQueryOne(UsuariFields.NIF, 
-                UsuariFields.USERNAME.equal(secretari));
-        if (secretariNIF != null) {
-            return secretariNIF;
-        }
-
-        // Si no hi es, provam amb Plugin de UserInformation
-        IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
-        UserInfo infoSecretari;
-        try {
-            infoSecretari = plugin.getUserInfoByUserName(secretari);
-            log.info("infoSecretari :" + infoSecretari);
-            secretariNIF = infoSecretari.getAdministrationID();
-
-        } catch (Exception e) {
-            throw new I18NException("error.logininfo.usuarinotfound", secretari);
-        }
-
-        if (secretariNIF == null) {
-            throw new I18NException("error.logininfo.NIFnotfound", secretari);
-        }
-        log.info("El NIF del meu secretari es: " + secretariNIF);
-        return secretariNIF;
-    }
 }
