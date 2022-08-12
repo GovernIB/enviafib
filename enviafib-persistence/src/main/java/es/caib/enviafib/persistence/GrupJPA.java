@@ -22,10 +22,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class GrupJPA implements Grup {
 
-
-
-private static final long serialVersionUID = 1963437333L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="GRUP_SEQ")
     @Column(name="grupid",nullable = false,length = 19)

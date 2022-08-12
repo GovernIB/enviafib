@@ -8,8 +8,6 @@ public class GrupBean implements Grup {
 
 
 
-private static final long serialVersionUID = 736798134L;
-
 	long grupID;// PK
 	java.lang.String nom;
 	java.lang.String descripcio;

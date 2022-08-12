@@ -162,17 +162,10 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
              * transaccio.setEstatMissatge(msg); return null; }
              */
 
-            // XYZ ZZZ On es fica això !!!!!!
-            String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); // "Subvenciones
-                                                                              // empleo";
-            if (procedimentNom == null) {
-               procedimentNom = Configuracio.getProcedimentNom();
-            }
 
+            String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); // "Subvenciones
             String procedimentCodi = peticio.getArxiuOptParamProcedimentCodi();
-            if (procedimentCodi == null) {
-              procedimentCodi =  Configuracio.getProcedimentCodi();               
-            }
+            
 
             // No hauria de ser null
             List<String> organs;
@@ -210,7 +203,7 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
 
             String serieDocumental = peticio.getArxiuOptParamSerieDocumental(); // "S0001";
             if (serieDocumental == null) {
-                serieDocumental = Configuracio.getSerieDocumental();
+                serieDocumental = peticio.getArxiuOptParamSerieDocumental();
             }
 
             // XYZ ZZZ Això és per quan l'usuari pugui indicar el nom de l'expedient on vol

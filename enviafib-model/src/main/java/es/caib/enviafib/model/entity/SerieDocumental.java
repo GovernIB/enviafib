@@ -11,6 +11,12 @@ public interface SerieDocumental extends org.fundaciobit.genapp.common.IGenAppEn
 	public java.lang.String getTipusDocumental();
 	public void setTipusDocumental(java.lang.String _tipusDocumental_);
 
+	public java.lang.String getProcedimentNom();
+	public void setProcedimentNom(java.lang.String _procedimentNom_);
+
+	public java.lang.String getProcedimentCodi();
+	public void setProcedimentCodi(java.lang.String _procedimentCodi_);
+
 
 
   // ======================================

@@ -16,9 +16,6 @@ public class InfoArxiuJPAManager
 
 
 
-
-    private static final long serialVersionUID = 1564833495L;
-
     public static final TableName<InfoArxiu> _TABLENAME =  new TableName<InfoArxiu>("InfoArxiuJPA");
 
 

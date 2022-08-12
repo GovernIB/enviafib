@@ -8,8 +8,6 @@ public class InfoSignaturaBean implements InfoSignatura {
 
 
 
-private static final long serialVersionUID = 986528854L;
-
 	long infoSignaturaID;// PK
 	int signOperation;
 	java.lang.String signType;

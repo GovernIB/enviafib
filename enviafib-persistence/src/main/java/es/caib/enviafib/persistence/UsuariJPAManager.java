@@ -16,9 +16,6 @@ public class UsuariJPAManager
 
 
 
-
-    private static final long serialVersionUID = 1136027571L;
-
     public static final TableName<Usuari> _TABLENAME =  new TableName<Usuari>("UsuariJPA");
 
 

@@ -42,6 +42,16 @@
           </c:if>
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTNOM)}">
+          <td>
+          ${serieDocumental.procedimentNom}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTCODI)}">
+          <td>
+          ${serieDocumental.procedimentCodi}
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

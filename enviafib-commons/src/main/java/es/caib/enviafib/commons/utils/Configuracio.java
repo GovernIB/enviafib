@@ -242,19 +242,5 @@ public class Configuracio implements Constants {
     public static String getPluginArxiuClass() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "plugin.arxiu.class");
     }
-    
-    public static String getProcedimentCodi() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "ProcedimentCodi");
-    }
-   
-    
-    public static String getProcedimentNom() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "ProcedimentNom");
-    }
-    
-    
-    public static String getSerieDocumental() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "SerieDocumental");
-    }
-    
+ 
 }

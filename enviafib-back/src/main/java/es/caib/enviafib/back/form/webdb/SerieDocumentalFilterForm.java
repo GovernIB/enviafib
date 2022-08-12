@@ -65,6 +65,28 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
   }
 
 
+  private java.lang.String procedimentNom;
+
+  public java.lang.String getProcedimentNom() {
+    return this.procedimentNom;
+  }
+
+  public void setProcedimentNom(java.lang.String procedimentNom) {
+    this.procedimentNom = procedimentNom;
+  }
+
+
+  private java.lang.String procedimentCodi;
+
+  public java.lang.String getProcedimentCodi() {
+    return this.procedimentCodi;
+  }
+
+  public void setProcedimentCodi(java.lang.String procedimentCodi) {
+    this.procedimentCodi = procedimentCodi;
+  }
+
+
   public SerieDocumentalFilterForm() {
   }
   
@@ -74,6 +96,8 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
     this.serieDocumentalIDFins = __toClone.serieDocumentalIDFins;
     this.nom = __toClone.nom;
     this.tipusDocumental = __toClone.tipusDocumental;
+    this.procedimentNom = __toClone.procedimentNom;
+    this.procedimentCodi = __toClone.procedimentCodi;
     this.mapOfValuesForTipusDocumental = __toClone.mapOfValuesForTipusDocumental;
   }
   

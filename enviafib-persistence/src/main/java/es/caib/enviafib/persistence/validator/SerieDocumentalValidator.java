@@ -34,6 +34,14 @@ public class SerieDocumentalValidator<I extends SerieDocumental>
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOM)));
 
+    __vr.rejectIfEmptyOrWhitespace(__target__,PROCEDIMENTNOM, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(PROCEDIMENTNOM)));
+
+    __vr.rejectIfEmptyOrWhitespace(__target__,PROCEDIMENTCODI, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(PROCEDIMENTCODI)));
+
     // Check size
     if (__vr.getFieldErrorCount(NOM) == 0) {
       java.lang.String __nom = __target__.getNom();
@@ -48,6 +56,22 @@ public class SerieDocumentalValidator<I extends SerieDocumental>
       if (__tipusdocumental!= null && __tipusdocumental.length() > 256) {
         __vr.rejectValue(TIPUSDOCUMENTAL, "genapp.validation.sizeexceeds",
             new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSDOCUMENTAL)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(256)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(PROCEDIMENTNOM) == 0) {
+      java.lang.String __procedimentnom = __target__.getProcedimentNom();
+      if (__procedimentnom!= null && __procedimentnom.length() > 2147483647) {
+        __vr.rejectValue(PROCEDIMENTNOM, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(PROCEDIMENTNOM)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(2147483647)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(PROCEDIMENTCODI) == 0) {
+      java.lang.String __procedimentcodi = __target__.getProcedimentCodi();
+      if (__procedimentcodi!= null && __procedimentcodi.length() > 2147483647) {
+        __vr.rejectValue(PROCEDIMENTCODI, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(PROCEDIMENTCODI)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(2147483647)));
       }
     }
 

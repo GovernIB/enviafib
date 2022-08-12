@@ -8,8 +8,6 @@ public class PeticioBean implements Peticio {
 
 
 
-private static final long serialVersionUID = -515854961L;
-
 	long peticioID;// PK
 	java.lang.String nom;
 	java.sql.Timestamp dataCreacio;

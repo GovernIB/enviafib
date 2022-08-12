@@ -16,9 +16,6 @@ public class SerieDocumentalJPAManager
 
 
 
-
-    private static final long serialVersionUID = 1332195828L;
-
     public static final TableName<SerieDocumental> _TABLENAME =  new TableName<SerieDocumental>("SerieDocumentalJPA");
 
 
@@ -58,8 +55,8 @@ public class SerieDocumentalJPAManager
         return list.toArray(new SerieDocumental[list.size()]);
     };
 
-    public SerieDocumental create( java.lang.String _nom_, java.lang.String _tipusDocumental_) throws I18NException {
-        SerieDocumentalJPA __bean =  new SerieDocumentalJPA(_nom_,_tipusDocumental_);
+    public SerieDocumental create( java.lang.String _nom_, java.lang.String _tipusDocumental_, java.lang.String _procedimentNom_, java.lang.String _procedimentCodi_) throws I18NException {
+        SerieDocumentalJPA __bean =  new SerieDocumentalJPA(_nom_,_tipusDocumental_,_procedimentNom_,_procedimentCodi_);
         return create(__bean);
     }
 

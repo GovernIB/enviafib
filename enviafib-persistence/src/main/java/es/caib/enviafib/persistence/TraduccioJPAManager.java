@@ -16,9 +16,6 @@ public class TraduccioJPAManager
 
 
 
-
-    private static final long serialVersionUID = -138387508L;
-
     public static final TableName<Traduccio> _TABLENAME =  new TableName<Traduccio>("TraduccioJPA");
 
 

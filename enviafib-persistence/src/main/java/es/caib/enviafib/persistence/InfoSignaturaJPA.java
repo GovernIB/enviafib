@@ -22,10 +22,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class InfoSignaturaJPA implements InfoSignatura {
 
-
-
-private static final long serialVersionUID = 170377845L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="INFOSIGNATURA_SEQ")
     @Column(name="infosignaturaid",nullable = false,length = 19)

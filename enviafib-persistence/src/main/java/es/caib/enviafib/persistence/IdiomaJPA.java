@@ -20,10 +20,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class IdiomaJPA implements Idioma {
 
-
-
-private static final long serialVersionUID = 1367253670L;
-
     @Id
     @Column(name="idiomaid",nullable = false,length = 5)
     java.lang.String idiomaID;

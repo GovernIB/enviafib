@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,7 +38,9 @@ import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.fields.PeticioFields;
+import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -48,6 +51,9 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 public abstract class AbstractFirmaUserController extends AbstractPeticioUserController {
+
+    @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.SerieDocumentalService serieDocumentalEjb;
 
     @Override
     public boolean isActiveList() {
@@ -193,7 +199,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             // Idioma per defecte per els documents, catala.
             peticio.setIdiomaDoc("ca");
 
-            LoginInfo li = LoginInfo.getInstance();            
+            LoginInfo li = LoginInfo.getInstance();
 
             // COIDDIR3
             // XYZ ZZZ S'ha de llegir de Plugin Estructura Organitzativa
@@ -202,18 +208,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             String nomcomplet = li.getUsuari().getNom() + " " + li.getUsuari().getLlinatge1();
             if (li.getUsuari().getLlinatge2() != null) {
-                nomcomplet = nomcomplet + li.getUsuari().getLlinatge2() ;
+                nomcomplet = nomcomplet + li.getUsuari().getLlinatge2();
             }
             peticio.setArxiuParamFuncionariNom(nomcomplet.trim());
             peticio.setArxiuParamFuncionariNif(li.getUsuari().getNif());
             peticio.setArxiuReqParamOrigen(Constants.ORIGEN_ADMINISTRACIO);
-
-
-            // XYZ ZZZ ZZZ S'ha d'obtenir del Mapeig de Series Documentals
-            // XYZ ZZZ PostValidate validar que pel tipus de document hi ha seria documental
-            peticio.setArxiuOptParamSerieDocumental(Configuracio.getSerieDocumental());
-            peticio.setArxiuOptParamProcedimentCodi(Configuracio.getProcedimentCodi());
-            peticio.setArxiuOptParamProcedimentNom(Configuracio.getProcedimentNom());
 
             // Ha d'escriure els DNIs, CIFs o NIFs de les persones interessades separats per
             // coma.
@@ -284,8 +283,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
-    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID")
-    java.lang.Long infoSignaturaID, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID") java.lang.Long infoSignaturaID,
+            HttpServletRequest request, HttpServletResponse response) {
 
         if (infoSignaturaID == null) {
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
@@ -345,9 +344,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String crearPeticioPost(@ModelAttribute
-    PeticioForm peticioForm, BindingResult result, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public String crearPeticioPost(@ModelAttribute PeticioForm peticioForm, BindingResult result,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String ret = super.crearPeticioPost(peticioForm, result, request, response);
 
@@ -412,6 +410,39 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     }
                 }
             }
+
+        }
+        // Validacio de serie documental
+        {
+            // XYZ ZZZ ZZZ S'ha d'obtenir del Mapeig de Series Documentals
+            // XYZ ZZZ PostValidate validar que pel tipus de document hi ha seria documental
+            
+            Peticio peticio = peticioForm.getPeticio();
+            
+            
+            String tipusDocumental = peticio.getTipusDocumental();
+            log.info("XYZ XXXX TIPUS DOCUMENTAL = " + tipusDocumental);
+            List<SerieDocumental> list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
+            log.info("XYZ XXXX QUERY Tipus documentals correcte");
+            if (list == null || list.isEmpty()) {
+                list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.isNull());
+                if (list == null || list.isEmpty()) {
+                    //throw new I18NException("No existeix Serie Documental amb el Tipus Documental " + tipusDocumental
+                    //        + " o amb tipus documental null. Consulti l'error amb el seu administrador");
+                    
+                    result.rejectValue(get(PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL), "error.tipusdocumental",
+                            new String[] { tipusDocumental },
+                            null);
+                   
+                }
+            }
+
+            SerieDocumental serieDocumental = list.get(0);
+
+            //XYZ Arreglar noms Java a genapp
+            peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
+            peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
+            peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
         }
     }
 

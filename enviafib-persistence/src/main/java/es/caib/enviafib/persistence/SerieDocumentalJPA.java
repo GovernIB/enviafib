@@ -5,9 +5,11 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
+import javax.persistence.Lob;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
+import org.hibernate.annotations.Type;
 import javax.persistence.Id;
 
 
@@ -17,10 +19,6 @@ import javax.persistence.Id;
 @SequenceGenerator(name="SERIEDOCUMENTAL_SEQ", sequenceName="efi_seriedocumental_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class SerieDocumentalJPA implements SerieDocumental {
-
-
-
-private static final long serialVersionUID = -2030187655L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SERIEDOCUMENTAL_SEQ")
@@ -33,6 +31,16 @@ private static final long serialVersionUID = -2030187655L;
     @Column(name="tipusdocumental",unique = true,length = 256)
     java.lang.String tipusDocumental;
 
+    @Column(name="procedimentnom",nullable = false,length = 2147483647)
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    java.lang.String procedimentNom;
+
+    @Column(name="procedimentcodi",nullable = false,length = 2147483647)
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    java.lang.String procedimentCodi;
+
 
 
   /** Constructor Buit */
@@ -40,20 +48,26 @@ private static final long serialVersionUID = -2030187655L;
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalJPA(long serieDocumentalID , java.lang.String nom , java.lang.String tipusDocumental) {
+  public SerieDocumentalJPA(long serieDocumentalID , java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi) {
     this.serieDocumentalID=serieDocumentalID;
     this.nom=nom;
     this.tipusDocumental=tipusDocumental;
+    this.procedimentNom=procedimentNom;
+    this.procedimentCodi=procedimentCodi;
 }
   /** Constructor sense valors autoincrementals */
-  public SerieDocumentalJPA(java.lang.String nom , java.lang.String tipusDocumental) {
+  public SerieDocumentalJPA(java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi) {
     this.nom=nom;
     this.tipusDocumental=tipusDocumental;
+    this.procedimentNom=procedimentNom;
+    this.procedimentCodi=procedimentCodi;
 }
   public SerieDocumentalJPA(SerieDocumental __bean) {
     this.setSerieDocumentalID(__bean.getSerieDocumentalID());
     this.setNom(__bean.getNom());
     this.setTipusDocumental(__bean.getTipusDocumental());
+    this.setProcedimentNom(__bean.getProcedimentNom());
+    this.setProcedimentCodi(__bean.getProcedimentCodi());
 	}
 
 	public long getSerieDocumentalID() {
@@ -75,6 +89,20 @@ private static final long serialVersionUID = -2030187655L;
 	};
 	public void setTipusDocumental(java.lang.String _tipusDocumental_) {
 		this.tipusDocumental = _tipusDocumental_;
+	};
+
+	public java.lang.String getProcedimentNom() {
+		return(procedimentNom);
+	};
+	public void setProcedimentNom(java.lang.String _procedimentNom_) {
+		this.procedimentNom = _procedimentNom_;
+	};
+
+	public java.lang.String getProcedimentCodi() {
+		return(procedimentCodi);
+	};
+	public void setProcedimentCodi(java.lang.String _procedimentCodi_) {
+		this.procedimentCodi = _procedimentCodi_;
 	};
 
 
@@ -100,6 +128,8 @@ private static final long serialVersionUID = -2030187655L;
     __tmp.setSerieDocumentalID(__bean.getSerieDocumentalID());
     __tmp.setNom(__bean.getNom());
     __tmp.setTipusDocumental(__bean.getTipusDocumental());
+    __tmp.setProcedimentNom(__bean.getProcedimentNom());
+    __tmp.setProcedimentCodi(__bean.getProcedimentCodi());
 		return __tmp;
 	}
 

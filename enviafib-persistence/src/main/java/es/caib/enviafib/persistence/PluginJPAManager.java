@@ -16,9 +16,6 @@ public class PluginJPAManager
 
 
 
-
-    private static final long serialVersionUID = -1591214331L;
-
     public static final TableName<Plugin> _TABLENAME =  new TableName<Plugin>("PluginJPA");
 
 

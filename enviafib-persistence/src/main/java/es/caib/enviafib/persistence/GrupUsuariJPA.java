@@ -27,10 +27,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class GrupUsuariJPA implements GrupUsuari {
 
-
-
-private static final long serialVersionUID = 1043341428L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="GRUPUSUARI_SEQ")
     @Column(name="grupusuariid",nullable = false,length = 19)

@@ -30,10 +30,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class PeticioJPA implements Peticio {
 
-
-
-private static final long serialVersionUID = 1230292508L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="PETICIO_SEQ")
     @Column(name="peticioid",nullable = false,length = 19)

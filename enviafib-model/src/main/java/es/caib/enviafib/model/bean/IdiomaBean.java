@@ -8,8 +8,6 @@ public class IdiomaBean implements Idioma {
 
 
 
-private static final long serialVersionUID = -565026235L;
-
 	java.lang.String idiomaID;// PK
 	java.lang.String nom;
 	boolean suportat;
