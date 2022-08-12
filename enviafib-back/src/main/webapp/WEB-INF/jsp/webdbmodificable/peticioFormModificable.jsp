@@ -1,6 +1,6 @@
 <c:if test="${not empty dragdrop}">
 
-<%-- 	<input type="hidden" name="dragndrop" value="true"/> --%> 
+	<%-- 	<input type="hidden" name="dragndrop" value="true"/> --%>
 
 	<div class="droparea">
 
@@ -44,6 +44,7 @@
 	    droparea.addEventListener("drop", handleDrop);
 	    
 //		$(".tab_container").append('<h5><fmt:message key="dragdrop.title"/><h5>');   
+		$("#peticio_tableid").append($("#peticio_idiomaDoc_rowid"));   
 		$("#peticio_tableid").append($("#peticio_fitxerID_rowid"));   
 		$(".tab_container").append($(".droparea"));   
 		
@@ -107,19 +108,19 @@
 	position: absolute;
 	width: 100%;
 	z-index: 1000;
-	background: #fcfcfc url("https://cdn.dribbble.com/users/765253/screenshots/2540865/loader.gif") no-repeat
-		scroll center center;
+	background: #fcfcfc
+		url("https://cdn.dribbble.com/users/765253/screenshots/2540865/loader.gif")
+		no-repeat scroll center center;
 	top: 0;
 	left: 0;
 	opacity: 0.8;
 }
 
 #peticio_tableid {
-	margin: auto;	
+	margin: auto;
 }
 
-
-#peticio_tableid > tbody > tr > td:first-child {
+#peticio_tableid>tbody>tr>td:first-child {
 	font-weight: bold;
 	text-align: right;
 	padding: 1rem;
@@ -130,7 +131,40 @@ td label {
 	margin: 0;
 }
 
+#showHideButton{
+
+}
 
 </style>
 
 </c:if>
+<div id="navbar-showHideButton" class="navbar-form" style="text-align:right;">
+ 	<button type="button" id="showHideButton" value="0" onclick="showMore()">Click me</button>
+</div>
+
+<script type="text/javascript">	
+
+
+$("#navbar-showHideButton").insertBefore("#peticioForm");
+
+$("#showHideButton").addClass("btn btn-primary");
+showMore();
+
+function showMore(){
+	$("#peticio_arxiuReqParamInteressats_rowid").toggle();
+	$("#peticio_arxiuReqParamOrgans_rowid").toggle();
+	$("#peticio_arxiuReqParamOrigen_rowid").toggle();
+
+	var mode = $("#showHideButton").val();
+
+	if(mode == 0){
+ 		$("#showHideButton").html('<fmt:message key="advanced.show"/>');
+		mode = 1;
+	}else{
+ 		$("#showHideButton").html('<fmt:message key="advanced.hide"/>');
+		mode = 0;
+	}
+ 	$("#showHideButton").val(mode);
+ }
+
+</script>
