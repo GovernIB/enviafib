@@ -146,11 +146,11 @@ public abstract class AbstractPluginAdminController extends PluginController {
         PluginJPA p = pluginLogicaEjb.findByPrimaryKey(pluginid);
 
         int tipusPlugin = getTipusDePlugin();
-        List<String> infoCodiNom;
 
         switch (tipusPlugin) {
             case Constants.TIPUS_PLUGIN_ESTRUCTURAORGANITZATIVA:
-
+                // XYZ ZZZ
+               // TODO: Falta controlar si és l'unic Plugin Actiu disponible i mostrar un missatge
             break;
 
             default:

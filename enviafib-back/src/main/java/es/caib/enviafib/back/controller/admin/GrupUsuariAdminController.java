@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController;
 import es.caib.enviafib.back.controller.webdb.GrupUsuariController;
 import es.caib.enviafib.back.form.webdb.GrupUsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.GrupUsuariForm;
