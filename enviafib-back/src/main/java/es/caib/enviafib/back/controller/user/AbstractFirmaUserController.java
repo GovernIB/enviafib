@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
+import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
@@ -46,6 +47,7 @@ import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
+import es.caib.portafib.utils.ConstantsV2;
 
 /**
  * Codi comú per formulari dels diferents tipus de peticions.
@@ -180,6 +182,21 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             Peticio peticio = peticioForm.getPeticio();
 
+            // COIDDIR3
+            try {
+                String codiDIR3 = getCodiDIR3();
+                peticio.setArxiuParamFuncionariDir3(codiDIR3);
+                peticioForm.addHiddenField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
+                peticioForm.addReadOnlyField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
+
+            } catch (I18NException e) {
+                String msg = I18NUtils.getMessage(e);
+                log.error(msg, e);
+                HtmlUtils.saveMessageWarning(request, msg);
+                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                return peticioForm;
+            }
+
             peticio.setDataCreacio(new Timestamp(System.currentTimeMillis()));
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
             peticio.setErrorMsg(LogicUtils.split255(
@@ -199,22 +216,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setIdiomaDoc("ca");
 
             LoginInfo li = LoginInfo.getInstance();
-
-            // COIDDIR3
-            // XYZ ZZZ S'ha de llegir de Plugin Estructura Organitzativa
-       //     peticio.setArxiuParamFuncionariDir3("A04027052 XYZ ZZZ");
-
-            try {
-                String codiDIR3 = getCodiDIR3();
-                peticioForm.getPeticio().setArxiuParamFuncionariDir3(codiDIR3);
-                peticioForm.addHiddenField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
-                peticioForm.addReadOnlyField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
-
-            } catch (I18NException e) {
-                String msg = I18NUtils.getMessage(e);
-                log.error(msg, e);
-                HtmlUtils.saveMessageWarning(request, msg);
-            }
 
             peticio.setArxiuFuncionariUsername(LoginInfo.getInstance().getUsername());
 
@@ -250,14 +251,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     public String getCodiDIR3() throws I18NException {
 
-        Long pluginID = pluginEstructuraOrganitzativaEjb.executeQueryOne(PluginFields.PLUGINID,
-                PluginFields.ACTIU.equal(true));
-
-        if (pluginID == null) {
-            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu", new I18NArgumentCode(PeticioFields.ARXIUPARAMFUNCIONARIDIR3.codeLabel));
-        }
-
-        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
+        IEstructuraOrganitzativaPlugin instance = getEstructuraOrganitzativaInstance();
 
         String codiDIR3;
         try {
@@ -265,11 +259,23 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             codiDIR3 = instance.getCodiDIR3ByUsername(username);
             log.info("El meu codiDIR3 es: " + codiDIR3);
             return codiDIR3;
-            
+
         } catch (Exception e) {
             throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());
         }
+    }
 
+    public IEstructuraOrganitzativaPlugin getEstructuraOrganitzativaInstance() throws I18NException {
+        Long pluginID = pluginEstructuraOrganitzativaEjb.executeQueryOne(PluginFields.PLUGINID,
+                PluginFields.ACTIU.equal(true));
+
+        if (pluginID == null) {
+            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu",
+                    new I18NArgumentCode(PeticioFields.ARXIUPARAMFUNCIONARIDIR3.codeLabel));
+        }
+
+        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
+        return instance;
     }
 
     @Override
