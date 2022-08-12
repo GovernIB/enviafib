@@ -28,10 +28,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class TraduccioJPA implements Traduccio {
 
-
-
-private static final long serialVersionUID = -326205279L;
-
   /**  */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="TRADUCCIO_SEQ")

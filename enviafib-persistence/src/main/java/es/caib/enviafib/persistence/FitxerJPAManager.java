@@ -16,9 +16,6 @@ public class FitxerJPAManager
 
 
 
-
-    private static final long serialVersionUID = -310054906L;
-
     public static final TableName<Fitxer> _TABLENAME =  new TableName<Fitxer>("FitxerJPA");
 
 

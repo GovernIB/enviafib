@@ -22,10 +22,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class InfoArxiuJPA implements InfoArxiu {
 
-
-
-private static final long serialVersionUID = -1940754442L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="INFOARXIU_SEQ")
     @Column(name="infoarxiuid",nullable = false,length = 19)

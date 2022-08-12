@@ -16,9 +16,6 @@ public class IdiomaJPAManager
 
 
 
-
-    private static final long serialVersionUID = 338419239L;
-
     public static final TableName<Idioma> _TABLENAME =  new TableName<Idioma>("IdiomaJPA");
 
 

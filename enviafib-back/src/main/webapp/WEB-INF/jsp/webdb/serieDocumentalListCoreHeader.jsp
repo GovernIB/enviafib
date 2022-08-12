@@ -21,6 +21,12 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.TIPUSDOCUMENTAL)}">
         <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.TIPUSDOCUMENTAL)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTNOM)}">
+        <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.PROCEDIMENTNOM)}</th>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTCODI)}">
+        <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.PROCEDIMENTCODI)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

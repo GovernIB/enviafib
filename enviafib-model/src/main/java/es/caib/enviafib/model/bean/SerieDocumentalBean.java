@@ -8,11 +8,11 @@ public class SerieDocumentalBean implements SerieDocumental {
 
 
 
-private static final long serialVersionUID = 1488475090L;
-
 	long serieDocumentalID;// PK
 	java.lang.String nom;
 	java.lang.String tipusDocumental;
+	java.lang.String procedimentNom;
+	java.lang.String procedimentCodi;
 
 
   /** Constructor Buit */
@@ -20,20 +20,26 @@ private static final long serialVersionUID = 1488475090L;
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalBean(long serieDocumentalID , java.lang.String nom , java.lang.String tipusDocumental) {
+  public SerieDocumentalBean(long serieDocumentalID , java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi) {
     this.serieDocumentalID=serieDocumentalID;
     this.nom=nom;
     this.tipusDocumental=tipusDocumental;
+    this.procedimentNom=procedimentNom;
+    this.procedimentCodi=procedimentCodi;
 }
   /** Constructor sense valors autoincrementals */
-  public SerieDocumentalBean(java.lang.String nom , java.lang.String tipusDocumental) {
+  public SerieDocumentalBean(java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi) {
     this.nom=nom;
     this.tipusDocumental=tipusDocumental;
+    this.procedimentNom=procedimentNom;
+    this.procedimentCodi=procedimentCodi;
 }
   public SerieDocumentalBean(SerieDocumental __bean) {
     this.setSerieDocumentalID(__bean.getSerieDocumentalID());
     this.setNom(__bean.getNom());
     this.setTipusDocumental(__bean.getTipusDocumental());
+    this.setProcedimentNom(__bean.getProcedimentNom());
+    this.setProcedimentCodi(__bean.getProcedimentCodi());
 	}
 
 	public long getSerieDocumentalID() {
@@ -57,6 +63,20 @@ private static final long serialVersionUID = 1488475090L;
 		this.tipusDocumental = _tipusDocumental_;
 	};
 
+	public java.lang.String getProcedimentNom() {
+		return(procedimentNom);
+	};
+	public void setProcedimentNom(java.lang.String _procedimentNom_) {
+		this.procedimentNom = _procedimentNom_;
+	};
+
+	public java.lang.String getProcedimentCodi() {
+		return(procedimentCodi);
+	};
+	public void setProcedimentCodi(java.lang.String _procedimentCodi_) {
+		this.procedimentCodi = _procedimentCodi_;
+	};
+
 
 
   // ======================================
@@ -67,6 +87,8 @@ private static final long serialVersionUID = 1488475090L;
     __tmp.setSerieDocumentalID(__bean.getSerieDocumentalID());
     __tmp.setNom(__bean.getNom());
     __tmp.setTipusDocumental(__bean.getTipusDocumental());
+    __tmp.setProcedimentNom(__bean.getProcedimentNom());
+    __tmp.setProcedimentCodi(__bean.getProcedimentCodi());
 		return __tmp;
 	}
 

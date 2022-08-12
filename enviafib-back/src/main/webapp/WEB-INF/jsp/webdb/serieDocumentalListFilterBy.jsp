@@ -94,6 +94,32 @@
 
 
         </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,SerieDocumentalFields.PROCEDIMENTNOM)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="serieDocumental.procedimentNom" var="procedimentNom" />
+              <fmt:message key="genapp.form.searchby" var="cercaperprocedimentNom" >                
+                 <fmt:param value="${procedimentNom}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${procedimentNom}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperprocedimentNom}" path="procedimentNom" />
+            </div>
+
+
+        </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,SerieDocumentalFields.PROCEDIMENTCODI)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="serieDocumental.procedimentCodi" var="procedimentCodi" />
+              <fmt:message key="genapp.form.searchby" var="cercaperprocedimentCodi" >                
+                 <fmt:param value="${procedimentCodi}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${procedimentCodi}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperprocedimentCodi}" path="procedimentCodi" />
+            </div>
+
+
+        </c:if>
 
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key >= 0 && not empty __entry.value.searchBy }">

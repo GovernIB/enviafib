@@ -15,12 +15,16 @@ public interface SerieDocumentalFields extends java.io.Serializable {
 	 public static final LongField SERIEDOCUMENTALID = new LongField(_TABLE_MODEL, "serieDocumentalID", "seriedocumentalid");  // PK
 	 public static final StringField NOM = new StringField(_TABLE_MODEL, "nom", "nom");
 	 public static final StringField TIPUSDOCUMENTAL = new StringField(_TABLE_MODEL, "tipusDocumental", "tipusdocumental");
+	 public static final StringField PROCEDIMENTNOM = new StringField(_TABLE_MODEL, "procedimentNom", "procedimentnom");
+	 public static final StringField PROCEDIMENTCODI = new StringField(_TABLE_MODEL, "procedimentCodi", "procedimentcodi");
 
 
   public static final Field<?>[] ALL_SERIEDOCUMENTAL_FIELDS = {
     SERIEDOCUMENTALID,
     NOM,
-    TIPUSDOCUMENTAL
+    TIPUSDOCUMENTAL,
+    PROCEDIMENTNOM,
+    PROCEDIMENTCODI
   };
 
 

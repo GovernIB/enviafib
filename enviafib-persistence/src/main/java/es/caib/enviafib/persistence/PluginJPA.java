@@ -20,10 +20,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class PluginJPA implements Plugin {
 
-
-
-private static final long serialVersionUID = 190357384L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="PLUGIN_SEQ")
     @Column(name="pluginid",nullable = false,length = 19)

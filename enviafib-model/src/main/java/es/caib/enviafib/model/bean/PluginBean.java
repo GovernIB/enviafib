@@ -8,8 +8,6 @@ public class PluginBean implements Plugin {
 
 
 
-private static final long serialVersionUID = 1605894563L;
-
 	long pluginID;// PK
 	java.lang.String nom;
 	java.lang.String descripcio;

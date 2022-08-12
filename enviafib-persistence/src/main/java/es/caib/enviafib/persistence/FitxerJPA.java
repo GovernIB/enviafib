@@ -22,10 +22,6 @@ import javax.persistence.Id;
 @javax.xml.bind.annotation.XmlRootElement
 public class FitxerJPA implements Fitxer {
 
-
-
-private static final long serialVersionUID = -252813913L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FITXER_SEQ")
     @Column(name="fitxerid",nullable = false,length = 19)

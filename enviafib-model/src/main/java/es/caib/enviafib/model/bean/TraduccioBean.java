@@ -8,8 +8,6 @@ public class TraduccioBean implements Traduccio {
 
 
 
-private static final long serialVersionUID = -1522646102L;
-
 	long traduccioID;// PK
 
 

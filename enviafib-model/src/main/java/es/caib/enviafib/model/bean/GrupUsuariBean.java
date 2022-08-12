@@ -8,8 +8,6 @@ public class GrupUsuariBean implements GrupUsuari {
 
 
 
-private static final long serialVersionUID = -2016371145L;
-
 	long grupUsuariID;// PK
 	long grupID;
 	long usuariID;

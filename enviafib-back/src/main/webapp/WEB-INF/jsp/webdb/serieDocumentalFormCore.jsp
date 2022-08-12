@@ -60,3 +60,39 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTNOM)}">
+        <tr id="serieDocumental_procedimentNom_rowid">
+          <td id="serieDocumental_procedimentNom_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.PROCEDIMENTNOM])?'serieDocumental.procedimentNom':__theForm.labels[SerieDocumentalFields.PROCEDIMENTNOM]}" /> &nbsp;(*)
+             </label>
+              <c:if test="${not empty __theForm.help[SerieDocumentalFields.PROCEDIMENTNOM]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[SerieDocumentalFields.PROCEDIMENTNOM]}" ></i>
+              </c:if>
+            </td>
+          <td id="serieDocumental_procedimentNom_columnvalueid">
+            <form:errors path="serieDocumental.procedimentNom" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.PROCEDIMENTNOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.PROCEDIMENTNOM)? ' uneditable-input' : ''}"  style="" maxlength="2147483647" path="serieDocumental.procedimentNom"   />
+
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTCODI)}">
+        <tr id="serieDocumental_procedimentCodi_rowid">
+          <td id="serieDocumental_procedimentCodi_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI])?'serieDocumental.procedimentCodi':__theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI]}" /> &nbsp;(*)
+             </label>
+              <c:if test="${not empty __theForm.help[SerieDocumentalFields.PROCEDIMENTCODI]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[SerieDocumentalFields.PROCEDIMENTCODI]}" ></i>
+              </c:if>
+            </td>
+          <td id="serieDocumental_procedimentCodi_columnvalueid">
+            <form:errors path="serieDocumental.procedimentCodi" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.PROCEDIMENTCODI)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.PROCEDIMENTCODI)? ' uneditable-input' : ''}"  style="" maxlength="2147483647" path="serieDocumental.procedimentCodi"   />
+
+           </td>
+        </tr>
+        </c:if>
+        

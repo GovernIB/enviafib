@@ -8,8 +8,6 @@ public class InfoArxiuBean implements InfoArxiu {
 
 
 
-private static final long serialVersionUID = -34062603L;
-
 	long infoArxiuID;// PK
 	java.lang.String originalFileUrl;
 	java.lang.String csv;

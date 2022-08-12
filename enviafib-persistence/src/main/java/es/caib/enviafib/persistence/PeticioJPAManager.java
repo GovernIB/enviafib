@@ -16,9 +16,6 @@ public class PeticioJPAManager
 
 
 
-
-    private static final long serialVersionUID = 1786972657L;
-
     public static final TableName<Peticio> _TABLENAME =  new TableName<Peticio>("PeticioJPA");
 
 

@@ -23,6 +23,14 @@ public class SerieDocumentalQueryPath extends org.fundaciobit.genapp.common.quer
     return new StringField(getQueryPath(), SerieDocumentalFields.TIPUSDOCUMENTAL);
   }
 
+  public StringField PROCEDIMENTNOM() {
+    return new StringField(getQueryPath(), SerieDocumentalFields.PROCEDIMENTNOM);
+  }
+
+  public StringField PROCEDIMENTCODI() {
+    return new StringField(getQueryPath(), SerieDocumentalFields.PROCEDIMENTCODI);
+  }
+
 
 
   @Override

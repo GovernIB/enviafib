@@ -16,9 +16,6 @@ public class GrupUsuariJPAManager
 
 
 
-
-    private static final long serialVersionUID = 947248281L;
-
     public static final TableName<GrupUsuari> _TABLENAME =  new TableName<GrupUsuari>("GrupUsuariJPA");
 
 

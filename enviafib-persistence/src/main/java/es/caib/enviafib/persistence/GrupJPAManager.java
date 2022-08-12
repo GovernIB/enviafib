@@ -16,9 +16,6 @@ public class GrupJPAManager
 
 
 
-
-    private static final long serialVersionUID = 1793460440L;
-
     public static final TableName<Grup> _TABLENAME =  new TableName<Grup>("GrupJPA");
 
 

@@ -8,8 +8,6 @@ public class FitxerBean implements Fitxer {
 
 
 
-private static final long serialVersionUID = 752486244L;
-
 	long fitxerID;// PK
 	java.lang.String nom;
 	java.lang.String mime;

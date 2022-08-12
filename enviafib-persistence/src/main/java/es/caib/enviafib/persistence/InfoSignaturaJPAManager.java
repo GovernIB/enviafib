@@ -16,9 +16,6 @@ public class InfoSignaturaJPAManager
 
 
 
-
-    private static final long serialVersionUID = 1055205240L;
-
     public static final TableName<InfoSignatura> _TABLENAME =  new TableName<InfoSignatura>("InfoSignaturaJPA");
 
 
