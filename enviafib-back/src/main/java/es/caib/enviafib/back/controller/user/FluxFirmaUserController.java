@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +47,8 @@ import es.caib.enviafib.persistence.PeticioJPA;
 @RequestMapping(value = FluxFirmaUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
 public class FluxFirmaUserController extends AbstractFirmaUserController {
+    
+    public static SimpleDateFormat SDF = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
 
     public static final String CONTEXT_WEB = "/user/flux";
     
@@ -126,12 +130,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
             api = getApiFlowTemplateSimple();
 
             // Crear Flux
-            
-
             String name = "Flux de Firma  - " + System.currentTimeMillis();
-            String descr = "{temporal=true}\n"
-                    + "{creation=" + System.currentTimeMillis() + "}\n"
-                    + "{owner=" + LoginInfo.getInstance().getUsername() + "}";
+            
+            final String username = LoginInfo.getInstance().getUsername();
+            
+            String descr = generateDescription(username, false);
             
             final boolean saveOnServer = true;
             final boolean visibleDescription = false;
@@ -175,6 +178,27 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
             return new ModelAndView(getRedirectToList());
         }
+    }
+
+    public static String generateDescription(final String username, final boolean isTemplate) {
+        long current = System.currentTimeMillis();
+        String currentStr = SDF.format(new Date(current));
+
+        
+        String descr = ( isTemplate? "{template=true}":"{temporal=true}\n"  )
+                + "{creation=" + current + "}\n"
+                + "{creationStr=" + currentStr + "}\n"
+                + getFluxFilterByUserName(username);
+        return descr;
+    }
+    
+    /**
+     * 
+     * @param username
+     * @return
+     */
+    public static String getFluxFilterByUserName(String username) {
+        return "{owner=" + username + "}";
     }
 
     @Override

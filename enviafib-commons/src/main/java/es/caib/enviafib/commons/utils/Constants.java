@@ -50,9 +50,17 @@ public interface Constants {
     
     // TIPUS DE PLUGINS DE ENVIAFIB
     public static final int TIPUS_PLUGIN_ESTRUCTURAORGANITZATIVA= 1;
-    
     public static final int TIPUS_PLUGIN_ARXIU = 2;
 
+    //TIPUS DE CARRECTS
+    public static final int CARREC_GERENT_PRESIDENT = 1;
+    public static final int CARREC_CAP_AREA_CONSELLER = 2;
+    public static final int CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL = 3;
+    public static final int CARREC_SECRETARI = 4;
+    public static final int CARREC_ENCARREGAT_COMPRES = 5;
+    public static final int CARREC_RECURSOS_HUMANS = 6;
+
+    
     
     
     // FORMATS DE FITXERS

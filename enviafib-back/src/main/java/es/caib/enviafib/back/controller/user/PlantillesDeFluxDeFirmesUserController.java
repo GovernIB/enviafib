@@ -192,7 +192,7 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
 
         FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
         filter.setLanguageUI(languageUI);
-        filter.setDescriptionFilter(getFluxFilterByUserName(username));
+        filter.setDescriptionFilter(FluxFirmaUserController.getFluxFilterByUserName(username));
 
         try {
             FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
@@ -234,14 +234,7 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
 
     }
 
-    /**
-     * 
-     * @param username
-     * @return
-     */
-    public static String getFluxFilterByUserName(String username) {
-        return "{owner=" + username + "}";
-    }
+
 
     @RequestMapping(value = "/{fluxID}/esborrar")
     public String esborrarFlux(@PathVariable("fluxID")
@@ -339,8 +332,8 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
 
             // Crear Flux
             String name = "Plantilla de Flux de Firma  - " + System.currentTimeMillis();
-            String descr = "{template=true}\n" + "{creation=" + System.currentTimeMillis() + "}\n"
-                    + getFluxFilterByUserName(LoginInfo.getInstance().getUsername());
+            String descr = FluxFirmaUserController.generateDescription(LoginInfo.getInstance().getUsername(), true);
+
 
             final boolean saveOnServer = true;
             final boolean visibleDescription = false;

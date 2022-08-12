@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -18,25 +19,31 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 @Controller
-@RequestMapping(value = FirmaPerNifUserController.CONTEXT_WEB)
+@RequestMapping(value = FirmaCarrecDirectorUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class FirmaPerNifUserController extends AbstractFirmaUserController {
+public class FirmaCarrecDirectorUserController extends AbtractFirmaCarrecUserController {
 
-    public static final String CONTEXT_WEB = "/user/firmapernif";
+    public static final String CONTEXT_WEB = "/user/firmadirector";
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
+
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
-        peticioForm.getHiddenFields().remove(DESTINATARINIF);
 
-        peticioForm.setAttachedAdditionalJspCode(true);
-
+        if (peticioForm.isNou()) {
+            peticioForm.setTitleCode("title.firma.director");
+        }
         return peticioForm;
     }
 
     @Override
     public int getTipusPeticio() {
-        return TIPUS_PETICIO_NIF;
+        return Constants.TIPUS_PETICIO_DIRECTOR;
+    }
+
+    @Override
+    public int getCarrec() {
+        return Constants.CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL;
     }
 }
