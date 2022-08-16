@@ -1,14 +1,19 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.digester.RegexMatcher;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleEditFlowTemplateRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFilterGetAllByFilter;
@@ -62,6 +67,9 @@ import es.caib.enviafib.persistence.UsuariJPA;
 @RequestMapping(value = "/user/plantillesfluxfirmes")
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })
 public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
+    
+    public static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
 
     @Override
     public String getEntityNameCode() {
@@ -221,6 +229,9 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
                 usuari.setNom(flowKeyValue.getValue());
                 // XYZ ZZZ
                 usuari.setLlinatge1(description); // + "\n<br/> flowTemplateId => " + flowTemplateId);
+                usuari.setEmail(getCreationDate(description));
+
+                
                 usuaris.add(usuari);
             }
 
@@ -233,8 +244,29 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
         }
 
     }
+    
+    private String getCreationDate(String description) {
+        
+        
+       Pattern PATTERN = Pattern.compile("\\{creation=(\\d+)\\}");
 
-
+        
+        final Matcher matcher = PATTERN.matcher(description);
+        
+        if (matcher.find()) {
+            
+                if (matcher.group(1) != null) {
+                    String datastr = matcher.group(1);
+                    Date data = new Date(Long.valueOf(datastr));
+                    return SDF.format(data);
+                }
+         }
+        
+        log.error("No s'ha pogut extreure atribut Creation de la descripcio");
+        return null;
+        
+    }
+    
 
     @RequestMapping(value = "/{fluxID}/esborrar")
     public String esborrarFlux(@PathVariable("fluxID")
