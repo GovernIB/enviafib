@@ -200,12 +200,9 @@ public class PluginArxiuLogicaEJB extends InfoArxiuEJB implements PluginArxiuLog
             if (organs == null || organs.size() == 0) {
                 log.error("\n\n ================ ORGANS VAL NULL ====================\n\n");
             }
-
+            
             String serieDocumental = peticio.getArxiuOptParamSerieDocumental(); // "S0001";
-            if (serieDocumental == null) {
-                serieDocumental = peticio.getArxiuOptParamSerieDocumental();
-            }
-
+            
             // XYZ ZZZ Això és per quan l'usuari pugui indicar el nom de l'expedient on vol
             // el document String custodyOrExpedientID = prop
             // .getProperty(TransaccioFields.ARXIUOPTPARAMCUSTODYOREXPEDIENTID.javaName);
