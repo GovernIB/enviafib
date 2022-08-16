@@ -32,7 +32,9 @@ public class TraduccioEJB extends TraduccioJPAManager implements TraduccioServic
          return super.update(instance);
     }
 
-    public void deleteIncludingFiles(Traduccio instance, es.caib.enviafib.ejb.FitxerService fitxerEjb)
+    @Override
+    @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS})
+    public void deleteIncludingFiles(Traduccio instance,  FitxerService fitxerEjb)
             throws I18NException {
 
         this.delete(instance);

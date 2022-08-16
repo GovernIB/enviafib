@@ -32,7 +32,9 @@ public class GrupUsuariEJB extends GrupUsuariJPAManager implements GrupUsuariSer
          return super.update(instance);
     }
 
-    public void deleteIncludingFiles(GrupUsuari instance, es.caib.enviafib.ejb.FitxerService fitxerEjb)
+    @Override
+    @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS})
+    public void deleteIncludingFiles(GrupUsuari instance,  FitxerService fitxerEjb)
             throws I18NException {
 
         this.delete(instance);

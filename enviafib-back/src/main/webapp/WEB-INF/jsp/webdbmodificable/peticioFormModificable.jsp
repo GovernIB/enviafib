@@ -1,3 +1,4 @@
+<%@page import="es.caib.enviafib.model.fields.PeticioFields"%>
 <c:if test="${not empty dragdrop}">
 
 	<%-- 	<input type="hidden" name="dragndrop" value="true"/> --%>
@@ -147,13 +148,14 @@ td label {
 
 $("#navbar-showHideButton").insertBefore("#peticioForm");
 
-$("#showHideButton").addClass("btn btn-primary");
+$("#showHideButton").addClass("btn btn-info");
 showMore();
 
 function showMore(){
-	$("#peticio_arxiuReqParamInteressats_rowid").toggle();
-	$("#peticio_arxiuReqParamOrgans_rowid").toggle();
-	$("#peticio_arxiuReqParamOrigen_rowid").toggle();
+
+	$("#<%= PeticioFields._TABLE_MODEL %>_<%=PeticioFields.ARXIUREQPARAMINTERESSATS.getJavaName() %>_rowid").toggle();
+	$("#<%= PeticioFields._TABLE_MODEL %>_<%=PeticioFields.ARXIUREQPARAMORGANS.getJavaName() %>_rowid").toggle();
+	$("#<%= PeticioFields._TABLE_MODEL %>_<%=PeticioFields.ARXIUREQPARAMORIGEN.getJavaName() %>_rowid").toggle();
 
 	var mode = $("#showHideButton").val();
 
