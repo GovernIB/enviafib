@@ -4,8 +4,10 @@ import java.io.StringReader;
 import java.util.List;
 import java.util.Properties;
 
+import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
 import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.IPlugin;
 import org.fundaciobit.pluginsib.core.utils.PluginsManager;
@@ -13,6 +15,8 @@ import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PluginEJB;
 import es.caib.enviafib.model.entity.Plugin;
+import es.caib.enviafib.model.fields.PeticioFields;
+import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.persistence.PluginJPA;
 
 /**
@@ -38,11 +42,27 @@ public abstract class AbstractPluginLogicaEJB<I extends IPlugin> extends PluginE
 
     @Override
     public Where getWhere() {
-        return Where.AND(TIPUS.equal(getTipusDePlugin()), ACTIU.equal(true)
+        return Where.AND(TIPUS.equal(getTipusDePlugin()), ACTIU.equal(true));
 
         // TODO Elegim plugin entre les genèriques o entre els específics per l'entitat
         // Where.OR(ENTITATID.isNull(), ENTITATID.equal(entitatID))
-        );
+
+    }
+
+    @Override
+    public I getInstance() throws I18NException {
+
+        List<Long> pluginList = this.executeQuery(PluginFields.PLUGINID, getWhere(), new OrderBy(PluginFields.PLUGINID));
+
+        if (pluginList == null || pluginList.size() == 0) {
+            throw new I18NException("error.plugin.noactiu",
+                    new I18NArgumentCode(PeticioFields.ARXIUPARAMFUNCIONARIDIR3.codeLabel));
+        }
+
+        Long pluginID = pluginList.get(0);
+        
+        I instance = this.getInstanceByPluginID(pluginID);
+        return instance;
     }
 
     @Override
@@ -104,6 +124,6 @@ public abstract class AbstractPluginLogicaEJB<I extends IPlugin> extends PluginE
 
         }
         return (I) pluginInstance;
-
     }
+
 }

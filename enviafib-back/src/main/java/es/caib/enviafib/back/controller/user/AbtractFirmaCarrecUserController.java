@@ -55,7 +55,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
         int tipusCarrec = getCarrec();
 
-        IEstructuraOrganitzativaPlugin instance = getEstructuraOrganitzativaInstance();
+        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstance();
 
         String carrec = null;
         String carrecUsername = null;

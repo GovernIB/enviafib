@@ -1,8 +1,5 @@
 package es.caib.enviafib.back.controller.admin;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PluginFilterForm;
 import es.caib.enviafib.back.form.webdb.PluginForm;
-import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.persistence.PluginJPA;
