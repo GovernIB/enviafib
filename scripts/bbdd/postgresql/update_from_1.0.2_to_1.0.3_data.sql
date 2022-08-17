@@ -3,6 +3,6 @@
 ---
 
 INSERT INTO efi_seriedocumental
-(nom, procedimentnom, procedimentcodi)
+(seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi)
 VALUES
-('S0001', 'Subvenciones empleo', 'organo1_PRO_123456789');
+(10, 'S0001', NULL ,'Subvenciones empleo', 'organo1_PRO_123456789');
