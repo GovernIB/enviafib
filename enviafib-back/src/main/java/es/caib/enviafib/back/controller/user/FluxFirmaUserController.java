@@ -112,7 +112,8 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
     @Override
     public void postValidate(HttpServletRequest request, PeticioForm peticioForm,
             BindingResult result) throws I18NException {
-
+        
+        super.postValidate(request, peticioForm, result);
         request.setAttribute("wizardstep", 3);
     }
 
