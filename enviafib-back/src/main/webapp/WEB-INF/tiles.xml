@@ -145,8 +145,7 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalList.jsp" />
     </definition>
     
-    
-    
+
     <definition name="grupFormAdmin" extends="admin">
         <put-attribute name="titol" value="grup.grup" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupForm.jsp" />
@@ -155,7 +154,6 @@
     <definition name="grupListAdmin" extends="admin">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupList.jsp" />
     </definition>
-
     
     <definition name="grupUsuariFormAdmin" extends="admin">
         <put-attribute name="titol" value="grupUsuari.grupUsuari" />
@@ -174,6 +172,14 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
     </definition>
     
+    <definition name="ArxiuPluginFormAdmin" extends="admin">
+        <put-attribute name="titol" value="Arxiu.Arxiu" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginForm.jsp" />
+    </definition>
+    
+    <definition name="ArxiuPluginListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
+    </definition>
     
     <!--  ===========  DESENVOLUPAMENT ================== -->
     

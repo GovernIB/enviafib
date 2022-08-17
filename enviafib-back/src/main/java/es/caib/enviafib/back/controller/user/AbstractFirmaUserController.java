@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.genapp.common.StringKeyValue;
-import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
-import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
@@ -22,8 +20,6 @@ import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
-import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
-import org.fundaciobit.pluginsib.userinformation.UserInfo;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ValidationUtils;
@@ -46,7 +42,6 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
-import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -60,6 +55,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocumentalEjb;
+
+
+    @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
+
 
     @Override
     public boolean isActiveList() {
@@ -249,7 +249,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     public String getCodiDIR3() throws I18NException {
 
-        IEstructuraOrganitzativaPlugin instance = getEstructuraOrganitzativaInstance();
+        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstance();
 
         String codiDIR3;
         try {
@@ -261,19 +261,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         } catch (Exception e) {
             throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());
         }
-    }
-
-    public IEstructuraOrganitzativaPlugin getEstructuraOrganitzativaInstance() throws I18NException {
-        Long pluginID = pluginEstructuraOrganitzativaEjb.executeQueryOne(PluginFields.PLUGINID,
-                PluginFields.ACTIU.equal(true));
-
-        if (pluginID == null) {
-            throw new I18NException("error.plugin.estructuraorganitzativa.noactiu",
-                    new I18NArgumentCode(PeticioFields.ARXIUPARAMFUNCIONARIDIR3.codeLabel));
-        }
-
-        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
-        return instance;
     }
 
     @Override

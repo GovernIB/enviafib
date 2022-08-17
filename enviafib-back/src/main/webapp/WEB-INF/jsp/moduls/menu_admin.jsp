@@ -37,6 +37,11 @@
       </a>
     </li>
 
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/admin/ArxiuPlugin/list"/>">
+        <span style="${(fn:contains(url, '/admin/ArxiuPlugin/list'))? "font-weight: bold;" : ""}">Plugins Arxiu </span>
+      </a>
+    </li>
    
          <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
  
