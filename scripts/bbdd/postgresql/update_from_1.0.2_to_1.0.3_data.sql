@@ -3,9 +3,10 @@
 ---
 
 INSERT INTO efi_seriedocumental
-(nom, procedimentnom, procedimentcodi)
+(seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi)
 VALUES
-('S0001', 'Subvenciones empleo', 'organo1_PRO_123456789');
+(10, 'S0001', NULL ,'Subvenciones empleo', 'organo1_PRO_123456789');
+
 
 
 ---
@@ -34,4 +35,5 @@ es.caib.enviafib.plugin.arxiu.caib.csv_validation_web_EL=http://dev.caib.es/conc
 es.caib.enviafib.plugin.arxiu.caib.csv.definicio=https://dev.caib.es/def_csv_gen.pdf
 es.caib.enviafib.plugin.arxiu.caib.validation_file_url_EL=https://dev.caib.es/concsv/hash/${csv}'
 , true, 2, 'Plugin Arxiu Prova', 'Plugin Arxiu Prova');
+
 

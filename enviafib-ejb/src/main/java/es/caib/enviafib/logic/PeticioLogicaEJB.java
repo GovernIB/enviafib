@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.security.PermitAll;
 
@@ -317,12 +316,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 PeticioFields.PETICIOID.equal(peticioID));
         InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
 
-        Future<Peticio> future = guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
-
         Peticio peticio;
         try {
-            log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu");
-            peticio = future.get(2L, TimeUnit.MINUTES);
+            log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
+            peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura);
         } catch (Exception e) {
             // XYZ ZZZ
             log.error("Future.get() ha llança un error: " + e.getMessage(), e);
@@ -330,20 +327,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
 
         String msg;
-        if (future.isDone()) {
-            if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
-                msg = null;
-            } else {
-                msg = peticio.getErrorMsg();
-            }
+        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+            msg = null;
         } else {
-            // XYZ ZZZ
-            msg = "El reintent de la peticióID " + peticioID + " no ha pogut finalitzar en 2 minuts :-(  Es cancel·la.";
-            log.error(msg, new Exception());
+            msg = peticio.getErrorMsg();
         }
-
+        
         return msg;
-
     }
 
     /**
@@ -358,6 +348,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public Future<Peticio> guardarFitxerArxiuAsync(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
             throws I18NException {
 
+        Peticio peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura);
+
+        return new AsyncResult<Peticio>(peticio);
+
+    }
+
+    private Peticio guardarFitxerArxiuSync(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
+            throws I18NException {
         log.info(" guardarFitxerArxiu:: START");
 
         Peticio peticio = null;
@@ -381,32 +379,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             peticio.setErrorException(null);
         }
 
-//        } catch (Throwable th) {
-//
-//            
-//
-//            if (th instanceof I18NException) {
-//                I18NException i18ne = (I18NException) th;
-//                error = I18NCommonUtils.getMessage(i18ne, new Locale(languageUI));
-//            } else {
-//                error = th.getMessage();
-//            }
-//
-//            stackTrace = LogicUtils.stackTrace2String(th);
-//
-//            log.error("Error arxivant petició amb ID " + peticioID + ": " + error,
-//                    th);
-//
-//        }
-
         peticio.setEstat(estatFinal);
 
         this.update(peticio);
 
         log.info("guardarFitxerArxiu:: END " + (System.currentTimeMillis() - start) + " ms");
-
-        return new AsyncResult<Peticio>(peticio);
-
+        return peticio;
     }
 
     protected InfoSignaturaJPA guardarFitxerInfoFirma(long peticioID, long portafirmesID, String languageUI)

@@ -163,7 +163,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
              * transaccio.setEstatMissatge(msg); return null; }
              */
 
-            String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); // "Subvenciones
+            //String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); // "Subvenciones
             String procedimentCodi = peticio.getArxiuOptParamProcedimentCodi();
 
             // No hauria de ser null
@@ -223,7 +223,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             Expedient expedient = new Expedient();
             expedient.setNom(nomExpedient);
-            // expedient.setVersio("1.0");
+            
             expedient.setMetadades(expedientMetadades);
 
             if (peticio.getArxiuOptParamExpedientId() != null) {
