@@ -266,6 +266,13 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
+
+        HtmlUtils.deleteMessages(request);
+
+        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
+        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
+        HtmlUtils.saveMessageSuccess(request, msg);
+
         return getRedirectToList();
     }
 
@@ -355,26 +362,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                 case Constants.TIPUS_PETICIO_PLANTILLAFLUX:
 
-                    log.info("TIPUS_PETICIO_PLANTILLAFLUX");
-                    
                     ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
-                    log.info("api " + api);
 
                     String flowTemplateId = peticio.getPeticioPortafirmes();
-                    log.info("flowTemplateId " + flowTemplateId);
-                    
                     final String languageUI = "ca";
 
                     FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
                     flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
-                    log.info("flowTemplateRequest " + flowTemplateRequest);
 
                     FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
-                    log.info("flux " + flux);
 
                     peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(),
                             LocaleContextHolder.getLocale().getLanguage(), flux);
-
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
@@ -385,8 +384,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                             LocaleContextHolder.getLocale().getLanguage());
                 break;
             }
-            HtmlUtils.saveMessageSuccess(request,
-                    "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
+//            HtmlUtils.saveMessageSuccess(request,
+//                    "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
 
         } catch (I18NException e) {
 
@@ -426,6 +425,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
         return ret;
     }
+
 
     @Override
     public void postValidate(HttpServletRequest request, PeticioForm peticioForm, BindingResult result)
