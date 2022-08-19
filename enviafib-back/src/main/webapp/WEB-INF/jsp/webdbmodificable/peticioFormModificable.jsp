@@ -132,30 +132,59 @@ td label {
 	margin: 0;
 }
 
-#showHideButton{
-
+#showHideButton {
+	
 }
-
 </style>
 
 </c:if>
-<div id="navbar-showHideButton" class="navbar-form" style="text-align:right;">
- 	<button type="button" id="showHideButton" value="0" onclick="showMore()">Click me</button>
+
+<c:if test="${not empty plantillaflux}">
+	<script type="text/javascript">
+
+		var portafibDIV = "<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.PETICIOPORTAFIRMES.getJavaName()%>";
+		var portafibIDLabel = "<%=PeticioFields.PETICIOPORTAFIRMES.getCodeLabel()%>";
+
+		$("#peticio_nom_rowid").after($("#" + portafibDIV + "_rowid"));
+		
+		var html = "";	 
+		html += '<select '; 
+		html += 'id= "' + portafibIDLabel  + '" '; 
+		html += 'name= "' + portafibIDLabel  + '" '; 
+		html += 'class="form-control col-md-9-optional"> ';
+		
+		<c:forEach var="item" items="${plantillesUsuari}">
+			html += '<option value="<c:out value="${item.key}"/>"><c:out value="${item.value}"/></option>';
+		</c:forEach>
+		
+		// Si no hi ha plantilles, tornar a llistat amb un missatge warn
+		
+		html += '</select>';
+		
+		document.getElementById(portafibDIV + "_columnvalueid").innerHTML = html;
+ 
+	</script>
+</c:if>
+
+
+<div id="navbar-showHideButton" class="navbar-form"
+	style="text-align: right;">
+	<button type="button" id="showHideButton" value="0"
+		onclick="showMore()">Click me</button>
 </div>
 
 <script type="text/javascript">	
 
 
 $("#navbar-showHideButton").insertBefore("#peticioForm");
-
 $("#showHideButton").addClass("btn btn-info");
 showMore();
 
 function showMore(){
 
-	$("#<%= PeticioFields._TABLE_MODEL %>_<%=PeticioFields.ARXIUREQPARAMINTERESSATS.getJavaName() %>_rowid").toggle();
-	$("#<%= PeticioFields._TABLE_MODEL %>_<%=PeticioFields.ARXIUREQPARAMORGANS.getJavaName() %>_rowid").toggle();
-	$("#<%= PeticioFields._TABLE_MODEL %>_<%=PeticioFields.ARXIUREQPARAMORIGEN.getJavaName() %>_rowid").toggle();
+	$("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMINTERESSATS.getJavaName()%>_rowid").toggle();
+	$("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORGANS.getJavaName()%>_rowid").toggle();
+	$("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORIGEN.getJavaName()%>_rowid").toggle();
 
 	var mode = $("#showHideButton").val();
 
@@ -168,5 +197,9 @@ function showMore(){
 	}
  	$("#showHideButton").val(mode);
  }
+ 
+ 
+ 
+ 
 
 </script>

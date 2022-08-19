@@ -47,8 +47,9 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         firmaPathByTipus.put(TIPUS_PETICIO_NIF, FirmaPerNifUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_AUTOFIRMA, AutoFirmaUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_FLUX, FluxFirmaUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_DIRECTOR, AutoFirmaUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_SECRETARI, FluxFirmaUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_DIRECTOR, FirmaCarrecDirectorUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_SECRETARI, FirmaCarrecSecretariUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_PLANTILLAFLUX, FirmaPlantillaFluxUserController.CONTEXT_WEB);
 
         // TODO AFTER: FALTEN LA RESTA DE TIPUS
     }
