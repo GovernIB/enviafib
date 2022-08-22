@@ -63,6 +63,12 @@
         <span style="${(fn:contains(url, '/firmasecretari'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmasecretari"/></span>
       </a>
     </li>
+   
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/firmaplantillaflux/new"/>">
+        <span style="${(fn:contains(url, '/firmaplantillaflux'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmaplantillaflux"/></span>
+      </a>
+    </li>
     
     
     <hr  style="margin-top: 6px;  margin-bottom: 6px;" />

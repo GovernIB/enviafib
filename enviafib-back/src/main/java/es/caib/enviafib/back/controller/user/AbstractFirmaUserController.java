@@ -10,7 +10,10 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
+import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
@@ -56,10 +59,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocumentalEjb;
 
-
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
-
 
     @Override
     public boolean isActiveList() {
@@ -340,38 +341,75 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @Override
     public PeticioJPA create(HttpServletRequest request, PeticioJPA peticio)
             throws I18NException, I18NValidationException {
+
         PeticioJPA p = super.create(request, peticio);
+        try {
 
-        final int tipus = getTipusPeticio();
-        if (tipus != TIPUS_PETICIO_AUTOFIRMA) {
-
-            try {
-
-                if (tipus == TIPUS_PETICIO_FLUX) {
+            final int tipus = getTipusPeticio();
+            switch (tipus) {
+                case Constants.TIPUS_PETICIO_FLUX:
                     peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(),
                             LocaleContextHolder.getLocale().getLanguage(),
                             (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
-                } else {
+                break;
+
+                case Constants.TIPUS_PETICIO_PLANTILLAFLUX:
+
+                    log.info("TIPUS_PETICIO_PLANTILLAFLUX");
+                    
+                    ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
+                    log.info("api " + api);
+
+                    String flowTemplateId = peticio.getPeticioPortafirmes();
+                    log.info("flowTemplateId " + flowTemplateId);
+                    
+                    final String languageUI = "ca";
+
+                    FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+                    flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+                    log.info("flowTemplateRequest " + flowTemplateRequest);
+
+                    FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+                    log.info("flux " + flux);
+
+                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(),
+                            LocaleContextHolder.getLocale().getLanguage(), flux);
+
+                break;
+
+                case Constants.TIPUS_PETICIO_AUTOFIRMA:
+
+                break;
+                default:
                     peticioLogicaEjb.arrancarPeticio(peticio.getPeticioID(),
                             LocaleContextHolder.getLocale().getLanguage());
-                }
-                // XYZ ZZZ TRA
-                HtmlUtils.saveMessageSuccess(request,
-                        "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
-            } catch (I18NException e) {
-
-                // XYZ ZZZ Error generic
-                String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
-                log.error(error, e);
-
-                p.setEstat(ESTAT_PETICIO_ERROR);
-                p.setErrorMsg(LogicUtils.split255(error));
-                p.setErrorException(LogicUtils.stackTrace2String(e));
-
-                peticioLogicaEjb.update(p);
+                break;
             }
-        }
+            HtmlUtils.saveMessageSuccess(request,
+                    "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
 
+        } catch (I18NException e) {
+
+            // XYZ ZZZ Error generic
+            String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
+            log.error(error, e);
+
+            p.setEstat(Constants.ESTAT_PETICIO_ERROR);
+            p.setErrorMsg(LogicUtils.split255(error));
+            p.setErrorException(LogicUtils.stackTrace2String(e));
+
+            peticioLogicaEjb.update(p);
+        } catch (AbstractApisIBException e) {
+
+            String error = I18NUtils.tradueix("error.flux.arrancar", e.getMessage());
+            log.error(error, e);
+
+            p.setEstat(Constants.ESTAT_PETICIO_ERROR);
+            p.setErrorMsg(LogicUtils.split255(error));
+            p.setErrorException(LogicUtils.stackTrace2String(e));
+
+            peticioLogicaEjb.update(p);
+        }
         return p;
     }
 
@@ -449,30 +487,30 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         {
             // XYZ ZZZ ZZZ S'ha d'obtenir del Mapeig de Series Documentals
             // XYZ ZZZ PostValidate validar que pel tipus de document hi ha seria documental
-            
+
             Peticio peticio = peticioForm.getPeticio();
-            
-            
+
             String tipusDocumental = peticio.getTipusDocumental();
             log.info("XYZ XXXX TIPUS DOCUMENTAL = " + tipusDocumental);
-            List<SerieDocumental> list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
+            List<SerieDocumental> list = serieDocumentalEjb
+                    .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
             log.info("XYZ XXXX QUERY Tipus documentals correcte");
             if (list == null || list.isEmpty()) {
                 list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.isNull());
                 if (list == null || list.isEmpty()) {
-                    //throw new I18NException("No existeix Serie Documental amb el Tipus Documental " + tipusDocumental
-                    //        + " o amb tipus documental null. Consulti l'error amb el seu administrador");
-                    
+                    // throw new I18NException("No existeix Serie Documental amb el Tipus Documental
+                    // " + tipusDocumental
+                    // + " o amb tipus documental null. Consulti l'error amb el seu administrador");
+
                     result.rejectValue(get(PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL), "error.tipusdocumental",
-                            new String[] { tipusDocumental },
-                            null);
-                   
+                            new String[] { tipusDocumental }, null);
+
                 }
             }
 
             SerieDocumental serieDocumental = list.get(0);
 
-            //XYZ Arreglar noms Java a genapp
+            // XYZ Arreglar noms Java a genapp
             peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
             peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
             peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
