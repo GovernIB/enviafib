@@ -591,8 +591,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
                 return DocumentTipus.RESPOSTA;
             case "62":
                 return DocumentTipus.PROPOSICIO_NO_LLEI;
-            case "63":
-                return DocumentTipus.ESQUEMA; // Enmienda o Esmena
             case "64":
                 return DocumentTipus.PROPOSTA_RESOLUCIO;
             case "65":
