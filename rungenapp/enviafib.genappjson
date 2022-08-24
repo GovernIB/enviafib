@@ -1375,7 +1375,7 @@
           "digits": 0,
           "isNotNullable": false,
           "labels": {
-            "ca": "Titol",
+            "ca": "Títol",
             "es": "Titulo"
           },
           "javaName": "titol",
