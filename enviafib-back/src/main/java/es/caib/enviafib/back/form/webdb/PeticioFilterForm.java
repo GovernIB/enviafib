@@ -43,14 +43,14 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.String nom;
+  private java.lang.String titol;
 
-  public java.lang.String getNom() {
-    return this.nom;
+  public java.lang.String getTitol() {
+    return this.titol;
   }
 
-  public void setNom(java.lang.String nom) {
-    this.nom = nom;
+  public void setTitol(java.lang.String titol) {
+    this.titol = titol;
   }
 
 
@@ -468,7 +468,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     super(__toClone);
     this.peticioIDDesde = __toClone.peticioIDDesde;
     this.peticioIDFins = __toClone.peticioIDFins;
-    this.nom = __toClone.nom;
+    this.titol = __toClone.titol;
     this.dataCreacioDesde = __toClone.dataCreacioDesde;
     this.dataCreacioFins = __toClone.dataCreacioFins;
     this.dataFinalDesde = __toClone.dataFinalDesde;

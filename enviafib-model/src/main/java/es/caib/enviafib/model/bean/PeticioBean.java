@@ -9,7 +9,7 @@ public class PeticioBean implements Peticio {
 
 
 	long peticioID;// PK
-	java.lang.String nom;
+	java.lang.String titol;
 	java.sql.Timestamp dataCreacio;
 	java.sql.Timestamp dataFinal;
 	long fitxerID;
@@ -48,9 +48,9 @@ public class PeticioBean implements Peticio {
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioBean(long peticioID , java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID) {
+  public PeticioBean(long peticioID , java.lang.String titol , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID) {
     this.peticioID=peticioID;
-    this.nom=nom;
+    this.titol=titol;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
     this.fitxerID=fitxerID;
@@ -84,8 +84,8 @@ public class PeticioBean implements Peticio {
     this.infoArxiuID=infoArxiuID;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioBean(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID) {
-    this.nom=nom;
+  public PeticioBean(java.lang.String titol , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID) {
+    this.titol=titol;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
     this.fitxerID=fitxerID;
@@ -132,7 +132,7 @@ public class PeticioBean implements Peticio {
 }
   public PeticioBean(Peticio __bean) {
     this.setPeticioID(__bean.getPeticioID());
-    this.setNom(__bean.getNom());
+    this.setTitol(__bean.getTitol());
     this.setDataCreacio(__bean.getDataCreacio());
     this.setDataFinal(__bean.getDataFinal());
     this.setFitxerID(__bean.getFitxerID());
@@ -177,11 +177,11 @@ public class PeticioBean implements Peticio {
 		this.peticioID = _peticioID_;
 	};
 
-	public java.lang.String getNom() {
-		return(nom);
+	public java.lang.String getTitol() {
+		return(titol);
 	};
-	public void setNom(java.lang.String _nom_) {
-		this.nom = _nom_;
+	public void setTitol(java.lang.String _titol_) {
+		this.titol = _titol_;
 	};
 
 	public java.sql.Timestamp getDataCreacio() {
@@ -409,7 +409,7 @@ public class PeticioBean implements Peticio {
     if (__bean == null) { return null;}
     PeticioBean __tmp = new PeticioBean();
     __tmp.setPeticioID(__bean.getPeticioID());
-    __tmp.setNom(__bean.getNom());
+    __tmp.setTitol(__bean.getTitol());
     __tmp.setDataCreacio(__bean.getDataCreacio());
     __tmp.setDataFinal(__bean.getDataFinal());
     __tmp.setFitxerID(__bean.getFitxerID());

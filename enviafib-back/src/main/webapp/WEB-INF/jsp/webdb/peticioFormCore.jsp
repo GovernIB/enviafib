@@ -2,19 +2,19 @@
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <un:useConstants var="PeticioFields" className="es.caib.enviafib.model.fields.PeticioFields"/>
   
-        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.NOM)}">
-        <tr id="peticio_nom_rowid">
-          <td id="peticio_nom_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.TITOL)}">
+        <tr id="peticio_titol_rowid">
+          <td id="peticio_titol_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[PeticioFields.NOM])?'peticio.nom':__theForm.labels[PeticioFields.NOM]}" />
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.TITOL])?'peticio.titol':__theForm.labels[PeticioFields.TITOL]}" />
              </label>
-              <c:if test="${not empty __theForm.help[PeticioFields.NOM]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.NOM]}" ></i>
+              <c:if test="${not empty __theForm.help[PeticioFields.TITOL]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.TITOL]}" ></i>
               </c:if>
             </td>
-          <td id="peticio_nom_columnvalueid">
-            <form:errors path="peticio.nom" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.NOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.NOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.nom"   />
+          <td id="peticio_titol_columnvalueid">
+            <form:errors path="peticio.titol" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.TITOL)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.TITOL)? ' uneditable-input' : ''}"  style="" maxlength="255" path="peticio.titol"   />
 
            </td>
         </tr>

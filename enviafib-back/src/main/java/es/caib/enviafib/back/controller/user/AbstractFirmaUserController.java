@@ -116,7 +116,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
-        hiddens.remove(NOM);
+        hiddens.remove(TITOL);
         hiddens.remove(FITXERID);
         hiddens.remove(TIPUSDOCUMENTAL);
         hiddens.remove(IDIOMADOC);

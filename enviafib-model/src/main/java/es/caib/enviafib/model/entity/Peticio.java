@@ -5,8 +5,8 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public long getPeticioID();
 	public void setPeticioID(long _peticioID_);
 
-	public java.lang.String getNom();
-	public void setNom(java.lang.String _nom_);
+	public java.lang.String getTitol();
+	public void setTitol(java.lang.String _titol_);
 
 	public java.sql.Timestamp getDataCreacio();
 	public void setDataCreacio(java.sql.Timestamp _dataCreacio_);

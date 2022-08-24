@@ -68,15 +68,15 @@
 
 
         </c:if>
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.NOM)}">
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.TITOL)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
-              <fmt:message key="peticio.nom" var="nom" />
-              <fmt:message key="genapp.form.searchby" var="cercapernom" >                
-                 <fmt:param value="${nom}"/>
+              <fmt:message key="peticio.titol" var="titol" />
+              <fmt:message key="genapp.form.searchby" var="cercapertitol" >                
+                 <fmt:param value="${titol}"/>
               </fmt:message>
-              <span class="add-on"><c:out value="${nom}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapernom}" path="nom" />
+              <span class="add-on"><c:out value="${titol}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapertitol}" path="titol" />
             </div>
 
 

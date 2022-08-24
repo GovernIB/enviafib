@@ -452,7 +452,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 throw new I18NException("error.portafib.peticionull", "FIRMA", String.valueOf(portafibID));
             }
 
-            String nomPeticio = peticioList.get(0).getNom().replace("'", "`");
+            String nomPeticio = peticioList.get(0).getTitol().replace("'", "`");
 
             long estatPeticio = peticioList.get(0).getEstat();
 

@@ -29,9 +29,9 @@
           ${peticio.peticioID}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.TITOL)}">
           <td>
-          ${peticio.nom}
+          ${peticio.titol}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATACREACIO)}">

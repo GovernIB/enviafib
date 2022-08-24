@@ -1330,8 +1330,8 @@
         "es": "Petición"
       },
       "labelsPlural": {
-        "ca": "Peticions",
-        "es": "Peticiones"
+        "ca": "Peticions de Firma",
+        "es": "Peticiones de Firma"
       },
       "generate": true,
       "fileMappingEntity": false,
@@ -1369,22 +1369,22 @@
         },
         {
           "isAutoIncrement": false,
-          "sqlName": "nom",
+          "sqlName": "titol",
           "sqlType": 12,
           "size": 255,
           "digits": 0,
           "isNotNullable": false,
           "labels": {
-            "ca": "Nom",
-            "es": "Nombre"
+            "ca": "Titol",
+            "es": "Titulo"
           },
-          "javaName": "nom",
+          "javaName": "titol",
           "javaType": "java.lang.String",
           "traduible": false,
           "showInWebList": true,
-          "showInReferenceList": true,
+          "showInReferenceList": false,
           "transientField": false,
-          "descripcio": "Nom de la peticio a PortaFIB.",
+          "descripcio": "Titol de la peticio a PortaFIB.",
           "filter": false,
           "orderBy": 0,
           "groupBy": false,
