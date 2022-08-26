@@ -151,12 +151,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     }
                     hiddens.remove(FITXERFIRMATID);
                 break;
-                case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
-                    hiddens.remove(FITXERFIRMATID);
-                    hiddens.remove(DATAFINAL);
-                    
-                    
-                    break;
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     hiddens.remove(FITXERFIRMATID);
                     hiddens.remove(DATAFINAL);
