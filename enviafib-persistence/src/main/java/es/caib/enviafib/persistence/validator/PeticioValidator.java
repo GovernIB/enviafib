@@ -67,14 +67,6 @@ public class PeticioValidator<I extends Peticio>
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
 
     // Check size
-    if (__vr.getFieldErrorCount(TITOL) == 0) {
-      java.lang.String __titol = __target__.getTitol();
-      if (__titol!= null && __titol.length() > 255) {
-        __vr.rejectValue(TITOL, "genapp.validation.sizeexceeds",
-            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TITOL)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
-      }
-    }
-
     if (__vr.getFieldErrorCount(IDIOMAID) == 0) {
       java.lang.String __idiomaid = __target__.getIdiomaID();
       if (__idiomaid!= null && __idiomaid.length() > 5) {
@@ -251,6 +243,14 @@ public class PeticioValidator<I extends Peticio>
       if (__arxiuoptparamexpedientid!= null && __arxiuoptparamexpedientid.length() > 255) {
         __vr.rejectValue(ARXIUOPTPARAMEXPEDIENTID, "genapp.validation.sizeexceeds",
             new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ARXIUOPTPARAMEXPEDIENTID)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
+    if (__vr.getFieldErrorCount(NOM) == 0) {
+      java.lang.String __nom = __target__.getNom();
+      if (__nom!= null && __nom.length() > 255) {
+        __vr.rejectValue(NOM, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOM)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
       }
     }
 

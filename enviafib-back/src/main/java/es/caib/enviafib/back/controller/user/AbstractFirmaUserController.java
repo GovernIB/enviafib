@@ -116,7 +116,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
-        hiddens.remove(TITOL);
+        hiddens.remove(NOM);
         hiddens.remove(FITXERID);
         hiddens.remove(TIPUSDOCUMENTAL);
         hiddens.remove(IDIOMADOC);
@@ -151,6 +151,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     }
                     hiddens.remove(FITXERFIRMATID);
                 break;
+                case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
+                    hiddens.remove(FITXERFIRMATID);
+                    hiddens.remove(DATAFINAL);
+                    
+                    
+                    break;
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     hiddens.remove(FITXERFIRMATID);
                     hiddens.remove(DATAFINAL);

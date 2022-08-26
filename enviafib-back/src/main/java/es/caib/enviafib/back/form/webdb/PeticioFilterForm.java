@@ -43,17 +43,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.String titol;
-
-  public java.lang.String getTitol() {
-    return this.titol;
-  }
-
-  public void setTitol(java.lang.String titol) {
-    this.titol = titol;
-  }
-
-
   private java.sql.Timestamp dataCreacioDesde;
 
   public java.sql.Timestamp getDataCreacioDesde() {
@@ -461,6 +450,17 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.String nom;
+
+  public java.lang.String getNom() {
+    return this.nom;
+  }
+
+  public void setNom(java.lang.String nom) {
+    this.nom = nom;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -468,7 +468,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     super(__toClone);
     this.peticioIDDesde = __toClone.peticioIDDesde;
     this.peticioIDFins = __toClone.peticioIDFins;
-    this.titol = __toClone.titol;
     this.dataCreacioDesde = __toClone.dataCreacioDesde;
     this.dataCreacioFins = __toClone.dataCreacioFins;
     this.dataFinalDesde = __toClone.dataFinalDesde;
@@ -506,6 +505,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.arxiuReqParamOrigenFins = __toClone.arxiuReqParamOrigenFins;
     this.infoArxiuIDDesde = __toClone.infoArxiuIDDesde;
     this.infoArxiuIDFins = __toClone.infoArxiuIDFins;
+    this.nom = __toClone.nom;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
