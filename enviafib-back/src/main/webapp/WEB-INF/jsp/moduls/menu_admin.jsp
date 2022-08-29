@@ -50,6 +50,12 @@
         <span style="${(fn:contains(url, '/grup'))? "font-weight: bold;" : ""}"><fmt:message key="admin.menu.grup"/></span>
       </a>
     </li>
+    
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/admin/plantillesfluxfirmes/list"/>">
+        <span style="${(fn:contains(url, '/admin/plantillesfluxfirmes'))? "font-weight: bold;" : ""}"><fmt:message key="plantillesfluxfirmes.admin.plural"/></span>
+      </a>
+    </li>
 
   </ul>
 </div>
