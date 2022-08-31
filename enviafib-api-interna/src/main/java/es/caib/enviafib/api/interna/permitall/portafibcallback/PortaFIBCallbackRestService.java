@@ -131,12 +131,11 @@ public class PortaFIBCallbackRestService {
                 break;
             }
 
-            log.info("XYZ **************************************************** XYZ "); 
 
             // Assignacio de l'estat a la peticio corresponent.
-            if (event != null && event.getSign() != null) {
-
-            }
+            //if (event != null && event.getSign() != null) {
+            //    
+            //}
 
             // Actualitzacio del pintat de la pagina
 

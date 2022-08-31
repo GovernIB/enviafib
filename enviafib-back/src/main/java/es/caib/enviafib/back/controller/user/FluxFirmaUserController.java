@@ -88,13 +88,9 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
-        // XYZ ZZZ Posam el del solicitat per a que no falli - #102
-
         long solicitantID = peticioForm.getPeticio().getSolicitantID();
         String solicitantNif = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
         peticioForm.getPeticio().setDestinatariNif(solicitantNif);
-
-        // peticioForm.getPeticio().setDestinatariNif(LoginInfo.getInstance().getUsuari().getNif());
 
         peticioForm.addHiddenField(DESTINATARINIF);
         

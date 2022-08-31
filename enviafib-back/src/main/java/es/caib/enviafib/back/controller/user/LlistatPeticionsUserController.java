@@ -274,8 +274,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                     LocaleContextHolder.getLocale().getLanguage());
 
             if (msg == null) {
-                // XYZ ZZZ TRA
-                HtmlUtils.saveMessageSuccess(request, "Reintent finalitzat correctament");
+                HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
             } else {
                 HtmlUtils.saveMessageError(request, msg);
             }

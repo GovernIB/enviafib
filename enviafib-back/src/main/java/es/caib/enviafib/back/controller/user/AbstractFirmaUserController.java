@@ -43,6 +43,7 @@ import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
+import es.caib.enviafib.model.entity.Traduccio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -194,8 +195,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             peticio.setDataCreacio(new Timestamp(System.currentTimeMillis()));
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            peticio.setErrorMsg(LogicUtils.split255(
-                    "XYZ ZZZ Error desconegut. El procés de creació de la petició de firma s'ha aturat de forma inesperada."));
+            peticio.setErrorMsg(LogicUtils.split255(I18NUtils.tradueix("error.peticio.desconegut")));
 
             String userName = request.getRemoteUser();
             Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
@@ -501,7 +501,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             SerieDocumental serieDocumental = list.get(0);
 
-            // XYZ Arreglar noms Java a genapp
             peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
             peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
             peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
