@@ -57,6 +57,12 @@
       </a>
     </li>
 
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/admin/netejarplantilles/list"/>">
+        <span style="${(fn:contains(url, '/admin/netejarplantilles/list'))? "font-weight: bold;" : ""}"><fmt:message key="plantillesfluxfirmes.obsolet.plural"/></span>
+      </a>
+    </li>
+
   </ul>
 </div>
 

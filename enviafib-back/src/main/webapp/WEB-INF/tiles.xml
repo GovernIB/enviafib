@@ -178,13 +178,7 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
     </definition>
     
-    
-    
-    <definition name="plantillesfluxfirmesFormAdmin" extends="admin">
-        <put-attribute name="titol" value="usuari.usuari" />
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
-    </definition>
-    
+       
     <definition name="plantillesfluxfirmesListAdmin" extends="admin">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
     </definition>
