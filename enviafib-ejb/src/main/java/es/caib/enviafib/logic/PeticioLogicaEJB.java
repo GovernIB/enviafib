@@ -19,7 +19,9 @@ import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
@@ -51,10 +53,12 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleR
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleSignature;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleSigner;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
+import org.fundaciobit.apisib.core.exceptions.ApisIBServerException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 
 import es.caib.enviafib.persistence.FitxerJPA;
@@ -64,6 +68,7 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
+import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
@@ -332,7 +337,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         } else {
             msg = peticio.getErrorMsg();
         }
-        
+
         return msg;
     }
 
@@ -427,7 +432,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
      * Peticio peticio = peticioList.get(0); return peticio; }
      */
 
-    protected void esborrarPeticioPortafib(long portafibID, String languageUI) {
+    protected boolean esborrarPeticioPortafib(long portafibID, String languageUI) {
 
         try {
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
@@ -435,8 +440,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
             api.deleteSignatureRequest(rinfo);
+            return true;
+        } catch (ApisIBServerException e) {
+            log.error("Error esborrant petició portafib amb ID " + portafibID + " : Missatge: " + e.getMessage()
+                    + " : Descripcio:" + e.getDescription(), e);
+            return true;
         } catch (Throwable t) {
-            log.error("Error esborrant petició portafib amb ID " + portafibID + ": " + t.getMessage(), t);
+            log.error("Error esborrant petició portafib amb ID " + portafibID + " : " + t.getMessage(), t);
+            return false;
         }
     }
 
@@ -927,6 +938,62 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         }
         return signatureBlocks;
+    }
+
+    // TODO Canviar temporitzador perque executi cada dia a les 4 del vespre
+    @Schedule(hour = "4", persistent = false)
+    protected void eliminarPeticionsPortaFIB() {
+        final String languageUI = "ca";
+
+        try {
+            Where w1 = TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
+
+            Where w2 = Where.OR(ESTAT.equal(Constants.ESTAT_PETICIO_FIRMADA),
+                    ESTAT.equal(Constants.ESTAT_PETICIO_ERROR));
+
+            Where w3 = PETICIOID.notIn(this.getSubQuery(PETICIOID, PETICIOPORTAFIRMES.like("JAESBORRAT%")));
+
+            List<String> listPortaFIBIds = this.executeQuery(PETICIOPORTAFIRMES, Where.AND(w1, w2, w3));
+
+            for (String portaFIBID : listPortaFIBIds) {
+                try {
+                    log.info("Esborram Peticio amb PortaFIB ID: " + portaFIBID);
+
+                    long portafibID = Long.parseLong(portaFIBID);
+
+                    if (esborrarPeticioPortafib(portafibID, languageUI)) {
+                        Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName()
+                                + " set " + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?0" + " where "
+                                + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?1");
+                        query.setParameter(0, "ESBORRADA_" + portaFIBID);
+                        query.setParameter(1, portaFIBID);
+                        query.executeUpdate();
+                    } else {
+                        log.error(
+                                "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
+                                        + portaFIBID);
+                    }
+
+                } catch (Throwable e) {
+                    log.info("XYZ Catch Throwable de eliminarPeticionsPortaFIB");
+                    // TODO Auto-generated catch block
+                    log.error(
+                            "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
+                                    + portaFIBID + " : " + e.getMessage(),
+                            e);
+                }
+
+                // TODO Afegir limit de temps al CRON. Cada vespre que executi maxim durant
+                // menys temps que el timeout de un metode CRON. (O incrementar timeout del
+                // mètode CRON.
+                // break;
+            }
+
+        } catch (I18NException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
 }
