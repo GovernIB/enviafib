@@ -29,6 +29,18 @@
       </a>
     </li>
     
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/peticio/firmades/list"/>">
+        <span style="${(fn:contains(url, 'user/peticio/firmades/list'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.peticionsusuari.firmades"/></span>
+      </a>
+    </li>
+    
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/peticio/pendents/list"/>">
+        <span style="${(fn:contains(url, 'user/peticio/pendents/list'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.peticionsusuari.pendents"/></span>
+      </a>
+    </li>
+    
     
     <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
     <li style="list-style-type: disc; list-style-position: inside;">
