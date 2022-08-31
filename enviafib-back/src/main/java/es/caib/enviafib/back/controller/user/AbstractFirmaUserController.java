@@ -170,9 +170,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             }
 
         } else {
-            if (getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
-                mav.addObject("dragdrop", true);
-            }
+            mav.addObject("dragdrop", true);
         }
 
         peticioForm.setAttachedAdditionalJspCode(true);
@@ -387,9 +385,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             String msg = I18NUtils.tradueix("procesdefirma.status.enviadaok", String.valueOf(peticio.getPeticioID()));
             HtmlUtils.deleteMessages(request);
             HtmlUtils.saveMessageSuccess(request, msg);
-            
-            //HtmlUtils.saveMessageSuccess(request,
-            //        "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
+
+            // HtmlUtils.saveMessageSuccess(request,
+            // "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
 
         } catch (I18NException e) {
 
@@ -429,7 +427,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
         return ret;
     }
-
 
     @Override
     public void postValidate(HttpServletRequest request, PeticioForm peticioForm, BindingResult result)
