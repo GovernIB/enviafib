@@ -7,6 +7,8 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
+
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
@@ -33,4 +35,13 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         
         return Where.AND(defaultCondition, getFirmadesCondition);
     }
+    
+    @Override
+    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
+            throws I18NException {
+        PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
+        peticioFilterForm.setTitleCode("peticio.list.firmades.title");
+        return peticioFilterForm;
+    }
+    
 }

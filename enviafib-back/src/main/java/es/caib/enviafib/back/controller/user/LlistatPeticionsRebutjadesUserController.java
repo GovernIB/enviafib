@@ -20,30 +20,27 @@ import es.caib.enviafib.commons.utils.Constants;
  *
  */
 @Controller
-@RequestMapping(value = LlistatPeticionsPendentsUserController.CONTEXT_WEB)
+@RequestMapping(value = LlistatPeticionsRebutjadesUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUserController {
+public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUserController {
 
-    public static final String CONTEXT_WEB = "/user/peticio/pendents";
+    public static final String CONTEXT_WEB = "/user/peticio/rebutjades";
     
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
         
         Where defaultCondition = super.getAdditionalCondition(request);
-        Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
-        Where getErroniesCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-        Where getPeticionsCondition = Where.OR(getPendentsCondition, getErroniesCondition);
+        Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR);
         
-        return Where.AND(defaultCondition, getPeticionsCondition);
+        return Where.AND(defaultCondition, getPendentsCondition);
     }
     
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
-        peticioFilterForm.setTitleCode("peticio.list.pendents.title");
+        peticioFilterForm.setTitleCode("peticio.list.rebutjades.title");
         return peticioFilterForm;
     }
-    
 
 }
