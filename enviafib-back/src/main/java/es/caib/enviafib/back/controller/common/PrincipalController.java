@@ -68,7 +68,7 @@ public class PrincipalController {
 			}
 
 			if ("user".equals(pipella)) {
-				return new ModelAndView(new RedirectView("/user/peticio/list/1", true));
+				return new ModelAndView(new RedirectView("/user/peticio/pendents/list/1", true));
 			}
 
 			if ("webdb".equals(pipella)) {

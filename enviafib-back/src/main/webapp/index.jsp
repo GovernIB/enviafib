@@ -9,7 +9,7 @@
 <head></head>
 <body>
 <c:if test = "${efi:hasRole('ROLE_USER')}">
-	<c:redirect url="/user/peticio/list/1"/>
+	<c:redirect url="/user/peticio/pendents/list/1"/>
 </c:if>
 <c:if test = "${!efi:hasRole('ROLE_USER')}">
 	<c:if test = "${efi:hasRole('ROLE_ADMIN')}">

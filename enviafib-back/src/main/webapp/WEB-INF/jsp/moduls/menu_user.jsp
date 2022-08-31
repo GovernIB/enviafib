@@ -22,13 +22,32 @@
    </sec:authorize>
     --%>
 
-
+	<%-- Botó per redirigir a la llista general de peticions--%>
+	<%--
     <li style="list-style-type: disc; list-style-position: inside;">
       <a href="<c:url value="/user/peticio/list"/>">
         <span style="${(fn:contains(url, 'user/peticio/list'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.peticionsusuari"/></span>
       </a>
     </li>
+    --%>
     
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/peticio/pendents/list"/>">
+        <span style="${(fn:contains(url, 'user/peticio/pendents/list'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.peticionsusuari.pendents"/></span>
+      </a>
+    </li>
+    
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/peticio/firmades/list"/>">
+        <span style="${(fn:contains(url, 'user/peticio/firmades/list'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.peticionsusuari.firmades"/></span>
+      </a>
+    </li>
+    
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/peticio/rebutjades/list"/>">
+        <span style="${(fn:contains(url, 'user/peticio/rebutjades/list'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.peticionsusuari.rebutjades"/></span>
+      </a>
+    </li>
     
     <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
     <li style="list-style-type: disc; list-style-position: inside;">
