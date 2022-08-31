@@ -180,6 +180,10 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
 
         }
     }
+    
+    public String getOwner() {
+        return LoginInfo.getInstance().getUsername();
+    }
 
     @Override
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,
@@ -194,7 +198,7 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
 
         ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
 
-        String username = LoginInfo.getInstance().getUsername();
+        String username = getOwner();
         final String languageUI = "ca";
 
         FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
@@ -342,10 +346,6 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
         mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/list");
         return mav;
     }
-
-    
-
-    
     
 
     @RequestMapping(value = "/crearflux", method = RequestMethod.GET)
@@ -363,7 +363,7 @@ public class PlantillesDeFluxDeFirmesUserController extends UsuariController {
 
             // Crear Flux
             String name = "Plantilla de Flux de Firma  - " + System.currentTimeMillis();
-            String descr = FluxFirmaUserController.generateDescription(LoginInfo.getInstance().getUsername(), true);
+            String descr = FluxFirmaUserController.generateDescription(getOwner(), true);
 
 
             final boolean saveOnServer = true;

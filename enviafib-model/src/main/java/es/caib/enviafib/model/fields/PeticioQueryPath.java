@@ -15,10 +15,6 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new LongField(getQueryPath(), PeticioFields.PETICIOID);
   }
 
-  public StringField NOM() {
-    return new StringField(getQueryPath(), PeticioFields.NOM);
-  }
-
   public TimestampField DATACREACIO() {
     return new TimestampField(getQueryPath(), PeticioFields.DATACREACIO);
   }
@@ -141,6 +137,10 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
 
   public LongField INFOARXIUID() {
     return new LongField(getQueryPath(), PeticioFields.INFOARXIUID);
+  }
+
+  public StringField NOM() {
+    return new StringField(getQueryPath(), PeticioFields.NOM);
   }
 
 

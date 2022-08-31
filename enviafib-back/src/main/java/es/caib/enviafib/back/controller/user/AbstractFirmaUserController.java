@@ -384,8 +384,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                             LocaleContextHolder.getLocale().getLanguage());
                 break;
             }
-//            HtmlUtils.saveMessageSuccess(request,
-//                    "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
+            String msg = I18NUtils.tradueix("procesdefirma.status.enviadaok", String.valueOf(peticio.getPeticioID()));
+            HtmlUtils.deleteMessages(request);
+            HtmlUtils.saveMessageSuccess(request, msg);
+            
+            //HtmlUtils.saveMessageSuccess(request,
+            //        "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
 
         } catch (I18NException e) {
 

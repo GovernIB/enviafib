@@ -159,9 +159,6 @@
         <put-attribute name="titol" value="grupUsuari.grupUsuari" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariForm.jsp" />
     </definition>
-
-
-    
     
     <definition name="EstructuraOrganitzativaPluginFormAdmin" extends="admin">
         <put-attribute name="titol" value="EstructuraOrganitzativa.EstructuraOrganitzativa" />
@@ -177,10 +174,14 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginForm.jsp" />
     </definition>
     
-    <definition name="ArxiuPluginListAdmin" extends="admin">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
+    <definition name="plantillesfluxfirmesFormAdmin" extends="admin">
+        <put-attribute name="titol" value="usuari.usuari" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
     </definition>
     
+    <definition name="plantillesfluxfirmesListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
+    </definition>
     <!--  ===========  DESENVOLUPAMENT ================== -->
     
     <definition name="desenvolupament" extends="base.definition">

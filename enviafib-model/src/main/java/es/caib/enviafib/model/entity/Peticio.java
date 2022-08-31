@@ -5,9 +5,6 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public long getPeticioID();
 	public void setPeticioID(long _peticioID_);
 
-	public java.lang.String getNom();
-	public void setNom(java.lang.String _nom_);
-
 	public java.sql.Timestamp getDataCreacio();
 	public void setDataCreacio(java.sql.Timestamp _dataCreacio_);
 
@@ -100,6 +97,9 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 
 	public java.lang.Long getInfoArxiuID();
 	public void setInfoArxiuID(java.lang.Long _infoArxiuID_);
+
+	public java.lang.String getNom();
+	public void setNom(java.lang.String _nom_);
 
   // Fitxer
   public <F extends Fitxer> F getFitxer();

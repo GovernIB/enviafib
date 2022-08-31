@@ -70,12 +70,6 @@ public class ArxiuPluginAdminController extends AbstractPluginAdminController {
 
             pluginFilterForm.setTitleCode("arxiuplugin.title");
 
-            pluginFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-check",
-                    "estructuraorganitzativaplugin.button", "javascript: provarPlugin({0})",
-
-                    // getContextWeb() + "/provar/{0}",
-                    "btn-primary"));
-
             pluginFilterForm.setAttachedAdditionalJspCode(true);
         }
 

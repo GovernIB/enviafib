@@ -245,7 +245,8 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt icon-white",
-                        "arxiu.reintentar", getContextWeb() + "/reintentararxivat/" + peticioID, "btn-warning"));
+                        "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
+                
             }
 
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {

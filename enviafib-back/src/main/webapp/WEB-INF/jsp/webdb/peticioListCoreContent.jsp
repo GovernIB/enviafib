@@ -29,11 +29,6 @@
           ${peticio.peticioID}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
-          <td>
-          ${peticio.nom}
-          </td>
-        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATACREACIO)}">
           <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${peticio.dataCreacio}" /></td>
         </c:if>
@@ -217,6 +212,11 @@
           <c:if test="${not empty tmp}">
           ${__theFilterForm.mapOfInfoArxiuForInfoArxiuID[tmp]}
           </c:if>
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
+          <td>
+          ${peticio.nom}
           </td>
         </c:if>
 

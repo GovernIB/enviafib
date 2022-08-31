@@ -13,7 +13,6 @@ public interface PeticioFields extends java.io.Serializable {
 
 
 	 public static final LongField PETICIOID = new LongField(_TABLE_MODEL, "peticioID", "peticioid");  // PK
-	 public static final StringField NOM = new StringField(_TABLE_MODEL, "nom", "nom");
 	 public static final TimestampField DATACREACIO = new TimestampField(_TABLE_MODEL, "dataCreacio", "datacreacio");
 	 public static final TimestampField DATAFINAL = new TimestampField(_TABLE_MODEL, "dataFinal", "datafinal");
 	 public static final LongField FITXERID = new LongField(_TABLE_MODEL, "fitxerID", "fitxerid");
@@ -45,11 +44,11 @@ public interface PeticioFields extends java.io.Serializable {
 	 public static final StringField ARXIUOPTPARAMEXPEDIENTID = new StringField(_TABLE_MODEL, "arxiuOptParamExpedientId", "arxiuoptparamexpedientid");
 	 public static final IntegerField ARXIUREQPARAMORIGEN = new IntegerField(_TABLE_MODEL, "arxiuReqParamOrigen", "arxiureqparamorigen");
 	 public static final LongField INFOARXIUID = new LongField(_TABLE_MODEL, "infoArxiuID", "infoarxiuid");
+	 public static final StringField NOM = new StringField(_TABLE_MODEL, "nom", "nom");
 
 
   public static final Field<?>[] ALL_PETICIO_FIELDS = {
     PETICIOID,
-    NOM,
     DATACREACIO,
     DATAFINAL,
     FITXERID,
@@ -80,7 +79,8 @@ public interface PeticioFields extends java.io.Serializable {
     ARXIUOPTPARAMSERIEDOCUMENTAL,
     ARXIUOPTPARAMEXPEDIENTID,
     ARXIUREQPARAMORIGEN,
-    INFOARXIUID
+    INFOARXIUID,
+    NOM
   };
 
 
