@@ -262,13 +262,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         // ASYNCHRONOUS Funcionalitat de guardar document a Arxiu amb la API
         guardarFitxerArxiu(peticioID, languageUI, infoSignatura);
-
-        // XYZ ZZZ Això s'ha de fer NOCTURN !!!!
-        // esborrarPeticioPortafib(portafibID, languageUI);
-
+        
         enviarMailSolicitant(portafibID, "FIRMADA", languageUI);
 
-        log.info("cosesAFerPeticioFirmada:: Final XYZ ZZZ");
     }
 
     @Override
@@ -289,9 +285,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String msg = I18NCommonUtils.tradueix(new Locale(peticio.getIdiomaID()), "peticio.motiu.rebuig", motiuRebuig);
         peticio.setErrorMsg(LogicUtils.split255(msg));
         this.update(peticio);
-
-        // XYZ ZZZ Això s'ha de fer NOCTURN !!!!
-        // esborrarPeticioPortafib(portafibID, languageUI);
+        
         enviarMailSolicitant(portafibID, "REBUTJADA", languageUI);
     }
 
@@ -309,7 +303,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI) throws I18NException {
 
-        // XYZ ZZZ Actualitzar estat de Peticio sense actualitzar tota la fila
         {
             Peticio peticio = findByPrimaryKey(peticioID);
             peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
@@ -373,7 +366,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         InfoArxiuJPA ia = pluginArxiuLogicaEjb.custodiaAmbApiArxiu(peticio, new Locale(languageUI), infoSignatura);
 
         if (ia == null) {
-            // ERROR
             estatFinal = Constants.ESTAT_PETICIO_ERROR_ARXIVANT;
         } else {
 
@@ -488,11 +480,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
 
-            log.info("Message Obtingut");
             boolean isHTML = true;
 
             String from = Configuracio.getAppEmail();
-            log.info("XYZ SENDER: " + from);
             EmailUtil.postMail(subject, message, isHTML, from, email);
 
         } catch (Throwable t) {
@@ -974,7 +964,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     }
 
                 } catch (Throwable e) {
-                    log.info("XYZ Catch Throwable de eliminarPeticionsPortaFIB");
                     // TODO Auto-generated catch block
                     log.error(
                             "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "

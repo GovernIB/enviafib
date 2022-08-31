@@ -267,7 +267,9 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
 
         if (pet == null) {
-            log.error("No existeix la petició"); // XYZ ZZZ Falta més info
+            log.error("Error en el procés de creació de Petició Firma. "
+                    + "No s'ha trobat la nova petició. S'ha de reintentar el procés, si el problema persisteix, contacti ab el seu administrador.");
+            
             throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
                     new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
         }
@@ -398,7 +400,4 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         return new ApiFirmaWebSimpleJersey(url, username, password);
     }
 
-
-    
-    
 }

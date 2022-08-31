@@ -162,10 +162,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "user.infoarxiu",
                             "/user/infoArxiu/view/" + infoArxiuID, "btn-info"));
 
-//                    new AdditionalButton("fas fa-file", "info.signatura",
-//                            "/user/infoSignatura/view/" + peticio.getInfoSignaturaID(),
-//                           )
-
                 break;
             }
 
@@ -174,10 +170,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
 
         peticioForm.setAttachedAdditionalJspCode(true);
-
-//        if (peticioForm.getPeticio().getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
-//            hiddens.remove(REASON);
-//        }
 
         peticioForm.setHiddenFields(hiddens);
 
@@ -492,10 +484,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             Peticio peticio = peticioForm.getPeticio();
 
             String tipusDocumental = peticio.getTipusDocumental();
-            log.info("XYZ XXXX TIPUS DOCUMENTAL = " + tipusDocumental);
             List<SerieDocumental> list = serieDocumentalEjb
                     .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
-            log.info("XYZ XXXX QUERY Tipus documentals correcte");
             if (list == null || list.isEmpty()) {
                 list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.isNull());
                 if (list == null || list.isEmpty()) {

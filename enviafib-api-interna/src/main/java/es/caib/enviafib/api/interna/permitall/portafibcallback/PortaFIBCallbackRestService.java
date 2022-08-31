@@ -69,39 +69,9 @@ public class PortaFIBCallbackRestService {
         try {
             long startTime = System.currentTimeMillis();
 
-            // TODO: Eliminar tots els log.info quan s'hagui implementat la gestió de la
-            // resposta de PortaFIB
-            log.info("XYZ **************************************************** XYZ ");
-            log.info("XYZ Resposta: ");
-            log.info("Event type:" + event.getEventTypeID());
-            log.info("Applicarion ID: " + event.getApplicationID());
-            log.info("Entity ID: " + event.getEntityID());
-            log.info("Version: " + event.getVersion());
-
-            //peticioLogicaEjb.metodeAsync(String.valueOf(event.getEventTypeID()));
-
             int eventID = event.getEventTypeID();
 
             switch (eventID) {
-                case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_EN_PROCES: {
-                    // JA NO ES NECESSARI. LA PETICIO ES POSA DIRECTAMENT A ESTAT EN PROCÉS
-                    /*                     
-                    log.info("NOTIFICACIOAVIS_PETICIO_EN_PROCES = " + eventID);
-
-                    Long portafibID = event.getSigningRequest().getID();
-                    Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID,
-                            PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
-
-                    if (peticioID != null) {
-                        Peticio peticioTemp = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-                        peticioTemp.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
-                        peticioLogicaEjb.updatePublic(peticioTemp);
-                    } else {
-//                        log.error(I18NUtils.tradueix("callback.event.enproces.error") + IDsToString);
-                    }
-                    */
-                }
-                break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR: {
                     log.info("NOTIFICACIOAVIS_REQUERIT_PER_VALIDAR = " + eventID);
                 }
