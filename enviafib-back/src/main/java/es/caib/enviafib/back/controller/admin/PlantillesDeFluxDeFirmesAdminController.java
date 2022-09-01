@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import es.caib.enviafib.back.controller.user.PlantillesDeFluxDeFirmesUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.commons.utils.Constants;
 
 /**
  * 
@@ -39,6 +40,6 @@ public class PlantillesDeFluxDeFirmesAdminController extends PlantillesDeFluxDeF
 
     @Override
     public String getOwner() {
-        return "_#enviafib#_";
+        return Constants.OWNER_ENTIAT;
     }
 }   

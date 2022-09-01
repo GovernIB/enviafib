@@ -154,7 +154,7 @@ td label {
 		html += 'class="form-control col-md-9-optional"> ';
 		
 		<c:forEach var="item" items="${plantillesUsuari}">
-			html += '<option value="<c:out value="${item.key}"/>"><c:out value="${item.value}"/></option>';
+			html += '<option value="<c:out value="${item.nif}"/>"><c:out value="${item.nom}"/></option>';
 		</c:forEach>
 		
 		// Si no hi ha plantilles, tornar a llistat amb un missatge warn

@@ -84,11 +84,16 @@
     </li>
    
     <li style="list-style-type: disc; list-style-position: inside;">
-      <a href="<c:url value="/user/firmaplantillaflux/new"/>">
-        <span style="${(fn:contains(url, '/firmaplantillaflux'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmaplantillaflux"/></span>
+      <a href="<c:url value="/user/firmaplantillafluxusuari/new"/>">
+        <span style="${(fn:contains(url, '/firmaplantillafluxusuari'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmaplantillaflux.usuari"/></span>
       </a>
     </li>
     
+    <li style="list-style-type: disc; list-style-position: inside;">
+      <a href="<c:url value="/user/firmaplantillafluxentitat/new"/>">
+        <span style="${(fn:contains(url, '/firmaplantillafluxentitat'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmaplantillaflux.entitat"/></span>
+      </a>
+    </li>
     
     <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
    

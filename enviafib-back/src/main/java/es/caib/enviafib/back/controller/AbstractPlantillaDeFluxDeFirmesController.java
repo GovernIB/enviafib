@@ -53,6 +53,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
     protected final static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
+    public abstract FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(final String languageUI);
+
     @Override
     public String getSessionAttributeFilterForm() {
         return "plantillesfluxfirmes_FilterForm_" + this.getClass().getSimpleName();
@@ -164,8 +166,6 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
         return getRedirectWhenCancel(request, 0L);
     }
-
-    public abstract FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(final String languageUI);
 
     @Override
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,

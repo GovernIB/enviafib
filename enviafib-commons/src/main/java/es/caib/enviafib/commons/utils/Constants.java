@@ -22,6 +22,9 @@ public interface Constants {
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER = "ROLE_USER";
 
+    public static final String OWNER_ENTIAT= "enviafib";
+//    public static final String OWNER_ENTIAT= "_#enviafib#_";
+
     // EJB HIGH LEVEL ROLES
     public static final String ROLE_EJB_FULL_ACCESS = EFI_ADMIN;
     public static final String ROLE_EJB_BASIC_ACCESS = EFI_USER;
@@ -44,10 +47,12 @@ public interface Constants {
     public static final int TIPUS_PETICIO_FLUX = 2;
     public static final int TIPUS_PETICIO_DIRECTOR = 3;
     public static final int TIPUS_PETICIO_SECRETARI = 4;
-    public static final int TIPUS_PETICIO_PLANTILLAFLUX= 5;
+    public static final int TIPUS_PETICIO_PLANTILLAFLUX_USUARI= 5;
+    public static final int TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT= 6;
     
     public static final int[] TIPUS_PETICIONS = { TIPUS_PETICIO_NIF, TIPUS_PETICIO_AUTOFIRMA,
-            TIPUS_PETICIO_FLUX, TIPUS_PETICIO_DIRECTOR, TIPUS_PETICIO_SECRETARI, TIPUS_PETICIO_PLANTILLAFLUX };
+            TIPUS_PETICIO_FLUX, TIPUS_PETICIO_DIRECTOR, TIPUS_PETICIO_SECRETARI, 
+            TIPUS_PETICIO_PLANTILLAFLUX_USUARI, TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT };
     
     
     // TIPUS DE PLUGINS DE ENVIAFIB

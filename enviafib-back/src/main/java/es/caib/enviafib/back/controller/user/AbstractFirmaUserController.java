@@ -350,7 +350,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                             (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
                 break;
 
-                case Constants.TIPUS_PETICIO_PLANTILLAFLUX:
+                case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
+                case Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT:
 
                     ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
 
