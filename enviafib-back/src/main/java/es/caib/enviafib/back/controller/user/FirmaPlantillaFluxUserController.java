@@ -113,8 +113,9 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
 //                usuari.setEmail(getCreationDate(description));
 
-                usuaris.add(usuari);
-
+                if (description.indexOf("{template=true}") != -1) {
+                    usuaris.add(usuari);
+                }
             }
 
             return usuaris;

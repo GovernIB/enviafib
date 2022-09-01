@@ -73,13 +73,13 @@
     
     <li style="list-style-type: disc; list-style-position: inside;">
       <a href="<c:url value="/user/firmadirector/new"/>">
-        <span style="${(fn:contains(url, '/firmadirector'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmadirector"/></span>
+        <span style="${(fn:contains(url, '/firmadirector'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmacarrec.director"/></span>
       </a>
     </li>
    
     <li style="list-style-type: disc; list-style-position: inside;">
       <a href="<c:url value="/user/firmasecretari/new"/>">
-        <span style="${(fn:contains(url, '/firmasecretari'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmasecretari"/></span>
+        <span style="${(fn:contains(url, '/firmasecretari'))? "font-weight: bold;" : ""}"><fmt:message key="user.menu.firmacarrec.secretari"/></span>
       </a>
     </li>
    
