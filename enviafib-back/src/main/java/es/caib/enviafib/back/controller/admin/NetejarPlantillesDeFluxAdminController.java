@@ -21,7 +21,6 @@ import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.model.entity.Usuari;
 
-//TODO: 
 @Controller
 @RequestMapping(value = "/admin/netejarplantilles")
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })

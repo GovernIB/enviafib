@@ -19,10 +19,7 @@ import es.caib.plugins.arxiu.api.IArxiuPlugin;
 @Local
 public interface PluginArxiuLogicaService extends AbstractPluginLogicaService<IArxiuPlugin>  {
 
-    
-    //XYZ Revisar si es necessari o es pot eliminar
-    public static final String KEY_ERROR = "* ERROR: ";
-    
+        
     public static final String JNDI_NAME = "java:app/enviafib-ejb/PluginArxiuLogicaEJB!es.caib.enviafib.logic.PluginArxiuLogicaService";
 
 

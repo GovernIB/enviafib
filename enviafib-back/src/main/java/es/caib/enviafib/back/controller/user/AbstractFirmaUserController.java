@@ -384,7 +384,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         } catch (I18NException e) {
 
-            // XYZ ZZZ Error generic
             String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
             log.error(error, e);
 
@@ -429,8 +428,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         {
 
-            // XYZ ZZZ Aqui falta el camp de DIR3Unit !!!
-            Field<?>[] signFields = { ARXIUPARAMFUNCIONARINIF, ARXIUPARAMFUNCIONARINOM, ARXIUPARAMFUNCIONARIDIR3 };
+            // XYZ ZZZ TRA - DONE
+            // TODO: Aqui falta el camp de DIR3Unit !!!
+            Field<?>[] signFields = { 
+                    PeticioFields.ARXIUPARAMFUNCIONARINIF, 
+                    PeticioFields.ARXIUPARAMFUNCIONARINOM, 
+                    PeticioFields.ARXIUPARAMFUNCIONARIDIR3 };
 
             for (Field<?> field : signFields) {
                 ValidationUtils.rejectIfEmptyOrWhitespace(result, field.fullName, "genapp.validation.required",
@@ -479,24 +482,25 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
         // Validacio de serie documental
         {
-            // XYZ ZZZ ZZZ S'ha d'obtenir del Mapeig de Series Documentals
-            // XYZ ZZZ PostValidate validar que pel tipus de document hi ha seria documental
+           
 
             Peticio peticio = peticioForm.getPeticio();
 
             String tipusDocumental = peticio.getTipusDocumental();
+            
+            // XYZ ZZZ TRA - DONE
+            // Mapeig de Series Documentals
             List<SerieDocumental> list = serieDocumentalEjb
                     .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
+
+            // XYZ ZZZ TRA - DONE
+            // Valida que pel tipus de document hi ha seria documental
             if (list == null || list.isEmpty()) {
                 list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.isNull());
                 if (list == null || list.isEmpty()) {
-                    // throw new I18NException("No existeix Serie Documental amb el Tipus Documental
-                    // " + tipusDocumental
-                    // + " o amb tipus documental null. Consulti l'error amb el seu administrador");
 
                     result.rejectValue(get(PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL), "error.tipusdocumental",
                             new String[] { tipusDocumental }, null);
-
                 }
             }
 

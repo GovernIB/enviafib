@@ -43,10 +43,6 @@ public abstract class AbstractPluginLogicaEJB<I extends IPlugin> extends PluginE
     @Override
     public Where getWhere() {
         return Where.AND(TIPUS.equal(getTipusDePlugin()), ACTIU.equal(true));
-
-        // TODO Elegim plugin entre les genèriques o entre els específics per l'entitat
-        // Where.OR(ENTITATID.isNull(), ENTITATID.equal(entitatID))
-
     }
 
     @Override

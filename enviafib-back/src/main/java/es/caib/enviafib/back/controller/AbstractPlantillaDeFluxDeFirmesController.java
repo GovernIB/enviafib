@@ -27,6 +27,7 @@ import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.user.FluxFirmaUserController;
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.FitxerFields;
@@ -142,24 +144,40 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
         final String languageUI = "ca";
 
-        // TODO XYZ ZZZ Comprovar que és de la nostra propietat
+        // XYZ ZZZ TRA - DONE
+        // Comprovam que és de la nostra propietat
         try {
 
             ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
 
-            FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
-            if (api.deleteFlowTemplate(r)) {
-                // XYZ ZZZ
-                HtmlUtils.saveMessageSuccess(request, "Esborrada plantilla de Flux de Firmes Correctament");
-            } else {
-                // XYZ ZZZ
-                HtmlUtils.saveMessageSuccess(request, "Error esborrant plantilla de Flux de Firmes amb ID " + fluxID
-                        + ".Consulti amb l´administrador de l'aplicació.");
-            }
+            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
 
+            FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+
+            String description = flux.getDescription();
+
+            String owner = LoginInfo.getInstance().getUsername();
+            if (description.indexOf("{owner="+ owner + "}") != -1) {
+                FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
+                if (api.deleteFlowTemplate(r)) {
+                    // XYZ ZZZ TRAD - DONE
+                    String msg = I18NUtils.tradueix("plantillaflux.esborrar.ok", fluxID);
+                    HtmlUtils.saveMessageSuccess(request, msg);
+                } else {
+                    // XYZ ZZZ TRAD - DONE
+                    String msg = I18NUtils.tradueix("plantillaflux.esborrar.error", fluxID, null);
+                    HtmlUtils.saveMessageError(request, msg);
+                }
+                log.info("El flux es de la nostra propietat");                
+            }else {
+                // XYZ ZZZ TRAD - DONE
+                String msg = I18NUtils.tradueix("plantillaflux.esborrar.nopropietari", fluxID);
+                HtmlUtils.saveMessageError(request, msg);
+            }
         } catch (AbstractApisIBException e) {
-            // XYZ ZZZ TRA
-            String msg = "Error esborrarnt Plantilla de Flux amb ID " + fluxID + ": " + e.getMessage();
+            // XYZ ZZZ TRAD - DONE
+            String msg = I18NUtils.tradueix("plantillaflux.esborrar.error", fluxID, e.getMessage());
             log.error(msg, e);
             HtmlUtils.saveMessageError(request, msg);
         }
@@ -209,9 +227,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
                 usuari.setUsuariID((long) flowTemplateId.hashCode());
                 usuari.setNif(flowTemplateId);
                 usuari.setNom(flowKeyValue.getValue());
-                // XYZ ZZZ
-                usuari.setLlinatge1(description); // + "\n<br/> flowTemplateId => " + flowTemplateId);
-
+                usuari.setLlinatge1(description);
                 usuari.setEmail(getCreationDate(description));
 
                 usuaris.add(usuari);

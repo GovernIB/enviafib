@@ -262,7 +262,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         // ASYNCHRONOUS Funcionalitat de guardar document a Arxiu amb la API
         guardarFitxerArxiu(peticioID, languageUI, infoSignatura);
-        
+
         enviarMailSolicitant(portafibID, "FIRMADA", languageUI);
 
     }
@@ -285,7 +285,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String msg = I18NCommonUtils.tradueix(new Locale(peticio.getIdiomaID()), "peticio.motiu.rebuig", motiuRebuig);
         peticio.setErrorMsg(LogicUtils.split255(msg));
         this.update(peticio);
-        
+
         enviarMailSolicitant(portafibID, "REBUTJADA", languageUI);
     }
 
@@ -318,7 +318,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
             peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura);
         } catch (Exception e) {
-            // XYZ ZZZ
+            // XYZ ZZZ TRAD - TMP
             log.error("Future.get() ha llança un error: " + e.getMessage(), e);
             peticio = null;
         }
@@ -929,6 +929,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return signatureBlocks;
     }
 
+    // XYZ ZZZ TRA - FBOSCH
     // TODO Canviar temporitzador perque executi cada dia a les 4 del vespre
     @Schedule(hour = "4", persistent = false)
     protected void eliminarPeticionsPortaFIB() {
@@ -964,13 +965,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     }
 
                 } catch (Throwable e) {
-                    // TODO Auto-generated catch block
+                    // XYZ ZZZ TRAD - TMP
                     log.error(
                             "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
                                     + portaFIBID + " : " + e.getMessage(),
                             e);
                 }
 
+                // XYZ ZZZ TRA - FBOSCH
                 // TODO Afegir limit de temps al CRON. Cada vespre que executi maxim durant
                 // menys temps que el timeout de un metode CRON. (O incrementar timeout del
                 // mètode CRON.
@@ -978,8 +980,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             }
 
         } catch (I18NException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // XYZ ZZZ TRA - DONE
+            String msg = e.getMessage();
+            log.error(msg, e);
         }
 
     }

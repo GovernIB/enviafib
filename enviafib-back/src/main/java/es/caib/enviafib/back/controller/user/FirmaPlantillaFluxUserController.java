@@ -14,7 +14,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleK
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
-
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -59,7 +59,9 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
                 mav.addObject("plantillesUsuari", llistatPlantilles);
 
             } else {
-                String msg = "TODO: No hi ha plantilles per aquest usuari";
+                // XYZ ZZZ TRAD - DONE
+                String msg = I18NUtils.tradueix("plantillaflux.empty.usuari", getOwner());
+
                 HtmlUtils.saveMessageWarning(request, msg);
                 mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
                 return peticioForm;
@@ -104,12 +106,19 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
                 String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
                         .replace("}{", "}<br/>{");
 
+
+                /* usuariID -> flowTemplateId hashed
+                 * nif -> flowTemplateId
+                 * nom -> value
+                 * llinatge1 -> description
+                 * email -> creationDate
+                 */
+                
                 Usuari usuari = new UsuariJPA();
                 usuari.setUsuariID((long) flowTemplateId.hashCode());
                 usuari.setNif(flowTemplateId);
                 usuari.setNom(flowKeyValue.getValue());
-                // XYZ ZZZ
-                usuari.setLlinatge1(description); // + "\n<br/> flowTemplateId => " + flowTemplateId);
+                usuari.setLlinatge1(description);
 
 //                usuari.setEmail(getCreationDate(description));
 

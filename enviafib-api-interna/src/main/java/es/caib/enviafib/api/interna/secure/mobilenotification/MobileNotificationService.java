@@ -102,7 +102,7 @@ public class MobileNotificationService {
 //
 //            // Check if notificationCode is empty
 //            if (notificationCode == null || notificationCode.trim().length() == 0) {
-//                // TODO XYZ ZZZ TRA
+//                // TODO XYZ ZZZ
 //                return generateError(SendMessageResultCode.NOTIFICATION_CODE_DO_NOT_EXIST,
 //                        "El codi de notificacio és null o buit. ");
 //            }
@@ -110,7 +110,7 @@ public class MobileNotificationService {
 //            // Check if notificationCode exists
 //            List<NotificacioApp> nList = notificacioLogicaEjb.select(NotificacioAppFields.CODI.equal(notificationCode));
 //            if (nList.size() != 1) {
-//                // TODO XYZ ZZZ TRA
+//                // TODO XYZ ZZZ
 //                return generateError(SendMessageResultCode.NOTIFICATION_CODE_DO_NOT_EXIST, "El codi de notificacio "
 //                        + notificationCode + " no està registrat." + "Consulti amb l'administrador de Carpeta.");
 //            }
@@ -123,14 +123,14 @@ public class MobileNotificationService {
 //            Entitat entitat = entitatLogicaEjb.findByPrimaryKey(notificacio.getEntitatID());
 //
 //            if (entitat == null) {
-//                // TODO XYZ ZZZ TRA
+//                // TODO XYZ ZZZ
 //                return generateError(SendMessageResultCode.ENTITYCODE_DO_NOT_EXIST,
 //                        "No existeix cap entitat dins Carpeta amb ID  `" + notificacio.getEntitatID()
 //                                + "`. Consulti amb l'administrador de Carpeta.");
 //            }
 //
 //            if (!entitat.isActiva()) {
-//                // TODO XYZ ZZZ TRA
+//                // TODO XYZ ZZZ 
 //                return generateError(SendMessageResultCode.ENTITY_DISABLED,
 //                        "No existeix cap entitat dins Carpeta amb codi `" + entitat.getCodi()
 //                                + "`. Consulti amb l'administrador de Carpeta.");
@@ -144,7 +144,7 @@ public class MobileNotificationService {
 //                // Check if Plugin is enabled
 //                plugin = pluginEjb.findByPrimaryKey(pluginID);
 //                if (!plugin.isActiu()) {
-//                    // TODO XYZ ZZZ TRA
+//                    // TODO XYZ ZZZ 
 //                    return generateError(SendMessageResultCode.PLUGIN_DISABLED,
 //                            "El plugin `" + plugin.getNom().getTraduccio(langError)
 //                                    + " associat al codi de notificació  `" + notificationCode
@@ -156,7 +156,7 @@ public class MobileNotificationService {
 //                List<PluginEntitat> listPE = pluginEntitatEjb.select(Where.AND(w1, w2));
 //
 //                if (listPE.size() != 1) {
-//                    // TODO XYZ ZZZ TRA
+//                    // TODO XYZ ZZZ 
 //                    return generateError(SendMessageResultCode.PLUGIN_ENTITY_DO_NOT_EXIST,
 //                            "El plugin `" + plugin.getNom().getTraduccio(langError)
 //                                    + " associat al codi de notificació  `" + notificationCode
@@ -167,7 +167,7 @@ public class MobileNotificationService {
 //                pluginEntitat = listPE.get(0);
 //
 //                if (!pluginEntitat.isActiu()) {
-//                    // TODO XYZ ZZZ TRA
+//                    // TODO XYZ ZZZ
 //                    return generateError(SendMessageResultCode.PLUGIN_ENTITY_DISABLED,
 //                            "El plugin `" + plugin.getNom().getTraduccio(langError)
 //                                    + " associat al codi de notificació  `" + notificationCode + "` en l'entitat `"
@@ -178,7 +178,7 @@ public class MobileNotificationService {
 //            // Check mobile of user
 //            String mobileID = getMobileIdOfCiutada(nif);
 //            if (mobileID == null) {
-//                // TODO XYZ ZZZ TRA
+//                // TODO XYZ ZZZ 
 //                return generateError(SendMessageResultCode.CITIZEN_DO_NOT_EXIST,
 //                        "No es té registrat el mòbil del ciutada/empresa amb NIF " + nif);
 //            }
@@ -356,14 +356,14 @@ public class MobileNotificationService {
 //
 //            // Check if notificationCode is empty
 //            if (notificationCode == null || notificationCode.trim().length() == 0) {
-//                // TODO XYZ ZZZ TRA
+//                // TODO XYZ ZZZ 
 //                return generateError("El codi de notificacio és null o buit. ");
 //            }
 //
 //            // Check if notificationCode exists
 //            List<NotificacioApp> nList = notificacioLogicaEjb.select(NotificacioAppFields.CODI.equal(notificationCode));
 //            if (nList.size() != 1) {
-//                // TODO XYZ ZZZ TRA
+//                // TODO XYZ ZZZ 
 //                return generateError("El codi de notificacio " + notificationCode + " no està registrat."
 //                        + "Consulti amb l'administrador de Carpeta.");
 //            }
