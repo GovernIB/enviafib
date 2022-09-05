@@ -208,6 +208,11 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                     color = "red";
                     icon = new String[] { "fas fa-exclamation-triangle", "fas fa-archive" };
                 break;
+                
+                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
+                    color = "red";
+                    icon = new String[] { "fas fa-exclamation-triangle", "fas fa-lock" };
+                break;
 
                 default:
                     color = "#f128";

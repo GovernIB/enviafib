@@ -25,18 +25,21 @@ import es.caib.enviafib.commons.utils.Constants;
 public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUserController {
 
     public static final String CONTEXT_WEB = "/user/peticio/pendents";
-    
+
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
-        
+
         Where defaultCondition = super.getAdditionalCondition(request);
         Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
-        Where getErroniesCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-        Where getPeticionsCondition = Where.OR(getPendentsCondition, getErroniesCondition);
-        
+        Where getErrorArxivantCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+        Where getErrorTancantExpedientCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+
+        Where getPeticionsCondition = Where.OR(getPendentsCondition, getErrorArxivantCondition,
+                getErrorTancantExpedientCondition);
+
         return Where.AND(defaultCondition, getPeticionsCondition);
     }
-    
+
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
@@ -44,6 +47,5 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
         peticioFilterForm.setTitleCode("peticio.list.pendents.title");
         return peticioFilterForm;
     }
-    
 
 }
