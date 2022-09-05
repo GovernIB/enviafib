@@ -72,6 +72,7 @@ import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
+import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -262,7 +263,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         // ASYNCHRONOUS Funcionalitat de guardar document a Arxiu amb la API
         guardarFitxerArxiu(peticioID, languageUI, infoSignatura);
-        
+
         enviarMailSolicitant(portafibID, "FIRMADA", languageUI);
 
     }
@@ -285,7 +286,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String msg = I18NCommonUtils.tradueix(new Locale(peticio.getIdiomaID()), "peticio.motiu.rebuig", motiuRebuig);
         peticio.setErrorMsg(LogicUtils.split255(msg));
         this.update(peticio);
-        
+
         enviarMailSolicitant(portafibID, "REBUTJADA", languageUI);
     }
 
@@ -333,6 +334,37 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return msg;
     }
 
+    @Override
+    public String reintentarTancarExpedient(long peticioID) throws I18NException {
+
+//        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
+//                PeticioFields.PETICIOID.equal(peticioID));
+//        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
+
+        Peticio peticio = this.findByPrimaryKey(peticioID);
+
+        String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
+                PETICIOID.equal(peticioID));
+
+        log.info("\n\n Reintentant el tancament d'expedient de la Petició " + peticioID + " dins d'Arxiu.");
+        boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, expedientID);
+
+        String msg;
+        if (tancatExpedient) {
+            peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
+            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+            peticio.setErrorMsg(null);
+            peticio.setErrorException(null);
+            msg = null;
+        } else {
+            msg = peticio.getErrorMsg();
+        }
+
+        this.update(peticio);
+
+        return msg;
+    }
+
     /**
      * 
      * @param portafibID
@@ -351,12 +383,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
+    /**
+     * 
+     * @param peticioID
+     * @param languageUI
+     * @param infoSignatura
+     * @return
+     * @throws I18NException
+     */
     private Peticio guardarFitxerArxiuSync(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
             throws I18NException {
         log.info(" guardarFitxerArxiu:: START");
 
         Peticio peticio = null;
-        int estatFinal;
         long start = System.currentTimeMillis();
 
         peticio = findByPrimaryKey(peticioID);
@@ -365,17 +404,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         // Ja inicialitza Petició amb l'estat com toca i guarda resultat a InfoArxiu
         InfoArxiuJPA ia = pluginArxiuLogicaEjb.custodiaAmbApiArxiu(peticio, new Locale(languageUI), infoSignatura);
 
-        if (ia == null) {
-            estatFinal = Constants.ESTAT_PETICIO_ERROR_ARXIVANT;
-        } else {
-
+        if (ia != null) {
             peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
-            estatFinal = Constants.ESTAT_PETICIO_FIRMADA;
+            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
         }
-
-        peticio.setEstat(estatFinal);
 
         this.update(peticio);
 

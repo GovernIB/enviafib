@@ -16,7 +16,6 @@ import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
-import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
@@ -78,30 +77,24 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         return "Arxiu";
     }
 
-    @Override
-    public void tancarExpedient(Long infoCustodyID, String expedientID, Locale locale) throws I18NException {
-
-        List<Peticio> peticions;
-        try {
-            peticions = peticioLogicaEjb.select(PeticioFields.INFOARXIUID.equal(infoCustodyID));
-        } catch (Throwable e) {
-            String msg = "Error cercant la transacció associada a la InfoCustody amb ID " + infoCustodyID + ": "
-                    + e.getMessage();
-            log.error(msg, e);
-            // XYZ ZZZ TRA
-            throw new I18NException("genapp.comodi", msg);
-        }
-
-        if (peticions == null || peticions.size() == 0) {
-            // XYZ ZZZ TRA
-            throw new I18NException("genapp.comodi",
-                    "InfoCustody amb ID " + infoCustodyID + " no es troba en cap transacció.");
-        }
-
-
-        IArxiuPlugin plugin = getInstance();
-        plugin.expedientTancar(expedientID);
-    }
+    /*
+     * @Override public void tancarExpedient(Long infoCustodyID, String expedientID,
+     * Locale locale) throws I18NException {
+     * 
+     * List<Peticio> peticions; try { peticions =
+     * peticioLogicaEjb.select(PeticioFields.INFOARXIUID.equal(infoCustodyID)); }
+     * catch (Throwable e) { String msg =
+     * "Error cercant la transacció associada a la InfoCustody amb ID " +
+     * infoCustodyID + ": " + e.getMessage(); log.error(msg, e); // XYZ ZZZ TRA
+     * throw new I18NException("genapp.comodi", msg); }
+     * 
+     * if (peticions == null || peticions.size() == 0) { // XYZ ZZZ TRA throw new
+     * I18NException("genapp.comodi", "InfoCustody amb ID " + infoCustodyID +
+     * " no es troba en cap transacció."); }
+     * 
+     * 
+     * IArxiuPlugin plugin = getInstance(); plugin.expedientTancar(expedientID); }
+     */
 
     @PermitAll
     @Override
@@ -122,6 +115,9 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             return null;
         }
+
+        String expedientId = null;
+        InfoArxiuJPA infoCust = null;
 
         try {
 
@@ -163,7 +159,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
              * transaccio.setEstatMissatge(msg); return null; }
              */
 
-            //String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); // "Subvenciones
+            // String procedimentNom = peticio.getArxiuOptParamProcedimentNom(); //
+            // "Subvenciones
             String procedimentCodi = peticio.getArxiuOptParamProcedimentCodi();
 
             // No hauria de ser null
@@ -223,7 +220,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             Expedient expedient = new Expedient();
             expedient.setNom(nomExpedient);
-            
+
             expedient.setMetadades(expedientMetadades);
 
             if (peticio.getArxiuOptParamExpedientId() != null) {
@@ -237,7 +234,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             // ContingutArxiu expedientCreat = plugin.expedientCrear(expedient);
             ContingutArxiu expedientCreat;
-            String expedientId = null;
 
             try {
                 expedientCreat = plugin.expedientCrear(expedient);
@@ -419,42 +415,16 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             documentPerCrear.setNom(nomDocument);
 
-            log.info("XYZ ZZZ  Creant document ... ");
+            log.info("XYZ ZZZ  Enviar document ... ");
 
             ContingutArxiu documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
 
-            log.info("XYZ ZZZ  Creat document ... ");
+            log.info("XYZ ZZZ  Enviat document ... ");
 
-            log.info("XYZ ZZZ  Tancar Expedient ... ");
+            log.info("XYZ ZZZ  Guardant Informació Document Arxivat ... ");
 
-            // Només per DocumentCustody, s'utilitza també per gestionar quan l'expedient no
-            // s'ha pogut tancar.
+            final String uuidDoc = documentCreat.getIdentificador();
 
-            try {
-                // if (true) {
-                // throw new Exception("Error desconegut tancant Expedient !!!!!");
-                // }
-
-                plugin.expedientTancar(expedientId);
-                log.info("XYZ ZZZ  Tancat Expedient ... ");
-            } catch (Throwable th) {
-                // TODO XYZ ZZZ
-                log.error("Error tancant Expedient " + expedientId + ": " + th.getMessage(), th);
-
-                // XYZ ZZZ AQUI NECESSITAM UN ALTRE ESTAT DE PETICIO PER REINTENTAR TANCAR
-                // EXPEDIENT
-                throw th;
-            }
-
-            String uuidDoc = documentCreat.getIdentificador();
-
-            // XYZ Cridades de Plugin: No esta implementat?
-            // peticioLogicaEjb.postCridadaOK(monitor, "expedientID=" + expedientId +
-            // "\nDocumentID=" + uuidDoc);
-
-            log.info("\n FINAL \n");
-
-            InfoArxiuJPA infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
             // reintentar
             int i = 0;
@@ -495,7 +465,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             peticio.setInfoArxiuID(infoCust.getInfoArxiuID());
 
-            return infoCust;
+            log.info("XYZ ZZZ  Guardada Informació Document Arxivat ... ");
 
         } catch (Throwable e) {
             final String msg;
@@ -518,9 +488,77 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // Cridades de Plugin
             // pluginCridada.postCridadaError(monitorIntegracions, msg + "\n\n" +
             // peticio.getEstatExcepcio());
+
+            return null; // Indicam un error
         }
 
-        return null;
+        boolean tancatExpedient;
+
+        tancatExpedient = tancarExpedient(peticio, plugin, expedientId);
+
+        if (!tancatExpedient) {
+            return null;
+        }
+
+        // XYZ Cridades de Plugin: No esta implementat?
+        // peticioLogicaEjb.postCridadaOK(monitor, "expedientID=" + expedientId +
+        // "\nDocumentID=" + uuidDoc);
+
+        log.info("\n FINAL \n");
+
+        return infoCust;
+    }
+
+    @Override
+    public boolean tancarExpedient(Peticio peticio, String expedientID) {
+
+        IArxiuPlugin plugin;
+
+        try {
+            plugin = getInstance();
+        } catch (I18NException e1) {
+
+            // XYZ ZZZ
+            Locale locale = new Locale("ca");
+            final String msg = "XYZ ZZZ Error Instanciant Plugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
+
+            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+            peticio.setErrorMsg(LogicUtils.split255(msg));
+            peticio.setErrorException(LogicUtils.stackTrace2String(e1));
+
+            return false;
+        }
+
+        return tancarExpedient(peticio, plugin, expedientID);
+
+    }
+
+    protected boolean tancarExpedient(Peticio peticio, IArxiuPlugin plugin, String expedientId) {
+        boolean tancatExpedient;
+        log.info("XYZ ZZZ  Tancant Expedient ... ");
+        // S'utilitza per gestionar quan l'expedient no s'ha pogut tancar.
+
+        try {
+            // if (true) {
+            // throw new Exception("Error desconegut tancant Expedient !!!!!");
+            // }
+
+            plugin.expedientTancar(expedientId);
+            log.info("XYZ ZZZ  Tancat Expedient ... ");
+
+            tancatExpedient = true;
+
+        } catch (Throwable th) {
+
+            final String msg = "Error Tancant Expedient " + expedientId + ": " + th.getMessage();
+            log.error(msg, th);
+
+            peticio.setErrorException(LogicUtils.stackTrace2String(th));
+            peticio.setErrorMsg(LogicUtils.split255(msg));
+            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+            tancatExpedient = false; // Indicam un error
+        }
+        return tancatExpedient;
     }
 
     protected DocumentTipus getDocumentTipusEnum(String tipusDocumental) {
@@ -611,7 +649,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         }
     }
 
-    public FirmaPerfil firmaPerfilToEnum(String perfil) throws I18NException {
+    protected FirmaPerfil firmaPerfilToEnum(String perfil) throws I18NException {
 
         if (perfil == null || perfil.trim().length() == 0) {
             log.warn("Perfil de Firma val null. Retornam BES.");

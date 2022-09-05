@@ -28,8 +28,9 @@ public interface PeticioLogicaService extends PeticioService {
     public static final String JNDI_NAME = "java:app/enviafib-ejb/PeticioLogicaEJB!es.caib.enviafib.logic.PeticioLogicaService";
 
     public void arrancarPeticio(long peticioID, String languageUI) throws I18NException;
-    
-    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux) throws I18NException;
+
+    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
+            throws I18NException;
 
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException;
 
@@ -47,9 +48,9 @@ public interface PeticioLogicaService extends PeticioService {
 
     public Future<Peticio> guardarFitxerArxiuAsync(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
             throws I18NException;
-    
-    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI)
-            throws I18NException;
- 
+
+    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI) throws I18NException;
+
+    public String reintentarTancarExpedient(long peticioID) throws I18NException;
 
 }

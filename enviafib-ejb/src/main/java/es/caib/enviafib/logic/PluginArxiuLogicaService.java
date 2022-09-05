@@ -33,16 +33,16 @@ public interface PluginArxiuLogicaService extends AbstractPluginLogicaService<IA
      * @param locale
      * @return
      */
-    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura) throws I18NException;
+    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura);
 
 
     /**
      * 
-     * @param transaccio
-     * @param expedientID
-     * @param locale
-     * @throws I18NException
+     * @param peticio
+     * @param plugin
+     * @param expedientId
+     * @return
      */
-    public void tancarExpedient(Long infoCustodyID, String expedientID, Locale locale) throws I18NException;
+    public boolean tancarExpedient(Peticio peticio, String expedientID);
 
 }
