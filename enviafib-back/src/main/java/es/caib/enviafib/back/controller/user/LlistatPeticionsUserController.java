@@ -208,6 +208,11 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
                     color = "red";
                     icon = new String[] { "fas fa-exclamation-triangle", "fas fa-archive" };
                 break;
+                
+                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
+                    color = "red";
+                    icon = new String[] { "fas fa-exclamation-triangle", "fas fa-lock" };
+                break;
 
                 default:
                     color = "#f128";
@@ -236,17 +241,23 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", codi_view,
                     getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
 
-            if(peticio.getInfoArxiuID() == null) {
-              filterForm.addAdditionalButtonByPK(peticioID,
-                    new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
-                            + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-                            "btn-danger"));
+            if (peticio.getInfoArxiuID() == null) {
+                filterForm.addAdditionalButtonByPK(peticioID,
+                        new AdditionalButton("fas fa-trash icon-white", codi_delete, "javascript: openModal('"
+                                + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
+                                "btn-danger"));
             }
-            
+
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt icon-white",
                         "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
-                
+
+            }
+            
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt icon-white",
+                        "arxiu.reintentartancamentexpedient", "javascript: reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
+
             }
 
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
@@ -280,6 +291,30 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             }
 
         } catch (I18NException e) {
+            // TODO XYZ ZZZ Falta LOG
+            HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+        }
+
+        return "redirect:" + getContextWeb() + "/list";
+
+    }
+
+    @RequestMapping(value = "/reintentartancamentexpedient/{peticioId}", method = RequestMethod.GET)
+    public String reintentarTancamentExpedient(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("peticioId")
+            Long peticioId) {
+
+        try {
+            String msg = peticioLogicaEjb.reintentarTancarExpedient(peticioId);
+
+            if (msg == null) {
+                HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
+            } else {
+                HtmlUtils.saveMessageError(request, msg);
+            }
+
+        } catch (I18NException e) {
+            // TODO XYZ ZZZ Falta LOG
             HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
         }
 
