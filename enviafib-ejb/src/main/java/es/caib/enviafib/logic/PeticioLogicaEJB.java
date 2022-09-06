@@ -21,6 +21,7 @@ import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
+import javax.ejb.Timeout;
 import javax.persistence.Query;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
@@ -60,6 +61,7 @@ import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
@@ -962,13 +964,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
         return signatureBlocks;
     }
-
-    // XYZ ZZZ TRA - FBOSCH
-    // TODO Canviar temporitzador perque executi cada dia a les 4 del vespre
+    
+    //Funcio que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
+    @TransactionTimeout(value = 180)
     @Schedule(hour = "4", persistent = false)
     protected void eliminarPeticionsPortaFIB() {
+        long currentTime = System.currentTimeMillis();
         final String languageUI = "ca";
-
         try {
             Where w1 = TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
 
@@ -997,6 +999,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                                 "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
                                         + portaFIBID);
                     }
+                    
+                    //El Timeout son 3 minuts. Si el CRON executa durant 2 min i 59 segons, es surt de la funció.
+                    if((System.currentTimeMillis() - currentTime) > 179000) {
+                        return;
+                    }
 
                 } catch (Throwable e) {
                     // XYZ ZZZ TRAD - TMP
@@ -1020,5 +1027,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
 
     }
+
 
 }
