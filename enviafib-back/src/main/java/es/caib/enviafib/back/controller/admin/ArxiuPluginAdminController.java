@@ -91,22 +91,4 @@ public class ArxiuPluginAdminController extends AbstractPluginAdminController {
         return "arxiuplugin";
     }
 
-    @RequestMapping(value = "/provar/{pluginID}/{username}", method = RequestMethod.GET)
-    public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("pluginID") Long pluginID, @PathVariable("username") String username) {
-
-        try {
-
-            IArxiuPlugin instance = pluginArxiuEjb.getInstanceByPluginID(pluginID);
-
-//            HtmlUtils.saveMessageInfo(request, msg);
-
-        } catch (I18NException e) {
-            String msg = I18NUtils.getMessage(e);
-            HtmlUtils.saveMessageError(request, msg);
-            log.error(msg, e);
-        }
-
-        return "redirect:" + getContextWeb() + "/list";
-    }
 }

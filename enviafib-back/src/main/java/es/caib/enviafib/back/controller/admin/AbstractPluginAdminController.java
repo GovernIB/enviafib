@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.StringKeyValue;
-import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.OrderBy;
@@ -77,8 +76,6 @@ public abstract class AbstractPluginAdminController extends PluginController {
             pluginFilterForm.setOrderBy(NOM.javaName);
             pluginFilterForm.setOrderAsc(true);
 
-            // XYZ ZZZ TRA - DONE
-            // TODO Ordenar per camp Traduit
             OrderBy[] orderby = { new OrderBy(PluginFields.NOM) };
             pluginFilterForm.setDefaultOrderBy(orderby);
         }
@@ -153,13 +150,11 @@ public abstract class AbstractPluginAdminController extends PluginController {
         switch (tipusPlugin) {
             case Constants.TIPUS_PLUGIN_ESTRUCTURAORGANITZATIVA:
 
-                // XYZ ZZZ TRA - DONE
-                // TODO: Controlar si és l'unic Plugin Actiu disponible i mostrar missatge
+                // Controla si és l'unic Plugin Actiu disponible i mostrar missatge
                 List<Long> llistaPlugins = pluginLogicaEjb.executeQuery(PluginFields.PLUGINID,
                         Where.AND(PluginFields.TIPUS.equal(tipusPlugin), PluginFields.ACTIU.equal(true)));
 
                 if (llistaPlugins.size() == 1 && llistaPlugins.get(0) == pluginid) {
-                    // XYZ ZZZ TRAD - DONE
                     String plugin = I18NUtils.tradueix("estructuraorganitzativaplugin");
                     String msg = I18NUtils.tradueix("unic.plugin.actiu", plugin);
                     HtmlUtils.saveMessageSuccess(request, msg);

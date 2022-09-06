@@ -291,8 +291,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             }
 
         } catch (I18NException e) {
-            // TODO XYZ ZZZ Falta LOG
-            HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+            String msg = I18NUtils.getMessage(e);
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
         }
 
         return "redirect:" + getContextWeb() + "/list";
@@ -314,8 +315,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             }
 
         } catch (I18NException e) {
-            // TODO XYZ ZZZ Falta LOG
-            HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+            String msg = I18NUtils.getMessage(e);
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
         }
 
         return "redirect:" + getContextWeb() + "/list";

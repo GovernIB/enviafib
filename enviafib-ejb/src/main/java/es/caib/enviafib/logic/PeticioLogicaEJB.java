@@ -319,7 +319,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
             peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura);
         } catch (Exception e) {
-            // XYZ ZZZ TRAD - TMP
+            // XYZ ZZZ TMP
             log.error("Future.get() ha llança un error: " + e.getMessage(), e);
             peticio = null;
         }
@@ -993,17 +993,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         query.setParameter(1, portaFIBID);
                         query.executeUpdate();
                     } else {
-                        log.error(
-                                "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
-                                        + portaFIBID);
+                        // XYZ ZZZ TMP
+                        String msg = "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
+                                + portaFIBID;
+                        log.error(msg);
                     }
 
                 } catch (Throwable e) {
-                    // XYZ ZZZ TRAD - TMP
-                    log.error(
-                            "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
-                                    + portaFIBID + " : " + e.getMessage(),
-                            e);
+                    // XYZ ZZZ TMP
+                    String msg = "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
+                            + portaFIBID + " : " + e.getMessage();
+                    log.error(msg, e);
                 }
 
                 // XYZ ZZZ TRA - FBOSCH
@@ -1014,7 +1014,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             }
 
         } catch (I18NException e) {
-            // XYZ ZZZ TRA - DONE
             String msg = e.getMessage();
             log.error(msg, e);
         }

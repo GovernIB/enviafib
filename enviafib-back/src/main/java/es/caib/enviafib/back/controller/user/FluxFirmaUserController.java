@@ -54,11 +54,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
     
     private ThreadLocal<Boolean> threadLocalTileForm = new ThreadLocal<>();
     
-   
-    // XYZ ZZZ TRA - DONE
-    // TODO: Si es queda a mitges com ho esborraramm ??? 
-    // transactionID => FluxInfo
-   private static final Map<String, FlowTemplateSimpleFlowTemplate> fluxInfoByTransactonID = new HashMap<String, FlowTemplateSimpleFlowTemplate>();
+    private static final Map<String, FlowTemplateSimpleFlowTemplate> fluxInfoByTransactonID = new HashMap<String, FlowTemplateSimpleFlowTemplate>();
 
     @Override
     public int getTipusPeticio() {

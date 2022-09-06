@@ -3,8 +3,6 @@ package es.caib.enviafib.back.security;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
@@ -124,8 +122,6 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
 					UsuariJPA persona = new UsuariJPA();
 					persona.setEmail(info.getEmail());
-					// XYZ ZZZ TRA - DONE
-                    // TODO #103: Falta idioma d'usuari (idiomaId) Afegir IdiomaId al a taula efi_usuari 
                     persona.setIdiomaID(LocaleContextHolder.getLocale().getLanguage()); 
                     
 					final String nom;
@@ -202,8 +198,6 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		log.info("LoginInfo:\n" + "\tuser: " + user + "\n" + "\tusuariPersona: " + usuariPersona + "\n"
 				+ "\tnecesitaConfigurar: " + necesitaConfigurar);
 
-        // XYZ ZZZ TRA - DONE
-		// TODO #103: Obtenir idioma de l'usuari. Null = idioma per defecte. 
 		String language = usuariPersona.getIdiomaID();
 
 		LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona,

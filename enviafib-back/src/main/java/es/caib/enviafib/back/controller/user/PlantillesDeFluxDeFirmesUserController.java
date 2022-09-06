@@ -110,9 +110,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
             api = FluxFirmaUserController.getApiFlowTemplateSimple();
 
-            // XYZ ZZZ TRA - DONE
-            // TODO Comprovar que és de la nostra propietat
-
+            // Comprova que és de la nostra propietat
             FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
             flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
 
@@ -278,7 +276,6 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
                     mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/list");
 
-                    // XYZ ZZZ TRAD - DONE
                     String msg = I18NUtils.tradueix("plantillaflux.creada.ok");
                     HtmlUtils.saveMessageSuccess(request, msg);
 
