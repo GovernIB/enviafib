@@ -3,12 +3,9 @@ package es.caib.enviafib.logic;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.jms.Message;
-
 import org.apache.log4j.Logger;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignedFileInfo;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
-import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.utils.Metadata;
 import org.fundaciobit.pluginsib.core.utils.MetadataConstants;
@@ -79,31 +76,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         return "Arxiu";
     }
 
-    @Override
-    public void tancarExpedient(Long infoCustodyID, String expedientID, Locale locale) throws I18NException {
-
-        List<Peticio> peticions;
-        try {
-            peticions = peticioLogicaEjb.select(PeticioFields.INFOARXIUID.equal(infoCustodyID));
-        } catch (Throwable e) {
-
-            // XYZ ZZZ TRAD - ANADAL
-            String msg = "Error cercant la transacció associada a la InfoCustody amb ID " + infoCustodyID + ": "
-                    + e.getMessage();
-
-            log.error(msg, e);
-            throw new I18NException("error.transaccio.create", String.valueOf(infoCustodyID), e.getMessage());
-        }
-
-        if (peticions == null || peticions.size() == 0) {
-            // XYZ ZZZ TRAD - DONE
-            throw new I18NException("error.transaccio.notfound", String.valueOf(infoCustodyID));
-        }
-
-        IArxiuPlugin plugin = getInstance();
-        plugin.expedientTancar(expedientID);
-    }
-
     @PermitAll
     @Override
     public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura) {
@@ -114,8 +86,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             plugin = getInstance();
 
         } catch (I18NException e1) {
-
-            // XYZ ZZZ TRAD - DONE
 
             final String msg = I18NLogicUtils.tradueix(locale, "error.plugin.instance",
                     I18NLogicUtils.getMessage(e1, locale));
@@ -328,18 +298,12 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             final FirmaTipus firmaTipus;
             final FirmaPerfil firmaPerfil;
 
-            // XYZ ZZZ TRAD - DONE
             final String commonError = I18NLogicUtils.tradueix(locale, "procesfirma.validacio");
 
             if (infoSignatura == null) {
                 firmaTipus = null;
                 firmaPerfil = null;
-
-                // XYZ ZZZ TRAD - DONE
-
-//                log.error(msg, new Exception());
                 throw new I18NException("infosignatura.notfound", commonError);
-
             } else {
 
                 /*
@@ -353,8 +317,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             }
 
             if (firmaTipus == null) {
-                // XYZ ZZZ TRAD - DONE
-
                 String msg = "FirmaTipus val null (infoSignatura.getEniTipoFirma() == "
                         + infoSignatura.getEniTipoFirma() + " )" + commonError;
                 log.error(msg, new Exception());
@@ -363,7 +325,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             }
 
             if (firmaPerfil == null) {
-                // XYZ ZZZ TRAD - DONE
                 String msg = "FirmaPerfil val null (infoSignatura.getEniPerfilFirma() == "
                         + infoSignatura.getEniPerfilFirma() + " )" + commonError;
                 log.error(msg, new Exception());
@@ -451,19 +412,14 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             } catch (Throwable th) {
                 // XYZ ZZZ TMP
                 log.error("Error tancant Expedient " + expedientId + ": " + th.getMessage(), th);
-
-                // XYZ ZZZ TRA - DONE
-                // TODO: AQUI NECESSITAM UN ALTRE ESTAT DE PETICIO PER REINTENTAR TANCAR
-                // EXPEDIENT
                 peticio.setEstat(Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT);
                 throw th;
             }
 
-            String uuidDoc = documentCreat.getIdentificador();
 
             log.info("\n FINAL \n");
 
-            InfoArxiuJPA infoCust = null;
+            infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
             // reintentar
             int i = 0;

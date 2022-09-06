@@ -59,7 +59,6 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
                 mav.addObject("plantillesUsuari", llistatPlantilles);
 
             } else {
-                // XYZ ZZZ TRAD - DONE
                 String msg = I18NUtils.tradueix("plantillaflux.empty.usuari", getOwner());
 
                 HtmlUtils.saveMessageWarning(request, msg);

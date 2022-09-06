@@ -144,7 +144,6 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
         final String languageUI = "ca";
 
-        // XYZ ZZZ TRA - DONE
         // Comprovam que és de la nostra propietat
         try {
 
@@ -161,22 +160,18 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
             if (description.indexOf("{owner="+ owner + "}") != -1) {
                 FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
                 if (api.deleteFlowTemplate(r)) {
-                    // XYZ ZZZ TRAD - DONE
                     String msg = I18NUtils.tradueix("plantillaflux.esborrar.ok", fluxID);
                     HtmlUtils.saveMessageSuccess(request, msg);
                 } else {
-                    // XYZ ZZZ TRAD - DONE
                     String msg = I18NUtils.tradueix("plantillaflux.esborrar.error", fluxID, null);
                     HtmlUtils.saveMessageError(request, msg);
                 }
                 log.info("El flux es de la nostra propietat");                
             }else {
-                // XYZ ZZZ TRAD - DONE
                 String msg = I18NUtils.tradueix("plantillaflux.esborrar.nopropietari", fluxID);
                 HtmlUtils.saveMessageError(request, msg);
             }
         } catch (AbstractApisIBException e) {
-            // XYZ ZZZ TRAD - DONE
             String msg = I18NUtils.tradueix("plantillaflux.esborrar.error", fluxID, e.getMessage());
             log.error(msg, e);
             HtmlUtils.saveMessageError(request, msg);

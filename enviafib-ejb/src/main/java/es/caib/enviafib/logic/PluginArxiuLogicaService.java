@@ -4,8 +4,6 @@ import java.util.Locale;
 
 import javax.ejb.Local;
 
-import org.fundaciobit.genapp.common.i18n.I18NException;
-
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;

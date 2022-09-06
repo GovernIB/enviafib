@@ -43,7 +43,6 @@ import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
-import es.caib.enviafib.model.entity.Traduccio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -427,9 +426,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         super.postValidate(request, peticioForm, result);
 
         {
-
-            // XYZ ZZZ TRA - DONE
-            // TODO: Aqui falta el camp de DIR3Unit !!!
             Field<?>[] signFields = { 
                     PeticioFields.ARXIUPARAMFUNCIONARINIF, 
                     PeticioFields.ARXIUPARAMFUNCIONARINOM, 
@@ -488,12 +484,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             String tipusDocumental = peticio.getTipusDocumental();
             
-            // XYZ ZZZ TRA - DONE
             // Mapeig de Series Documentals
             List<SerieDocumental> list = serieDocumentalEjb
                     .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
 
-            // XYZ ZZZ TRA - DONE
             // Valida que pel tipus de document hi ha seria documental
             if (list == null || list.isEmpty()) {
                 list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.isNull());
