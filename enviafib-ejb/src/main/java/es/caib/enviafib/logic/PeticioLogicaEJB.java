@@ -70,6 +70,7 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
+import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
@@ -995,9 +996,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         query.setParameter(1, portaFIBID);
                         query.executeUpdate();
                     } else {
-                        // XYZ ZZZ TMP
-                        String msg = "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
-                                + portaFIBID;
+
+                        String msg = I18NCommonUtils.tradueix(new Locale(languageUI), "error.peticio.portafib.eliminacio" , portaFIBID);
                         log.error(msg);
                     }
                     
@@ -1007,17 +1007,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     }
 
                 } catch (Throwable e) {
-                    // XYZ ZZZ TMP
-                    String msg = "Error en el proces d'eliminacio automatic de peticions de firma ja resoltes. Error en la peticio: "
-                            + portaFIBID + " : " + e.getMessage();
+                    
+                    String msg = I18NCommonUtils.tradueix(new Locale(languageUI), "error.peticio.portafib.eliminacio" , portaFIBID)+ " : " + e.getMessage();
                     log.error(msg, e);
                 }
 
-                // XYZ ZZZ TRA - FBOSCH
-                // TODO Afegir limit de temps al CRON. Cada vespre que executi maxim durant
-                // menys temps que el timeout de un metode CRON. (O incrementar timeout del
-                // mètode CRON.
-                // break;
             }
 
         } catch (I18NException e) {
