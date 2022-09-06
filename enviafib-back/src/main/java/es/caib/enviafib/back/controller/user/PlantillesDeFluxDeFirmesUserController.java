@@ -8,6 +8,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleEditFlowTemplateRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFilterGetAllByFilter;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleGetFlowResultResponse;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleGetTransactionIdRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleStartTransactionRequest;
@@ -103,14 +104,25 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
     public ModelAndView editarFlux(@PathVariable("fluxID") java.lang.String fluxID, HttpServletRequest request,
             HttpServletResponse response) {
 
-        // TODO XYZ ZZZ Comprovar que és de la nostra propietat
-
         ApiFlowTemplateSimple api = null;
         try {
-
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
             api = FluxFirmaUserController.getApiFlowTemplateSimple();
+
+            // Comprova que és de la nostra propietat
+            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
+
+            FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+
+            String description = flux.getDescription();
+
+            if (description.indexOf("{owner=" + getOwner() + "}") != -1) {
+                log.info("El flux es de la nostra propietat");
+            } else {
+                log.error("El flux NO es de la nostra propietat");
+            }
 
             final String callBackUrl = AbstractFirmaUserController.getAbsoluteControllerBase(request, getContextWeb())
                     + "/finalEdicio";
@@ -250,7 +262,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
                 {
                     FlowTemplateSimpleFlowTemplate flux = fullResult.getFlowInfo();
 
-                    // XYZ Debug a partir de setembre
+                    // XYZ ZZZ TRA Debug a partir de setembre
                     log.info(" ======= FLUX ========= ");
                     log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
                     log.info(" ---------------------- ");
@@ -264,9 +276,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
                     mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/list");
 
-                    // XYZ ZZZ TRA
-                    String msg = "XYZ ZZZ Plantilla de Flux de Firmes creada correctament";
-
+                    String msg = I18NUtils.tradueix("plantillaflux.creada.ok");
                     HtmlUtils.saveMessageSuccess(request, msg);
 
                     return mav;

@@ -54,10 +54,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
     
     private ThreadLocal<Boolean> threadLocalTileForm = new ThreadLocal<>();
     
-   
-    // XYZ ZZZ Si es queda a mitges com ho esborraramm ??? 
-    // transactionID => FluxInfo
-   private static final Map<String, FlowTemplateSimpleFlowTemplate> fluxInfoByTransactonID = new HashMap<String, FlowTemplateSimpleFlowTemplate>();
+    private static final Map<String, FlowTemplateSimpleFlowTemplate> fluxInfoByTransactonID = new HashMap<String, FlowTemplateSimpleFlowTemplate>();
 
     @Override
     public int getTipusPeticio() {
@@ -299,7 +296,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
                 {
                     FlowTemplateSimpleFlowTemplate flux = fullResult.getFlowInfo();
 
-                    // XYZ Debug a partir de setembre
+                    // XYZ ZZZ TRA Debug a partir de setembre
                     log.info(" ======= FLUX ========= ");
                     log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
                     log.info(" ---------------------- ");

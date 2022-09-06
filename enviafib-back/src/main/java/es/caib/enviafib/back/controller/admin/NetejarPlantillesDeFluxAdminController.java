@@ -10,7 +10,6 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.ITableManager;
 import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
-import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -21,7 +20,6 @@ import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.model.entity.Usuari;
 
-//TODO: 
 @Controller
 @RequestMapping(value = "/admin/netejarplantilles")
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })

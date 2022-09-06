@@ -3,7 +3,6 @@ package es.caib.enviafib.back.security;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
@@ -12,6 +11,7 @@ import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
 import org.fundaciobit.pluginsib.userinformation.UserInfo;
 
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -122,8 +122,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
 					UsuariJPA persona = new UsuariJPA();
 					persona.setEmail(info.getEmail());
-					// persona.setIdiomaID(Configuracio.getDefaultLanguage()); Afegir idioma a
-					// usuari o eliminar aquesta linia?
+                    persona.setIdiomaID(LocaleContextHolder.getLocale().getLanguage()); 
+                    
 					final String nom;
 					{
 						String nomTmp = info.getName() == null ? username : info.getName();
@@ -145,9 +145,10 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 						}
 					}
 					persona.setNom(nom);
-					// TODO #103: Falta idioma d'usuari (idiomaId) Afegir IdiomaId al a taula efi_usuari 
-					persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
+		            persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
 					persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
+					
+					
 					persona.setUsername(username);
 					
 					persona.setNif(info.getAdministrationID());
@@ -197,8 +198,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 		log.info("LoginInfo:\n" + "\tuser: " + user + "\n" + "\tusuariPersona: " + usuariPersona + "\n"
 				+ "\tnecesitaConfigurar: " + necesitaConfigurar);
 
-		// TODO #103: Obtenir idioma de l'usuari. Null = idioma per defecte. 
-		String language = "ca";
+		String language = usuariPersona.getIdiomaID();
 
 		LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona,
 				new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);

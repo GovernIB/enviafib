@@ -43,7 +43,6 @@ import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
-import es.caib.enviafib.model.entity.Traduccio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -306,7 +305,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public static String getRedirectToList() {
-        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/pendents/list";
     }
 
     public static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
@@ -384,7 +383,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         } catch (I18NException e) {
 
-            // XYZ ZZZ Error generic
             String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
             log.error(error, e);
 
@@ -428,9 +426,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         super.postValidate(request, peticioForm, result);
 
         {
-
-            // XYZ ZZZ Aqui falta el camp de DIR3Unit !!!
-            Field<?>[] signFields = { ARXIUPARAMFUNCIONARINIF, ARXIUPARAMFUNCIONARINOM, ARXIUPARAMFUNCIONARIDIR3 };
+            Field<?>[] signFields = { 
+                    PeticioFields.ARXIUPARAMFUNCIONARINIF, 
+                    PeticioFields.ARXIUPARAMFUNCIONARINOM, 
+                    PeticioFields.ARXIUPARAMFUNCIONARIDIR3 };
 
             for (Field<?> field : signFields) {
                 ValidationUtils.rejectIfEmptyOrWhitespace(result, field.fullName, "genapp.validation.required",
@@ -479,24 +478,23 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
         // Validacio de serie documental
         {
-            // XYZ ZZZ ZZZ S'ha d'obtenir del Mapeig de Series Documentals
-            // XYZ ZZZ PostValidate validar que pel tipus de document hi ha seria documental
+           
 
             Peticio peticio = peticioForm.getPeticio();
 
             String tipusDocumental = peticio.getTipusDocumental();
+            
+            // Mapeig de Series Documentals
             List<SerieDocumental> list = serieDocumentalEjb
                     .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
+
+            // Valida que pel tipus de document hi ha seria documental
             if (list == null || list.isEmpty()) {
                 list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.isNull());
                 if (list == null || list.isEmpty()) {
-                    // throw new I18NException("No existeix Serie Documental amb el Tipus Documental
-                    // " + tipusDocumental
-                    // + " o amb tipus documental null. Consulti l'error amb el seu administrador");
 
                     result.rejectValue(get(PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL), "error.tipusdocumental",
                             new String[] { tipusDocumental }, null);
-
                 }
             }
 

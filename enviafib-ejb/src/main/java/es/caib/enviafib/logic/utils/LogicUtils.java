@@ -32,8 +32,7 @@ public class LogicUtils {
             try {
                 prop.load(new StringReader(propertiesStr));
             } catch (Exception e) {
-                // TODO Crec que no es cridarà mai
-                e.printStackTrace();
+                log.error("Error passant propietats a String: " + e.getMessage(), e);
             }
         }
         return prop;

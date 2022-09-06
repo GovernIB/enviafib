@@ -70,7 +70,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
     @Override
     public String getSessionAttributeFilterForm() {
-        return "PeticioUser_FilterForm";
+        return "PeticioUser_FilterForm_"+this.getClass().getSimpleName();
     }
 
     @Override
@@ -167,11 +167,18 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                 peticioFilterForm.addAdditionalField(additionalField);
             }
+            
+            peticioFilterForm.setTitleCode(getTitleCode());
 
         }
+        
         return peticioFilterForm;
     }
-
+    
+    protected String getTitleCode() {
+        return "peticio.list.title";
+    }
+    
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
@@ -291,8 +298,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             }
 
         } catch (I18NException e) {
-            // TODO XYZ ZZZ Falta LOG
-            HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+            String msg = I18NUtils.getMessage(e);
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
         }
 
         return "redirect:" + getContextWeb() + "/list";
@@ -314,8 +322,9 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
             }
 
         } catch (I18NException e) {
-            // TODO XYZ ZZZ Falta LOG
-            HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
+            String msg = I18NUtils.getMessage(e);
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
         }
 
         return "redirect:" + getContextWeb() + "/list";

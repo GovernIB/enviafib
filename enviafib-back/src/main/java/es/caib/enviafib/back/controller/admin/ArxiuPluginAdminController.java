@@ -2,16 +2,9 @@ package es.caib.enviafib.back.controller.admin;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
-import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +13,6 @@ import es.caib.enviafib.back.form.webdb.PluginForm;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.persistence.PluginJPA;
-import es.caib.plugins.arxiu.api.IArxiuPlugin;
 
 @Controller
 @RequestMapping(value = ArxiuPluginAdminController.CONTEXTWEB)
@@ -91,22 +83,4 @@ public class ArxiuPluginAdminController extends AbstractPluginAdminController {
         return "arxiuplugin";
     }
 
-    @RequestMapping(value = "/provar/{pluginID}/{username}", method = RequestMethod.GET)
-    public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("pluginID") Long pluginID, @PathVariable("username") String username) {
-
-        try {
-
-            IArxiuPlugin instance = pluginArxiuEjb.getInstanceByPluginID(pluginID);
-
-//            HtmlUtils.saveMessageInfo(request, msg);
-
-        } catch (I18NException e) {
-            String msg = I18NUtils.getMessage(e);
-            HtmlUtils.saveMessageError(request, msg);
-            log.error(msg, e);
-        }
-
-        return "redirect:" + getContextWeb() + "/list";
-    }
 }

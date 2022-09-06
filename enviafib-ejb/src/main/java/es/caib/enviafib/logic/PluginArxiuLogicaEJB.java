@@ -3,7 +3,6 @@ package es.caib.enviafib.logic;
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-
 import org.apache.log4j.Logger;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignedFileInfo;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
@@ -77,25 +76,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         return "Arxiu";
     }
 
-    /*
-     * @Override public void tancarExpedient(Long infoCustodyID, String expedientID,
-     * Locale locale) throws I18NException {
-     * 
-     * List<Peticio> peticions; try { peticions =
-     * peticioLogicaEjb.select(PeticioFields.INFOARXIUID.equal(infoCustodyID)); }
-     * catch (Throwable e) { String msg =
-     * "Error cercant la transacció associada a la InfoCustody amb ID " +
-     * infoCustodyID + ": " + e.getMessage(); log.error(msg, e); // XYZ ZZZ TRA
-     * throw new I18NException("genapp.comodi", msg); }
-     * 
-     * if (peticions == null || peticions.size() == 0) { // XYZ ZZZ TRA throw new
-     * I18NException("genapp.comodi", "InfoCustody amb ID " + infoCustodyID +
-     * " no es troba en cap transacció."); }
-     * 
-     * 
-     * IArxiuPlugin plugin = getInstance(); plugin.expedientTancar(expedientID); }
-     */
-
     @PermitAll
     @Override
     public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura) {
@@ -107,7 +87,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
         } catch (I18NException e1) {
 
-            final String msg = "XYZ ZZZ Error Instanciant Plugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
+            final String msg = I18NLogicUtils.tradueix(locale, "error.plugin.instance",
+                    I18NLogicUtils.getMessage(e1, locale));
 
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
             peticio.setErrorMsg(LogicUtils.split255(msg));
@@ -128,7 +109,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             documentFormat = DocumentFormat.PDF;
             documentExtensio = DocumentExtensio.PDF;
 
-            // XYZ S'ha de controlar el format del document
+            // XYZ ZZZ S'ha de controlar el format del document
             /*
              * { switch (peticio.getPerfil().getScanFormatFitxer()) {
              * 
@@ -199,12 +180,14 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             String serieDocumental = peticio.getArxiuOptParamSerieDocumental(); // "S0001";
 
-            // XYZ ZZZ Això és per quan l'usuari pugui indicar el nom de l'expedient on vol
+            // XYZ ZZZ TRA - ISSUE
+            // TODO: Fer un tiquet per posar-ho en una propietat del PLugin ????
+
+            // Això és per quan l'usuari pugui indicar el nom de l'expedient on vol
             // el document String custodyOrExpedientID = prop
             // .getProperty(TransaccioFields.ARXIUOPTPARAMCUSTODYOREXPEDIENTID.javaName);
             final String interessatsStr = peticio.getArxiuReqParamInteressats();
 
-            // XYZ ZZZ Fer un tiquet per posar-ho en una propietat del PLugin ????
             final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP";
 
             ExpedientMetadades expedientMetadades = new ExpedientMetadades();
@@ -224,13 +207,14 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             expedient.setMetadades(expedientMetadades);
 
             if (peticio.getArxiuOptParamExpedientId() != null) {
-                // XYZ ZZZ Falta implementar que s'hagi definit un EXPEDIENT
+                // XYZ ZZZ TRA
+                // TODO: Falta implementar que s'hagi definit un EXPEDIENT
                 log.error(
                         "\n\n Falta implementar que s'hagi definit un EXPEDIENT (no s'hauria de fer creacio d'expedient) \n\n",
                         new Exception());
             }
 
-            log.info("XYZ ZZZ  Creant expedient... ");
+            log.info("XYZ ZZZ TMP Creant expedient... ");
 
             // ContingutArxiu expedientCreat = plugin.expedientCrear(expedient);
             ContingutArxiu expedientCreat;
@@ -238,7 +222,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             try {
                 expedientCreat = plugin.expedientCrear(expedient);
                 expedientId = expedientCreat.getIdentificador();
-                log.info("XYZ ZZZ  Creat expedient amd ID = " + expedientId);
+                log.info("XYZ ZZZ TMP Creat expedient amd ID = " + expedientId);
             } catch (Throwable th) {
 
                 log.error(
@@ -255,7 +239,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
                         if (nomExpedient.equals(ca.getNom())) {
                             expedientId = ca.getIdentificador();
-                            log.info("XYZ ZZZ  Expedient ja existia (ID = " + expedientId + ")");
+                            log.info("XYZ ZZZ TMP Expedient ja existia (ID = " + expedientId + ")");
                         }
                     }
                 }
@@ -267,7 +251,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             }
 
-            log.info("XYZ ZZZ  Creant document ... ");
+            log.info("XYZ ZZZ TMP Creant document ... ");
             final DocumentMetadades documentMetadades = new DocumentMetadades();
 
             documentMetadades.setOrgans(organs);
@@ -314,19 +298,12 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             final FirmaTipus firmaTipus;
             final FirmaPerfil firmaPerfil;
 
-            // XYZ ZZZ TRA TODO
-            final String commonError = "Comprovi que el procés de firma realitza la validació de la mateixa.";
+            final String commonError = I18NLogicUtils.tradueix(locale, "procesfirma.validacio");
 
             if (infoSignatura == null) {
                 firmaTipus = null;
                 firmaPerfil = null;
-
-                // XYZ ZZZ TRA TODO
-                String msg = "InfoSignatura és null. Es requereix per saber el valor de firmaTipus, firmaPerfil i SignMode."
-                        + commonError;
-                log.error(msg, new Exception());
-                throw new I18NException("genapp.comodi", msg);
-
+                throw new I18NException("infosignatura.notfound", commonError);
             } else {
 
                 /*
@@ -340,19 +317,19 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             }
 
             if (firmaTipus == null) {
-                // XYZ ZZZ TRA TODO
                 String msg = "FirmaTipus val null (infoSignatura.getEniTipoFirma() == "
                         + infoSignatura.getEniTipoFirma() + " )" + commonError;
                 log.error(msg, new Exception());
-                throw new I18NException("genapp.comodi", msg);
+
+                throw new I18NException("firmatipus.isnull", infoSignatura.getEniTipoFirma(), commonError);
             }
 
             if (firmaPerfil == null) {
-                // XYZ ZZZ TRA TODO
                 String msg = "FirmaPerfil val null (infoSignatura.getEniPerfilFirma() == "
                         + infoSignatura.getEniPerfilFirma() + " )" + commonError;
                 log.error(msg, new Exception());
-                throw new I18NException("genapp.comodi", msg);
+
+                throw new I18NException("firmaperfil.isnull", infoSignatura.getEniPerfilFirma(), commonError);
             }
 
             final boolean esDetached;
@@ -415,16 +392,34 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             documentPerCrear.setNom(nomDocument);
 
-            log.info("XYZ ZZZ  Enviar document ... ");
+            log.info("XYZ ZZZ TMP Creant document ... ");
 
             ContingutArxiu documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
 
-            log.info("XYZ ZZZ  Enviat document ... ");
+            log.info("XYZ ZZZ TMP Creat document ... ");
 
-            log.info("XYZ ZZZ  Guardant Informació Document Arxivat ... ");
+            log.info("XYZ ZZZ TMP Tancar Expedient ... ");
 
             final String uuidDoc = documentCreat.getIdentificador();
 
+            try {
+                // if (true) {
+                // throw new Exception("Error desconegut tancant Expedient !!!!!");
+                // }
+
+                plugin.expedientTancar(expedientId);
+                log.info("XYZ ZZZ TMP Tancat Expedient ... ");
+            } catch (Throwable th) {
+                // XYZ ZZZ TMP
+                log.error("Error tancant Expedient " + expedientId + ": " + th.getMessage(), th);
+                peticio.setEstat(Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT);
+                throw th;
+            }
+
+
+            log.info("\n FINAL \n");
+
+            infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
             // reintentar
             int i = 0;
@@ -470,13 +465,16 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         } catch (Throwable e) {
             final String msg;
 
+            // ZYZ ZZZ TRAD - DONE
             if (e instanceof I18NException) {
-                msg = "XYZ ZZZ Error custodiant fitxer firmat(I18NException): "
-                        + I18NLogicUtils.getMessage((I18NException) e, locale);
+                msg = I18NLogicUtils.tradueix(locale, "error.custodiant.fitxer.firmat", "I18NException",
+                        I18NLogicUtils.getMessage((I18NException) e, locale));
             } else if (e instanceof ArxiuException) {
-                msg = "XYZ ZZZ Error custodiant fitxer firmat(ArxiuException): " + e.getMessage();
+                msg = I18NLogicUtils.tradueix(locale, "error.custodiant.fitxer.firmat", "ArxiuException",
+                        e.getMessage());
             } else {
-                msg = "XYZ ZZZ Error custodiant fitxer firmat(" + e.getClass() + "): " + e.getMessage();
+                msg = I18NLogicUtils.tradueix(locale, "error.custodiant.fitxer.firmat", e.getClass().toString(),
+                        e.getMessage());
             }
 
             log.error("Error intenant enviar a API d'Arxiu: " + msg, e);
@@ -801,10 +799,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             }
         }
 
-        // XYZ ZZZ ESBORRAR !!!!!
-        /*
-         * metadadesAddicionals.add(new Metadata("eni:subtipo_doc", "Especial CAIB"));
-         */
         return metadadesAddicionals;
     }
 
