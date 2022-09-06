@@ -70,7 +70,7 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
     @Override
     public String getSessionAttributeFilterForm() {
-        return "PeticioUser_FilterForm";
+        return "PeticioUser_FilterForm_"+this.getClass().getSimpleName();
     }
 
     @Override
@@ -167,11 +167,18 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
 
                 peticioFilterForm.addAdditionalField(additionalField);
             }
+            
+            peticioFilterForm.setTitleCode(getTitleCode());
 
         }
+        
         return peticioFilterForm;
     }
-
+    
+    protected String getTitleCode() {
+        return "peticio.list.title";
+    }
+    
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
