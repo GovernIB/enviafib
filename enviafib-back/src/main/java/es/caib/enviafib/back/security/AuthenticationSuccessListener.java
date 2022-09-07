@@ -25,7 +25,7 @@ import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
-
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 
 /**
@@ -122,7 +122,14 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
 					UsuariJPA persona = new UsuariJPA();
 					persona.setEmail(info.getEmail());
-                    persona.setIdiomaID(LocaleContextHolder.getLocale().getLanguage()); 
+					String lang = LocaleContextHolder.getLocale().getLanguage();
+					if (lang == null) {
+					    lang = Configuracio.getDefaultLanguage();
+					    if (lang == null) {
+					        lang = "ca";
+					    }
+					}					
+                    persona.setIdiomaID(lang); 
                     
 					final String nom;
 					{
