@@ -7,7 +7,6 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
@@ -29,10 +28,10 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
-        Where defaultCondition = super.getAdditionalCondition(request);
-        Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
-        Where getErrorArxivantCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-        Where getErrorTancantExpedientCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+        final Where defaultCondition = super.getAdditionalCondition(request);
+        final Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
+        final Where getErrorArxivantCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+        final Where getErrorTancantExpedientCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
 
         Where getPeticionsCondition = Where.OR(getPendentsCondition, getErrorArxivantCondition,
                 getErrorTancantExpedientCondition);
@@ -41,11 +40,8 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
     }
 
     @Override
-    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
-            throws I18NException {
-        PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
-        peticioFilterForm.setTitleCode("peticio.list.pendents.title");
-        return peticioFilterForm;
+    protected String getTitleCode() {
+        return "peticio.list.pendents.title";
     }
 
 }

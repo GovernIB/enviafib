@@ -44,7 +44,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
                 HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                mav.setView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
                 return peticioForm;
             }
         }

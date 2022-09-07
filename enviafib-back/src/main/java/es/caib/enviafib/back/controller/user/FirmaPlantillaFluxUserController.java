@@ -62,7 +62,7 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
                 String msg = I18NUtils.tradueix("plantillaflux.empty.usuari", getOwner());
 
                 HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                mav.setView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
                 return peticioForm;
             }
         }

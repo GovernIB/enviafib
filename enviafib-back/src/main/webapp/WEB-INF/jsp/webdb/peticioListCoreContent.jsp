@@ -24,6 +24,11 @@
           </c:forEach>
 
 
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
+          <td>
+          ${peticio.nom}
+          </td>
+        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOID)}">
           <td>
           ${peticio.peticioID}
@@ -212,11 +217,6 @@
           <c:if test="${not empty tmp}">
           ${__theFilterForm.mapOfInfoArxiuForInfoArxiuID[tmp]}
           </c:if>
-          </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
-          <td>
-          ${peticio.nom}
           </td>
         </c:if>
 

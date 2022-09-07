@@ -1,8 +1,7 @@
 ﻿<datasources>
     ...
     <datasource jndi-name="java:jboss/datasources/enviafibDS" pool-name="enviafibDS" enabled="true" use-java-context="true">
-        <connection-url>jdbc:oracle:thin://host:1523/enviafib
-        </connection-url>
+        <connection-url>jdbc:oracle:thin:@oraclehost:1521:xe</connection-url>
         <driver>oracle</driver>
         <pool>
             <min-pool-size>1</min-pool-size>

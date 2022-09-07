@@ -221,7 +221,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         HtmlUtils.saveMessageSuccess(request, msg);
 
                         return new ModelAndView(
-                                new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                                new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
 
 //                        ModelAndView mav = new ModelAndView("finaliframe"); 
 //                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
@@ -280,7 +280,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         peticioLogicaEjb.update(pet);
 
-        return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+        return new ModelAndView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
 
 //        ModelAndView mav = new ModelAndView("finaliframe"); 
 //        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");

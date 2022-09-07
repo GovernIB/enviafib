@@ -105,7 +105,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             return mav;
         } catch (I18NException e) {
             HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
-            return new ModelAndView("redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+            return new ModelAndView("redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
         }
     }
 
@@ -190,7 +190,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
                 HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                mav.setView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
                 return peticioForm;
             }
 
@@ -307,7 +307,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public static String getRedirectToList() {
-        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+        return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
     }
 
     public static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
