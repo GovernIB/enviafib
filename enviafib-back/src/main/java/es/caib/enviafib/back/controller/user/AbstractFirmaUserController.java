@@ -305,7 +305,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public static String getRedirectToList() {
-        return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/pendents/list";
+        return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
     }
 
     public static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
