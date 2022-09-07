@@ -28,10 +28,11 @@ public class IdiomaJPA implements Idioma {
     java.lang.String nom;
 
     @Column(name="suportat",nullable = false,length = 1)
-    boolean suportat;
+    boolean suportat = true;
 
+    @org.hibernate.annotations.ColumnDefault("0")
     @Column(name="ordre",nullable = false,length = 10)
-    int ordre;
+    int ordre = 0;
 
 
 

@@ -57,8 +57,9 @@ public class PeticioJPA implements Peticio {
     @Column(name="destinatarinif",length = 50)
     java.lang.String destinatariNif;
 
+    @org.hibernate.annotations.ColumnDefault("1")
     @Column(name="estat",nullable = false,length = 10)
-    int estat;
+    int estat = 1;
 
     @Column(name="fitxer_firmatid",length = 19)
     java.lang.Long fitxerFirmatID;
@@ -72,8 +73,9 @@ public class PeticioJPA implements Peticio {
     @Column(name="infosignaturaid",length = 19)
     java.lang.Long infoSignaturaID;
 
+    @org.hibernate.annotations.ColumnDefault("0")
     @Column(name="tipus",nullable = false,length = 10)
-    int tipus;
+    int tipus = 0;
 
     @Column(name="errormsg",length = 255)
     java.lang.String errorMsg;
