@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import es.caib.enviafib.back.controller.AbstractLlistatPeticionsUserController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
@@ -222,7 +221,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         HtmlUtils.saveMessageSuccess(request, msg);
 
                         return new ModelAndView(
-                                new RedirectView(AbstractLlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                                new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
 
 //                        ModelAndView mav = new ModelAndView("finaliframe"); 
 //                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
@@ -281,7 +280,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         peticioLogicaEjb.update(pet);
 
-        return new ModelAndView(new RedirectView(AbstractLlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+        return new ModelAndView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
 
 //        ModelAndView mav = new ModelAndView("finaliframe"); 
 //        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");

@@ -13,7 +13,6 @@ import org.fundaciobit.pluginsib.userinformation.UserInfo;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import es.caib.enviafib.back.controller.AbstractLlistatPeticionsUserController;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
@@ -45,7 +44,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
                 HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(AbstractLlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                mav.setView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
                 return peticioForm;
             }
         }
