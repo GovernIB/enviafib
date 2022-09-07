@@ -5,21 +5,6 @@ INSERT INTO efi_idioma(idiomaid, nom, ordre, suportat) VALUES ('es', 'Castellano
 INSERT INTO efi_idioma(idiomaid, nom, ordre, suportat) VALUES ('en', 'English', 2, false);
     
     
----
----  Canviar estat REBUTJAT per ERROR #82 
----
-
-UPDATE efi_peticio SET errormsg='Petició Rebutjada'  WHERE estat=4 AND errormsg is null;
-
-
-
----
----  Arrancar Directament les peticions de tipus nif, director i secretari #114 (DEPRECATED)
----  
-
--- UPDATE efi_peticio SET estat=4, errormsg='L´estat CREADA ja no existeix. Esborri aquesta petició i torni a crear-la.'  WHERE estat=1;
-
-
 
 ---
 --- 04/08/2022 - Gestió de PLugins de Estructura Organitzativa #142
