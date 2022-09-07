@@ -2,6 +2,9 @@ package es.caib.enviafib.model.entity;
 
 public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 
+	public java.lang.String getNom();
+	public void setNom(java.lang.String _nom_);
+
 	public long getPeticioID();
 	public void setPeticioID(long _peticioID_);
 
@@ -97,9 +100,6 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 
 	public java.lang.Long getInfoArxiuID();
 	public void setInfoArxiuID(java.lang.Long _infoArxiuID_);
-
-	public java.lang.String getNom();
-	public void setNom(java.lang.String _nom_);
 
   // Fitxer
   public <F extends Fitxer> F getFitxer();

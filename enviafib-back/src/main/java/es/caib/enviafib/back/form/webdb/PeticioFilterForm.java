@@ -21,6 +21,17 @@ import es.caib.enviafib.model.fields.PeticioFields;
 @Component
 public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements PeticioFields {
 
+  private java.lang.String nom;
+
+  public java.lang.String getNom() {
+    return this.nom;
+  }
+
+  public void setNom(java.lang.String nom) {
+    this.nom = nom;
+  }
+
+
   private java.lang.Long peticioIDDesde;
 
   public java.lang.Long getPeticioIDDesde() {
@@ -450,22 +461,12 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.String nom;
-
-  public java.lang.String getNom() {
-    return this.nom;
-  }
-
-  public void setNom(java.lang.String nom) {
-    this.nom = nom;
-  }
-
-
   public PeticioFilterForm() {
   }
   
   public PeticioFilterForm(PeticioFilterForm __toClone) {
     super(__toClone);
+    this.nom = __toClone.nom;
     this.peticioIDDesde = __toClone.peticioIDDesde;
     this.peticioIDFins = __toClone.peticioIDFins;
     this.dataCreacioDesde = __toClone.dataCreacioDesde;
@@ -505,7 +506,6 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.arxiuReqParamOrigenFins = __toClone.arxiuReqParamOrigenFins;
     this.infoArxiuIDDesde = __toClone.infoArxiuIDDesde;
     this.infoArxiuIDFins = __toClone.infoArxiuIDFins;
-    this.nom = __toClone.nom;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;

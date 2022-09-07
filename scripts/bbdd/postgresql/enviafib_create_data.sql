@@ -5,6 +5,21 @@ INSERT INTO efi_idioma(idiomaid, nom, ordre, suportat) VALUES ('es', 'Castellano
 INSERT INTO efi_idioma(idiomaid, nom, ordre, suportat) VALUES ('en', 'English', 2, false);
     
     
+---
+---  Canviar estat REBUTJAT per ERROR #82 
+---
+
+UPDATE efi_peticio SET errormsg='Petició Rebutjada'  WHERE estat=4 AND errormsg is null;
+
+
+
+---
+---  Arrancar Directament les peticions de tipus nif, director i secretari #114 (DEPRECATED)
+---  
+
+-- UPDATE efi_peticio SET estat=4, errormsg='L´estat CREADA ja no existeix. Esborri aquesta petició i torni a crear-la.'  WHERE estat=1;
+
+
 
 ---
 --- 04/08/2022 - Gestió de PLugins de Estructura Organitzativa #142
@@ -28,7 +43,9 @@ es.caib.enviafib.pluginsib.estructuraorganizativa.mock.recursoshumansbyusername=
 
 
 
-
+---
+--- 16/08/2022 Afegir camps Procediment Nom i Procediment codi a taula efi_seriedocumental #157
+---
 
 INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi)
 VALUES (10, 'S0001', NULL ,'Subvenciones empleo', 'organo1_PRO_123456789');
@@ -61,3 +78,4 @@ es.caib.enviafib.plugin.arxiu.caib.csv_validation_web_EL=http://dev.caib.es/conc
 es.caib.enviafib.plugin.arxiu.caib.csv.definicio=https://dev.caib.es/def_csv_gen.pdf
 es.caib.enviafib.plugin.arxiu.caib.validation_file_url_EL=https://dev.caib.es/concsv/hash/${csv}'
 , true, 2, 'Plugin Arxiu Prova', 'Plugin Arxiu Prova');
+
