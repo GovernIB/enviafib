@@ -145,6 +145,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     }
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
+                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
+                case Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT:
                     hiddens.remove(ERRORMSG);
                     if (peticioForm.getPeticio().getErrorException() != null) {
                         hiddens.remove(ERROREXCEPTION);
