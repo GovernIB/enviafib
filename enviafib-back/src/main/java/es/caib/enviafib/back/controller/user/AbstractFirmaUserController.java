@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import es.caib.enviafib.back.controller.AbstractLlistatPeticionsUserController;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
@@ -105,7 +106,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             return mav;
         } catch (I18NException e) {
             HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
-            return new ModelAndView("redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+            return new ModelAndView("redirect:" + AbstractLlistatPeticionsUserController.CONTEXT_WEB + "/list");
         }
     }
 
@@ -188,7 +189,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
                 HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                mav.setView(new RedirectView(AbstractLlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
                 return peticioForm;
             }
 
@@ -305,7 +306,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public static String getRedirectToList() {
-        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/pendents/list";
+        return "redirect:" + AbstractLlistatPeticionsUserController.CONTEXT_WEB + "/pendents/list";
     }
 
     public static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {

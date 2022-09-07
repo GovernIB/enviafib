@@ -1,4 +1,4 @@
-package es.caib.enviafib.back.controller.user;
+package es.caib.enviafib.back.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,16 +19,13 @@ import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.caib.enviafib.back.controller.FileDownloadController;
+import es.caib.enviafib.back.controller.user.AbstractPeticioUserController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
-import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
@@ -47,10 +44,8 @@ import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
  * @author anadal
  *
  */
-@Controller
-@RequestMapping(value = LlistatPeticionsUserController.CONTEXT_WEB)
-@SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class LlistatPeticionsUserController extends AbstractPeticioUserController {
+
+public class AbstractLlistatPeticionsUserController extends AbstractPeticioUserController {
 
     public static final String CONTEXT_WEB = "/user/peticio";
 
@@ -63,10 +58,10 @@ public class LlistatPeticionsUserController extends AbstractPeticioUserControlle
     public static final String codi_download = "peticio.btn.download";
     public static final String codi_email = "peticio.btn.sendmail";
 
-    @Override
-    public String getTileList() {
-        return "peticioListUser";
-    }
+//    @Override
+//    public String getTileList() {
+//        return "peticioListUser";
+//   }
 
     @Override
     public String getSessionAttributeFilterForm() {
