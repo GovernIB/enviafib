@@ -402,22 +402,9 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             final String uuidDoc = documentCreat.getIdentificador();
 
-            try {
-                // if (true) {
-                // throw new Exception("Error desconegut tancant Expedient !!!!!");
-                // }
-
-                plugin.expedientTancar(expedientId);
-                log.info("XYZ ZZZ TMP Tancat Expedient ... ");
-            } catch (Throwable th) {
-                // XYZ ZZZ TMP
-                log.error("Error tancant Expedient " + expedientId + ": " + th.getMessage(), th);
-                peticio.setEstat(Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT);
-                throw th;
-            }
 
 
-            log.info("\n FINAL \n");
+
 
             infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
