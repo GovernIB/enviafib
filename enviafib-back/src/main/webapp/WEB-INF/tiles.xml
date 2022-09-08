@@ -169,12 +169,12 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
     </definition>
     
-    <definition name="ArxiuPluginFormAdmin" extends="admin">
+    <definition name="arxiupluginFormAdmin" extends="admin">
         <put-attribute name="titol" value="Arxiu.Arxiu" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginForm.jsp" />
     </definition>
     
-    <definition name="ArxiuPluginListAdmin" extends="admin">
+    <definition name="arxiupluginListAdmin" extends="admin">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
     </definition>
     

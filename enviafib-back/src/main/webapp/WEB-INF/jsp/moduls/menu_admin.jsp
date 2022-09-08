@@ -38,8 +38,8 @@
     </li>
 
     <li style="list-style-type: disc; list-style-position: inside;">
-      <a href="<c:url value="/admin/ArxiuPlugin/list"/>">
-        <span style="${(fn:contains(url, '/admin/ArxiuPlugin/list'))? "font-weight: bold;" : ""}">Plugins Arxiu </span>
+      <a href="<c:url value="/admin/arxiuplugin/list"/>">
+        <span style="${(fn:contains(url, '/admin/arxiuplugin/list'))? "font-weight: bold;" : ""}">Plugins Arxiu </span>
       </a>
     </li>
    

@@ -31,31 +31,31 @@ public class ProvesPluginArxiu {
 
             System.out.println(plugin);
 
-            String arxiuID = "ad393c24-5ac6-4d7c-aeef-6934224cd6e0";
-
+            String arxiuID = "068b4b34-266e-4db2-924a-63698970ce72";
+            
             System.out.println("Starting test: \n");
-
+            
             String Csv = plugin.getCsv(arxiuID);
             System.out.println("Csv : " + Csv);
-
+            
             String CsvGenerationDefinition = plugin.getCsvGenerationDefinition(arxiuID);
             System.out.println("CsvGenerationDefinition : " + CsvGenerationDefinition);
-
+            
             String CsvValidationWeb = plugin.getCsvValidationWeb(arxiuID);
             System.out.println("CsvValidationWeb : " + CsvValidationWeb);
-
+            
             String EniFileUrl = plugin.getEniFileUrl(arxiuID);
             System.out.println("EniFileUrl : " + EniFileUrl);
-
+            
             String OriginalFileUrl = plugin.getOriginalFileUrl(arxiuID);
             System.out.println("OriginalFileUrl : " + OriginalFileUrl);
-
+            
             String PrintableFileUrl = plugin.getPrintableFileUrl(arxiuID);
             System.out.println("PrintableFileUrl : " + PrintableFileUrl);
-
+           
             String ValidationFileUrl = plugin.getValidationFileUrl(arxiuID);
             System.out.println("ValidationFileUrl : " + ValidationFileUrl);
-                        
+            
             System.out.println("ARXIU_BASE_PROPERTY : " + plugin.ARXIU_BASE_PROPERTY);
             
             

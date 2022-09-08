@@ -19,21 +19,21 @@ import es.caib.enviafib.persistence.PluginJPA;
 @SessionAttributes(types = { PluginForm.class, PluginFilterForm.class })
 public class ArxiuPluginAdminController extends AbstractPluginAdminController {
 
-    public static final String CONTEXTWEB = "/admin/ArxiuPlugin";
+    public static final String CONTEXTWEB = "/admin/arxiuplugin";
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb;
 
     public String getTileForm() {
-        return "ArxiuPluginFormAdmin";
+        return "arxiupluginFormAdmin";
     }
 
     public String getTileList() {
-        return "ArxiuPluginListAdmin";
+        return "arxiupluginListAdmin";
     }
 
     public String getSessionAttributeFilterForm() {
-        return "ArxiuPluginListAdmin_FilterForm";
+        return "arxiupluginListAdmin_FilterForm";
     }
 
     @Override

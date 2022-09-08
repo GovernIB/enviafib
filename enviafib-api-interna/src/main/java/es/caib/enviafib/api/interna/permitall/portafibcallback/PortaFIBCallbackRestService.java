@@ -141,7 +141,7 @@ public class PortaFIBCallbackRestService {
 
             long endTime = System.currentTimeMillis();
             log.info("Event processat. Temps: " + (endTime - startTime));
-            log.error("CALLBACK -> OK");
+            log.info("CALLBACK -> OK");
 
             return Response.status(Response.Status.OK).entity("OK").build();
         } catch (I18NException e) {
