@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -39,4 +40,10 @@ public class FirmaPerNifUserController extends AbstractFirmaUserController {
     public int getTipusPeticio() {
         return TIPUS_PETICIO_NIF;
     }
+    
+    @Override
+    public String getTitolCode() {
+        return Constants.CODI_PETICIO_NIF;
+    }
+
 }

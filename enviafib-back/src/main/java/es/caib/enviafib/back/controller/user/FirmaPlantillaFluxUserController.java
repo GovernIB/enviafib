@@ -77,6 +77,11 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         return Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI;
     }
 
+    @Override
+    public String getTitolCode() {
+        return Constants.CODI_PETICIO_PLANTILLAFLUX_USUARI;
+    }
+
     public List<Usuari> getPlantillesFluxFirma() throws I18NException {
 
         ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();

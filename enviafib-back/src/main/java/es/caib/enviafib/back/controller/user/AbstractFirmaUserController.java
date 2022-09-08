@@ -94,6 +94,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     public abstract int getTipusPeticio();
 
+    public abstract String getTitolCode();
     /**
      * Carregar el formulari per un nou Peticio
      */
@@ -166,17 +167,15 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                 break;
             }
-
-        } else {
-            mav.addObject("dragdrop", true);
         }
 
         peticioForm.setAttachedAdditionalJspCode(true);
-
         peticioForm.setHiddenFields(hiddens);
 
         if (peticioForm.isNou()) {
-
+            mav.addObject("dragdrop", true);
+            peticioForm.setTitleCode(getTitolCode());
+            
             Peticio peticio = peticioForm.getPeticio();
 
             // COIDDIR3
@@ -203,7 +202,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setSolicitantID(userId);
 
             peticio.setTipus(getTipusPeticio());
-
+            
+            
             // Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context
             // autmaticament.
             peticio.setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
@@ -212,8 +212,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setIdiomaDoc("ca");
 
             LoginInfo li = LoginInfo.getInstance();
-
-            peticio.setArxiuFuncionariUsername(LoginInfo.getInstance().getUsername());
+            peticio.setArxiuFuncionariUsername(li.getUsername());
 
             String nomcomplet = li.getUsuari().getNom() + " " + li.getUsuari().getLlinatge1();
             if (li.getUsuari().getLlinatge2() != null) {

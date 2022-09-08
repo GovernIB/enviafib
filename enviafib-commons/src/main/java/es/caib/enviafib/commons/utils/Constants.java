@@ -57,6 +57,14 @@ public interface Constants {
             TIPUS_PETICIO_FLUX, TIPUS_PETICIO_DIRECTOR, TIPUS_PETICIO_SECRETARI, 
             TIPUS_PETICIO_PLANTILLAFLUX_USUARI, TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT };
     
+    public static final String CODI_PETICIO_AUTOFIRMA = "titol.autofirma";
+    public static final String CODI_PETICIO_NIF = "titol.firmapernif";
+    public static final String CODI_PETICIO_FLUX = "titol.firmaperflux";
+    public static final String CODI_PETICIO_DIRECTOR = "titol.firmacarrec.director";
+    public static final String CODI_PETICIO_SECRETARI = "titol.firmacarrec.secretari";
+    public static final String CODI_PETICIO_PLANTILLAFLUX_USUARI = "titol.plantillaflux.usuari";
+    public static final String CODI_PETICIO_PLANTILLAFLUX_ENTITAT = "titol.plantillaflux.entitat";
+    
     
     // TIPUS DE PLUGINS DE ENVIAFIB
     public static final int TIPUS_PLUGIN_ESTRUCTURAORGANITZATIVA= 1;
@@ -88,10 +96,5 @@ public interface Constants {
     
     public static final int ORIGEN_ADMINISTRACIO = 0;
     public static final int ORIGEN_CIUTADA = 1;
-    
-   
-
-
-
 
 }
