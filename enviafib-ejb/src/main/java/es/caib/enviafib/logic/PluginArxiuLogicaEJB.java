@@ -14,10 +14,10 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
+import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
-import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.plugins.arxiu.api.ArxiuException;
 import es.caib.plugins.arxiu.api.ArxiuNotFoundException;
 import es.caib.plugins.arxiu.api.ConsultaFiltre;
@@ -78,7 +78,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
     @PermitAll
     @Override
-    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignaturaJPA infoSignatura) {
+    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignatura infoSignatura) {
 
         IArxiuPlugin plugin;
 

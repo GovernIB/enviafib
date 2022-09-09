@@ -56,7 +56,7 @@ public class ProvesPluginArxiu {
             String ValidationFileUrl = plugin.getValidationFileUrl(arxiuID);
             System.out.println("ValidationFileUrl : " + ValidationFileUrl);
             
-            System.out.println("ARXIU_BASE_PROPERTY : " + plugin.ARXIU_BASE_PROPERTY);
+            System.out.println("ARXIU_BASE_PROPERTY : " + IArxiuPlugin.ARXIU_BASE_PROPERTY);
             
             
             

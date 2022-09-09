@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.caib.enviafib.logic.PeticioLogicaService;
+import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -61,11 +61,7 @@ public class PortaFIBCallbackRestService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/event")
-    public Response event(@RequestBody PortaFIBEvent eventRequest) {
-        return eventStatic(peticioLogicaEjb, eventRequest);
-    }
-
-    protected static Response eventStatic(PeticioLogicaService peticioLogicaEjb, PortaFIBEvent event) {
+    public Response event(@RequestBody PortaFIBEvent event) {
         try {
             long startTime = System.currentTimeMillis();
 
@@ -107,7 +103,12 @@ public class PortaFIBCallbackRestService {
                     String languageUI = "ca";
                     Long portafibID = event.getSigningRequest().getID();
 
-                    peticioLogicaEjb.cosesAFerPeticioFirmada(portafibID, languageUI);
+                    InfoSignatura infoSignatura;
+                    infoSignatura = peticioLogicaEjb.cosesAFerPeticioFirmadaPart1(portafibID, languageUI);
+
+                    // ASYNCHRONOUS Funcionalitat de guardar document a Arxiu amb la API
+                    peticioLogicaEjb.cosesAFerPeticioFirmadaPart2(portafibID, languageUI, infoSignatura);
+                    
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA: {
