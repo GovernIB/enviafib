@@ -511,7 +511,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                     code = "email.peticio.body.process";
                 break;
+                case Constants.ESTAT_PETICIO_ARXIVANT:
+                    code = "email.peticio.body.arxivant";
+                    break;
+                case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
+                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:{
+                    code = "email.peticio.body.error.arxivant";
+                }
+                break;
             }
+            
+            
 
             String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
 
