@@ -529,9 +529,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             String from = Configuracio.getAppEmail();
 
-            // XYZ ZZZ TRA
-            // TODO: Eliminar comentari per enviar correus
-//            EmailUtil.postMail(subject, message, isHTML, from, email);
+            EmailUtil.postMail(subject, message, isHTML, from, email);
 
         } catch (Throwable t) {
             log.error("EJB: Error enviant mail: " + t.getMessage(), t);
