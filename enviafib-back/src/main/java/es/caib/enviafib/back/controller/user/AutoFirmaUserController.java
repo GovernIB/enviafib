@@ -68,6 +68,11 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
     }
 
     @Override
+    public String getTitolCode() {
+        return Constants.CODI_PETICIO_AUTOFIRMA;
+    }
+
+    @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
 

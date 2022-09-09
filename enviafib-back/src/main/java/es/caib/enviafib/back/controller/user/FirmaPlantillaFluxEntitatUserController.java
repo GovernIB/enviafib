@@ -23,6 +23,10 @@ public class FirmaPlantillaFluxEntitatUserController extends FirmaPlantillaFluxU
     public int getTipusPeticio() {
         return Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT;
     }
+    @Override
+    public String getTitolCode() {
+        return Constants.CODI_PETICIO_PLANTILLAFLUX_ENTITAT;
+    }
 
     @Override
     public String getOwner() {

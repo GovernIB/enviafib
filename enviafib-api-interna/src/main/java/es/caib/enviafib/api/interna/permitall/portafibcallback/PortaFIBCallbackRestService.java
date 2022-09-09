@@ -141,14 +141,17 @@ public class PortaFIBCallbackRestService {
 
             long endTime = System.currentTimeMillis();
             log.info("Event processat. Temps: " + (endTime - startTime));
+            log.info("CALLBACK -> OK");
 
             return Response.status(Response.Status.OK).entity("OK").build();
         } catch (I18NException e) {
+            log.error("CALLBACK -> ERROR");
             String msg = I18NCommonUtils.getMessage(e, new Locale("ca"));
             log.error(msg, e);
             return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
 
         } catch (Throwable th) {
+            log.error("CALLBACK -> ERROR");
             String msg = "Error desconegut processant event de Peticio de Firma REST: " + th.getMessage();
             log.error(msg, th);
             return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();

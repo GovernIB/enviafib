@@ -35,6 +35,7 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -59,6 +60,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
     @Override
     public int getTipusPeticio() {
         return TIPUS_PETICIO_FLUX;
+    }
+
+    @Override
+    public String getTitolCode() {
+        return Constants.CODI_PETICIO_FLUX;
     }
 
     @Override
@@ -92,7 +98,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
         peticioForm.addHiddenField(DESTINATARINIF);
         
         if(!__isView) {
-            peticioForm.setTitleCode("emptystring");
+        //    peticioForm.setTitleCode("emptystring");
         }
         
 

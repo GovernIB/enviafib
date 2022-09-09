@@ -32,7 +32,7 @@ public class FirmaCarrecDirectorUserController extends AbtractFirmaCarrecUserCon
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
         if (peticioForm.isNou()) {
-            peticioForm.setTitleCode("title.firma.director");
+        //    peticioForm.setTitleCode("title.firma.director");
         }
         return peticioForm;
     }
@@ -42,6 +42,13 @@ public class FirmaCarrecDirectorUserController extends AbtractFirmaCarrecUserCon
         return Constants.TIPUS_PETICIO_DIRECTOR;
     }
 
+    @Override
+    public String getTitolCode() {
+        return Constants.CODI_PETICIO_DIRECTOR;
+    }
+
+    
+    
     @Override
     public int getCarrec() {
         return Constants.CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL;
