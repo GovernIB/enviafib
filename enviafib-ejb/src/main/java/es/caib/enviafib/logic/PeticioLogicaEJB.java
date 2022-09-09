@@ -66,6 +66,7 @@ import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
+import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
@@ -541,7 +542,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 }
                 break;
             }
-            
             
 
             String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
