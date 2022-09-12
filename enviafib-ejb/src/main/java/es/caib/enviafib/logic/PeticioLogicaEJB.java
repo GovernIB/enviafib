@@ -397,25 +397,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return msg;
     }
 
-    /**
-     * 
-     * @param portafibID
-     * @param languageUI
-     * @param infoSignatura
-     * @throws I18NException
-     */
-    /*
-    @Override
-    @Asynchronous
-    public void guardarFitxerArxiuAsync(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
-            throws I18NException {
-
-        guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura);
-
-        
-
-    }
-    */
 
     /**
      * 
@@ -443,6 +424,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
+            
+            try {
+                enviarMailSolicitant(Long.parseLong(peticio.getPeticioPortafirmes()), "FIRMADA", peticio.getIdiomaID());
+            } catch(Exception e) {
+                 log.error("Error enviant correu: " + e.getMessage(), e);
+            }
         }
 
         this.update(peticio);
