@@ -15,6 +15,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.PeticioController;
+import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.IdiomaFields;
 
@@ -81,9 +82,11 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
         List<StringKeyValue> tmpList = null;
+        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
+
         tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
 
-        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
+        //tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
 
         return tmpList;
     }
@@ -124,6 +127,14 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     @Override
     public boolean isActiveDelete() {
         return false;
+    }
+    
+    @Override
+    public void fillReferencesForForm(PeticioForm peticioForm,
+            HttpServletRequest request, ModelAndView mav) throws I18NException{
+        super.fillReferencesForForm(peticioForm, request, mav);
+        List<StringKeyValue> _listSKV = getReferenceListForTipusDocumental(request, mav, peticioForm, null);
+        peticioForm.setListOfValuesForTipusDocumental(_listSKV);    
     }
 
 }
