@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,14 +82,17 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         // de PortaFIB per obtenir els tipus de documents que gestiona:
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
-        List<StringKeyValue> tmpList = null;
-        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
 
+        List<StringKeyValue> tipusDocumentalList = new ArrayList<StringKeyValue>();
+        tipusDocumentalList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
+        
+        List<StringKeyValue> tmpList;
         tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
-
-        //tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
-
-        return tmpList;
+        if(tmpList != null && !tmpList.isEmpty()) { 
+            java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
+        }
+        tipusDocumentalList.addAll(tmpList);
+        return tipusDocumentalList;
     }
 
     @Override
