@@ -17,12 +17,15 @@ import es.caib.enviafib.commons.utils.Constants;
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
 public class FirmaPlantillaFluxEntitatUserController extends FirmaPlantillaFluxUserController {
 
+    public static final String OWNER_PLANTILLES_DE_LA_ENTITAT = "+*enviafib*+";
+
     public static final String CONTEXT_WEB = "/user/firmaplantillafluxentitat";
 
     @Override
     public int getTipusPeticio() {
         return Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT;
     }
+
     @Override
     public String getTitolCode() {
         return Constants.CODI_PETICIO_PLANTILLAFLUX_ENTITAT;
@@ -30,6 +33,6 @@ public class FirmaPlantillaFluxEntitatUserController extends FirmaPlantillaFluxU
 
     @Override
     public String getOwner() {
-        return Constants.OWNER_ENTIAT;
+        return OWNER_PLANTILLES_DE_LA_ENTITAT;
     }
 }

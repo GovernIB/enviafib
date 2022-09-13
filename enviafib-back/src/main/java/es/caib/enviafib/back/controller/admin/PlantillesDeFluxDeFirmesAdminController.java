@@ -3,14 +3,17 @@ package es.caib.enviafib.back.controller.admin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController;
 import es.caib.enviafib.back.controller.user.PlantillesDeFluxDeFirmesUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
-import es.caib.enviafib.commons.utils.Constants;
+
 
 /**
  * 
  * @author fbosch
+ * @author anadal
  *
  */
 @Controller
@@ -40,6 +43,6 @@ public class PlantillesDeFluxDeFirmesAdminController extends PlantillesDeFluxDeF
 
     @Override
     public String getOwner() {
-        return Constants.OWNER_ENTIAT;
+        return FirmaPlantillaFluxEntitatUserController.OWNER_PLANTILLES_DE_LA_ENTITAT;
     }
 }   

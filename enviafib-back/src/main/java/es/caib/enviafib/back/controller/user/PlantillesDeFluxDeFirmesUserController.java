@@ -315,4 +315,9 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         return filter;
     }
 
+    @Override
+    public Boolean onlyAcceptTemplates() {
+        return true;
+    }
+
 }

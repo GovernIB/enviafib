@@ -3,6 +3,8 @@ package es.caib.enviafib.back.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +26,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.ITableManager;
 import org.fundaciobit.genapp.common.query.OrderBy;
+import org.fundaciobit.genapp.common.query.OrderType;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
@@ -56,6 +59,14 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     protected final static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     public abstract FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(final String languageUI);
+    
+    /**
+     * 
+     * @return true Nomes Palntilles
+     *         false Només Temporal
+     *         null  Plantilles i temporal
+     */
+    public abstract Boolean onlyAcceptTemplates();
 
     @Override
     public String getSessionAttributeFilterForm() {
@@ -139,8 +150,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     }
 
     @RequestMapping(value = "/{fluxID}/esborrar")
-    public String esborrarFlux(@PathVariable("fluxID") java.lang.String fluxID, HttpServletRequest request,
-            HttpServletResponse response) {
+    public String esborrarFlux(@PathVariable("fluxID")
+    java.lang.String fluxID, HttpServletRequest request, HttpServletResponse response) {
 
         final String languageUI = "ca";
 
@@ -157,7 +168,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
             String description = flux.getDescription();
 
             String owner = LoginInfo.getInstance().getUsername();
-            if (description.indexOf("{owner="+ owner + "}") != -1) {
+            if (description.indexOf("{owner=" + owner + "}") != -1) {
                 FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
                 if (api.deleteFlowTemplate(r)) {
                     String msg = I18NUtils.tradueix("plantillaflux.esborrar.ok", fluxID);
@@ -166,8 +177,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
                     String msg = I18NUtils.tradueix("plantillaflux.esborrar.error", fluxID, null);
                     HtmlUtils.saveMessageError(request, msg);
                 }
-                log.info("El flux es de la nostra propietat");                
-            }else {
+                log.info("El flux es de la nostra propietat");
+            } else {
                 String msg = I18NUtils.tradueix("plantillaflux.esborrar.nopropietari", fluxID);
                 HtmlUtils.saveMessageError(request, msg);
             }
@@ -183,13 +194,6 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     @Override
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,
             final Integer itemsPerPage, final int inici) throws I18NException {
-
-        log.info("OrderBy " + orderBy);
-        if (orderBy != null) {
-            for (OrderBy o : orderBy) {
-                log.info("OrderBy[" + o.javaName + " => " + o.orderType);
-            }
-        }
 
         ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
 
@@ -214,8 +218,26 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
                 flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
 
                 FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+                
+                
+                String descrOriginal = flux.getDescription();
+                        
+                if (onlyAcceptTemplates() == null) {
+                    // Accept All
+                } else if (onlyAcceptTemplates() ==  true) {
+                    // Templates
+                    if (descrOriginal.indexOf("{template=true}") == -1) {
+                        continue;
+                    }
+                } else {
+                    // Temporal
+                    if (descrOriginal.indexOf("{temporal=true}") == -1) {
+                        continue;
+                    }
+                }
+                
 
-                String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
+                String description = descrOriginal.replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
                         .replace("}{", "}<br/>{");
 
                 Usuari usuari = new UsuariJPA();
@@ -224,8 +246,26 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
                 usuari.setNom(flowKeyValue.getValue());
                 usuari.setLlinatge1(description);
                 usuari.setEmail(getCreationDate(description));
-
                 usuaris.add(usuari);
+            }
+
+            log.info("OrderBy " + orderBy);
+            if (orderBy != null) {
+                for (OrderBy o : orderBy) {
+                    log.info("OrderBy[" + o.javaName + " => " + o.orderType);
+
+                    // Data Creació
+                    if (o.javaName.equals(EMAIL.javaName)) {
+                        Collections.sort(usuaris, new ComparatorByCreationDate(o.orderType));
+                        break;
+                    }
+
+                    // Nom
+                    if (o.javaName.equals(NOM.javaName)) {
+                        Collections.sort(usuaris, new ComparatorByName(o.orderType));
+                        break;
+                    }
+                }
             }
 
             return usuaris;
@@ -234,6 +274,43 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
             String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
             log.error(msg, e);
             throw new I18NException("genapp.comodi", msg);
+        }
+
+    }
+
+    /**
+     * 
+     * @author anadal
+     *
+     */
+    public class ComparatorByCreationDate implements Comparator<Usuari> {
+
+        protected final int sort;
+
+        public ComparatorByCreationDate(OrderType order) {
+            sort = order.equals(OrderType.ASC) ? +1 : -1;
+        }
+
+        @Override
+        public int compare(Usuari o1, Usuari o2) {
+            Long d1 = getCreationDateLong(o1.getLlinatge1());
+            Long d2 = getCreationDateLong(o2.getLlinatge1());
+            return sort * Long.compare(d1, d2);
+        }
+
+    }
+
+    public class ComparatorByName implements Comparator<Usuari> {
+
+        protected final int sort;
+
+        public ComparatorByName(OrderType order) {
+            sort = order.equals(OrderType.ASC) ? +1 : -1;
+        }
+
+        @Override
+        public int compare(Usuari o1, Usuari o2) {
+            return sort * o1.getNom().compareToIgnoreCase(o2.getNom());
         }
 
     }
