@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.AbstractPlantillaDeFluxDeFirmesController;
+import es.caib.enviafib.back.controller.user.FluxFirmaUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.model.entity.Usuari;
@@ -45,11 +46,12 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
 
         FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
         filter.setLanguageUI(languageUI);
-        filter.setDescriptionFilter("{temporal=true}");
+        // Cercam per usuari aplicació i despres ja cercarem per {temporal=true}
+        filter.setDescriptionFilter(FluxFirmaUserController.getFluxFilterByUserName(null));
 
         return filter;
     }
-    
+
     @Override
     public UsuariFilterForm getUsuariFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
@@ -63,7 +65,6 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
         return usuariFilterForm;
     }
 
-
     @Override
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,
             final Integer itemsPerPage, final int inici) throws I18NException {
@@ -75,16 +76,25 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
 
             String description = plantilla.getLlinatge1();
 
-            Long creationDate = getCreationDateLong(description);
-            Long currentTime = System.currentTimeMillis();
+            {
 
-            long limit = 3 * 1000 * 3600;
+                Long creationDate = getCreationDateLong(description);
+                Long currentTime = System.currentTimeMillis();
 
-            if (currentTime - creationDate > limit) {
-                caducades.add(plantilla);
+                long limit = 3 * 1000 * 3600;
+
+                if (currentTime - creationDate > limit) {
+                    caducades.add(plantilla);
+                }
             }
         }
 
         return caducades;
+    }
+
+    @Override
+    public Boolean onlyAcceptTemplates() {
+        // Només Temporals
+        return false;
     }
 }

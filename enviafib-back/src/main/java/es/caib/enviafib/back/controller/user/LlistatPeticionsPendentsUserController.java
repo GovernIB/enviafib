@@ -7,6 +7,7 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
@@ -25,6 +26,19 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
 
     public static final String CONTEXT_WEB = "/user/peticio/pendents";
 
+    
+    @Override
+    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
+            throws I18NException {
+        PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
+        if (peticioFilterForm.isNou()) {
+            peticioFilterForm.addHiddenField(DATAFINAL);
+        }
+        
+        return peticioFilterForm;
+    }
+    
+    
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
@@ -46,6 +60,7 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
         return Where.AND(defaultCondition, ESTAT.in(estats));
 
     }
+    
 
     @Override
     protected String getTitleCode() {

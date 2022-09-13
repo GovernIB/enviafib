@@ -129,6 +129,7 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
 
             api = getApiFlowTemplateSimple();
 
+
             // Crear Flux
             String name = "Flux de Firma  - " + System.currentTimeMillis();
             
@@ -181,11 +182,11 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
     }
 
     public static String generateDescription(final String username, final boolean isTemplate) {
-        long current = System.currentTimeMillis();
-        String currentStr = SDF.format(new Date(current));
-
+        final long current = System.currentTimeMillis();
+        final String currentStr = SDF.format(new Date(current));
         
-        String descr = ( isTemplate? "{template=true}":"{temporal=true}\n"  )
+        
+        String descr = ( isTemplate? "{template=true}":"{temporal=true}\n"  )                
                 + "{creation=" + current + "}\n"
                 + "{creationStr=" + currentStr + "}\n"
                 + getFluxFilterByUserName(username);
@@ -198,7 +199,9 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
      * @return
      */
     public static String getFluxFilterByUserName(String username) {
-        return "{owner=" + username + "}";
+        final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
+        // Filtre de Flux de Firmes no filtra bé per descripció (https://github.com/GovernIB/portafib/issues/752)
+        return "{usrapp=" + usrapp +  "}" + (username==null? "":"{owner=" + username + "}");
     }
 
     @Override
