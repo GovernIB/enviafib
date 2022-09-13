@@ -28,15 +28,23 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
+//        final Where defaultCondition = super.getAdditionalCondition(request);
+//        final Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
+//        final Where getErrorArxivantCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+//        final Where getErrorTancantExpedientCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+//
+//        Where getPeticionsCondition = Where.OR(getPendentsCondition, getErrorArxivantCondition,
+//                getErrorTancantExpedientCondition);
+//
+//        return Where.AND(defaultCondition, getPeticionsCondition);
+
+    
         final Where defaultCondition = super.getAdditionalCondition(request);
-        final Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
-        final Where getErrorArxivantCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-        final Where getErrorTancantExpedientCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
 
-        Where getPeticionsCondition = Where.OR(getPendentsCondition, getErrorArxivantCondition,
-                getErrorTancantExpedientCondition);
+        Integer[] estats = { Constants.ESTAT_PETICIO_EN_PROCES, Constants.ESTAT_PETICIO_ARXIVANT, Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT  };
 
-        return Where.AND(defaultCondition, getPeticionsCondition);
+        return Where.AND(defaultCondition, ESTAT.in(estats));
+
     }
 
     @Override

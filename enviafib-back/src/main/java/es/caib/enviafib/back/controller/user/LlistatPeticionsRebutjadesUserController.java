@@ -28,10 +28,18 @@ public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUs
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
-        final Where defaultCondition = super.getAdditionalCondition(request);
-        final Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR);
+//        final Where defaultCondition = super.getAdditionalCondition(request);
+//        final Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR);
+//
+//        return Where.AND(defaultCondition, getPendentsCondition);
+//        
 
-        return Where.AND(defaultCondition, getPendentsCondition);
+        final Where defaultCondition = super.getAdditionalCondition(request);
+
+        Integer[] estats = { Constants.ESTAT_PETICIO_ERROR, Constants.ESTAT_PETICIO_ERROR_ARXIVANT};
+
+        return Where.AND(defaultCondition, ESTAT.in(estats));
+
     }
 
     @Override
