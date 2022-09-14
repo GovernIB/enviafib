@@ -10,7 +10,7 @@
     create table efi_grup (
        grupid number(19,0) not null,
         descripcio varchar2(255 char),
-        nom varchar2(255 char)
+        nom varchar2(255 char) not null
     );
 
     create table efi_grupusuari (
@@ -22,7 +22,7 @@
     create table efi_idioma (
        idiomaid varchar2(5 char) not null,
         nom varchar2(50 char) not null,
-        ordre number(10,0) not null,
+        ordre number(10,0) default 0 not null,
         suportat number(1,0) not null
     );
 
@@ -80,7 +80,7 @@
         destinatarinif varchar2(50 char),
         errorexception clob,
         errormsg varchar2(255 char),
-        estat number(10,0) not null,
+        estat number(10,0) default 1 not null,
         fitxer_firmatid number(19,0),
         fitxerid number(19,0) not null,
         idiomadoc varchar2(30 char) not null,
@@ -91,7 +91,7 @@
         peticioportafirmes varchar2(255 char),
         reason varchar2(255 char),
         solicitantid number(19,0) not null,
-        tipus number(10,0) not null,
+        tipus number(10,0) default 0 not null,
         tipusdocumental varchar2(100 char) not null
     );
 
@@ -108,6 +108,8 @@
     create table efi_seriedocumental (
        seriedocumentalid number(19,0) not null,
         nom varchar2(256 char) not null,
+        procedimentcodi clob not null,
+        procedimentnom clob not null,
         tipusdocumental varchar2(256 char)
     );
 
@@ -124,7 +126,7 @@
     create table efi_usuari (
        usuariid number(19,0) not null,
         email varchar2(256 char) not null,
-        idiomaid varchar2(5 char) not null,
+        idiomaid varchar2(5 char) default 'ca' not null,
         llinatge1 varchar2(256 char) not null,
         llinatge2 varchar2(256 char),
         nif varchar2(50 char) not null,
