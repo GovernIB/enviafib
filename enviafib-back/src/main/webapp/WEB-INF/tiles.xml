@@ -56,6 +56,11 @@
         <put-attribute name="titol" value="EdicioUsuari" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
     </definition>
+    
+    <definition name="userFormEditCommon" extends="common">
+        <put-attribute name="titol" value="EdicioUsuari" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
+    </definition>
 
     <definition name="home" extends="common">
         <put-attribute name="contingut" value="/WEB-INF/jsp/common/home.jsp" />
@@ -66,6 +71,11 @@
     <definition name="user" extends="base.definition">
         <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_user.jsp" />
          <put-attribute name="pipella" value="user" />
+    </definition>
+    
+    <definition name="userFormEditUser" extends="user">
+        <put-attribute name="titol" value="EdicioUsuari" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
     </definition>
     
     <definition name="plantillesfluxfirmesFormUser" extends="user">

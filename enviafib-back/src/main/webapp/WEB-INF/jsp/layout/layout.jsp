@@ -14,7 +14,7 @@
 	</c:if> --%>
  
 	<c:redirect
-		url="/common/usuari/${loginInfo.usuari.usuariID}/edit" />
+		url="/common/usuarinou/${loginInfo.usuari.usuariID}/edit" />
 </c:if>
 <%@ include file="/WEB-INF/jsp/moduls/imports.jsp"%>
 </head>

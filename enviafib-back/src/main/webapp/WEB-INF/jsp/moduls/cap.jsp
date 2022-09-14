@@ -2,9 +2,10 @@
 <%@page import="es.caib.enviafib.commons.utils.Configuracio"%>
 <%@page import="java.util.Locale"%>
 <%@page import="es.caib.enviafib.back.security.LoginInfo"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%><%@ include
-	file="/WEB-INF/jsp/moduls/includes.jsp"%><%@ taglib prefix="tiles"
-	uri="http://tiles.apache.org/tags-tiles"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <header>
 	<!-- Header -->
@@ -22,8 +23,7 @@
 		<div class="navbar-brand menuGovern">
 			<div class="logoGovern">
 				<a href="http://www.caib.es/"> <img
-					src="<c:url value="/img/logo-caib.png"/>"
-					style="height: 60px;"
+					src="<c:url value="/img/logo-caib.png"/>" style="height: 60px;"
 					alt="Govern de les Illes Balears" />
 				</a>
 			</div>
@@ -113,11 +113,18 @@
 							</a>
 						</c:if>
 						<c:if test="${ not empty loginInfo  }">
-
-							<a class="dropdown-item"
-								href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit"></c:url>">
+							<c:set var = "userNoAdmin" value = "${efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN')}"></c:set>
+							<c:if test = "${userNoAdmin}">
+								<c:set var="edicioUsuariUrl" value="/user/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
+						</c:if>
+						<c:if test = "${!userNoAdmin}">
+							<c:set var="edicioUsuariUrl" value="/common/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
+						</c:if>
+							<a class="dropdown-item" href="<c:url value="${edicioUsuariUrl}"></c:url>">
 								<i class="fas fa-cog"></i> <fmt:message key="configuracio" />
 							</a>
+							
+							
 
 							<c:if test="${not empty url_sortida}">
 								<a class="dropdown-item" href="<c:url value="${url_sortida}"></c:url>">
