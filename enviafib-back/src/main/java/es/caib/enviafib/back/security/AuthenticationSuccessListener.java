@@ -159,13 +159,13 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 					persona.setUsername(username);
 					
 					persona.setNif(info.getAdministrationID());
-					/*
-					persona.setNif(!info.getAttributes().containsKey("nif") || info.getAttributes().get("nif") == null
+					
+					/*persona.setNif(!info.getAttributes().containsKey("nif") || info.getAttributes().get("nif") == null
 							|| info.getAttributes().get("nif").isEmpty() ? ""
 									: info.getAttributes().get("nif").toUpperCase());
 					persona.setNif(info.getAttributes().get("nif") == null ? ""
-							: info.getAttributes().get("nif").toUpperCase());
-							*/
+							: info.getAttributes().get("nif").toUpperCase());*/
+							
 					persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
 
 					usuariPersona = usuariEjb.create(persona);
