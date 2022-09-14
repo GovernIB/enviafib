@@ -26,7 +26,6 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
 
     public static final String CONTEXT_WEB = "/user/peticio/pendents";
 
-    
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
@@ -34,11 +33,10 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.addHiddenField(DATAFINAL);
         }
-        
+
         return peticioFilterForm;
     }
-    
-    
+
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
@@ -52,15 +50,15 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
 //
 //        return Where.AND(defaultCondition, getPeticionsCondition);
 
-    
         final Where defaultCondition = super.getAdditionalCondition(request);
 
-        Integer[] estats = { Constants.ESTAT_PETICIO_EN_PROCES, Constants.ESTAT_PETICIO_ARXIVANT, Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT  };
+        Integer[] estats = { Constants.ESTAT_PETICIO_EN_PROCES, Constants.ESTAT_PETICIO_ARXIVANT,
+                Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT, Constants.ESTAT_PETICIO_ERROR_ARXIVANT,
+                Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT };
 
         return Where.AND(defaultCondition, ESTAT.in(estats));
 
     }
-    
 
     @Override
     protected String getTitleCode() {

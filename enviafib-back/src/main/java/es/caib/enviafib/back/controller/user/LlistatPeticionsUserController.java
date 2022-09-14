@@ -245,6 +245,24 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
                         "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
             }
 
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT || peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
+                        "peticio.btn.sendmail",  "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+                
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
+                        "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + peticioID , "btn-info"));
+
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
+                        "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + peticioID , "btn-info"));
+                
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fas fa-print",
+                        "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + peticioID , "btn-info"));
+
+            }
+
+            
+            
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
                         new AdditionalButton("fas fa-redo-alt icon-white", "arxiu.reintentartancamentexpedient",

@@ -31,15 +31,15 @@ public interface Constants {
     //PENDENTS
     public static final int ESTAT_PETICIO_EN_PROCES = 2;
     public static final int ESTAT_PETICIO_ARXIVANT = 5;
+    public static final int ESTAT_PETICIO_ERROR_ARXIVANT = 6;
+    public static final int ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT = 7;
     public static final int ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT = 8;
     
     //FIRMADES
     public static final int ESTAT_PETICIO_FIRMADA = 3;
-    public static final int ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT = 7;
     
     //REBUTJADES
     public static final int ESTAT_PETICIO_ERROR = 4;
-    public static final int ESTAT_PETICIO_ERROR_ARXIVANT = 6;
 
     
     

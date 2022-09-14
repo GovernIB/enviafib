@@ -43,7 +43,7 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
 
         final Where defaultCondition = super.getAdditionalCondition(request);
 
-        Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT };
+        Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA };
 
         return Where.AND(defaultCondition, ESTAT.in(estats));
     }
@@ -65,18 +65,17 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
 
-            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-file-pdf",
-                    "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}", "btn-info"));
-
-            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-vote-yea",
-                    "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/{0}", "btn-info"));
-
-            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-print",
-                    "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/{0}", "btn-info"));
-
-            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-envelope icon-white",
-                    "peticio.btn.sendmail", "javascript: cridaEmail({0})", "btn-success"));
-
+//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-file-pdf",
+//                    "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}", "btn-info"));
+//
+//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-vote-yea",
+//                    "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/{0}", "btn-info"));
+//
+//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-print",
+//                    "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/{0}", "btn-info"));
+//
+//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-envelope icon-white",
+//                    "peticio.btn.sendmail", "javascript: cridaEmail({0})", "btn-success"));
         }
 
         return peticioFilterForm;
