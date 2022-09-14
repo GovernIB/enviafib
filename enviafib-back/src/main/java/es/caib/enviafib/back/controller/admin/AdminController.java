@@ -23,9 +23,6 @@ public class AdminController {
     @RequestMapping(value = "/home")
     public ModelAndView option1(HttpSession session, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
-        log.info("BUENAS TARDES, DAMAS Y CABALLEROS, BIENVENIDOS A TIEMPO DE JUEGO!");
-
         ModelAndView mav = new ModelAndView("home");
         return mav;
 

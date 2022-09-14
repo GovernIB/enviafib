@@ -89,8 +89,6 @@ public class PrincipalController {
     @RequestMapping(value = "/user/home")
     public ModelAndView homeUser(HttpSession session, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        log.info("HOLA HOLA, BIENVENIDOS A TIEMPO DE JUEGO!");
-
         ModelAndView mav = new ModelAndView("homeuser");
         return mav;
 
