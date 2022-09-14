@@ -422,10 +422,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
                     final String validationFileUrl = plugin.getValidationFileUrl(documentCreat);
 
-                    // infoCust = new InfoCustodyJPA(custodyID, expedientId, uuidDoc, csv,
-                    // originalFileUrl,
-                    // csvValidationWeb, csvGenerationDefinition, printableFileUrl, eniFileUrl,
-                    // validationFileUrl);
+                    csvGenerationDefinition = plugin.getCsvGenerationDefinition(documentCreat.getIdentificador());
 
                     infoCust = new InfoArxiuJPA(originalFileUrl, csv, csvGenerationDefinition, csvValidationWeb,
                             expedientId, uuidDoc, printableFileUrl, eniFileUrl, validationFileUrl);
