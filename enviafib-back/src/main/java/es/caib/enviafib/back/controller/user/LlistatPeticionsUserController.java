@@ -233,7 +233,7 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view",
                     getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
 
-            if (peticio.getInfoArxiuID() == null) {
+            if (peticio.getInfoArxiuID() == null || peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
                         new AdditionalButton("fas fa-trash icon-white", "peticio.btn.delete", "javascript: openModal('"
                                 + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
@@ -243,7 +243,6 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt icon-white",
                         "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
-
             }
 
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
@@ -398,6 +397,5 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
         peticioLogicaEjb.deleteFull(peticio);
     }
-
 
 }
