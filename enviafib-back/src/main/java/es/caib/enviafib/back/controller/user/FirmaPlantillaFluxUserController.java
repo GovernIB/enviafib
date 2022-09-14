@@ -109,6 +109,11 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
                 String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
                         .replace("}{", "}<br/>{");
+                
+                if (description.indexOf("{template=true}") == -1) {
+                    continue;
+                }
+                
 
 
                 /* usuariID -> flowTemplateId hashed
@@ -126,9 +131,9 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
 //                usuari.setEmail(getCreationDate(description));
 
-                if (description.indexOf("{template=true}") != -1) {
-                    usuaris.add(usuari);
-                }
+                
+                usuaris.add(usuari);
+                
             }
 
             return usuaris;

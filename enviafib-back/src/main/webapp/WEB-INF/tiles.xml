@@ -92,7 +92,7 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioForm.jsp" />
     </definition>
     
-    <definition name="homeUser" extends="user">
+    <definition name="homeuser" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/common/home.jsp" />
     </definition>
     

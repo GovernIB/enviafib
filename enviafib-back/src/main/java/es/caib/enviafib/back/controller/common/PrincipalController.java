@@ -85,4 +85,12 @@ public class PrincipalController {
 		return new ModelAndView(new RedirectView("/admin/home", true));
 	}
 
+	
+    @RequestMapping(value = "/user/home")
+    public ModelAndView homeUser(HttpSession session, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        ModelAndView mav = new ModelAndView("homeuser");
+        return mav;
+
+    }
 }
