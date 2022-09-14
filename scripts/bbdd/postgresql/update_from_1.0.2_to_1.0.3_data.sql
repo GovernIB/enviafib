@@ -18,21 +18,17 @@ es.caib.enviafib.plugin.arxiu.caib.base.url=https://esbse.caib.es:4430/esb
 es.caib.enviafib.plugin.arxiu.caib.aplicacio.codi=Tests
 es.caib.enviafib.plugin.arxiu.caib.usuari=username
 es.caib.enviafib.plugin.arxiu.caib.contrasenya=password
+
 es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.url=https://se.caib.es/concsv/rest/printable/uuid
 es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.usuari=username
 es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.contrasenya=password
 
-# No funciona
 es.caib.enviafib.plugin.arxiu.caib.original_file_url_EL=https://se.caib.es/concsv/rest/original/${csv}
-
-# No funciona
 es.caib.enviafib.plugin.arxiu.caib.printable_file_url_EL=https://se.caib.es/concsv/rest/printable/${csv}
-
-# No funciona
 es.caib.enviafib.plugin.arxiu.caib.eni_file_url_EL=https://se.caib.es/concsv/enidoc/${csv}
 es.caib.enviafib.plugin.arxiu.caib.csv_validation_web_EL=http://se.caib.es/concsv/${csv}
 
-# Valor Desconegut
+# Valor a definir per cada entiat
 es.caib.enviafib.plugin.arxiu.caib.csv.definicio=https://se.caib.es/def_csv_gen.pdf
 es.caib.enviafib.plugin.arxiu.caib.validation_file_url_EL=https://se.caib.es/concsv/hash/${csv}'
 , true, 2, 'Plugin Arxiu Prova', 'Plugin Arxiu Prova');
