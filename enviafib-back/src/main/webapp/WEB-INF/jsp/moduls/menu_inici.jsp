@@ -5,20 +5,20 @@
   <h5><fmt:message key="menuinici" /></h5>
   <ul class="tree" style="margin: 3px; padding: 0px;">
   
-  <c:if test="${empty loginInfo}">
+	<c:if test="${empty loginInfo}">
         <li style="list-style-type: disc; list-style-position: inside;">
           <a href="<c:url value="/common/home.html"/>">
-            <span style="${(fn:contains(url, 'home'))? "font-weight: bold;" : ""}">Pàgina Inicial</span>
+            <span style="${(fn:contains(url, 'home'))? "font-weight: bold;" : ""}"><fmt:message key="inici.menu.about"/></span>
           </a>
         </li>
     </c:if>
+    
     <c:if test="${not empty loginInfo}">
-
-    <li style="list-style-type: disc; list-style-position: inside;">
-      <a href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit" />">
-        <span style="${(fn:contains(url, 'home'))? "font-weight: bold;" : ""}">Pàgina Inicial</span>
-      </a>
-    </li>
+	    <li style="list-style-type: disc; list-style-position: inside;">
+	      <a href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit" />">
+	        <span style="${(fn:contains(url, 'home'))? "font-weight: bold;" : ""}"><fmt:message key="inici.menu.about"/></span>
+	      </a>
+	    </li>
 
    <%-- Example with security: virtual roles  --%>
    <%--
@@ -31,13 +31,12 @@
    </sec:authorize>
     --%>
 
-    <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
-    <li style="list-style-type: disc; list-style-position: inside;">
-      <a href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit"/>">
-        <span style="${(fn:contains(url, 'common/usuari/edit'))? "font-weight: bold;" : ""}">Editar usuari</span>
-      </a>
-    </li>
-   
+	    <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
+	    <li style="list-style-type: disc; list-style-position: inside;">
+	      <a href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit"/>">
+	        <span style="${(fn:contains(url, 'common/usuari/edit'))? "font-weight: bold;" : ""}"><fmt:message key="inici.menu.editar.usuari"/></span>
+	      </a>
+	    </li>
    </c:if>
   </ul>
 </div>
