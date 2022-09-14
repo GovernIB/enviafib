@@ -251,7 +251,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             }
 
-            log.info("XYZ ZZZ TMP Creant document ... ");
             final DocumentMetadades documentMetadades = new DocumentMetadades();
 
             documentMetadades.setOrgans(organs);
@@ -642,6 +641,14 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         }
 
         perfil = perfil.trim();
+        
+        // XYZ ZZZ S'ha de donar d'alta a FirmaSimpleSignedFileInfo
+        // https://administracionelectronica.gob.es/pae_Home/pae_Actualidad/pae_Noticias/Anio2017/Mayo/Noticia-CTT-2017-05-19-Nuevos-tipos-de-formato-de-firma-en-la-nueva-version-de--firma.html#.YyGz4rTP2Uk
+        // 1.- Para las firmas XADES y CADES : EPES, T, C, X, XL, A, BASELINE B-Level, BASELINE T-Level, BASELINE LT-Level, BASELINE LTA-Level
+        // 2.- Para las firmas PADES : EPES, LTV, BASELINE B-Level, BASELINE T
+        if (perfil.equals("BASELINE B-Level")) {
+            return FirmaPerfil.BES; 
+        }
 
         if (perfil.equals(FirmaSimpleSignedFileInfo.SIGNPROFILE_BES)) {
             return FirmaPerfil.BES;

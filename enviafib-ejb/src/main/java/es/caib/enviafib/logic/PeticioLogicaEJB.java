@@ -310,7 +310,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         peticio.setErrorMsg(LogicUtils.split255(msg));
         this.update(peticio);
 
-        enviarMailSolicitant(portafibID, "REBUTJADA", languageUI);
+        enviarMailSolicitant(peticio.getPeticioID(), "REBUTJADA", languageUI);
     }
 
     /*
@@ -383,7 +383,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             msg = null;
             
             try {
-                enviarMailSolicitant(Long.parseLong(peticio.getPeticioPortafirmes()), "FIRMADA", peticio.getIdiomaID());
+                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID());
             } catch(Exception e) {
                  log.error("Error enviant correu: " + e.getMessage(), e);
             }
@@ -426,7 +426,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             peticio.setErrorException(null);
             
             try {
-                enviarMailSolicitant(Long.parseLong(peticio.getPeticioPortafirmes()), "FIRMADA", peticio.getIdiomaID());
+                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID());
             } catch(Exception e) {
                  log.error("Error enviant correu: " + e.getMessage(), e);
             }
@@ -486,24 +486,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    protected void enviarMailSolicitant(long portafibID, String estat, String idiomaId) {
+    protected void enviarMailSolicitant(long peticioID, String estat, String idiomaId) {
 
         final Locale loc = new Locale(idiomaId);
 
         try {
-            List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
+            Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
 
-            if (peticioList == null || peticioList.size() != 1) {
-                log.error("Event de FIRMA amb portafibid = " + portafibID + " i Petició no trobada");
-                throw new I18NException("error.portafib.peticionull", "FIRMA", String.valueOf(portafibID));
-            }
+            String nomPeticio = peticio.getNom().replace("'", "`");
 
-            String nomPeticio = peticioList.get(0).getNom().replace("'", "`");
+            long estatPeticio = peticio.getEstat();
 
-            long estatPeticio = peticioList.get(0).getEstat();
-
-            Long solicitantID = executeQueryOne(PeticioFields.SOLICITANTID,
-                    PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
+            Long solicitantID = peticio.getSolicitantID();
 
             String urlBase = Configuracio.getUrlBase();
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
