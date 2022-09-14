@@ -399,11 +399,5 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
         peticioLogicaEjb.deleteFull(peticio);
     }
 
-    @RequestMapping(value = "/home")
-    public ModelAndView principal(HttpSession session, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        ModelAndView mav = new ModelAndView("homeUser");
-        return mav;
 
-    }
 }
