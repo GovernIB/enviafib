@@ -4,7 +4,7 @@ setlocal
 
 echo [%date%, %time%] 1>> log.txt
 
-set SERVIDORS=esbse.caib.es:4430
+set SERVIDORS=se.caib.es
 
 REM Comprovam que tenim l'executable openssl 
 where /q openssl

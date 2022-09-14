@@ -43,6 +43,10 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb;
 
+    @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
+
+    
     public static final Map<Integer, String> firmaPathByTipus = new HashMap<Integer, String>();
 
     static {

@@ -27,15 +27,23 @@ public interface Constants {
     public static final String ROLE_EJB_BASIC_ACCESS = EFI_USER;
 
     // ESTATS DE PETICIO DE FIRMA D'ENVIAFIB
+
+    //PENDENTS
     public static final int ESTAT_PETICIO_EN_PROCES = 2;
-    public static final int ESTAT_PETICIO_FIRMADA = 3;
-    public static final int ESTAT_PETICIO_ERROR = 4;
-    
     public static final int ESTAT_PETICIO_ARXIVANT = 5;
-    public static final int ESTAT_PETICIO_ERROR_ARXIVANT = 6;
+    public static final int ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT = 8;
+    
+    //FIRMADES
+    public static final int ESTAT_PETICIO_FIRMADA = 3;
     public static final int ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT = 7;
     
-    public static final int ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT = 8;
+    //REBUTJADES
+    public static final int ESTAT_PETICIO_ERROR = 4;
+    public static final int ESTAT_PETICIO_ERROR_ARXIVANT = 6;
+
+    
+    
+    
     
     public static final int[] ESTATS_PETICIO = { ESTAT_PETICIO_EN_PROCES,
             ESTAT_PETICIO_FIRMADA, ESTAT_PETICIO_ERROR, ESTAT_PETICIO_ARXIVANT, ESTAT_PETICIO_ERROR_ARXIVANT,
