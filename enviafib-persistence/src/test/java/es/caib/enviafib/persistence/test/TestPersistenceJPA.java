@@ -15,11 +15,11 @@ import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
 
 import es.caib.enviafib.persistence.EnviaFIBJPADaoManagers;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.EnviaFIBDaoManager;
 import es.caib.enviafib.model.dao.IPeticioManager;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
-
 /**
  * 
  * @author anadal
@@ -67,7 +67,7 @@ public class TestPersistenceJPA {
             EnviaFIBDaoManager.setDaoManagers(new EnviaFIBJPADaoManagers(em));
 
             consultaNocturna();
-
+            
             /*
              * EXEMPLE DE CRIDADA DIRECTE
              * 
@@ -118,6 +118,7 @@ public class TestPersistenceJPA {
 
             tx.commit();
             log.info("<<<<<<<<<<<  Good Bye!");
+            System.exit(0);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,12 +127,19 @@ public class TestPersistenceJPA {
 
     protected static void consultaNocturna() throws Exception, I18NException {
         IPeticioManager peticionsDAO = EnviaFIBDaoManager.getDaoManagers().getPeticioManager();
+        
+        Where w1 = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
 
-        Where where = null; // ?????
+        Where w2 = Where.OR(PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_FIRMADA),
+                PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR));
+
+        Where w3 = PeticioFields.PETICIOID.notIn(peticionsDAO.getSubQuery(PeticioFields.PETICIOID, PeticioFields.PETICIOPORTAFIRMES.like("JAESBORRAT%")));
+        
+        Where where = Where.AND(w1, w2, w3); // ?????
         List<Peticio> peticions = peticionsDAO.select(where, new OrderBy(PeticioFields.PETICIOID));
 
         for (Peticio peticio : peticions) {
-            System.out.println(peticio.getPeticioID() + " => " + peticio.getNom());
+            System.out.println(peticio.getPeticioID() + " => " + peticio.getNom() + "=>" + peticio.getPeticioPortafirmes());
         }
     }
 

@@ -1000,7 +1000,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             Where w2 = Where.OR(ESTAT.equal(Constants.ESTAT_PETICIO_FIRMADA),
                     ESTAT.equal(Constants.ESTAT_PETICIO_ERROR));
 
-            Where w3 = PETICIOID.notIn(this.getSubQuery(PETICIOID, PETICIOPORTAFIRMES.like("JAESBORRAT%")));
+            Where w3 = PETICIOID.notIn(this.getSubQuery(PETICIOID, PETICIOPORTAFIRMES.like("ESBORRADA%")));
 
             List<String> listPortaFIBIds = this.executeQuery(PETICIOPORTAFIRMES, Where.AND(w1, w2, w3));
 
