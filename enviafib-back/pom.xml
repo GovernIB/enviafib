@@ -275,7 +275,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/src/main/resources</outputDirectory>
+							<outputDirectory>${basedir}/target/classes</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${basedir}/../enviafib-ejb/src/main/resources</directory>
