@@ -1,4 +1,7 @@
 ﻿
+---
+--- 15/09/2022 -  Crear una taula efi_menu #212 
+---
 
 INSERT INTO efi_traduccio VALUES (110);
 INSERT INTO efi_traduccio VALUES (111);

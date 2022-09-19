@@ -74,7 +74,7 @@ ALTER TABLE efi_peticio
     START WITH 1000
     INCREMENT BY 1;
 
-  CREATE TABLE public.efi_infoarxiu
+  CREATE TABLE efi_infoarxiu
 (
    infoarxiuid NUMBER(19) DEFAULT efi_infoarxiu_seq.nextval NOT NULL,
    originalfileurl VARCHAR(255), 
