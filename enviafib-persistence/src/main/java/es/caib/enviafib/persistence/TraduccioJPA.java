@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.Set;
 import java.util.HashMap;
 import org.hibernate.annotations.Cascade;
+import java.util.HashSet;
 import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
@@ -69,6 +72,32 @@ public class TraduccioJPA implements Traduccio {
     }
     return __result;
   }
+
+// EXP  Field:ajudamenuid | Table: efi_menu | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ajudaMenuID")
+    private Set<MenuJPA> menu_ajudamenuids = new HashSet<MenuJPA>(0);
+    public  Set<MenuJPA> getMenu_ajudamenuids() {
+    return this.menu_ajudamenuids;
+  }
+
+    public void setMenu_ajudamenuids(Set<MenuJPA> menu_ajudamenuids) {
+      this.menu_ajudamenuids = menu_ajudamenuids;
+    }
+
+
+// EXP  Field:titolmenuid | Table: efi_menu | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "titolMenuID")
+    private Set<MenuJPA> menu_titolmenuids = new HashSet<MenuJPA>(0);
+    public  Set<MenuJPA> getMenu_titolmenuids() {
+    return this.menu_titolmenuids;
+  }
+
+    public void setMenu_titolmenuids(Set<MenuJPA> menu_titolmenuids) {
+      this.menu_titolmenuids = menu_titolmenuids;
+    }
+
 
   @ElementCollection(fetch= FetchType.EAGER, targetClass = es.caib.enviafib.persistence.TraduccioMapJPA.class)
   @Cascade(value=org.hibernate.annotations.CascadeType.ALL)
@@ -135,6 +164,14 @@ public class TraduccioJPA implements Traduccio {
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
+    if(!"MenuJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.menu_titolmenuids) || org.hibernate.Hibernate.isInitialized(__jpa.getMenu_titolmenuids())) ) {
+      __tmp.setMenu_titolmenuids(MenuJPA.copyJPA(__jpa.getMenu_titolmenuids(), __alreadyCopied,"TraduccioJPA"));
+    }
+    if(!"MenuJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.menu_ajudamenuids) || org.hibernate.Hibernate.isInitialized(__jpa.getMenu_ajudamenuids())) ) {
+      __tmp.setMenu_ajudamenuids(MenuJPA.copyJPA(__jpa.getMenu_ajudamenuids(), __alreadyCopied,"TraduccioJPA"));
+    }
     // Copia de beans complexes (IMP)
     // Aquesta linia s'afeix de forma manual
     __tmp.setTraduccions(new HashMap<String, TraduccioMapJPA>(__jpa.getTraduccions()));

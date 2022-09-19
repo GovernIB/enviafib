@@ -4,10 +4,10 @@
 
     <definition name="base.cap" template="/WEB-INF/jsp/moduls/cap.jsp" preparer="es.caib.enviafib.back.preparer.CapPreparer"/>
     <definition name="base.menu_i_contingut" template="/WEB-INF/jsp/moduls/menu_i_contingut.jsp"/>
-    <definition name="base.menu" template="/WEB-INF/jsp/moduls/blanc.jsp" preparer="es.caib.enviafib.back.preparer.MenuPreparer"/>
+    <definition name="base.menu" template="/WEB-INF/jsp/moduls/blanc.jsp" />
     <definition name="base.contingut" template="/WEB-INF/jsp/moduls/blanc.jsp"/>
     <definition name="base.peu" template="/WEB-INF/jsp/moduls/peu.jsp" preparer="es.caib.enviafib.back.preparer.PeuPreparer"/>
- <definition name="base.contingut" template="/WEB-INF/jsp/moduls/blanc.jsp"/>
+    <definition name="base.contingut" template="/WEB-INF/jsp/moduls/blanc.jsp"/>
 
     <definition name="base.definition" template="/WEB-INF/jsp/layout/layout.jsp" preparer="es.caib.enviafib.back.preparer.BasePreparer">
         <put-attribute name="cap" value="base.cap" />
@@ -37,7 +37,7 @@
     <!--  ==================PUBLIC =============== -->
 
     <definition name="all" extends="base.definition">
-        <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_inici.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_inici.jsp"  />
         <put-attribute name="contingut" value="/WEB-INF/jsp/all/homepublic.jsp" />
     </definition>
 
@@ -68,9 +68,13 @@
 
     <!--  ===========  USER  ================== -->
     
+    <definition name="menu.user" template="/WEB-INF/jsp/moduls/menu_user.jsp" preparer="es.caib.enviafib.back.preparer.MenuPreparer">
+       <put-attribute name="pipella" value="user" />
+    </definition>
+    
     <definition name="user" extends="base.definition">
-        <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_user.jsp" />
-         <put-attribute name="pipella" value="user" />
+        <put-attribute name="menu" value="menu.user" />
+        <put-attribute name="pipella" value="user" />
     </definition>
     
     <definition name="userFormEditUser" extends="user">
@@ -192,6 +196,23 @@
     <definition name="plantillesfluxfirmesListAdmin" extends="admin">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
     </definition>
+    
+    
+    <definition name="menuFormAdmin" extends="admin">
+        <put-attribute name="titol" value="menu.menu" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/menuForm.jsp" />
+    </definition>
+    
+    <definition name="menuListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/menuList.jsp" />
+    </definition>
+    
+    <definition name="noumenu" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/admin/noumenu.jsp" />
+    </definition>
+
+    
+    
     <!--  ===========  DESENVOLUPAMENT ================== -->
     
     <definition name="desenvolupament" extends="base.definition">
@@ -284,6 +305,16 @@
     
     <definition name="infoSignaturaListWebDB" extends="webdb">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
+    </definition>
+
+
+    <definition name="menuFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="menu.menu" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/menuForm.jsp" />
+    </definition>
+    
+    <definition name="menuListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/menuList.jsp" />
     </definition>
 
 

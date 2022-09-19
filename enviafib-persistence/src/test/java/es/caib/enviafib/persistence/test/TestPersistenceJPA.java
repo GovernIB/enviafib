@@ -1,8 +1,6 @@
 package es.caib.enviafib.persistence.test;
 
-
 import java.util.Properties;
-
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,11 +10,8 @@ import javax.persistence.Persistence;
 
 import org.apache.log4j.Logger;
 
-
 import es.caib.enviafib.persistence.EnviaFIBJPADaoManagers;
 import es.caib.enviafib.model.EnviaFIBDaoManager;
-
-
 
 /**
  * 
@@ -26,7 +21,6 @@ import es.caib.enviafib.model.EnviaFIBDaoManager;
 public class TestPersistenceJPA {
 
     public static final Logger log = Logger.getLogger(TestPersistenceJPA.class);
-
 
     public static final void main(String[] args) {
         try {
@@ -64,11 +58,8 @@ public class TestPersistenceJPA {
 
             tx.begin();
 
+            EnviaFIBDaoManager.setDaoManagers(new EnviaFIBJPADaoManagers(em));
 
-            EnviaFIBDaoManager.setDaoManagers(new EnviaFIBJPADaoManagers(em)); 
-            
-            
-            
             /*   EXEMPLE DE CRIDADA DIRECTE
               
              
@@ -84,16 +75,15 @@ public class TestPersistenceJPA {
             }
             
             */
-            
 
             /*
              EXEMPLE DE LLISTAT 
              
             IPluginManager pluginMan = EnviaFIBDaoManager.getDaoManagers().getPluginManager();
-
-           
+            
+            
             SelectTraduccio st = new SelectTraduccio(PluginFields.NOMID, "es");
-
+            
             List<String> noms = pluginMan.executeQuery(st, null);
             
             for (String nom : noms) {
@@ -101,7 +91,6 @@ public class TestPersistenceJPA {
             }
             
             */
-            
 
             /*  CONSULTA IDIOMES DISPONIBLES
              * IIdiomaManager idioma = EnviaFIBDaoManager.getDaoManagers().getIdiomaManager();

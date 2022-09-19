@@ -62,49 +62,41 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         try {
             String username = LoginInfo.getInstance().getUsername();
 
+            carrec =  "estructuraorganitzativa." + tipusCarrec + ".nom";
             switch (tipusCarrec) {
                 case Constants.CARREC_GERENT_PRESIDENT:
-                    carrec = "estructuraorganitzativa.gerent.nom";
                     carrecUsername = instance.getGerentPresident();
                 break;
                 case Constants.CARREC_CAP_AREA_CONSELLER:
-                    carrec = "estructuraorganitzativa.caparea.nom";
                     carrecUsername = instance.getCapAreaConsellerByUsername(username);
                 break;
                 case Constants.CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL:
-                    carrec = "estructuraorganitzativa.capdepartament.nom";
                     carrecUsername = instance.getCapDepartamentDirectorGeneralByUsername(username);
                 break;
                 case Constants.CARREC_SECRETARI:
-                    carrec = "estructuraorganitzativa.secretari.nom";
                     carrecUsername = instance.getSecretariByUsername(username);
                 break;
                 case Constants.CARREC_ENCARREGAT_COMPRES:
-                    carrec = "estructuraorganitzativa.encarregatcompres.nom";
                     carrecUsername = instance.getEncarregatCompresByUsername(username);
                 break;
                 case Constants.CARREC_RECURSOS_HUMANS:
-                    carrec = "estructuraorganitzativa.recursoshumans.nom";
                     carrecUsername = instance.getRecursosHumansByUsername(username);
                 break;
 
                 default:
-
-                break;
+                    throw new I18NException("plugin.estructuraorganitzativa.noasignat", String.valueOf(tipusCarrec));
             }
         } catch (Exception e) {
             String error = e.getMessage();
 
             log.info("ERRROR ]" + e + "[");
-            throw new I18NException("error.plugin.estructuraorganitzativa", new I18NArgumentCode(carrec),
+            throw new I18NException("error.plugin.estructuraorganitzativa", new I18NArgumentString(String.valueOf(tipusCarrec)),
                     new I18NArgumentString(error));
         }
 
-        log.info("El meu " + I18NUtils.tradueix(carrec) + " es: " + carrecUsername);
+        log.info("El meu " + I18NUtils.tradueix(carrec) + " es " + carrecUsername);
 
-        if (carrecUsername == null) {
-            throw new I18NException("plugin.estructuraorganitzativa.noasignat", new I18NArgumentCode(carrec));
-        }
+
         String carrecNIF;
 
         // Provam a BBDD a veure si està el NIF
