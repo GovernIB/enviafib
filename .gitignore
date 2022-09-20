@@ -120,3 +120,5 @@ hs_err_pid*
 /enviafib-pluginsib/pluginsib-estructuraorganitzativa/mock/.classpath
 /scripts/.project
 pemfiles
+/enviafib-ejb/arxiu.properties
+/log.txt
