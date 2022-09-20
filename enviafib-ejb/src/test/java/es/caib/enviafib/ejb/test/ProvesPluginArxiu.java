@@ -6,10 +6,6 @@ import java.util.Properties;
 import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.ejb.InfoArxiuEJB;
-import es.caib.enviafib.logic.PeticioLogicaEJB;
-import es.caib.enviafib.model.entity.InfoArxiu;
-import es.caib.enviafib.persistence.PeticioJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.IArxiuPlugin;
 

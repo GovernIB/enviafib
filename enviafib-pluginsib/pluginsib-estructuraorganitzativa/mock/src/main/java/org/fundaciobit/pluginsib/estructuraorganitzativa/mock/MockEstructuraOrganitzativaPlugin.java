@@ -32,54 +32,157 @@ public class MockEstructuraOrganitzativaPlugin extends AbstractPluginProperties
         super(propertyKeyBase);
     }
 
+    /** =================  ORGANITZACIÓ - EMPRESA ========= */
+
     @Override
-    public String getCodiDIR3ByUsername(String username) throws Exception {
-        return processarPropietat("codidir3byusername", username);
+    public String getGerentPresidentName() throws Exception {
+        return processarPropietat("gerentpresident.name", null);
     }
 
     @Override
-    public String getGerentPresident() throws Exception {
-        return processarPropietat("gerentpresident", null);
-    };
-
-    @Override
-    public String getNomAreaConselleriaByUsername(String username, String lang) throws Exception {
-        return processarPropietat("nomareaconselleriabyusername." + lang, username);
+    public String getGerentPresidentUsername() throws Exception {
+        return processarPropietat("gerentpresident.username", null);
     }
 
     @Override
-    public String getCapAreaConsellerByUsername(String username) throws Exception {
-        return processarPropietat("capareaconsellerbyusername", username);
+    public String getNameOrganitzacioEmpresa(String lang) throws Exception {
+        return processarPropietat("organitzacioempresa.name", null);
+    }
+
+    @Override
+    public String getDir3OrganitzacioEmpresa() throws Exception {
+        return processarPropietat("organitzacioempresa.dir3", null);
+    }
+
+    @Override
+    public String getNifOrganitzacioEmpresa() throws Exception {
+        return processarPropietat("organitzacioempresa.nif", null);
+    }
+
+    /** =================  ÀREA - CONSELLERIA ========= */
+
+    @Override
+    public String getNameAreaConselleria(String username, String lang) throws Exception {
+        return processarPropietat("areaconselleria.name." + lang, username);
+    }
+
+    @Override
+    public String getDir3AreaConselleria(String username) throws Exception {
+        String tmp = processarPropietat("areaconselleria.dir3", username);
+        if (tmp == null) {
+            tmp = getDir3OrganitzacioEmpresa();
+        }
+        return tmp;
+    }
+
+    @Override
+    public String getCodeAreaConselleria(String username) throws Exception {
+        return processarPropietat("areaconselleria.code", username);
+    }
+
+    @Override
+    public String getCapAreaConsellerUsername(String username) throws Exception {
+        return processarPropietat("areaconselleria.boss.username", username);
+    }
+
+    @Override
+    public String getCapAreaConsellerName(String username) throws Exception {
+        return processarPropietat("areaconselleria.boss.name", username);
+    }
+
+    /** =================  DEPARTAMENT - DIRECCIÓ GENERAL ========= */
+
+    @Override
+    public String getNameDepartamentDireccioGeneral(String username, String lang) throws Exception {
+        return processarPropietat("departamentdirecciogeneral.name." + lang, username);
+    }
+
+    @Override
+    public String getDir3DepartamentDireccioGeneral(String username) throws Exception {
+        String tmp = processarPropietat("departamentdirecciogeneral.dir3", username);
+        if (tmp == null) {
+            tmp = getDir3AreaConselleria(username);
+        }
+        return tmp;
+    }
+
+    @Override
+    public String getCodeDepartamentDireccioGeneral(String username) throws Exception {
+        return processarPropietat("departamentdirecciogeneral.code", username);
+    }
+
+    @Override
+    public String getCapDepartamentDirectorGeneralUsername(String username) throws Exception {
+        return processarPropietat("departamentdirecciogeneral.boss.username", username);
+    }
+
+    @Override
+    public String getCapDepartamentDirectorGeneralName(String username) throws Exception {
+        return processarPropietat("departamentdirecciogeneral.boss.name", username);
+    }
+
+    /** =================  DADES GENERALS ========= */
+
+    @Override
+    public String getSecretariUsername(String username) throws Exception {
+        return processarPropietat("secretari", username);
     };
 
     @Override
-    public String getNomDepartamentDireccioGeneralByUsername(String username, String lang) throws Exception {
-        return processarPropietat("nomdepartamentdirecciogeneralbyusername." + lang, username);
+    public String getEncarregatCompresUsername(String username) throws Exception {
+        return processarPropietat("encarregatcompres", username);
     };
 
     @Override
-    public String getCapDepartamentDirectorGeneralByUsername(String username) throws Exception {
-        return processarPropietat("capdepartamentdirectorgeneralbyusername", username);
-    };
+    public String getRecursosHumansUsername(String username) throws Exception {
+        return processarPropietat("recursoshumans", username);
+    }
 
-    @Override
-    public String getSecretariByUsername(String username) throws Exception {
-        return processarPropietat("secretaribyusername", username);
-    };
+    /** =================  CÀRRECS ADDICIONALS ========= */
 
+    /* Username de la persona que ocupa aquest càrrec */
     @Override
-    public String getEncarregatCompresByUsername(String username) throws Exception {
-        return processarPropietat("encarregatcompresbyusername", username);
-    };
+    public String getCarrec1Username(String username) throws Exception {
+        return processarPropietat("carrec1.username", username);
+    }
 
+    /* Nom complet de la persona que ocupa aquest càrrec */
     @Override
-    public String getRecursosHumansByUsername(String username) throws Exception {
-        return processarPropietat("recursoshumansbyusername", username);
+    public String getCarrec1Name(String username) throws Exception {
+        return processarPropietat("carrec1.name", username);
+    }
+
+    /* Nom del càrrec que ocupa. */
+    @Override
+    public String getCarrec1PositionName(String username, String lang) throws Exception {
+        return processarPropietat("carrec1.positionname." + lang, username);
+    }
+
+    /* Username de la persona que ocupa aquest càrrec */
+    @Override
+    public String getCarrec2Username(String username) throws Exception {
+        return processarPropietat("carrec2.username", username);
+    }
+
+    /* Nom complet de la persona que ocupa aquest càrrec */
+    @Override
+    public String getCarrec2Name(String username) throws Exception {
+        return processarPropietat("carrec2.name", username);
+    }
+
+    /* Nom del càrrec que ocupa. */
+    @Override
+    public String getCarrec2PositionName(String username, String lang) throws Exception {
+        return processarPropietat("carrec2.positionname." + lang, username);
     }
 
     protected String processarPropietat(String propietat, String username) throws Exception {
 
         String valorPropietat = getPropertyRequired(MOCK_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + propietat);
+        
+        if (valorPropietat.trim().length() == 0) {
+            return null;
+        }
 
         Map<String, Object> map = new HashMap<String, Object>();
         if (username != null) {

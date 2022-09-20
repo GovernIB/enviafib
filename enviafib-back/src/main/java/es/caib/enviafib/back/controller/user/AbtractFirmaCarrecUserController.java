@@ -65,22 +65,28 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
             carrec =  "estructuraorganitzativa." + tipusCarrec + ".nom";
             switch (tipusCarrec) {
                 case Constants.CARREC_GERENT_PRESIDENT:
-                    carrecUsername = instance.getGerentPresident();
+                    carrecUsername = instance.getGerentPresidentUsername();
                 break;
                 case Constants.CARREC_CAP_AREA_CONSELLER:
-                    carrecUsername = instance.getCapAreaConsellerByUsername(username);
+                    carrecUsername = instance.getCapAreaConsellerUsername(username);
                 break;
                 case Constants.CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL:
-                    carrecUsername = instance.getCapDepartamentDirectorGeneralByUsername(username);
+                    carrecUsername = instance.getCapDepartamentDirectorGeneralUsername(username);
                 break;
                 case Constants.CARREC_SECRETARI:
-                    carrecUsername = instance.getSecretariByUsername(username);
+                    carrecUsername = instance.getSecretariUsername(username);
                 break;
                 case Constants.CARREC_ENCARREGAT_COMPRES:
-                    carrecUsername = instance.getEncarregatCompresByUsername(username);
+                    carrecUsername = instance.getEncarregatCompresUsername(username);
                 break;
                 case Constants.CARREC_RECURSOS_HUMANS:
-                    carrecUsername = instance.getRecursosHumansByUsername(username);
+                    carrecUsername = instance.getRecursosHumansUsername(username);
+                break;
+                case Constants.CARREC_ADDICIONAL_1:
+                    carrecUsername = instance.getCarrec1Username(username);
+                break;
+                case Constants.CARREC_ADDICIONAL_2:
+                    carrecUsername = instance.getCarrec2Username(username);
                 break;
 
                 default:

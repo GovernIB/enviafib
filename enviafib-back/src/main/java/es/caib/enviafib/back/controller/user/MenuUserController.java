@@ -73,7 +73,7 @@ public class MenuUserController implements Constants {
 
                     case CARREC_CAP_AREA_CONSELLER:
                         // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec AP AREA/CONSELLER");
+                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec CAP AREA/CONSELLER");
                         return "redirect:/";
 
                     case CARREC_ENCARREGAT_COMPRES:
@@ -91,6 +91,17 @@ public class MenuUserController implements Constants {
 
                     case CARREC_SECRETARI:
                         return "redirect:/user/firmasecretari/new";
+
+                    case CARREC_ADDICIONAL_1:
+                        // XYZ ZZZ
+                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec CARREC_ADDICIONAL_1");
+                        return "redirect:/";
+
+                    case CARREC_ADDICIONAL_2:
+                        // XYZ ZZZ
+                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec CARREC_ADDICIONAL_2");
+                        return "redirect:/";
+                        
 
                     default:
                         // XYZ ZZZ

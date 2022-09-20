@@ -245,7 +245,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         String codiDIR3;
         try {
             String username = LoginInfo.getInstance().getUsername();
-            codiDIR3 = instance.getCodiDIR3ByUsername(username);
+            codiDIR3 = instance.getDir3DepartamentDireccioGeneral(username);
             log.info("El meu codiDIR3 es: " + codiDIR3);
             return codiDIR3;
 

@@ -35,8 +35,8 @@ INSERT INTO efi_traducciomap VALUES (116, 'ca', 'Enviar a firmar al/la Director/
 INSERT INTO efi_traducciomap VALUES (116, 'es', 'Enviar a firmar al/la Director/a');
 INSERT INTO efi_traducciomap VALUES (117, 'ca', 'Enviar a firmar un document al/a la Director/a General');
 INSERT INTO efi_traducciomap VALUES (117, 'es', 'Enviar a firmar un documento al/la Director/a General');
-INSERT INTO efi_traducciomap VALUES (118, 'ca', 'Enviar a firmar al/a la secretari/a');
-INSERT INTO efi_traducciomap VALUES (118, 'es', 'Enviar a firmar al/a la secretario/a');
+INSERT INTO efi_traducciomap VALUES (118, 'ca', 'Enviar a firmar al/a la Secretari/a');
+INSERT INTO efi_traducciomap VALUES (118, 'es', 'Enviar a firmar al/a la Secretario/a');
 INSERT INTO efi_traducciomap VALUES (119, 'ca', 'Per enviar a signar un document al/a la secretari/a de la seva direcció general');
 INSERT INTO efi_traducciomap VALUES (119, 'es', 'Para enviar a firmar un documento al/a la secretario/a de su dirección general');
 INSERT INTO efi_traducciomap VALUES (120, 'ca', 'Enviar a firmar amb una plantilla de flux de firma de l´usuari');

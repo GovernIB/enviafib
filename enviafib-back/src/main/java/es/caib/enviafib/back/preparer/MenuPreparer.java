@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.security.RunAs;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.ejb.IdiomaService;
 import es.caib.enviafib.logic.MenuLogicaService;
 import es.caib.enviafib.model.entity.Menu;
 
@@ -34,8 +32,8 @@ public class MenuPreparer implements ViewPreparer {
 
     protected final Logger log = Logger.getLogger(getClass());
 
-    // NO FUNCIONA :-(  => @EJB(mappedName = MenuLogicaService.JNDI_NAME)
-    protected static MenuLogicaService menuLogicaEjb;
+    // NO FUNCIONA :-(  =>  @EJB(mappedName = MenuLogicaService.JNDI_NAME)
+    protected MenuLogicaService menuLogicaEjb;
 
     @Override
     public void execute(Request tilesRequest, AttributeContext attributeContext) throws PreparerException {

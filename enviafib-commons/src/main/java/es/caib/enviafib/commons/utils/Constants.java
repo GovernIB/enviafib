@@ -76,11 +76,14 @@ public interface Constants {
     public static final int CARREC_SECRETARI = 4;
     public static final int CARREC_ENCARREGAT_COMPRES = 5;
     public static final int CARREC_RECURSOS_HUMANS = 6;
+    public static final int CARREC_ADDICIONAL_1 = 7;
+    public static final int CARREC_ADDICIONAL_2 = 8;
     
     public static final int[] CARRECS = {
             CARREC_GERENT_PRESIDENT, CARREC_CAP_AREA_CONSELLER,
             CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL, CARREC_SECRETARI,
-            CARREC_ENCARREGAT_COMPRES, CARREC_RECURSOS_HUMANS
+            CARREC_ENCARREGAT_COMPRES, CARREC_RECURSOS_HUMANS,
+            CARREC_ADDICIONAL_1, CARREC_ADDICIONAL_2
     };
     
 
