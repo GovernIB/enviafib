@@ -13,9 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.security.PermitAll;
-
 import javax.ejb.Asynchronous;
-
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
@@ -60,9 +58,6 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
-import es.caib.enviafib.persistence.FitxerJPA;
-import es.caib.enviafib.persistence.InfoArxiuJPA;
-import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
@@ -74,6 +69,9 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.model.fields.UsuariFields;
+import es.caib.enviafib.persistence.FitxerJPA;
+import es.caib.enviafib.persistence.InfoArxiuJPA;
+import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -264,22 +262,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return infoSignatura;
 
     }
-    
-    
-    
+
     @Override
     @PermitAll
     @Asynchronous
-    public void cosesAFerPeticioFirmadaPart2(long portaFIBID, String languageUI, InfoSignatura infoSignatura) throws I18NException {
+    public void cosesAFerPeticioFirmadaPart2(long portaFIBID, String languageUI, InfoSignatura infoSignatura)
+            throws I18NException {
 
-        
         Long peticioID = getPeticioIdFromPortafibId(portaFIBID);
-        
+
         Peticio peticio = this.findByPrimaryKey(peticioID);
-         
+
         peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
         this.update(peticio);
-        
+
         log.info("cosesAFerPeticioFirmada():: Guardam dins arxiu de forma asyncrona .... ");
 
         guardarFitxerArxiuSync(peticio.getPeticioID(), languageUI, infoSignatura);
@@ -288,8 +284,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         log.info("cosesAFerPeticioFirmada()::  SORTIM !!!!! ");
     }
-    
-    
 
     @Override
     @PermitAll
@@ -316,13 +310,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     /*
     protected void guardarFitxerArxiu(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
             throws I18NException {
-
+    
         Peticio peticio = findByPrimaryKey(peticioID);
         peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
         this.update(peticio);
-
+    
         guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
-
+    
     }
     */
 
@@ -362,9 +356,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public String reintentarTancarExpedient(long peticioID) throws I18NException {
 
-//        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
-//                PeticioFields.PETICIOID.equal(peticioID));
-//        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
+        //        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
+        //                PeticioFields.PETICIOID.equal(peticioID));
+        //        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
 
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
@@ -381,11 +375,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
             msg = null;
-            
+
             try {
                 enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID());
-            } catch(Exception e) {
-                 log.error("Error enviant correu: " + e.getMessage(), e);
+            } catch (Exception e) {
+                log.error("Error enviant correu: " + e.getMessage(), e);
             }
 
         } else {
@@ -396,7 +390,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         return msg;
     }
-
 
     /**
      * 
@@ -424,11 +417,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
-            
+
             try {
                 enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID());
-            } catch(Exception e) {
-                 log.error("Error enviant correu: " + e.getMessage(), e);
+            } catch (Exception e) {
+                log.error("Error enviant correu: " + e.getMessage(), e);
             }
         }
 
@@ -464,8 +457,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return this.executeQueryOne(PeticioFields.PETICIOID,
                 PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
     }
-    
-
 
     protected boolean esborrarPeticioPortafib(long portafibID, String languageUI) {
 
@@ -516,14 +507,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 break;
                 case Constants.ESTAT_PETICIO_ARXIVANT:
                     code = "email.peticio.body.arxivant";
-                    break;
+                break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:{
+                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT: {
                     code = "email.peticio.body.error.arxivant";
                 }
                 break;
             }
-            
 
             String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
 
@@ -758,16 +748,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         this.update(pet);
 
         //guardarFitxerArxiu(peticioID, pet.getIdiomaID(), infoSignatura);
-        
+
         Peticio peticio = findByPrimaryKey(peticioID);
         peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
         this.update(peticio);
-        
+
         log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
 
         guardarFitxerArxiuSync(peticioID, peticio.getIdiomaID(), infoSignatura);
-        
-        
+
         log.info("guardarResultatAutofirma()::Autofirma => sortim");
 
         // pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
@@ -987,7 +976,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
         return signatureBlocks;
     }
-    
+
     //Funcio que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
     @TransactionTimeout(value = 180)
     @Schedule(hour = "4", persistent = false)
@@ -1019,18 +1008,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         query.executeUpdate();
                     } else {
 
-                        String msg = I18NCommonUtils.tradueix(new Locale(languageUI), "error.peticio.portafib.eliminacio" , portaFIBID);
+                        String msg = I18NCommonUtils.tradueix(new Locale(languageUI),
+                                "error.peticio.portafib.eliminacio", portaFIBID);
                         log.error(msg);
                     }
-                    
+
                     //El Timeout son 3 minuts. Si el CRON executa durant 2 min i 59 segons, es surt de la funció.
-                    if((System.currentTimeMillis() - currentTime) > 179000) {
+                    if ((System.currentTimeMillis() - currentTime) > 179000) {
                         return;
                     }
 
                 } catch (Throwable e) {
-                    
-                    String msg = I18NCommonUtils.tradueix(new Locale(languageUI), "error.peticio.portafib.eliminacio" , portaFIBID)+ " : " + e.getMessage();
+
+                    String msg = I18NCommonUtils.tradueix(new Locale(languageUI), "error.peticio.portafib.eliminacio",
+                            portaFIBID) + " : " + e.getMessage();
                     log.error(msg, e);
                 }
 
@@ -1043,5 +1034,51 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
+    //Funcio que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
+    @TransactionTimeout(value = 180)
+    @Schedule(hour = "5", persistent = false)
+    protected void eliminarFitxersSignatsDeLocal() {
+        log.info("Comença eliminarFitxersSignatsDeLocal()");
+        try {
+            //Llistat de peticions arxivades: 
+            List<Long> fitxersFirmatsID = this.executeQuery(PeticioFields.FITXERFIRMATID,
+                    Where.AND(PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_FIRMADA),
+                            PeticioFields.FITXERFIRMATID.isNotNull()));
 
+            java.util.Set<Long> fitxersEsborrar = new java.util.HashSet<Long>();
+
+            // Borram fitxers a BD
+            for (Long fitxerFirmatID : fitxersFirmatsID) {
+
+                Query query = getEntityManager().createQuery(
+                        "update " + PeticioJPA.class.getSimpleName() + " set " + PeticioFields.FITXERFIRMATID.javaName
+                                + " = null" + " where " + PeticioFields.FITXERFIRMATID.javaName + " = ?0");
+
+                query.setParameter(0, fitxerFirmatID);
+                query.executeUpdate();
+
+                log.info("Esborrant fitxer " + fitxerFirmatID + " a BBDD");
+                fitxerEjb.delete(fitxerFirmatID);
+                fitxersEsborrar.add(fitxerFirmatID);
+
+            }
+
+            if (fitxersEsborrar.size() == 0) {
+                log.info("No hi ha fitxers per esborrar!");
+            } else {
+                for (Long fitxerID : fitxersEsborrar) {
+                    log.info("Fitxer " + fitxerID + " per esborrar fisic");
+                }
+            }
+
+            // Borram fitxers fisic
+            __tsRegistry.registerInterposedSynchronization(
+                    new es.caib.enviafib.ejb.utils.CleanFilesSynchronization(fitxersEsborrar));
+
+        } catch (I18NException e) {
+            String msg = "Ha hagut un error amb el Cron Nocturn d'eliminar fixers: " + e.getMessage();
+            log.error(msg, e);
+        }
+        log.info("Acaba eliminarFitxersSignatsDeLocal()");
+    }
 }
