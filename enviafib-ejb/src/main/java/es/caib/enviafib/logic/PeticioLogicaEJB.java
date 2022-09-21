@@ -924,6 +924,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return signatureBlocks;
     }
 
+    /**
+     * 
+     * @param nifDestinatari
+     * @return
+     * @throws I18NException
+     */
     protected FirmaAsyncSimpleSignatureBlock[] convertNifToSignatureBlocks(String nifDestinatari) throws I18NException {
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = null;
 
@@ -977,11 +983,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return signatureBlocks;
     }
 
-    //Funcio que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
-    @TransactionTimeout(value = 180)
+    public static final long TRANSACTION_TIMEOUT_IN_SEC = 180;
+    public static final long TRAMSACTION_EXIT_IN_MILI= (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
+
+    /**
+     * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
+     */
+    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
     @Schedule(hour = "4", persistent = false)
     protected void eliminarPeticionsPortaFIB() {
-        long currentTime = System.currentTimeMillis();
+        log.info("Comença eliminarPeticionsPortaFIB()");
+
+        final long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
         try {
             Where w1 = TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
@@ -1008,37 +1021,44 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         query.executeUpdate();
                     } else {
 
-                        String msg = I18NCommonUtils.tradueix(new Locale(languageUI),
-                                "error.peticio.portafib.eliminacio", portaFIBID);
+                        final String msg = "Error amb el mètode esborrarPeticioPortafib() amb portafibID=" + portaFIBID
+                                + " durant el cron nocturn.";
                         log.error(msg);
                     }
 
-                    //El Timeout son 3 minuts. Si el CRON executa durant 2 min i 59 segons, es surt de la funció.
-                    if ((System.currentTimeMillis() - currentTime) > 179000) {
-                        return;
+                    //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
+                    if ((System.currentTimeMillis() - startTime) > TRAMSACTION_EXIT_IN_MILI) {
+                        break;
                     }
 
                 } catch (Throwable e) {
-
-                    String msg = I18NCommonUtils.tradueix(new Locale(languageUI), "error.peticio.portafib.eliminacio",
-                            portaFIBID) + " : " + e.getMessage();
+                    final String msg = "Error pasant portafibID=" + portaFIBID
+                            + "  a ESBORRADA% durant el cron nocturn: " + e.getMessage();
                     log.error(msg, e);
                 }
-
             }
 
         } catch (I18NException e) {
-            String msg = e.getMessage();
+            final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
+                    + I18NCommonUtils.getMessage(e, new Locale(languageUI));
             log.error(msg, e);
         }
 
+        long endTime = System.currentTimeMillis();
+        log.info("Total time: " + (endTime - startTime));
+        log.info("Acaba eliminarPeticionsPortaFIB()");
     }
 
-    //Funcio que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
-    @TransactionTimeout(value = 180)
+    /**
+     * Funció que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
+     */
+    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
     @Schedule(hour = "5", persistent = false)
     protected void eliminarFitxersSignatsDeLocal() {
         log.info("Comença eliminarFitxersSignatsDeLocal()");
+
+        long startTime = System.currentTimeMillis();
+        final String languageUI = "ca";
         try {
             //Llistat de peticions arxivades: 
             List<Long> fitxersFirmatsID = this.executeQuery(PeticioFields.FITXERFIRMATID,
@@ -1049,25 +1069,37 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             // Borram fitxers a BD
             for (Long fitxerFirmatID : fitxersFirmatsID) {
+                try {
+                    Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName() + " set "
+                            + PeticioFields.FITXERFIRMATID.javaName + " = null" + " where "
+                            + PeticioFields.FITXERFIRMATID.javaName + " = ?0");
 
-                Query query = getEntityManager().createQuery(
-                        "update " + PeticioJPA.class.getSimpleName() + " set " + PeticioFields.FITXERFIRMATID.javaName
-                                + " = null" + " where " + PeticioFields.FITXERFIRMATID.javaName + " = ?0");
+                    query.setParameter(0, fitxerFirmatID);
+                    query.executeUpdate();
 
-                query.setParameter(0, fitxerFirmatID);
-                query.executeUpdate();
+                    log.info("Esborrant fitxer " + fitxerFirmatID + " a BBDD");
+                    fitxerEjb.delete(fitxerFirmatID);
+                    fitxersEsborrar.add(fitxerFirmatID);
 
-                log.info("Esborrant fitxer " + fitxerFirmatID + " a BBDD");
-                fitxerEjb.delete(fitxerFirmatID);
-                fitxersEsborrar.add(fitxerFirmatID);
+                    //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
+                    if ((System.currentTimeMillis() - startTime) > TRAMSACTION_EXIT_IN_MILI) {
+                        break;
+                    }
 
+                } catch (Throwable t) {
+                    final String msg = "Error esborrant el fitxer firmat amb ID = " + fitxerFirmatID + " : "
+                            + t.getMessage();
+                    log.error(msg, t);
+                }
             }
 
             if (fitxersEsborrar.size() == 0) {
                 log.info("No hi ha fitxers per esborrar!");
             } else {
-                for (Long fitxerID : fitxersEsborrar) {
-                    log.info("Fitxer " + fitxerID + " per esborrar fisic");
+                if (log.isDebugEnabled()) {
+                    for (Long fitxerID : fitxersEsborrar) {
+                        log.debug("Fitxer " + fitxerID + " per esborrar fisic");
+                    }
                 }
             }
 
@@ -1076,9 +1108,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     new es.caib.enviafib.ejb.utils.CleanFilesSynchronization(fitxersEsborrar));
 
         } catch (I18NException e) {
-            String msg = "Ha hagut un error amb el Cron Nocturn d'eliminar fixers: " + e.getMessage();
+
+            final String msg = "Error obtenint llistat de fitxersFirmatsID durant el cron nocturn: "
+                    + I18NCommonUtils.getMessage(e, new Locale(languageUI));
             log.error(msg, e);
         }
+
+        long endTime = System.currentTimeMillis();
+        log.info("Total time: " + (endTime - startTime));
         log.info("Acaba eliminarFitxersSignatsDeLocal()");
     }
 }
