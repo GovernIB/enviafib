@@ -33,6 +33,7 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 
@@ -244,24 +245,27 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
                         "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
             }
 
-            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT || peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT
+                    || peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
 
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
-                        "peticio.btn.sendmail",  "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+                        "peticio.btn.sendmail", "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+
+                String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
+                        InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
                 
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
-                        "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + peticioID , "btn-info"));
+                        "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + csv, "btn-info"));
 
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
-                        "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + peticioID , "btn-info"));
-                
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fas fa-print",
-                        "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + peticioID , "btn-info"));
+                        "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
+
+                filterForm.addAdditionalButtonByPK(peticioID,
+                        new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
+                                getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
 
             }
 
-            
-            
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
                         new AdditionalButton("fas fa-redo-alt icon-white", "arxiu.reintentartancamentexpedient",

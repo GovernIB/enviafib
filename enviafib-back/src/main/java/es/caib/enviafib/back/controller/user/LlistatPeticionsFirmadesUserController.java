@@ -2,6 +2,7 @@ package es.caib.enviafib.back.controller.user;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.InfoArxiu;
+import es.caib.enviafib.model.fields.InfoArxiuFields;
+import es.caib.enviafib.model.fields.PeticioFields;
+import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 import es.caib.plugins.arxiu.api.Document;
@@ -64,73 +69,62 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
 
-//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-file-pdf",
-//                    "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}", "btn-info"));
-//
-//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-vote-yea",
-//                    "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/{0}", "btn-info"));
-//
-//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-print",
-//                    "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/{0}", "btn-info"));
-//
-//            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-envelope icon-white",
-//                    "peticio.btn.sendmail", "javascript: cridaEmail({0})", "btn-success"));
+            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-file-pdf",
+            //                    "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}", "btn-info"));
+            //
+            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-vote-yea",
+            //                    "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/{0}", "btn-info"));
+            //
+            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-print",
+            //                    "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/{0}", "btn-info"));
+            //
+            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-envelope icon-white",
+            //                    "peticio.btn.sendmail", "javascript: cridaEmail({0})", "btn-success"));
         }
 
         return peticioFilterForm;
     }
 
-    @RequestMapping(value = "/descarregaroriginal/{peticioID}", method = RequestMethod.GET)
-    public void descarregarOriginal(@PathVariable("peticioID") java.lang.Long peticioID, HttpServletRequest request,
+    @RequestMapping(value = "/descarregaroriginal/{csv}", method = RequestMethod.GET)
+    public void descarregarOriginal(@PathVariable("csv") String csv, HttpServletRequest request,
             HttpServletResponse response) throws I18NException, IOException {
 
         final String format = "PDF";
+        final String docName = "_original";
         TipusFile tipusFile = TipusFile.ORIGINAL;
 
-        internalDownload(peticioID, response, format, tipusFile);
+        internalDownload(csv, response, format, docName, tipusFile);
     }
 
-    @RequestMapping(value = "/descarregarenidoc/{peticioID}", method = RequestMethod.GET)
-    public void descarregarEnidoc(@PathVariable("peticioID") java.lang.Long peticioID, HttpServletRequest request,
+    @RequestMapping(value = "/descarregarenidoc/{csv}", method = RequestMethod.GET)
+    public void descarregarEnidoc(@PathVariable("csv") String csv, HttpServletRequest request,
             HttpServletResponse response) throws I18NException, IOException {
 
         final String format = "ENI";
+        final String docName = "_eni";
         TipusFile tipusFile = TipusFile.ENI_DOC;
 
-        internalDownload(peticioID, response, format, tipusFile);
+        internalDownload(csv, response, format, docName, tipusFile);
     }
 
-    @RequestMapping(value = "/descarregarimprimible/{peticioID}", method = RequestMethod.GET)
-    public void descarregarVersioImprible(@PathVariable("peticioID") java.lang.Long peticioID,
-            HttpServletRequest request, HttpServletResponse response) throws I18NException, IOException {
+    @RequestMapping(value = "/descarregarimprimible/{csv}", method = RequestMethod.GET)
+    public void descarregarVersioImprible(@PathVariable("csv") String csv, HttpServletRequest request,
+            HttpServletResponse response) throws I18NException, IOException {
 
         final String format = "PDF";
+        final String docName = "_imprimible";
         TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
 
-        internalDownload(peticioID, response, format, tipusFile);
+        internalDownload(csv, response, format, docName, tipusFile);
     }
 
-    protected void internalDownload(java.lang.Long peticioID, HttpServletResponse response, final String format,
+    protected void internalDownload(String csv, HttpServletResponse response, final String format, final String docName,
             TipusFile tipusFile) throws I18NException, IOException {
 
-        if (peticioID == null) {
-            return;
-        }
-
-        PeticioJPA peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-        log.info("internalDownload(): -> peticio: " + peticio);
-
-        InfoArxiuJPA infoArxiu = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
-        log.info("internalDownload(): -> infoArxiu: " + infoArxiu);
-
-        String docID = infoArxiu.getArxiuDocumentID();
-        log.info("internalDownload(): -> docID: " + docID);
-
-//        String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
-//                InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-
-//        Long pluginID = 1001L;
         IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
+
+        String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID, InfoArxiuFields.CSV.equal(csv));
+        log.info("internalDownload(): -> docID: " + docID);
 
         byte[] data = null;
         switch (tipusFile) {
@@ -150,31 +144,36 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
             break;
         }
 
-        prepareAndDownload(data, response, peticio, format);
+        prepareAndDownload(data, response, docName, format, csv);
     }
 
-    private void prepareAndDownload(byte[] data, HttpServletResponse response, PeticioJPA peticio, String format) {
+    private void prepareAndDownload(byte[] data, HttpServletResponse response, final String docName,
+            final String format, String csv) throws I18NException {
 
-        // s'eliminen els espais en el cas de noms de transaccions amb més d'una
-        // paraula, així queda només el nom amb una paraula
-        // motiu: no se li afegia l'extensió correctament al document descarregat
-        String documentName = peticio.getNom().replace(" ", "_");
+        //      new PeticioJPA().getInfoArxiu().getCsv();
+        String fileName = peticioEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
+                new PeticioQueryPath().INFOARXIU().CSV().equal(csv));
 
-        if (format.equals("PDF")) {
-            response.setContentType("application/pdf");
+        fileName = fileName.replace(" ", "_");
 
-            if (documentName != null && !documentName.toLowerCase().endsWith(".pdf")) {
-                documentName += ".pdf";
+        if (fileName != null) {
+            if (fileName.toLowerCase().endsWith(".pdf")) {
+                fileName = fileName.substring(0, fileName.lastIndexOf(".pdf"));
+            }
+            if (fileName.toLowerCase().endsWith(".xml")) {
+                fileName = fileName.substring(0, fileName.lastIndexOf(".xml"));
             }
 
-        } else if (format.equals("ENI")) {
-            response.setContentType("text/xml");
+            if (format.equals("PDF")) {
+                response.setContentType("application/pdf");
+                fileName += docName + ".pdf";
 
-            if (documentName != null && !documentName.toLowerCase().endsWith(".xml")) {
-                documentName += ".xml";
+            } else if (format.equals("ENI")) {
+                response.setContentType("text/xml");
+                fileName += docName + ".xml";
             }
         }
-        response.setHeader("Content-disposition", "attachment; filename=" + documentName);
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
         response.setContentLength(data.length);
 
         OutputStream out;
