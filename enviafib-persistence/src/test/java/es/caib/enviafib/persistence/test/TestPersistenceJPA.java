@@ -33,9 +33,6 @@ public class TestPersistenceJPA {
 
     public static final Logger log = Logger.getLogger(TestPersistenceJPA.class);
 
-    @javax.annotation.Resource
-    protected javax.transaction.TransactionSynchronizationRegistry __tsRegistry;
-
     public static final void main(String[] args) {
         try {
             log.info(">>>>>>>>>>>>  Hello World!");
@@ -43,38 +40,18 @@ public class TestPersistenceJPA {
             // USING GENAPP
             // ============
 
-            Properties prop = new Properties();
-
-            prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-            prop.put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
-            prop.put("javax.persistence.jdbc.url", "jdbc:postgresql://localhost:5432/enviafib");
-            prop.put("javax.persistence.jdbc.user", "enviafib");
-            prop.put("javax.persistence.jdbc.password", "enviafib");
-
-            prop.put("hibernate.connection.driver_class", "org.postgresql.Driver");
-            prop.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/enviafib");
-            prop.put("hibernate.connection.username", "enviafib");
-            prop.put("hibernate.connection.password", "enviafib");
-
-            prop.put("hibernate.show_sql", "true");
-
-            EntityManagerFactory emf;
-
-            // Veure persistence.xml
-            emf = Persistence.createEntityManagerFactory("enviafibPULocal", prop);
-
-            EntityManager em = emf.createEntityManager();
-
-            em.setFlushMode(FlushModeType.AUTO);
+            EntityManager em = initializeDataBase();
 
             EntityTransaction tx = em.getTransaction();
 
             tx.begin();
 
-            EnviaFIBDaoManager.setDaoManagers(new EnviaFIBJPADaoManagers(em));
+            
 
-            eliminarFitxersSignatsDeLocal();
+            //eliminarFitxersSignatsDeLocal();
             //consultaNocturna();
+            
+            
 
             /*
              * EXEMPLE DE CRIDADA DIRECTE
@@ -133,6 +110,35 @@ public class TestPersistenceJPA {
         }
     }
 
+    protected static EntityManager initializeDataBase() {
+        Properties prop = new Properties();
+
+        prop.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        prop.put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
+        prop.put("javax.persistence.jdbc.url", "jdbc:postgresql://localhost:5432/enviafib");
+        prop.put("javax.persistence.jdbc.user", "enviafib");
+        prop.put("javax.persistence.jdbc.password", "enviafib");
+
+        prop.put("hibernate.connection.driver_class", "org.postgresql.Driver");
+        prop.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/enviafib");
+        prop.put("hibernate.connection.username", "enviafib");
+        prop.put("hibernate.connection.password", "enviafib");
+
+        prop.put("hibernate.show_sql", "true");
+
+        EntityManagerFactory emf;
+
+        // Veure persistence.xml
+        emf = Persistence.createEntityManagerFactory("enviafibPULocal", prop);
+
+        EntityManager em = emf.createEntityManager();
+
+        em.setFlushMode(FlushModeType.AUTO);
+        
+        EnviaFIBDaoManager.setDaoManagers(new EnviaFIBJPADaoManagers(em));
+        return em;
+    }
+
     protected static void eliminarFitxersSignatsDeLocal() {
         try {
             IPeticioManager peticionsDAO = EnviaFIBDaoManager.getDaoManagers().getPeticioManager();
@@ -174,12 +180,6 @@ public class TestPersistenceJPA {
                     System.out.println("Fitxer " + fitxerID + " per esborrar fisic");
                 }
             }
-
-            /*
-            // Borram fitxers fisic
-            __tsRegistry.registerInterposedSynchronization(
-                    new es.caib.enviafib.ejb.utils.CleanFilesSynchronization(fitxersEsborrar));
-             */
 
         } catch (I18NException e) {
             String msg = e.getMessage();
