@@ -984,7 +984,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     public static final long TRANSACTION_TIMEOUT_IN_SEC = 180;
-    public static final long TRAMSACTION_EXIT_IN_MILI= (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
+    public static final long TRAMSACTION_EXIT_IN_MILI = (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
 
     /**
      * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
@@ -997,14 +997,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         final long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
         try {
-            Where w1 = TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
+            Where w1 = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
 
-            Where w2 = Where.OR(ESTAT.equal(Constants.ESTAT_PETICIO_FIRMADA),
-                    ESTAT.equal(Constants.ESTAT_PETICIO_ERROR));
+            Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR };
+            Where w2 = PeticioFields.ESTAT.in(estats);
 
-            Where w3 = PETICIOID.notIn(this.getSubQuery(PETICIOID, PETICIOPORTAFIRMES.like("ESBORRADA%")));
+            Where w3 = PeticioFields.PETICIOPORTAFIRMES.notLike("ESBORRADA%");
 
-            List<String> listPortaFIBIds = this.executeQuery(PETICIOPORTAFIRMES, Where.AND(w1, w2, w3));
+            List<String> listPortaFIBIds = this.executeQuery(PeticioFields.PETICIOPORTAFIRMES, Where.AND(w1, w2, w3));
 
             for (String portaFIBID : listPortaFIBIds) {
                 try {
@@ -1021,13 +1021,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         query.executeUpdate();
                     } else {
 
-                        final String msg = "Error amb el mètode esborrarPeticioPortafib() amb portafibID=" + portaFIBID
+                        final String msg = "Error al mètode esborrarPeticioPortafib() amb portafibID=" + portaFIBID
                                 + " durant el cron nocturn.";
                         log.error(msg);
                     }
 
                     //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
                     if ((System.currentTimeMillis() - startTime) > TRAMSACTION_EXIT_IN_MILI) {
+                        log.warn("Timeout.");
                         break;
                     }
 
@@ -1083,6 +1084,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
                     //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
                     if ((System.currentTimeMillis() - startTime) > TRAMSACTION_EXIT_IN_MILI) {
+                        log.warn("Timeout.");
                         break;
                     }
 
@@ -1093,13 +1095,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 }
             }
 
+            // XYZ ZZZ TRA Debug a partir de setembre
             if (fitxersEsborrar.size() == 0) {
                 log.info("No hi ha fitxers per esborrar!");
             } else {
-                if (log.isDebugEnabled()) {
-                    for (Long fitxerID : fitxersEsborrar) {
-                        log.debug("Fitxer " + fitxerID + " per esborrar fisic");
-                    }
+                for (Long fitxerID : fitxersEsborrar) {
+                    log.info("Fitxer " + fitxerID + " per esborrar fisic");
                 }
             }
 
