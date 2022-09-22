@@ -27,11 +27,6 @@ public class FirmaPlantillaFluxEntitatUserController extends FirmaPlantillaFluxU
     }
 
     @Override
-    public String getTitolCode() {
-        return Constants.CODI_PETICIO_PLANTILLAFLUX_ENTITAT;
-    }
-
-    @Override
     public String getOwner() {
         return OWNER_PLANTILLES_DE_LA_ENTITAT;
     }

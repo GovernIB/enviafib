@@ -1,3 +1,16 @@
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecAddicional2UserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaPlantillaFluxUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaFluxUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.AutoFirmaUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaPerNifUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecAddicional1UserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecSecretariUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecGerentPresidentUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecCapAreaConsellerUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecEncarregatCompresUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecRecursosHumansUserController"%>
+<%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecDirectorUserController"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@page import="org.springframework.security.core.Authentication"%><%@page
     import="org.springframework.context.i18n.LocaleContextHolder"%><%@page
@@ -5,8 +18,8 @@
     import="org.springframework.security.core.context.SecurityContextHolder"%><%@page
     import="es.caib.enviafib.back.security.LoginInfo"%>
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
-<un:useConstants var="ConstantsEnviaFIB"
-    className="es.caib.enviafib.commons.utils.Constants" />
+<un:useConstants var="ConstantsEnviaFIB" className="es.caib.enviafib.commons.utils.Constants" />
+
 <c:set var="url" value="${urlActual}" />
 <div>
     <h5>
@@ -151,42 +164,50 @@
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_AUTOFIRMA}">
-                    <c:set var="urlBlack" value="/user/autofirma" />
+                    <%                             
+                     pageContext.setAttribute("urlBlack", AutoFirmaUserController.CONTEXT_WEB);
+                     %> 
                 </c:when>
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_PER_NIF}">
-                    <c:set var="urlBlack" value="/user/firmapernif" />
+                    <%                             
+                     pageContext.setAttribute("urlBlack", FirmaPerNifUserController.CONTEXT_WEB);
+                     %> 
                 </c:when>
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_FLUX}">
-                    <c:set var="urlBlack" value="/user/flux" />
+                   <%                             
+                     pageContext.setAttribute("urlBlack", FirmaFluxUserController.CONTEXT_WEB);
+                     %> 
                 </c:when>
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI}">
-                    <c:set var="urlBlack"
-                        value="/user/firmaplantillafluxusuari" />
+                    <%                             
+                     pageContext.setAttribute("urlBlack", FirmaPlantillaFluxUserController.CONTEXT_WEB);
+                     %> 
                 </c:when>
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_PLANTILLES_FLUX_ENTITAT}">
-                    <c:set var="urlBlack"
-                        value="/user/firmaplantillafluxentitat" />
+                    <%                             
+                     pageContext.setAttribute("urlBlack", FirmaPlantillaFluxEntitatUserController.CONTEXT_WEB);
+                     %> 
                 </c:when>
 
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT}">
                     <c:set var="urlBlack"
-                        value="NO IMPLEMENTAT MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT" />
+                        value="XYZ ZZZ NO IMPLEMENTAT MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT" />
                 </c:when>
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON}">
                     <c:set var="urlBlack"
-                        value="No implementat MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON" />
+                        value="XYZ ZZZ No implementat MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON" />
                 </c:when>
 
 
@@ -198,40 +219,61 @@
 
                         <c:when
                             test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_GERENT_PRESIDENT}">
-                            <c:set var="urlBlack"
-                                value="No implementada firma per càrrec GERENT/PRESIDENT" />
+                             <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecGerentPresidentUserController.CONTEXT_WEB);
+                             %> 
                         </c:when>
-
 
                         <c:when
                             test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_CAP_AREA_CONSELLER}">
-                            <c:set var="urlBlack"
-                                value="No implementada firma per càrrec CAP AREA/CONSELLER" />
+                             <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB);
+                             %> 
                         </c:when>
-
-                        <c:when
-                            test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_ENCARREGAT_COMPRES}">
-                            <c:set var="urlBlack"
-                                value="No implementada firma per càrrec ENCARREGAT DE COMPRES" />
-                        </c:when>
-
-                        <c:when
-                            test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_RECURSOS_HUMANS}">
-                            <c:set var="urlBlack"
-                                value="No implementada firma per càrrec RECURSOS_HUMANS" />
-                        </c:when>
-
+                        
                         <c:when
                             test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL}">
-                            <c:set var="urlBlack"
-                                value="/user/firmadirector" />
+                             <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecDirectorUserController.CONTEXT_WEB);
+                             %>    
+                                 
                         </c:when>
 
                         <c:when
                             test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_SECRETARI}">
-                            <c:set var="urlBlack"
-                                value="/user/firmasecretari" />
+                            <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecSecretariUserController.CONTEXT_WEB);
+                             %> 
                         </c:when>
+
+                        <c:when
+                            test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_ENCARREGAT_COMPRES}">
+                             <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB);
+                             %> 
+                        </c:when>
+
+                        <c:when
+                            test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_RECURSOS_HUMANS}">
+                             <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecRecursosHumansUserController.CONTEXT_WEB);
+                             %> 
+                        </c:when>
+                        
+                        <c:when
+                            test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_ADDICIONAL_1}">
+                             <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecAddicional1UserController.CONTEXT_WEB);
+                             %> 
+                        </c:when>
+                        
+                        <c:when
+                            test="${menu.parametreCombo eq ConstantsEnviaFIB.CARREC_ADDICIONAL_2}">
+                             <%                             
+                             pageContext.setAttribute("urlBlack", FirmaCarrecAddicional2UserController.CONTEXT_WEB);
+                             %> 
+                        </c:when>
+
                         <c:otherwise>
                             <c:set var="urlBlack"
                                 value="TIPUS CARREC NO DEFINIT ${menu.parametreCombo}" />

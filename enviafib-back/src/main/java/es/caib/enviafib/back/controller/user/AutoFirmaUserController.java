@@ -67,10 +67,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         return Constants.TIPUS_PETICIO_AUTOFIRMA;
     }
 
-    @Override
-    public String getTitolCode() {
-        return Constants.CODI_PETICIO_AUTOFIRMA;
-    }
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)

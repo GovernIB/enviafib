@@ -48,22 +48,25 @@ public interface Constants {
     public static final int TIPUS_PETICIO_NIF = 0;
     public static final int TIPUS_PETICIO_AUTOFIRMA = 1;
     public static final int TIPUS_PETICIO_FLUX = 2;
-    public static final int TIPUS_PETICIO_DIRECTOR = 3;
-    public static final int TIPUS_PETICIO_SECRETARI = 4;
+    //public static final int TIPUS_PETICIO_DIRECTOR = 3;
+    //public static final int TIPUS_PETICIO_SECRETARI = 4;
     public static final int TIPUS_PETICIO_PLANTILLAFLUX_USUARI = 5;
     public static final int TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT = 6;
+    // Càrrecs
+    public static final int TIPUS_PETICIO_CARREC_GERENT_PRESIDENT = 11;
+    public static final int TIPUS_PETICIO_CARREC_CAPAREA_CONSELLER = 12;
+    public static final int TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR = 13;
+    public static final int TIPUS_PETICIO_CARREC_SECRETARI = 14;
+    public static final int TIPUS_PETICIO_CARREC_ENCARREGAT_COMPRES = 15;
+    public static final int TIPUS_PETICIO_CARREC_RECURSOS_HUMANS = 16;
+    public static final int TIPUS_PETICIO_CARREC_ADDICIONAL_1 = 17;
+    public static final int TIPUS_PETICIO_CARREC_ADDICIONAL_2 = 18;
+    
 
     public static final int[] TIPUS_PETICIONS = { TIPUS_PETICIO_NIF, TIPUS_PETICIO_AUTOFIRMA, TIPUS_PETICIO_FLUX,
-            TIPUS_PETICIO_DIRECTOR, TIPUS_PETICIO_SECRETARI, TIPUS_PETICIO_PLANTILLAFLUX_USUARI,
-            TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT };
+            TIPUS_PETICIO_PLANTILLAFLUX_USUARI, TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT,
+            TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR, TIPUS_PETICIO_CARREC_SECRETARI};
 
-    public static final String CODI_PETICIO_AUTOFIRMA = "titol.autofirma";
-    public static final String CODI_PETICIO_NIF = "titol.firmapernif";
-    public static final String CODI_PETICIO_FLUX = "titol.firmaperflux";
-    public static final String CODI_PETICIO_DIRECTOR = "titol.firmacarrec.director";
-    public static final String CODI_PETICIO_SECRETARI = "titol.firmacarrec.secretari";
-    public static final String CODI_PETICIO_PLANTILLAFLUX_USUARI = "titol.plantillaflux.usuari";
-    public static final String CODI_PETICIO_PLANTILLAFLUX_ENTITAT = "titol.plantillaflux.entitat";
 
     // TIPUS DE PLUGINS DE ENVIAFIB
     public static final int TIPUS_PLUGIN_ESTRUCTURAORGANITZATIVA = 1;

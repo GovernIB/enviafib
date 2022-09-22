@@ -6,13 +6,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.Menu;
 import es.caib.enviafib.model.fields.MenuFields;
+import es.caib.enviafib.persistence.MenuJPA;
 
 /**
  * 
@@ -32,23 +35,24 @@ public class MenuUserController implements Constants {
     int tipus, HttpServletRequest request, HttpServletResponse response) throws I18NException {
 
         // XYZ ZZZ Check si aquest usuair pot obrir el menuID
+        
 
         switch (tipus) {
 
             case MENU_FIRMA_TIPUS_AUTOFIRMA:
-                return "redirect:/user/autofirma/new";
+                return "redirect:" + AutoFirmaUserController.CONTEXT_WEB + "/new";
 
             case MENU_FIRMA_TIPUS_PER_NIF:
-                return "redirect:/user/firmapernif/new";
+                return "redirect:" + FirmaPerNifUserController.CONTEXT_WEB + "/new";
 
             case MENU_FIRMA_TIPUS_FLUX:
-                return "redirect:/user/flux/crearflux";
+                return "redirect:" + FirmaFluxUserController.CONTEXT_WEB + "/crearflux";
 
             case MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI:
-                return "redirect:/user/firmaplantillafluxusuari/new";
+                return "redirect:" + FirmaPlantillaFluxUserController.CONTEXT_WEB + "/new";
 
             case MENU_FIRMA_TIPUS_PLANTILLES_FLUX_ENTITAT:
-                return "redirect:/user/firmaplantillafluxentitat/new";
+                return "redirect:" + FirmaPlantillaFluxEntitatUserController.CONTEXT_WEB + "/new";
 
             case MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT:
                 // XYZ ZZZ
@@ -62,46 +66,40 @@ public class MenuUserController implements Constants {
                 return "redirect:/";
 
             case MENU_FIRMA_TIPUS_CARREC:
-                String tipusCarrecStr = menuEjb.executeQueryOne(MenuFields.PARAMETRECOMBO,
-                        MenuFields.MENUID.equal(menuID));
+                //String tipusCarrecStr = menuEjb.executeQueryOne(MenuFields.PARAMETRECOMBO,
+                //        MenuFields.MENUID.equal(menuID));
+                MenuJPA menu = (MenuJPA)menuEjb.findByPrimaryKey(menuID);
+                
+                String tipusCarrecStr = menu.getParametreCombo();
+                
+                request.getSession().setAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO_CARREC,
+                        menu.getTitolMenu().getTraduccio(LocaleContextHolder.getLocale().getLanguage()).getValor());
+                
                 switch (Integer.parseInt(tipusCarrecStr)) {
 
                     case CARREC_GERENT_PRESIDENT:
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec GERENT/PRESIDENT");
-                        return "redirect:/";
+                        return "redirect:" + FirmaCarrecGerentPresidentUserController.CONTEXT_WEB + "/new";
 
                     case CARREC_CAP_AREA_CONSELLER:
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec CAP AREA/CONSELLER");
-                        return "redirect:/";
+                        return "redirect:" + FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB + "/new";
 
                     case CARREC_ENCARREGAT_COMPRES:
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec ENCARREGAT DE COMPRES");
-                        return "redirect:/";
+                        return "redirect:" + FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB + "/new";
 
                     case CARREC_RECURSOS_HUMANS:
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec RECURSOS_HUMANS");
-                        return "redirect:/";
+                        return "redirect:" + FirmaCarrecRecursosHumansUserController.CONTEXT_WEB + "/new";
 
                     case CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL:
-                        return "redirect:/user/firmadirector/new";
+                        return "redirect:" + FirmaCarrecDirectorUserController.CONTEXT_WEB + "/new";
 
                     case CARREC_SECRETARI:
-                        return "redirect:/user/firmasecretari/new";
+                        return "redirect:" + FirmaCarrecSecretariUserController.CONTEXT_WEB + "/new";
 
                     case CARREC_ADDICIONAL_1:
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec CARREC_ADDICIONAL_1");
-                        return "redirect:/";
+                        return "redirect:" + FirmaCarrecAddicional1UserController.CONTEXT_WEB + "/new";
 
                     case CARREC_ADDICIONAL_2:
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request, "No implementada firma per càrrec CARREC_ADDICIONAL_2");
-                        return "redirect:/";
-                        
+                        return "redirect:" + FirmaCarrecAddicional2UserController.CONTEXT_WEB + "/new";
 
                     default:
                         // XYZ ZZZ

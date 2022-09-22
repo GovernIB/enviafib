@@ -8,22 +8,21 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
 
-
 /**
  * 
  * @author anadal
  *
  */
 @Controller
-@RequestMapping(value = FirmaCarrecDirectorUserController.CONTEXT_WEB)
+@RequestMapping(value = FirmaCarrecAddicional1UserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class FirmaCarrecDirectorUserController extends AbtractFirmaCarrecUserController {
+public class FirmaCarrecAddicional1UserController extends AbtractFirmaCarrecUserController {
 
-    public static final String CONTEXT_WEB = "/user/firmadirector";
+    public static final String CONTEXT_WEB = "/user/carrecaddicional1";
 
     @Override
     public int getTipusPeticio() {
-        return Constants.TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR;
+        return Constants.TIPUS_PETICIO_CARREC_ADDICIONAL_1;
     }
 
 }

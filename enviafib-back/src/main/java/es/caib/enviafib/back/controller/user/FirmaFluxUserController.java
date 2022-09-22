@@ -35,7 +35,6 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
-import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -45,9 +44,9 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 @Controller
-@RequestMapping(value = FluxFirmaUserController.CONTEXT_WEB)
+@RequestMapping(value = FirmaFluxUserController.CONTEXT_WEB)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
-public class FluxFirmaUserController extends AbstractFirmaUserController {
+public class FirmaFluxUserController extends AbstractFirmaUserController {
     
     public static SimpleDateFormat SDF = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
 
@@ -60,11 +59,6 @@ public class FluxFirmaUserController extends AbstractFirmaUserController {
     @Override
     public int getTipusPeticio() {
         return TIPUS_PETICIO_FLUX;
-    }
-
-    @Override
-    public String getTitolCode() {
-        return Constants.CODI_PETICIO_FLUX;
     }
 
     @Override

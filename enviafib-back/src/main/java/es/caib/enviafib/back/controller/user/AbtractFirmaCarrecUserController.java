@@ -21,17 +21,62 @@ import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
+/**
+ * 
+ * @author anadal
+ *
+ */
 public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUserController {
+    
+    
+    public static final String TITOL_PETICIO_CARREC = "__TITOL_PETICIO_CARREC__";
+    
+    
 
-    public abstract int getCarrec();
+    public int getCarrec() {
+
+        switch (getTipusPeticio()) {
+
+            case TIPUS_PETICIO_CARREC_GERENT_PRESIDENT:
+                return CARREC_GERENT_PRESIDENT;
+            case TIPUS_PETICIO_CARREC_CAPAREA_CONSELLER:
+                return CARREC_CAP_AREA_CONSELLER;
+            case TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR:
+                return CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL;
+            case TIPUS_PETICIO_CARREC_SECRETARI:
+                return CARREC_SECRETARI;
+            case TIPUS_PETICIO_CARREC_ENCARREGAT_COMPRES:
+                return CARREC_ENCARREGAT_COMPRES;
+            case TIPUS_PETICIO_CARREC_RECURSOS_HUMANS:
+                return CARREC_RECURSOS_HUMANS;
+            case TIPUS_PETICIO_CARREC_ADDICIONAL_1:
+                return CARREC_ADDICIONAL_1;
+            case TIPUS_PETICIO_CARREC_ADDICIONAL_2:
+                return CARREC_ADDICIONAL_2;
+
+            default:
+                return -1;
+
+        }
+
+    }
+    
+    @Override
+    public String getTitolCode(HttpServletRequest request) {
+        return "genapp.comodi";
+        
+    }
+    
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
 
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
-
+        
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
+        
+        peticioForm.setTitleParam((String)request.getSession().getAttribute(TITOL_PETICIO_CARREC));
 
         if (peticioForm.isNou()) {
 
