@@ -24,7 +24,7 @@ public class TestUpdate {
         EntityTransaction tx = null;
         try {
 
-            EntityManager em = TestPersistenceJPA.initializeDataBase();
+            EntityManager em = TestPersistenceJPA.initDB();
 
             IFitxerManager fitxerDAO = EnviaFIBDaoManager.getDaoManagers().getFitxerManager();
 
@@ -46,7 +46,6 @@ public class TestUpdate {
             fitxerDAO.update(FitxerFields.DESCRIPCIO, null, null);
 
             // Test 3-A
-
             {
                 UpdateItem<String> u1 = new UpdateItemSql<String>(FitxerFields.DESCRIPCIO,
                         FitxerFields.TAMANY.fullName + " + 4");
@@ -56,7 +55,6 @@ public class TestUpdate {
             }
 
             // Test 3-B
-
             {
                 UpdateItem<String> u1 = new UpdateItemValue<String>(FitxerFields.DESCRIPCIO, null);
                 UpdateItem<String> u2 = new UpdateItemValue<String>(FitxerFields.MIME, "application/pdf");
