@@ -111,9 +111,11 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         HtmlUtils.deleteMessages(request);
 
-        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
-        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
-        HtmlUtils.saveMessageSuccess(request, msg);
+        //No ha de sortir cap missatge quan es autofirma
+        
+//        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
+//        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
+//        HtmlUtils.saveMessageSuccess(request, msg);
 
         return "redirect:" + getContextWeb() + "/viewiniframe";
     }
