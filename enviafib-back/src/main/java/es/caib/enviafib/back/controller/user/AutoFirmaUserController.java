@@ -67,7 +67,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         return Constants.TIPUS_PETICIO_AUTOFIRMA;
     }
 
-
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
@@ -109,6 +108,13 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
+
+        HtmlUtils.deleteMessages(request);
+
+        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
+        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
+        HtmlUtils.saveMessageSuccess(request, msg);
+
         return "redirect:" + getContextWeb() + "/viewiniframe";
     }
 
@@ -218,15 +224,16 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     if (fssr != null && fssr.getSignedFileInfo() != null) {
                         peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
+                        //XYZ ZZZ TRA - Missatges duplicats al crear AutoFirma #203
                         String msg = I18NUtils.tradueix("procesdefirma.status.final.firmatok");
                         HtmlUtils.saveMessageSuccess(request, msg);
 
                         return new ModelAndView(
                                 new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
 
-//                        ModelAndView mav = new ModelAndView("finaliframe"); 
-//                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
-//                        return mav;
+                        //                        ModelAndView mav = new ModelAndView("finaliframe"); 
+                        //                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+                        //                        return mav;
                     } else {
                         errorException = null;
                         errorMsg = I18NUtils.tradueix("procesdefirma.status.final.firmaterror", SIGNID);
@@ -270,7 +277,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         if (pet == null) {
             log.error("Error en el procés de creació de Petició Firma. "
                     + "No s'ha trobat la nova petició. S'ha de reintentar el procés, si el problema persisteix, contacti ab el seu administrador.");
-            
+
             throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
                     new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
         }
@@ -283,9 +290,9 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         return new ModelAndView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
 
-//        ModelAndView mav = new ModelAndView("finaliframe"); 
-//        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
-//        return mav;
+        //        ModelAndView mav = new ModelAndView("finaliframe"); 
+        //        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
+        //        return mav;
     }
 
     /**
@@ -357,7 +364,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
             // Es Web
             final String view = FirmaSimpleStartTransactionRequest.VIEW_FULLSCREEN;
-//          FirmaSimpleStartTransactionRequest.VIEW_FULLSCREEN.equals(view)
+            //          FirmaSimpleStartTransactionRequest.VIEW_FULLSCREEN.equals(view)
 
             final String returnUrl = absoluteControllerBase + "/finalWeb/" + transactionID;
 
