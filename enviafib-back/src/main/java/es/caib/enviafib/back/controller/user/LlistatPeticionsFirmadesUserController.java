@@ -68,7 +68,8 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
 
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
-
+            peticioFilterForm.setDeleteSelectedButtonVisible(false);
+            
             //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-file-pdf",
             //                    "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}", "btn-info"));
             //
