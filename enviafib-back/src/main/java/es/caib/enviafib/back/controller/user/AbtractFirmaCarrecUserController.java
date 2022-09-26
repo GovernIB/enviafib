@@ -20,6 +20,7 @@ import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
+import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
  * 
@@ -27,11 +28,8 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUserController {
-    
-    
+
     public static final String TITOL_PETICIO_CARREC = "__TITOL_PETICIO_CARREC__";
-    
-    
 
     public int getCarrec() {
 
@@ -60,30 +58,42 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         }
 
     }
-    
+
     @Override
     public String getTitolCode(HttpServletRequest request) {
         return "genapp.comodi";
-        
+
     }
-    
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
 
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
-        
+
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
-        
-        peticioForm.setTitleParam((String)request.getSession().getAttribute(TITOL_PETICIO_CARREC));
+
+        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO_CARREC));
 
         if (peticioForm.isNou()) {
 
             try {
-                String carrecNIF = getCarrecNIF();
+                String[] carrecData = getCarrecNIF();
+
+                String carrecNIF = carrecData[0];
+                String carrec = carrecData[1];
+                String carrecUsername = carrecData[2];
+                String carrecName = carrecData[3];
+
+                String msg = "El NIF del meu " + carrec + ", " + carrecName + " (" + carrecUsername + ") es: "
+                        + carrecNIF;
+
+                log.info(msg);
+                peticioForm.setSubTitleCode("=" + carrecName + " (" + carrecUsername + ")");
+
                 peticioForm.getPeticio().setDestinatariNif(carrecNIF);
-                peticioForm.addReadOnlyField(PeticioFields.DESTINATARINIF);
+                //                peticioForm.addReadOnlyField(PeticioFields.DESTINATARINIF);
+                peticioForm.addHiddenField(PeticioFields.DESTINATARINIF);
 
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
@@ -96,7 +106,14 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         return peticioForm;
     }
 
-    public String getCarrecNIF() throws I18NException {
+    public String[] getCarrecNIF() throws I18NException {
+
+        String[] dadesCarrec = new String[4];
+        /* dadesCarrec[0] = NIF
+         * dadesCarrec[1] = carrec
+         * dadesCarrec[2] = username
+         * dadesCarrec[3] = name
+         */
 
         int tipusCarrec = getCarrec();
 
@@ -107,7 +124,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         try {
             String username = LoginInfo.getInstance().getUsername();
 
-            carrec =  "estructuraorganitzativa." + tipusCarrec + ".nom";
+            carrec = "estructuraorganitzativa." + tipusCarrec + ".nom";
             switch (tipusCarrec) {
                 case Constants.CARREC_GERENT_PRESIDENT:
                     carrecUsername = instance.getGerentPresidentUsername();
@@ -141,45 +158,56 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
             String error = e.getMessage();
 
             log.info("ERRROR ]" + e + "[");
-            throw new I18NException("error.plugin.estructuraorganitzativa", new I18NArgumentString(String.valueOf(tipusCarrec)),
-                    new I18NArgumentString(error));
+            throw new I18NException("error.plugin.estructuraorganitzativa",
+                    new I18NArgumentString(String.valueOf(tipusCarrec)), new I18NArgumentString(error));
         }
 
         log.info("El meu " + I18NUtils.tradueix(carrec) + " es " + carrecUsername);
 
-
         String carrecNIF;
+        String carrecName;
 
         // Provam a BBDD a veure si està el NIF
-        carrecNIF = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USERNAME.equal(carrecUsername));
-        if (carrecNIF != null) {
-            return carrecNIF;
-        }
+        Long usuariID = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(carrecUsername));
 
-        // Si no hi es, provam amb Plugin de UserInformation
-        IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
-        UserInfo infoCarrec;
-        try {
-            infoCarrec = plugin.getUserInfoByUserName(carrecUsername);
-            log.info("infoCarrec: ]" + infoCarrec + "[");
-            if (infoCarrec == null) {
-                throw new Exception(I18NUtils.tradueix("userinfoisnull"));
+        if (usuariID != null) {
+            UsuariJPA usuariBD = usuariEjb.findByPrimaryKey(usuariID);
+
+            carrecNIF = usuariBD.getNif();
+            carrecName = usuariBD.getNom() + " " + usuariBD.getLlinatge1();
+        } else {
+            // Si no hi es, provam amb Plugin de UserInformation
+            IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
+            UserInfo infoCarrec;
+            try {
+                infoCarrec = plugin.getUserInfoByUserName(carrecUsername);
+                log.info("infoCarrec: ]" + infoCarrec + "[");
+                if (infoCarrec == null) {
+                    throw new Exception(I18NUtils.tradueix("userinfoisnull"));
+                }
+
+            } catch (Exception e) {
+                String error = e.getMessage();
+                throw new I18NException("error.logininfo.usuarinotfound", new I18NArgumentCode(carrec),
+                        new I18NArgumentString(carrecUsername), new I18NArgumentString(error));
             }
 
-        } catch (Exception e) {
-            String error = e.getMessage();
-            throw new I18NException("error.logininfo.usuarinotfound", new I18NArgumentCode(carrec),
-                    new I18NArgumentString(carrecUsername), new I18NArgumentString(error));
+            carrecNIF = infoCarrec.getAdministrationID();
+            carrecName = infoCarrec.getFullName();
+            if (carrecNIF == null) {
+                throw new I18NException("error.logininfo", new I18NArgumentCode(UsuariFields.NIF.codeLabel),
+                        new I18NArgumentCode(carrec), new I18NArgumentString(carrecUsername),
+                        new I18NArgumentCode("nifisnull"));
+            }
+            log.info("El NIF del meu " + I18NUtils.tradueix(carrec) + " (" + carrecUsername + ") es: " + carrecNIF);
+
         }
 
-        carrecNIF = infoCarrec.getAdministrationID();
-        if (carrecNIF == null) {
-            throw new I18NException("error.logininfo", new I18NArgumentCode(UsuariFields.NIF.codeLabel),
-                    new I18NArgumentCode(carrec), new I18NArgumentString(carrecUsername),
-                    new I18NArgumentCode("nifisnull"));
-        }
-        log.info("El NIF del meu " + I18NUtils.tradueix(carrec) + " (" + carrecUsername + ") es: " + carrecNIF);
-        return carrecNIF;
+        dadesCarrec[0] = carrecNIF;
+        dadesCarrec[1] = I18NUtils.tradueix(carrec);
+        dadesCarrec[2] = carrecUsername;
+        dadesCarrec[3] = carrecName;
+        return dadesCarrec;
     }
 
 }
