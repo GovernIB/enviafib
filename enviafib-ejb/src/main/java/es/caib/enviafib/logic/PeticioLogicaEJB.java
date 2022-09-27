@@ -2,7 +2,6 @@ package es.caib.enviafib.logic;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,7 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Asynchronous;
@@ -58,20 +56,16 @@ import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
-import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.ejb.InfoArxiuEJB;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
-import es.caib.enviafib.model.entity.InfoArxiu;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
-import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -79,8 +73,6 @@ import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
-import es.caib.plugins.arxiu.api.Document;
-import es.caib.plugins.arxiu.api.IArxiuPlugin;
 
 /**
  * 
@@ -269,7 +261,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Long peticioID = getPeticioIdFromPortafibId(portafibID);
 
-        InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(peticioID, portafibID, languageUI);
+        InfoSignaturaJPA infoSignatura;
+        
+        if (peticioID == null) {
+            log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ", new Exception());
+            infoSignatura = null;
+        }else {
+            infoSignatura = guardarFitxerInfoFirma(peticioID, portafibID, languageUI);
+        }
 
         return infoSignatura;
 
@@ -304,8 +303,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
         if (peticioList == null || peticioList.size() != 1) {
-            log.error("Event de REBUIG amb portafibid = " + portafibID + " i Petició no trobada");
-            throw new I18NException("error.portafib.peticionull", "REBUIG", String.valueOf(portafibID));
+            log.error("Event de REBUIG amb portafibid = " + portafibID + " i Petició no trobada", new Exception());
+            return;
+//            throw new I18NException("error.portafib.peticionull", "REBUIG", String.valueOf(portafibID));
         }
 
         Peticio peticio = peticioList.get(0);
