@@ -29,7 +29,7 @@ import es.caib.enviafib.persistence.UsuariJPA;
  */
 public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUserController {
 
-    public static final String TITOL_PETICIO_CARREC = "__TITOL_PETICIO_CARREC__";
+//    public static final String TITOL_PETICIO_CARREC = "__TITOL_PETICIO_CARREC__";
 
     public int getCarrec() {
 
@@ -59,11 +59,10 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
     }
 
-    @Override
-    public String getTitolCode(HttpServletRequest request) {
-        return "genapp.comodi";
-
-    }
+//    @Override
+//    public String getTitolCode(HttpServletRequest request) {
+//        return "genapp.comodi";
+//    }
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
@@ -73,7 +72,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
 
-        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO_CARREC));
+//        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO_CARREC));
 
         if (peticioForm.isNou()) {
 
