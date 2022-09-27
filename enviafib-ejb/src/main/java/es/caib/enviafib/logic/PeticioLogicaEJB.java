@@ -2,6 +2,7 @@ package es.caib.enviafib.logic;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Asynchronous;
@@ -56,16 +58,20 @@ import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.ejb.InfoArxiuEJB;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
+import es.caib.enviafib.model.entity.InfoArxiu;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -73,6 +79,8 @@ import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
+import es.caib.plugins.arxiu.api.Document;
+import es.caib.plugins.arxiu.api.IArxiuPlugin;
 
 /**
  * 
@@ -94,6 +102,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
+    
+
+    @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
 
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
@@ -490,7 +502,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             Long solicitantID = peticio.getSolicitantID();
 
-            String urlBase = Configuracio.getUrlBase();
+
+            
+            String baseUrl = Configuracio.getUrlBase();
+            
+            
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
             String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
 
@@ -515,7 +531,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 break;
             }
 
-            String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
+            String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
 
             boolean isHTML = true;
 
@@ -996,13 +1012,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         final long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
+        final String prefixeEsborrat="ESBORRADA%";
         try {
             Where w1 = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
 
             Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR };
             Where w2 = PeticioFields.ESTAT.in(estats);
 
-            Where w3 = PeticioFields.PETICIOPORTAFIRMES.notLike("ESBORRADA%");
+            Where w3 = PeticioFields.PETICIOPORTAFIRMES.notLike(prefixeEsborrat);
 
             List<String> listPortaFIBIds = this.executeQuery(PeticioFields.PETICIOPORTAFIRMES, Where.AND(w1, w2, w3));
 
@@ -1016,7 +1033,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName()
                                 + " set " + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?0" + " where "
                                 + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?1");
-                        query.setParameter(0, "ESBORRADA_" + portaFIBID);
+                        query.setParameter(0, prefixeEsborrat + portaFIBID);
                         query.setParameter(1, portaFIBID);
                         query.executeUpdate();
                     } else {

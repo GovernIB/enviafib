@@ -7,7 +7,6 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.caib.enviafib.back.controller.FileDownloadController;
+import es.caib.enviafib.back.controller.all.DescarregarImprimiblePublicController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
@@ -253,16 +252,15 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
 
                 String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                         InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-                
+
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
                         "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + csv, "btn-info"));
 
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
                         "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
 
-                filterForm.addAdditionalButtonByPK(peticioID,
-                        new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
-                                getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fas fa-print",
+                        "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
 
             }
 
@@ -352,16 +350,26 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
 
             // Recuperacio del fitxer firmat a partir del ID de peticio
             Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
+
+            // Si a petició s'ha arxivat correctament, s'ha de passar el link amb CSV:
+            if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
+                throw new I18NException("genapp.comodi", "No e spot enviar email de peticio no finalitzada");
+            }
             Fitxer file = fitxerEjb.findByPrimaryKey(peticio.getFitxerFirmatID());
-            int port = urlTmp.getPort();
 
-            String fileUrl = urlTmp.getProtocol() + "://" + urlTmp.getHost()
-                    + ((port == -1) ? "" : (":" + urlTmp.getPort())) + request.getContextPath()
-                    + FileDownloadController.fileUrl(file);
+            String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
+                    InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
+            String fileUrl;
             Map<String, Object> map = new HashMap<String, Object>();
 
             map.put("nomFitxer", file.getNom());
+            // Recuperam el CSV d'arxiu.
+            // fileUrl = infoArxiuEjb.executeQueryOne(InfoArxiuFields.PRINTABLEURL,
+            // InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+
+            fileUrl = Configuracio.getUrlBase() + DescarregarImprimiblePublicController.CONTEXT_WEB + "/" + csv;
+
             map.put("fileUrl", fileUrl);
 
             String subject = I18NUtils.tradueix("email.download.file.subject");
