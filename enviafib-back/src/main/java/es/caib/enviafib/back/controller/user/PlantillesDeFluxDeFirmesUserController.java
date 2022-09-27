@@ -108,7 +108,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         try {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
-            api = FluxFirmaUserController.getApiFlowTemplateSimple();
+            api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
             // Comprova que és de la nostra propietat
             FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
@@ -165,11 +165,11 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
-            api = FluxFirmaUserController.getApiFlowTemplateSimple();
+            api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
             // Crear Flux
             String name = "Plantilla de Flux de Firma  - " + System.currentTimeMillis();
-            String descr = FluxFirmaUserController.generateDescription(getOwner(), true);
+            String descr = FirmaFluxUserController.generateDescription(getOwner(), true);
 
             final boolean saveOnServer = true;
             final boolean visibleDescription = false;
@@ -207,7 +207,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             log.error(msg, aaie);
 
             final String intermediateID = null;
-            FluxFirmaUserController.cleanFlux(api, transactionID, intermediateID, log);
+            FirmaFluxUserController.cleanFlux(api, transactionID, intermediateID, log);
 
             return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
         }
@@ -225,7 +225,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         String error = null;
         try {
 
-            api = FluxFirmaUserController.getApiFlowTemplateSimple();
+            api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
             FlowTemplateSimpleGetFlowResultResponse fullResult = api.getFlowTemplateResult(transactionID);
 
@@ -293,7 +293,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
             error = I18NUtils.tradueix("error.error.flux.creacioflux", aaie.getMessage());
             log.error(error, aaie);
-            FluxFirmaUserController.cleanFlux(api, transactionID, null, log);
+            FirmaFluxUserController.cleanFlux(api, transactionID, null, log);
         }
 
         log.error(error);
@@ -311,7 +311,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
     public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
         FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
         filter.setLanguageUI(languageUI);
-        filter.setDescriptionFilter(FluxFirmaUserController.getFluxFilterByUserName(getOwner()));
+        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
         return filter;
     }
 

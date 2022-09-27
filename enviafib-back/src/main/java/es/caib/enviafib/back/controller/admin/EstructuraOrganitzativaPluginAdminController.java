@@ -114,22 +114,24 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
 
             IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
 
-            String CapAreaConseller =  campBuit( instance.getCapAreaConsellerByUsername(username));
-            String CapDepartamentDirectorGeneral = campBuit(instance.getCapDepartamentDirectorGeneralByUsername(username));
-            String CodiDIR3ByUsername = campBuit(instance.getCodiDIR3ByUsername(username));
-            String EncarregatCompresByUsername = campBuit(instance.getEncarregatCompresByUsername(username));
-            String GerentPresident = campBuit(instance.getGerentPresident());
-            String NomAreaConselleria = campBuit(instance.getNomAreaConselleriaByUsername(username, lang));
-            String NomDepartamentDireccioGeneral = campBuit(instance.getNomDepartamentDireccioGeneralByUsername(username, lang));
-            String RecursosHumans = campBuit(instance.getRecursosHumansByUsername(username));
-            String Secretari = campBuit(instance.getSecretariByUsername(username));
+            String CapAreaConseller =  campBuit( instance.getCapAreaConsellerUsername(username));
+            String CapDepartamentDirectorGeneral = campBuit(instance.getCapDepartamentDirectorGeneralUsername(username));
+            String CodiDIR3ByUsername = campBuit(instance.getDir3DepartamentDireccioGeneral(username));
+            String EncarregatCompresByUsername = campBuit(instance.getEncarregatCompresUsername(username));
+            String GerentPresidentName = campBuit(instance.getGerentPresidentName());
+            String GerentPresidentUsername = campBuit(instance.getGerentPresidentUsername());
+            String NomAreaConselleria = campBuit(instance.getNameAreaConselleria(username, lang));
+            String NomDepartamentDireccioGeneral = campBuit(instance.getNameDepartamentDireccioGeneral(username, lang));
+            String RecursosHumans = campBuit(instance.getRecursosHumansUsername(username));
+            String Secretari = campBuit(instance.getSecretariUsername(username));
             
             String msg = "<b>Dades organitzatives de " + username + ": </b>";
                 msg += "<br>" + "Cap Area/Conseller: " + CapAreaConseller + "<br>" 
                     + "Cap Departament/Director General: " + CapDepartamentDirectorGeneral + "<br>"
                     + "Codi DIR3: " + CodiDIR3ByUsername + "<br>" 
                     + "Encarregat Compres: " + EncarregatCompresByUsername + "<br>"
-                    + "Gerent/President: " + GerentPresident + "<br>"
+                    + "Gerent/President Name: " + GerentPresidentName + "<br>"
+                     + "Gerent/President Username: " + GerentPresidentUsername + "<br>"
                     + "Area/Conselleria: " + NomAreaConselleria + "<br>"
                     + "Departament/Direccio General: " + NomDepartamentDireccioGeneral + "<br>" 
                     + "Recursos Humans: " + RecursosHumans + "<br>"

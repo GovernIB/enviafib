@@ -24,4 +24,32 @@ public class TraduccioQueryPath extends org.fundaciobit.genapp.common.query.Quer
   }
 
 
+/* L'ús d'aquest camp (OneToMany) llança una exception:
+ [Illegal attempt to dereference a collection]
+
+ // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
+
+  public MenuQueryPath MENU_AJUDAMENUIDS() {
+    return new MenuQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return TraduccioQueryPath.this.getQueryPath() + "menu_ajudamenuids" + ".";
+      }
+    });
+  }
+*/
+
+/* L'ús d'aquest camp (OneToMany) llança una exception:
+ [Illegal attempt to dereference a collection]
+
+ // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
+
+  public MenuQueryPath MENU_TITOLMENUIDS() {
+    return new MenuQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return TraduccioQueryPath.this.getQueryPath() + "menu_titolmenuids" + ".";
+      }
+    });
+  }
+*/
+
 }

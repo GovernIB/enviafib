@@ -94,7 +94,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     public abstract int getTipusPeticio();
 
-    public abstract String getTitolCode();
+
+    public String getTitolCode(HttpServletRequest request) {
+        return "titol." + getTipusPeticio();
+    }
     /**
      * Carregar el formulari per un nou Peticio
      */
@@ -174,7 +177,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         if (peticioForm.isNou()) {
             mav.addObject("dragdrop", true);
-            peticioForm.setTitleCode(getTitolCode());
+            peticioForm.setTitleCode(getTitolCode(request));
             
             Peticio peticio = peticioForm.getPeticio();
 
@@ -245,7 +248,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         String codiDIR3;
         try {
             String username = LoginInfo.getInstance().getUsername();
-            codiDIR3 = instance.getCodiDIR3ByUsername(username);
+            codiDIR3 = instance.getDir3DepartamentDireccioGeneral(username);
             log.info("El meu codiDIR3 es: " + codiDIR3);
             return codiDIR3;
 
@@ -353,7 +356,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
                 case Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT:
 
-                    ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
+                    ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
                     String flowTemplateId = peticio.getPeticioPortafirmes();
                     final String languageUI = "ca";

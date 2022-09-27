@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.AbstractPlantillaDeFluxDeFirmesController;
-import es.caib.enviafib.back.controller.user.FluxFirmaUserController;
+import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.model.entity.Usuari;
@@ -47,7 +47,7 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
         FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
         filter.setLanguageUI(languageUI);
         // Cercam per usuari aplicació i despres ja cercarem per {temporal=true}
-        filter.setDescriptionFilter(FluxFirmaUserController.getFluxFilterByUserName(null));
+        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(null));
 
         return filter;
     }

@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.caib.enviafib.back.controller.user.FluxFirmaUserController;
+import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.security.LoginInfo;
@@ -158,7 +158,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
         // Comprovam que és de la nostra propietat
         try {
 
-            ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
+            ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
             FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
             flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
@@ -195,7 +195,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,
             final Integer itemsPerPage, final int inici) throws I18NException {
 
-        ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
+        ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
         final String languageUI = "ca";
 

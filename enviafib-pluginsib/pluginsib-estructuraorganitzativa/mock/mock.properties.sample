@@ -4,15 +4,52 @@
 
 # Classe org.fundaciobit.pluginsib.estructuraorganitzativa.mock.MockEstructuraOrganitzativaPlugin
 
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.codidir3byusername=A04027052
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.gerentpresident=aroig
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomareaconselleriabyusername.ca=Innovació
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomareaconselleriabyusername.es=Innovación
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.capareaconsellerbyusername=jtramullas
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomdepartamentdirecciogeneralbyusername.es=Govern Digital
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.nomdepartamentdirecciogeneralbyusername.ca=Gobierno Digital
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.capdepartamentdirectorgeneralbyusername=<#switch username><#case "anadal"><#case "ptrias"><#case "fbosch"><#case "bverges">atrobat<#break><#case "jsastre">xtous<#break><#default>ellado</#switch>
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.secretaribyusername=
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.encarregatcompresbyusername=jfernandez
-es.caib.myapp.pluginsib.estructuraorganizativa.mock.recursoshumansbyusername=rdiaz
+# =================  ORGANITZACIÓ - EMPRESA =========
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.gerentpresident.name=Antoni Roig
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.gerentpresident.username=aroig
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.organitzacioempresa.name=Fundació BIT
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.organitzacioempresa.dir3=A04027052
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.organitzacioempresa.nif=G57775884
+
+# =================  ÀREA - CONSELLERIA =========
+ 
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.areaconselleria.name.ca=Innovació
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.areaconselleria.name.es=Innovación
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.areaconselleria.dir3=
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.areaconselleria.code=
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.areaconselleria.boss.username=jtramullas
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.areaconselleria.boss.name=Joan Tramullas
+
+# =================  DEPARTAMENT - DIRECCIÓ GENERAL =========
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.departamentdirecciogeneral.name.ca=<#switch username><#case "anadal"><#case "ptrias"><#case "fbosch"><#case "bverges">Govern Digital<#break><#case "jsastre">Sanitat<#break><#default>Turisme</#switch>
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.departamentdirecciogeneral.name.es=<#switch username><#case "anadal"><#case "ptrias"><#case "fbosch"><#case "bverges">Gobierno Digital<#break><#case "jsastre">Sanidad<#break><#default>Turismo</#switch>
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.departamentdirecciogeneral.dir3=
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.departamentdirecciogeneral.code=
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.departamentdirecciogeneral.boss.username=<#switch username><#case "anadal"><#case "ptrias"><#case "fbosch"><#case "bverges">atrobat<#break><#case "jsastre">xtous<#break><#default>ellado</#switch>
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.departamentdirecciogeneral.boss.name=<#switch username><#case "anadal"><#case "ptrias"><#case "fbosch"><#case "bverges">Antoni Trobat<#break><#case "jsastre">Xisco Tous<#break><#default>Esteva Llado</#switch>
+
+# =================  DADES GENERALS =========
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.secretari=
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.encarregatcompres=jfernandez
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.recursoshumans=rdiaz
+
+# =================  CÀRRECS ADDICIONALS =========
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec1.name=Antoni Nadal
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec1.username=anadal
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec1.positionname.ca=Cap de Becaris
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec1.positionname.es=Jefe de Becarios
+
+
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec2.name=
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec2.username=
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec2.positionname.ca=
+es.caib.myapp.pluginsib.estructuraorganizativa.mock.carrec2.positionname.es=
+
 

@@ -1,16 +1,12 @@
 package es.caib.enviafib.back.controller.user;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +16,6 @@ import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,26 +23,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.caib.enviafib.back.controller.FileDownloadController;
-import es.caib.enviafib.back.controller.user.LlistatPeticionsFirmadesUserController.TipusFile;
+import es.caib.enviafib.back.controller.all.DescarregarImprimiblePublicController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.ejb.InfoArxiuEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Fitxer;
-import es.caib.enviafib.model.entity.InfoArxiu;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
-import es.caib.enviafib.persistence.InfoArxiuJPA;
-import es.caib.enviafib.persistence.PeticioJPA;
-import es.caib.plugins.arxiu.api.Document;
-import es.caib.plugins.arxiu.api.DocumentContingut;
-import es.caib.plugins.arxiu.api.IArxiuPlugin;
 
 /**
  * 
@@ -257,24 +244,26 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
                         "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
             }
 
-            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT || peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT
+                    || peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
 
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
-                        "peticio.btn.sendmail",  "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
-                
+                        "peticio.btn.sendmail", "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+
+                String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
+                        InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
-                        "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + peticioID , "btn-info"));
+                        "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + csv, "btn-info"));
 
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
-                        "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + peticioID , "btn-info"));
-                
+                        "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
+
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fas fa-print",
-                        "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + peticioID , "btn-info"));
+                        "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
 
             }
 
-            
-            
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
                         new AdditionalButton("fas fa-redo-alt icon-white", "arxiu.reintentartancamentexpedient",
@@ -361,22 +350,26 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
 
             // Recuperacio del fitxer firmat a partir del ID de peticio
             Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
-           
-            //Si a petició s'ha arxivat correctament, s'ha de passar el link amb CSV:
-            if(peticio.getEstat()!= Constants.ESTAT_PETICIO_FIRMADA) {
-                throw new I18NException("genapp.comodi","No e spot enviar email de peticio no finalitzada");
+
+            // Si a petició s'ha arxivat correctament, s'ha de passar el link amb CSV:
+            if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
+                throw new I18NException("genapp.comodi", "No e spot enviar email de peticio no finalitzada");
             }
             Fitxer file = fitxerEjb.findByPrimaryKey(peticio.getFitxerFirmatID());
+
+            String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
+                    InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+
             String fileUrl;
             Map<String, Object> map = new HashMap<String, Object>();
 
             map.put("nomFitxer", file.getNom());
-            //Recuperam el CSV d'arxiu.
-            //fileUrl = infoArxiuEjb.executeQueryOne(InfoArxiuFields.PRINTABLEURL, InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-            
-            fileUrl = Configuracio.getUrlBase() + getContextWeb() + "/descarregarimprimible/" + peticioId;
-            
-            log.info("XYZ ZZZ File URL = " + fileUrl);
+            // Recuperam el CSV d'arxiu.
+            // fileUrl = infoArxiuEjb.executeQueryOne(InfoArxiuFields.PRINTABLEURL,
+            // InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+
+            fileUrl = Configuracio.getUrlBase() + DescarregarImprimiblePublicController.CONTEXT_WEB + "/" + csv;
+
             map.put("fileUrl", fileUrl);
 
             String subject = I18NUtils.tradueix("email.download.file.subject");
@@ -431,96 +424,7 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
 
     @Override
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
-        peticioLogicaEjb.deleteFull(peticio) ;
+        peticioLogicaEjb.deleteFull(peticio);
     }
-    
-    @RequestMapping(value = "/downloadfile/{peticioId}", method = RequestMethod.GET)
-    public void descarregarFitxerArxiu(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") long peticioId) throws I18NException, IOException {
-        final String format = "PDF";
-        TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
 
-        
-        internalDownload(peticioId, response, format, tipusFile);
-    }
-    
-    protected void internalDownload(java.lang.Long peticioID, HttpServletResponse response, final String format,
-            TipusFile tipusFile) throws I18NException, IOException {
-
-        if (peticioID == null) {
-            return;
-        }
-
-        PeticioJPA peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-        log.info("internalDownload(): -> peticio: " + peticio);
-
-        InfoArxiuJPA infoArxiu = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
-        log.info("internalDownload(): -> infoArxiu: " + infoArxiu);
-
-        String docID = infoArxiu.getArxiuDocumentID();
-        log.info("internalDownload(): -> docID: " + docID);
-
-//        String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
-//                InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-
-//        Long pluginID = 1001L;
-        IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
-
-        byte[] data = null;
-        switch (tipusFile) {
-            case ORIGINAL:
-                Document original = plugin.documentDetalls(docID, null, true);
-                data = original.getContingut().getContingut();
-            break;
-
-            case ENI_DOC:
-                String enidoc = plugin.documentExportarEni(docID);
-                data = enidoc.getBytes();
-            break;
-
-            case VERSIO_IMPRIMIBLE:
-                DocumentContingut imprimible = plugin.documentImprimible(docID);
-                data = imprimible.getContingut();
-            break;
-        }
-
-        prepareAndDownload(data, response, peticio, format);
-    }
-    
-    private void prepareAndDownload(byte[] data, HttpServletResponse response, PeticioJPA peticio, String format) {
-
-        // s'eliminen els espais en el cas de noms de transaccions amb més d'una
-        // paraula, així queda només el nom amb una paraula
-        // motiu: no se li afegia l'extensió correctament al document descarregat
-        String documentName = peticio.getNom().replace(" ", "_");
-
-        if (format.equals("PDF")) {
-            response.setContentType("application/pdf");
-
-            if (documentName != null && !documentName.toLowerCase().endsWith(".pdf")) {
-                documentName += ".pdf";
-            }
-
-        } else if (format.equals("ENI")) {
-            response.setContentType("text/xml");
-
-            if (documentName != null && !documentName.toLowerCase().endsWith(".xml")) {
-                documentName += ".xml";
-            }
-        }
-        response.setHeader("Content-disposition", "attachment; filename=" + documentName);
-        response.setContentLength(data.length);
-
-        OutputStream out;
-
-        try {
-            out = response.getOutputStream();
-            out.write(data);
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
 }

@@ -216,8 +216,8 @@
           "digits": 0,
           "isNotNullable": true,
           "labels": {
-            "es": "grupID",
-            "ca": "grupID"
+            "es": "ID",
+            "ca": "ID"
           },
           "javaName": "grupID",
           "javaType": "long",
@@ -239,6 +239,12 @@
             {
               "name": "efi_grupusuari_grup_grupid_fk",
               "table": "efi_grupusuari",
+              "field": "grupid",
+              "type": 0
+            },
+            {
+              "name": "efi_menu_grup_grupid_fk",
+              "table": "efi_menu",
               "field": "grupid",
               "type": 0
             }
@@ -324,8 +330,8 @@
           "digits": 0,
           "isNotNullable": true,
           "labels": {
-            "ca": "GrupUsuariID",
-            "es": "GrupoUsuarioID"
+            "ca": "ID",
+            "es": "ID"
           },
           "javaName": "grupUsuariID",
           "javaType": "long",
@@ -1311,6 +1317,349 @@
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_menu",
+      "nameJava": "Menu",
+      "shortName": "menu",
+      "labels": {
+        "ca": "Menú de Firma",
+        "es": "Menú de Firma"
+      },
+      "labelsPlural": {
+        "ca": "Menús de Firma",
+        "es": "Menús de Firma"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_menu_pk",
+          "index": "efi_menu_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "menuid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "menuID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_menu_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Descripció",
+            "es": "Descripción"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_menu_titolmenuid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "titolmenuid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Títol del menú",
+            "es": "Título del menú"
+          },
+          "javaName": "titolMenuID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_menu_traduccio_titol_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_menu_traduccio_titol_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_menu_ajudamenuid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "ajudamenuid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Ajuda menú",
+            "es": "Ayuda menú"
+          },
+          "javaName": "ajudaMenuID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_menu_traduccio_ajuda_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_menu_traduccio_ajuda_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "ordre",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Ordre",
+            "es": "Orden"
+          },
+          "javaName": "ordre",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipus",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus",
+            "es": "Tipo"
+          },
+          "javaName": "tipus",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "1,2,3,4,5,6,78,9,10,11,12,13",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_menu_grupid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "grupid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Grup d\u0027usuaris permesos",
+            "es": "Grupo de usuaris permitidos"
+          },
+          "javaName": "grupID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": true,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_menu_grup_grupid_fk",
+              "table": "efi_grup",
+              "field": "grupid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_menu_grup_grupid_fk",
+              "table": "efi_grup",
+              "field": "grupid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "parametrecombo",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Càrrec",
+            "es": "Cargo"
+          },
+          "javaName": "parametreCombo",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "1,2,3,4,5,6",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "parametretext",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Dades del Flux",
+            "es": "Datos del Flujo"
+          },
+          "javaName": "parametreText",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "actiu",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Actiu",
+            "es": "Activo"
+          },
+          "javaName": "actiu",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "false",
           "filter": false,
           "orderBy": 0,
           "groupBy": false,
@@ -2668,6 +3017,18 @@
             ]
           },
           "foreignKeys": [
+            {
+              "name": "efi_menu_traduccio_ajuda_fk",
+              "table": "efi_menu",
+              "field": "ajudamenuid",
+              "type": 0
+            },
+            {
+              "name": "efi_menu_traduccio_titol_fk",
+              "table": "efi_menu",
+              "field": "titolmenuid",
+              "type": 0
+            },
             {
               "name": "efi_traducmap_traduccio_fk",
               "table": "efi_traducciomap",

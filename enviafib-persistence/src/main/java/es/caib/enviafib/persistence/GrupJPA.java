@@ -105,6 +105,19 @@ public class GrupJPA implements Grup {
     }
 
 
+// EXP  Field:grupid | Table: efi_menu | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "grup")
+    private Set<MenuJPA> menus = new HashSet<MenuJPA>(0);
+    public  Set<MenuJPA> getMenus() {
+    return this.menus;
+  }
+
+    public void setMenus(Set<MenuJPA> menus) {
+      this.menus = menus;
+    }
+
+
 
  // ---------------  STATIC METHODS ------------------
   public static GrupJPA toJPA(Grup __bean) {
@@ -145,6 +158,10 @@ public class GrupJPA implements Grup {
     if(!"GrupUsuariJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.grupUsuaris) || org.hibernate.Hibernate.isInitialized(__jpa.getGrupUsuaris())) ) {
       __tmp.setGrupUsuaris(GrupUsuariJPA.copyJPA(__jpa.getGrupUsuaris(), __alreadyCopied,"GrupJPA"));
+    }
+    if(!"MenuJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.menus) || org.hibernate.Hibernate.isInitialized(__jpa.getMenus())) ) {
+      __tmp.setMenus(MenuJPA.copyJPA(__jpa.getMenus(), __alreadyCopied,"GrupJPA"));
     }
     // Copia de beans complexes (IMP)
 

@@ -77,14 +77,10 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         return Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI;
     }
 
-    @Override
-    public String getTitolCode() {
-        return Constants.CODI_PETICIO_PLANTILLAFLUX_USUARI;
-    }
 
     public List<Usuari> getPlantillesFluxFirma() throws I18NException {
 
-        ApiFlowTemplateSimple api = FluxFirmaUserController.getApiFlowTemplateSimple();
+        ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
         final String languageUI = "ca";
         FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
@@ -153,7 +149,7 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
     public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
         FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
         filter.setLanguageUI(languageUI);
-        filter.setDescriptionFilter(FluxFirmaUserController.getFluxFilterByUserName(getOwner()));
+        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
         return filter;
     }
 }

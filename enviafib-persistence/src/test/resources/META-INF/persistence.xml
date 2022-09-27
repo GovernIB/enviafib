@@ -13,6 +13,7 @@
 		<class>es.caib.enviafib.persistence.IdiomaJPA</class>
 		<class>es.caib.enviafib.persistence.InfoArxiuJPA</class>
 		<class>es.caib.enviafib.persistence.InfoSignaturaJPA</class>
+		<class>es.caib.enviafib.persistence.MenuJPA</class>
 		<class>es.caib.enviafib.persistence.PeticioJPA</class>
 		<class>es.caib.enviafib.persistence.PluginJPA</class>
 		<class>es.caib.enviafib.persistence.SerieDocumentalJPA</class>

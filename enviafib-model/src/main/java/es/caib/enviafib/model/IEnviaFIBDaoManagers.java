@@ -9,6 +9,7 @@ public interface IEnviaFIBDaoManagers {
 	public IIdiomaManager getIdiomaManager();
 	public IInfoArxiuManager getInfoArxiuManager();
 	public IInfoSignaturaManager getInfoSignaturaManager();
+	public IMenuManager getMenuManager();
 	public IPeticioManager getPeticioManager();
 	public IPluginManager getPluginManager();
 	public ISerieDocumentalManager getSerieDocumentalManager();
