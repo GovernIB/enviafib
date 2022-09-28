@@ -160,6 +160,12 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
             throw new I18NException("error.plugin.estructuraorganitzativa",
                     new I18NArgumentString(String.valueOf(tipusCarrec)), new I18NArgumentString(error));
         }
+                
+        if(carrecUsername == null) {
+            String carrecName = I18NUtils.tradueix(carrec);
+            String msg = I18NUtils.tradueix("error.plugin.estructuraorganitzativa.carrecnotrobat", carrecName);
+            throw new I18NException("genapp.comodi", msg, carrecName);
+        }
 
         log.info("El meu " + I18NUtils.tradueix(carrec) + " es " + carrecUsername);
 

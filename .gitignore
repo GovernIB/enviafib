@@ -116,3 +116,4 @@ pemfiles
 /scripts/sqlgenerator/06_grants.sql
 /scripts/sqlgenerator/create_schema.sql
 /scripts/sqlgenerator/drop_schema.sql
+installCerts.bat
