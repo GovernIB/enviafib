@@ -14,6 +14,7 @@
 	<modules>
 		<module>api</module>
 		<module>mock</module>
+		<module>database</module>
 	</modules>
 	<properties>
 		<!-- Propietats que afecten els plugins -->

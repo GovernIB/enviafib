@@ -247,7 +247,12 @@
 			<version>1.0.4</version>
 		</dependency>
 		
-	
+		<dependency>
+			<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
+		    <artifactId>pluginsib-estructuraorganitzativa-database</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+
 	</dependencies>
 
 

@@ -116,3 +116,12 @@ pemfiles
 /scripts/sqlgenerator/06_grants.sql
 /scripts/sqlgenerator/create_schema.sql
 /scripts/sqlgenerator/drop_schema.sql
+/enviafib-back/src/main/resources/missatges_en.properties
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/generador.properties
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/database.properties
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/.project
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/.settings
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/target
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/.classpath
+installCerts.bat
+
