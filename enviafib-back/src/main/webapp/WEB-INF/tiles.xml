@@ -174,13 +174,17 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/grupUsuariForm.jsp" />
     </definition>
     
-    <definition name="EstructuraOrganitzativaPluginFormAdmin" extends="admin">
+    <definition name="estructuraOrganitzativaPluginFormAdmin" extends="admin">
         <put-attribute name="titol" value="EstructuraOrganitzativa.EstructuraOrganitzativa" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginForm.jsp" />
     </definition>
     
-    <definition name="EstructuraOrganitzativaPluginListAdmin" extends="admin">
+    <definition name="estructuraOrganitzativaPluginListAdmin" extends="admin">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/pluginList.jsp" />
+    </definition>
+
+    <definition name="estructuraOrganitzativaPluginProvesAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/admin/estructuraorganitzativaproves.jsp" />
     </definition>
     
     <definition name="arxiupluginFormAdmin" extends="admin">
@@ -315,6 +319,16 @@
     
     <definition name="menuListWebDB" extends="webdb">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/menuList.jsp" />
+    </definition>
+
+
+    <definition name="organitzacioFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="organitzacio.organitzacio" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/organitzacioForm.jsp" />
+    </definition>
+    
+    <definition name="organitzacioListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/organitzacioList.jsp" />
     </definition>
 
 

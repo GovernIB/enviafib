@@ -37,11 +37,6 @@
 			<url>https://repo.spring.io/release</url>
 		</repository>
 		<repository>
-			<id>github_governib_maven</id>
-			<name>GitHub GovernIB Maven Repository</name>
-			<url>https://governib.github.io/maven/maven/</url>
-		</repository>
-		<repository>
 			<id>jboss-releases</id>
 			<name>JBoss Releases Repository</name>
 			<url>https://maven.repository.redhat.com/ga/</url>
@@ -51,6 +46,11 @@
 			<snapshots>
 				<updatePolicy>never</updatePolicy>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>github_governib_maven</id>
+			<name>GitHub GovernIB Maven Repository</name>
+			<url>https://governib.github.io/maven/maven/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -96,8 +96,6 @@
 		<hibernate.annotations.version>5.3.15.Final</hibernate.annotations.version>
 		<resteasy.version>3.6.3.Final</resteasy.version>
 		<jboss-logging.version>3.3.2.Final</jboss-logging.version>
-		<!-- 5.0.2.RELEASE - 5.0.0.RELEASE 4.3.26.RELEASE - 4.2.14.RELEASE 3.2.18.RELEASE 
-			- 3.2.10.RELEASE -->
 		<spring.version>4.3.26.RELEASE</spring.version>
 		<springsecurity.version>4.2.14.RELEASE</springsecurity.version>
 		<spring-data-jpa>1.6.6.RELEASE</spring-data-jpa>
@@ -144,26 +142,6 @@
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
 				<version>${jaxb-api.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.bom</groupId>
-				<artifactId>eap-runtime-artifacts</artifactId>
-				<version>${jboss-eap.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.bom</groupId>
-				<artifactId>jboss-eap-javaee8-with-tools</artifactId>
-				<version>${jboss-eap.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.spec</groupId>
-				<artifactId>jboss-javaee-8.0</artifactId>
-				<version>${jboss-javaee.version}</version>
-				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>javax.persistence</groupId>
@@ -216,6 +194,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+
 			<!-- Dependències per tests REST - suport estàndar per JSONB -->
 			<dependency>
 				<groupId>org.jboss.resteasy</groupId>
@@ -229,6 +208,27 @@
 						<artifactId>javax.json-api</artifactId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+			<!-- ==== JBOSS ========== -->
+			<dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>eap-runtime-artifacts</artifactId>
+				<version>${jboss-eap.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.bom</groupId>
+				<artifactId>jboss-eap-javaee8-with-tools</artifactId>
+				<version>${jboss-eap.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-8.0</artifactId>
+				<version>${jboss-javaee.version}</version>
+				<type>pom</type>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

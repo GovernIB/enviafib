@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.model.entity.Menu;
-import es.caib.enviafib.model.fields.MenuFields;
 import es.caib.enviafib.persistence.MenuJPA;
 
 /**

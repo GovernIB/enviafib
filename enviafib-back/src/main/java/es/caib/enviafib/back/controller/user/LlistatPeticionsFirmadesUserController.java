@@ -2,7 +2,6 @@ package es.caib.enviafib.back.controller.user;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.enviafib.model.entity.InfoArxiu;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
-import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
-import es.caib.enviafib.persistence.InfoArxiuJPA;
-import es.caib.enviafib.persistence.PeticioJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.DocumentContingut;
 import es.caib.plugins.arxiu.api.IArxiuPlugin;

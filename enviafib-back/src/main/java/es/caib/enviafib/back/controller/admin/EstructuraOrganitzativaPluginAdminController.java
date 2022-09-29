@@ -1,5 +1,8 @@
 package es.caib.enviafib.back.controller.admin;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PluginFilterForm;
 import es.caib.enviafib.back.form.webdb.PluginForm;
@@ -23,8 +27,9 @@ import es.caib.enviafib.model.fields.PluginFields;
 import es.caib.enviafib.persistence.PluginJPA;
 
 /**
- * 
+ *
  * @author ptrias
+ * @author anadal
  *
  */
 @Controller
@@ -32,19 +37,22 @@ import es.caib.enviafib.persistence.PluginJPA;
 @SessionAttributes(types = { PluginForm.class, PluginFilterForm.class })
 public class EstructuraOrganitzativaPluginAdminController extends AbstractPluginAdminController {
 
-    public static final String CONTEXTWEB = "/admin/EstructuraOrganitzativaPlugin";
+    public static final String CONTEXTWEB = "/admin/estructuraorganitzativaplugin";
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
+    @Override
     public String getTileForm() {
-        return "EstructuraOrganitzativaPluginFormAdmin";
+        return "estructuraOrganitzativaPluginFormAdmin";
     }
 
+    @Override
     public String getTileList() {
-        return "EstructuraOrganitzativaPluginListAdmin";
+        return "estructuraOrganitzativaPluginListAdmin";
     }
 
+    @Override
     public String getSessionAttributeFilterForm() {
         return "EstructuraOrganitzativaPluginListAdmin_FilterForm";
     }
@@ -70,8 +78,8 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
         if (pluginFilterForm.isNou()) {
 
             pluginFilterForm.addHiddenField(PluginFields.PLUGINID);
-            pluginFilterForm.addHiddenField(PluginFields.DESCRIPCIO);
-//            pluginFilterForm.addHiddenField(PluginFields.CLASSE);
+//            pluginFilterForm.addHiddenField(PluginFields.DESCRIPCIO);
+            pluginFilterForm.addHiddenField(PluginFields.CLASSE);
             pluginFilterForm.addHiddenField(PluginFields.TIPUS);
 
             pluginFilterForm.setTitleCode("estructuraorganitzativaplugin.title");
@@ -105,15 +113,77 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
     }
 
     @RequestMapping(value = "/provar/{pluginID}/{username}", method = RequestMethod.GET)
-    public String arrancarPeticio(HttpServletRequest request, HttpServletResponse response,
+    public ModelAndView provar(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("pluginID") Long pluginID, @PathVariable("username") String username) {
 
         try {
 //            String username = LoginInfo.getInstance().getUsername();
             String lang = "ca";
 
-            IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
+            IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstanceByPluginID(pluginID);
+            
+            Map<String, String> map;
+            
+            Map<String, Map<String, String>> estructura = new TreeMap<String, Map<String,String>>();
+            
+            map = new TreeMap<String, String>();
+            estructura.put("1.-ENTITAT - ORGANITZACIÓ - EMPRESA  ", map);
+            map.put("getGerentPresidentName()", plugin.getGerentPresidentName());
+            map.put("getGerentPresidentUsername()", plugin.getGerentPresidentUsername());
+            map.put("getNameOrganitzacioEmpresa(lang)", plugin.getNameOrganitzacioEmpresa(lang));
+            map.put("getDir3OrganitzacioEmpresa()", plugin.getDir3OrganitzacioEmpresa());
+            map.put("getNifOrganitzacioEmpresa()", plugin.getNifOrganitzacioEmpresa());
 
+            map = new TreeMap<String, String>();
+            estructura.put("2.- ÀREA - CONSELLERIA  ", map);
+
+            map.put("getNameAreaConselleria(String username, String lang)"
+                   , plugin.getNameAreaConselleria(username, lang));
+            map.put("getDir3AreaConselleria(username)", plugin.getDir3AreaConselleria(username));
+            map.put("getCodeAreaConselleria(username)", plugin.getCodeAreaConselleria(username));
+            map.put("getCapAreaConsellerUsername(username)", plugin.getCapAreaConsellerUsername(username));
+            map.put("getCapAreaConsellerName(username)", plugin.getCapAreaConsellerName(username));
+            
+            map = new TreeMap<String, String>();
+            estructura.put("3.- DEPARTAMENT - DIRECCIÓ GENERAL  ", map);
+            map.put("getNameDepartamentDireccioGeneral(username, lang)"
+                   , plugin.getNameDepartamentDireccioGeneral(username, lang));
+            map.put(
+                    "getDir3DepartamentDireccioGeneral(username)", plugin.getDir3DepartamentDireccioGeneral(username));
+            map.put(
+                    "getCodeDepartamentDireccioGeneral(username)", plugin.getCodeDepartamentDireccioGeneral(username));
+            map.put("getCapDepartamentDirectorGeneralUsername(username)"
+                   , plugin.getCapDepartamentDirectorGeneralUsername(username));
+            map.put("getCapDepartamentDirectorGeneralName(username)"
+                   , plugin.getCapDepartamentDirectorGeneralName(username));
+            
+            map = new TreeMap<String, String>();
+            estructura.put("4.- DADES GENERALS  ", map);
+            map.put("getSecretariUsername(username)", plugin.getSecretariUsername(username));
+            map.put("getSecretariName(username)", plugin.getSecretariName(username));
+            map.put("getEncarregatCompresUsername(username)", plugin.getEncarregatCompresUsername(username));
+            map.put("getEncarregatCompresName(username)", plugin.getEncarregatCompresName(username));
+            map.put("getRecursosHumansUsername(username)", plugin.getRecursosHumansUsername(username));
+            map.put("getRecursosHumansName(username)", plugin.getRecursosHumansName(username));
+            map = new TreeMap<String, String>();
+            estructura.put("5.- CÀRRECS ADDICIONALS  ", map);
+            map.put("getCarrec1Username(username)", plugin.getCarrec1Username(username));
+            map.put("getCarrec1Name(username)", plugin.getCarrec1Name(username));
+            map.put("getCarrec1PositionName(username, lang)", plugin.getCarrec1PositionName(username, lang));
+            map.put("getCarrec2Username(username)", plugin.getCarrec2Username(username));
+            map.put("getCarrec2Name(username)", plugin.getCarrec2Name(username));
+            map.put("getCarrec2PositionName(username, lang)", plugin.getCarrec2PositionName(username, lang));
+       
+            
+            ModelAndView mav = new ModelAndView("estructuraOrganitzativaPluginProvesAdmin");
+            
+            mav.addObject("username", username);
+            mav.addObject("estructura", estructura);
+            mav.addObject("tornarurl", getContextWeb() + "/list");
+
+            return mav;
+            
+/*
             String CapAreaConseller =  campBuit( instance.getCapAreaConsellerUsername(username));
             String CapDepartamentDirectorGeneral = campBuit(instance.getCapDepartamentDirectorGeneralUsername(username));
             String CodiDIR3ByUsername = campBuit(instance.getDir3DepartamentDireccioGeneral(username));
@@ -138,28 +208,9 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
                     + "Secretari: " + Secretari + "<br>";
 
             HtmlUtils.saveMessageInfo(request, msg);
-
+*/
             
-//            
-//            Map<String, String> map = new HashMap<String, String>();
-//
-//            map.put("Cap Area/Conseller", instance.getCapAreaConsellerByUsername(username));
-//            map.put("Cap Departament/Director General", instance.getCapDepartamentDirectorGeneralByUsername(username));
-//            map.put("Codi DIR3", instance.getCodiDIR3ByUsername(username));
-//            map.put("Encarregat Compres", instance.getEncarregatCompresByUsername(username));
-//            map.put("Gerent/President", instance.getGerentPresident());
-//            map.put("Area/Conselleria", instance.getNomAreaConselleriaByUsername(username, lang));
-//            map.put("Departament/Direccio General", instance.getNomDepartamentDireccioGeneralByUsername(username, lang));
-//            map.put("Recursos Humans", instance.getRecursosHumansByUsername(username));
-//            map.put("Secretari", instance.getSecretariByUsername(username));
-//            
-//            msg = "<b>Dades organitzatives de " + username + ": </b>";
-//
-//            for (Map.Entry<String, String> entry : map.entrySet()) {
-//                msg += "<br>" + entry.getKey() + ": " + campBuit(entry.getValue());                
-//            }
-//            
-//            HtmlUtils.saveMessageInfo(request, msg);
+
 
             
         } catch (I18NException e) {
@@ -173,7 +224,7 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
             log.error(msg, e);
         }
 
-        return "redirect:" + getContextWeb() + "/list";
+        return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
     }
 
     public String campBuit(String valor) {
