@@ -4,7 +4,13 @@
 <c:if test="${not empty wizardstep}">
 
 <label style="font-size: 1.25rem;font-weight: bold;">
+
+<c:out value="${titolFluxFirma}" default="Aqui hauria de possar FIRMA PERSONALITAZA"/>
+
+<%-- 
 <fmt:message key="menu.flux.title" />
+
+ --%>
 </label>
 
 

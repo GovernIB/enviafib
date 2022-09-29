@@ -112,10 +112,10 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         HtmlUtils.deleteMessages(request);
 
         //No ha de sortir cap missatge quan es autofirma
-        
-//        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
-//        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
-//        HtmlUtils.saveMessageSuccess(request, msg);
+
+        //        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
+        //        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
+        //        HtmlUtils.saveMessageSuccess(request, msg);
 
         return "redirect:" + getContextWeb() + "/viewiniframe";
     }
@@ -123,8 +123,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
     @RequestMapping(value = "/viewiniframe", method = RequestMethod.GET)
     public ModelAndView viewInIframe(HttpServletRequest request) throws Exception {
         String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
+        log.info("ENTRA A /viewiniframe => redirectUrl: " + redirectUrl);
         if (log.isDebugEnabled()) {
-            log.debug("ENTRA A /viewiniframe => redirectUrl: " + redirectUrl);
         }
 
         ModelAndView mav = new ModelAndView("firmasimpleweb_iframe");
@@ -155,7 +155,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                     new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
         }
 
-        log.info("Consulta transactionID[" + transactionID + "] => " + peticioID);
+        log.info("Consulta transactionID]" + transactionID + "[ => " + peticioID);
 
         String errorMsg;
         String errorException;
@@ -231,8 +231,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         HtmlUtils.saveMessageSuccess(request, msg);
 
                         return new ModelAndView(
-                                new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
-
+                                new RedirectView(LlistatPeticionsFirmadesUserController.CONTEXT_WEB + "/list", true));
                         //                        ModelAndView mav = new ModelAndView("finaliframe"); 
                         //                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
                         //                        return mav;
@@ -253,16 +252,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             errorMsg = I18NUtils.tradueix("procesdefirma.error", e.getMessage());
 
         } finally {
-            try {
-                if (api != null && transactionID != null) {
-                    try {
-                        api.closeTransaction(transactionID);
-                    } catch (Throwable th) {
-                        log.error(th.getMessage(), th);
-                    }
+            if (api != null && transactionID != null) {
+                try {
+                    api.closeTransaction(transactionID);
+                } catch (Throwable th) {
+                    log.error(th.getMessage(), th);
                 }
-            } catch (Exception e2) {
-                log.error(e2.getMessage(), e2);
             }
         }
 
@@ -290,7 +285,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         peticioLogicaEjb.update(pet);
 
-        return new ModelAndView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
+        return new ModelAndView(new RedirectView(LlistatPeticionsRebutjadesUserController.CONTEXT_WEB + "/list", true));
 
         //        ModelAndView mav = new ModelAndView("finaliframe"); 
         //        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
@@ -383,18 +378,13 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         } catch (Exception e) {
 
             log.error("Error desconegut processant entrada de dades o inicialitzant el proces de firma ", e);
-            try {
-                // Només s'executa si es WEB
-                if (transactionID != null) {
-                    try {
-                        apiWeb.closeTransaction(transactionID);
-                    } catch (Throwable th) {
-                        log.error(th.getMessage(), th);
-                    }
+            // Només s'executa si es WEB
+            if (transactionID != null) {
+                try {
+                    apiWeb.closeTransaction(transactionID);
+                } catch (Throwable th) {
+                    log.error(th.getMessage(), th);
                 }
-
-            } catch (Exception e2) {
-                log.error(e2.getMessage(), e2);
             }
 
             throw new I18NException("error.procesdefirma", e.getMessage());

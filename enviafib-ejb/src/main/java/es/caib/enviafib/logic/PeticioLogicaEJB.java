@@ -94,6 +94,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
+    
+
+    @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
 
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
@@ -257,7 +261,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Long peticioID = getPeticioIdFromPortafibId(portafibID);
 
-        InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(peticioID, portafibID, languageUI);
+        InfoSignaturaJPA infoSignatura;
+        
+        if (peticioID == null) {
+            log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ", new Exception());
+            infoSignatura = null;
+        }else {
+            infoSignatura = guardarFitxerInfoFirma(peticioID, portafibID, languageUI);
+        }
 
         return infoSignatura;
 
@@ -292,8 +303,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         List<Peticio> peticioList = this.select(PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
 
         if (peticioList == null || peticioList.size() != 1) {
-            log.error("Event de REBUIG amb portafibid = " + portafibID + " i Petició no trobada");
-            throw new I18NException("error.portafib.peticionull", "REBUIG", String.valueOf(portafibID));
+            log.error("Event de REBUIG amb portafibid = " + portafibID + " i Petició no trobada", new Exception());
+            return;
+//            throw new I18NException("error.portafib.peticionull", "REBUIG", String.valueOf(portafibID));
         }
 
         Peticio peticio = peticioList.get(0);
@@ -490,7 +502,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             Long solicitantID = peticio.getSolicitantID();
 
-            String urlBase = Configuracio.getUrlBase();
+
+            
+            String baseUrl = Configuracio.getUrlBase();
+            
+            
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
             String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
 
@@ -515,7 +531,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 break;
             }
 
-            String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, urlBase);
+            String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
 
             boolean isHTML = true;
 
@@ -996,13 +1012,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         final long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
+        final String prefixeEsborrat="ESBORRADA%";
         try {
             Where w1 = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
 
             Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR };
             Where w2 = PeticioFields.ESTAT.in(estats);
 
-            Where w3 = PeticioFields.PETICIOPORTAFIRMES.notLike("ESBORRADA%");
+            Where w3 = PeticioFields.PETICIOPORTAFIRMES.notLike(prefixeEsborrat);
 
             List<String> listPortaFIBIds = this.executeQuery(PeticioFields.PETICIOPORTAFIRMES, Where.AND(w1, w2, w3));
 
@@ -1016,7 +1033,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName()
                                 + " set " + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?0" + " where "
                                 + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?1");
-                        query.setParameter(0, "ESBORRADA_" + portaFIBID);
+                        query.setParameter(0, prefixeEsborrat + portaFIBID);
                         query.setParameter(1, portaFIBID);
                         query.executeUpdate();
                     } else {

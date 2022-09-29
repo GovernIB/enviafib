@@ -1,6 +1,5 @@
 package es.caib.enviafib.back.controller.user;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,6 +52,8 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
     public static final String CONTEXT_WEB = "/user/flux";
 
+    public static final String TITOL_FLUX_FIRMA = "titolFluxFirma";
+
     private ThreadLocal<Boolean> threadLocalTileForm = new ThreadLocal<>();
 
     private static final Map<String, FlowTemplateSimpleFlowTemplate> fluxInfoByTransactonID = new HashMap<String, FlowTemplateSimpleFlowTemplate>();
@@ -64,12 +65,12 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
     @Override
     public String getEntityNameCode() {
-        return "hola.misco";
+        return "flux.flux";
     }
 
     @Override
     public String getEntityNameCodePlural() {
-        return "hola.misco.plural";
+        return "flux.flux.plural";
     }
 
     @Override
@@ -98,6 +99,13 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         long solicitantID = peticioForm.getPeticio().getSolicitantID();
         String solicitantNif = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
         peticioForm.getPeticio().setDestinatariNif(solicitantNif);
+
+        
+        String titol_flux = (String) request.getSession()
+                .getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
+        mav.addObject(TITOL_FLUX_FIRMA, titol_flux);
+
+        peticioForm.setTitleCode("= ");
 
         peticioForm.addHiddenField(DESTINATARINIF);
 
@@ -186,7 +194,11 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
             request.getSession().setAttribute("transactionID", transactionID);
 
+            String titol_flux = (String) request.getSession()
+                    .getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
+
             ModelAndView mav = new ModelAndView("flowview");
+            mav.addObject(TITOL_FLUX_FIRMA, titol_flux);
             mav.addObject("fluxname", name);
             mav.addObject("urlflow", redirectUrl);
             mav.addObject("wizardstep", 1);
@@ -381,7 +393,12 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
             log.info("View Flow Template Url = " + url);
 
+            String titol_flux = (String) request.getSession()
+                    .getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
+
             ModelAndView mav = new ModelAndView("flowview");
+            mav.addObject(TITOL_FLUX_FIRMA, titol_flux);
+
             mav.addObject("title", I18NUtils.tradueix("vista.flux"));
             mav.addObject("urlflow", url);
 

@@ -11,6 +11,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
+import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
+import org.fundaciobit.genapp.common.i18n.I18NException;
+
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
@@ -22,10 +26,6 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import org.apache.log4j.Logger;
-import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
-import org.fundaciobit.genapp.common.i18n.I18NException;
 
 /**
  * 
@@ -106,9 +106,10 @@ public class PortaFIBCallbackRestService {
                     InfoSignatura infoSignatura;
                     infoSignatura = peticioLogicaEjb.cosesAFerPeticioFirmadaPart1(portafibID, languageUI);
 
-                    // ASYNCHRONOUS Funcionalitat de guardar document a Arxiu amb la API
-                    peticioLogicaEjb.cosesAFerPeticioFirmadaPart2(portafibID, languageUI, infoSignatura);
-                    
+                    if (infoSignatura != null) {
+                        // ASYNCHRONOUS Funcionalitat de guardar document a Arxiu amb la API
+                        peticioLogicaEjb.cosesAFerPeticioFirmadaPart2(portafibID, languageUI, infoSignatura);
+                    }
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA: {
@@ -132,7 +133,6 @@ public class PortaFIBCallbackRestService {
                 break;
             }
 
-
             // Assignacio de l'estat a la peticio corresponent.
             //if (event != null && event.getSign() != null) {
             //    
@@ -142,9 +142,10 @@ public class PortaFIBCallbackRestService {
 
             long endTime = System.currentTimeMillis();
             log.info("Event processat. Temps: " + (endTime - startTime));
-            log.info("CALLBACK -> OK");
 
+            log.info("CALLBACK -> OK");
             return Response.status(Response.Status.OK).entity("OK").build();
+
         } catch (I18NException e) {
             log.error("CALLBACK -> ERROR");
             String msg = I18NCommonUtils.getMessage(e, new Locale("ca"));
@@ -161,10 +162,10 @@ public class PortaFIBCallbackRestService {
     }
 
     // @GetMapping("/versio")
-//    public String getVersio() {
-//        log.info("URL de CallBack Validada");
-//        return "1";
-//    }
+    //    public String getVersio() {
+    //        log.info("URL de CallBack Validada");
+    //        return "1";
+    //    }
 
     // TODO: Ficar dins funcions:
     /*

@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,10 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
 
     public static final String CONTEXT_WEB = "/user/peticio/firmades";
 
+    public enum TipusFile {
+        ORIGINAL, ENI_DOC, VERSIO_IMPRIMIBLE
+    }
+
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
@@ -52,10 +57,6 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         return "peticio.list.firmades.title";
     }
 
-    protected enum TipusFile {
-        ORIGINAL, ENI_DOC, VERSIO_IMPRIMIBLE
-    }
-
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
@@ -64,18 +65,25 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
             peticioFilterForm.setDeleteSelectedButtonVisible(false);
-            
-            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-file-pdf",
-            //                    "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}", "btn-info"));
+
+            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
+            // fa-file-pdf",
+            // "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}",
+            // "btn-info"));
             //
-            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-vote-yea",
-            //                    "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/{0}", "btn-info"));
+            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
+            // fa-vote-yea",
+            // "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/{0}",
+            // "btn-info"));
             //
-            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-print",
-            //                    "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/{0}", "btn-info"));
+            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
+            // fa-print",
+            // "download.arxivat.imprimible", getContextWeb() +
+            // "/descarregarimprimible/{0}", "btn-info"));
             //
-            //            peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-envelope icon-white",
-            //                    "peticio.btn.sendmail", "javascript: cridaEmail({0})", "btn-success"));
+            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
+            // fa-envelope icon-white",
+            // "peticio.btn.sendmail", "javascript: cridaEmail({0})", "btn-success"));
         }
 
         return peticioFilterForm;
@@ -89,7 +97,7 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         final String docName = "_original";
         TipusFile tipusFile = TipusFile.ORIGINAL;
 
-        internalDownload(csv, response, format, docName, tipusFile);
+        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioEjb, log);
     }
 
     @RequestMapping(value = "/descarregarenidoc/{csv}", method = RequestMethod.GET)
@@ -100,27 +108,37 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         final String docName = "_eni";
         TipusFile tipusFile = TipusFile.ENI_DOC;
 
-        internalDownload(csv, response, format, docName, tipusFile);
+        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioEjb, log);
     }
 
     @RequestMapping(value = "/descarregarimprimible/{csv}", method = RequestMethod.GET)
-    public void descarregarVersioImprible(@PathVariable("csv") String csv, HttpServletRequest request,
-            HttpServletResponse response) throws I18NException, IOException {
-
+    public void descarregarFitxerArxiu(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("csv") String csv) throws I18NException, IOException {
         final String format = "PDF";
-        final String docName = "_imprimible";
         TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
+        final String docName = "_imprimible";
 
-        internalDownload(csv, response, format, docName, tipusFile);
+        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioEjb, log);
     }
 
-    protected void internalDownload(String csv, HttpServletResponse response, final String format, final String docName,
-            TipusFile tipusFile) throws I18NException, IOException {
+    public static void internalDownload(String csv, HttpServletResponse response, final String format,
+            final String docName, TipusFile tipusFile, es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb,
+            es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb,
+            es.caib.enviafib.ejb.PeticioService peticioEjb, Logger log) throws I18NException, IOException {
 
-        IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
+        if (csv == null) {
+            return;
+        }
 
         String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID, InfoArxiuFields.CSV.equal(csv));
+
         log.info("internalDownload(): -> docID: " + docID);
+
+//        String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
+//                InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+
+//        Long pluginID = 1001L;
+        IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
 
         byte[] data = null;
         switch (tipusFile) {
@@ -140,13 +158,13 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
             break;
         }
 
-        prepareAndDownload(data, response, docName, format, csv);
+        prepareAndDownload(data, response, docName, format, csv, peticioEjb);
     }
 
-    private void prepareAndDownload(byte[] data, HttpServletResponse response, final String docName,
-            final String format, String csv) throws I18NException {
+    private static void prepareAndDownload(byte[] data, HttpServletResponse response, final String docName,
+            final String format, String csv, es.caib.enviafib.ejb.PeticioService peticioEjb) throws I18NException {
 
-        //      new PeticioJPA().getInfoArxiu().getCsv();
+        // new PeticioJPA().getInfoArxiu().getCsv();
         String fileName = peticioEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
                 new PeticioQueryPath().INFOARXIU().CSV().equal(csv));
 
@@ -183,4 +201,5 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
             e.printStackTrace();
         }
     }
+
 }

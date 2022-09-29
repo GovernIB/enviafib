@@ -62,6 +62,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
+    public static final String TITOL_PETICIO = "__TITOL_PETICIO__";
+
     @Override
     public boolean isActiveList() {
         return false;
@@ -96,8 +98,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
 
     public String getTitolCode(HttpServletRequest request) {
-        return "titol." + getTipusPeticio();
+        
+        
+        return "=" + request.getSession().getAttribute(TITOL_PETICIO);
     }
+    
     /**
      * Carregar el formulari per un nou Peticio
      */
@@ -119,6 +124,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
         Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
+
+        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO));
 
         hiddens.remove(NOM);
         hiddens.remove(FITXERID);

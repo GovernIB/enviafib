@@ -28,12 +28,17 @@ public class MenuUserController implements Constants {
     protected es.caib.enviafib.ejb.MenuService menuEjb;
 
     @RequestMapping(value = "/show/{menuID}/{tipus}", method = RequestMethod.GET)
-    public String show(@PathVariable("menuID")
-    long menuID, @PathVariable("tipus")
-    int tipus, HttpServletRequest request, HttpServletResponse response) throws I18NException {
+    public String show(@PathVariable("menuID") long menuID, @PathVariable("tipus") int tipus,
+            HttpServletRequest request, HttpServletResponse response) throws I18NException {
 
         // XYZ ZZZ Check si aquest usuair pot obrir el menuID
-        
+
+        MenuJPA menu = (MenuJPA) menuEjb.findByPrimaryKey(menuID);
+
+        String idioma = LocaleContextHolder.getLocale().getLanguage();
+
+        request.getSession().setAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO,
+                menu.getTitolMenu().getTraduccio(idioma).getValor());
 
         switch (tipus) {
 
@@ -66,13 +71,9 @@ public class MenuUserController implements Constants {
             case MENU_FIRMA_TIPUS_CARREC:
                 //String tipusCarrecStr = menuEjb.executeQueryOne(MenuFields.PARAMETRECOMBO,
                 //        MenuFields.MENUID.equal(menuID));
-                MenuJPA menu = (MenuJPA)menuEjb.findByPrimaryKey(menuID);
-                
+
                 String tipusCarrecStr = menu.getParametreCombo();
-                
-                request.getSession().setAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO_CARREC,
-                        menu.getTitolMenu().getTraduccio(LocaleContextHolder.getLocale().getLanguage()).getValor());
-                
+
                 switch (Integer.parseInt(tipusCarrecStr)) {
 
                     case CARREC_GERENT_PRESIDENT:
