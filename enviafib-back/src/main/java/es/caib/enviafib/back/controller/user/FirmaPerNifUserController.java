@@ -5,10 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -19,7 +17,7 @@ import es.caib.enviafib.persistence.PeticioJPA;
  */
 @Controller
 @RequestMapping(value = FirmaPerNifUserController.CONTEXT_WEB)
-@SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
+//
 public class FirmaPerNifUserController extends AbstractFirmaUserController {
 
     public static final String CONTEXT_WEB = "/user/firmapernif";
@@ -31,6 +29,15 @@ public class FirmaPerNifUserController extends AbstractFirmaUserController {
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
 
         peticioForm.setAttachedAdditionalJspCode(true);
+
+        boolean ptriasDeveloper = true;
+        if (ptriasDeveloper) {
+            PeticioJPA p = peticioForm.getPeticio();
+            p.setNom("Nom inventat");
+            p.setDestinatariNif("45186147W");
+            p.setTipusDocumental("2");
+            p.setArxiuReqParamDocEstatElabora("EE01");
+        }
 
         return peticioForm;
     }

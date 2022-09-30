@@ -32,11 +32,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
@@ -54,7 +52,6 @@ import es.caib.enviafib.persistence.PeticioJPA;
  */
 @Controller
 @RequestMapping(value = AutoFirmaUserController.CONTEXT_WEB)
-@SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
 public class AutoFirmaUserController extends AbstractFirmaUserController {
 
     public static final String CONTEXT_WEB = "/user/autofirma";

@@ -59,10 +59,6 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
     }
 
-//    @Override
-//    public String getTitolCode(HttpServletRequest request) {
-//        return "genapp.comodi";
-//    }
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
@@ -71,8 +67,6 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
-
-//        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO_CARREC));
 
         if (peticioForm.isNou()) {
 

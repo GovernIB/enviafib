@@ -56,6 +56,13 @@ ${entityname}
         </span></a>
         </li>
 
+    <%-- Organitzacio --%>
+       <fmt:message var="entityname" key="organitzacio.organitzacio.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/organitzacio/list/1"/>" ><span style="${(fn:contains(url, 'organitzacio/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
+
     <%-- Peticio --%>
        <fmt:message var="entityname" key="peticio.peticio.plural"/>
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/peticio/list/1"/>" ><span style="${(fn:contains(url, 'peticio/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >

@@ -125,17 +125,38 @@ public class MockEstructuraOrganitzativaPlugin extends AbstractPluginProperties
 
     @Override
     public String getSecretariUsername(String username) throws Exception {
-        return processarPropietat("secretari", username);
+        return processarPropietat("secretari.name", username);
     };
+    
+    @Override
+    public String getSecretariName(String username) throws Exception {
+        return processarPropietat("secretari.username", username);
+    }
+
+
+
 
     @Override
     public String getEncarregatCompresUsername(String username) throws Exception {
-        return processarPropietat("encarregatcompres", username);
+        return processarPropietat("encarregatcompres.username", username);
     };
+    
+    @Override
+    public String getEncarregatCompresName(String username) throws Exception {
+        return processarPropietat("encarregatcompres.name", username);
+    }
+
+
 
     @Override
     public String getRecursosHumansUsername(String username) throws Exception {
-        return processarPropietat("recursoshumans", username);
+        return processarPropietat("recursoshumans.username", username);
+    }
+    
+    
+    @Override
+    public String getRecursosHumansName(String username) throws Exception {
+        return processarPropietat("recursoshumans.name", username);
     }
 
     /** =================  CÀRRECS ADDICIONALS ========= */
@@ -197,5 +218,6 @@ public class MockEstructuraOrganitzativaPlugin extends AbstractPluginProperties
         }
         return generat;
     }
+
 
 }

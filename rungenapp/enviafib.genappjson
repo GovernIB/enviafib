@@ -1671,6 +1671,155 @@
       ]
     },
     {
+      "name": "efi_organitzacio",
+      "nameJava": "Organitzacio",
+      "shortName": "organitza",
+      "labels": {
+        "ca": "Estructura organitzativa",
+        "es": "Estructura organizativa"
+      },
+      "labelsPlural": {
+        "ca": "Estructures organitzatives",
+        "es": "Estructuras organizativas"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_organitzacio_pk",
+          "index": "efi_organitzacio_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "organitzacioid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "organitzacioID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_organitzacio_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "codiconselleria",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Codi Conselleria",
+            "es": "Código Conselleria"
+          },
+          "javaName": "codiConselleria",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "codidirecciogeneral",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Codi Direcció General",
+            "es": "Código Dirección General"
+          },
+          "javaName": "codiDireccioGeneral",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipus",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Tipus",
+            "es": "Tipo"
+          },
+          "javaName": "tipus",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "CARREC1_NAME,CARREC1_USERNAME,CARREC1_POSITION,CARREC2_NAME,CARREC2_USERNAME,CARREC2_POSITION,RRHH_NAME,RRHH_USERNAME,COMPRES_NAME,COMPRES_USERNAME,SEC_NAME,SEC_USERNAME,CAP_NAME,CAP_USERNAME,NAME.ca,NAME.es,NAME.en,DIR3,NIF",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "valor",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Valor",
+            "es": "Valor"
+          },
+          "javaName": "valor",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
       "name": "efi_peticio",
       "nameJava": "Peticio",
       "shortName": "peticio",

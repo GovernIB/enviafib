@@ -23,4 +23,6 @@ public interface AbstractPluginLogicaService<I> extends PluginService {
   public Where getWhere();
 
   public I getInstance() throws I18NException;
+  
+  public Long getCurrentPluginID() throws I18NException;
 }

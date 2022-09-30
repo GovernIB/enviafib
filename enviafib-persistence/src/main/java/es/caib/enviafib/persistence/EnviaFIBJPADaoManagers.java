@@ -13,6 +13,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
    private final InfoArxiuJPAManager efi_infoarxiu;
    private final InfoSignaturaJPAManager efi_infosignatura;
    private final MenuJPAManager efi_menu;
+   private final OrganitzacioJPAManager efi_organitzacio;
    private final PeticioJPAManager efi_peticio;
    private final PluginJPAManager efi_plugin;
    private final SerieDocumentalJPAManager efi_seriedocumental;
@@ -27,6 +28,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
     this.efi_infoarxiu = new InfoArxiuJPAManager(__em);
     this.efi_infosignatura = new InfoSignaturaJPAManager(__em);
     this.efi_menu = new MenuJPAManager(__em);
+    this.efi_organitzacio = new OrganitzacioJPAManager(__em);
     this.efi_peticio = new PeticioJPAManager(__em);
     this.efi_plugin = new PluginJPAManager(__em);
     this.efi_seriedocumental = new SerieDocumentalJPAManager(__em);
@@ -60,6 +62,10 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
     public IMenuManager getMenuManager() {
         return this.efi_menu;
+    };
+
+    public IOrganitzacioManager getOrganitzacioManager() {
+        return this.efi_organitzacio;
     };
 
     public IPeticioManager getPeticioManager() {

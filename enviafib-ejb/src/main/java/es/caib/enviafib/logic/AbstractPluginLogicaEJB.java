@@ -48,6 +48,14 @@ public abstract class AbstractPluginLogicaEJB<I extends IPlugin> extends PluginE
     @Override
     public I getInstance() throws I18NException {
 
+        Long pluginID = getCurrentPluginID();
+        
+        I instance = this.getInstanceByPluginID(pluginID);
+        return instance;
+    }
+
+    @Override
+    public Long getCurrentPluginID() throws I18NException {
         List<Long> pluginList = this.executeQuery(PluginFields.PLUGINID, getWhere(), new OrderBy(PluginFields.PLUGINID));
 
         if (pluginList == null || pluginList.size() == 0) {
@@ -56,9 +64,7 @@ public abstract class AbstractPluginLogicaEJB<I extends IPlugin> extends PluginE
         }
 
         Long pluginID = pluginList.get(0);
-        
-        I instance = this.getInstanceByPluginID(pluginID);
-        return instance;
+        return pluginID;
     }
 
     @Override

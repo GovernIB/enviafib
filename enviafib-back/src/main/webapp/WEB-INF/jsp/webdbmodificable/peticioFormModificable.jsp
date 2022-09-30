@@ -11,6 +11,9 @@
 			<fmt:message key="dragdrop.text" />
 		</p>
 
+		<input type="hidden" name="myHiddenInput" id="myHiddenInput">
+		<input type="hidden" name="nFitxers" id="nFitxers">
+
 		<div id="progress_bar" class="progress" style="display: none;">
 			<div class="progress-bar progress-bar-striped active"
 				role="progressbar" aria-valuenow="0" aria-valuemin="0"
@@ -58,19 +61,92 @@
 		
 		$('.loader').show(); // show loader
 
-        var fileInput = document.getElementById("fitxerID");
+/*         Input = document.getElementById("fitxerID");
 		fileInput.files = e.dataTransfer.files;
+ */		
+		document.getElementById("fitxerID").files = e.dataTransfer.files;
+ 
+        var files = e.dataTransfer.files;
 
-		var fileName = fileInput.files[0].name;
+ 		console.log(files);
+ 
+ 		var hiddenInput = document.getElementById("myHiddenInput");
+		hiddenInput.value = files.length;
+		
+		var fitxers = [];
+		
+		for (var i = 0; i < files.length; i++) {
 
+			var input = document.createElement("input");
+	
+			input.setAttribute("type", "file");
+	
+			input.setAttribute("id", "hiddenFile" + i );
+			input.setAttribute("name", "hiddenFile" );
+			input.setAttribute("style", "display:none");
+			input.setAttribute("value", "hiddenFile" + i );
+	
+			document.getElementById("peticioForm").appendChild(input);
+
+			var fileInput = document.getElementById("hiddenFile" + i);
+			
+			let list = new DataTransfer();
+			let file = files.item(i);
+			list.items.add(file);
+
+			let myFileList = list.files;
+			fileInput.files = myFileList;
+
+			fitxers.push(file.name);
+		}
+		
+		
+/* 		var fitxers = [];
+		var fileName = "";
+
+		var transferencia = [];
+		
+		for (const file of fileInput.files) {
+
+			
+			fileName += file.name + ", ";
+			fitxers.push(file.name);
+
+//			console.log(file);
+
+			setTimeout(function(){
+				var fr = new FileReader();
+				fr.onload = function() {
+					var data = fr.result;
+					var array = new Int8Array(data);
+//					console.log(array);
+//					console.log(JSON.stringify(array, null, '  '));
+					var fileObject = {
+						name : file.name,
+						data : array,
+						mime : file.type,
+						size : file.size
+					};
+					console.log(fileObject);
+					transferencia.push(fileObject);
+				};
+
+				 fr.readAsArrayBuffer(file);
+			}, 200);
+		}
+		
+	    console.log("transferencia: " + transferencia);
+ */
+		
 	    setTimeout(function(){
 			var fileLabel= $("#fitxerID-custom-file-label");
 		    fileLabel.show();
-		    fileLabel.children("small").html(fileName)
+		    fileLabel.children("small").html(fitxers)
 		    
-	 	    console.log(fileInput.files); 
+			console.log(fitxers); 
+		    
 		    $('.loader').hide(); // show loader
-	    }, 3200);
+	    }, 500);
 	}
 	
  	var classList = document.getElementById("peticio_tableid").classList;

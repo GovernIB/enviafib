@@ -1,0 +1,23 @@
+
+# CAIB
+
+# =================  ORGANITZACIÓ - EMPRESA =========
+
+gerentpresident.name=Francesca Lluc Armengol Socias
+gerentpresident.username=farmengol
+
+organitzacioempresa.name.ca=Govern de les Illes Balears
+organitzacioempresa.name.es=Gobierno de las Illes Balears
+organitzacioempresa.dir3=A04003003
+organitzacioempresa.nif=S0711001H
+
+
+# ============= Properties de Plugin de Estructura Organitzativa ==========
+
+plugindatabaseestructuraorganitzativa.properties=database.properties
+
+
+
+
+
+

@@ -10,7 +10,7 @@ import org.fundaciobit.pluginsib.core.IPlugin;
 public interface IEstructuraOrganitzativaPlugin extends IPlugin {
 
     public static final String ESTRUCTURAORGANITZATIVA_PROPERTY_BASE = IPLUGINSIB_BASE_PROPERTIES
-            + "estructuraorganizativa.";
+            + "estructuraorganitzativa.";
 
     /** =================  ENTITAT - ORGANITZACIÓ - EMPRESA ========= */
 
@@ -51,10 +51,16 @@ public interface IEstructuraOrganitzativaPlugin extends IPlugin {
     /** =================  DADES GENERALS ========= */
 
     public String getSecretariUsername(String username) throws Exception;
+    
+    public String getSecretariName(String username) throws Exception;
 
     public String getEncarregatCompresUsername(String username) throws Exception;
+    
+    public String getEncarregatCompresName(String username) throws Exception;
 
     public String getRecursosHumansUsername(String username) throws Exception;
+    
+    public String getRecursosHumansName(String username) throws Exception;
 
     /** =================  CÀRRECS ADDICIONALS ========= */
 

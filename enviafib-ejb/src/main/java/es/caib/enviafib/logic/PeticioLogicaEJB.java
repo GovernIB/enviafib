@@ -871,13 +871,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             List<FirmaAsyncSimpleSignature> signers = new ArrayList<FirmaAsyncSimpleSignature>();
             for (FlowTemplateSimpleSignature signOrigen : blockOrigen.getSignatures()) {
 
-                /*
-                 * String nif = destinatarisBloc[j].trim();
-                 * 
-                 * if (nif.trim().length() == 0) { throw new I18NException("genapp.comodi",
-                 * "El destinatari " + j + " del bloc " + i + " està buit o val null"); }
-                 */
-
                 FirmaAsyncSimpleSigner personToSign = new FirmaAsyncSimpleSigner();
 
                 FlowTemplateSimpleSigner signerOrig = signOrigen.getSigner();

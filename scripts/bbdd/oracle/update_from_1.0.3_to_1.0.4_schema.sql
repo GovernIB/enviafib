@@ -30,3 +30,25 @@ create index efi_menu_titolmenuid_fk_i on efi_menu (titolmenuid);
 create index efi_menu_ajudamenuid_fk_i on efi_menu (ajudamenuid);
 create index efi_menu_grupid_fk_i on efi_menu (grupid);
 
+
+---
+--- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+---
+
+CREATE SEQUENCE efi_organitzacio_seq  START WITH 1000 INCREMENT BY 1;
+
+CREATE TABLE efi_organitzacio
+(
+   organitzacioid bigint DEFAULT efi_organitzacio_seq.nextval  NOT NULL , 
+   codiconselleria varchar2(100 char),
+   codidirecciogeneral varchar2(100 char),
+   tipus varchar2(100 char),
+   valor varchar2(255 char),
+
+   
+);
+
+ALTER TABLE efi_organitzacio ADD CONSTRAINT efi_organitzacio_pk PRIMARY KEY (organitzacioid)
+
+ create index efi_organitzacio_pk_i on efi_organitzacio (organitzacioid);
+ 

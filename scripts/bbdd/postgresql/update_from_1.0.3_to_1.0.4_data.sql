@@ -107,3 +107,33 @@ UPDATE efi_peticio SET tipus=13 WHERE tipus=3;
 UPDATE efi_peticio SET tipus=14 WHERE tipus=4;
 
 
+---
+--- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+---
+
+INSERT INTO efi_plugin(pluginid, classe, properties, actiu, tipus, nom, descripcio) 
+      VALUES (30, 'org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstructuraOrganitzativaPlugin', '# =================  TAULA DE BBDD =========
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.datasourcejndi=java:jboss/datasources/enviafibDS
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.tablename=efi_organitzacio
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.areacodi=codiconselleria
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.departamentcodi=codidirecciogeneral
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.tipus=tipus
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.valor=valor
+
+
+# =================  PLUGIN DE USER INFORMATION =========
+
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.class=org.fundaciobit.pluginsib.userinformation.keycloak.KeyCloakUserInformationPlugin
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertybase=es.caib.enviafib.
+# Si la següent propietat està comentada, llavors les propietats
+# del plugin de user information han d''estar al System.getProperties()
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertiesfile=D:\\dades\\dades\\CarpetesPersonals\\ProjecteBase\\jboss7\\standalone\\deploy_enviafib\\enviafib.properties
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcaparea=RolCapArea
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcapdepartament=RolCapDepartament
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolsecretari=RolSecretari', true, 1, 'Database', 'Recull informació de l''Estructura d''una taula de la Base de Dades');
+
+
+

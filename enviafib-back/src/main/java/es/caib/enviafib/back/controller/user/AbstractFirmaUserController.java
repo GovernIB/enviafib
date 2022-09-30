@@ -30,10 +30,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
+import es.caib.enviafib.back.form.webdb.PeticioMultipleForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
@@ -46,6 +50,7 @@ import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
+import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -54,6 +59,8 @@ import es.caib.enviafib.persistence.PeticioJPA;
  * @author anadal
  *
  */
+
+@SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class, PeticioMultipleForm.class })
 public abstract class AbstractFirmaUserController extends AbstractPeticioUserController {
 
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
@@ -96,13 +103,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     public abstract int getTipusPeticio();
 
-
     public String getTitolCode(HttpServletRequest request) {
-        
-        
+
         return "=" + request.getSession().getAttribute(TITOL_PETICIO);
     }
-    
+
     /**
      * Carregar el formulari per un nou Peticio
      */
@@ -121,7 +126,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
-        PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
+        PeticioForm peticioForm2 = super.getPeticioForm(_jpa, __isView, request, mav);
+
+        PeticioMultipleForm peticioForm = new PeticioMultipleForm(peticioForm2);
 
         Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
@@ -185,7 +192,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         if (peticioForm.isNou()) {
             mav.addObject("dragdrop", true);
             peticioForm.setTitleCode(getTitolCode(request));
-            
+
             Peticio peticio = peticioForm.getPeticio();
 
             // COIDDIR3
@@ -212,8 +219,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setSolicitantID(userId);
 
             peticio.setTipus(getTipusPeticio());
-            
-            
+
             // Amagam el selector d'idioma a la creacio de peticio. S'agafa el del context
             // autmaticament.
             peticio.setIdiomaID(LocaleContextHolder.getLocale().getLanguage());
@@ -418,15 +424,39 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String crearPeticioPost(@ModelAttribute PeticioForm peticioForm, BindingResult result,
+    public String crearPeticioPost(@ModelAttribute PeticioForm peticioForm2, BindingResult result,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String ret = super.crearPeticioPost(peticioForm, result, request, response);
+        PeticioMultipleForm peticioForm = (PeticioMultipleForm) peticioForm2;
 
-        if (result.hasErrors() && getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
+        CommonsMultipartFile[] files = peticioForm.getHiddenFile();
 
-            request.setAttribute("dragdrop", true);
+        String ret = null;
+        String originalName = peticioForm.getPeticio().getNom();
+        for (int i = 0; i < files.length; i++) {
+            String msg = "\nFile" + i + ": \n";
+
+            msg += "Bytes: " + files[i].getBytes() + "\n";
+            msg += "ContentType: " + files[i].getContentType() + "\n";
+            msg += "OriginalFilename: " + files[i].getOriginalFilename() + "\n";
+            msg += "Size: " + files[i].getSize() + "\n";
+
+            log.info(msg);
+            
+            // TODO: Crear varias peticiones con ficheros diferentes
+            peticioForm.setFitxerID(files[i]);
+
+            peticioForm.getPeticio().setPeticioID(0);
+            peticioForm.getPeticio().setNom(originalName + "-" + files[i].getOriginalFilename());
+
+            ret = super.crearPeticioPost(peticioForm, result, request, response);
+
+            if (result.hasErrors() && getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
+                request.setAttribute("dragdrop", true);
+            }
         }
+
+        //        String ret = super.crearPeticioPost(peticioForm, result, request, response);
         return ret;
     }
 
@@ -437,9 +467,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         super.postValidate(request, peticioForm, result);
 
         {
-            Field<?>[] signFields = { 
-                    PeticioFields.ARXIUPARAMFUNCIONARINIF, 
-                    PeticioFields.ARXIUPARAMFUNCIONARINOM, 
+            Field<?>[] signFields = { PeticioFields.ARXIUPARAMFUNCIONARINIF, PeticioFields.ARXIUPARAMFUNCIONARINOM,
                     PeticioFields.ARXIUPARAMFUNCIONARIDIR3 };
 
             for (Field<?> field : signFields) {
@@ -489,12 +517,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
         // Validacio de serie documental
         {
-           
 
             Peticio peticio = peticioForm.getPeticio();
 
             String tipusDocumental = peticio.getTipusDocumental();
-            
+
             // Mapeig de Series Documentals
             List<SerieDocumental> list = serieDocumentalEjb
                     .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
