@@ -587,13 +587,25 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("CARREC1_NAME" , "CARREC1_NAME"));
+    __tmp.add(new StringKeyValue("CARREC1_USERNAME" , "CARREC1_USERNAME"));
+    __tmp.add(new StringKeyValue("CARREC1_POSITION" , "CARREC1_POSITION"));
+    __tmp.add(new StringKeyValue("CARREC2_NAME" , "CARREC2_NAME"));
+    __tmp.add(new StringKeyValue("CARREC2_USERNAME" , "CARREC2_USERNAME"));
+    __tmp.add(new StringKeyValue("CARREC2_POSITION" , "CARREC2_POSITION"));
+    __tmp.add(new StringKeyValue("RRHH_NAME" , "RRHH_NAME"));
+    __tmp.add(new StringKeyValue("RRHH_USERNAME" , "RRHH_USERNAME"));
+    __tmp.add(new StringKeyValue("COMPRES_NAME" , "COMPRES_NAME"));
+    __tmp.add(new StringKeyValue("COMPRES_USERNAME" , "COMPRES_USERNAME"));
+    __tmp.add(new StringKeyValue("SEC_NAME" , "SEC_NAME"));
+    __tmp.add(new StringKeyValue("SEC_USERNAME" , "SEC_USERNAME"));
     __tmp.add(new StringKeyValue("CAP_NAME" , "CAP_NAME"));
     __tmp.add(new StringKeyValue("CAP_USERNAME" , "CAP_USERNAME"));
-    __tmp.add(new StringKeyValue("NAME" , "NAME"));
+    __tmp.add(new StringKeyValue("NAME.ca" , "NAME.ca"));
+    __tmp.add(new StringKeyValue("NAME.es" , "NAME.es"));
+    __tmp.add(new StringKeyValue("NAME.en" , "NAME.en"));
     __tmp.add(new StringKeyValue("DIR3" , "DIR3"));
     __tmp.add(new StringKeyValue("NIF" , "NIF"));
-    __tmp.add(new StringKeyValue("SEC_USERNAME" , "SEC_USERNAME"));
-    __tmp.add(new StringKeyValue("SEC_NAME" , "SEC_NAME"));
     return __tmp;
   }
 

@@ -44,11 +44,6 @@ public class GeneradorEstructuraOrganitzativa {
                 plugin = new DatabaseEstructuraOrganitzativaPlugin(PACKAGE_BASE, propDatabase);
             }
 
-            // Carregar propietats de PluginUserInformation dins de System.properties
-            {
-                System.getProperties().putAll(propGenerals);
-            }
-
             // RolCapArea
             String ROL_CAP_AREA = propDatabase.getProperty(EOPB + "userinformation.rolcaparea");
             // RolCapDepartament

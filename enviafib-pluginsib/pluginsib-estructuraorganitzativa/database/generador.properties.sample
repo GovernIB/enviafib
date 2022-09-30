@@ -16,25 +16,7 @@ organitzacioempresa.nif=S0711001H
 
 plugindatabaseestructuraorganitzativa.properties=database.properties
 
-# =========== Properties de Plugin USER INFORMATION =======
 
-es.caib.enviafib.pluginsib.userinformation.keycloak.serverurl=https://localhost:18080/auth
-es.caib.enviafib.pluginsib.userinformation.keycloak.realm=GOIB
-es.caib.enviafib.pluginsib.userinformation.keycloak.client_id=goib-ws
-es.caib.enviafib.pluginsib.userinformation.keycloak.password_secret=MY_PASSWORD_SECRET
-es.caib.enviafib.pluginsib.userinformation.keycloak.client_id_for_user_autentication=goib-default
-
-# Mappings. Mapejos entre valors de Attibutes de un usuari i els valors de UserInfo de PluginUserInformation
-# Clau:  username, administrationID, name, surname1, surname2, email, language,
-#        phoneNumber, password,  address, company, website o gender( -1: unknown or undefined, 0 female, 1 male)
-# Valor:  Atribut definit dins "Attributes" de l'usuari Keycloak
-es.caib.enviafib.pluginsib.userinformation.keycloak.mapping.administrationID=nif
-es.caib.enviafib.pluginsib.userinformation.keycloak.mapping.companyDepartment=departmentNumber
-es.caib.enviafib.pluginsib.userinformation.keycloak.mapping.companyArea=areaNumber
-#es.caib.enviafib.pluginsib.userinformation.keycloak.mapping.surname1=sn1
-#es.caib.enviafib.pluginsib.userinformation.keycloak.mapping.surname2=sn2
-# Per depuració
-es.caib.enviafib.pluginsib.userinformation.keycloak.debug=true
 
 
 

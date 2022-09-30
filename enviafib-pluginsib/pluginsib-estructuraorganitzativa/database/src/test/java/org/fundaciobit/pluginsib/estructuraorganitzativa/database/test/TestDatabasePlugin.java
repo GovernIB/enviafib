@@ -46,7 +46,6 @@ public class TestDatabasePlugin {
 
             Properties propGenerals = new Properties();
             {
-
                 byte[] data = FileUtils.readFromFile(new File("generador.properties"));
                 propGenerals.load(new ByteArrayInputStream(data));
             }
