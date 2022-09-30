@@ -36,188 +36,220 @@ import es.caib.enviafib.commons.utils.Constants;
 @Component
 public class AuthenticationSuccessListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent> {
 
-	protected final Logger log = Logger.getLogger(getClass());
+    protected final Logger log = Logger.getLogger(getClass());
 
-	@Override
-	public synchronized void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
+    @Override
+    public synchronized void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
 
-		log.info("Entram a AuthenticationSuccessListener");
+        log.info("Entram a AuthenticationSuccessListener");
 
-		SecurityContext sc = SecurityContextHolder.getContext();
-		Authentication au = sc.getAuthentication();
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
 
-		if (au == null) {
-		    String msg = I18NUtils.tradueix("error.authentication.isnull");
-			throw new LoginException(msg);
-		}
+        if (authentication == null) {
+            String msg = I18NUtils.tradueix("error.authentication.isnull");
+            throw new LoginException(msg);
+        }
 
-		User user = (User) au.getPrincipal();
+        User user = (User) authentication.getPrincipal();
 
-		String username = user.getUsername();
-		log.info(" =================================================================");
-		log.info(" ============ Login Usuari: " + username);
+        String username = user.getUsername();
+        log.info(" =================================================================");
+        log.info(" ============ Login Usuari: " + username);
 
-		// Cercam si té el ROLE_USER o ROLE_ADMIN
-		Collection<GrantedAuthority> realAuthorities = user.getAuthorities();
-		boolean containsRoleUser = false;
-		boolean containsRoleAdmin = false;
-		for (GrantedAuthority grantedAuthority : realAuthorities) {
-			String rol = grantedAuthority.getAuthority();
-			log.info("Rol REAL : " + rol);
-			if (Constants.ROLE_USER.equals(rol)) {
-				containsRoleUser = true;
-			}
-			if (Constants.ROLE_ADMIN.equals(rol)) {
-				containsRoleAdmin = true;
-			}
-		}
+        // Cercam si té el ROLE_USER o ROLE_ADMIN
+        Collection<GrantedAuthority> realAuthorities = user.getAuthorities();
+        boolean containsRoleUser = false;
+        boolean containsRoleAdmin = false;
+        for (GrantedAuthority grantedAuthority : realAuthorities) {
+            String rol = grantedAuthority.getAuthority();
+            log.info("Rol REAL : " + rol);
+            if (Constants.ROLE_USER.equals(rol)) {
+                containsRoleUser = true;
+            }
+            if (Constants.ROLE_ADMIN.equals(rol)) {
+                containsRoleAdmin = true;
+            }
+        }
 
-		log.info(" ============ Login Usuari: " + username);
-		log.info(" ============ containsRoleUser: " + containsRoleUser);
-		log.info(" ============ containsRoleAdmin: " + containsRoleAdmin);
+        log.info(" ============ Login Usuari: " + username);
+        log.info(" ============ containsRoleUser: " + containsRoleUser);
+        log.info(" ============ containsRoleAdmin: " + containsRoleAdmin);
 
-		try {
-			LoginInfo loginInfo = LoginInfo.getInstance();
+        try {
+            LoginInfo loginInfo = LoginInfo.getInstance();
 
-			if (!username.equals(loginInfo.getUsuari().getUsername())) {
-				throw new LoginException("Amb aquest navegador ja s'ha autenticat amb un altre usuari."
-						+ " Tanqui el navegador completament.");
-			}
-		} catch (Throwable e) {
-		}
+            if (!username.equals(loginInfo.getUsuari().getUsername())) {
+                throw new LoginException("Amb aquest navegador ja s'ha autenticat amb un altre usuari."
+                        + " Tanqui el navegador completament.");
+            }
+        } catch (Throwable e) {
+        }
 
-		final boolean isDebug = log.isDebugEnabled();
+        final boolean isDebug = log.isDebugEnabled();
 
-		UsuariService usuariEjb;
-		try {
-			usuariEjb = EjbManager.getUsuariEJB();
-		} catch (Throwable e) {
+        UsuariService usuariEjb;
+        try {
+            usuariEjb = EjbManager.getUsuariEJB();
+        } catch (Throwable e) {
             String msg = I18NUtils.tradueix("error.authentication.manager", username, e.getMessage());
             throw new LoginException(msg, e);
-		}
+        }
 
-		List<Usuari> listUsuariPersona;
-		try {
-			// Cerca de l'usuari que es conecta
-			listUsuariPersona = usuariEjb.select(UsuariFields.USERNAME.equal(username));
+        List<Usuari> listUsuariPersona;
+        try {
+            // Cerca de l'usuari que es conecta
+            listUsuariPersona = usuariEjb.select(UsuariFields.USERNAME.equal(username));
+            log.info("Llista d'usuaris amb usuariEjb: " + listUsuariPersona.size());
 
-		} catch (I18NException e1) {
-			listUsuariPersona = null;
-			log.error("Error llegint usuari " + username + " : " + e1.getMessage(), e1);
-		}
-		boolean necesitaConfigurar = false;
-		Usuari usuariPersona = null;
+        } catch (I18NException e1) {
+            listUsuariPersona = null;
+            log.error("Error llegint usuari " + username + " : " + e1.getMessage(), e1);
+        }
+        boolean necesitaConfigurar = false;
+        Usuari usuariPersona = null;
 
-		if (listUsuariPersona != null && !listUsuariPersona.isEmpty()) {
-			usuariPersona = (Usuari) listUsuariPersona.get(0);
-		}
+        if (listUsuariPersona != null && !listUsuariPersona.isEmpty()) {
+            usuariPersona = (Usuari) listUsuariPersona.get(0);
+        }
 
-		if (usuariPersona == null) {
-			// Revisar si és un Administrador que entra per primera vegada
-			log.info("\n No s'ha trobat l'usuari " + username + " a la BBDD \n");
-			try {
-				IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
-				UserInfo info = plugin.getUserInfoByUserName(username);
-				if (info != null) {
+        // Check if Usuari trobat a BBDD
+        if (usuariPersona == null) {
+            // Revisar si és un Administrador que entra per primera vegada
+            log.info("\n No s'ha trobat l'usuari " + username + " a la BBDD \n");
+            try {
+                IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
+                UserInfo info = plugin.getUserInfoByUserName(username);
 
-					UsuariJPA persona = new UsuariJPA();
-					persona.setEmail(info.getEmail());
-					String lang = LocaleContextHolder.getLocale().getLanguage();
-					if (lang == null) {
-					    lang = Configuracio.getDefaultLanguage();
-					    if (lang == null) {
-					        lang = "ca";
-					    }
-					}					
-                    persona.setIdiomaID(lang); 
-                    
-					final String nom;
-					{
-						String nomTmp = info.getName() == null ? username : info.getName();
+                // Check if Usuari trobat a UserInformation
+                if (info != null) {
+                    log.info("\n Usuari trobat " + username + " a UserInformation\n");
+                    // Sent UserInfo, sera el primer login, i sempre necesita configurar.
+                    necesitaConfigurar = true;
 
-						String llinatgesTmp = (info.getSurname1() == null ? "" : info.getSurname1())
-								+ (info.getSurname2() == null ? "" : (" " + info.getSurname2()));
-						llinatgesTmp = llinatgesTmp.trim();
+                    // Check if DNI ja existeix al sistema
+                    UsuariJPA persona = new UsuariJPA();
+                    persona.setEmail(info.getEmail());
+                    String lang = LocaleContextHolder.getLocale().getLanguage();
+                    if (lang == null) {
+                        lang = Configuracio.getDefaultLanguage();
+                        if (lang == null) {
+                            lang = "ca";
+                        }
+                    }
+                    persona.setIdiomaID(lang);
 
-						if (llinatgesTmp.length() == 0) {
-							// Miram si podem xapar el nom
-							int pos = nomTmp.indexOf(' ');
-							if (pos == -1) {
-								nom = nomTmp;
-							} else {
-								nom = nomTmp.substring(0, pos);
-							}
-						} else {
-							nom = nomTmp;
-						}
-					}
-					persona.setNom(nom);
-		            persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
-					persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
-					
-					
-					persona.setUsername(username);
-					
-					persona.setNif(info.getAdministrationID());
-					
-					/*persona.setNif(!info.getAttributes().containsKey("nif") || info.getAttributes().get("nif") == null
-							|| info.getAttributes().get("nif").isEmpty() ? ""
-									: info.getAttributes().get("nif").toUpperCase());
-					persona.setNif(info.getAttributes().get("nif") == null ? ""
-							: info.getAttributes().get("nif").toUpperCase());*/
-							
-					persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
+                    // Omplir nom i llinatges segons info de userinfo
+                    final String nom = calculateUsername(username, info);
 
-					usuariPersona = usuariEjb.create(persona);
-					log.info("\n S'ha creat l'usuari " + username + " la BBDD \n");
+                    persona.setNom(nom);
+                    persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
+                    persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
 
-					if (isDebug) {
-						log.debug("necesitaConfigurarUsuari = " + necesitaConfigurar);
-					}
+                    persona.setUsername(username);
+                    persona.setNif(info.getAdministrationID());
+                    persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
 
-				}
-				//if (usuariPersona.getNif() == null || usuariPersona.getNif().isEmpty()) 
-				necesitaConfigurar = true;
+                    try {
+                        usuariPersona = usuariEjb.create(persona);
+                        log.info("\n S'ha creat l'usuari " + username + " la BBDD \n");
+                    } catch (Throwable e) {
+                        log.info("XYZ ZZZ Excepció de EJB capturada");
+                        usuariPersona = new UsuariJPA(persona);
+                        usuariPersona.setUsuariID(0);
+                        necesitaConfigurar = true;
 
-			} catch (Throwable e) {
-				String msg;
-				if (e instanceof I18NException) {
-					msg = I18NUtils.getMessage((I18NException) e);
-				} else if (e instanceof I18NValidationException) {
-					msg = I18NUtils.getMessage((I18NValidationException) e);
-				} else {
-					msg = e.getMessage();
-				}
-				msg = "Error llegint informació del plugin de UserInformation: " + msg;
-				log.error(msg, e);
-				throw new LoginException(msg, e);
+                    }
 
-			}
+                    /*
+                     * persona.setNif(!info.getAttributes().containsKey("nif") ||
+                     * info.getAttributes().get("nif") == null ||
+                     * info.getAttributes().get("nif").isEmpty() ? "" :
+                     * info.getAttributes().get("nif").toUpperCase());
+                     * persona.setNif(info.getAttributes().get("nif") == null ? "" :
+                     * info.getAttributes().get("nif").toUpperCase());
+                     */
 
-		} else {
-			log.info("\n Hem trobat l'usuari " + username + " a la BBDD \n");
-		}
+                    // Controlar excepció i redirigir a pantalla de creació d'usuari.
 
-		if (usuariPersona.getNif() == null || usuariPersona.getNif().isEmpty()) {
-			necesitaConfigurar = true;
-		}
+                    if (isDebug) {
+                        log.debug("necesitaConfigurarUsuari = " + necesitaConfigurar);
+                    }
 
-		log.info("LoginInfo:\n" + "\tuser: " + user + "\n" + "\tusuariPersona: " + usuariPersona + "\n"
-				+ "\tnecesitaConfigurar: " + necesitaConfigurar);
+                } else {
+                    log.info("\n No s'ha trobat l'usuari " + username + " a UserInformation \n");
 
-		String language = usuariPersona.getIdiomaID();
+                }
+                // if (usuariPersona.getNif() == null || usuariPersona.getNif().isEmpty())
 
-		LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona,
-				new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);
+            } catch (Throwable e) {
+                String msg;
+                if (e instanceof I18NException) {
+                    msg = I18NUtils.getMessage((I18NException) e);
+                } else if (e instanceof I18NValidationException) {
+                    msg = I18NUtils.getMessage((I18NValidationException) e);
+                } else {
+                    msg = e.getMessage();
+                }
+                msg = "Error llegint informació del plugin de UserInformation: " + msg;
+                log.error(msg, e);
+                throw new LoginException(msg, e);
 
-		// and set the authentication of the current Session context
-		SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());
+            }
 
-		log.info(">>>>>> Final del Process d'autenticació.");
-		log.info(" =================================================================");
+        } else {
+            log.info("\n Hem trobat l'usuari " + username + " a la BBDD \n");
+        }
 
-		log.info("Sortim de AuthenticationSuccessListener");
+        if (usuariPersona == null) {
+            usuariPersona = new UsuariJPA();
+            usuariPersona.setUsername(username);
+            necesitaConfigurar = true;
 
-	}
+        } else if (usuariPersona.getNif() == null || usuariPersona.getNif().isEmpty()) {
+            necesitaConfigurar = true;
+        }
+
+        {
+            log.info("LoginInfo:\n" + "\tuser: " + user + "\n" + "\tusuariPersona: " + usuariPersona + "\n"
+                    + "\tnecesitaConfigurar: " + necesitaConfigurar + "\tusuariID: " + usuariPersona.getUsuariID());
+
+            String language = usuariPersona.getIdiomaID();
+
+            LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona,
+                    new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);
+
+            // and set the authentication of the current Session context
+            SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());
+
+            log.info(">>>>>> Final del Process d'autenticació.");
+            log.info(" =================================================================");
+
+            log.info("Sortim de AuthenticationSuccessListener");
+        }
+
+    }
+
+    private String calculateUsername(String username, UserInfo info) {
+        final String nom;
+        String nomTmp = info.getName() == null ? username : info.getName();
+
+        String llinatgesTmp = (info.getSurname1() == null ? "" : info.getSurname1())
+                + (info.getSurname2() == null ? "" : (" " + info.getSurname2()));
+        llinatgesTmp = llinatgesTmp.trim();
+
+        if (llinatgesTmp.length() == 0) {
+            // Miram si podem xapar el nom
+            int pos = nomTmp.indexOf(' ');
+            if (pos == -1) {
+                nom = nomTmp;
+            } else {
+                nom = nomTmp.substring(0, pos);
+            }
+        } else {
+            nom = nomTmp;
+        }
+        return nom;
+    }
 
 }
