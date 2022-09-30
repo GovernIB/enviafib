@@ -6,15 +6,17 @@
     lang="<c:out value="${pageContext.response.locale.language}"/>">
 <head>
 <c:if test="${loginInfo.necesitaConfigurar}">
-	<%
-	LoginInfo.getInstance().setNecesitaConfigurar(false);
-	%>
+	
 	<%-- <c:if test="${not empty loginInfo.error}">
 		<c:redirect url="/common/loginerror.html" />
 	</c:if> --%>
+	<%
+	LoginInfo.getInstance().setNecesitaConfigurar(false);
+	%>
  
 	<c:redirect
-		url="/common/usuarinou/${loginInfo.usuari.usuariID}/edit" />
+		url="/common/usuarinou/${loginInfo.usuari.usuariID}/check" />
+	
 </c:if>
 <%@ include file="/WEB-INF/jsp/moduls/imports.jsp"%>
 </head>
