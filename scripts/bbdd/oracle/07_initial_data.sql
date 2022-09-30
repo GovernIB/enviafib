@@ -74,7 +74,7 @@ es.caib.enviafib.pluginsib.estructuraorganizativa.mock.carrec1.positionname.es=J
 es.caib.enviafib.pluginsib.estructuraorganizativa.mock.carrec2.name=
 es.caib.enviafib.pluginsib.estructuraorganizativa.mock.carrec2.username=
 es.caib.enviafib.pluginsib.estructuraorganizativa.mock.carrec2.positionname.ca=
-es.caib.enviafib.pluginsib.estructuraorganizativa.mock.carrec2.positionname.es=', 1, 1, 'Plugin Mock', 'Plugin Mock que simula entitat Fundació Bit');
+es.caib.enviafib.pluginsib.estructuraorganizativa.mock.carrec2.positionname.es=', 0, 1, 'Plugin Mock', 'Plugin Mock que simula entitat Fundació Bit');
 
 
     
@@ -205,5 +205,37 @@ INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, t
 INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (19, 'Encarregat de Compres', NULL, 128, 129, 95, 8, NULL, NULL, '5', 1);
 INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (20, 'Recursos Humans', NULL, 130, 131, 96, 8, NULL, NULL, '6', 1);
 INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (21, 'Addicional 1 - Cap de Becaris', NULL, 132, 133, 97, 8, NULL, NULL, '7', 1);
+
+
+
+---
+--- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+---
+
+ INSERT INTO efi_plugin(pluginid, classe, properties, actiu, tipus, nom, descripcio) 
+  VALUES (30, 'org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstructuraOrganitzativaPlugin', '# =================  TAULA DE BBDD =========
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.datasourcejndi=java:jboss/datasources/enviafibDS
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.tablename=efi_organitzacio
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.areacodi=codiconselleria
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.departamentcodi=codidirecciogeneral
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.tipus=tipus
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.valor=valor
+
+
+# =================  PLUGIN DE USER INFORMATION =========
+
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.class=org.fundaciobit.pluginsib.userinformation.keycloak.KeyCloakUserInformationPlugin
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertybase=es.caib.enviafib.
+# Si la següent propietat està comentada, llavors les propietats
+# del plugin de user information han d''estar al System.getProperties()
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertiesfile=D:\\dades\\dades\\CarpetesPersonals\\ProjecteBase\\jboss7\\standalone\\deploy_enviafib\\enviafib.properties
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcaparea=RolCapArea
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcapdepartament=RolCapDepartament
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolsecretari=RolSecretari', 1, 1, 'Database', 'Recull informació de l''Estructura d''una taula de la Base de Dades');
+
+
 
 
