@@ -29,7 +29,7 @@ import es.caib.enviafib.persistence.UsuariJPA;
  */
 public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUserController {
 
-//    public static final String TITOL_PETICIO_CARREC = "__TITOL_PETICIO_CARREC__";
+    //    public static final String TITOL_PETICIO_CARREC = "__TITOL_PETICIO_CARREC__";
 
     public int getCarrec() {
 
@@ -59,10 +59,10 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
     }
 
-//    @Override
-//    public String getTitolCode(HttpServletRequest request) {
-//        return "genapp.comodi";
-//    }
+    //    @Override
+    //    public String getTitolCode(HttpServletRequest request) {
+    //        return "genapp.comodi";
+    //    }
 
     @Override
     public PeticioForm getPeticioForm(PeticioJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
@@ -72,7 +72,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
 
-//        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO_CARREC));
+        //        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO_CARREC));
 
         if (peticioForm.isNou()) {
 
@@ -108,7 +108,8 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
     public String[] getCarrecNIF() throws I18NException {
 
         String[] dadesCarrec = new String[4];
-        /* dadesCarrec[0] = NIF
+        /* 
+         * dadesCarrec[0] = NIF
          * dadesCarrec[1] = carrec
          * dadesCarrec[2] = username
          * dadesCarrec[3] = name
@@ -118,36 +119,49 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
         IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstance();
 
-        String carrec = null;
+        String carrecRol = null;
         String carrecUsername = null;
+        String carrecNIF = null;
+        String carrecFullName = null;
+
         try {
             String username = LoginInfo.getInstance().getUsername();
 
-            carrec = "estructuraorganitzativa." + tipusCarrec + ".nom";
+            String carrec = "estructuraorganitzativa." + tipusCarrec + ".nom";//2-3-5
+            carrecRol = I18NUtils.tradueix(carrec);//Secretari-Director-Etc
+            
             switch (tipusCarrec) {
                 case Constants.CARREC_GERENT_PRESIDENT:
                     carrecUsername = instance.getGerentPresidentUsername();
+                    carrecFullName = instance.getGerentPresidentName();
                 break;
                 case Constants.CARREC_CAP_AREA_CONSELLER:
                     carrecUsername = instance.getCapAreaConsellerUsername(username);
+                    carrecFullName = instance.getCapAreaConsellerName(username);
                 break;
                 case Constants.CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL:
                     carrecUsername = instance.getCapDepartamentDirectorGeneralUsername(username);
+                    carrecFullName = instance.getCapDepartamentDirectorGeneralName(username);
                 break;
                 case Constants.CARREC_SECRETARI:
                     carrecUsername = instance.getSecretariUsername(username);
+                    carrecFullName = instance.getSecretariName(username);
                 break;
                 case Constants.CARREC_ENCARREGAT_COMPRES:
                     carrecUsername = instance.getEncarregatCompresUsername(username);
+                    carrecFullName = instance.getEncarregatCompresName(username);
                 break;
                 case Constants.CARREC_RECURSOS_HUMANS:
                     carrecUsername = instance.getRecursosHumansUsername(username);
+                    carrecFullName = instance.getRecursosHumansName(username);
                 break;
                 case Constants.CARREC_ADDICIONAL_1:
                     carrecUsername = instance.getCarrec1Username(username);
+                    carrecFullName = instance.getCarrec1Name(username);
                 break;
                 case Constants.CARREC_ADDICIONAL_2:
                     carrecUsername = instance.getCarrec2Username(username);
+                    carrecFullName = instance.getCarrec2Name(username);
                 break;
 
                 default:
@@ -157,20 +171,16 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
             String error = e.getMessage();
 
             log.info("ERRROR ]" + e + "[");
-            throw new I18NException("error.plugin.estructuraorganitzativa",
-                    new I18NArgumentString(String.valueOf(tipusCarrec)), new I18NArgumentString(error));
-        }
-                
-        if(carrecUsername == null) {
-            String carrecName = I18NUtils.tradueix(carrec);
-            String msg = I18NUtils.tradueix("error.plugin.estructuraorganitzativa.carrecnotrobat", carrecName);
-            throw new I18NException("genapp.comodi", msg, carrecName);
+            throw new I18NException("error.plugin.estructuraorganitzativa", new I18NArgumentString(carrecRol),
+                    new I18NArgumentString(error));
         }
 
-        log.info("El meu " + I18NUtils.tradueix(carrec) + " es " + carrecUsername);
+        if (carrecUsername == null) {
+            String msg = I18NUtils.tradueix("error.plugin.estructuraorganitzativa.carrecnotrobat", carrecRol);
+            throw new I18NException("genapp.comodi", msg, carrecRol);
+        }
 
-        String carrecNIF;
-        String carrecName;
+        log.info("El meu " + carrecRol + " es " + carrecFullName + " - " + carrecUsername);
 
         // Provam a BBDD a veure si està el NIF
         Long usuariID = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(carrecUsername));
@@ -179,39 +189,45 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
             UsuariJPA usuariBD = usuariEjb.findByPrimaryKey(usuariID);
 
             carrecNIF = usuariBD.getNif();
-            carrecName = usuariBD.getNom() + " " + usuariBD.getLlinatge1();
+            if (carrecFullName == null) {
+                carrecFullName = usuariBD.getNom() + " " + usuariBD.getLlinatge1();
+            }
+
         } else {
             // Si no hi es, provam amb Plugin de UserInformation
-            IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
+            IUserInformationPlugin pluginUserInfo = EnviaFIBPluginsManager.getUserInformationPluginInstance();
             UserInfo infoCarrec;
             try {
-                infoCarrec = plugin.getUserInfoByUserName(carrecUsername);
+                infoCarrec = pluginUserInfo.getUserInfoByUserName(carrecUsername);
                 log.info("infoCarrec: ]" + infoCarrec + "[");
                 if (infoCarrec == null) {
                     throw new Exception(I18NUtils.tradueix("userinfoisnull"));
                 }
 
+                carrecNIF = infoCarrec.getAdministrationID();
+                if (carrecFullName == null) {
+                    carrecFullName = infoCarrec.getFullName();
+                }
+
             } catch (Exception e) {
                 String error = e.getMessage();
-                throw new I18NException("error.logininfo.usuarinotfound", new I18NArgumentCode(carrec),
+                throw new I18NException("error.logininfo.usuarinotfound", new I18NArgumentString(carrecRol),
                         new I18NArgumentString(carrecUsername), new I18NArgumentString(error));
             }
-
-            carrecNIF = infoCarrec.getAdministrationID();
-            carrecName = infoCarrec.getFullName();
-            if (carrecNIF == null) {
-                throw new I18NException("error.logininfo", new I18NArgumentCode(UsuariFields.NIF.codeLabel),
-                        new I18NArgumentCode(carrec), new I18NArgumentString(carrecUsername),
-                        new I18NArgumentCode("nifisnull"));
-            }
-            log.info("El NIF del meu " + I18NUtils.tradueix(carrec) + " (" + carrecUsername + ") es: " + carrecNIF);
-
         }
 
+        if (carrecNIF == null) {
+            throw new I18NException("error.logininfo", new I18NArgumentCode(UsuariFields.NIF.codeLabel),
+                    new I18NArgumentString(carrecRol), new I18NArgumentString(carrecUsername),
+                    new I18NArgumentCode("nifisnull"));
+        }
+
+        log.info("El NIF del meu " + carrecRol + ", " + carrecFullName + " (" + carrecUsername + ") es: " + carrecNIF);
+
         dadesCarrec[0] = carrecNIF;
-        dadesCarrec[1] = I18NUtils.tradueix(carrec);
+        dadesCarrec[1] = carrecRol;
         dadesCarrec[2] = carrecUsername;
-        dadesCarrec[3] = carrecName;
+        dadesCarrec[3] = carrecFullName;
         return dadesCarrec;
     }
 
