@@ -154,11 +154,9 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
                         usuariPersona = usuariEjb.create(persona);
                         log.info("\n S'ha creat l'usuari " + username + " la BBDD \n");
                     } catch (Throwable e) {
-                        log.info("XYZ ZZZ Excepció de EJB capturada");
                         usuariPersona = new UsuariJPA(persona);
                         usuariPersona.setUsuariID(0);
                         necesitaConfigurar = true;
-
                     }
 
                     /*

@@ -145,20 +145,18 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 break;
 
                 default:
-                    throw new I18NException("plugin.estructuraorganitzativa.noasignat", String.valueOf(tipusCarrec));
+                    throw new I18NException("plugin.estructuraorganitzativa.noasignat", String.valueOf(carrec));
             }
         } catch (Exception e) {
             String error = e.getMessage();
 
             log.info("ERRROR ]" + e + "[");
             throw new I18NException("error.plugin.estructuraorganitzativa",
-                    new I18NArgumentString(String.valueOf(tipusCarrec)), new I18NArgumentString(error));
+                    new I18NArgumentString(I18NUtils.tradueix(carrec)), new I18NArgumentString(error));
         }
                 
         if(carrecUsername == null) {
-            String carrecName = I18NUtils.tradueix(carrec);
-            String msg = I18NUtils.tradueix("error.plugin.estructuraorganitzativa.carrecnotrobat", carrecName);
-            throw new I18NException("genapp.comodi", msg, carrecName);
+            throw new I18NException("error.plugin.estructuraorganitzativa.carrecnotrobat", I18NUtils.tradueix(carrec));
         }
 
         log.info("El meu " + I18NUtils.tradueix(carrec) + " es " + carrecUsername);
