@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.io.ByteArrayInputStream;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleF
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
@@ -44,6 +46,8 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.logic.utils.LogicUtils;
+import es.caib.enviafib.model.bean.FitxerBean;
+import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
@@ -251,6 +255,42 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         }
 
+        boolean ptriasDeveloper = true;
+        if (ptriasDeveloper) {
+            PeticioJPA p = peticioForm.getPeticio();
+
+            p.setTipusDocumental("2");
+            p.setArxiuReqParamDocEstatElabora("EE01");
+            p.setArxiuParamFuncionariDir3("A04027052");
+
+            switch (p.getTipus()) {
+                case Constants.TIPUS_PETICIO_FLUX:
+                    p.setNom("Firmaflux multiple");
+
+                break;
+
+                case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
+                case Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT:
+                    p.setNom("Entitat multiple");
+
+                break;
+
+                case Constants.TIPUS_PETICIO_AUTOFIRMA:
+                    p.setNom("Autofirma multiple");
+                    p.setReason("Invented reason");
+
+                break;
+                case Constants.TIPUS_PETICIO_NIF:
+                    p.setNom("NIF multiple");
+                    p.setDestinatariNif("45186147W");
+                break;
+                default:
+                    p.setNom("Carrec multiple");
+
+                break;
+            }
+        }
+
         return peticioForm;
     }
 
@@ -273,13 +313,25 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
 
-        HtmlUtils.deleteMessages(request);
+        //   HtmlUtils.deleteMessages(request);
 
-        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
-        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
-        HtmlUtils.saveMessageSuccess(request, msg);
+        Peticio peticio = peticioForm.getPeticio();
+        String peticioID = String.valueOf(peticio.getPeticioID());
 
-        return getRedirectToList();
+        if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
+            String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg();
+            log.error(msg + "\n");
+            HtmlUtils.saveMessageError(request, msg);
+            return "redirect:" + LlistatPeticionsRebutjadesUserController.CONTEXT_WEB + "/list";
+        } else {
+
+            HtmlUtils.deleteMessageSuccess(request);
+            
+            String msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", String.valueOf(peticioID));
+            log.info(msg + "\n");
+            HtmlUtils.saveMessageSuccess(request, msg);
+            return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
+        }
     }
 
     @Override
@@ -357,12 +409,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         PeticioJPA p = super.create(request, peticio);
         try {
+            final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
             final int tipus = getTipusPeticio();
             switch (tipus) {
                 case Constants.TIPUS_PETICIO_FLUX:
-                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(),
-                            LocaleContextHolder.getLocale().getLanguage(),
+                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI,
                             (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
                 break;
 
@@ -372,51 +424,46 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
                     String flowTemplateId = peticio.getPeticioPortafirmes();
-                    final String languageUI = "ca";
 
                     FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
                     flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
 
                     FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
-                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(),
-                            LocaleContextHolder.getLocale().getLanguage(), flux);
+                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux);
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
 
                 break;
                 default:
-                    peticioLogicaEjb.arrancarPeticio(peticio.getPeticioID(),
-                            LocaleContextHolder.getLocale().getLanguage());
+                    p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI);
                 break;
             }
-            String msg = I18NUtils.tradueix("procesdefirma.status.enviadaok", String.valueOf(peticio.getPeticioID()));
-            HtmlUtils.deleteMessages(request);
-            HtmlUtils.saveMessageSuccess(request, msg);
 
-            // HtmlUtils.saveMessageSuccess(request,
-            // "Peticio amb Id: " + peticio.getPeticioID() + " enviada correctament.");
+            //Peticio enviada correctament.
+            String peticioID = String.valueOf(p.getPeticioID());
+            String portafibID = p.getPeticioPortafirmes();
+            String msg = I18NUtils.tradueix("procesdefirma.status.enviadaok", peticioID, portafibID);
+            log.info(msg);
 
-        } catch (I18NException e) {
+        } catch (Exception e) {
 
-            String error = I18NUtils.tradueix("error.flux.arrancar", I18NUtils.getMessage(e));
+            String errorMsg;
+            if (e instanceof I18NException) {
+                errorMsg = I18NUtils.getMessage((I18NException) e);
+            } else if (e instanceof AbstractApisIBException) {
+                errorMsg = e.getMessage();
+            } else {
+                errorMsg = e.getMessage();
+            }
+
+            String error = I18NUtils.tradueix("error.flux.arrancar", errorMsg);
             log.error(error, e);
 
             p.setEstat(Constants.ESTAT_PETICIO_ERROR);
             p.setErrorMsg(LogicUtils.split255(error));
             p.setErrorException(LogicUtils.stackTrace2String(e));
-
-            peticioLogicaEjb.update(p);
-        } catch (AbstractApisIBException e) {
-
-            String error = I18NUtils.tradueix("error.flux.arrancar", e.getMessage());
-            log.error(error, e);
-
-            p.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            p.setErrorMsg(LogicUtils.split255(error));
-            p.setErrorException(LogicUtils.stackTrace2String(e));
-
             peticioLogicaEjb.update(p);
         }
         return p;
@@ -434,22 +481,36 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         String ret = null;
         String originalName = peticioForm.getPeticio().getNom();
         for (int i = 0; i < files.length; i++) {
-            String msg = "\nFile" + i + ": \n";
+            //            String msg = "\nFile" + i + ": \n";
+            //
+            //            msg += "Bytes: " + files[i].getBytes() + "\n";
+            //            msg += "ContentType: " + files[i].getContentType() + "\n";
+            //            msg += "OriginalFilename: " + files[i].getOriginalFilename() + "\n";
+            //            msg += "Size: " + files[i].getSize() + "\n";
+            //            log.info(msg);
 
-            msg += "Bytes: " + files[i].getBytes() + "\n";
-            msg += "ContentType: " + files[i].getContentType() + "\n";
-            msg += "OriginalFilename: " + files[i].getOriginalFilename() + "\n";
-            msg += "Size: " + files[i].getSize() + "\n";
+            //            FitxerJPA fitxer = new FitxerJPA();
+            //
+            //            fitxer.setNom(files[i].getOriginalFilename());
+            //            fitxer.setMime(files[i].getContentType());
+            //            final byte[] data = files[i].getBytes();
+            //            fitxer.setTamany(data.length);
+            //
+            //            Fitxer f = fitxerEjb.create(fitxer);
+            //
+            //            FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
+            //
+            //            // TODO: Crear varias peticiones con ficheros diferentes
+            //            peticioForm.getPeticio().setFitxer(fitxer);
+            //            peticioForm.getPeticio().setFitxerID(f.getFitxerID());
 
-            log.info(msg);
-            
-            // TODO: Crear varias peticiones con ficheros diferentes
             peticioForm.setFitxerID(files[i]);
 
             peticioForm.getPeticio().setPeticioID(0);
             peticioForm.getPeticio().setNom(originalName + "-" + files[i].getOriginalFilename());
 
             ret = super.crearPeticioPost(peticioForm, result, request, response);
+            //            log.info("Creada peticio amb peticioID=" + peticioForm.getPeticio().getPeticioID());
 
             if (result.hasErrors() && getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
                 request.setAttribute("dragdrop", true);
@@ -498,7 +559,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                 String interessats = peticioForm.getPeticio().getArxiuReqParamInteressats();
 
-                log.info("\n XXX Validar NIFs interessats ... " + interessats);
+                //                log.info("\n XXX Validar NIFs interessats ... " + interessats);
 
                 if (interessats != null) {
 

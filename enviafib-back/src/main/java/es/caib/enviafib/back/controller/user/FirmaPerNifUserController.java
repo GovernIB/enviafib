@@ -17,7 +17,6 @@ import es.caib.enviafib.persistence.PeticioJPA;
  */
 @Controller
 @RequestMapping(value = FirmaPerNifUserController.CONTEXT_WEB)
-//
 public class FirmaPerNifUserController extends AbstractFirmaUserController {
 
     public static final String CONTEXT_WEB = "/user/firmapernif";
@@ -29,15 +28,6 @@ public class FirmaPerNifUserController extends AbstractFirmaUserController {
         peticioForm.getHiddenFields().remove(DESTINATARINIF);
 
         peticioForm.setAttachedAdditionalJspCode(true);
-
-        boolean ptriasDeveloper = true;
-        if (ptriasDeveloper) {
-            PeticioJPA p = peticioForm.getPeticio();
-            p.setNom("Nom inventat");
-            p.setDestinatariNif("45186147W");
-            p.setTipusDocumental("2");
-            p.setArxiuReqParamDocEstatElabora("EE01");
-        }
 
         return peticioForm;
     }
