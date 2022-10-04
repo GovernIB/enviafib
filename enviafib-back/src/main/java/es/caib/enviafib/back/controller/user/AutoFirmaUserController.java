@@ -1,6 +1,8 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,10 +85,13 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             throws I18NException, I18NValidationException {
         PeticioJPA p = super.create(request, peticio);
 
-        final String absoluteControllerBase = getAbsoluteControllerBase(request, getContextWeb());
+        String absoluteControllerBase = getAbsoluteControllerBase(request, getContextWeb());
+        Usuari usuari = LoginInfo.getInstance().getUsuari();
+        String lang = LocaleContextHolder.getLocale().getLanguage();
 
-        String[] info = autofirma(peticio, LoginInfo.getInstance().getUsuari(),
-                LocaleContextHolder.getLocale().getLanguage(), absoluteControllerBase);
+        PeticioJPA[] llistatPeticio = null;
+
+        String[] info = autofirma(peticio, usuari, lang, absoluteControllerBase);
 
         String transactionID = info[0];
         String redirectUrl = info[1];
@@ -106,13 +111,8 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
 
-        HtmlUtils.deleteMessages(request);
-
         //No ha de sortir cap missatge quan es autofirma
-
-        //        String peticioID = String.valueOf(peticioForm.getPeticio().getPeticioID());
-        //        String msg = I18NUtils.tradueix("creat.i.enviat", peticioID);
-        //        HtmlUtils.saveMessageSuccess(request, msg);
+        HtmlUtils.deleteMessages(request);
 
         return "redirect:" + getContextWeb() + "/viewiniframe";
     }
@@ -218,20 +218,13 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         }
                         fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
                     }
-                    // Final for de fitxers firmats
 
+                    // Final for de fitxers firmats
                     if (fssr != null && fssr.getSignedFileInfo() != null) {
                         peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
-                        //XYZ ZZZ TRA - Missatges duplicats al crear AutoFirma #203
-                        String msg = I18NUtils.tradueix("procesdefirma.status.final.firmatok");
-                        HtmlUtils.saveMessageSuccess(request, msg);
-
                         return new ModelAndView(
                                 new RedirectView(LlistatPeticionsFirmadesUserController.CONTEXT_WEB + "/list", true));
-                        //                        ModelAndView mav = new ModelAndView("finaliframe"); 
-                        //                        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
-                        //                        return mav;
                     } else {
                         errorException = null;
                         errorMsg = I18NUtils.tradueix("procesdefirma.status.final.firmaterror", SIGNID);
@@ -316,14 +309,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             log.info("administrationID: ]" + administrationID + "[");
             log.info("signerEmail: ]" + signerEmail + "[");
 
-            final String reason = peticio.getReason();
-            final String location = null; // form.getLocation();
-
-            // Només es suporta una firma
-            final int signNumber = 1;
-
-            final String langDoc = peticio.getIdiomaDoc();
-
             FirmaSimpleCommonInfo commonInfoSignature;
 
             String signProfile = Configuracio.getPortafibProfile();
@@ -334,20 +319,25 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             transactionID = apiWeb.getTransactionID(commonInfoSignature);
             log.info("TransactionID = |" + transactionID + "|");
 
-            FirmaSimpleFileInfoSignature fileInfoSignature;
+            final String signID = "SignID_" + peticio.getPeticioID();
+            final String location = null; // form.getLocation();
+            final String langDoc = peticio.getIdiomaDoc();
+            final String reason = peticio.getReason();
+            final long tipusDocumentalID = Long.parseLong(peticio.getTipusDocumental()); // =TD99
+
+            //for (PeticioJPA peticio : llistatPeticio) 
             {
 
-                // No ha de contenir caracters no suportats en URLs
-                final String signID = SIGNID;
+                FirmaSimpleFileInfoSignature fileInfoSignature;
 
+                // Només es suporta una firma
+                final int signNumber = 1;
+
+                String nomFitxer = peticio.getFitxer().getNom();
                 String mimeTypeFitxer = peticio.getFitxer().getMime();
                 byte[] dataFitxer = FileSystemManager.getFileContent(peticio.getFitxerID());
 
-                String nomFitxer = peticio.getFitxer().getNom();
-
                 FirmaSimpleFile fileToSign = new FirmaSimpleFile(nomFitxer, mimeTypeFitxer, dataFitxer);
-
-                long tipusDocumentalID = Long.parseLong(peticio.getTipusDocumental()); // =TD99
 
                 fileInfoSignature = new FirmaSimpleFileInfoSignature(fileToSign, signID, fileToSign.getNom(), reason,
                         location, signNumber, langDoc, tipusDocumentalID);

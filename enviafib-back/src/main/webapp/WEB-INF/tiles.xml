@@ -215,6 +215,15 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/admin/noumenu.jsp" />
     </definition>
 
+   <definition name="organitzacioFormAdmin" extends="admin">
+        <put-attribute name="titol" value="organitzacio.organitzacio" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/organitzacioForm.jsp" />
+    </definition>
+    
+    <definition name="organitzacioListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/organitzacioList.jsp" />
+    </definition>
+
     
     
     <!--  ===========  DESENVOLUPAMENT ================== -->

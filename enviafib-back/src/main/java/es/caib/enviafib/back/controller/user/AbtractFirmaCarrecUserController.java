@@ -165,7 +165,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 break;
 
                 default:
-                    throw new I18NException("plugin.estructuraorganitzativa.noasignat", String.valueOf(tipusCarrec));
+                    throw new I18NException("plugin.estructuraorganitzativa.noasignat", String.valueOf(carrec));
             }
         } catch (Exception e) {
             String error = e.getMessage();
@@ -176,8 +176,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         }
 
         if (carrecUsername == null) {
-            String msg = I18NUtils.tradueix("error.plugin.estructuraorganitzativa.carrecnotrobat", carrecRol);
-            throw new I18NException("genapp.comodi", msg, carrecRol);
+            throw new I18NException("error.plugin.estructuraorganitzativa.carrecnotrobat", I18NUtils.tradueix(carrec));
         }
 
         log.info("El meu " + carrecRol + " es " + carrecFullName + " - " + carrecUsername);

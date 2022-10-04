@@ -128,7 +128,11 @@ public class DatabaseEstructuraOrganitzativaPlugin extends AbstractPluginPropert
 
     @Override
     public String getDir3AreaConselleria(String username) throws Exception {
-        return consultaSqlAreaConselleria(null, TIPUS_DIR3, username);
+        String dir3 = consultaSqlAreaConselleria(null, TIPUS_DIR3, username);
+        if (dir3 == null) {
+            dir3 = getDir3OrganitzacioEmpresa();
+        }
+        return dir3;
     }
 
     @Override
@@ -175,7 +179,11 @@ public class DatabaseEstructuraOrganitzativaPlugin extends AbstractPluginPropert
 
     @Override
     public String getDir3DepartamentDireccioGeneral(String username) throws Exception {
-        return consultaSqlDepartament(username, TIPUS_DIR3, null);
+        String dir3 = consultaSqlDepartament(username, TIPUS_DIR3, null);
+        if (dir3 == null) {
+            dir3 = getDir3AreaConselleria(username);
+        }
+        return dir3;
     }
 
     @Override

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.OrderBy;
@@ -159,12 +160,12 @@ public abstract class AbstractPluginAdminController extends PluginController {
                     String msg = I18NUtils.tradueix("unic.plugin.actiu", plugin);
                     HtmlUtils.saveMessageSuccess(request, msg);
                 }
-
             break;
 
             default:
-                String msg = I18NUtils.tradueix("plugin.tipus.notrobat", String.valueOf(tipusPlugin));
-                throw new I18NException("genapp.comodi", msg);
+                //String msg = I18NUtils.tradueix("plugin.tipus.notrobat", String.valueOf(tipusPlugin));
+                //throw new I18NException("genapp.comodi", msg);
+                throw new I18NException("plugin.tipus.notrobat", new I18NArgumentString(String.valueOf(tipusPlugin)));
         }
 
         p.setActiu(false);

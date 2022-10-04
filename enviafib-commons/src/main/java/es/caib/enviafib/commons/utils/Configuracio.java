@@ -242,5 +242,14 @@ public class Configuracio implements Constants {
     public static String getPluginArxiuClass() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "plugin.arxiu.class");
     }
+    
+    /**  Propietat que indica si volem les opcions de menú per gestionar la
+     *  taula de bbdd que conté les dades de l'estructura organitzativa pel
+     *  Plugin d'Estructura Organitzativa de DATABASE.
+     */
+    public static boolean showMenuEstructuraOrganitzativa() {
+        return "true".equals(getProperty(ENVIAFIB_PROPERTY_BASE + "showmenuestructuraorganitzativa"));
+    }
+
  
 }
