@@ -11,6 +11,7 @@ import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitz
 import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
 import org.fundaciobit.pluginsib.userinformation.UserInfo;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
@@ -91,8 +92,10 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
-                HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
+                mav.setViewName("errorIniciPeticioUser");                
+                mav.addObject("errorMsg", msg);
+                mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
+                
                 return peticioForm;
             }
         }
