@@ -1,6 +1,5 @@
 package es.caib.enviafib.back.controller.user;
 
-import java.io.ByteArrayInputStream;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -16,7 +15,6 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleF
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
-import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
@@ -46,15 +44,12 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.logic.utils.LogicUtils;
-import es.caib.enviafib.model.bean.FitxerBean;
-import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
-import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -311,24 +306,32 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     @Override
-    public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
+    public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm2) {
 
-        //   HtmlUtils.deleteMessages(request);
+        PeticioMultipleForm peticioForm = (PeticioMultipleForm) peticioForm2;
+        HtmlUtils.deleteMessages(request);
 
         Peticio peticio = peticioForm.getPeticio();
         String peticioID = String.valueOf(peticio.getPeticioID());
 
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
-            String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg();
+            String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg()
+                    + "\n";
             log.error(msg + "\n");
             HtmlUtils.saveMessageError(request, msg);
             return "redirect:" + LlistatPeticionsRebutjadesUserController.CONTEXT_WEB + "/list";
         } else {
 
-            HtmlUtils.deleteMessageSuccess(request);
-            
-            String msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", String.valueOf(peticioID));
-            log.info(msg + "\n");
+            CommonsMultipartFile[] files = peticioForm.getHiddenFile();
+            String msg;
+
+            if (files != null && files.length != 1) {
+                int n = peticioForm.getHiddenFile().length;
+                msg = I18NUtils.tradueix("procesdefirma.status.final.multiple", String.valueOf(n));
+            } else {
+                msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", peticioID);
+            }
+
             HtmlUtils.saveMessageSuccess(request, msg);
             return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
         }
@@ -478,6 +481,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         CommonsMultipartFile[] files = peticioForm.getHiddenFile();
 
+        if (files == null && peticioForm.getFitxerID() != null) {
+            files = new CommonsMultipartFile[1];
+            files[0] = peticioForm.getFitxerID();
+        }
+
         String ret = null;
         String originalName = peticioForm.getPeticio().getNom();
         for (int i = 0; i < files.length; i++) {
@@ -488,7 +496,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             //            msg += "OriginalFilename: " + files[i].getOriginalFilename() + "\n";
             //            msg += "Size: " + files[i].getSize() + "\n";
             //            log.info(msg);
-
+            //
             //            FitxerJPA fitxer = new FitxerJPA();
             //
             //            fitxer.setNom(files[i].getOriginalFilename());
@@ -510,14 +518,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticioForm.getPeticio().setNom(originalName + "-" + files[i].getOriginalFilename());
 
             ret = super.crearPeticioPost(peticioForm, result, request, response);
-            //            log.info("Creada peticio amb peticioID=" + peticioForm.getPeticio().getPeticioID());
+            log.info("Creada peticio amb peticioID=" + peticioForm.getPeticio().getPeticioID());
 
             if (result.hasErrors() && getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
                 request.setAttribute("dragdrop", true);
             }
         }
-
-        //        String ret = super.crearPeticioPost(peticioForm, result, request, response);
         return ret;
     }
 
