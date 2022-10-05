@@ -17,7 +17,6 @@ import es.caib.enviafib.persistence.PeticioJPA;
  */
 @Controller
 @RequestMapping(value = FirmaPerNifUserController.CONTEXT_WEB)
-//
 public class FirmaPerNifUserController extends AbstractFirmaUserController {
 
     public static final String CONTEXT_WEB = "/user/firmapernif";

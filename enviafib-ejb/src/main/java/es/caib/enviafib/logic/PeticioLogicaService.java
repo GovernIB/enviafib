@@ -27,7 +27,7 @@ public interface PeticioLogicaService extends PeticioService {
 
     public static final String JNDI_NAME = "java:app/enviafib-ejb/PeticioLogicaEJB!es.caib.enviafib.logic.PeticioLogicaService";
 
-    public void arrancarPeticio(long peticioID, String languageUI) throws I18NException;
+    public PeticioJPA arrancarPeticio(long peticioID, String languageUI) throws I18NException;
 
     public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
             throws I18NException;
