@@ -244,17 +244,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Long peticioDeFirmaID2;
 
         // Utilitzar Blocs de Firmes
-//        log.info("Petició de Firma emprant Blocs de Firmes");
+        //        log.info("Petició de Firma emprant Blocs de Firmes");
         FirmaAsyncSimpleSignatureRequestWithSignBlockList signatureRequest;
         signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(signatureRequestBase, signatureBlocks);
         peticioDeFirmaID2 = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
 
-//        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
+        //        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
 
         rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
 
         String url = api.getUrlToViewFlow(rinfo);
-//        log.info("URL to view flow: " + url);
+        //        log.info("URL to view flow: " + url);
         return peticioDeFirmaID2;
 
     }
@@ -1024,14 +1024,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     long portafibID = Long.parseLong(portaFIBID);
 
                     if (esborrarPeticioPortafib(portafibID, languageUI)) {
-                        Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName()
-                                + " set " + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?0" + " where "
-                                + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?1");
-                        query.setParameter(0, prefixeEsborrat + portaFIBID);
-                        query.setParameter(1, portaFIBID);
-                        query.executeUpdate();
-                    } else {
+                        //                        Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName()
+                        //                                + " set " + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?0" + " where "
+                        //                                + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?1");
+                        //                        query.setParameter(0, prefixeEsborrat + portaFIBID);
+                        //                        query.setParameter(1, portaFIBID);
+                        //                        query.executeUpdate();
 
+                        this.update(PeticioFields.PETICIOPORTAFIRMES, prefixeEsborrat + portaFIBID,
+                                PeticioFields.PETICIOPORTAFIRMES.equal(portaFIBID));
+
+                    } else {
                         final String msg = "Error al mètode esborrarPeticioPortafib() amb portafibID=" + portaFIBID
                                 + " durant el cron nocturn.";
                         log.error(msg);
@@ -1082,12 +1085,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             // Borram fitxers a BD
             for (Long fitxerFirmatID : fitxersFirmatsID) {
                 try {
-                    Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName() + " set "
-                            + PeticioFields.FITXERFIRMATID.javaName + " = null" + " where "
-                            + PeticioFields.FITXERFIRMATID.javaName + " = ?0");
+                    //                    Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName() + " set "
+                    //                            + PeticioFields.FITXERFIRMATID.javaName + " = null" + " where "
+                    //                            + PeticioFields.FITXERFIRMATID.javaName + " = ?0");
+                    //
+                    //                    query.setParameter(0, fitxerFirmatID);
+                    //                    query.executeUpdate();
 
-                    query.setParameter(0, fitxerFirmatID);
-                    query.executeUpdate();
+                    this.update(PeticioFields.FITXERFIRMATID, null, PeticioFields.FITXERFIRMATID.equal(fitxerFirmatID));
 
                     log.info("Esborrant fitxer " + fitxerFirmatID + " a BBDD");
                     fitxerEjb.delete(fitxerFirmatID);

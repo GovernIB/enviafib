@@ -176,7 +176,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         }
 
         if (carrecUsername == null) {
-            throw new I18NException("error.plugin.estructuraorganitzativa.carrecnotrobat", I18NUtils.tradueix(carrec));
+            throw new I18NException("error.plugin.estructuraorganitzativa.carrecnotrobat", I18NUtils.tradueix(carrecUsername));
         }
 
         log.info("El meu " + carrecRol + " es " + carrecFullName + " - " + carrecUsername);
