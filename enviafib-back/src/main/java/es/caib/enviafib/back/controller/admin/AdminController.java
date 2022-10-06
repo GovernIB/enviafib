@@ -17,15 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-
-    protected final Logger log = Logger.getLogger(getClass());
-
-    @RequestMapping(value = "/home")
-    public ModelAndView option1(HttpSession session, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        ModelAndView mav = new ModelAndView("home");
-        return mav;
-
-    }
-
+    
+    
 }
