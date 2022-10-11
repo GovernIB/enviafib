@@ -269,8 +269,6 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
                     log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId() + "|");
 
-                    // request.getSession().setAttribute("flux", flux);
-                    // fluxInfoByTransactonID.put(transactionID, flux);
 
                     ModelAndView mav = new ModelAndView("finaliframe");
 

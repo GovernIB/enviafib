@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignatureBlock;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignatureResult;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.genapp.common.StringKeyValue;
@@ -31,6 +32,10 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
             throws I18NException;
+    
+
+    public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
+            FirmaAsyncSimpleSignatureBlock[] signatureBlocks) throws I18NException;
 
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException;
 

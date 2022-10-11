@@ -87,8 +87,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         Usuari usuari = LoginInfo.getInstance().getUsuari();
         String lang = LocaleContextHolder.getLocale().getLanguage();
 
-        PeticioJPA[] llistatPeticio = null;
-
         String[] info = autofirma(peticio, usuari, lang, absoluteControllerBase);
 
         String transactionID = info[0];

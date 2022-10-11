@@ -1,3 +1,4 @@
+<%@page import="es.caib.enviafib.back.controller.user.FirmaPerFluxFirmaSimpleUserController"%>
 <%@page import="es.caib.enviafib.back.controller.user.FirmaCarrecAddicional2UserController"%>
 <%@page import="es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController"%>
 <%@page import="es.caib.enviafib.back.controller.user.FirmaPlantillaFluxUserController"%>
@@ -200,8 +201,9 @@
 
                 <c:when
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT}">
-                    <c:set var="urlBlack"
-                        value="XYZ ZZZ NO IMPLEMENTAT MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT" />
+                    <%                             
+                     pageContext.setAttribute("urlBlack", FirmaPerFluxFirmaSimpleUserController.CONTEXT_WEB);
+                     %> 
                 </c:when>
 
                 <c:when
