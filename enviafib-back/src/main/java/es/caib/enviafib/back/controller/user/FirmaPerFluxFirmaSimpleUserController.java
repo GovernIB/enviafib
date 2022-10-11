@@ -46,8 +46,8 @@ import es.caib.enviafib.persistence.PeticioJPA;
 #            - Usuari Loguejat => ${UsuariActual}
 #
 # Exemple:
-#        anadal|ptrias
-#        atrobat&fbosh
+#        anadal | ptrias
+#        atrobat & fbosh
 #        ${Secretari}
 #        ${GerentPresident}
 #
