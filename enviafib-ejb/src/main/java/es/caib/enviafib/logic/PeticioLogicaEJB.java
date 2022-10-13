@@ -183,7 +183,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throw new Exception("No s'ha definit fitxer a firmar");
         }
 
-        FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+        
 
         final String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
         final String description = "Prova de firma - Desc";
@@ -251,7 +251,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         //        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
 
-        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
+        //FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+        //rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
 
         //String url = api.getUrlToViewFlow(rinfo);
         //        log.info("URL to view flow: " + url);

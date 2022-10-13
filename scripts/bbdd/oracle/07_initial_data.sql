@@ -139,6 +139,8 @@ INSERT INTO efi_traduccio VALUES (130);
 INSERT INTO efi_traduccio VALUES (131);
 INSERT INTO efi_traduccio VALUES (132);
 INSERT INTO efi_traduccio VALUES (133);
+INSERT INTO efi_traduccio VALUES (134);
+INSERT INTO efi_traduccio VALUES (135);
 
 
 INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (110, 'es', 'Enviar a firmar por NIF');
@@ -189,6 +191,10 @@ INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (132, 'ca',
 INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (132, 'es', 'Jefe de Becarios (Adic. 1)');
 INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (133, 'es', 'Firma Jefe de Becarios (Adic. 1)');
 INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (133, 'ca', 'Firma Cap de Becaris (Addic. 1)');
+INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (134, 'ca', 'Firma Secretari i Director General');
+INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (134, 'es', 'Firmar Secretario y Director General');
+INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (135, 'ca', 'Firma Secretari i després Director General');
+INSERT INTO efi_traducciomap(traducciomapid, idiomaid, valor) VALUES (135, 'es', 'Firmar Secretario y después Director General');
 
 
 INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (10, 'Autofirma', NULL, 112, 113, 10, 1, NULL, NULL, NULL, 1);
@@ -205,36 +211,36 @@ INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, t
 INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (19, 'Encarregat de Compres', NULL, 128, 129, 95, 8, NULL, NULL, '5', 1);
 INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (20, 'Recursos Humans', NULL, 130, 131, 96, 8, NULL, NULL, '6', 1);
 INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (21, 'Addicional 1 - Cap de Becaris', NULL, 132, 133, 97, 8, NULL, NULL, '7', 1);
-
-
-
----
---- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
----
-
- INSERT INTO efi_plugin(pluginid, classe, properties, actiu, tipus, nom, descripcio) 
-  VALUES (30, 'org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstructuraOrganitzativaPlugin', '# =================  TAULA DE BBDD =========
-
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.datasourcejndi=java:jboss/datasources/enviafibDS
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.tablename=efi_organitzacio
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.areacodi=codiconselleria
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.departamentcodi=codidirecciogeneral
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.tipus=tipus
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.valor=valor
-
-
-# =================  PLUGIN DE USER INFORMATION =========
-
-
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.class=org.fundaciobit.pluginsib.userinformation.keycloak.KeyCloakUserInformationPlugin
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertybase=es.caib.enviafib.
-# Si la següent propietat està comentada, llavors les propietats
-# del plugin de user information han d''estar al System.getProperties()
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertiesfile=D:\\dades\\dades\\CarpetesPersonals\\ProjecteBase\\jboss7\\standalone\\deploy_enviafib\\enviafib.properties
-
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcaparea=RolCapArea
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcapdepartament=RolCapDepartament
-es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolsecretari=RolSecretari', 1, 1, 'Database', 'Recull informació de l''Estructura d''una taula de la Base de Dades');
+INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, tipus, grupid, parametretext, parametrecombo, actiu) VALUES (22, 'Secretari i Director General', NULL, 134, 135, 80, 6, NULL, '# Es definirà el flux simple emprant les següents normes:
+#    (0) Comentaris començaran per ''#''
+#    (1) Cada Fila representa un bloc de firmes.
+#    (2) Els usuaris de cada bloc es representaran pel seu username o càrrec
+#        d''Estructura organitzativa i es separaran pel caràcter ''|'' o ''&''.
+#    (3) Una separació d''usuaris emprant ''&'' implica que totes les firmes s''han de realitzar.
+#    (4) Una separació d''usuaris emprant ''|'' implica que només es requerirà la firma d''un 
+#         d''ells i després es passarà al següent bloc.
+#    (5) No es poden mesclar en una mateixa fila separadors ''&'' i ''|''
+#    (6) Els càrrecs d''Estructura organitzativa es definiran de la següent forma:
+#          - Gerent/President => ${GerentPresident}
+#          - Cap Area/Conseller => ${CapAreaConseller}
+#          - Cap Departament/Director General => ${CapDepartamentDirectorGeneral}
+#          - Secretari => ${Secretari}
+#          - Encarregat de Compres => ${EncarregatCompres}
+#          - Recursos Humans => ${RecursosHumans}
+#          - Càrrec Addicional 1 => ${Carrec1}
+#          - Càrrec Addicional 2 => ${Carrec2}
+#          - Usuari Loguejat => ${UsuariActual}
+# 
+# Exemple:
+#        anadal | ptrias
+#        atrobat & fbosh
+#        ${Secretari}
+#        ${GerentPresident}
+#
+# Explicació: Primer firmarà anadal o ptrias (només un dels dos), després atrobat
+#             i fbosch en l''ordre que vulguin, després el secretari i finalment gerent.
+#
+anadal | ${Secretari} | ${UsuariActual}', NULL, 0);
 
 
 
