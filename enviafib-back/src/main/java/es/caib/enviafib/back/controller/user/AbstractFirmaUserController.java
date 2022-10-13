@@ -204,7 +204,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
-                msg = msg + " " + I18NUtils.tradueix("transaccio.fundacionaridir3.notrobat");
                 log.error(msg, e);
                 mav.setViewName("errorIniciPeticioUser");                
                 mav.addObject("errorMsg", msg);
