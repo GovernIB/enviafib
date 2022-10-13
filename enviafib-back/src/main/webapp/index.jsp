@@ -13,7 +13,7 @@
 </c:if>
 <c:if test = "${!efi:hasRole('ROLE_USER')}">
 	<c:if test = "${efi:hasRole('ROLE_ADMIN')}">
-		<c:redirect url="/admin/home"/>
+		<c:redirect url="/common/home"/>
 	</c:if>
 </c:if>
 

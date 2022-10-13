@@ -96,6 +96,10 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioForm.jsp" />
     </definition>
     
+    <definition name="errorIniciPeticioUser" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/errorinicifirma.jsp" />
+    </definition>
+    
     <definition name="homeuser" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/common/home.jsp" />
     </definition>

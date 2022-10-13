@@ -109,7 +109,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertNifToSignatureBlocks(nifDestinatari);
 
-        arrancarPeticioInterna(peticio, languageUI, signatureBlocks);
+        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks);
 
         return (PeticioJPA) peticio;
     }
@@ -126,11 +126,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertFluxToSignatureBlocks(flux);
 
-        arrancarPeticioInterna(peticio, languageUI, signatureBlocks);
+        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks);
 
     }
 
-    public void arrancarPeticioInterna(Peticio peticio, String languageUI,
+    @Override
+    public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
             FirmaAsyncSimpleSignatureBlock[] signatureBlocks) throws I18NException {
 
         String perfil = Configuracio.getPortafibProfile();
@@ -162,7 +163,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     protected Long createSignatureRequestAndStart(String languageUI, FirmaAsyncSimpleSignatureBlock[] signatureBlocks,
-            String perfil, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
+            String profileCode, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
             String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api) throws Exception {
 
         // Annexes
@@ -180,15 +181,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         // Fitxer a Firmar
         if (fitxerAFirmar == null) {
+            // XYZ ZZZ TRA
             throw new Exception("No s'ha definit fitxer a firmar");
         }
 
-        FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+        
 
-        String profileCode = perfil;
-        String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
-        String description = "Prova de firma - Desc";
-        String reason = "Prova de firma - reason";
+        final String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
+        final String description = "Prova de firma - Desc";
+        final String reason = "Prova de firma - reason";
         FirmaAsyncSimpleFile originalDetachedSignature = null;
 
         Long tipusDocumentalID = null;
@@ -252,9 +253,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         //        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
 
-        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
+        //FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+        //rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
 
-        String url = api.getUrlToViewFlow(rinfo);
+        //String url = api.getUrlToViewFlow(rinfo);
         //        log.info("URL to view flow: " + url);
         return peticioDeFirmaID2;
 
@@ -887,7 +889,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     destExtSigner.setName(externalOrig.getName());
                     destExtSigner.setSecurityLevel(externalOrig.getSecurityLevel());
                     destExtSigner.setSurnames(externalOrig.getSurnames());
-                    ;
 
                     personToSign.setExternalSigner(destExtSigner);
                 } else {

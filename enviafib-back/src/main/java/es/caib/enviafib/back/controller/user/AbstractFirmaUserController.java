@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignatureBlock;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
@@ -208,9 +209,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
+                msg = msg + " " + I18NUtils.tradueix("transaccio.fundacionaridir3.notrobat");
                 log.error(msg, e);
-                HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
+                mav.setViewName("errorIniciPeticioUser");                
+                mav.addObject("errorMsg", msg);
+                mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
                 return peticioForm;
             }
 
@@ -408,9 +411,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             final int tipus = getTipusPeticio();
             switch (tipus) {
+                
+                
+                case Constants.TIPUS_PETICIO_FLUX_SIMPLE:
+                    peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
+                            ( FirmaAsyncSimpleSignatureBlock[]) request.getSession().getAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY));
+                break;
+                
+                
+                
                 case Constants.TIPUS_PETICIO_FLUX:
                     peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI,
-                            (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute("flux"));
+                            (FlowTemplateSimpleFlowTemplate) request.getSession().getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY));
                 break;
 
                 case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
@@ -808,7 +820,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
             peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
             peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
-        }
+        }        
+        
     }
 
 }

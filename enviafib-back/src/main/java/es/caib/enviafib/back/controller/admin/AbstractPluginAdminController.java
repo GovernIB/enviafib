@@ -163,8 +163,6 @@ public abstract class AbstractPluginAdminController extends PluginController {
             break;
 
             default:
-                //String msg = I18NUtils.tradueix("plugin.tipus.notrobat", String.valueOf(tipusPlugin));
-                //throw new I18NException("genapp.comodi", msg);
                 throw new I18NException("plugin.tipus.notrobat", new I18NArgumentString(String.valueOf(tipusPlugin)));
         }
 

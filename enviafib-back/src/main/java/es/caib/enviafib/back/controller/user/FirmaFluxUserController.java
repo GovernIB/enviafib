@@ -51,6 +51,8 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
     public static final String CONTEXT_WEB = "/user/flux";
 
     public static final String TITOL_FLUX_FIRMA = "titolFluxFirma";
+    
+    public static final String FLUX_SESSION_KEY = "__FLUX_SESSION_KEY__";
 
     private ThreadLocal<Boolean> threadLocalTileForm = new ThreadLocal<>();
 
@@ -249,7 +251,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
         FlowTemplateSimpleFlowTemplate flux = fluxInfoByTransactonID.get(transactionID);
         log.info("**************new::flux= " + flux);
-        request.getSession().setAttribute("flux", flux);
+        request.getSession().setAttribute(FLUX_SESSION_KEY, flux);
         fluxInfoByTransactonID.remove(transactionID);
 
         if (api != null && transactionID != null) {
@@ -336,7 +338,6 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
                     log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId() + "|");
 
-                    //request.getSession().setAttribute("flux", flux);
                     fluxInfoByTransactonID.put(transactionID, flux);
 
                     ModelAndView mav = new ModelAndView("finaliframe");
