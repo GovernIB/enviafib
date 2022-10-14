@@ -75,7 +75,6 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         return Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI;
     }
 
-
     public List<Usuari> getPlantillesFluxFirma() throws I18NException {
 
         ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
@@ -103,12 +102,10 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
                 String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
                         .replace("}{", "}<br/>{");
-                
+
                 if (description.indexOf("{template=true}") == -1) {
                     continue;
                 }
-                
-
 
                 /* usuariID -> flowTemplateId hashed
                  * nif -> flowTemplateId
@@ -116,18 +113,17 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
                  * llinatge1 -> description
                  * email -> creationDate
                  */
-                
+
                 Usuari usuari = new UsuariJPA();
                 usuari.setUsuariID((long) flowTemplateId.hashCode());
                 usuari.setNif(flowTemplateId);
                 usuari.setNom(flowKeyValue.getValue());
                 usuari.setLlinatge1(description);
 
-//                usuari.setEmail(getCreationDate(description));
+                //                usuari.setEmail(getCreationDate(description));
 
-                
                 usuaris.add(usuari);
-                
+
             }
 
             return usuaris;

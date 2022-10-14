@@ -39,38 +39,39 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
     @EJB(mappedName = es.caib.enviafib.ejb.InfoSignaturaService.JNDI_NAME)
     protected es.caib.enviafib.ejb.InfoSignaturaService infoSignaturaEjb;
-    
+
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb;
 
     @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
     protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
 
-    
     public static final Map<Integer, String> firmaPathByTipus = new HashMap<Integer, String>();
 
     static {
         firmaPathByTipus.put(TIPUS_PETICIO_NIF, FirmaPerNifUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_AUTOFIRMA, AutoFirmaUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_FLUX, FirmaFluxUserController.CONTEXT_WEB);
-        
-        
+
         firmaPathByTipus.put(TIPUS_PETICIO_FLUX_SIMPLE, FirmaPerFluxFirmaSimpleUserController.CONTEXT_WEB);
 
         firmaPathByTipus.put(TIPUS_PETICIO_PLANTILLAFLUX_USUARI, FirmaPlantillaFluxUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT, FirmaPlantillaFluxEntitatUserController.CONTEXT_WEB);
-        
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_GERENT_PRESIDENT, FirmaCarrecGerentPresidentUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPAREA_CONSELLER, FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR, FirmaCarrecDirectorUserController.CONTEXT_WEB);
+
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_GERENT_PRESIDENT,
+                FirmaCarrecGerentPresidentUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPAREA_CONSELLER,
+                FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR,
+                FirmaCarrecDirectorUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_SECRETARI, FirmaCarrecSecretariUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ENCARREGAT_COMPRES, FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ENCARREGAT_COMPRES,
+                FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_RECURSOS_HUMANS, FirmaCarrecRecursosHumansUserController.CONTEXT_WEB);
-        
+
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ADDICIONAL_1, FirmaCarrecAddicional1UserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ADDICIONAL_2, FirmaCarrecAddicional2UserController.CONTEXT_WEB);
-        
-        
+
         // TODO NOMES FALTA TIPUS JSON
     }
 
@@ -103,10 +104,10 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         List<StringKeyValue> tipusDocumentalList = new ArrayList<StringKeyValue>();
         tipusDocumentalList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
-        
+
         List<StringKeyValue> tmpList;
         tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
-        if(tmpList != null && !tmpList.isEmpty()) { 
+        if (tmpList != null && !tmpList.isEmpty()) {
             java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
         }
         tipusDocumentalList.addAll(tmpList);
@@ -150,13 +151,13 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     public boolean isActiveDelete() {
         return false;
     }
-    
+
     @Override
-    public void fillReferencesForForm(PeticioForm peticioForm,
-            HttpServletRequest request, ModelAndView mav) throws I18NException{
+    public void fillReferencesForForm(PeticioForm peticioForm, HttpServletRequest request, ModelAndView mav)
+            throws I18NException {
         super.fillReferencesForForm(peticioForm, request, mav);
         List<StringKeyValue> _listSKV = getReferenceListForTipusDocumental(request, mav, peticioForm, null);
-        peticioForm.setListOfValuesForTipusDocumental(_listSKV);    
+        peticioForm.setListOfValuesForTipusDocumental(_listSKV);
     }
 
 }

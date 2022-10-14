@@ -86,7 +86,7 @@ public class InfoArxiuUserController extends InfoArxiuController {
             infoArxiuForm.setView(__isView);
 
         }
-        
+
         infoArxiuForm.setContexte(getContextWeb());
         infoArxiuForm.setEntityNameCode(getEntityNameCode());
         infoArxiuForm.setEntityNameCodePlural(getEntityNameCodePlural());
@@ -94,11 +94,10 @@ public class InfoArxiuUserController extends InfoArxiuController {
     }
 
     @Override
-    public InfoArxiuFilterForm getInfoArxiuFilterForm(Integer pagina, ModelAndView mav,
-            HttpServletRequest request) throws I18NException {
+    public InfoArxiuFilterForm getInfoArxiuFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
+            throws I18NException {
         InfoArxiuFilterForm infoArxiuFilterForm;
-        infoArxiuFilterForm = (InfoArxiuFilterForm) request.getSession()
-                .getAttribute(getSessionAttributeFilterForm());
+        infoArxiuFilterForm = (InfoArxiuFilterForm) request.getSession().getAttribute(getSessionAttributeFilterForm());
         if (infoArxiuFilterForm == null) {
             infoArxiuFilterForm = new InfoArxiuFilterForm();
             infoArxiuFilterForm.setContexte(getContextWeb());
@@ -112,8 +111,6 @@ public class InfoArxiuUserController extends InfoArxiuController {
         return infoArxiuFilterForm;
     }
 
-   
-
     @Override
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long infoarxiuid) {
 
@@ -122,11 +119,11 @@ public class InfoArxiuUserController extends InfoArxiuController {
             s2c = new Select2Columns<Long, Integer>(PeticioFields.PETICIOID.select, PeticioFields.TIPUS.select);
             List<Select2Values<Long, Integer>> list;
             list = peticioLogicaEjb.executeQuery(s2c, PeticioFields.INFOARXIUID.equal(infoarxiuid));
-            
-            
+
             if (list == null || list.size() != 1) {
-//            HtmlUtils.saveMessageError(request, msg);
-                log.error("InfoArxiuUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat", new Exception());
+                //            HtmlUtils.saveMessageError(request, msg);
+                log.error("InfoArxiuUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat",
+                        new Exception());
                 return AbstractFirmaUserController.getRedirectToList();
             }
 
