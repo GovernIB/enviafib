@@ -1,6 +1,7 @@
 package es.caib.enviafib.back.controller.user;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +26,10 @@ import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +48,7 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
+import es.caib.enviafib.commons.utils.NifUtils.NifInfo;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
@@ -109,8 +114,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     /**
-     * Carregar el formulari per un nou Peticio
-     */
+    * Carregar el formulari per un nou Peticio
+    */
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView crearPeticioGet(HttpServletRequest request, HttpServletResponse response) throws I18NException {
@@ -205,8 +210,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
-                HtmlUtils.saveMessageWarning(request, msg);
-                mav.setView(new RedirectView(LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list", true));
+                mav.setViewName("errorIniciPeticioUser");                
+                mav.addObject("errorMsg", msg);
+                mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
                 return peticioForm;
             }
 
@@ -278,7 +284,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 break;
                 case Constants.TIPUS_PETICIO_NIF:
                     p.setNom("NIF multiple");
-                    p.setDestinatariNif("45186147W");
+                    p.setDestinatariNif("45186149P");
                 break;
                 default:
                     p.setNom("Carrec multiple");
@@ -307,33 +313,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     @Override
-    public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm2) {
-
-        PeticioMultipleForm peticioForm = (PeticioMultipleForm) peticioForm2;
-        HtmlUtils.deleteMessages(request);
+    public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
 
         Peticio peticio = peticioForm.getPeticio();
         String peticioID = String.valueOf(peticio.getPeticioID());
 
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
-            String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg()
-                    + "\n";
-            log.error(msg + "\n");
-            HtmlUtils.saveMessageError(request, msg);
+            String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg();
+            log.error(msg);
             return "redirect:" + LlistatPeticionsRebutjadesUserController.CONTEXT_WEB + "/list";
         } else {
-
-            CommonsMultipartFile[] files = peticioForm.getHiddenFile();
-            String msg;
-
-            if (files != null && files.length != 1) {
-                int n = peticioForm.getHiddenFile().length;
-                msg = I18NUtils.tradueix("procesdefirma.status.final.multiple", String.valueOf(n));
-            } else {
-                msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", peticioID);
-            }
-
-            HtmlUtils.saveMessageSuccess(request, msg);
+            String msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", peticioID);
+            log.info(msg);
             return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
         }
     }
@@ -412,6 +403,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             throws I18NException, I18NValidationException {
 
         PeticioJPA p = super.create(request, peticio);
+
+        //Enviament de la peticio a PortaFIB després de la seva creació
         try {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
@@ -451,7 +444,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
-
+                    p.setPeticioPortafirmes("AUTOFIRMA");
                 break;
                 default:
                     p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI);
@@ -462,6 +455,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             String peticioID = String.valueOf(p.getPeticioID());
             String portafibID = p.getPeticioPortafirmes();
             String msg = I18NUtils.tradueix("procesdefirma.status.enviadaok", peticioID, portafibID);
+            msg = "CREATE: Peticio amb ID=" + peticioID + " creada i enviada a PortaFIB (" + portafibID + ").";
             log.info(msg);
 
         } catch (Exception e) {
@@ -475,16 +469,39 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 errorMsg = e.getMessage();
             }
 
-            String error = I18NUtils.tradueix("error.flux.arrancar", errorMsg);
-            log.error(error, e);
+            //            String error = I18NUtils.tradueix("error.flux.arrancar", errorMsg);
+            //            log.error(error, e);
 
             p.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            p.setErrorMsg(LogicUtils.split255(error));
+            p.setErrorMsg(LogicUtils.split255(errorMsg));
             p.setErrorException(LogicUtils.stackTrace2String(e));
             peticioLogicaEjb.update(p);
         }
         return p;
     }
+
+    //            String msg = "\nFile" + i + ": \n";
+    //
+    //            msg += "Bytes: " + files[i].getBytes() + "\n";
+    //            msg += "ContentType: " + files[i].getContentType() + "\n";
+    //            msg += "OriginalFilename: " + files[i].getOriginalFilename() + "\n";
+    //            msg += "Size: " + files[i].getSize() + "\n";
+    //            log.info(msg);
+    //
+    //            FitxerJPA fitxer = new FitxerJPA();
+    //
+    //            fitxer.setNom(files[i].getOriginalFilename());
+    //            fitxer.setMime(files[i].getContentType());
+    //            final byte[] data = files[i].getBytes();
+    //            fitxer.setTamany(data.length);
+    //
+    //            Fitxer f = fitxerEjb.create(fitxer);
+    //
+    //            FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
+    //
+    //            // TODO: Crear varias peticiones con ficheros diferentes
+    //            peticioForm.getPeticio().setFitxer(fitxer);
+    //            peticioForm.getPeticio().setFitxerID(f.getFitxerID());
 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.POST)
@@ -495,50 +512,208 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         CommonsMultipartFile[] files = peticioForm.getHiddenFile();
 
-        if (files == null && peticioForm.getFitxerID() != null) {
-            files = new CommonsMultipartFile[1];
-            files[0] = peticioForm.getFitxerID();
-        }
-
-        String ret = null;
-        String originalName = peticioForm.getPeticio().getNom();
-        for (int i = 0; i < files.length; i++) {
-            //            String msg = "\nFile" + i + ": \n";
-            //
-            //            msg += "Bytes: " + files[i].getBytes() + "\n";
-            //            msg += "ContentType: " + files[i].getContentType() + "\n";
-            //            msg += "OriginalFilename: " + files[i].getOriginalFilename() + "\n";
-            //            msg += "Size: " + files[i].getSize() + "\n";
-            //            log.info(msg);
-            //
-            //            FitxerJPA fitxer = new FitxerJPA();
-            //
-            //            fitxer.setNom(files[i].getOriginalFilename());
-            //            fitxer.setMime(files[i].getContentType());
-            //            final byte[] data = files[i].getBytes();
-            //            fitxer.setTamany(data.length);
-            //
-            //            Fitxer f = fitxerEjb.create(fitxer);
-            //
-            //            FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
-            //
-            //            // TODO: Crear varias peticiones con ficheros diferentes
-            //            peticioForm.getPeticio().setFitxer(fitxer);
-            //            peticioForm.getPeticio().setFitxerID(f.getFitxerID());
-
-            peticioForm.setFitxerID(files[i]);
-
-            peticioForm.getPeticio().setPeticioID(0);
-            peticioForm.getPeticio().setNom(originalName + "-" + files[i].getOriginalFilename());
-
-            ret = super.crearPeticioPost(peticioForm, result, request, response);
-            log.info("Creada peticio amb peticioID=" + peticioForm.getPeticio().getPeticioID());
-
-            if (result.hasErrors() && getTipusPeticio() != Constants.TIPUS_PETICIO_FLUX) {
-                request.setAttribute("dragdrop", true);
+        int nFitxers;
+        if (files != null) {
+            nFitxers = files.length;
+        } else {
+            if (peticioForm.getFitxerID().isEmpty()) {
+                nFitxers = 0;
+                result.rejectValue(get(FITXERID), "error.fitxers.postcreate",
+                        new String[] { "Missatge que va dins error" }, null);
+            } else {
+                files = new CommonsMultipartFile[1];
+                files[0] = peticioForm.getFitxerID();
+                nFitxers = 1;
             }
         }
-        return ret;
+        log.info("\n\nTenim " + nFitxers + " fitxers a processar\n");
+
+        String originalName = peticioForm.getPeticio().getNom();
+
+        Peticio firstPet = null;
+
+        int PETICIONS_CREADES_OK = 0;
+        List<String> missatgesErrors = new ArrayList<String>();
+
+        int i;
+        for (i = 0; i < nFitxers; i++) {
+
+            Peticio petFor = peticioForm.getPeticio();
+            peticioForm.setFitxerID(files[i]);
+
+            petFor.setPeticioID(0);
+            petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
+            petFor.setErrorMsg(null);
+            petFor.setErrorException(null);
+            petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
+
+            BeanPropertyBindingResult result2 = new BeanPropertyBindingResult(peticioForm, "peticioForm");
+
+            log.info("\n\nSTART CREATE POST");
+
+            String ret = super.crearPeticioPost(peticioForm, result2, request, response);
+            petFor = peticioForm.getPeticio();
+
+            log.info("POST: ret=" + ret);
+            if (ret == null) {
+                //Aturar
+                String msg = "POST: Error ret=null";
+                log.error(msg);
+                HtmlUtils.saveMessageError(request, msg);
+                break;
+            } else {
+                if (result2.hasErrors()) {
+
+                    showErrorInfo(result2);
+                    for (ObjectError objectError : result2.getAllErrors()) {
+                        result.addError(objectError);
+                    }
+
+                    int nErrorsFields = result2.getFieldErrorCount();
+                    int nErrorsFitxers = result2.getFieldErrorCount(PeticioFields.FITXERID.fullName);
+
+                    //Hi ha errors al formulari
+                    if (nErrorsFitxers == nErrorsFields) {
+                        //Només hi ha errors amb fitxers -> Avisar i continuar
+                        FieldError fieldFileError = result2.getFieldErrors(PeticioFields.FITXERID.fullName).get(0);
+
+                        Object[] array = fieldFileError.getArguments();
+                        String[] arguments = Arrays.copyOf(array, array.length, String[].class);
+
+                        String msgError = I18NUtils.tradueix(fieldFileError.getCode(), arguments);
+
+                        String msg = "POST: No s'ha pogut crear la peticio amb el fitxer "
+                                + files[i].getOriginalFilename() + ": " + msgError;
+
+                        missatgesErrors.add(msg);
+                        log.warn(msg);
+                        continue;
+                    } else {
+                        //Al formulari hi errors que no son de fitxers -> Aturar
+                        //Aquest missatge sobra, genapp ja en posa un per defecte
+                        String msg = "POST: Errors al formulari";
+                        HtmlUtils.saveMessageError(request, msg);
+                        log.error(msg);
+                        break;
+                    }
+                } else {
+                    //No hi ha errors al formulari
+                    if (ret.equals(getTileForm())) {
+                        //Posible RunTimeException -> Aturar
+                        String msg = "POST: Error no controlat";
+                        HtmlUtils.saveMessageError(request, msg);
+                        log.error(msg);
+                        break;
+                    } else {
+                        if (petFor.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
+
+                            if (petFor.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
+                                if (i == 0) {
+                                    firstPet = new PeticioJPA(petFor);
+                                } else if (i == 1) {
+                                    Peticio secondPet = new PeticioJPA(petFor);
+                                    if (hasSameError(firstPet, secondPet)) {
+                                        peticioLogicaEjb.deleteIncludingFiles(firstPet, fitxerEjb);
+                                        peticioLogicaEjb.deleteIncludingFiles(secondPet, fitxerEjb);
+
+                                        HtmlUtils.deleteMessages(request);
+                                        String msg = "No s'ha pogut crear cap de les " + nFitxers + " peticions: "
+                                                + firstPet.getErrorMsg();
+                                        HtmlUtils.saveMessageError(request, msg);
+                                        break;
+                                    }
+                                }
+
+                                String msg = "POST: Error enviant a PortaFIB: " + petFor.getErrorMsg();
+                                missatgesErrors.add(msg);
+                                log.error(msg);
+                            } else {
+                                PETICIONS_CREADES_OK++;
+                                String msg = "POST: Peticio creada i enviada amb ID=" + petFor.getPeticioID();
+                                log.info(msg);
+
+                            }
+                        }
+                        continue;
+                    }
+                }
+            }
+        }
+
+        log.warn("\n\nAtributs del result final:");
+        showErrorInfo(result);
+
+        if (i == nFitxers && i > 0) {
+            HtmlUtils.deleteMessages(request);
+            if (PETICIONS_CREADES_OK > 0) {
+                String msg = "S'han creat i enviat correctament " + PETICIONS_CREADES_OK + " peticions a PortaFIB";
+                HtmlUtils.saveMessageInfo(request, msg);
+            } else {
+                HtmlUtils.saveMessageWarning(request, "No s'ha creat ni enviat cap peticio a PortaFIB");
+            }
+            for (String fileErrorMsg : missatgesErrors) {
+                HtmlUtils.saveMessageError(request, fileErrorMsg);
+            }
+
+        }
+
+        if (result.hasErrors()) {
+            request.setAttribute("dragdrop", true);
+            peticioForm.getPeticio().setNom(originalName);
+            peticioForm.getPeticio().setFitxer(null);
+            return getTileForm();
+        } else {
+            return getRedirectWhenCreated(request, peticioForm);
+        }
+    }
+
+    public boolean hasSameError(Peticio firstPet, Peticio secondPet) {
+
+        String error1 = firstPet.getErrorMsg();
+        String error2 = secondPet.getErrorMsg();
+
+        log.info("PeticioID: first=" + firstPet.getPeticioID() + " - petFor=" + secondPet.getPeticioID());
+        log.info("fitxerID: first=" + firstPet.getFitxerID() + " - petFor=" + secondPet.getFitxerID());
+        log.error(error1);
+        log.error(error2);
+        if (error1 == null || error2 == null) {
+            return false;
+        } else {
+            if (error1.equals(error2)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public void showErrorInfo(BindingResult result) {
+
+        int nErrors = result.getErrorCount();
+        int nErrorsFields = result.getFieldErrorCount();
+        int nErrorsFitxers = result.getFieldErrorCount(PeticioFields.FITXERID.fullName);
+
+        log.warn("nErrors: " + nErrors);
+        log.warn("nErrorsFields: " + nErrorsFields);
+        log.warn("nErrorsFitxers: " + nErrorsFitxers);
+
+        for (ObjectError objectError : result.getAllErrors()) {
+            log.warn("\n");
+
+            if (objectError instanceof FieldError) {
+                FieldError fieldError = (FieldError) objectError;
+                log.warn("getField: " + fieldError.getField());
+                log.warn("getRejectedValue: " + fieldError.getRejectedValue());
+            }
+            log.warn("getCode: " + objectError.getCode());
+            log.warn("getObjectName: " + objectError.getObjectName());
+            log.warn("getDefaultMessage: " + objectError.getDefaultMessage());
+
+            for (String code : objectError.getCodes()) {
+                log.warn("code: " + code);
+            }
+        }
+
     }
 
     @Override
@@ -548,6 +723,33 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         super.postValidate(request, peticioForm, result);
 
         {
+            switch (peticioForm.getPeticio().getTipus()) {
+                case Constants.TIPUS_PETICIO_FLUX:
+                case Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT:
+                case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
+                break;
+                default:
+                    String nif = peticioForm.getPeticio().getDestinatariNif();
+                    if (nif == null) {
+                        result.rejectValue(get(DESTINATARINIF), "genapp.validation.required",
+                                new String[] { I18NUtils.tradueix(DESTINATARINIF.fullName) }, null);
+                    } else {
+                        NifInfo info = NifUtils.validateNif(nif);
+
+                        if (!info.isValid()) {
+                            //                            result.rejectValue(get(DESTINATARINIF), "genapp.validation.malformed",
+                            //                                    new String[] { I18NUtils.tradueix(DESTINATARINIF.fullName) }, null);
+                        }
+                    }
+                break;
+            }
+        }
+
+        {
+
+        }
+
+        {
             Field<?>[] signFields = { PeticioFields.ARXIUPARAMFUNCIONARINIF, PeticioFields.ARXIUPARAMFUNCIONARINOM,
                     PeticioFields.ARXIUPARAMFUNCIONARIDIR3 };
 
@@ -555,7 +757,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 ValidationUtils.rejectIfEmptyOrWhitespace(result, field.fullName, "genapp.validation.required",
                         new Object[] { I18NUtils.tradueix(field.fullName) });
             }
-
         }
 
         {

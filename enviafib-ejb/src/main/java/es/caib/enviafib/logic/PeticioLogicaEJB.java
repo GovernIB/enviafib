@@ -160,7 +160,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         } catch (Throwable e) {
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            //            throw new I18NException("error.portafib.creacio", e.getMessage());
+            //            peticio.setErrorMsg(LogicUtils.split255(e.getMessage()));
+            //            peticio.setErrorException(LogicUtils.stackTrace2String(e));
+            throw new I18NException("error.portafib.creacio", e.getMessage());
         }
         this.update(peticio);
     }
