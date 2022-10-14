@@ -28,151 +28,144 @@ import es.caib.enviafib.persistence.MenuJPA;
 @Controller
 @RequestMapping(value = "/user/menu")
 public class MenuUserController implements Constants {
-    
-    
+
     protected final Logger log = Logger.getLogger(MenuUserController.class);
 
     @EJB(mappedName = es.caib.enviafib.ejb.MenuService.JNDI_NAME)
     protected es.caib.enviafib.ejb.MenuService menuEjb;
-    
+
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
-    
-    
 
     @RequestMapping(value = "/show/{menuID}/{tipus}", method = RequestMethod.GET)
-    public String show(@PathVariable("menuID") long menuID, @PathVariable("tipus") int tipus,
-            HttpServletRequest request, HttpServletResponse response) {
+    public String show(@PathVariable("menuID")
+    long menuID, @PathVariable("tipus")
+    int tipus, HttpServletRequest request, HttpServletResponse response) {
 
         // XYZ ZZZ Check si aquest usuari té permís per obrir el menuID
-        
+
         try {
 
-        MenuJPA menu = (MenuJPA) menuEjb.findByPrimaryKey(menuID);
+            MenuJPA menu = (MenuJPA) menuEjb.findByPrimaryKey(menuID);
 
-        String idioma = LocaleContextHolder.getLocale().getLanguage();
+            String idioma = LocaleContextHolder.getLocale().getLanguage();
 
-        request.getSession().setAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO,
-                menu.getTitolMenu().getTraduccio(idioma).getValor());
+            request.getSession().setAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO,
+                    menu.getTitolMenu().getTraduccio(idioma).getValor());
 
-        switch (tipus) {
+            switch (tipus) {
 
-            case MENU_FIRMA_TIPUS_AUTOFIRMA:
-                return "redirect:" + AutoFirmaUserController.CONTEXT_WEB + "/new";
+                case MENU_FIRMA_TIPUS_AUTOFIRMA:
+                    return "redirect:" + AutoFirmaUserController.CONTEXT_WEB + "/new";
 
-            case MENU_FIRMA_TIPUS_PER_NIF:
-                return "redirect:" + FirmaPerNifUserController.CONTEXT_WEB + "/new";
+                case MENU_FIRMA_TIPUS_PER_NIF:
+                    return "redirect:" + FirmaPerNifUserController.CONTEXT_WEB + "/new";
 
-            case MENU_FIRMA_TIPUS_FLUX:
-                return "redirect:" + FirmaFluxUserController.CONTEXT_WEB + "/crearflux";
+                case MENU_FIRMA_TIPUS_FLUX:
+                    return "redirect:" + FirmaFluxUserController.CONTEXT_WEB + "/crearflux";
 
-            case MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI:
-                return "redirect:" + FirmaPlantillaFluxUserController.CONTEXT_WEB + "/new";
+                case MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI:
+                    return "redirect:" + FirmaPlantillaFluxUserController.CONTEXT_WEB + "/new";
 
-            case MENU_FIRMA_TIPUS_PLANTILLES_FLUX_ENTITAT:
-                return "redirect:" + FirmaPlantillaFluxEntitatUserController.CONTEXT_WEB + "/new";
+                case MENU_FIRMA_TIPUS_PLANTILLES_FLUX_ENTITAT:
+                    return "redirect:" + FirmaPlantillaFluxEntitatUserController.CONTEXT_WEB + "/new";
 
-            case MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT:
-            {
-                final String fluxSimple = menu.getParametreText();
-                
-                final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
-                
-                final String loginUsername =  LoginInfo.getInstance().getUsername();
-                
-                final FirmaAsyncSimpleSignatureBlock[] blocs;
+                case MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT: {
+                    final String fluxSimple = menu.getParametreText();
 
-                blocs = FirmaPerFluxFirmaSimpleUserController.getFluxFromFluxSimple(fluxSimple, plugin, loginUsername);
+                    final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
 
-                request.getSession().setAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY,blocs);
-                
-                return "redirect:" + FirmaPerFluxFirmaSimpleUserController.CONTEXT_WEB + "/new";
-            }
+                    final String loginUsername = LoginInfo.getInstance().getUsername();
 
-            case MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON:
-            {
+                    final FirmaAsyncSimpleSignatureBlock[] blocs;
 
-                final String loginUsername =  LoginInfo.getInstance().getUsername();
-                
-                final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
-                
-                
-                String fluxJson = menu.getParametreText();
-                
-                
-                final FirmaAsyncSimpleSignatureBlock[] blocs = FirmaPerFluxFirmaJsonUserController.checkFluxJson(loginUsername, plugin, fluxJson);
+                    blocs = FirmaPerFluxFirmaSimpleUserController.getFluxFromFluxSimple(fluxSimple, plugin,
+                            loginUsername);
 
-                request.getSession().setAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY,blocs);
-                
-                return "redirect:" + FirmaPerFluxFirmaJsonUserController.CONTEXT_WEB + "/new";
-            }
+                    request.getSession().setAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY,
+                            blocs);
 
-            case MENU_FIRMA_TIPUS_CARREC:
-
-                String tipusCarrecStr = menu.getParametreCombo();
-
-                switch (Integer.parseInt(tipusCarrecStr)) {
-
-                    case CARREC_GERENT_PRESIDENT:
-                        return "redirect:" + FirmaCarrecGerentPresidentUserController.CONTEXT_WEB + "/new";
-
-                    case CARREC_CAP_AREA_CONSELLER:
-                        return "redirect:" + FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB + "/new";
-
-                    case CARREC_ENCARREGAT_COMPRES:
-                        return "redirect:" + FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB + "/new";
-
-                    case CARREC_RECURSOS_HUMANS:
-                        return "redirect:" + FirmaCarrecRecursosHumansUserController.CONTEXT_WEB + "/new";
-
-                    case CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL:
-                        return "redirect:" + FirmaCarrecDirectorUserController.CONTEXT_WEB + "/new";
-
-                    case CARREC_SECRETARI:
-                        return "redirect:" + FirmaCarrecSecretariUserController.CONTEXT_WEB + "/new";
-
-                    case CARREC_ADDICIONAL_1:
-                        return "redirect:" + FirmaCarrecAddicional1UserController.CONTEXT_WEB + "/new";
-
-                    case CARREC_ADDICIONAL_2:
-                        return "redirect:" + FirmaCarrecAddicional2UserController.CONTEXT_WEB + "/new";
-
-                    default:
-                        // XYZ ZZZ
-                        HtmlUtils.saveMessageError(request,
-                                "No s'ha trobat el càrrec amb ID = ]" + tipusCarrecStr + "[");
-                        return "redirect:/";
+                    return "redirect:" + FirmaPerFluxFirmaSimpleUserController.CONTEXT_WEB + "/new";
                 }
 
-            default:
-            {
-                // XYZ ZZZ TRA ERROR 
-                String msg = "Tipus de Peticio de Firma " + tipus + " No implementada dins MenuUserController."; 
-                HtmlUtils.saveMessageError(request,msg);
-                log.error(msg);
-                return "redirect:/";
+                case MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON: {
+
+                    final String loginUsername = LoginInfo.getInstance().getUsername();
+
+                    final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
+
+                    String fluxJson = menu.getParametreText();
+
+                    final FirmaAsyncSimpleSignatureBlock[] blocs = FirmaPerFluxFirmaJsonUserController
+                            .checkFluxJson(loginUsername, plugin, fluxJson);
+
+                    request.getSession().setAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY, blocs);
+
+                    return "redirect:" + FirmaPerFluxFirmaJsonUserController.CONTEXT_WEB + "/new";
+                }
+
+                case MENU_FIRMA_TIPUS_CARREC:
+
+                    String tipusCarrecStr = menu.getParametreCombo();
+
+                    switch (Integer.parseInt(tipusCarrecStr)) {
+
+                        case CARREC_GERENT_PRESIDENT:
+                            return "redirect:" + FirmaCarrecGerentPresidentUserController.CONTEXT_WEB + "/new";
+
+                        case CARREC_CAP_AREA_CONSELLER:
+                            return "redirect:" + FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB + "/new";
+
+                        case CARREC_ENCARREGAT_COMPRES:
+                            return "redirect:" + FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB + "/new";
+
+                        case CARREC_RECURSOS_HUMANS:
+                            return "redirect:" + FirmaCarrecRecursosHumansUserController.CONTEXT_WEB + "/new";
+
+                        case CARREC_CAP_DEPARTAMENT_DIRECTOR_GENERAL:
+                            return "redirect:" + FirmaCarrecDirectorUserController.CONTEXT_WEB + "/new";
+
+                        case CARREC_SECRETARI:
+                            return "redirect:" + FirmaCarrecSecretariUserController.CONTEXT_WEB + "/new";
+
+                        case CARREC_ADDICIONAL_1:
+                            return "redirect:" + FirmaCarrecAddicional1UserController.CONTEXT_WEB + "/new";
+
+                        case CARREC_ADDICIONAL_2:
+                            return "redirect:" + FirmaCarrecAddicional2UserController.CONTEXT_WEB + "/new";
+
+                        default:
+                            // XYZ ZZZ
+                            HtmlUtils.saveMessageError(request,
+                                    "No s'ha trobat el càrrec amb ID = ]" + tipusCarrecStr + "[");
+                            return "redirect:/";
+                    }
+
+                default: {
+                    // XYZ ZZZ TRA ERROR 
+                    String msg = "Tipus de Peticio de Firma " + tipus + " No implementada dins MenuUserController.";
+                    HtmlUtils.saveMessageError(request, msg);
+                    log.error(msg);
+                    return "redirect:/";
+                }
+
             }
 
-        }
-        
-        } catch(I18NException i18ne) {
-            String msg = I18NUtils.getMessage(i18ne);            
+        } catch (I18NException i18ne) {
+            String msg = I18NUtils.getMessage(i18ne);
             HtmlUtils.saveMessageError(request, msg);
             log.error(msg, i18ne);
             return "redirect:/";
-            
-        } catch(Exception e) {
+
+        } catch (Exception e) {
             //XYZ ZZZ TRA
-            String msg = "Error desconegut intentant redirigir al menu corresponent (menuID= " + menuID + ")(tipus=" + tipus+ ")";            
+            String msg = "Error desconegut intentant redirigir al menu corresponent (menuID= " + menuID + ")(tipus="
+                    + tipus + ")";
             HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
             return "redirect:/";
         }
 
     }
-
-
-
-
 
 }

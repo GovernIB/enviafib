@@ -40,7 +40,7 @@ import es.caib.enviafib.persistence.MenuJPA;
 @RequestMapping(value = "/admin/menu")
 @SessionAttributes(types = { MenuForm.class, MenuFilterForm.class })
 public class MenuAdminController extends MenuController implements Constants {
-    
+
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
@@ -105,8 +105,7 @@ public class MenuAdminController extends MenuController implements Constants {
             menuFilterForm.addHiddenField(GRUPID);
             menuFilterForm.addHiddenField(PARAMETRECOMBO);
             menuFilterForm.addHiddenField(PARAMETRETEXT);
-            
-            
+
             menuFilterForm.setOrderBy(ORDRE.javaName);
         }
         return menuFilterForm;
@@ -160,7 +159,7 @@ public class MenuAdminController extends MenuController implements Constants {
             case MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT:
                 menuForm.addHiddenField(PARAMETRECOMBO);
                 if (menuForm.isNou()) {
-                  menu.setParametreText(FirmaPerFluxFirmaSimpleUserController.AJUDA);
+                    menu.setParametreText(FirmaPerFluxFirmaSimpleUserController.AJUDA);
                 }
 
             break;
@@ -169,11 +168,12 @@ public class MenuAdminController extends MenuController implements Constants {
                 menuForm.addHiddenField(PARAMETRECOMBO);
                 // XYZ ZZZ
                 if (menuForm.isNou()) {
-                  menu.setParametreText("Aquí s'ha de copiar el codi json d'una plantilla de flux. Anar al menu ' Plantilles de Flux de Firmes de l´Entitat ' ");
+                    menu.setParametreText(
+                            "Aquí s'ha de copiar el codi json d'una plantilla de flux. Anar al menu ' Plantilles de Flux de Firmes de l´Entitat ' ");
                 }
-                
+
                 addAjudaFirmaFluxJson(request);
-                
+
             break;
 
             case MENU_FIRMA_TIPUS_CARREC:
@@ -202,71 +202,62 @@ public class MenuAdminController extends MenuController implements Constants {
         HtmlUtils.saveMessageInfo(request, help.replace("\n", "<br/>\n"));
     }
 
-    
-    
     @Override
-    public void postValidate(HttpServletRequest request, MenuForm menuForm, BindingResult result)
-            throws I18NException {
+    public void postValidate(HttpServletRequest request, MenuForm menuForm, BindingResult result) throws I18NException {
 
         super.postValidate(request, menuForm, result);
-        
-       if ( menuForm.getMenu().getTipus() == MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT) {
-        
+
+        if (menuForm.getMenu().getTipus() == MENU_FIRMA_TIPUS_FLUX_SIMPLE_TEXT) {
+
             final String fluxSimple = menuForm.getMenu().getParametreText();
-            
+
             final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
-            
-            final String loginUsername =  LoginInfo.getInstance().getUsername();
+
+            final String loginUsername = LoginInfo.getInstance().getUsername();
 
             try {
                 // Només serveix per fer CHECK
-                FirmaPerFluxFirmaSimpleUserController.getFluxFromFluxSimple(fluxSimple, plugin, loginUsername);    
+                FirmaPerFluxFirmaSimpleUserController.getFluxFromFluxSimple(fluxSimple, plugin, loginUsername);
             } catch (I18NException e) {
-                
+
                 moveI18NException2BindingResult(result, e);
             }
-            
-       } else if ( menuForm.getMenu().getTipus() == MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON) {
-           
-           
-           
-           final String fluxJson = menuForm.getMenu().getParametreText();
-           
-           final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
-           
-           final String loginUsername =  LoginInfo.getInstance().getUsername();
 
-           try {
-               // Només serveix per fer CHECK
-               FirmaPerFluxFirmaJsonUserController.checkFluxJson(loginUsername, plugin, fluxJson);
-           } catch (I18NException e) {
-               
-               moveI18NException2BindingResult(result, e);
-           }
-           
-           
-           if (result.hasErrors()) {
-               addAjudaFirmaFluxJson(request);
-           }
-           
-       }
-        
-        
-        
+        } else if (menuForm.getMenu().getTipus() == MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON) {
+
+            final String fluxJson = menuForm.getMenu().getParametreText();
+
+            final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
+
+            final String loginUsername = LoginInfo.getInstance().getUsername();
+
+            try {
+                // Només serveix per fer CHECK
+                FirmaPerFluxFirmaJsonUserController.checkFluxJson(loginUsername, plugin, fluxJson);
+            } catch (I18NException e) {
+
+                moveI18NException2BindingResult(result, e);
+            }
+
+            if (result.hasErrors()) {
+                addAjudaFirmaFluxJson(request);
+            }
+
+        }
+
     }
 
     protected void moveI18NException2BindingResult(BindingResult result, I18NException e) {
         String msg = I18NUtils.getMessage(e);
-        
+
         log.error(msg, e);
-        
+
         String code = e.getTraduccio().getCode();
-        
+
         I18NArgument[] arguments = e.getTraduccio().getArgs();
-        
 
         Object[] params = new Object[arguments.length];
-        
+
         for (int i = 0; i < arguments.length; i++) {
             if (arguments[i] instanceof I18NArgumentCode) {
                 params[i] = I18NUtils.tradueix(arguments[i].getValue());
@@ -277,5 +268,5 @@ public class MenuAdminController extends MenuController implements Constants {
 
         result.rejectValue(get(PARAMETRETEXT), code, params, null);
     }
-    
+
 }
