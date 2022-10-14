@@ -373,7 +373,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             final int tipus = getTipusPeticio();
             switch (tipus) {
-
+                
+                case Constants.TIPUS_PETICIO_FLUX_JSON:
+                    peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
+                            ( FirmaAsyncSimpleSignatureBlock[]) request.getSession().getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY));
+                break;
+                
                 case Constants.TIPUS_PETICIO_FLUX_SIMPLE:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
                             (FirmaAsyncSimpleSignatureBlock[]) request.getSession()

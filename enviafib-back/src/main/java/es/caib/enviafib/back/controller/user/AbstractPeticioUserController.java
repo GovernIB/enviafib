@@ -54,6 +54,7 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         firmaPathByTipus.put(TIPUS_PETICIO_FLUX, FirmaFluxUserController.CONTEXT_WEB);
 
         firmaPathByTipus.put(TIPUS_PETICIO_FLUX_SIMPLE, FirmaPerFluxFirmaSimpleUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_FLUX_JSON, FirmaPerFluxFirmaJsonUserController.CONTEXT_WEB);
 
         firmaPathByTipus.put(TIPUS_PETICIO_PLANTILLAFLUX_USUARI, FirmaPlantillaFluxUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT, FirmaPlantillaFluxEntitatUserController.CONTEXT_WEB);
@@ -71,8 +72,6 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ADDICIONAL_1, FirmaCarrecAddicional1UserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ADDICIONAL_2, FirmaCarrecAddicional2UserController.CONTEXT_WEB);
-
-        // TODO NOMES FALTA TIPUS JSON
     }
 
     @Override

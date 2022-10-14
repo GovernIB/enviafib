@@ -11,6 +11,7 @@ import org.fundaciobit.genapp.common.i18n.I18NArgument;
 import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import es.caib.enviafib.back.controller.user.FirmaPerFluxFirmaJsonUserController;
 import es.caib.enviafib.back.controller.user.FirmaPerFluxFirmaSimpleUserController;
 import es.caib.enviafib.back.controller.webdb.MenuController;
 import es.caib.enviafib.back.form.webdb.MenuFilterForm;
@@ -165,8 +167,13 @@ public class MenuAdminController extends MenuController implements Constants {
 
             case MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON:
                 menuForm.addHiddenField(PARAMETRECOMBO);
-                menu.setParametreText("#  Per exemple es podrà crear un flux amb el cap i el gerent."
-                        + "# Crear codis de substitucions. El format serà:");
+                // XYZ ZZZ
+                if (menuForm.isNou()) {
+                  menu.setParametreText("Aquí s'ha de copiar el codi json d'una plantilla de flux. Anar al menu ' Plantilles de Flux de Firmes de l´Entitat ' ");
+                }
+                
+                addAjudaFirmaFluxJson(request);
+                
             break;
 
             case MENU_FIRMA_TIPUS_CARREC:
@@ -179,6 +186,20 @@ public class MenuAdminController extends MenuController implements Constants {
         }
 
         return menuForm;
+    }
+
+    protected void addAjudaFirmaFluxJson(HttpServletRequest request) {
+        final String help = "Els valors dels camps usernames poden ser substituits per càrrecs de l'Estructura organitzativa emprant la següent nomenclatura:\r\n"
+                + "                   - Gerent/President => ${GerentPresident}\n"
+                + "                   - Cap Area/Conseller => ${CapAreaConseller}\n"
+                + "                   - Cap Departament/Director General => ${CapDepartamentDirectorGeneral}\n"
+                + "                   - Secretari => ${Secretari}\n"
+                + "                   - Encarregat de Compres => ${EncarregatCompres}\n"
+                + "                   - Recursos Humans => ${RecursosHumans}\n"
+                + "                   - Càrrec Addicional 1 => ${Carrec1}\n"
+                + "                   - Càrrec Addicional 2 => ${Carrec2}\n"
+                + "                   - Usuari Loguejat => ${UsuariActual}";
+        HtmlUtils.saveMessageInfo(request, help.replace("\n", "<br/>\n"));
     }
 
     
@@ -202,32 +223,59 @@ public class MenuAdminController extends MenuController implements Constants {
                 FirmaPerFluxFirmaSimpleUserController.getFluxFromFluxSimple(fluxSimple, plugin, loginUsername);    
             } catch (I18NException e) {
                 
-                String msg = I18NUtils.getMessage(e);
-                
-                log.error(msg, e);
-                
-                String code = e.getTraduccio().getCode();
-                
-                I18NArgument[] arguments = e.getTraduccio().getArgs();
-                
-
-                Object[] params = new Object[arguments.length];
-                
-                for (int i = 0; i < arguments.length; i++) {
-                    if (arguments[i] instanceof I18NArgumentCode) {
-                        params[i] = I18NUtils.tradueix(arguments[i].getValue());
-                    } else {
-                        params[i] = arguments[i].getValue();
-                    }
-                }
-
-                result.rejectValue(get(PARAMETRETEXT), code, params, null);
+                moveI18NException2BindingResult(result, e);
             }
             
+       } else if ( menuForm.getMenu().getTipus() == MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON) {
+           
+           
+           
+           final String fluxJson = menuForm.getMenu().getParametreText();
+           
+           final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
+           
+           final String loginUsername =  LoginInfo.getInstance().getUsername();
+
+           try {
+               // Només serveix per fer CHECK
+               FirmaPerFluxFirmaJsonUserController.checkFluxJson(loginUsername, plugin, fluxJson);
+           } catch (I18NException e) {
+               
+               moveI18NException2BindingResult(result, e);
+           }
+           
+           
+           if (result.hasErrors()) {
+               addAjudaFirmaFluxJson(request);
+           }
+           
        }
         
         
         
+    }
+
+    protected void moveI18NException2BindingResult(BindingResult result, I18NException e) {
+        String msg = I18NUtils.getMessage(e);
+        
+        log.error(msg, e);
+        
+        String code = e.getTraduccio().getCode();
+        
+        I18NArgument[] arguments = e.getTraduccio().getArgs();
+        
+
+        Object[] params = new Object[arguments.length];
+        
+        for (int i = 0; i < arguments.length; i++) {
+            if (arguments[i] instanceof I18NArgumentCode) {
+                params[i] = I18NUtils.tradueix(arguments[i].getValue());
+            } else {
+                params[i] = arguments[i].getValue();
+            }
+        }
+
+        result.rejectValue(get(PARAMETRETEXT), code, params, null);
     }
     
 }
