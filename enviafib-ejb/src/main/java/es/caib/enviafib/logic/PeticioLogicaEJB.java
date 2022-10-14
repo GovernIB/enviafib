@@ -6,8 +6,10 @@ import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -148,7 +150,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         try {
             idPortafib = createSignatureRequestAndStart(languageUI, signatureBlocks, perfil, fitxerAFirmar,
-                    fitxerAAnexar, tipusDoc, idiomaDoc, api);
+                    fitxerAAnexar, tipusDoc, idiomaDoc, api, peticio.getTipus(), peticio.getNom());
 
             peticio.setPeticioPortafirmes(String.valueOf(idPortafib));
             peticio.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
@@ -162,7 +164,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     protected Long createSignatureRequestAndStart(String languageUI, FirmaAsyncSimpleSignatureBlock[] signatureBlocks,
             String profileCode, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
-            String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api) throws Exception {
+            String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api, int tipusPeticio, String titolPeticio) throws Exception {
 
         // Annexes
         List<FirmaAsyncSimpleAnnex> annexs = null;
@@ -183,11 +185,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throw new Exception("No s'ha definit fitxer a firmar");
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         
-
-        final String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
-        final String description = "Prova de firma - Desc";
-        final String reason = "Prova de firma - reason";
+        String title = "ENVIAFIB_" + sdf.format(new Date(System.currentTimeMillis()))+"_"+titolPeticio;
+        if(title.length() > 250) {
+            title = title.substring(0, 250);
+        }
+        final String description = "Firma des de EnviaFIB. Tipus: "+tipusPeticio;
+        final String reason = "Firma des de EnviaFIB.";
         FirmaAsyncSimpleFile originalDetachedSignature = null;
 
         Long tipusDocumentalID = null;
