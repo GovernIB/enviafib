@@ -88,31 +88,31 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
             infoSignaturaForm = new InfoSignaturaForm(_jpa, false);
             infoSignaturaForm.setView(__isView);
 
-//            final Section seccio0 = new Section("seccio0", "infosignatura.seccio.0", InfoSignaturaFields.INFOSIGNATURAID);
-//
-//            final Section infosignatura = new Section("infosignatura", "infosignatura.seccio.1",
-//                    InfoSignaturaFields.SIGNOPERATION, InfoSignaturaFields.SIGNTYPE, InfoSignaturaFields.SIGNALGORITHM,
-//                    InfoSignaturaFields.SIGNMODE);
-//
-//            final Section infoadicional = new Section("infoadicional", "infosignatura.seccio.2",
-//                    InfoSignaturaFields.SIGNATURESTABLELOCATION, InfoSignaturaFields.TIMESTAMPINCLUDED,
-//                    InfoSignaturaFields.POLICYINCLUDED);
-//
-//            final Section eni = new Section("eni", "infosignatura.seccio.3", InfoSignaturaFields.ENITIPOFIRMA,
-//                    InfoSignaturaFields.ENIPERFILFIRMA, InfoSignaturaFields.ENIROLFIRMA,
-//                    InfoSignaturaFields.ENISIGNERNAME, InfoSignaturaFields.ENISIGNERADMINISTRATIONID,
-//                    InfoSignaturaFields.ENISIGNLEVEL);
-//
-//            final Section checks = new Section("checks", "infosignatura.seccio.4",
-//                    InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER, InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS,
-//                    InfoSignaturaFields.CHECKVALIDATIONSIGNATURE);
-//
-//            infoSignaturaForm.addSection(seccio0);
-//            infoSignaturaForm.addSection(infosignatura);
-//            infoSignaturaForm.addSection(infoadicional);
-//            infoSignaturaForm.addSection(eni);
-//            infoSignaturaForm.addSection(checks);
-//
+            //            final Section seccio0 = new Section("seccio0", "infosignatura.seccio.0", InfoSignaturaFields.INFOSIGNATURAID);
+            //
+            //            final Section infosignatura = new Section("infosignatura", "infosignatura.seccio.1",
+            //                    InfoSignaturaFields.SIGNOPERATION, InfoSignaturaFields.SIGNTYPE, InfoSignaturaFields.SIGNALGORITHM,
+            //                    InfoSignaturaFields.SIGNMODE);
+            //
+            //            final Section infoadicional = new Section("infoadicional", "infosignatura.seccio.2",
+            //                    InfoSignaturaFields.SIGNATURESTABLELOCATION, InfoSignaturaFields.TIMESTAMPINCLUDED,
+            //                    InfoSignaturaFields.POLICYINCLUDED);
+            //
+            //            final Section eni = new Section("eni", "infosignatura.seccio.3", InfoSignaturaFields.ENITIPOFIRMA,
+            //                    InfoSignaturaFields.ENIPERFILFIRMA, InfoSignaturaFields.ENIROLFIRMA,
+            //                    InfoSignaturaFields.ENISIGNERNAME, InfoSignaturaFields.ENISIGNERADMINISTRATIONID,
+            //                    InfoSignaturaFields.ENISIGNLEVEL);
+            //
+            //            final Section checks = new Section("checks", "infosignatura.seccio.4",
+            //                    InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER, InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS,
+            //                    InfoSignaturaFields.CHECKVALIDATIONSIGNATURE);
+            //
+            //            infoSignaturaForm.addSection(seccio0);
+            //            infoSignaturaForm.addSection(infosignatura);
+            //            infoSignaturaForm.addSection(infoadicional);
+            //            infoSignaturaForm.addSection(eni);
+            //            infoSignaturaForm.addSection(checks);
+            //
         }
 
         infoSignaturaForm.setContexte(getContextWeb());
@@ -177,11 +177,12 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
             s2c = new Select2Columns<Long, Integer>(PeticioFields.PETICIOID.select, PeticioFields.TIPUS.select);
             List<Select2Values<Long, Integer>> list;
             list = peticioLogicaEjb.executeQuery(s2c, PeticioFields.INFOSIGNATURAID.equal(infosignaturaid));
-            
-            
+
             if (list == null || list.size() != 1) {
-//            HtmlUtils.saveMessageError(request, msg);
-                log.error("InfoSignaturaUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat", new Exception());
+                //            HtmlUtils.saveMessageError(request, msg);
+                log.error(
+                        "InfoSignaturaUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat",
+                        new Exception());
                 return AbstractFirmaUserController.getRedirectToList();
             }
 

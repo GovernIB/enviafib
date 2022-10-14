@@ -33,9 +33,11 @@ public interface PeticioLogicaService extends PeticioService {
     public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
             throws I18NException;
     
-
     public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
             FirmaAsyncSimpleSignatureBlock[] signatureBlocks) throws I18NException;
+    
+    public FirmaAsyncSimpleSignatureBlock[] convertFluxToSignatureBlocks(FlowTemplateSimpleFlowTemplate flux)
+            throws I18NException;
 
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException;
 

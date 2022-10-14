@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -32,6 +33,10 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.addHiddenField(DATAFINAL);
+
+            peticioFilterForm.addAdditionalButton(
+                    new AdditionalButton("fas fa-info", "code.text.label", "FUNCTION", "btn-info"));
+
         }
 
         return peticioFilterForm;
@@ -40,15 +45,15 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
-//        final Where defaultCondition = super.getAdditionalCondition(request);
-//        final Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
-//        final Where getErrorArxivantCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-//        final Where getErrorTancantExpedientCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
-//
-//        Where getPeticionsCondition = Where.OR(getPendentsCondition, getErrorArxivantCondition,
-//                getErrorTancantExpedientCondition);
-//
-//        return Where.AND(defaultCondition, getPeticionsCondition);
+        //        final Where defaultCondition = super.getAdditionalCondition(request);
+        //        final Where getPendentsCondition = ESTAT.equal(Constants.ESTAT_PETICIO_EN_PROCES);
+        //        final Where getErrorArxivantCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+        //        final Where getErrorTancantExpedientCondition = ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+        //
+        //        Where getPeticionsCondition = Where.OR(getPendentsCondition, getErrorArxivantCondition,
+        //                getErrorTancantExpedientCondition);
+        //
+        //        return Where.AND(defaultCondition, getPeticionsCondition);
 
         final Where defaultCondition = super.getAdditionalCondition(request);
 

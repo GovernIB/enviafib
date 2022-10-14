@@ -96,12 +96,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         // peticioIdByTransactionId.put(transactionID, peticio.getPeticioID());
         p.setPeticioPortafirmes(transactionID);
+
         this.peticioLogicaEjb.update(p);
 
         request.getSession().setAttribute("redirectUrl", redirectUrl);
 
         return p;
-
     }
 
     @Override

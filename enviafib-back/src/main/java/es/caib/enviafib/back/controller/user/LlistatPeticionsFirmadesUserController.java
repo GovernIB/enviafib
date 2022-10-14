@@ -134,10 +134,10 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
 
         log.info("internalDownload(): -> docID: " + docID);
 
-//        String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
-//                InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+        //        String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
+        //                InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
-//        Long pluginID = 1001L;
+        //        Long pluginID = 1001L;
         IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
 
         byte[] data = null;

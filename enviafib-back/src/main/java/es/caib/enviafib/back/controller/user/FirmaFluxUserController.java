@@ -51,7 +51,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
     public static final String CONTEXT_WEB = "/user/flux";
 
     public static final String TITOL_FLUX_FIRMA = "titolFluxFirma";
-    
+
     public static final String FLUX_SESSION_KEY = "__FLUX_SESSION_KEY__";
 
     private ThreadLocal<Boolean> threadLocalTileForm = new ThreadLocal<>();
@@ -100,9 +100,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         String solicitantNif = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
         peticioForm.getPeticio().setDestinatariNif(solicitantNif);
 
-        
-        String titol_flux = (String) request.getSession()
-                .getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
+        String titol_flux = (String) request.getSession().getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
         mav.addObject(TITOL_FLUX_FIRMA, titol_flux);
 
         peticioForm.setTitleCode("= ");

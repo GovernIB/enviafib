@@ -12,7 +12,6 @@ import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
 import org.fundaciobit.pluginsib.userinformation.UserInfo;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
@@ -97,10 +96,10 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
                 log.error(msg, e);
-                mav.setViewName("errorIniciPeticioUser");                
+                mav.setViewName("errorIniciPeticioUser");
                 mav.addObject("errorMsg", msg);
                 mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
-                
+
                 return peticioForm;
             }
         }
@@ -131,7 +130,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
             String carrec = "estructuraorganitzativa." + tipusCarrec + ".nom";//2-3-5
             carrecRol = I18NUtils.tradueix(carrec);//Secretari-Director-Etc
-            
+
             switch (tipusCarrec) {
                 case Constants.CARREC_GERENT_PRESIDENT:
                     carrecUsername = instance.getGerentPresidentUsername();
@@ -178,7 +177,8 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         }
 
         if (carrecUsername == null) {
-            throw new I18NException("error.plugin.estructuraorganitzativa.carrecnotrobat", I18NUtils.tradueix(carrecUsername));
+            throw new I18NException("error.plugin.estructuraorganitzativa.carrecnotrobat",
+                    I18NUtils.tradueix(carrecUsername));
         }
 
         log.info("El meu " + carrecRol + " es " + carrecFullName + " - " + carrecUsername);

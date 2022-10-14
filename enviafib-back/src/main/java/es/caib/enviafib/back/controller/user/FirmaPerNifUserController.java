@@ -36,6 +36,5 @@ public class FirmaPerNifUserController extends AbstractFirmaUserController {
     public int getTipusPeticio() {
         return TIPUS_PETICIO_NIF;
     }
-    
 
 }

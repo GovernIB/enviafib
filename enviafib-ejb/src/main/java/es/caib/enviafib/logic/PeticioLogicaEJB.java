@@ -83,6 +83,11 @@ import es.caib.enviafib.persistence.PeticioJPA;
  */
 @Stateless(name = "PeticioLogicaEJB")
 public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService {
+    
+    protected static final long TRANSACTION_TIMEOUT_IN_SEC = 180;
+
+    protected static final long TRANSACTION_EXIT_IN_MILI = (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
+
 
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
@@ -157,7 +162,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         } catch (Throwable e) {
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            //            throw new I18NException("error.portafib.creacio", e.getMessage());
+            //            peticio.setErrorMsg(LogicUtils.split255(e.getMessage()));
+            //            peticio.setErrorException(LogicUtils.stackTrace2String(e));
+            throw new I18NException("error.portafib.creacio", e.getMessage());
         }
         this.update(peticio);
     }
@@ -864,7 +871,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         pet.setFitxerFirmatID(fitxer.getFitxerID());
     }
 
-    protected FirmaAsyncSimpleSignatureBlock[] convertFluxToSignatureBlocks(FlowTemplateSimpleFlowTemplate flux)
+    @Override
+    public FirmaAsyncSimpleSignatureBlock[] convertFluxToSignatureBlocks(FlowTemplateSimpleFlowTemplate flux)
             throws I18NException {
 
         List<FlowTemplateSimpleBlock> blocks = flux.getBlocks();
@@ -998,8 +1006,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return signatureBlocks;
     }
 
-    public static final long TRANSACTION_TIMEOUT_IN_SEC = 180;
-    public static final long TRAMSACTION_EXIT_IN_MILI = (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
 
     /**
      * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
@@ -1046,7 +1052,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     }
 
                     //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
-                    if ((System.currentTimeMillis() - startTime) > TRAMSACTION_EXIT_IN_MILI) {
+                    if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
                         log.warn("Timeout.");
                         break;
                     }
@@ -1104,7 +1110,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     fitxersEsborrar.add(fitxerFirmatID);
 
                     //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
-                    if ((System.currentTimeMillis() - startTime) > TRAMSACTION_EXIT_IN_MILI) {
+                    if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
                         log.warn("Timeout.");
                         break;
                     }

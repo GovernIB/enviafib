@@ -269,7 +269,6 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
                     log.info(" INTERMEDIATE =====>  |" + flux.getIntermediateServerFlowTemplateId() + "|");
 
-
                     ModelAndView mav = new ModelAndView("finaliframe");
 
                     mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/list");
