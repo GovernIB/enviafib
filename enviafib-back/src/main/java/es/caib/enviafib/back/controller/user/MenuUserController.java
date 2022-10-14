@@ -74,12 +74,12 @@ public class MenuUserController implements Constants {
 
                     final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
 
-                    final String loginusername = LoginInfo.getInstance().getUsername();
+                    final String loginUsername = LoginInfo.getInstance().getUsername();
 
                     final FirmaAsyncSimpleSignatureBlock[] blocs;
 
                     blocs = FirmaPerFluxFirmaSimpleUserController.getFluxFromFluxSimple(fluxSimple, plugin,
-                            loginusername);
+                            loginUsername);
 
                     request.getSession().setAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY,
                             blocs);
@@ -87,10 +87,21 @@ public class MenuUserController implements Constants {
                     return "redirect:" + FirmaPerFluxFirmaSimpleUserController.CONTEXT_WEB + "/new";
                 }
 
-                case MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON:
-                    // XYZ ZZZ
-                    HtmlUtils.saveMessageError(request, "No implementat MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON");
-                    return "redirect:/";
+                case MENU_FIRMA_TIPUS_FLUX_COMPLEX_JSON: {
+
+                    final String loginUsername = LoginInfo.getInstance().getUsername();
+
+                    final IEstructuraOrganitzativaPlugin plugin = pluginEstructuraOrganitzativaEjb.getInstance();
+
+                    String fluxJson = menu.getParametreText();
+
+                    final FirmaAsyncSimpleSignatureBlock[] blocs = FirmaPerFluxFirmaJsonUserController
+                            .checkFluxJson(loginUsername, plugin, fluxJson);
+
+                    request.getSession().setAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY, blocs);
+
+                    return "redirect:" + FirmaPerFluxFirmaJsonUserController.CONTEXT_WEB + "/new";
+                }
 
                 case MENU_FIRMA_TIPUS_CARREC:
 
@@ -155,9 +166,5 @@ public class MenuUserController implements Constants {
         }
 
     }
-
-
-
-
 
 }
