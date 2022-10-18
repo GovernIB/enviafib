@@ -417,7 +417,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             String peticioID = String.valueOf(p.getPeticioID());
             String portafibID = p.getPeticioPortafirmes();
             String msg = I18NUtils.tradueix("procesdefirma.status.enviadaok", peticioID, portafibID);
-            msg = "CREATE: Peticio amb ID=" + peticioID + " creada i enviada a PortaFIB (" + portafibID + ").";
             log.info(msg);
 
         } catch (Exception e) {

@@ -58,6 +58,9 @@ public interface PeticioLogicaService extends PeticioService {
     public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI) throws I18NException;
 
     public String reintentarTancarExpedient(long peticioID) throws I18NException;
+    
+    
+    public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException;
 
 
 }
