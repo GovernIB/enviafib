@@ -83,11 +83,10 @@ import es.caib.enviafib.persistence.PeticioJPA;
  */
 @Stateless(name = "PeticioLogicaEJB")
 public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService {
-    
+
     protected static final long TRANSACTION_TIMEOUT_IN_SEC = 180;
 
     protected static final long TRANSACTION_EXIT_IN_MILI = (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
-
 
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
@@ -171,7 +170,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     protected Long createSignatureRequestAndStart(String languageUI, FirmaAsyncSimpleSignatureBlock[] signatureBlocks,
             String profileCode, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
-            String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api, int tipusPeticio, String titolPeticio) throws Exception {
+            String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api, int tipusPeticio,
+            String titolPeticio) throws Exception {
 
         // Annexes
         List<FirmaAsyncSimpleAnnex> annexs = null;
@@ -196,9 +196,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         
         String title = "ENVIAFIB_" + sdf.format(new Date(System.currentTimeMillis()))+"_"+titolPeticio;
         if(title.length() > 250) {
+
             title = title.substring(0, 250);
         }
-        final String description = "Firma des de EnviaFIB. Tipus: "+tipusPeticio;
+        final String description = "Firma des de EnviaFIB. Tipus: " + tipusPeticio;
         final String reason = "Firma des de EnviaFIB.";
         FirmaAsyncSimpleFile originalDetachedSignature = null;
 
@@ -1006,7 +1007,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return signatureBlocks;
     }
 
-
     /**
      * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
      */
@@ -1146,4 +1146,34 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Total time: " + (endTime - startTime));
         log.info("Acaba eliminarFitxersSignatsDeLocal()");
     }
+
+    /**
+     * 
+     * @param peticioPortaFIB
+     * @param languageUI
+     * @return
+     * @throws I18NException
+     */
+    @Override
+    public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException {
+
+        try {
+            ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+            FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+            rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortaFIB, languageUI);
+            String url;
+            url = api.getUrlToViewFlow(rinfo);
+            return url;
+        } catch (I18NException e) {
+            throw e;
+        } catch (Exception e) {
+            // XYZ ZZZ TRA
+            throw new I18NException("genapp.codi",
+                    "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "
+                            + e.getMessage());
+
+        }
+
+    }
+
 }
