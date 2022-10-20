@@ -253,7 +253,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticioForm.addHelpToField(ARXIUPARAMFUNCIONARIDIR3, msgFD3);
 
             peticioForm.addAdditionalButton(
-                    new AdditionalButton("fas fa-info", "code.text.label", "FUNCTION", "btn-info"));
+                    new AdditionalButton("fas fa-info-circle", "advanced.show", "javascript:mostrarOcultarCampsAvanzats(this)", "btn-warning"));
 
         }
         return peticioForm;
