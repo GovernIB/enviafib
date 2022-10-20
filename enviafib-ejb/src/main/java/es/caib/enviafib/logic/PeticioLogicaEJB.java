@@ -192,10 +192,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throw new Exception("No s'ha definit fitxer a firmar");
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+        
+        String title = "ENVIAFIB_" + sdf.format(new Date(System.currentTimeMillis()))+"_"+titolPeticio;
+        if(title.length() > 250) {
 
-        String title = "ENVIAFIB_" + sdf.format(new Date(System.currentTimeMillis())) + "_" + titolPeticio;
-        if (title.length() > 250) {
             title = title.substring(0, 250);
         }
         final String description = "Firma des de EnviaFIB. Tipus: " + tipusPeticio;
