@@ -295,7 +295,7 @@
             <li
                 style="list-style-type: disc; list-style-position: inside;">
                 <a
-                href="<c:url value="/user/menu/show/${menu.menuID}/${menu.tipus}"/>">
+                href="javascript:cridarOpcioMenu(${menu.menuID},${menu.tipus});">
                     <span style="${(fn:contains(url, urlBlack))? "font-weight:bold;" : ""}">
                         ${menu.titolMenu.traduccions[lang].valor} </span> <i
                     class="fas fa-info-circle"
@@ -314,19 +314,14 @@
 
             <li
                 style="list-style-type: disc; list-style-position: inside;">
-                <a
-                href="<c:url value="/user/plantillesfluxfirmes/list"/>">
+                <a href="<c:url value="/user/plantillesfluxfirmes/list"/>">
                     <span
                     style="${(fn:contains(url, '/user/plantillesfluxfirmes'))? "font-weight:bold;" : ""}"><fmt:message
                             key="plantillesfluxfirmes.plural" /></span>
             </a>
             </li>
         </c:if>
-
-
     </ul>
-
-
 
     <c:if test="${LoginInfo.getInstance().getRoles() == '[ROLE_USER]'}">
         <hr style="margin-top: 6px; margin-bottom: 6px;" />
@@ -338,4 +333,16 @@
         </li>
     </c:if>
 </div>
+
+<script>
+
+
+ function cridarOpcioMenu(menuID, tipus) {
+     
+     window.location='<c:url value="/user/menu/show/"/>'  + menuID + '/' + tipus + '/' + btoa(window.location);
+     
+ }
+
+
+</script>
 

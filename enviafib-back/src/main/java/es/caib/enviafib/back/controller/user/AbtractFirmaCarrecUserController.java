@@ -178,10 +178,11 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
 
         if (carrecUsername == null) {
             throw new I18NException("error.plugin.estructuraorganitzativa.carrecnotrobat",
-                    I18NUtils.tradueix(carrecUsername));
+                    new I18NArgumentString(carrecRol));
         }
 
-        log.info("El meu " + carrecRol + " es " + carrecFullName + " - " + carrecUsername);
+        log.info("El meu " + new I18NArgumentString(carrecRol) + "(" + carrecRol + ") es " + carrecFullName + " - "
+                + carrecUsername);
 
         // Provam a BBDD a veure si està el NIF
         Long usuariID = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(carrecUsername));
