@@ -326,9 +326,7 @@
 
     </ul>
 
-
-
-    <c:if test="${LoginInfo.getInstance().getRoles() == '[ROLE_USER]'}">
+    <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && !efi:hasRole(ConstantsEnviaFIB.ROLE_ADMIN)}">
         <hr style="margin-top: 6px; margin-bottom: 6px;" />
         <li style="list-style-type: disc; list-style-position: inside;">
             <a href="<c:url value="/user/home"/>"> <span
