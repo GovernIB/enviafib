@@ -322,8 +322,6 @@
             </a>
             </li>
         </c:if>
-
-
     </ul>
 
     <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && !efi:hasRole(ConstantsEnviaFIB.ROLE_ADMIN)}">

@@ -63,27 +63,7 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
 
         if (peticioFilterForm.isNou()) {
-            peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
             peticioFilterForm.setDeleteSelectedButtonVisible(false);
-
-            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
-            // fa-file-pdf",
-            // "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}",
-            // "btn-info"));
-            //
-            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
-            // fa-vote-yea",
-            // "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/{0}",
-            // "btn-info"));
-            //
-            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
-            // fa-print",
-            // "download.arxivat.imprimible", getContextWeb() +
-            // "/descarregarimprimible/{0}", "btn-info"));
-            //
-            // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
-            // fa-envelope icon-white",
-            // "peticio.btn.sendmail", "javascript: cridaEmail({0})", "btn-success"));
         }
 
         return peticioFilterForm;
