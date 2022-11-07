@@ -41,7 +41,7 @@
 
 
 
-        <li style="list-style-type: disc; list-style-position: inside;">
+        <li style="margin-top: 6px; margin-bottom: 6px; list-style-type: disc; list-style-position: inside; font-family: Arial, Helvetica, sans-serif;font-weight:bold">
             <a href="<c:url value="/user/peticio/pendents/list"/>">
                 <span
                 style="${(fn:contains(url, 'user/peticio/pendents/list'))? "font-weight:bold;" : ""}"><fmt:message
@@ -49,7 +49,7 @@
         </a>
         </li>
 
-        <li style="list-style-type: disc; list-style-position: inside;">
+        <li style="margin-top: 6px; margin-bottom: 6px; list-style-type: disc; list-style-position: inside; font-family:Arial, Helvetica, sans-serif;font-weight:bold">
             <a href="<c:url value="/user/peticio/firmades/list"/>">
                 <span
                 style="${(fn:contains(url, 'user/peticio/firmades/list'))? "font-weight:bold;" : ""}"><fmt:message
@@ -57,7 +57,7 @@
         </a>
         </li>
 
-        <li style="list-style-type: disc; list-style-position: inside;">
+        <li style="margin-top: 6px; margin-bottom: 6px; list-style-type: disc; list-style-position: inside; font-family: Arial, Helvetica, sans-serif;font-weight:bold">
             <a href="<c:url value="/user/peticio/rebutjades/list"/>">
                 <span
                 style="${(fn:contains(url, 'user/peticio/rebutjades/list'))? "font-weight:bold;" : ""}"><fmt:message
@@ -160,10 +160,9 @@
 
 
 
-
             <c:choose>
 
-                <c:when
+                <c:when 
                     test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_AUTOFIRMA}">
                     <%                             
                      pageContext.setAttribute("urlBlack", AutoFirmaUserController.CONTEXT_WEB);
@@ -291,9 +290,8 @@
                 </c:otherwise>
             </c:choose>
 
-
             <li
-                style="list-style-type: disc; list-style-position: inside;">
+                style="list-style-type: disc; list-style-position: inside; margin-top: 6px; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;font-weight:bold">
                 <a
                 href="<c:url value="/user/menu/show/${menu.menuID}/${menu.tipus}"/>">
                     <span style="${(fn:contains(url, urlBlack))? "font-weight:bold;" : ""}">
@@ -315,7 +313,7 @@
             <li
                 style="list-style-type: disc; list-style-position: inside;">
                 <a
-                href="<c:url value="/user/plantillesfluxfirmes/list"/>">
+                href="<c:url value="/user/plantillesfluxfirmes/list"/>" style="font-family: Arial, Helvetica, sans-serif;font-weight:bold">
                     <span
                     style="${(fn:contains(url, '/user/plantillesfluxfirmes'))? "font-weight:bold;" : ""}"><fmt:message
                             key="plantillesfluxfirmes.plural" /></span>
