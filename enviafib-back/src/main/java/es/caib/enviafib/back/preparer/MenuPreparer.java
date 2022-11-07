@@ -42,30 +42,40 @@ public class MenuPreparer implements ViewPreparer {
 
         Object pipella = attributeContext.getAttribute("pipella");
 
-        if (pipella != null && String.valueOf(pipella).equals("user")) {
+        if (
+           LoginInfo.hasRole(Constants.ROLE_USER) && getAdditionalCondition(String.valueOf(pipella))) {
 
-            List<Menu> menus;
-            try {
-
-                log.info("menuLogicaEjb => " + menuLogicaEjb);
-
-                if (menuLogicaEjb == null) {
-                    menuLogicaEjb = (MenuLogicaService) new InitialContext().lookup(MenuLogicaService.JNDI_NAME);
-                }
-
-                menus = menuLogicaEjb.getAllOptionMenusByUsername(LoginInfo.getInstance().getUsuari().getUsuariID());
-            } catch (LoginException e) {
-                log.error("Error intentant obtenir l'ID de l'usuari de BBDD: " + e.getMessage(), e);
-                menus = new ArrayList<Menu>();
-            } catch (I18NException e) {
-                log.error("Error intentant obtenir els menus de firma l'ID de l'usuari de BBDD: " + e.getMessage(), e);
-                menus = new ArrayList<Menu>();
-            } catch (NamingException e) {
-                log.error("Error intentant obtenir una instancia de MenuLogicaService:" + e.getMessage(), e);
-                menus = new ArrayList<Menu>();
-            }
+            List<Menu> menus = getMenuUser();
 
             request.put("menus", menus);
         }
+    }
+
+    protected boolean getAdditionalCondition(String pipella) {
+        return pipella != null && pipella.equals("user") && LoginInfo.hasRole(Constants.ROLE_ADMIN);
+    }
+
+    public List<Menu> getMenuUser() {
+        List<Menu> menus;
+        try {
+
+            log.info("menuLogicaEjb => " + menuLogicaEjb);
+
+            if (menuLogicaEjb == null) {
+                menuLogicaEjb = (MenuLogicaService) new InitialContext().lookup(MenuLogicaService.JNDI_NAME);
+            }
+
+            menus = menuLogicaEjb.getAllOptionMenusByUsername(LoginInfo.getInstance().getUsuari().getUsuariID());
+        } catch (LoginException e) {
+            log.error("Error intentant obtenir l'ID de l'usuari de BBDD: " + e.getMessage(), e);
+            menus = new ArrayList<Menu>();
+        } catch (I18NException e) {
+            log.error("Error intentant obtenir els menus de firma l'ID de l'usuari de BBDD: " + e.getMessage(), e);
+            menus = new ArrayList<Menu>();
+        } catch (NamingException e) {
+            log.error("Error intentant obtenir una instancia de MenuLogicaService:" + e.getMessage(), e);
+            menus = new ArrayList<Menu>();
+        }
+        return menus;
     }
 }

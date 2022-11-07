@@ -58,4 +58,12 @@
         <function-signature>boolean hasRole(java.lang.String)</function-signature>
 </function>
 
+
+<function>
+        <name>getBasePathForMenu</name>
+        <description>getBasePathForMenu</description>
+        <function-class>es.caib.enviafib.back.controller.user.MenuUserController</function-class>
+        <function-signature>String getBasePathForMenu(es.caib.enviafib.model.entity.Menu)</function-signature>
+</function>
+
 </taglib>

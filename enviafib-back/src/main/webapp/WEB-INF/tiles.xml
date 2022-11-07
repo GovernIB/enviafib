@@ -2,6 +2,7 @@
 <!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
+
     <definition name="base.cap" template="/WEB-INF/jsp/moduls/cap.jsp" preparer="es.caib.enviafib.back.preparer.CapPreparer"/>
     <definition name="base.menu_i_contingut" template="/WEB-INF/jsp/moduls/menu_i_contingut.jsp"/>
     <definition name="base.menu" template="/WEB-INF/jsp/moduls/blanc.jsp" />
