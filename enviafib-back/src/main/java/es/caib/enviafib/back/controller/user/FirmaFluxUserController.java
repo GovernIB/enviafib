@@ -100,7 +100,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         String solicitantNif = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
         peticioForm.getPeticio().setDestinatariNif(solicitantNif);
 
-        String titol_flux = (String) request.getSession().getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
+        String titol_flux = (String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO);
         mav.addObject(TITOL_FLUX_FIRMA, titol_flux);
 
         peticioForm.setTitleCode("= ");
@@ -179,8 +179,8 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
             log.info("SaveOnServer  = |" + saveOnServer + "|");
             log.info("TransactionID = |" + transactionID + "|");
 
-            final String callBackUrl = getAbsoluteControllerBase(request, getContextWeb()) + "/callbackflux/"
-                    + transactionID;
+            final String callBackUrl = request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR)
+                    + getContextWeb() + "/callbackflux/" + transactionID;
 
             // Per ara només suportam FULLVIEW
             FlowTemplateSimpleStartTransactionRequest startTransactionInfo;
@@ -192,8 +192,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
             request.getSession().setAttribute("transactionID", transactionID);
 
-            String titol_flux = (String) request.getSession()
-                    .getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
+            String titol_flux = (String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO);
 
             ModelAndView mav = new ModelAndView("flowview");
             mav.addObject(TITOL_FLUX_FIRMA, titol_flux);
@@ -390,8 +389,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
             log.info("View Flow Template Url = " + url);
 
-            String titol_flux = (String) request.getSession()
-                    .getAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO);
+            String titol_flux = (String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO);
 
             ModelAndView mav = new ModelAndView("flowview");
             mav.addObject(TITOL_FLUX_FIRMA, titol_flux);

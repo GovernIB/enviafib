@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.util.Base64;
+
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.persistence.MenuJPA;
 
@@ -29,6 +32,10 @@ import es.caib.enviafib.persistence.MenuJPA;
 @RequestMapping(value = "/user/menu")
 public class MenuUserController implements Constants {
 
+    public static final String TITOL_PETICIO = "__TITOL_PETICIO__";
+
+    public static final String URL_BASE_NAVEGADOR = "__URL_BASE_NAVEGADOR__";
+
     protected final Logger log = Logger.getLogger(MenuUserController.class);
 
     @EJB(mappedName = es.caib.enviafib.ejb.MenuService.JNDI_NAME)
@@ -37,20 +44,23 @@ public class MenuUserController implements Constants {
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
-    @RequestMapping(value = "/show/{menuID}/{tipus}", method = RequestMethod.GET)
+    @RequestMapping(value = "/show/{menuID}/{tipus}/{windowUrl}", method = RequestMethod.GET)
     public String show(@PathVariable("menuID") long menuID, @PathVariable("tipus") int tipus,
-            HttpServletRequest request, HttpServletResponse response) {
+            @PathVariable("windowUrl") String windowUrl, HttpServletRequest request, HttpServletResponse response) {
 
         // XYZ ZZZ Check si aquest usuari té permís per obrir el menuID
 
         try {
 
+            // Decodificam la URL que arriba en base64
+            String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+            request.getSession().setAttribute(URL_BASE_NAVEGADOR, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
+
             MenuJPA menu = (MenuJPA) menuEjb.findByPrimaryKey(menuID);
 
             String idioma = LocaleContextHolder.getLocale().getLanguage();
 
-            request.getSession().setAttribute(AbtractFirmaCarrecUserController.TITOL_PETICIO,
-                    menu.getTitolMenu().getTraduccio(idioma).getValor());
+            request.getSession().setAttribute(TITOL_PETICIO, menu.getTitolMenu().getTraduccio(idioma).getValor());
 
             switch (tipus) {
 

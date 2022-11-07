@@ -44,7 +44,6 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.form.webdb.PeticioMultipleForm;
 import es.caib.enviafib.back.security.LoginInfo;
-import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
@@ -73,8 +72,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
-
-    public static final String TITOL_PETICIO = "__TITOL_PETICIO__";
 
     @Override
     public boolean isActiveList() {
@@ -110,7 +107,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
     public String getTitolCode(HttpServletRequest request) {
 
-        return "=" + request.getSession().getAttribute(TITOL_PETICIO);
+        return "=" + request.getSession().getAttribute(MenuUserController.TITOL_PETICIO);
     }
 
     /**
@@ -137,7 +134,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
-        peticioForm.setTitleParam((String) request.getSession().getAttribute(TITOL_PETICIO));
+        peticioForm.setTitleParam((String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO));
 
         hiddens.remove(NOM);
         hiddens.remove(FITXERID);
@@ -252,8 +249,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             String msgFD3 = I18NUtils.tradueix("transaccio.fundacionaridir3.ajuda");
             peticioForm.addHelpToField(ARXIUPARAMFUNCIONARIDIR3, msgFD3);
 
-            peticioForm.addAdditionalButton(
-                    new AdditionalButton("fas fa-info-circle", "advanced.show", "javascript:mostrarOcultarCampsAvanzats(this)", "btn-warning"));
+            peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "advanced.show",
+                    "javascript:mostrarOcultarCampsAvanzats(this)", "btn-warning"));
 
         }
         return peticioForm;
@@ -335,9 +332,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
     }
 
+    /*
+    @Deprecated
     public static String getAbsoluteControllerBase(HttpServletRequest request, String webContext) {
         return Configuracio.getUrlBase() + webContext;
     }
+    */
 
     @RequestMapping(value = "/veureInfoSignatura/{infoSignaturaID}", method = RequestMethod.GET)
     public ModelAndView veureInfoSignatura(@PathVariable("infoSignaturaID") java.lang.Long infoSignaturaID,
@@ -370,25 +370,28 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         //Enviament de la peticio a PortaFIB després de la seva creació
         try {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
+            
+            final String solicitantUsr = LoginInfo.getInstance().getUsername();
 
             final int tipus = getTipusPeticio();
             switch (tipus) {
-                
+
                 case Constants.TIPUS_PETICIO_FLUX_JSON:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
-                            ( FirmaAsyncSimpleSignatureBlock[]) request.getSession().getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY));
+                            (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
+                                    .getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY), solicitantUsr);
                 break;
-                
+
                 case Constants.TIPUS_PETICIO_FLUX_SIMPLE:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
                             (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
-                                    .getAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY));
+                                    .getAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY), solicitantUsr);
                 break;
 
                 case Constants.TIPUS_PETICIO_FLUX:
                     peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI,
                             (FlowTemplateSimpleFlowTemplate) request.getSession()
-                                    .getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY));
+                                    .getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY), solicitantUsr);
                 break;
 
                 case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
@@ -403,13 +406,13 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                     FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
-                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux);
+                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux, solicitantUsr);
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
                 break;
                 default:
-                    p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI);
+                    p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI, solicitantUsr);
                 break;
             }
 
@@ -501,7 +504,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
             petFor.setErrorMsg(null);
             petFor.setErrorException(null);
-            petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
+            if (nFitxers == 1) {
+              petFor.setNom(originalName);
+            } else {
+              petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
+            } 
 
             BeanPropertyBindingResult result2 = new BeanPropertyBindingResult(peticioForm, "peticioForm");
 
