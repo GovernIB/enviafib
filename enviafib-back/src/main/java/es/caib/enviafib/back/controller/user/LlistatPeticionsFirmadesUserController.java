@@ -64,6 +64,7 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
 
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.setDeleteSelectedButtonVisible(false);
+            peticioFilterForm.addHiddenField(DATACREACIO);
         }
 
         return peticioFilterForm;
