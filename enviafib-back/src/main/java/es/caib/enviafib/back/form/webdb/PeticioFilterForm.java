@@ -21,17 +21,6 @@ import es.caib.enviafib.model.fields.PeticioFields;
 @Component
 public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements PeticioFields {
 
-  private java.lang.String nom;
-
-  public java.lang.String getNom() {
-    return this.nom;
-  }
-
-  public void setNom(java.lang.String nom) {
-    this.nom = nom;
-  }
-
-
   private java.lang.Long peticioIDDesde;
 
   public java.lang.Long getPeticioIDDesde() {
@@ -51,6 +40,17 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setPeticioIDFins(java.lang.Long peticioIDFins) {
     this.peticioIDFins = peticioIDFins;
+  }
+
+
+  private java.lang.String nom;
+
+  public java.lang.String getNom() {
+    return this.nom;
+  }
+
+  public void setNom(java.lang.String nom) {
+    this.nom = nom;
   }
 
 
@@ -466,9 +466,9 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   
   public PeticioFilterForm(PeticioFilterForm __toClone) {
     super(__toClone);
-    this.nom = __toClone.nom;
     this.peticioIDDesde = __toClone.peticioIDDesde;
     this.peticioIDFins = __toClone.peticioIDFins;
+    this.nom = __toClone.nom;
     this.dataCreacioDesde = __toClone.dataCreacioDesde;
     this.dataCreacioFins = __toClone.dataCreacioFins;
     this.dataFinalDesde = __toClone.dataFinalDesde;
@@ -522,12 +522,12 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { ERRORMSG ,ERROREXCEPTION }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { NOM }));
   }
 
   @Override
   public List<Field<?>> getDefaultGroupByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { TIPUS }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { DATACREACIO ,TIPUSDOCUMENTAL ,TIPUS }));
   }
 
 

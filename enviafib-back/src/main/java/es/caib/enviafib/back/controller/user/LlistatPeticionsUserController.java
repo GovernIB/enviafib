@@ -136,9 +136,10 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             peticioFilterForm.setAddButtonVisible(false);
             peticioFilterForm.setEditButtonVisible(false);
             peticioFilterForm.setDeleteButtonVisible(false);
+            
+            peticioFilterForm.setVisibleFilterBy(false);
 
             {
-
                 AdditionalField<Long, String> additionalField = new AdditionalField<Long, String>();
                 additionalField.setCodeName(PeticioFields.ESTAT.codeLabel);
                 additionalField.setPosition(COLUMN_ESTAT_IMG);
@@ -147,7 +148,6 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
                 // Els valors s'ompliran al mètode postList()
                 additionalField.setValueMap(new HashMap<Long, String>());
                 // Per ordenar feim servir el mateix camp de nom del remitent
-
                 peticioFilterForm.addAdditionalField(additionalField);
             }
 
@@ -158,6 +158,7 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
         return peticioFilterForm;
     }
 
+
     protected String getTitleCode() {
         return "peticio.list.title";
     }
@@ -165,6 +166,9 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
+        
+        // Millores en els filtres dels llistat de peticions. #248: Mostrar sempre filtres
+        filterForm.setVisibleFilterBy(true);
 
         Map<Long, String> mapRemitent = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_ESTAT_IMG)
                 .getValueMap();

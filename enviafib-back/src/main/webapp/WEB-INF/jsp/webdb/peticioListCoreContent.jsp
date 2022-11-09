@@ -24,14 +24,14 @@
           </c:forEach>
 
 
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
-          <td>
-          ${peticio.nom}
-          </td>
-        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.PETICIOID)}">
           <td>
           ${peticio.peticioID}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.NOM)}">
+          <td>
+          ${peticio.nom}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.DATACREACIO)}">
