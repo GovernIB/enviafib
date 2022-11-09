@@ -313,7 +313,7 @@ a:hover{
 .mobil{
 	margin-left: auto!important;
 	padding-right: 20px;
-	padding-top: 10px !important;
+	padding-top: 10px;
 }
 .navbar-nav.mobil{
 	padding-top: 10px;
