@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.25
 -- Dumped by pg_dump version 9.3.25
--- Started on 2022-09-14 11:52:20
+-- Started on 2022-11-11 13:20:16
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -16,24 +16,24 @@ SET client_min_messages = warning;
 
 --
 -- TOC entry 1 (class 3079 OID 11750)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2089 (class 0 OID 0)
+-- TOC entry 2115 (class 0 OID 0)
 -- Dependencies: 1
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- TOC entry 171 (class 1259 OID 57626)
--- Name: efi_fitxer_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 171 (class 1259 OID 72983)
+-- Name: efi_fitxer_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_fitxer_seq
@@ -44,15 +44,11 @@ CREATE SEQUENCE public.efi_fitxer_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_fitxer_seq OWNER TO enviafib;
-
-SET default_tablespace = '';
-
 SET default_with_oids = false;
 
 --
--- TOC entry 172 (class 1259 OID 57628)
--- Name: efi_fitxer; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 172 (class 1259 OID 72985)
+-- Name: efi_fitxer; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_fitxer (
@@ -64,11 +60,9 @@ CREATE TABLE public.efi_fitxer (
 );
 
 
-ALTER TABLE public.efi_fitxer OWNER TO enviafib;
-
 --
--- TOC entry 190 (class 1259 OID 82299)
--- Name: efi_grup_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 189 (class 1259 OID 73211)
+-- Name: efi_grup_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_grup_seq
@@ -79,11 +73,9 @@ CREATE SEQUENCE public.efi_grup_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_grup_seq OWNER TO enviafib;
-
 --
--- TOC entry 191 (class 1259 OID 82301)
--- Name: efi_grup; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 190 (class 1259 OID 73213)
+-- Name: efi_grup; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_grup (
@@ -93,11 +85,9 @@ CREATE TABLE public.efi_grup (
 );
 
 
-ALTER TABLE public.efi_grup OWNER TO enviafib;
-
 --
--- TOC entry 192 (class 1259 OID 82319)
--- Name: efi_grupusuari_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 191 (class 1259 OID 73223)
+-- Name: efi_grupusuari_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_grupusuari_seq
@@ -108,25 +98,21 @@ CREATE SEQUENCE public.efi_grupusuari_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_grupusuari_seq OWNER TO enviafib;
-
 --
--- TOC entry 193 (class 1259 OID 82328)
--- Name: efi_grupusuari; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 192 (class 1259 OID 73225)
+-- Name: efi_grupusuari; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_grupusuari (
     grupusuariid bigint DEFAULT nextval('public.efi_grupusuari_seq'::regclass) NOT NULL,
-    grupid bigint NOT NULL,
-    usuariid bigint NOT NULL
+    grupid bigint,
+    usuariid bigint
 );
 
 
-ALTER TABLE public.efi_grupusuari OWNER TO enviafib;
-
 --
--- TOC entry 173 (class 1259 OID 57636)
--- Name: efi_idioma; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 173 (class 1259 OID 72993)
+-- Name: efi_idioma; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_idioma (
@@ -137,11 +123,9 @@ CREATE TABLE public.efi_idioma (
 );
 
 
-ALTER TABLE public.efi_idioma OWNER TO enviafib;
-
 --
--- TOC entry 188 (class 1259 OID 82282)
--- Name: efi_infoarxiu_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 187 (class 1259 OID 73194)
+-- Name: efi_infoarxiu_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_infoarxiu_seq
@@ -152,11 +136,9 @@ CREATE SEQUENCE public.efi_infoarxiu_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_infoarxiu_seq OWNER TO enviafib;
-
 --
--- TOC entry 189 (class 1259 OID 82284)
--- Name: efi_infoarxiu; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 188 (class 1259 OID 73196)
+-- Name: efi_infoarxiu; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_infoarxiu (
@@ -173,26 +155,9 @@ CREATE TABLE public.efi_infoarxiu (
 );
 
 
-ALTER TABLE public.efi_infoarxiu OWNER TO enviafib;
-
 --
--- TOC entry 187 (class 1259 OID 74119)
--- Name: efi_infocustody_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
---
-
-CREATE SEQUENCE public.efi_infocustody_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.efi_infocustody_seq OWNER TO enviafib;
-
---
--- TOC entry 185 (class 1259 OID 74057)
--- Name: efi_infosignatura_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 185 (class 1259 OID 73110)
+-- Name: efi_infosignatura_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_infosignatura_seq
@@ -203,11 +168,9 @@ CREATE SEQUENCE public.efi_infosignatura_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_infosignatura_seq OWNER TO enviafib;
-
 --
--- TOC entry 186 (class 1259 OID 74059)
--- Name: efi_infosignatura; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 186 (class 1259 OID 73112)
+-- Name: efi_infosignatura; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_infosignatura (
@@ -231,11 +194,69 @@ CREATE TABLE public.efi_infosignatura (
 );
 
 
-ALTER TABLE public.efi_infosignatura OWNER TO enviafib;
+--
+-- TOC entry 193 (class 1259 OID 73359)
+-- Name: efi_menu_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.efi_menu_seq
+    START WITH 1000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 
 --
--- TOC entry 174 (class 1259 OID 57641)
--- Name: efi_peticio_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 194 (class 1259 OID 73361)
+-- Name: efi_menu; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.efi_menu (
+    menuid bigint DEFAULT nextval('public.efi_menu_seq'::regclass) NOT NULL,
+    nom character varying(255) NOT NULL,
+    descripcio character varying(255),
+    titolmenuid bigint NOT NULL,
+    ajudamenuid bigint NOT NULL,
+    ordre integer NOT NULL,
+    tipus integer NOT NULL,
+    grupid bigint,
+    parametretext text,
+    parametrecombo character varying(255),
+    actiu boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- TOC entry 195 (class 1259 OID 73401)
+-- Name: efi_organitzacio_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.efi_organitzacio_seq
+    START WITH 1000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 196 (class 1259 OID 73403)
+-- Name: efi_organitzacio; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.efi_organitzacio (
+    organitzacioid bigint DEFAULT nextval('public.efi_organitzacio_seq'::regclass) NOT NULL,
+    codiconselleria character varying(100),
+    codidirecciogeneral character varying(100),
+    tipus character varying(100),
+    valor character varying(255)
+);
+
+
+--
+-- TOC entry 174 (class 1259 OID 72998)
+-- Name: efi_peticio_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_peticio_seq
@@ -246,11 +267,9 @@ CREATE SEQUENCE public.efi_peticio_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_peticio_seq OWNER TO enviafib;
-
 --
--- TOC entry 175 (class 1259 OID 57643)
--- Name: efi_peticio; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 175 (class 1259 OID 73000)
+-- Name: efi_peticio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_peticio (
@@ -290,29 +309,27 @@ CREATE TABLE public.efi_peticio (
 );
 
 
-ALTER TABLE public.efi_peticio OWNER TO enviafib;
-
 --
--- TOC entry 2090 (class 0 OID 0)
+-- TOC entry 2116 (class 0 OID 0)
 -- Dependencies: 175
--- Name: COLUMN efi_peticio.peticioportafirmes; Type: COMMENT; Schema: public; Owner: enviafib
+-- Name: COLUMN efi_peticio.peticioportafirmes; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.efi_peticio.peticioportafirmes IS 'Identificador de la petició dins el sistema de portafirmes';
 
 
 --
--- TOC entry 2091 (class 0 OID 0)
+-- TOC entry 2117 (class 0 OID 0)
 -- Dependencies: 175
--- Name: COLUMN efi_peticio.nom; Type: COMMENT; Schema: public; Owner: enviafib
+-- Name: COLUMN efi_peticio.nom; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.efi_peticio.nom IS 'Nom de la peticio a PortaFIB.';
+COMMENT ON COLUMN public.efi_peticio.nom IS 'Nom de la peticio.';
 
 
 --
--- TOC entry 176 (class 1259 OID 57647)
--- Name: efi_plugin_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 176 (class 1259 OID 73005)
+-- Name: efi_plugin_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_plugin_seq
@@ -323,11 +340,9 @@ CREATE SEQUENCE public.efi_plugin_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_plugin_seq OWNER TO enviafib;
-
 --
--- TOC entry 177 (class 1259 OID 57649)
--- Name: efi_plugin; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 177 (class 1259 OID 73007)
+-- Name: efi_plugin; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_plugin (
@@ -341,11 +356,9 @@ CREATE TABLE public.efi_plugin (
 );
 
 
-ALTER TABLE public.efi_plugin OWNER TO enviafib;
-
 --
--- TOC entry 183 (class 1259 OID 65825)
--- Name: efi_seriedocumental_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 178 (class 1259 OID 73014)
+-- Name: efi_seriedocumental_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_seriedocumental_seq
@@ -356,11 +369,9 @@ CREATE SEQUENCE public.efi_seriedocumental_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_seriedocumental_seq OWNER TO enviafib;
-
 --
--- TOC entry 184 (class 1259 OID 65827)
--- Name: efi_seriedocumental; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 179 (class 1259 OID 73016)
+-- Name: efi_seriedocumental; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_seriedocumental (
@@ -372,20 +383,18 @@ CREATE TABLE public.efi_seriedocumental (
 );
 
 
-ALTER TABLE public.efi_seriedocumental OWNER TO enviafib;
-
 --
--- TOC entry 2092 (class 0 OID 0)
--- Dependencies: 184
--- Name: TABLE efi_seriedocumental; Type: COMMENT; Schema: public; Owner: enviafib
+-- TOC entry 2118 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: TABLE efi_seriedocumental; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.efi_seriedocumental IS 'Taula de relacio de Series documentals amb Tipus documentals d''Arxiu.';
 
 
 --
--- TOC entry 178 (class 1259 OID 57656)
--- Name: efi_traduccio_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 180 (class 1259 OID 73023)
+-- Name: efi_traduccio_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_traduccio_seq
@@ -396,11 +405,9 @@ CREATE SEQUENCE public.efi_traduccio_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_traduccio_seq OWNER TO enviafib;
-
 --
--- TOC entry 179 (class 1259 OID 57658)
--- Name: efi_traduccio; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 181 (class 1259 OID 73025)
+-- Name: efi_traduccio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_traduccio (
@@ -408,11 +415,9 @@ CREATE TABLE public.efi_traduccio (
 );
 
 
-ALTER TABLE public.efi_traduccio OWNER TO enviafib;
-
 --
--- TOC entry 180 (class 1259 OID 57662)
--- Name: efi_traducciomap; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 182 (class 1259 OID 73029)
+-- Name: efi_traducciomap; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_traducciomap (
@@ -422,11 +427,9 @@ CREATE TABLE public.efi_traducciomap (
 );
 
 
-ALTER TABLE public.efi_traducciomap OWNER TO enviafib;
-
 --
--- TOC entry 181 (class 1259 OID 57668)
--- Name: efi_usuari_seq; Type: SEQUENCE; Schema: public; Owner: enviafib
+-- TOC entry 183 (class 1259 OID 73035)
+-- Name: efi_usuari_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.efi_usuari_seq
@@ -437,11 +440,9 @@ CREATE SEQUENCE public.efi_usuari_seq
     CACHE 1;
 
 
-ALTER TABLE public.efi_usuari_seq OWNER TO enviafib;
-
 --
--- TOC entry 182 (class 1259 OID 57670)
--- Name: efi_usuari; Type: TABLE; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 184 (class 1259 OID 73037)
+-- Name: efi_usuari; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.efi_usuari (
@@ -456,11 +457,9 @@ CREATE TABLE public.efi_usuari (
 );
 
 
-ALTER TABLE public.efi_usuari OWNER TO enviafib;
-
 --
--- TOC entry 1913 (class 2606 OID 57678)
--- Name: efi_fitxer_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1928 (class 2606 OID 73045)
+-- Name: efi_fitxer_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_fitxer
@@ -468,8 +467,8 @@ ALTER TABLE ONLY public.efi_fitxer
 
 
 --
--- TOC entry 1955 (class 2606 OID 82309)
--- Name: efi_grup_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1970 (class 2606 OID 73221)
+-- Name: efi_grup_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_grup
@@ -477,8 +476,8 @@ ALTER TABLE ONLY public.efi_grup
 
 
 --
--- TOC entry 1959 (class 2606 OID 82357)
--- Name: efi_grupusuari_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1974 (class 2606 OID 73230)
+-- Name: efi_grupusuari_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_grupusuari
@@ -486,8 +485,8 @@ ALTER TABLE ONLY public.efi_grupusuari
 
 
 --
--- TOC entry 1962 (class 2606 OID 82379)
--- Name: efi_grupusuari_usuari_grup_uk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1977 (class 2606 OID 73242)
+-- Name: efi_grupusuari_usuari_grup_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_grupusuari
@@ -495,8 +494,8 @@ ALTER TABLE ONLY public.efi_grupusuari
 
 
 --
--- TOC entry 1916 (class 2606 OID 57680)
--- Name: efi_idioma_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1931 (class 2606 OID 73047)
+-- Name: efi_idioma_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_idioma
@@ -504,8 +503,8 @@ ALTER TABLE ONLY public.efi_idioma
 
 
 --
--- TOC entry 1952 (class 2606 OID 82292)
--- Name: efi_infoarxiu_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1967 (class 2606 OID 73204)
+-- Name: efi_infoarxiu_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_infoarxiu
@@ -513,8 +512,8 @@ ALTER TABLE ONLY public.efi_infoarxiu
 
 
 --
--- TOC entry 1949 (class 2606 OID 74067)
--- Name: efi_infosignatura_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1964 (class 2606 OID 73120)
+-- Name: efi_infosignatura_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_infosignatura
@@ -522,8 +521,26 @@ ALTER TABLE ONLY public.efi_infosignatura
 
 
 --
--- TOC entry 1924 (class 2606 OID 57682)
--- Name: efi_peticio_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1982 (class 2606 OID 73369)
+-- Name: efi_menu_pk; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.efi_menu
+    ADD CONSTRAINT efi_menu_pk PRIMARY KEY (menuid);
+
+
+--
+-- TOC entry 1986 (class 2606 OID 73411)
+-- Name: efi_organitzacio_pk; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.efi_organitzacio
+    ADD CONSTRAINT efi_organitzacio_pk PRIMARY KEY (organitzacioid);
+
+
+--
+-- TOC entry 1939 (class 2606 OID 73049)
+-- Name: efi_peticio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_peticio
@@ -531,8 +548,8 @@ ALTER TABLE ONLY public.efi_peticio
 
 
 --
--- TOC entry 1928 (class 2606 OID 57684)
--- Name: efi_plugin_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1943 (class 2606 OID 73051)
+-- Name: efi_plugin_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_plugin
@@ -540,8 +557,8 @@ ALTER TABLE ONLY public.efi_plugin
 
 
 --
--- TOC entry 1944 (class 2606 OID 65839)
--- Name: efi_seriedocu_tipusdocu_uk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1946 (class 2606 OID 73055)
+-- Name: efi_seriedocu_tipusdocu_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_seriedocumental
@@ -549,8 +566,8 @@ ALTER TABLE ONLY public.efi_seriedocumental
 
 
 --
--- TOC entry 1946 (class 2606 OID 65835)
--- Name: efi_seriedocumental_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1948 (class 2606 OID 73053)
+-- Name: efi_seriedocumental_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_seriedocumental
@@ -558,8 +575,8 @@ ALTER TABLE ONLY public.efi_seriedocumental
 
 
 --
--- TOC entry 1931 (class 2606 OID 57686)
--- Name: efi_traduccio_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1951 (class 2606 OID 73057)
+-- Name: efi_traduccio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_traduccio
@@ -567,8 +584,8 @@ ALTER TABLE ONLY public.efi_traduccio
 
 
 --
--- TOC entry 1936 (class 2606 OID 57688)
--- Name: efi_traducmap_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1956 (class 2606 OID 73059)
+-- Name: efi_traducmap_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_traducciomap
@@ -576,8 +593,8 @@ ALTER TABLE ONLY public.efi_traducciomap
 
 
 --
--- TOC entry 1939 (class 2606 OID 57690)
--- Name: efi_usuari_nif_uk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1959 (class 2606 OID 73061)
+-- Name: efi_usuari_nif_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_usuari
@@ -585,8 +602,8 @@ ALTER TABLE ONLY public.efi_usuari
 
 
 --
--- TOC entry 1941 (class 2606 OID 57692)
--- Name: efi_usuari_pk; Type: CONSTRAINT; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1961 (class 2606 OID 73063)
+-- Name: efi_usuari_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_usuari
@@ -594,184 +611,224 @@ ALTER TABLE ONLY public.efi_usuari
 
 
 --
--- TOC entry 1914 (class 1259 OID 57693)
--- Name: efi_fitxer_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1929 (class 1259 OID 73064)
+-- Name: efi_fitxer_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_fitxer_pk_i ON public.efi_fitxer USING btree (fitxerid);
 
 
 --
--- TOC entry 1956 (class 1259 OID 82368)
--- Name: efi_grup_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1971 (class 1259 OID 73222)
+-- Name: efi_grup_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_grup_pk_i ON public.efi_grup USING btree (grupid);
 
 
 --
--- TOC entry 1957 (class 1259 OID 82370)
--- Name: efi_grupusuari_grupid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1972 (class 1259 OID 73244)
+-- Name: efi_grupusuari_grupid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_grupusuari_grupid_fk_i ON public.efi_grupusuari USING btree (grupid);
 
 
 --
--- TOC entry 1960 (class 1259 OID 82369)
--- Name: efi_grupusuari_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1975 (class 1259 OID 73243)
+-- Name: efi_grupusuari_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_grupusuari_pk_i ON public.efi_grupusuari USING btree (grupusuariid);
 
 
 --
--- TOC entry 1963 (class 1259 OID 82371)
--- Name: efi_grupusuari_usuariid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1978 (class 1259 OID 73245)
+-- Name: efi_grupusuari_usuariid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_grupusuari_usuariid_fk_i ON public.efi_grupusuari USING btree (usuariid);
 
 
 --
--- TOC entry 1917 (class 1259 OID 57694)
--- Name: efi_idioma_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1932 (class 1259 OID 73065)
+-- Name: efi_idioma_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_idioma_pk_i ON public.efi_idioma USING btree (idiomaid);
 
 
 --
--- TOC entry 1953 (class 1259 OID 90474)
--- Name: efi_infoarxiu_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1968 (class 1259 OID 73298)
+-- Name: efi_infoarxiu_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_infoarxiu_pk_i ON public.efi_infoarxiu USING btree (infoarxiuid);
 
 
 --
--- TOC entry 1950 (class 1259 OID 74068)
--- Name: efi_infosignatura_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1965 (class 1259 OID 73121)
+-- Name: efi_infosignatura_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_infosignatura_pk_i ON public.efi_infosignatura USING btree (infosignaturaid);
 
 
 --
--- TOC entry 1918 (class 1259 OID 65841)
--- Name: efi_peticio_fitxer_firma_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1979 (class 1259 OID 73387)
+-- Name: efi_menu_ajudamenuid_fk_i; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX efi_menu_ajudamenuid_fk_i ON public.efi_menu USING btree (ajudamenuid);
+
+
+--
+-- TOC entry 1980 (class 1259 OID 73388)
+-- Name: efi_menu_grupid_fk_i; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX efi_menu_grupid_fk_i ON public.efi_menu USING btree (grupid);
+
+
+--
+-- TOC entry 1983 (class 1259 OID 73385)
+-- Name: efi_menu_pk_i; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX efi_menu_pk_i ON public.efi_menu USING btree (menuid);
+
+
+--
+-- TOC entry 1984 (class 1259 OID 73386)
+-- Name: efi_menu_titolmenuid_fk_i; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX efi_menu_titolmenuid_fk_i ON public.efi_menu USING btree (titolmenuid);
+
+
+--
+-- TOC entry 1987 (class 1259 OID 73412)
+-- Name: efi_organitzacio_pk_i; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX efi_organitzacio_pk_i ON public.efi_organitzacio USING btree (organitzacioid);
+
+
+--
+-- TOC entry 1933 (class 1259 OID 73107)
+-- Name: efi_peticio_fitxer_firma_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_peticio_fitxer_firma_fk_i ON public.efi_peticio USING btree (fitxer_firmatid);
 
 
 --
--- TOC entry 1919 (class 1259 OID 57695)
--- Name: efi_peticio_fitxerid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1934 (class 1259 OID 73066)
+-- Name: efi_peticio_fitxerid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_peticio_fitxerid_fk_i ON public.efi_peticio USING btree (fitxerid);
 
 
 --
--- TOC entry 1920 (class 1259 OID 57696)
--- Name: efi_peticio_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1935 (class 1259 OID 73067)
+-- Name: efi_peticio_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_peticio_idiomaid_fk_i ON public.efi_peticio USING btree (idiomaid);
 
 
 --
--- TOC entry 1921 (class 1259 OID 82298)
--- Name: efi_peticio_infoarxiuid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1936 (class 1259 OID 73210)
+-- Name: efi_peticio_infoarxiuid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_peticio_infoarxiuid_fk_i ON public.efi_peticio USING btree (infoarxiuid);
 
 
 --
--- TOC entry 1922 (class 1259 OID 74074)
--- Name: efi_peticio_infosignid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1937 (class 1259 OID 73155)
+-- Name: efi_peticio_infosignid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_peticio_infosignid_fk_i ON public.efi_peticio USING btree (infosignaturaid);
 
 
 --
--- TOC entry 1925 (class 1259 OID 57697)
--- Name: efi_peticio_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1940 (class 1259 OID 73068)
+-- Name: efi_peticio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_peticio_pk_i ON public.efi_peticio USING btree (peticioid);
 
 
 --
--- TOC entry 1926 (class 1259 OID 57698)
--- Name: efi_peticio_solicitantid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1941 (class 1259 OID 73069)
+-- Name: efi_peticio_solicitantid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_peticio_solicitantid_fk_i ON public.efi_peticio USING btree (solicitantid);
 
 
 --
--- TOC entry 1929 (class 1259 OID 57700)
--- Name: efi_plugin_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1944 (class 1259 OID 73071)
+-- Name: efi_plugin_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_plugin_pk_i ON public.efi_plugin USING btree (pluginid);
 
 
 --
--- TOC entry 1947 (class 1259 OID 65842)
--- Name: efi_seriedocumental_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1949 (class 1259 OID 73108)
+-- Name: efi_seriedocumental_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_seriedocumental_pk_i ON public.efi_seriedocumental USING btree (seriedocumentalid);
 
 
 --
--- TOC entry 1932 (class 1259 OID 57701)
--- Name: efi_traduccio_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1952 (class 1259 OID 73072)
+-- Name: efi_traduccio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_traduccio_pk_i ON public.efi_traduccio USING btree (traduccioid);
 
 
 --
--- TOC entry 1933 (class 1259 OID 57702)
--- Name: efi_traducciomap_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1953 (class 1259 OID 73073)
+-- Name: efi_traducciomap_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_traducciomap_idiomaid_fk_i ON public.efi_traducciomap USING btree (idiomaid);
 
 
 --
--- TOC entry 1934 (class 1259 OID 57703)
--- Name: efi_traducciomap_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1954 (class 1259 OID 73074)
+-- Name: efi_traducciomap_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_traducciomap_pk_i ON public.efi_traducciomap USING btree (traducciomapid);
 
 
 --
--- TOC entry 1937 (class 1259 OID 90475)
--- Name: efi_usuari_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1957 (class 1259 OID 73299)
+-- Name: efi_usuari_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_usuari_idiomaid_fk_i ON public.efi_usuari USING btree (idiomaid);
 
 
 --
--- TOC entry 1942 (class 1259 OID 57704)
--- Name: efi_usuari_pk_i; Type: INDEX; Schema: public; Owner: enviafib; Tablespace: 
+-- TOC entry 1962 (class 1259 OID 73075)
+-- Name: efi_usuari_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX efi_usuari_pk_i ON public.efi_usuari USING btree (usuariid);
 
 
 --
--- TOC entry 1972 (class 2606 OID 82346)
--- Name: efi_grupusuari_grup_grupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1996 (class 2606 OID 73231)
+-- Name: efi_grupusuari_grup_grupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_grupusuari
@@ -779,8 +836,8 @@ ALTER TABLE ONLY public.efi_grupusuari
 
 
 --
--- TOC entry 1973 (class 2606 OID 82351)
--- Name: efi_grupusuari_usuari_usuar_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1997 (class 2606 OID 73236)
+-- Name: efi_grupusuari_usuari_usuar_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_grupusuari
@@ -788,8 +845,35 @@ ALTER TABLE ONLY public.efi_grupusuari
 
 
 --
--- TOC entry 1967 (class 2606 OID 57740)
--- Name: efi_peticio_fitxer_ffirm_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 2000 (class 2606 OID 73380)
+-- Name: efi_menu_grup_grupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.efi_menu
+    ADD CONSTRAINT efi_menu_grup_grupid_fk FOREIGN KEY (grupid) REFERENCES public.efi_grup(grupid);
+
+
+--
+-- TOC entry 1999 (class 2606 OID 73375)
+-- Name: efi_menu_traduccio_ajuda_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.efi_menu
+    ADD CONSTRAINT efi_menu_traduccio_ajuda_fk FOREIGN KEY (ajudamenuid) REFERENCES public.efi_traduccio(traduccioid);
+
+
+--
+-- TOC entry 1998 (class 2606 OID 73370)
+-- Name: efi_menu_traduccio_titol_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.efi_menu
+    ADD CONSTRAINT efi_menu_traduccio_titol_fk FOREIGN KEY (titolmenuid) REFERENCES public.efi_traduccio(traduccioid);
+
+
+--
+-- TOC entry 1988 (class 2606 OID 73076)
+-- Name: efi_peticio_fitxer_ffirm_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_peticio
@@ -797,8 +881,8 @@ ALTER TABLE ONLY public.efi_peticio
 
 
 --
--- TOC entry 1964 (class 2606 OID 57705)
--- Name: efi_peticio_fitxer_fitxer_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1989 (class 2606 OID 73081)
+-- Name: efi_peticio_fitxer_fitxer_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_peticio
@@ -806,8 +890,8 @@ ALTER TABLE ONLY public.efi_peticio
 
 
 --
--- TOC entry 1965 (class 2606 OID 57710)
--- Name: efi_peticio_idioma_idiid_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1990 (class 2606 OID 73086)
+-- Name: efi_peticio_idioma_idiid_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_peticio
@@ -815,8 +899,8 @@ ALTER TABLE ONLY public.efi_peticio
 
 
 --
--- TOC entry 1969 (class 2606 OID 82293)
--- Name: efi_peticio_infoarxiu_infoa_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1993 (class 2606 OID 73205)
+-- Name: efi_peticio_infoarxiu_infoa_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_peticio
@@ -824,8 +908,8 @@ ALTER TABLE ONLY public.efi_peticio
 
 
 --
--- TOC entry 1968 (class 2606 OID 74069)
--- Name: efi_peticio_infosign_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1992 (class 2606 OID 73122)
+-- Name: efi_peticio_infosign_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_peticio
@@ -833,8 +917,8 @@ ALTER TABLE ONLY public.efi_peticio
 
 
 --
--- TOC entry 1966 (class 2606 OID 57720)
--- Name: efi_peticio_usuari_soli_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1991 (class 2606 OID 73096)
+-- Name: efi_peticio_usuari_soli_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_peticio
@@ -842,8 +926,8 @@ ALTER TABLE ONLY public.efi_peticio
 
 
 --
--- TOC entry 1970 (class 2606 OID 57725)
--- Name: efi_traducmap_traduccio_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1994 (class 2606 OID 73101)
+-- Name: efi_traducmap_traduccio_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_traducciomap
@@ -851,27 +935,15 @@ ALTER TABLE ONLY public.efi_traducciomap
 
 
 --
--- TOC entry 1971 (class 2606 OID 74114)
--- Name: efi_usuari_idioma_fk; Type: FK CONSTRAINT; Schema: public; Owner: enviafib
+-- TOC entry 1995 (class 2606 OID 73189)
+-- Name: efi_usuari_idioma_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.efi_usuari
     ADD CONSTRAINT efi_usuari_idioma_fk FOREIGN KEY (idiomaid) REFERENCES public.efi_idioma(idiomaid);
 
 
---
--- TOC entry 2088 (class 0 OID 0)
--- Dependencies: 7
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
--- Completed on 2022-09-14 11:52:21
+-- Completed on 2022-11-11 13:20:16
 
 --
 -- PostgreSQL database dump complete
