@@ -12,6 +12,10 @@
 
     alter table efi_infosignatura add constraint efi_infosignatura_pk primary key (infosignaturaid);
 
+    alter table efi_menu add constraint efi_menu_pk primary key (menuid);
+
+    alter table efi_organitzacio add constraint efi_organitzacio_pk primary key (organitzacioid);
+
     alter table efi_peticio add constraint efi_peticio_pk primary key (peticioid);
 
     alter table efi_plugin add constraint efi_plugin_pk primary key (pluginid);
@@ -38,6 +42,21 @@
        add constraint efi_grupusuari_usuari_usuar_fk 
        foreign key (usuariid) 
        references efi_usuari;
+
+    alter table efi_menu 
+       add constraint efi_menu_traduccio_ajuda_fk 
+       foreign key (ajudamenuid) 
+       references efi_traduccio;
+
+    alter table efi_menu 
+       add constraint efi_menu_grup_grupid_fk 
+       foreign key (grupid) 
+       references efi_grup;
+
+    alter table efi_menu 
+       add constraint efi_menu_traduccio_titol_fk 
+       foreign key (titolmenuid) 
+       references efi_traduccio;
 
     alter table efi_peticio 
        add constraint efi_peticio_fitxer_fitxer_fk 

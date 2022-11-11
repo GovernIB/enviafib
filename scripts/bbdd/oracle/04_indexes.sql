@@ -2,9 +2,11 @@
 -- create index efi_grupusuari_pk_i on efi_grupusuari (grupusuariid);
 create index efi_grupusuari_usuariid_fk_i on efi_grupusuari (usuariid);
 -- create index efi_infoarxiu_pk_i on efi_infoarxiu (infoarxiuid);
--- create index efi_peticio_pk_i on efi_peticio (peticioid);
-create index efi_peticio_solicitantid_fk_i on efi_peticio (solicitantid);
-create index efi_peticio_fitxer_firma_fk_i on efi_peticio (fitxer_firmatid);
-create index efi_peticio_infoarxiuid_fk_i on efi_peticio (infoarxiuid);
--- create index efi_seriedocumental_pk_i on efi_seriedocumental (seriedocumentalid);
+-- create index efi_menu_pk_i on efi_menu (menuid);
+create index efi_menu_ajudamenuid_fk_i on efi_menu (ajudamenuid);
+-- create index efi_organitzacio_pk_i on efi_organitzacio (organitzacioid);
+create index efi_peticio_fitxerid_fk_i on efi_peticio (fitxerid);
+create index efi_peticio_idiomaid_fk_i on efi_peticio (idiomaid);
+create index efi_peticio_infosignid_fk_i on efi_peticio (infosignaturaid);
+-- create index efi_plugin_pk_i on efi_plugin (pluginid);
 -- create index efi_usuari_pk_i on efi_usuari (usuariid);

@@ -59,6 +59,28 @@
         timestampincluded number(1,0)
     );
 
+    create table efi_menu (
+       menuid number(19,0) not null,
+        actiu number(1,0) not null,
+        ajudamenuid number(19,0) not null,
+        descripcio varchar2(255 char),
+        grupid number(19,0),
+        nom varchar2(255 char) not null,
+        ordre number(10,0) not null,
+        parametrecombo varchar2(255 char),
+        parametretext clob,
+        tipus number(10,0) not null,
+        titolmenuid number(19,0) not null
+    );
+
+    create table efi_organitzacio (
+       organitzacioid number(19,0) not null,
+        codiconselleria varchar2(100 char),
+        codidirecciogeneral varchar2(100 char),
+        tipus varchar2(100 char),
+        valor varchar2(255 char)
+    );
+
     create table efi_peticio (
        peticioid number(19,0) not null,
         arxiufuncionariusername varchar2(255 char),
@@ -133,6 +155,7 @@
         nom varchar2(256 char) not null,
         username varchar2(100 char) not null
     );
+
 
 
 
