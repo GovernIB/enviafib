@@ -77,5 +77,10 @@ public class EditarUsuariNouCommonController extends AbstractEditarUsuariCommonC
         }
         return redirectString;
     }
+    
+    @Override
+    public String getRedirectWhenCreated(HttpServletRequest request, UsuariForm usuariForm) {
+        return "redirect:/";
+    }
 
 }
