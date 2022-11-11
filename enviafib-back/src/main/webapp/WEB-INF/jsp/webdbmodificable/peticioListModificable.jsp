@@ -25,7 +25,7 @@ function reintentarTancamentExpedient(peticioId) {
                 backdrop : "static",
                 keyboard: false
             });
-    window.location = '<%=request.getContextPath()%>${contexte}/reintentartancamentexpedient/'+peticioId;
+    window.location = '<%=request.getContextPath()%>${contexte}/reintentartancamentexpedient/' + peticioId + "/" + btoa(window.location);
 }
 
 </script>

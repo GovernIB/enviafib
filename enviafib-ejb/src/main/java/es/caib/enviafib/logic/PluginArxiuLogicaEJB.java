@@ -186,7 +186,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // Això és per quan l'usuari pugui indicar el nom de l'expedient on vol
             // el document String custodyOrExpedientID = prop
             // .getProperty(TransaccioFields.ARXIUOPTPARAMCUSTODYOREXPEDIENTID.javaName);
-            final String interessatsStr = peticio.getArxiuReqParamInteressats();
+            
+            
 
             final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP";
 
@@ -194,8 +195,32 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             expedientMetadades.setClassificacio(procedimentCodi);
             expedientMetadades.setDataObertura(new Date());
 
-            expedientMetadades.setInteressats(LogicUtils.stringToListString(interessatsStr));
-            expedientMetadades.setMetadadesAddicionals(null);
+            {
+                final String interessatsStr = peticio.getArxiuReqParamInteressats();
+                log.info("\n\n\n     INTERESSATS STR => " + interessatsStr  + "\n\n\n");
+                List<String> intresessatsList = LogicUtils.stringToListString(interessatsStr);
+                
+                if (intresessatsList == null) {
+                    //log.info("\n\n\n     INTERESSATS LIST ORIG => " + intresessatsList + "\n\n\n");
+                    intresessatsList = new ArrayList<String>();                    
+                } else {
+                    //log.info("\n\n\n     INTERESSATS LIST ORIG => " + Arrays.toString(intresessatsList.toArray()) + "\n\n\n");    
+                }
+                
+                if (peticio.getDestinatariNif() != null) {
+                    intresessatsList.add(peticio.getDestinatariNif());
+                }
+                
+                //log.info("\n\n\n     INTERESSATS LIST FINAL => " + Arrays.toString(intresessatsList.toArray()) + "\n\n\n");
+                
+                
+                expedientMetadades.setInteressats(intresessatsList);
+            }
+
+            {
+                Map<String, Object> metadadesAddicionals = null;
+                expedientMetadades.setMetadadesAddicionals(metadadesAddicionals);
+            }
 
             expedientMetadades.setOrgans(organs);
             expedientMetadades.setSerieDocumental(serieDocumental);
@@ -262,6 +287,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             documentMetadades.setTipusDocumental(getDocumentTipusEnum(peticio.getTipusDocumental()));
             documentMetadades.setFormat(documentFormat);
             documentMetadades.setExtensio(documentExtensio);
+            
+            
 
             final ContingutOrigen origen;
             if (elabora.equals("EE02") || elabora.equals("EE04")) {
@@ -281,18 +308,18 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // El plugin internament ja actualitza aquesta dada
             java.lang.String csvGenerationDefinition = null;
 
-            Map<String, Object> metadadesAddicionals = new HashMap<String, Object>();
-
             {
+                Map<String, Object> metadadesAddicionals = new HashMap<String, Object>();
+
                 List<Metadata> metadades = generaMetadades(peticio, csvGenerationDefinition, log);
                 if (metadades != null && metadades.size() != 0) {
                     for (Metadata metadata : metadades) {
                         metadadesAddicionals.put(metadata.getKey(), metadata.getValue());
                     }
                 }
-            }
 
-            documentMetadades.setMetadadesAddicionals(metadadesAddicionals);
+                documentMetadades.setMetadadesAddicionals(metadadesAddicionals);
+            }
 
             final FirmaTipus firmaTipus;
             final FirmaPerfil firmaPerfil;
@@ -400,10 +427,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             log.info("XYZ ZZZ TMP Tancar Expedient ... ");
 
             final String uuidDoc = documentCreat.getIdentificador();
-
-
-
-
 
             infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
@@ -638,13 +661,13 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         }
 
         perfil = perfil.trim();
-        
+
         // XYZ ZZZ S'ha de donar d'alta a FirmaSimpleSignedFileInfo
         // https://administracionelectronica.gob.es/pae_Home/pae_Actualidad/pae_Noticias/Anio2017/Mayo/Noticia-CTT-2017-05-19-Nuevos-tipos-de-formato-de-firma-en-la-nueva-version-de--firma.html#.YyGz4rTP2Uk
         // 1.- Para las firmas XADES y CADES : EPES, T, C, X, XL, A, BASELINE B-Level, BASELINE T-Level, BASELINE LT-Level, BASELINE LTA-Level
         // 2.- Para las firmas PADES : EPES, LTV, BASELINE B-Level, BASELINE T
         if (perfil.equals("BASELINE B-Level")) {
-            return FirmaPerfil.BES; 
+            return FirmaPerfil.BES;
         }
 
         if (perfil.equals(FirmaSimpleSignedFileInfo.SIGNPROFILE_BES)) {
@@ -693,17 +716,17 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
     }
 
-//    protected IArxiuPlugin getInstancePluginArxiu() throws I18NException {
-//
-//        Long pluginID = this.executeQueryOne(PluginFields.PLUGINID,
-//                PluginFields.ACTIU.equal(true));
-//        
-//        if (pluginID != null) {
-//            IArxiuPlugin plugin = getInstanceByPluginID(pluginID);
-//            return plugin;
-//        }
-//        return null;
-//    }
+    //    protected IArxiuPlugin getInstancePluginArxiu() throws I18NException {
+    //
+    //        Long pluginID = this.executeQueryOne(PluginFields.PLUGINID,
+    //                PluginFields.ACTIU.equal(true));
+    //        
+    //        if (pluginID != null) {
+    //            IArxiuPlugin plugin = getInstanceByPluginID(pluginID);
+    //            return plugin;
+    //        }
+    //        return null;
+    //    }
 
     private static List<Metadata> generaMetadades(Peticio peticio, String csvGenerationDefinition, Logger log) {
         List<Metadata> metadadesAddicionals = new ArrayList<Metadata>();
