@@ -1,5 +1,7 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,7 @@ import es.caib.enviafib.back.controller.AbstractPlantillaDeFluxDeFirmesControlle
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.model.entity.Usuari;
 
 /**
@@ -82,6 +85,8 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             // BOTO PER CREAR
             usuariFilterForm.addAdditionalButton(new AdditionalButton("fas fa-plus-circle", "nouflux",
                     getContextWeb() + "/crearflux", "btn-success"));
+            
+            usuariFilterForm.setAttachedAdditionalJspCode(true);
         }
 
         return usuariFilterForm;
@@ -95,18 +100,23 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
         for (Usuari usuari : list) {
             // BOTO PER EDITAR
+            final String fluxID = usuari.getNif();
             filterForm.addAdditionalButtonByPK((long) usuari.getNif().hashCode(), new AdditionalButton("fas fa-edit",
-                    "genapp.edit", getContextWeb() + "/" + usuari.getNif() + "/editar", "btn-warning"));
+                    "genapp.edit", "javascript:editarFlux('" + request.getContextPath() + getContextWeb() + "/editarflux/" + fluxID +"')", "btn-warning"));
         }
     }
 
-    @RequestMapping(value = "/{fluxID}/editar")
-    public ModelAndView editarFlux(@PathVariable("fluxID") java.lang.String fluxID, HttpServletRequest request,
+    @RequestMapping(value = "/editarflux/{fluxID}/{windowUrl}")
+    public ModelAndView editarFlux(@PathVariable("fluxID") java.lang.String fluxID, 
+            @PathVariable("windowUrl") String windowUrl, HttpServletRequest request,
             HttpServletResponse response) {
 
         ApiFlowTemplateSimple api = null;
         try {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
+            
+            // Decodificam la URL que arriba en base64
+            String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
             api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
@@ -124,8 +134,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
                 log.error("El flux NO es de la nostra propietat");
             }
 
-            final String callBackUrl = AbstractFirmaUserController.getAbsoluteControllerBase(request, getContextWeb())
-                    + "/finalEdicio";
+            final String callBackUrl = Configuracio.getUrlBase(decodedUrl, request.getContextPath()) + getContextWeb() + "/finalEdicio";
 
             FlowTemplateSimpleEditFlowTemplateRequest transactionRequest;
             transactionRequest = new FlowTemplateSimpleEditFlowTemplateRequest(languageUI, fluxID, callBackUrl);
@@ -139,7 +148,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             mav.addObject("urlflow", redirectUrl);
             return mav;
 
-        } catch (AbstractApisIBException aaie) {
+        } catch (Exception aaie) {
             String msg = I18NUtils.tradueix("error.flux.edicio", aaie.getMessage());
             log.error(msg, aaie);
             return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
@@ -168,7 +177,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
             // Crear Flux
-            String name = "Plantilla de Flux de Firma  - " + System.currentTimeMillis();
+            final String name = "ENVIAFIB_Plantilla_Flux_Firma_" + FirmaFluxUserController.SDF.format(new Date()) + "_" +getOwner();
             String descr = FirmaFluxUserController.generateDescription(getOwner(), true);
 
             final boolean saveOnServer = true;
@@ -185,8 +194,8 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             log.info("SaveOnServer  = |" + saveOnServer + "|");
             log.info("TransactionID = |" + transactionID + "|");
 
-            final String callBackUrl = AbstractFirmaUserController.getAbsoluteControllerBase(request, getContextWeb())
-                    + "/callbackflux/" + transactionID;
+            final String callBackUrl = request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR)
+                     + getContextWeb() + "/callbackflux/" + transactionID;
 
             // Per ara només suportam FULLVIEW
             FlowTemplateSimpleStartTransactionRequest startTransactionInfo;

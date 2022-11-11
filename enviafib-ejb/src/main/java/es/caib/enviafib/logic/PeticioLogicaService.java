@@ -28,13 +28,13 @@ public interface PeticioLogicaService extends PeticioService {
 
     public static final String JNDI_NAME = "java:app/enviafib-ejb/PeticioLogicaEJB!es.caib.enviafib.logic.PeticioLogicaService";
 
-    public PeticioJPA arrancarPeticio(long peticioID, String languageUI) throws I18NException;
+    public PeticioJPA arrancarPeticio(long peticioID, String languageUI, String solicitantUsr) throws I18NException;
 
-    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
+    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, String solicitantUsr)
             throws I18NException;
     
     public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
-            FirmaAsyncSimpleSignatureBlock[] signatureBlocks) throws I18NException;
+            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, String solicitantUsr) throws I18NException;
     
     public FirmaAsyncSimpleSignatureBlock[] convertFluxToSignatureBlocks(FlowTemplateSimpleFlowTemplate flux)
             throws I18NException;
@@ -55,9 +55,12 @@ public interface PeticioLogicaService extends PeticioService {
     
     public void cosesAFerPeticioFirmadaPart2(long portafibID, String languageUI, InfoSignatura infoSignatura) throws I18NException;
     
-    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI) throws I18NException;
+    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException;
 
-    public String reintentarTancarExpedient(long peticioID) throws I18NException;
+    public String reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException;
+    
+    
+    public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException;
 
 
 }

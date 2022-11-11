@@ -1,12 +1,16 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
@@ -45,6 +49,25 @@ public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUs
     @Override
     protected String getTitleCode() {
         return "peticio.list.rebutjades.title";
+    }
+
+    @Override
+    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
+            throws I18NException {
+        PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
+        if (peticioFilterForm.isNou()) {
+
+            if (peticioFilterForm.getFilterByFields() == null) {
+                ArrayList<Field<?>> list = new ArrayList<Field<?>>(peticioFilterForm.getDefaultFilterByFields());
+                peticioFilterForm.setFilterByFields(list);
+            }
+
+            peticioFilterForm.getFilterByFields().add(ERRORMSG);
+            peticioFilterForm.getFilterByFields().add(ERROREXCEPTION);
+
+        }
+
+        return peticioFilterForm;
     }
 
 }

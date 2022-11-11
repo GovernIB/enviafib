@@ -1838,32 +1838,6 @@
       "translationMapEntity": false,
       "fields": [
         {
-          "isAutoIncrement": false,
-          "sqlName": "nom",
-          "sqlType": 12,
-          "size": 255,
-          "digits": 0,
-          "isNotNullable": false,
-          "labels": {
-            "ca": "Titol",
-            "es": "Titulo"
-          },
-          "javaName": "nom",
-          "javaType": "java.lang.String",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "descripcio": "Nom de la peticio a PortaFIB.",
-          "filter": false,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 1
-          },
-          "foreignKeys": []
-        },
-        {
           "PK": "efi_peticio_pk",
           "index": "efi_peticio_pk_i",
           "isAutoIncrement": true,
@@ -1893,6 +1867,32 @@
         },
         {
           "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Títol",
+            "es": "Título"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "Nom de la peticio a PortaFIB.",
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
           "sqlName": "datacreacio",
           "sqlType": 93,
           "size": 29,
@@ -1910,7 +1910,7 @@
           "transientField": false,
           "filter": false,
           "orderBy": 0,
-          "groupBy": false,
+          "groupBy": true,
           "webFieldInfo": {
             "webtype": 7
           },
@@ -2170,7 +2170,7 @@
           "minAllowedValue": "1,2,3,4",
           "filter": false,
           "orderBy": 0,
-          "groupBy": false,
+          "groupBy": true,
           "webFieldInfo": {
             "webtype": 16
           },
@@ -2249,8 +2249,8 @@
           "digits": 0,
           "isNotNullable": true,
           "labels": {
-            "es": "Tipo",
-            "ca": "Tipus"
+            "es": "Tipo de firma",
+            "ca": "Tipus de firma"
           },
           "javaName": "tipus",
           "javaType": "int",
@@ -2285,7 +2285,7 @@
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
-          "filter": true,
+          "filter": false,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -2310,7 +2310,7 @@
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
-          "filter": true,
+          "filter": false,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {

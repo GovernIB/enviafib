@@ -3,9 +3,9 @@
 function cridaEmail(peticioId){
 	var mail = window.prompt('<fmt:message key="email.demanar.destinatari"/>','');
 	if(mail){
-		window.location = '<%= request.getContextPath()%>${contexte}/enviaremail/'+peticioId+'/'+btoa(mail) + '/' + btoa(window.location);	
-	}else{
-		var alertVar = window.alert('<fmt:message key="email.demanar.nodestinatari"/>');
+		window.location = '<%=request.getContextPath()%>${contexte}/enviaremail/'+peticioId+'/'+btoa(mail) + '/' + btoa(window.location);	
+	} else {
+		window.alert('<fmt:message key="email.demanar.nodestinatari"/>');
 	}
 }
 
@@ -15,7 +15,8 @@ function reintentarArxivat(peticioId) {
 				backdrop : "static",
 				keyboard: false
 		    });
-	window.location = '<%= request.getContextPath()%>${contexte}/reintentararxivat/'+peticioId;
+	var base = '<%= request.getContextPath()%>${contexte}/reintentararxivat/';
+	window.location = base +peticioId + '/' + btoa(window.location);
 }
 
 function reintentarTancamentExpedient(peticioId) {
@@ -24,7 +25,7 @@ function reintentarTancamentExpedient(peticioId) {
                 backdrop : "static",
                 keyboard: false
             });
-    window.location = '<%= request.getContextPath()%>${contexte}/reintentartancamentexpedient/'+peticioId;
+    window.location = '<%=request.getContextPath()%>${contexte}/reintentartancamentexpedient/' + peticioId + "/" + btoa(window.location);
 }
 
 </script>

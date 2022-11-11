@@ -17,20 +17,9 @@ public class PeticioForm extends EnviaFIBBaseForm {
   
   private CommonsMultipartFile fitxerID;
   private boolean fitxerIDDelete;
-
-//  private CommonsMultipartFile [] hiddenFile;
   
   
   private CommonsMultipartFile fitxerFirmatID;
-
-//  public CommonsMultipartFile[] getHiddenFile() {
-//    return hiddenFile;
-//  }
-//
-//  public void setHiddenFile(CommonsMultipartFile[] hiddenFile) {
-//    this.hiddenFile = hiddenFile;
-//  }
-
   private boolean fitxerFirmatIDDelete;
   
   public PeticioForm() {
@@ -51,8 +40,7 @@ public class PeticioForm extends EnviaFIBBaseForm {
     this.listOfInfoArxiuForInfoArxiuID = __toClone.listOfInfoArxiuForInfoArxiuID;
   }
   
-
-public PeticioForm(PeticioJPA peticio, boolean nou) {
+  public PeticioForm(PeticioJPA peticio, boolean nou) {
     super(nou);
     this.peticio = peticio;
   }

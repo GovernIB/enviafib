@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -53,23 +54,20 @@ public class Configuracio implements Constants {
         }
 
         File File = new File(propertyFile);
-//		if (!File.exists()) {
-//			throw new RuntimeException("La propietat "File.getAbsolutePath());
-//		}
+        //		if (!File.exists()) {
+        //			throw new RuntimeException("La propietat "File.getAbsolutePath());
+        //		}
 
         try {
             fileProperties.load(new FileInputStream(File));
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException("La propietat: " + property
-                    + " del fitxer standalone apunta a un fitxer que no existeix (" + propertyFile
-                    + ")");
+                    + " del fitxer standalone apunta a un fitxer que no existeix (" + propertyFile + ")");
 
         } catch (IOException e) {
-            throw new RuntimeException(
-                    "La propietat: " + property + " del fitxer standalone apunta a un fitxer("
-                            + propertyFile + ") que no es pot llegir:" + e.getMessage(),
-                    e);
+            throw new RuntimeException("La propietat: " + property + " del fitxer standalone apunta a un fitxer("
+                    + propertyFile + ") que no es pot llegir:" + e.getMessage(), e);
         }
     }
 
@@ -128,21 +126,17 @@ public class Configuracio implements Constants {
     public static File getFilesDirectory() {
         String path = getProperty(ENVIAFIB_PROPERTY_BASE + "filesdirectory");
         if (path == null) {
-            throw new RuntimeException("No existeix la propietat '" + ENVIAFIB_PROPERTY_BASE
-                    + "filesdirectory'" + " al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
-                    + ". S'hauria d'anar al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+            throw new RuntimeException("No existeix la propietat '" + ENVIAFIB_PROPERTY_BASE + "filesdirectory'"
+                    + " al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+                    + ". S'hauria d'anar al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
                     + " i incloure la propietat '" + ENVIAFIB_PROPERTY_BASE + "filesdirectory'"
                     + " amb una ruta al directori on l'aplició gestionara els fitxers.");
         }
 
         if (path.isEmpty()) {
-            throw new RuntimeException("No s'ha definit la propietat '" + ENVIAFIB_PROPERTY_BASE
-                    + "filesdirectory'" + " al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
-                    + ". S'hauria d'anar al fitxer "
-                    + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+            throw new RuntimeException("No s'ha definit la propietat '" + ENVIAFIB_PROPERTY_BASE + "filesdirectory'"
+                    + " al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
+                    + ". S'hauria d'anar al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
                     + " i donar valor a la propietat '" + ENVIAFIB_PROPERTY_BASE + "filesdirectory'"
                     + " amb una ruta al directori on l'aplició gestionara els fitxers.");
         }
@@ -150,23 +144,23 @@ public class Configuracio implements Constants {
         File filesFolder = new File(path);
 
         if (!filesFolder.exists()) {
-            throw new RuntimeException("El directori indicat a la propietat '"
-                    + ENVIAFIB_PROPERTY_BASE + ".filesdirectory'" + " del fitxer "
+            throw new RuntimeException("El directori indicat a la propietat '" + ENVIAFIB_PROPERTY_BASE
+                    + ".filesdirectory'" + " del fitxer "
                     + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
                     + " no existeix. S'hauria de modificar la ruta indicada per la d'un directori existent, o crear un directori amb la ruta: "
                     + path);
         }
 
         if (!filesFolder.isDirectory()) {
-            throw new RuntimeException("El directori indicat a la propietat '"
-                    + ENVIAFIB_PROPERTY_BASE + ".filesdirectory'" + " del fitxer "
+            throw new RuntimeException("El directori indicat a la propietat '" + ENVIAFIB_PROPERTY_BASE
+                    + ".filesdirectory'" + " del fitxer "
                     + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
                     + " no es un directori, probablement es tracti d'un fitxer. S'hauria de modificar la ruta indicada per la d'un directori existent.");
         }
 
         if (!filesFolder.canWrite()) {
-            throw new RuntimeException("El directori indicat a la propietat '"
-                    + ENVIAFIB_PROPERTY_BASE + ".filesdirectory'" + " del fitxer "
+            throw new RuntimeException("El directori indicat a la propietat '" + ENVIAFIB_PROPERTY_BASE
+                    + ".filesdirectory'" + " del fitxer "
                     + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
                     + " es un directori sense permisos d'escriptura. S'haurien de donar permisos d'escriptura al directori, o canviar la ruta a un directori amb permisos.");
         }
@@ -205,7 +199,7 @@ public class Configuracio implements Constants {
     public static String getPortaFIBApiFirmaWebPassword() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.password");
     }
-    
+
     public static String getPortaFIBApiFlowUrl() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.url");
     }
@@ -218,7 +212,6 @@ public class Configuracio implements Constants {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.password");
     }
 
-    
     public static String getTelefonAjuda() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.telefon");
     }
@@ -230,19 +223,32 @@ public class Configuracio implements Constants {
     public static String getEmailAjuda() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
     }
-    
+
+    /**
+     * 
+     * 
+     */
     public static String getUrlBase() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "url");
+    }
+
+    public static String getUrlBase(String fullUrl, String contextPath) throws Exception {
+        URL urlTmp = new URL(fullUrl);
+        if (urlTmp.getPort() == -1) { // port is not
+            return urlTmp.getProtocol() + "://" + urlTmp.getHost() + contextPath;
+        } else {
+            return urlTmp.getProtocol() + "://" + urlTmp.getHost() + ":" + urlTmp.getPort() + contextPath;
+        }
     }
 
     public static String getSortirURL() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "url_sortida");
     }
-    
+
     public static String getPluginArxiuClass() {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "plugin.arxiu.class");
     }
-    
+
     /**  Propietat que indica si volem les opcions de menú per gestionar la
      *  taula de bbdd que conté les dades de l'estructura organitzativa pel
      *  Plugin d'Estructura Organitzativa de DATABASE.
@@ -251,5 +257,4 @@ public class Configuracio implements Constants {
         return "true".equals(getProperty(ENVIAFIB_PROPERTY_BASE + "showmenuestructuraorganitzativa"));
     }
 
- 
 }

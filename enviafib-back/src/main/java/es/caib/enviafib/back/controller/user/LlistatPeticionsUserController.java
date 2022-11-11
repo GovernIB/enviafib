@@ -2,7 +2,6 @@ package es.caib.enviafib.back.controller.user;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -137,9 +136,10 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             peticioFilterForm.setAddButtonVisible(false);
             peticioFilterForm.setEditButtonVisible(false);
             peticioFilterForm.setDeleteButtonVisible(false);
+            
+            peticioFilterForm.setVisibleFilterBy(false);
 
             {
-
                 AdditionalField<Long, String> additionalField = new AdditionalField<Long, String>();
                 additionalField.setCodeName(PeticioFields.ESTAT.codeLabel);
                 additionalField.setPosition(COLUMN_ESTAT_IMG);
@@ -148,7 +148,6 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
                 // Els valors s'ompliran al mètode postList()
                 additionalField.setValueMap(new HashMap<Long, String>());
                 // Per ordenar feim servir el mateix camp de nom del remitent
-
                 peticioFilterForm.addAdditionalField(additionalField);
             }
 
@@ -159,6 +158,7 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
         return peticioFilterForm;
     }
 
+
     protected String getTitleCode() {
         return "peticio.list.title";
     }
@@ -166,6 +166,9 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
+        
+        // Millores en els filtres dels llistat de peticions. #248: Mostrar sempre filtres
+        filterForm.setVisibleFilterBy(true);
 
         Map<Long, String> mapRemitent = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_ESTAT_IMG)
                 .getValueMap();
@@ -272,13 +275,46 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
         }
     }
 
-    @RequestMapping(value = "/reintentararxivat/{peticioId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reintentararxivat/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String reintentarArxivat(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioId) {
+            @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
 
         try {
+
+            // Decodificam la URL que arriba en base64
+            String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+
             String msg = peticioLogicaEjb.reintentarGuardarFitxerArxiu(peticioId,
-                    LocaleContextHolder.getLocale().getLanguage());
+                    LocaleContextHolder.getLocale().getLanguage(), Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
+
+            if (msg == null) {
+                HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
+            } else {
+                HtmlUtils.saveMessageError(request, msg);
+            }
+        } catch (I18NException e) {
+            String msg = I18NUtils.getMessage(e);
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
+        }
+
+        return "redirect:" + getContextWeb() + "/list";
+
+    }
+
+    @RequestMapping(value = "/reintentartancamentexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
+    public String reintentarTancamentExpedient(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
+
+        try {
+            // Decodificam la URL que arriba en base64
+            String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+
+            String msg = peticioLogicaEjb.reintentarTancarExpedient(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
 
             if (msg == null) {
                 HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
@@ -290,27 +326,8 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             String msg = I18NUtils.getMessage(e);
             log.error(msg, e);
             HtmlUtils.saveMessageError(request, msg);
-        }
-
-        return "redirect:" + getContextWeb() + "/list";
-
-    }
-
-    @RequestMapping(value = "/reintentartancamentexpedient/{peticioId}", method = RequestMethod.GET)
-    public String reintentarTancamentExpedient(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioId) {
-
-        try {
-            String msg = peticioLogicaEjb.reintentarTancarExpedient(peticioId);
-
-            if (msg == null) {
-                HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
-            } else {
-                HtmlUtils.saveMessageError(request, msg);
-            }
-
-        } catch (I18NException e) {
-            String msg = I18NUtils.getMessage(e);
+        } catch (Exception e) {
+            String msg = e.getMessage();
             log.error(msg, e);
             HtmlUtils.saveMessageError(request, msg);
         }
@@ -344,9 +361,8 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
 
         // Decodificam la URL que arriba en base64
         String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
-        URL urlTmp = null;
+
         try {
-            urlTmp = new URL(decodedUrl);
 
             // Recuperacio del fitxer firmat a partir del ID de peticio
             Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
@@ -368,7 +384,8 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             // fileUrl = infoArxiuEjb.executeQueryOne(InfoArxiuFields.PRINTABLEURL,
             // InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
-            fileUrl = Configuracio.getUrlBase() + DescarregarImprimiblePublicController.CONTEXT_WEB + "/" + csv;
+            fileUrl = Configuracio.getUrlBase(decodedUrl, request.getContextPath()) + DescarregarImprimiblePublicController.CONTEXT_WEB + "/"
+                    + csv;
 
             map.put("fileUrl", fileUrl);
 
@@ -406,7 +423,8 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             @PathVariable("peticioID") Long peticioID) {
 
         try {
-            peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage());
+            final String solicitantUsr = LoginInfo.getInstance().getUsername();
+            peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage(), solicitantUsr);
 
         } catch (LoginException e) {
             String msg = "La sessio de l'usuari ha caducat.";

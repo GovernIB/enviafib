@@ -83,7 +83,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             throws I18NException, I18NValidationException {
         PeticioJPA p = super.create(request, peticio);
 
-        String absoluteControllerBase = getAbsoluteControllerBase(request, getContextWeb());
+        String absoluteControllerBase = request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR) + getContextWeb();
         Usuari usuari = LoginInfo.getInstance().getUsuari();
         String lang = LocaleContextHolder.getLocale().getLanguage();
 

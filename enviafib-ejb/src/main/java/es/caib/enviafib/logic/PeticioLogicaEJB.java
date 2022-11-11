@@ -81,11 +81,10 @@ import es.caib.enviafib.persistence.PeticioJPA;
  */
 @Stateless(name = "PeticioLogicaEJB")
 public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService {
-    
+
     protected static final long TRANSACTION_TIMEOUT_IN_SEC = 180;
 
     protected static final long TRANSACTION_EXIT_IN_MILI = (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
-
 
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
@@ -106,7 +105,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     private static long lastRefresh = 0;
 
     @Override
-    public PeticioJPA arrancarPeticio(long peticioID, String languageUI) throws I18NException {
+    public PeticioJPA arrancarPeticio(long peticioID, String languageUI, String solicitantUsr) throws I18NException {
 
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
@@ -114,13 +113,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertNifToSignatureBlocks(nifDestinatari);
 
-        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks);
+        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitantUsr);
 
         return (PeticioJPA) peticio;
     }
 
     @Override
-    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux)
+    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, String solicitantUsr)
             throws I18NException {
 
         if (log.isDebugEnabled()) {
@@ -131,13 +130,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertFluxToSignatureBlocks(flux);
 
-        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks);
+        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitantUsr);
 
     }
 
     @Override
     public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
-            FirmaAsyncSimpleSignatureBlock[] signatureBlocks) throws I18NException {
+            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, String solicitantUsr ) throws I18NException {
 
         String perfil = Configuracio.getPortafibProfile();
         FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
@@ -153,7 +152,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         try {
             idPortafib = createSignatureRequestAndStart(languageUI, signatureBlocks, perfil, fitxerAFirmar,
-                    fitxerAAnexar, tipusDoc, idiomaDoc, api);
+                    fitxerAAnexar, tipusDoc, idiomaDoc, api, peticio.getTipus(), peticio.getNom(), solicitantUsr);
 
             peticio.setPeticioPortafirmes(String.valueOf(idPortafib));
             peticio.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
@@ -169,7 +168,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     protected Long createSignatureRequestAndStart(String languageUI, FirmaAsyncSimpleSignatureBlock[] signatureBlocks,
             String profileCode, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
-            String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api) throws Exception {
+            String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api, int tipusPeticio,
+            String titolPeticio, String solicitantUsr) throws Exception {
 
         // Annexes
         List<FirmaAsyncSimpleAnnex> annexs = null;
@@ -190,11 +190,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throw new Exception("No s'ha definit fitxer a firmar");
         }
 
+        //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+        //sdf.format(new Date(System.currentTimeMillis()))
         
-
-        final String title = "Peticio de Firma Simple Async - " + ((System.currentTimeMillis() / 1000) % 100000);
-        final String description = "Prova de firma - Desc";
-        final String reason = "Prova de firma - reason";
+        String title = "ENVIAFIB_" + solicitantUsr  + "_" + titolPeticio;
+        if(title.length() > 250) {
+            title = title.substring(0, 250);
+        }
+        final String description = "Firma des d´EnviaFIB. Tipus: " + tipusPeticio;
+        final String reason = "Firma des de EnviaFIB.";
         FirmaAsyncSimpleFile originalDetachedSignature = null;
 
         Long tipusDocumentalID = null;
@@ -301,7 +305,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         log.info("cosesAFerPeticioFirmada():: Guardam dins arxiu de forma asyncrona .... ");
 
-        guardarFitxerArxiuSync(peticio.getPeticioID(), languageUI, infoSignatura);
+        guardarFitxerArxiuSync(peticio.getPeticioID(), languageUI, infoSignatura, Configuracio.getUrlBase());
 
         //guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
 
@@ -328,7 +332,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         peticio.setErrorMsg(LogicUtils.split255(msg));
         this.update(peticio);
 
-        enviarMailSolicitant(peticio.getPeticioID(), "REBUTJADA", languageUI);
+        enviarMailSolicitant(peticio.getPeticioID(), "REBUTJADA", languageUI, Configuracio.getUrlBase());
     }
 
     /*
@@ -345,7 +349,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     */
 
     @Override
-    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI) throws I18NException {
+    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException {
 
         {
             Peticio peticio = findByPrimaryKey(peticioID);
@@ -360,7 +364,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Peticio peticio;
         try {
             log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
-            peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura);
+            peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
         } catch (Exception e) {
             // XYZ ZZZ TMP
             log.error("Future.get() ha llança un error: " + e.getMessage(), e);
@@ -378,7 +382,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     @Override
-    public String reintentarTancarExpedient(long peticioID) throws I18NException {
+    public String reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException {
 
         //        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
         //                PeticioFields.PETICIOID.equal(peticioID));
@@ -401,7 +405,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             msg = null;
 
             try {
-                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID());
+                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID(), urlBase);
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
@@ -423,7 +427,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
      * @return
      * @throws I18NException
      */
-    private Peticio guardarFitxerArxiuSync(long peticioID, String languageUI, InfoSignatura infoSignatura)
+    protected Peticio guardarFitxerArxiuSync(long peticioID, String languageUI, InfoSignatura infoSignatura, String urlBase)
             throws I18NException {
         log.info(" guardarFitxerArxiu:: START");
 
@@ -443,7 +447,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             peticio.setErrorException(null);
 
             try {
-                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID());
+                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID(), urlBase);
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
@@ -501,7 +505,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    protected void enviarMailSolicitant(long peticioID, String estat, String idiomaId) {
+    protected void enviarMailSolicitant(long peticioID, String estat, String idiomaId, String baseUrl) {
 
         final Locale loc = new Locale(idiomaId);
 
@@ -514,7 +518,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
             Long solicitantID = peticio.getSolicitantID();
 
-            String baseUrl = Configuracio.getUrlBase();
+            //String baseUrl = Configuracio.getUrlBase();
 
             String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
             String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
@@ -780,7 +784,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
 
-        guardarFitxerArxiuSync(peticioID, peticio.getIdiomaID(), infoSignatura);
+        guardarFitxerArxiuSync(peticioID, peticio.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
 
         log.info("guardarResultatAutofirma()::Autofirma => sortim");
 
@@ -1001,7 +1005,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return signatureBlocks;
     }
 
-
     /**
      * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
      */
@@ -1141,4 +1144,34 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Total time: " + (endTime - startTime));
         log.info("Acaba eliminarFitxersSignatsDeLocal()");
     }
+
+    /**
+     * 
+     * @param peticioPortaFIB
+     * @param languageUI
+     * @return
+     * @throws I18NException
+     */
+    @Override
+    public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException {
+
+        try {
+            ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+            FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+            rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortaFIB, languageUI);
+            String url;
+            url = api.getUrlToViewFlow(rinfo);
+            return url;
+        } catch (I18NException e) {
+            throw e;
+        } catch (Exception e) {
+            // XYZ ZZZ TRA
+            throw new I18NException("genapp.codi",
+                    "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "
+                            + e.getMessage());
+
+        }
+
+    }
+
 }
