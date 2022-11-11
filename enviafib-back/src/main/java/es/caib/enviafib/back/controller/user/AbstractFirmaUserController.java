@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.io.ByteArrayInputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleF
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
@@ -50,12 +52,14 @@ import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.commons.utils.NifUtils.NifInfo;
 import es.caib.enviafib.logic.utils.LogicUtils;
+import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
+import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -373,12 +377,13 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             final int tipus = getTipusPeticio();
             switch (tipus) {
-                
+
                 case Constants.TIPUS_PETICIO_FLUX_JSON:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
-                            ( FirmaAsyncSimpleSignatureBlock[]) request.getSession().getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY));
+                            (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
+                                    .getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY));
                 break;
-                
+
                 case Constants.TIPUS_PETICIO_FLUX_SIMPLE:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
                             (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
@@ -475,8 +480,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         CommonsMultipartFile[] files = peticioForm.getHiddenFile();
         String originalName = peticioForm.getPeticio().getNom();
 
-        Peticio firstPet = null;
-
         if (files == null) {
             if (peticioForm.getFitxerID().isEmpty()) {
                 files = new CommonsMultipartFile[0];
@@ -489,81 +492,99 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
         int nFitxers = files.length;
 
-        int PETICIONS_CREADES_OK = 0;
-        List<String> missatgesErrors = new ArrayList<String>();
+        if (peticioForm.getPeticio().getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
+            int i = 0;
+            CommonsMultipartFile file = files[i];
 
-        int i;
-        for (i = 0; i < nFitxers; i++) {
+            FitxerJPA fitxer = new FitxerJPA();
 
-            Peticio petFor = peticioForm.getPeticio();
-            peticioForm.setFitxerID(files[i]);
+            fitxer.setNom(file.getOriginalFilename());
+            fitxer.setMime(file.getContentType());
+            final byte[] data = file.getBytes();
+            fitxer.setTamany(data.length);
 
-            petFor.setPeticioID(0);
-            petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
-            petFor.setErrorMsg(null);
-            petFor.setErrorException(null);
-            petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
+            Fitxer f = fitxerEjb.create(fitxer);
+            FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
 
-            BeanPropertyBindingResult result2 = new BeanPropertyBindingResult(peticioForm, "peticioForm");
+            String ret = super.crearPeticioPost(peticioForm, result, request, response);
 
-            log.info("\n\nSTART CREATE POST");
+        } else {
 
-            String ret = super.crearPeticioPost(peticioForm, result2, request, response);
-            petFor = peticioForm.getPeticio();
+            Peticio firstPet = null;
 
-            log.info("POST: ret=" + ret);
-            if (ret == null) {
-                //Aturar
-                String msg = "POST: Error ret=null";
-                log.error(msg);
-                HtmlUtils.saveMessageError(request, msg);
-                break;
-            } else {
-                if (result2.hasErrors()) {
+            int PETICIONS_CREADES_OK = 0;
+            List<String> missatgesErrors = new ArrayList<String>();
 
-                    showErrorInfo(result2);
-                    for (ObjectError objectError : result2.getAllErrors()) {
-                        result.addError(objectError);
-                    }
+            int i;
+            for (i = 0; i < nFitxers; i++) {
 
-                    int nErrorsFields = result2.getFieldErrorCount();
-                    int nErrorsFitxers = result2.getFieldErrorCount(PeticioFields.FITXERID.fullName);
+                Peticio petFor = peticioForm.getPeticio();
+                peticioForm.setFitxerID(files[i]);
 
-                    //Hi ha errors al formulari
-                    if (nErrorsFitxers == nErrorsFields) {
-                        //Només hi ha errors amb fitxers -> Avisar i continuar
-                        FieldError fieldFileError = result2.getFieldErrors(PeticioFields.FITXERID.fullName).get(0);
+                petFor.setPeticioID(0);
+                petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
+                petFor.setErrorMsg(null);
+                petFor.setErrorException(null);
+                petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
 
-                        Object[] array = fieldFileError.getArguments();
-                        String[] arguments = Arrays.copyOf(array, array.length, String[].class);
+                BeanPropertyBindingResult result2 = new BeanPropertyBindingResult(peticioForm, "peticioForm");
 
-                        String msgError = I18NUtils.tradueix(fieldFileError.getCode(), arguments);
+                log.info("\n\nSTART CREATE POST");
 
-                        String msg = "POST: No s'ha pogut crear la peticio amb el fitxer "
-                                + files[i].getOriginalFilename() + ": " + msgError;
+                String ret = super.crearPeticioPost(peticioForm, result2, request, response);
+                petFor = peticioForm.getPeticio();
 
-                        missatgesErrors.add(msg);
-                        log.warn(msg);
-                        continue;
-                    } else {
-                        //Al formulari hi errors que no son de fitxers -> Aturar
-                        //Aquest missatge sobra, genapp ja en posa un per defecte
-                        String msg = "POST: Errors al formulari";
-                        HtmlUtils.saveMessageError(request, msg);
-                        log.error(msg);
-                        break;
-                    }
+                log.info("POST: ret=" + ret);
+                if (ret == null) {
+                    //Aturar
+                    String msg = "POST: Error ret=null";
+                    log.error(msg);
+                    HtmlUtils.saveMessageError(request, msg);
+                    break;
                 } else {
-                    //No hi ha errors al formulari
-                    if (ret.equals(getTileForm())) {
-                        //Posible RunTimeException -> Aturar
-                        String msg = "POST: Error no controlat";
-                        HtmlUtils.saveMessageError(request, msg);
-                        log.error(msg);
-                        break;
-                    } else {
-                        if (petFor.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
+                    if (result2.hasErrors()) {
 
+                        showErrorInfo(result2);
+                        for (ObjectError objectError : result2.getAllErrors()) {
+                            result.addError(objectError);
+                        }
+
+                        int nErrorsFields = result2.getFieldErrorCount();
+                        int nErrorsFitxers = result2.getFieldErrorCount(PeticioFields.FITXERID.fullName);
+
+                        //Hi ha errors al formulari
+                        if (nErrorsFitxers == nErrorsFields) {
+                            //Només hi ha errors amb fitxers -> Avisar i continuar
+                            FieldError fieldFileError = result2.getFieldErrors(PeticioFields.FITXERID.fullName).get(0);
+
+                            Object[] array = fieldFileError.getArguments();
+                            String[] arguments = Arrays.copyOf(array, array.length, String[].class);
+
+                            String msgError = I18NUtils.tradueix(fieldFileError.getCode(), arguments);
+
+                            String msg = "POST: No s'ha pogut crear la peticio amb el fitxer "
+                                    + files[i].getOriginalFilename() + ": " + msgError;
+
+                            missatgesErrors.add(msg);
+                            log.warn(msg);
+                            continue;
+                        } else {
+                            //Al formulari hi errors que no son de fitxers -> Aturar
+                            //Aquest missatge sobra, genapp ja en posa un per defecte
+                            String msg = "POST: Errors al formulari";
+                            HtmlUtils.saveMessageError(request, msg);
+                            log.error(msg);
+                            break;
+                        }
+                    } else {
+                        //No hi ha errors al formulari
+                        if (ret.equals(getTileForm())) {
+                            //Posible RunTimeException -> Aturar
+                            String msg = "POST: Error no controlat";
+                            HtmlUtils.saveMessageError(request, msg);
+                            log.error(msg);
+                            break;
+                        } else {
                             if (petFor.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
                                 if (i == 0) {
                                     firstPet = new PeticioJPA(petFor);
@@ -588,30 +609,29 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                                 PETICIONS_CREADES_OK++;
                                 String msg = "POST: Peticio creada i enviada amb ID=" + petFor.getPeticioID();
                                 log.info(msg);
-
                             }
+                            continue;
                         }
-                        continue;
                     }
                 }
             }
-        }
 
-        log.warn("\n\nAtributs del result final:");
-        showErrorInfo(result);
+            log.warn("\n\nAtributs del result final:");
+            showErrorInfo(result);
 
-        if (i == nFitxers && i > 0) {
-            HtmlUtils.deleteMessages(request);
-            if (PETICIONS_CREADES_OK > 0) {
-                String msg = "S'han creat i enviat correctament " + PETICIONS_CREADES_OK + " peticions a PortaFIB";
-                HtmlUtils.saveMessageInfo(request, msg);
-            } else {
-                HtmlUtils.saveMessageWarning(request, "No s'ha creat ni enviat cap peticio a PortaFIB");
+            if (i == nFitxers && i > 0) {
+                HtmlUtils.deleteMessages(request);
+                if (PETICIONS_CREADES_OK > 0) {
+                    String msg = "S'han creat i enviat correctament " + PETICIONS_CREADES_OK + " peticions a PortaFIB";
+                    HtmlUtils.saveMessageInfo(request, msg);
+                } else {
+                    HtmlUtils.saveMessageWarning(request, "No s'ha creat ni enviat cap peticio a PortaFIB");
+                }
+                for (String fileErrorMsg : missatgesErrors) {
+                    HtmlUtils.saveMessageError(request, fileErrorMsg);
+                }
+
             }
-            for (String fileErrorMsg : missatgesErrors) {
-                HtmlUtils.saveMessageError(request, fileErrorMsg);
-            }
-
         }
 
         if (result.hasErrors()) {
