@@ -491,5 +491,6 @@ a.iconoXarxes{
 .page-link:focus, .page-link:hover {
 	color: #000;
 }
-
+#GroupDiv { font-size:90%; }
+#FilterDiv { font-size:90%; }
 

@@ -86,7 +86,7 @@
                                     active" : ""}"
                                 href="javascript:cridarOpcioMenu(${menu.menuID},${menu.tipus});">
 
-                                    ${menu.titolMenu.traduccions[lang].valor} <i class="fas fa-info-circle"
+                                    ${menu.titolMenu.traduccions[lang].valor} &nbsp;<i class="fas fa-info-circle"
                                     title="${menu.ajudaMenu.traduccions[lang].valor}"></i>
                                 </a>
 
