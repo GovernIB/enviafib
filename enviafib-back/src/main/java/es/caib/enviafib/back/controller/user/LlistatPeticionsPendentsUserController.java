@@ -35,6 +35,11 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
     public static final String CONTEXT_WEB = "/user/peticio/pendents";
 
     @Override
+    public String getEntityNameCode() {
+        return "peticio.list.pendents";
+    }
+    
+    @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
@@ -68,10 +73,6 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
 
     }
 
-    @Override
-    protected String getTitleCode() {
-        return "peticio.list.pendents.title";
-    }
 
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)

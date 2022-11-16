@@ -41,6 +41,11 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
     public enum TipusFile {
         ORIGINAL, ENI_DOC, VERSIO_IMPRIMIBLE
     }
+    
+    @Override
+    public String getEntityNameCode() {
+        return "peticio.list.firmades";
+    }
 
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
@@ -50,11 +55,6 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA };
 
         return Where.AND(defaultCondition, ESTAT.in(estats));
-    }
-
-    @Override
-    protected String getTitleCode() {
-        return "peticio.list.firmades.title";
     }
 
     @Override

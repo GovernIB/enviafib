@@ -28,6 +28,11 @@ import es.caib.enviafib.commons.utils.Constants;
 public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUserController {
 
     public static final String CONTEXT_WEB = "/user/peticio/rebutjades";
+    
+    @Override
+    public String getEntityNameCode() {
+        return "peticio.list.rebutjades";
+    }
 
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
@@ -44,11 +49,6 @@ public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUs
 
         return Where.AND(defaultCondition, ESTAT.in(estats));
 
-    }
-
-    @Override
-    protected String getTitleCode() {
-        return "peticio.list.rebutjades.title";
     }
 
     @Override
