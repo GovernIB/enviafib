@@ -46,6 +46,12 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
     public String getEntityNameCode() {
         return "peticio.list.firmades";
     }
+    
+    @Override
+    public String getEntityNameCodePlural() {
+        return "peticio.list.firmades.plural";
+    }
+    
 
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {

@@ -35,6 +35,11 @@ public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUs
     }
 
     @Override
+    public String getEntityNameCodePlural() {
+        return "peticio.list.rebutjades.plural";
+    }
+
+    @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
 
         //        final Where defaultCondition = super.getAdditionalCondition(request);

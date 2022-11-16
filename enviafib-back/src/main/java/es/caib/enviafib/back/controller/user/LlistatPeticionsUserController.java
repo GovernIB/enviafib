@@ -151,8 +151,6 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
                 peticioFilterForm.addAdditionalField(additionalField);
             }
 
-            peticioFilterForm.setTitleCode(getEntityNameCode());
-
         }
 
         return peticioFilterForm;

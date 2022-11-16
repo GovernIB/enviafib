@@ -40,6 +40,11 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
     }
     
     @Override
+    public String getEntityNameCodePlural() {
+        return "peticio.list.pendents.plural";
+    }
+    
+    @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
