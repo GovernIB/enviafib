@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>pluginsib-estructuraorganitzativa</artifactId>
 	<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<packaging>pom</packaging>
 	<name>PluginsIB - Estructura Organitzativa</name>
 	<parent>
 		<groupId>es.caib.enviafib</groupId>
-		<version>1.0.4</version>
+		<version>1.0.5</version>
 		<artifactId>enviafib-pluginsib</artifactId>
 	</parent>
 	<modules>

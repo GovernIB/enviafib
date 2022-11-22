@@ -45,7 +45,7 @@ import es.caib.enviafib.model.fields.UsuariFields;
 public abstract class LlistatPeticionsUserController extends AbstractPeticioUserController {
 
     public static final int COLUMN_ESTAT_IMG = 1;
-
+    
     @Override
     public String getTileList() {
         return "peticioListUser";
@@ -151,17 +151,11 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
                 peticioFilterForm.addAdditionalField(additionalField);
             }
 
-            peticioFilterForm.setTitleCode(getTitleCode());
-
         }
 
         return peticioFilterForm;
     }
 
-
-    protected String getTitleCode() {
-        return "peticio.list.title";
-    }
 
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
@@ -333,7 +327,6 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
         }
 
         return "redirect:" + getContextWeb() + "/list";
-
     }
 
     /**
