@@ -56,8 +56,11 @@ public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUs
 
     }
 
-    @Override
-    protected String getTitleCode() {
-        return "peticio.list.rebutjades.title";
-    }
+//    @Override
+//    protected String getTitleCode() {
+//        return "peticio.list.rebutjades.title";
+//    }
+    
+    
+    
 }
