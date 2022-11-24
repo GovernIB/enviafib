@@ -50,24 +50,4 @@ public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUs
     protected String getTitleCode() {
         return "peticio.list.rebutjades.title";
     }
-
-    @Override
-    public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
-            throws I18NException {
-        PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
-        if (peticioFilterForm.isNou()) {
-
-            if (peticioFilterForm.getFilterByFields() == null) {
-                ArrayList<Field<?>> list = new ArrayList<Field<?>>(peticioFilterForm.getDefaultFilterByFields());
-                peticioFilterForm.setFilterByFields(list);
-            }
-
-            peticioFilterForm.getFilterByFields().add(ERRORMSG);
-            peticioFilterForm.getFilterByFields().add(ERROREXCEPTION);
-
-        }
-
-        return peticioFilterForm;
-    }
-
 }

@@ -63,10 +63,11 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
 
         if (peticioFilterForm.isNou()) {
-            peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
+//            peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
             peticioFilterForm.setDeleteSelectedButtonVisible(false);
             peticioFilterForm.addHiddenField(DATACREACIO);
-
+            peticioFilterForm.getFilterByFields().remove(DATACREACIO);
+            
             // peticioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas
             // fa-file-pdf",
             // "download.arxivat.original", getContextWeb() + "/descarregaroriginal/{0}",

@@ -2,6 +2,7 @@ package es.caib.enviafib.back.controller.user;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
@@ -93,13 +95,16 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             throws I18NException {
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
         if (peticioFilterForm.isNou()) {
+
+            peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
+            
             peticioFilterForm.setVisibleExportList(false);
             peticioFilterForm.addHiddenField(SOLICITANTID);
             peticioFilterForm.addHiddenField(PETICIOID);
             peticioFilterForm.addHiddenField(FITXERFIRMATID);
             peticioFilterForm.addHiddenField(PETICIOPORTAFIRMES);
             peticioFilterForm.addHiddenField(IDIOMADOC);
-            peticioFilterForm.addHiddenField(TIPUSDOCUMENTAL);
+            peticioFilterForm.addHiddenField(TIPUS);
             peticioFilterForm.addHiddenField(IDIOMAID);
             peticioFilterForm.addHiddenField(ERROREXCEPTION);
 
@@ -137,6 +142,15 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
             peticioFilterForm.setEditButtonVisible(false);
             peticioFilterForm.setDeleteButtonVisible(false);
             
+            if (peticioFilterForm.getFilterByFields() == null) {
+                ArrayList<Field<?>> list = new ArrayList<Field<?>>(peticioFilterForm.getDefaultFilterByFields());
+                peticioFilterForm.setFilterByFields(list);
+            }
+
+            peticioFilterForm.getFilterByFields().add(NOM);
+            peticioFilterForm.getFilterByFields().add(DATACREACIO);
+            peticioFilterForm.getFilterByFields().add(DATAFINAL);
+
             peticioFilterForm.setVisibleFilterBy(false);
 
             {
@@ -237,20 +251,20 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
 
             if (peticio.getInfoArxiuID() == null || peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
-                        new AdditionalButton("fas fa-trash icon-white", "peticio.btn.delete", "javascript: openModal('"
+                        new AdditionalButton("fas fa-trash ", "peticio.btn.delete", "javascript: openModal('"
                                 + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
                                 "btn-danger"));
             }
 
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt icon-white",
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
                         "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
             }
 
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT
                     || peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
 
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope icon-white",
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",
                         "peticio.btn.sendmail", "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
 
                 String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
@@ -269,7 +283,7 @@ public abstract class LlistatPeticionsUserController extends AbstractPeticioUser
 
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
-                        new AdditionalButton("fas fa-redo-alt icon-white", "arxiu.reintentartancamentexpedient",
+                        new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
                                 "javascript: reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
             }
         }

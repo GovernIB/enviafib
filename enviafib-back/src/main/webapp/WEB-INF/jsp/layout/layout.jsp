@@ -76,7 +76,7 @@
 </c:if>
 
         <%-- INICI MENU + CONTINGUT --%>
-        <div class="well well-white" style="padding: 10px">
+        <div class="well well-white" >
             <tiles:insertAttribute name="menu_i_contingut">
                 <tiles:putAttribute name="menu"
                     value="${menu_tile}" />

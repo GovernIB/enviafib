@@ -151,4 +151,46 @@
     }
 
 </script>
+
+<style>
+body {
+    background-image:
+        url(https://intranet.caib.es/pinbal/img/background-pattern.png);
+}
+
+.well.well-white {
+    padding: 20px;
+    margin: 0rem 4rem;
+}
+
+.btn-primary,
+.btn-warning,
+.btn-secondary {
+    background-color: #246EB9;
+    border-color: #246EB9;
+    color: #FDFFFC;
+}
+
+.btn-primary:hover,
+.btn-warning:hover,
+.btn-secondary:hover {
+    background-color: #00B2FF;
+    border-color: #00B2FF;
+}
+
+ul {
+    padding: 5px !important;
+}
+
+form {
+    padding: 1rem;
+    padding-top: 0px;
+}
+
+.lead label{
+    font-weight: 400 !important;
+    margin: 0px;
+}
+
+</style>
   

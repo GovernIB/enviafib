@@ -40,6 +40,8 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.addHiddenField(DATAFINAL);
+            peticioFilterForm.getFilterByFields().remove(DATAFINAL);
+
         }
 
         return peticioFilterForm;

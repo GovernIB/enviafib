@@ -8,9 +8,18 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <un:useConstants var="ConstantsEnviaFIB" className="es.caib.enviafib.commons.utils.Constants" />
 
+<link href= 'https://fonts.googleapis.com/css?family=Rubik+Glitch' rel='stylesheet' />  
+
+<style>
+
+h1{
+    font-family: Roboto;  
+}
+
+</style>
 <header>
     <!-- Header -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-aplicacio" style="padding: 0;">
+    <nav class="navbar navbar-expand-md navbar-dark bg-aplicacio">
 
         <button class="navbar-toggler botoMobil" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,37 +27,34 @@
         </button>
 
         <!-- Logo i nom aplicació -->
-        <div class="navbar-brand menuGovern">
-            <div class="logoGovern">
+<!--         <div class="navbar-brand menuGovern"> -->
+            <div id="logoGovernContainer" class="logoGovern">
                 <a href="http://www.caib.es/"> <img src="<c:url value="/img/logo-caib.png"/>" style="height: 60px;"
                     alt="Govern de les Illes Balears" />
                 </a>
             </div>
 
-            <div class="logoGovern">
-                <img src="<c:url value="/img/app-logo.png"/>" alt="EnviaFIB" title="EnviaFIB" />
+            <div id="logoEnviafibContainer" class="logoGovern">
+                <img src="<c:url value="/img/app-logo.png"/>"  style="height: 55px;" alt="EnviaFIB" title="EnviaFIB" />
             </div>
 
             <div>
-                <h1 class="titol"><%=es.caib.enviafib.commons.utils.StaticVersion.PROJECT_NAME%></h1>
+                <p style="text-transform: uppercase;font-size: 2rem;margin: 0;"><%=es.caib.enviafib.commons.utils.StaticVersion.PROJECT_NAME%></p>
             </div>
  
-        </div>
 
-       <div style="position:absolute;right:25px;top:0;">
-            <div>
-                <strong class="subtitol llevarMobil"><fmt:message key="usuari" />: </strong> <span
-                    class="subtitolMay"> <%=LoginInfo.getInstance().getUsuari().getNom() + " " + LoginInfo.getInstance().getUsuari().getLlinatge1()%>
+       <div id="userInfoContainer" style="position:absolute;right:88px;top:11px;">
+          <strong class="llevarMobil"><fmt:message key="usuari" />: </strong> <span
+              class="subtitolMay"> <%=LoginInfo.getInstance().getUsuari().getNom() + " " + LoginInfo.getInstance().getUsuari().getLlinatge1()%>
 
-                    (<%=request.getRemoteUser()%>)
-                </span>
-            </div>
-        </div>
+              (<%=request.getRemoteUser()%>)
+          </span>
+       </div>
 
         <!-- FI Logo i nom aplicació -->
 
         <!-- Botons -->
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div id="menuCapContainer" class="collapse navbar-collapse" id="navbarCollapse">
 
             <ul class="navbar-nav mobil">
 
@@ -59,14 +65,14 @@
 
                 <%--  MENÚ d'Usuari SI NOMES TE ROL EFI_USER --%>
                 <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && !efi:hasRole(ConstantsEnviaFIB.ROLE_ADMIN)}">
-                    <li class="dropdown colorTaronja">
+                    <li class="dropdown">
 
-                        <button class="btn colorTaronja dropdown-toggle" type="button" id="dropdownMenu3"
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-file-signature"></i>
                             <fmt:message key="ferfirma" />
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
                             <c:if test="${empty menus}">
                                 <a class="dropdown-item" href="#"> <b style="color: red"> <fmt:message
@@ -124,9 +130,9 @@
 
 
                 <%--  MENU D'IDIOMES, ELS AGAFA DE LA BASE DE DADES--%>
-                <li class="dropdown colorTaronja">
+                <li class="dropdown">
 
-                    <button class="btn colorTaronja dropdown-toggle" type="button" id="dropdownMenu2"
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-language fa-lg"></i>
                         <fmt:message key="idiomes" />
@@ -146,9 +152,9 @@
 
 
                 <%--   OPCIONS  --%>
-                <li class="dropdown colorTaronja">
+                <li class="dropdown">
 
-                    <button class="btn colorTaronja dropdown-toggle" type="button" id="dropdownMenu3"
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-cog"></i> <fmt:message key="configuracio" />
                     </button>
@@ -189,7 +195,7 @@
 
             </ul>
 
-        </div>
+<!--         </div> -->
         <!-- FI Botons -->
     </nav>
 
@@ -233,3 +239,90 @@
     </div>
 </header>
 
+
+
+
+
+<!-- CAPÇALERA MODERNA -->
+<script type="text/javascript">
+    $('.subtitolMay').css('font-size', '1rem !important');
+</script>
+
+<style>
+.bg-aplicacio {
+    height: 6rem;
+    padding: 0px 5rem;
+}
+
+.subtitolMay {
+    font-size: 1rem;
+}
+
+.main {
+    padding-top: 2rem;
+}
+
+#logoGovernContainer {
+    border-right: 1px solid white;
+}
+
+#menuCapContainer {
+    margin-top: 2rem;
+    /*   margin-bottom: 1rem; */
+}
+
+#menuCapContainer button {
+    padding: 0.25rem 0.75rem;
+}
+
+#userInfoContainer {
+    font-size: large;
+}
+
+#principal {
+    padding-left: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 0rem;
+}
+
+#ocultarMenu {
+    padding: 0.5rem;
+}
+
+#mostrarMenu {
+    padding: 0px !important;
+}
+
+@font-face {
+    font-family: CaviarDreamsFont;
+    src: url(/fonts/RubikGlitch-Regular.ttf);
+}
+
+h1 {
+    font-family: CaviarDreamsFont;
+    color: darkgreen;
+}
+
+#FilterButton,
+#GroupButton {
+    background-color: #E1E1E1;
+    border-color: #E1E1E1;
+    margin-left: 3px;
+}
+
+#FilterButton:hover,
+#GroupButton:hover {
+    background-color: #A1A1A1;
+    border-color: #A1A1A1;
+}
+
+
+.dropdown .btn-secondary {
+    margin: 0 5px;
+}
+.dropdown-menu {
+    margin-top: 0px;
+}
+
+</style>

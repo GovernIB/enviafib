@@ -7,8 +7,8 @@
 
 <div class="row">
 
-	<!--  INICI MENU col-3 -->
-	<div id="principal" class="mainMenu col-3">
+	<!--  INICI MENU col-2 -->
+	<div id="principal" class="mainMenu col-2">
         <div id="mostrarMenu" class="upper-left-corner no-disponible" style="padding-left:17px;">
             <a id="mostrar" href="#" data-toggle="tooltip"
                 title="Mostrar Menu"> <i class="fas fa-expand-alt"></i>
@@ -25,8 +25,8 @@
 		</div>
 	</div>
 
-	<!--  CONTINGUT col-9 -->
-    <div id="contingut" class="col-9">
+	<!--  CONTINGUT col-10 -->
+    <div id="contingut" class="col-10">
 
 		<!--  Missatges  -->
 		<jsp:include page="/WEB-INF/jsp/moduls/missatges.jsp" />
@@ -44,8 +44,8 @@
 
 <script>
 	$('#ocultar').click(function() {
-		$('#principal').removeClass('col-3');
-		$('#contingut').removeClass('col-9');
+		$('#principal').removeClass('col-2');
+		$('#contingut').removeClass('col-10');
 		$('#contingut').addClass('col-12');
 		show('#mostrarMenu');
 		hide('#ocultarMenu');
@@ -54,9 +54,9 @@
 	});
 
 	$('#mostrar').click(function() {
-		$('#principal').addClass('col-3');
+		$('#principal').addClass('col-2');
+		$('#contingut').addClass('col-10');
 		$('#contingut').removeClass('col-12');
-		$('#contingut').addClass('col-9');
 		hide('#mostrarMenu');
 		show('#ocultarMenu');
 		show('#thumbnailmenu');
@@ -102,5 +102,6 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
   transition: all 0.2s ease-in-out;
 }
+
 </style>
 
