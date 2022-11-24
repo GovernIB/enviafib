@@ -1,0 +1,33 @@
+
+<subsystem xmlns="urn:jboss:domain:keycloak:1.1">
+	<realm name="GOIB">
+		<auth-server-url>https://dev.caib.es/auth/</auth-server-url>
+		<ssl-required>EXTERNAL</ssl-required>
+	</realm>
+	<secure-deployment name="enviafib-back.war">
+		<realm>GOIB</realm>
+		<resource>goib-default</resource>
+		<use-resource-role-mappings>true</use-resource-role-mappings>
+		<public-client>true</public-client>
+		<principal-attribute>preferred_username</principal-attribute>
+		<verify-token-audience>true</verify-token-audience>
+	</secure-deployment>
+	<secure-deployment name="enviafib-api-externa.war">
+		<realm>GOIB</realm>
+		<resource>goib-ws</resource>
+		<use-resource-role-mappings>true</use-resource-role-mappings>
+		<bearer-only>true</bearer-only>
+		<enable-basic-auth>true</enable-basic-auth>
+		<principal-attribute>preferred_username</principal-attribute>
+		<credential name="secret">e2e2e1dd-0abc-4926-9abd-90bfb3b3ee78</credential>
+	</secure-deployment>
+	<secure-deployment name="enviafib-api-interna.war">
+		<realm>GOIB</realm>
+		<resource>goib-ws</resource>
+		<use-resource-role-mappings>true</use-resource-role-mappings>
+		<bearer-only>true</bearer-only>
+		<enable-basic-auth>true</enable-basic-auth>
+		<principal-attribute>preferred_username</principal-attribute>
+		<credential name="secret">e2e2e1dd-0abc-4926-9abd-90bfb3b3ee78</credential>
+	</secure-deployment>
+</subsystem>
