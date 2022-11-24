@@ -4,16 +4,16 @@
 <tiles:importAttribute name="menu" />
 <tiles:importAttribute name="contingut" />
 
-
-<div class="row">
-
-	<!--  INICI MENU col-2 -->
-	<div id="principal" class="mainMenu col-2">
-        <div id="mostrarMenu" class="upper-left-corner no-disponible" style="padding-left:17px;">
+        <div id="mostrarMenu" class="upper-left-corner no-disponible" ">
             <a id="mostrar" href="#" data-toggle="tooltip"
                 title="Mostrar Menu"> <i class="fas fa-expand-alt"></i>
             </a>
         </div>
+
+<div class="" style="display: flex;">
+
+	<!--  INICI MENU col-2 -->
+	<div id="principal" class="mainMenu">
         <div id="ocultarMenu" class="upper-right-corner disponible">
             <a id="ocultar" href="#" data-toggle="tooltip"
                 title="Ocultar Menu"> <i class="fas fa-compress-alt"></i>
@@ -26,7 +26,7 @@
 	</div>
 
 	<!--  CONTINGUT col-10 -->
-    <div id="contingut" class="col-10">
+    <div id="contingut">
 
 		<!--  Missatges  -->
 		<jsp:include page="/WEB-INF/jsp/moduls/missatges.jsp" />
@@ -44,22 +44,19 @@
 
 <script>
 	$('#ocultar').click(function() {
-		$('#principal').removeClass('col-2');
-		$('#contingut').removeClass('col-10');
-		$('#contingut').addClass('col-12');
-		show('#mostrarMenu');
+        show('#mostrarMenu');
 		hide('#ocultarMenu');
-		hide('#thumbnailmenu');
-		return false;
+
+		
+        $("#principal").css("display","none");        
+        return false;
 	});
 
 	$('#mostrar').click(function() {
-		$('#principal').addClass('col-2');
-		$('#contingut').addClass('col-10');
-		$('#contingut').removeClass('col-12');
-		hide('#mostrarMenu');
+        hide('#mostrarMenu');
 		show('#ocultarMenu');
-		show('#thumbnailmenu');
+		
+        $("#principal").css("display","block");				
 		return false;
 	});
 
@@ -72,6 +69,7 @@
 		$(item).removeClass('no-disponible');
 		$(item).addClass('disponible');
 	}
+	   
 </script>
 <style>
 .no-disponible {
@@ -101,6 +99,30 @@
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
   transition: all 0.2s ease-in-out;
+}
+
+#ocultarMenu {
+    padding: 0.5rem;
+}
+
+#mostrarMenu{
+	padding-left: 1.25rem;
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;	
+}
+
+#principal {
+    width: 30%;
+    min-width: 250px;
+    max-width: 300px;
+
+    padding-left: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 0rem;
+}
+#contingut {
+    width: 100%;
 }
 
 </style>

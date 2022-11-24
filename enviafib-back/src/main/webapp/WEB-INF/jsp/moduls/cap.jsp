@@ -279,21 +279,6 @@ h1{
     font-size: large;
 }
 
-#principal {
-    padding-left: 2rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-right: 0rem;
-}
-
-#ocultarMenu {
-    padding: 0.5rem;
-}
-
-#mostrarMenu {
-    padding: 0px !important;
-}
-
 @font-face {
     font-family: CaviarDreamsFont;
     src: url(/fonts/RubikGlitch-Regular.ttf);

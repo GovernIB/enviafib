@@ -12,9 +12,8 @@
 	<br />
 	<center>
 		<img src="<c:url value="/img/app-logo.png"/>" alt="EnviaFIB"
-			title="EnviaFIB" /> <br /> <br />
+			title="EnviaFIB" style="width: 125px;"/> <br /> <br />
 		<fmt:message key="common.benvinguda.missatge" />
-
 
 		<br /> <br />
 		<table border="0">

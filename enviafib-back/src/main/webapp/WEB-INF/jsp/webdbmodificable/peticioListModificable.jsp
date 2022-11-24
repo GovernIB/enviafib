@@ -218,11 +218,12 @@ function reintentarTancamentExpedient(peticioId) {
 
 <style>
 #FilterDiv {
-	padding: 0.5rem !important;
+    padding: 0.5rem !important;
 	margin-bottom: 1.25rem !important;
 	background-image:
-		url(https://intranet.caib.es/pinbal/img/background-pattern.png)
+		url(/enviafib/img/background-pattern.png)
 		!important;
+    min-width: 41rem;
 }
 
 #page-header {

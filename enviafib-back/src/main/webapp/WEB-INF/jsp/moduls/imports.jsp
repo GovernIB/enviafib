@@ -155,7 +155,7 @@
 <style>
 body {
     background-image:
-        url(https://intranet.caib.es/pinbal/img/background-pattern.png);
+        url(/enviafib/img/background-pattern.png);
 }
 
 .well.well-white {
