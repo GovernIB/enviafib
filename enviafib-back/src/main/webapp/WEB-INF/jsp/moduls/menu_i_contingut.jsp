@@ -40,10 +40,29 @@
 
 	<div class="clearfix"></div>
 
+
+<%--     <div id="infoNumRegistres">
+		<fmt:message key="show.n.results" var="showNResults">
+			<fmt:param>
+				<fmt:message key="${__entry.value.codeName}" />
+                5
+			</fmt:param>
+            <fmt:param>
+               <fmt:message key="${__entry.value.codeName}" />
+                16
+            </fmt:param>
+		</fmt:message>
+		<c:out value="${showNResults}" />
+	</div>
+ --%>    
+
 </div>
 
 <script>
-	$('#ocultar').click(function() {
+
+/* $("#GroupDiv").after($("#infoNumRegistres")); */
+
+$('#ocultar').click(function() {
         show('#mostrarMenu');
 		hide('#ocultarMenu');
 
@@ -112,18 +131,21 @@
 }
 
 #principal {
-    width: 30%;
+/*     width: 30%; */
     min-width: 250px;
     max-width: 300px;
 
-    padding-left: 2rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-right: 0rem;
+    padding: 0px 0.75rem;
 }
+
 #contingut {
     width: 100%;
 }
 
+/* #infoNumRegistres{
+    margin-bottom: 5px;
+}
+ */
+ 
 </style>
 

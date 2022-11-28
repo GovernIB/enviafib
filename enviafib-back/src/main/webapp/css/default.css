@@ -257,8 +257,11 @@ small {
 }
 .mainMenu .thumbnail { padding:5px; background-color: #FAFAFA;}
 .mainMenu .thumbnail h4 { margin-top:0;}
-.custom-submenu { margin: 0 50px -1px; }
-	.custom-submenu.nav-tabs > li.active > a {
+    .custom-submenu { 
+        margin: 0 60px 0; 
+    }
+
+    .custom-submenu.nav-tabs > li.active > a {
 		border-left:1px solid #ccc;
 		border-right:1px solid #ccc;
 		border-top:1px solid #ccc;

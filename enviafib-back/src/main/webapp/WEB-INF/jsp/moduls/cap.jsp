@@ -8,15 +8,6 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <un:useConstants var="ConstantsEnviaFIB" className="es.caib.enviafib.commons.utils.Constants" />
 
-<link href= 'https://fonts.googleapis.com/css?family=Rubik+Glitch' rel='stylesheet' />  
-
-<style>
-
-h1{
-    font-family: Roboto;  
-}
-
-</style>
 <header>
     <!-- Header -->
     <nav class="navbar navbar-expand-md navbar-dark bg-aplicacio">
@@ -29,8 +20,8 @@ h1{
         <!-- Logo i nom aplicació -->
 <!--         <div class="navbar-brand menuGovern"> -->
             <div id="logoGovernContainer" class="logoGovern">
-                <a href="http://www.caib.es/"> <img src="<c:url value="/img/logo-caib.png"/>" style="height: 60px;"
-                    alt="Govern de les Illes Balears" />
+                <a href="http://www.caib.es/"> 
+                    <img src="<c:url value="/img/logo-caib.png"/>" style="height: 60px;" alt="Govern de les Illes Balears" />
                 </a>
             </div>
 
@@ -39,19 +30,23 @@ h1{
             </div>
 
             <div>
-                <p style="text-transform: uppercase;font-size: 2rem;margin: 0;"><%=es.caib.enviafib.commons.utils.StaticVersion.PROJECT_NAME%></p>
+                <p id="nomApp""><%=es.caib.enviafib.commons.utils.StaticVersion.PROJECT_NAME%></p>
             </div>
- 
 
-       <div id="userInfoContainer" style="position:absolute;right:88px;top:11px;">
-          <strong class="llevarMobil"><fmt:message key="usuari" />: </strong> <span
-              class="subtitolMay"> <%=LoginInfo.getInstance().getUsuari().getNom() + " " + LoginInfo.getInstance().getUsuari().getLlinatge1()%>
 
-              (<%=request.getRemoteUser()%>)
-          </span>
-       </div>
+		<div id="userInfoContainer"
+			style="position: absolute; right: 88px; top: 11px;">
+			<strong class="llevarMobil"><fmt:message key="usuari" />: </strong>
+			<span class="subtitolMay"> 
+			<%=
+			   LoginInfo.getInstance().getUsuari().getNom() + " " 
+		       + LoginInfo.getInstance().getUsuari().getLlinatge1() + " ("
+			   + request.getRemoteUser() + ")"
+		    %>
+			</span>
+		</div>
 
-        <!-- FI Logo i nom aplicació -->
+		<!-- FI Logo i nom aplicació -->
 
         <!-- Botons -->
         <div id="menuCapContainer" class="collapse navbar-collapse" id="navbarCollapse">
@@ -259,7 +254,7 @@ h1{
 }
 
 .main {
-    padding-top: 2rem;
+    padding-top: 1rem;
 }
 
 #logoGovernContainer {
@@ -310,4 +305,10 @@ h1 {
     margin-top: 0px;
 }
 
+#nomApp{
+	text-transform: uppercase;
+	font-size: 2rem;
+	margin: 0;
+	font-family: 'Montserrat', serif;
+}
 </style>

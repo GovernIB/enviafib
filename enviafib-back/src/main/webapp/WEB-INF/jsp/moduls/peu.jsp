@@ -3,9 +3,9 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
 <%@include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
-<footer id="footer">
+<footer id="footer" >
 
-	<div class="row mr-auto ml-3 mr-3 peuResponsive">
+	<div class="row peuResponsive">
 
 		<!-- Esquerra -->
 		<div class="col-4 pt-2 elementPeuResponsive">

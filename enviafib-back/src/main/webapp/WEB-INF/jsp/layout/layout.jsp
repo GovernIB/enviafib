@@ -5,6 +5,9 @@
     xml:lang="<c:out value="${pageContext.response.locale.language}"/>"
     lang="<c:out value="${pageContext.response.locale.language}"/>">
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet" >
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:wght@300;400&display=swap" rel="stylesheet" >
+
 <c:if test="${loginInfo.necesitaConfigurar}">
 	
 	<%-- <c:if test="${not empty loginInfo.error}">
@@ -33,7 +36,7 @@
     <div class="row-fluid container main" style="max-width: none;">
 
 <c:if test = "${!(efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN'))}">
-        <ul class="nav nav-tabs custom-submenu">
+        <ul class="nav nav-tabs custom-submenu" style="padding: 0 0 0 1rem !important;">
 			
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 	            <li class="nav-item"><a
@@ -89,7 +92,7 @@
         <%-- FINAL DIV PIPELLES --%>
     </div>
 
-    <div class="container-fluid">
+    <div style="margin: 0px 5rem;">
         <tiles:insertAttribute name="peu">
         </tiles:insertAttribute>
     </div>

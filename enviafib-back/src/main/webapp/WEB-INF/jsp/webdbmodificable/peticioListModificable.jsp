@@ -311,6 +311,11 @@ th span {
 td:nth-child(1), td:nth-child(5) {
 	vertical-align: middle !important;
 }
+td:nth-child(2) {
+    text-align: left;
+    padding-left: 1rem;
+}
+
 
 td:last-child {
 	width: 0px;

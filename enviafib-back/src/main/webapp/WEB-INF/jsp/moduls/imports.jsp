@@ -159,7 +159,7 @@ body {
 }
 
 .well.well-white {
-    padding: 20px;
+    padding: 20px 0.75rem ;
     margin: 0rem 4rem;
 }
 
@@ -183,7 +183,7 @@ ul {
 }
 
 form {
-    padding: 1rem;
+    padding: 0.75rem;
     padding-top: 0px;
 }
 
