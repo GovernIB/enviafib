@@ -221,7 +221,7 @@ function reintentarTancamentExpedient(peticioId) {
     padding: 0.5rem !important;
 	margin-bottom: 1.25rem !important;
 	background-image:
-		url(/enviafib/img/background-pattern.png)
+        url(<c:url value="/img/background-pattern.png"></c:url>);
 		!important;
     min-width: 41rem;
 }

@@ -154,8 +154,7 @@
 
 <style>
 body {
-    background-image:
-        url(/enviafib/img/background-pattern.png);
+    background-image: url(<c:url value="/img/background-pattern.png"></c:url>);
 }
 
 .well.well-white {

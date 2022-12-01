@@ -310,14 +310,14 @@
 						<defaultLibBundleDir>lib</defaultLibBundleDir>
 	
 						<modules>
-	
+
 							<webModule>
 								<groupId>es.caib.enviafib</groupId>
 								<artifactId>enviafib-back</artifactId>
-								<contextRoot>enviafib</contextRoot>
+								<contextRoot>enviafibfront</contextRoot>
 	                            <bundleFileName>enviafib-back.war</bundleFileName>
 							</webModule>
-	
+
 							<ejbModule>
 								<groupId>es.caib.enviafib</groupId>
 								<artifactId>enviafib-ejb</artifactId>

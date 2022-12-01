@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.ironjacamar.org/doc/schema"
+             xsi:schemaLocation="http://www.ironjacamar.org/doc/schema
+             http://www.ironjacamar.org/doc/schema/datasources_1_2.xsd">
+
+    <datasource jndi-name="java:jboss/datasources/enviafibDS" pool-name="enviafibDS">
+        <connection-url>jdbc:oracle:thin:@localhost:1521:sid</connection-url>
+        <driver>oracle</driver>
+        <new-connection-sql>BEGIN EXECUTE IMMEDIATE 'ALTER SESSION SET CURRENT_SCHEMA = enviafib'; END;
+        </new-connection-sql>
+        <security>
+            <user-name>www_enviafib</user-name>
+            <password>www_enviafib</password>
+        </security>
+    </datasource>
+
+</datasources>
