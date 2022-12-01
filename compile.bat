@@ -3,7 +3,7 @@
 echo optional parameters -Dcaib -Psqlgen
 
 cmd /C mvn clean install -DskipTests %* 
-
+ 
 if %errorlevel% EQU 0 (
 
 	@echo off
