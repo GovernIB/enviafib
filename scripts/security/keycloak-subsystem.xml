@@ -12,6 +12,14 @@
 		<principal-attribute>preferred_username</principal-attribute>
 		<verify-token-audience>true</verify-token-audience>
 	</secure-deployment>
+	<secure-deployment name="enviafib-front.war">
+		<realm>GOIB</realm>
+		<resource>goib-default</resource>
+		<use-resource-role-mappings>true</use-resource-role-mappings>
+		<public-client>true</public-client>
+		<principal-attribute>preferred_username</principal-attribute>
+		<verify-token-audience>true</verify-token-audience>
+	</secure-deployment>
 	<secure-deployment name="enviafib-api-externa.war">
 		<realm>GOIB</realm>
 		<resource>goib-ws</resource>

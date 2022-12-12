@@ -12,6 +12,7 @@
 		<module>enviafib-ejb</module>
 		<module>enviafib-commons</module>
 		<module>enviafib-back</module>
+		<module>enviafib-front</module>
 		<module>enviafib-api-interna</module>
 		<module>enviafib-ear</module>
 		<module>scripts</module>

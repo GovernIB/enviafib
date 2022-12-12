@@ -131,3 +131,9 @@ installCerts.bat
 /doc/QuadernDeCarrega/enviafib_1.0.4_20221122/fitxers
 /doc/QuadernDeCarrega/enviafib_1.0.4/fitxers
 /doc/QuadernDeCarrega/enviafib_1.0.5/fitxers
+/enviafib-front/.project
+/enviafib-front/.settings
+/enviafib-front/target
+/enviafib-front/.classpath
+/database.odb
+/front.bat

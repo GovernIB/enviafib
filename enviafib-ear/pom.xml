@@ -41,6 +41,13 @@
 			<type>war</type>
 		</dependency>
 		
+		<dependency>
+			<groupId>es.caib.enviafib</groupId>
+			<artifactId>enviafib-front</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+		
 		
 		<!-- API INTERNA START -->
 		<dependency>
@@ -314,8 +321,15 @@
 							<webModule>
 								<groupId>es.caib.enviafib</groupId>
 								<artifactId>enviafib-back</artifactId>
-								<contextRoot>enviafibfront</contextRoot>
+								<contextRoot>enviafibback</contextRoot>
 	                            <bundleFileName>enviafib-back.war</bundleFileName>
+							</webModule>
+							
+							<webModule>
+						    <groupId>es.caib.enviafib</groupId>
+								<artifactId>enviafib-front</artifactId>
+								<contextRoot>enviafibfront</contextRoot>
+	                            <bundleFileName>enviafib-front.war</bundleFileName>
 							</webModule>
 
 							<ejbModule>
