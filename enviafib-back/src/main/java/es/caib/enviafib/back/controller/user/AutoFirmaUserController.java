@@ -315,7 +315,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
             transactionID = apiWeb.getTransactionID(commonInfoSignature);
             log.info("TransactionID = |" + transactionID + "|");
 
-            final String signID = "SignID_" + peticio.getPeticioID();
+            final String signID = SIGNID;
             final String location = null; // form.getLocation();
             final String langDoc = peticio.getIdiomaDoc();
             final String reason = peticio.getReason();
