@@ -280,4 +280,12 @@ mostrarOcultarCampsAvanzats();
 
 </script>
 
+<!-- Canviar la paraula GUARDAR per una altra que sigui més explicativa #272 -->
+<script type="text/javascript"> 
+    var msg = '<fmt:message key="peticiodefirma.continuar"/>';
+    document.querySelector('input[type="submit"]').value = msg; 
+</script>
+
+
+
 
