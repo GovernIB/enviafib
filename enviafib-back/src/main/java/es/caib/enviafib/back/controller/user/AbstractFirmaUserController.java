@@ -216,7 +216,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
                 return peticioForm;
             }
-
+            
             peticio.setDataCreacio(new Timestamp(System.currentTimeMillis()));
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
             peticio.setErrorMsg(LogicUtils.split255(I18NUtils.tradueix("error.peticio.desconegut")));

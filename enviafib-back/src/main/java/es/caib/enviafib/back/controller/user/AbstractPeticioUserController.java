@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -106,8 +107,11 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         List<StringKeyValue> tmpList;
         tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
+        
         if (tmpList != null && !tmpList.isEmpty()) {
             java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
+        }else {
+            HtmlUtils.saveMessageError(request, "No s'han pogut obtenir els tipus documentals de portafib");
         }
         tipusDocumentalList.addAll(tmpList);
         return tipusDocumentalList;

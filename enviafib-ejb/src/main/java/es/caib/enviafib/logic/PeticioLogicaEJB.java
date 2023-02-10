@@ -61,6 +61,7 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
+import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
@@ -736,21 +737,36 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
+        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         try {
+            log.info("VAMOS A POR LOS TIPOS DOCUMENTALES");
             List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
+            log.info("YA LOS TENEMOS");
 
-            List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
             for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
-                __tmp.add(new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName()));
+                StringKeyValue skv = new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName());
+                __tmp.add(skv);
+                log.info("key: " + skv.getKey() + " - val: " + skv.getValue());
             }
 
             return __tmp;
 
-        } catch (AbstractApisIBException e) {
-            log.error("Error obtenint els tipus documentals: " + e.getMessage(), e);
-            throw new I18NException("error.tipusdocumentals.obtencio", e.getMessage());
-        }
+        } catch (Exception e) {
+            
+            String[] tipusDocumentalsENI = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+                    "13", "14", "15", "16", "17", "18", "19", "20", "51", "52", "53", "54", "55", "56", "57", "58",
+                    "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "99", };
 
+            for (String key : tipusDocumentalsENI) {
+                StringKeyValue skv = new StringKeyValue(key, I18NLogicUtils.tradueix(new Locale(lang), "td." + key));
+                __tmp.add(skv);
+                log.info("key: " + skv.getKey() + " - val: " + skv.getValue());
+            }
+            
+            log.error("Error obtenint els tipus documentals: " + e.getMessage(), e);
+//            throw new I18NException("error.tipusdocumentals.obtencio", e.getMessage());
+            return __tmp;
+        }
     }
 
     @Override
