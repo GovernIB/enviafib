@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>pluginsib-estructuraorganitzativa-api</artifactId>
 	<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<name>PluginsIB - Estructura Organitzativa - API</name>
 	<parent>
 		<artifactId>pluginsib-estructuraorganitzativa</artifactId>
 		<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
-		<version>1.0.5</version>
+		<version>1.0.6</version>
 	</parent>
 </project>
