@@ -739,14 +739,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         try {
-            log.info("VAMOS A POR LOS TIPOS DOCUMENTALES");
             List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
-            log.info("YA LOS TENEMOS");
 
             for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
                 StringKeyValue skv = new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName());
                 __tmp.add(skv);
-                log.info("key: " + skv.getKey() + " - val: " + skv.getValue());
             }
 
             return __tmp;
@@ -760,7 +757,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             for (String key : tipusDocumentalsENI) {
                 StringKeyValue skv = new StringKeyValue(key, I18NLogicUtils.tradueix(new Locale(lang), "td." + key));
                 __tmp.add(skv);
-                log.info("key: " + skv.getKey() + " - val: " + skv.getValue());
             }
             
             log.error("Error obtenint els tipus documentals: " + e.getMessage(), e);

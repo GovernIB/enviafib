@@ -62,71 +62,62 @@
 
 
         <%-- =============== OPCIONS DINAMIQUES --%>
+<%--         <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && efi:hasRole(ConstantsEnviaFIB.ROLE_ADMIN)}">
+            
+            <hr style="margin-top: 6px; margin-bottom: 6px;" />
 
-        <c:if
-            test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && efi:hasRole(ConstantsEnviaFIB.ROLE_ADMIN)}">
-<hr style="margin-top: 6px; margin-bottom: 6px;" />
-            <%-- QUAN NO TE CAP MENU ... --%>
-
+            QUAN NO TE CAP MENU ...
             <c:if test="${empty menus}">
-                <b style="color: red"> <fmt:message
-                        key="menu.error.buit" />
+                <b style="color: red"> 
+                    <fmt:message key="menu.error.buit" />
                 </b>
             </c:if>
 
-
-            <c:set var="mostrarPlantilles" value="${false}" />
-
-
             <c:forEach items="${menus}" var="menu" varStatus="varStatus">
 
-                <c:set var="urlBlack"
-                    value="${efi:getBasePathForMenu(menu)}" />
+                <c:set var="urlBlack" value="${efi:getBasePathForMenu(menu)}" />
 
-                <li
-                    style="list-style-type: disc; list-style-position: inside;">
-                    <a
-                    href="javascript:cridarOpcioMenu(${menu.menuID},${menu.tipus});">
+                <li style="list-style-type: disc; list-style-position: inside;">
+                    <a href="javascript:cridarOpcioMenu(${menu.menuID},${menu.tipus});">
                         <span style="${(fn:contains(url, urlBlack))? "font-weight:bold;" : ""}">
-                            ${menu.titolMenu.traduccions[lang].valor} </span> <i
-                        class="fas fa-info-circle"
-                        title="${menu.ajudaMenu.traduccions[lang].valor}"></i>
-                </a>
+                            ${menu.titolMenu.traduccions[lang].valor} </span> 
+                        <i class="fas fa-info-circle" title="${menu.ajudaMenu.traduccions[lang].valor}"></i>
+                    </a>
                 </li>
-                <c:if
-                    test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI}">
+                
+                <c:if test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI}">
                     <c:set var="mostrarPlantilles" value="${true}" />
                 </c:if>
             </c:forEach>
+        </c:if>
+ --%>
+
+
+        <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER)}">
+            <c:set var="mostrarPlantilles" value="${false}" />
 
             <c:if test="${mostrarPlantilles}">
 
                 <hr style="margin-top: 6px; margin-bottom: 6px;" />
 
-                <li
-                    style="list-style-type: disc; list-style-position: inside;">
-                    <a
-                    href="<c:url value="/user/plantillesfluxfirmes/list"/>">
-                        <span
-                        style="${(fn:contains(url, '/user/plantillesfluxfirmes'))? "font-weight:bold;" : ""}"><fmt:message
-                                key="plantillesfluxfirmes.plural" /></span>
-                </a>
+                <li style="list-style-type: disc; list-style-position: inside;">
+                    <a href="<c:url value="/user/plantillesfluxfirmes/list"/>">
+                        <span style="${(fn:contains(url, '/user/plantillesfluxfirmes'))? "font-weight:bold;" : ""}">
+                        <fmt:message key="plantillesfluxfirmes.plural" /></span>
+                    </a>
                 </li>
             </c:if>
-
-
         </c:if>
         
-        
+                
         <c:if
             test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && !efi:hasRole(ConstantsEnviaFIB.ROLE_ADMIN)}">
             <hr style="margin-top: 6px; margin-bottom: 6px;" />
-            <li
-                style="list-style-type: disc; list-style-position: inside;">
-                <a href="<c:url value="/user/home"/>"> <span
-                    style="${(fn:contains(url, '/home'))? "font-weight:bold;" : ""}"><fmt:message
-                            key="user.menu.home" /></span>
-            </a>
+            <li style="list-style-type: disc; list-style-position: inside;">
+                <a href="<c:url value="/user/home"/>"> 
+                    <span style="${(fn:contains(url, '/home'))? "font-weight:bold;" : ""}">
+                    <fmt:message key="user.menu.home" /></span>
+                </a>
             </li>
         </c:if>
         

@@ -30,10 +30,10 @@ import es.caib.enviafib.model.entity.Menu;
 @Component
 public class MenuPreparer implements ViewPreparer {
 
-    protected final Logger log = Logger.getLogger(getClass());
+    protected static final Logger log = Logger.getLogger(MenuPreparer.class);
 
     // NO FUNCIONA :-(  =>  @EJB(mappedName = MenuLogicaService.JNDI_NAME)
-    protected MenuLogicaService menuLogicaEjb;
+    protected static MenuLogicaService menuLogicaEjb;
 
     @Override
     public void execute(Request tilesRequest, AttributeContext attributeContext) throws PreparerException {
@@ -41,21 +41,13 @@ public class MenuPreparer implements ViewPreparer {
         Map<String, Object> request = tilesRequest.getContext("request");
 
         Object pipella = attributeContext.getAttribute("pipella");
-
-        if (
-           LoginInfo.hasRole(Constants.ROLE_USER) && getAdditionalCondition(String.valueOf(pipella))) {
-
-            List<Menu> menus = getMenuUser();
-
-            request.put("menus", menus);
-        }
     }
 
     protected boolean getAdditionalCondition(String pipella) {
-        return pipella != null && pipella.equals("user") && LoginInfo.hasRole(Constants.ROLE_ADMIN);
+        return pipella != null && pipella.equals("user");
     }
 
-    public List<Menu> getMenuUser() {
+    public static List<Menu> getMenuUser() {
         List<Menu> menus;
         try {
 

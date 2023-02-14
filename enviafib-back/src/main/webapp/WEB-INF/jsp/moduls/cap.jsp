@@ -1,7 +1,11 @@
+<%@page import="es.caib.enviafib.back.preparer.MenuPreparer"%>
+<%@page import="es.caib.enviafib.model.entity.Menu"%>
+<%@page import="java.util.List"%>
 <%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
 <%@page import="es.caib.enviafib.commons.utils.Configuracio"%>
 <%@page import="java.util.Locale"%>
 <%@page import="es.caib.enviafib.back.security.LoginInfo"%>
+<%@page import="es.caib.enviafib.back.controller.user.MenuUserController"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -59,63 +63,56 @@
 
 
                 <%--  MENÚ d'Usuari SI NOMES TE ROL EFI_USER --%>
-                <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && !efi:hasRole(ConstantsEnviaFIB.ROLE_ADMIN)}">
-                    <li class="dropdown">
+                <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && pipella eq 'user'}">
+
+					<%
+					List<Menu> menus = MenuPreparer.getMenuUser();
+					request.getSession().setAttribute("menus", menus);
+					%>
+
+					<li class="dropdown">
 
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-file-signature"></i>
                             <fmt:message key="ferfirma" />
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <c:if test="${empty menus}">
-                                <a class="dropdown-item" href="#"> <b style="color: red"> <fmt:message
-                                            key="menu.error.buit" />
-                                </b>
+                                <a class="dropdown-item" href="#">
+                                    <b style="color: red"> <fmt:message key="menu.error.buit" /></b>
                                 </a>
                             </c:if>
 
+							<c:set var="mostrarPlantilles" value="${false}" />
 
-                            <c:set var="mostrarPlantilles" value="${false}" />
-
-                            <c:forEach items="${menus}" var="menu" varStatus="varStatus">
+							<c:forEach items="${menus}" var="menu" varStatus="varStatus">
 
                                 <c:set var="urlBlack" value="${efi:getBasePathForMenu(menu)}" />
 
-                                <a class="dropdown-item ${(fn:contains(url, urlBlack))? "
-                                    active" : ""}"
-                                href="javascript:cridarOpcioMenu(${menu.menuID},${menu.tipus});">
+                                <a class="dropdown-item ${(fn:contains(url, urlBlack))? "active" : ""}"
+                                    href="javascript:cridarOpcioMenu(${menu.menuID},${menu.tipus});">
 
-                                    ${menu.titolMenu.traduccions[lang].valor} &nbsp;<i class="fas fa-info-circle"
-                                    title="${menu.ajudaMenu.traduccions[lang].valor}"></i>
+                                    ${menu.titolMenu.traduccions[lang].valor} &nbsp;
+                                    <i class="fas fa-info-circle" title="${menu.ajudaMenu.traduccions[lang].valor}"></i>
                                 </a>
 
+								<c:if test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI}">
+									<c:set var="mostrarPlantilles" value="${true}" />
+								</c:if>
 
-                                <c:if test="${menu.tipus eq ConstantsEnviaFIB.MENU_FIRMA_TIPUS_PLANTILLES_FLUX_USUARI}">
-                                    <c:set var="mostrarPlantilles" value="${true}" />
-                                </c:if>
-                            </c:forEach>
+							</c:forEach>
 
                             <c:if test="${mostrarPlantilles}">
 
                                 <hr style="margin-top: 6px; margin-bottom: 6px;" />
-
                                 <a class="dropdown-item" href="<c:url value="/user/plantillesfluxfirmes/list"/>"> <span
                                     style="${(fn:contains(url, '/user/plantillesfluxfirmes'))? "font-weight:bold;" : ""}"><fmt:message
                                             key="plantillesfluxfirmes.plural" /></span>
                                 </a>
-
                             </c:if>
-
-
-
                         </div>
-
-
-
-
-
 
                     </li>
                     <%-- Final Boto desplegable Opcions de Menu User --%>
