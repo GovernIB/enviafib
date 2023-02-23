@@ -47,7 +47,6 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleF
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleReviser;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleSignature;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleSigner;
-import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.apisib.core.exceptions.ApisIBServerException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
@@ -1170,20 +1169,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+            log.info("peticioPortaFIB: " + peticioPortaFIB);
+            log.info("languageUI: " + languageUI);
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortaFIB, languageUI);
-            String url;
-            url = api.getUrlToViewFlow(rinfo);
+            String url = api.getUrlToViewFlow(rinfo);
             return url;
+
         } catch (I18NException e) {
+            log.error("error obtenint getUrlToViewFlow: " + e);
             throw e;
         } catch (Exception e) {
             // XYZ ZZZ TRA
-            throw new I18NException("genapp.codi",
-                    "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "
-                            + e.getMessage());
-
+            String msg = "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "  + e.getMessage();
+            log.error(msg, e);
+            throw new I18NException("genapp.comodi", msg);
         }
-
     }
-
 }

@@ -155,6 +155,18 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
     </definition>
     
+    
+    <definition name="peticioListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioList.jsp" />
+    </definition>
+    
+    <definition name="peticioFormAdmin" extends="admin">
+        <put-attribute name="titol" value="peticio.peticio" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioForm.jsp" />
+    </definition>
+    
+    
+    
     <definition name="serieDocumentalFormAdmin" extends="admin">
         <put-attribute name="titol" value="serieDocumental.serieDocumental" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalForm.jsp" />

@@ -29,6 +29,10 @@ function reintentarTancamentExpedient(peticioId) {
 	${contexte}/reintentartancamentexpedient/'
 				+ peticioId + "/" + btoa(window.location);
 	}
+
+
+
+
 </script>
 
 

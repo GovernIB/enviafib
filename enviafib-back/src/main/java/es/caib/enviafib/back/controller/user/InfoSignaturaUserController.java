@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.caib.enviafib.back.controller.AbstractPeticioUserController;
 import es.caib.enviafib.back.controller.webdb.InfoSignaturaController;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaForm;

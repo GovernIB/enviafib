@@ -1,4 +1,4 @@
-package es.caib.enviafib.back.controller.user;
+package es.caib.enviafib.back.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +16,21 @@ import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.caib.enviafib.back.controller.user.AutoFirmaUserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecAddicional1UserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecAddicional2UserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecCapAreaConsellerUserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecDirectorUserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecEncarregatCompresUserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecGerentPresidentUserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecRecursosHumansUserController;
+import es.caib.enviafib.back.controller.user.FirmaCarrecSecretariUserController;
+import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
+import es.caib.enviafib.back.controller.user.FirmaPerFluxFirmaJsonUserController;
+import es.caib.enviafib.back.controller.user.FirmaPerFluxFirmaSimpleUserController;
+import es.caib.enviafib.back.controller.user.FirmaPerNifUserController;
+import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController;
+import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxUserController;
 import es.caib.enviafib.back.controller.webdb.PeticioController;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.commons.utils.Constants;
@@ -73,6 +88,15 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ADDICIONAL_1, FirmaCarrecAddicional1UserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ADDICIONAL_2, FirmaCarrecAddicional2UserController.CONTEXT_WEB);
+    }
+
+    protected String getContextWebByTipus(int tipus) {
+        String cw = firmaPathByTipus.get(tipus);
+        if (cw == null) {
+            throw new RuntimeException("S'ha de registrar el tipus de peticio " + tipus
+                    + " en el bloc static {}  de la classe " + AbstractPeticioUserController.class.getSimpleName());
+        }
+        return cw;
     }
 
     @Override

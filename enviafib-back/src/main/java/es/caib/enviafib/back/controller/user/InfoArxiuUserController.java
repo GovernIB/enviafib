@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.caib.enviafib.back.controller.AbstractPeticioUserController;
 import es.caib.enviafib.back.controller.webdb.InfoArxiuController;
 import es.caib.enviafib.back.form.webdb.InfoArxiuFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoArxiuForm;
