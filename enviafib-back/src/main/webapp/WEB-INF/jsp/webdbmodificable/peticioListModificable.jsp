@@ -28,7 +28,17 @@ function reintentarTancamentExpedient(peticioId) {
     window.location = '<%=request.getContextPath()%>
 	${contexte}/reintentartancamentexpedient/'
 				+ peticioId + "/" + btoa(window.location);
-	}
+}
+
+function reintentarArxivarTotes() {
+    $('#spinnerModal').modal(
+            {
+                backdrop : "static",
+                keyboard: false
+            });
+    var base = '<%=request.getContextPath()%>${contexte}/reintentarArxivarTotes/';
+    window.location = base + btoa(window.location);
+}
 
 
 

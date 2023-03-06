@@ -290,24 +290,47 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
+//    @Override
+//    @PermitAll
+//    @Asynchronous
+//    public void cosesAFerPeticioFirmadaPart2(long portaFIBID, String languageUI, InfoSignatura infoSignatura)
+//            throws I18NException {
+//
+//        Long peticioID = getPeticioIdFromPortafibId(portaFIBID);
+//
+//        Peticio peticio = this.findByPrimaryKey(peticioID);
+//
+//        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+//        this.update(peticio);
+//
+//        log.info("cosesAFerPeticioFirmada():: Guardam dins arxiu de forma asyncrona .... ");
+//
+//        guardarFitxerArxiuSync(peticio.getPeticioID(), languageUI, infoSignatura, Configuracio.getUrlBase());
+//
+//        //guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
+//
+//        log.info("cosesAFerPeticioFirmada()::  SORTIM !!!!! ");
+//    }
+
+
     @Override
-    @PermitAll
-    @Asynchronous
     public void cosesAFerPeticioFirmadaPart2(long portaFIBID, String languageUI, InfoSignatura infoSignatura)
             throws I18NException {
-
+    
         Long peticioID = getPeticioIdFromPortafibId(portaFIBID);
-
-        Peticio peticio = this.findByPrimaryKey(peticioID);
-
-        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-        this.update(peticio);
-
+        String urlBase = Configuracio.getUrlBase();
+    
         log.info("cosesAFerPeticioFirmada():: Guardam dins arxiu de forma asyncrona .... ");
+        Peticio peticio = findByPrimaryKey(peticioID);
 
-        guardarFitxerArxiuSync(peticio.getPeticioID(), languageUI, infoSignatura, Configuracio.getUrlBase());
+        guardarPeticioArxiu(peticio, languageUI, infoSignatura, urlBase);
+    
 
-        //guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
+        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+            log.info("S'ha arxivar correctament");
+        } else {
+            log.error("Error arxivant: " + peticio.getErrorMsg());
+        }
 
         log.info("cosesAFerPeticioFirmada()::  SORTIM !!!!! ");
     }
@@ -349,38 +372,78 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     */
 
     @Override
-    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException {
+    @PermitAll
+    @Asynchronous
+    public void guardarPeticioArxiu(Peticio peticio, String languageUI, InfoSignatura infoSignatura, String urlBase)
+            throws I18NException {
 
-        {
-            Peticio peticio = findByPrimaryKey(peticioID);
-            peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-            this.update(peticio);
-        }
-
-        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
-                PeticioFields.PETICIOID.equal(peticioID));
-        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
-
-        Peticio peticio;
+        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+        this.update(peticio);
+        
+        long peticioID = peticio.getPeticioID();
         try {
-            log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
+            log.info("Guardant Peticio " + peticioID + " dins d'Arxiu.");
             peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
         } catch (Exception e) {
             // XYZ ZZZ TMP
             log.error("Future.get() ha llança un error: " + e.getMessage(), e);
             peticio = null;
         }
-
-        String msg;
-        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
-            msg = null;
-        } else {
-            msg = peticio.getErrorMsg();
-        }
-
-        return msg;
     }
 
+    
+    @Override
+    public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String languageUI, String urlBase)
+            throws I18NException {
+
+        InfoSignatura infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaID);
+        Peticio peticio = findByPrimaryKey(peticioID);
+
+        guardarPeticioArxiu(peticio, languageUI, infoSignatura, urlBase);
+
+        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+            return null;
+        } else {
+            return peticio.getErrorMsg();
+        }
+    }
+    
+//    @Override
+//    @PermitAll
+//    @Asynchronous
+//    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException {
+//
+//        {
+//            Peticio peticio = findByPrimaryKey(peticioID);
+//            peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+//            this.update(peticio);
+//        }
+//
+//        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
+//                PeticioFields.PETICIOID.equal(peticioID));
+//        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
+//
+//        Peticio peticio;
+//        try {
+//            log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
+//            peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
+//        } catch (Exception e) {
+//            // XYZ ZZZ TMP
+//            log.error("Future.get() ha llança un error: " + e.getMessage(), e);
+//            peticio = null;
+//        }
+//
+//        String msg;
+//        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+//            msg = null;
+//        } else {
+//            msg = peticio.getErrorMsg();
+//        }
+//
+//        return msg;comp
+//    }
+
+    
     @Override
     public String reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException {
 
@@ -1184,5 +1247,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             log.error(msg, e);
             throw new I18NException("genapp.comodi", msg);
         }
+    }
+
+    @Override
+    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

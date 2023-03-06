@@ -80,6 +80,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
     @Override
     public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignatura infoSignatura) {
 
+        log.info("custodiaAmbApiArxiu:: START. \n\n================ PeticioID=" + peticio.getPeticioID() + "================ \n");
         IArxiuPlugin plugin;
 
         try {
@@ -197,7 +198,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             {
                 final String interessatsStr = peticio.getArxiuReqParamInteressats();
-                log.info("\n\n\n     INTERESSATS STR => " + interessatsStr  + "\n\n\n");
+                log.info("INTERESSATS STR => " + interessatsStr);
                 List<String> intresessatsList = LogicUtils.stringToListString(interessatsStr);
                 
                 if (intresessatsList == null) {
@@ -419,6 +420,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             documentPerCrear.setNom(nomDocument);
 
             log.info("XYZ ZZZ TMP Creant document ... ");
+            log.info("XYZ ZZZ TMP expedientId=" + expedientId);
+            log.info("XYZ ZZZ TMP documentPerCrear=" + documentPerCrear);
 
             ContingutArxiu documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
 

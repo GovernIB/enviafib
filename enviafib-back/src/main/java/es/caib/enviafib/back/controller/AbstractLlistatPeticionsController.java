@@ -40,6 +40,7 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
+import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.DocumentContingut;
 import es.caib.plugins.arxiu.api.IArxiuPlugin;
@@ -105,13 +106,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             peticioFilterForm.setAddButtonVisible(false);
             peticioFilterForm.setEditButtonVisible(false);
             peticioFilterForm.setDeleteButtonVisible(false);
-            
-            List<Field<?>> newFilterBy =  new ArrayList<Field<?>>(peticioFilterForm.getDefaultFilterByFields()); 
+
+            List<Field<?>> newFilterBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultFilterByFields());
             newFilterBy.add(NOM);
             newFilterBy.add(DATACREACIO);
             newFilterBy.add(DATAFINAL);
             peticioFilterForm.setFilterByFields(newFilterBy);
-            
 
             peticioFilterForm.setVisibleFilterBy(false);
 
@@ -144,10 +144,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 .getValueMap();
         mapRemitent.clear();
 
-        for (Peticio pf : list) {
+        for (Peticio peticio : list) {
             String color;
             ArrayList<String> iconList = new ArrayList<String>();
-            switch ((int) pf.getEstat()) {
+            int estat = (int) peticio.getEstat();
+
+            switch (estat) {
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     color = "green";
                     iconList.add("fas fa-file-signature");
@@ -156,7 +158,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 case Constants.ESTAT_PETICIO_ARXIVANT:
                     color = "orange";
-                    if (pf.getEstat() == Constants.ESTAT_PETICIO_EN_PROCES) {
+                    if (estat == Constants.ESTAT_PETICIO_EN_PROCES) {
                         iconList.add("fas fa-user-clock");
                     } else {
                         iconList.add("fas fa-spinner");
@@ -168,9 +170,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                     color = "red";
                     iconList.add("fas fa-exclamation-triangle");
-                    if (pf.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
+                    if (estat == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                         iconList.add("fas fa-archive");
-                    } else if (pf.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
+                    } else if (estat == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                         iconList.add("fas fa-lock");
                     }
                 break;
@@ -184,68 +186,70 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             StringBuffer iconsStr = new StringBuffer();
 
             for (String i : iconList) {
-                String title = I18NUtils.tradueix("estat." + pf.getEstat());
+                String title = I18NUtils.tradueix("estat." + estat);
                 iconsStr.append("<i class='" + i + "' style='color:" + color + ";' title='" + title + "'></i>");
             }
 
-            mapRemitent.put(pf.getPeticioID(), "<center>" + iconsStr.toString() + "</center>");
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
 
-            switch (peticio.getEstat()) {
+            mapRemitent.put(peticioID, "<center>" + iconsStr.toString() + "</center>");
+
+            switch (estat) {
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-user-friends", "flux.info", getContextWeb() + "/fluxinfo/" + peticioID, "btn-info"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-user-friends",
+                            "flux.info", getContextWeb() + "/fluxinfo/" + peticioID, "btn-info"));
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
+                            "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient", "javascript: reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
+                                    "javascript: reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
                 case Constants.ESTAT_PETICIO_FIRMADA:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ", "peticio.btn.sendmail", "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",
+                            "peticio.btn.sendmail", "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
 
-                    String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV, InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf", "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + csv, "btn-info"));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea", "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
+                    String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
+                            InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
+                            "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + csv, "btn-info"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
+                            "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
+                                    getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
                 break;
                 default:
                 break;
             }
 
             if (peticio.getInfoArxiuID() == null) {
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-trash ", "peticio.btn.delete", "javascript: openModal('"+ request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')", "btn-danger"));
+                filterForm.addAdditionalButtonByPK(peticioID,
+                        new AdditionalButton("fas fa-trash ", "peticio.btn.delete", "javascript: openModal('"
+                                + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
+                                "btn-danger"));
             }
-
         }
-        
-        
-        
-        
     }
 
     @RequestMapping(value = "/reintentararxivat/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String reintentarArxivat(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
+            @PathVariable("peticioId") Long peticioID, @PathVariable("windowUrl") String windowUrl) {
 
         try {
-
             // Decodificam la URL que arriba en base64
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
-            String msg = peticioLogicaEjb.reintentarGuardarFitxerArxiu(peticioId,
-                    LocaleContextHolder.getLocale().getLanguage(),
-                    Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
+            String languageUI = LocaleContextHolder.getLocale().getLanguage();
+            String url = Configuracio.getUrlBase(decodedUrl, request.getContextPath());
+
+            Long infoSignaturaID = peticioLogicaEjb.executeQueryOne(PeticioFields.INFOSIGNATURAID,
+                    PeticioFields.PETICIOID.equal(peticioID));
+
+            String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
 
             if (msg == null) {
                 HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
@@ -413,7 +417,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID, InfoArxiuFields.CSV.equal(csv));
         log.info("internalDownload(): -> docID: " + docID);
 
-//        Long pluginID = 1001L;
+        //        Long pluginID = 1001L;
         IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
 
         byte[] data = null;
@@ -478,7 +482,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             e.printStackTrace();
         }
     }
-    
+
     @RequestMapping(value = "/fluxinfo/{peticioID}", method = RequestMethod.GET)
     public String fluxInfo(@PathVariable("peticioID") java.lang.Long peticioID, HttpServletRequest request,
             HttpServletResponse response) throws I18NException {
@@ -492,6 +496,5 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         return "redirect:" + url;
 
     }
-
 
 }
