@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.AbstractPeticioUserController;
+import es.caib.enviafib.back.controller.admin.LlistatPeticionsAdminController;
 import es.caib.enviafib.back.controller.webdb.InfoSignaturaController;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaForm;
@@ -31,11 +32,14 @@ import es.caib.enviafib.persistence.InfoSignaturaJPA;
  */
 @Controller
 @RequestMapping(value = "/user/infoSignatura")
-@SessionAttributes(types = { InfoSignatura.class, InfoSignatura.class })
+@SessionAttributes(types = { InfoSignaturaForm.class, InfoSignaturaFilterForm.class })
 public class InfoSignaturaUserController extends InfoSignaturaController {
 
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+
+    @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoSignaturaLogicaService infoSignaturaLogicEjb;
 
     @Override
     public boolean isActiveList() {
@@ -170,32 +174,47 @@ public class InfoSignaturaUserController extends InfoSignaturaController {
         return __tmp;
     }
 
+    public boolean isAdmin() {
+        return false;
+    }
+
     @Override
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long infosignaturaid) {
 
         try {
-            Select2Columns<Long, Integer> s2c;
-            s2c = new Select2Columns<Long, Integer>(PeticioFields.PETICIOID.select, PeticioFields.TIPUS.select);
-            List<Select2Values<Long, Integer>> list;
-            list = peticioLogicaEjb.executeQuery(s2c, PeticioFields.INFOSIGNATURAID.equal(infosignaturaid));
+            if (isAdmin()) {
+                Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID, PeticioFields.INFOSIGNATURAID.equal(infosignaturaid));
+                String context = LlistatPeticionsAdminController.CONTEXT;
+                return "redirect:" + context + "/view/" + peticioID;
+            } else {
 
-            if (list == null || list.size() != 1) {
-                //            HtmlUtils.saveMessageError(request, msg);
-                log.error(
-                        "InfoSignaturaUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat",
-                        new Exception());
-                return AbstractFirmaUserController.getRedirectToList();
+                Select2Columns<Long, Integer> s2c;
+                s2c = new Select2Columns<Long, Integer>(PeticioFields.PETICIOID.select, PeticioFields.TIPUS.select);
+                List<Select2Values<Long, Integer>> list;
+                list = peticioLogicaEjb.executeQuery(s2c, PeticioFields.INFOSIGNATURAID.equal(infosignaturaid));
+
+                if (list == null || list.size() != 1) {
+                    //            HtmlUtils.saveMessageError(request, msg);
+                    log.error("InfoArxiuUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat",
+                            new Exception());
+                    return AbstractFirmaUserController.getRedirectToList();
+                }
+
+                Long peticioID = list.get(0).getValue1();
+                Integer tipus = list.get(0).getValue2();
+                
+                String context = AbstractPeticioUserController.firmaPathByTipus.get(tipus);
+                return "redirect:" + context + "/view/" + peticioID;
             }
-
-            Long peticioID = list.get(0).getValue1();
-            Integer tipus = list.get(0).getValue2();
-            String context = AbstractPeticioUserController.firmaPathByTipus.get(tipus);
-            return "redirect:" + context + "/view/" + peticioID;
         } catch (I18NException e) {
-            log.error("InfoSignaturaUserController:: getRedirectWhenCancel: La consulta no no ha be", e);
+            log.error("InfoArrxiuUserController:: getRedirectWhenCancel: La consulta no no ha be", e);
             return AbstractFirmaUserController.getRedirectToList();
         }
-
     }
 
+    @Override
+    public InfoSignaturaJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long infoSignaturaID)
+            throws I18NException {
+        return (InfoSignaturaJPA) infoSignaturaLogicEjb.findByPrimaryKeyPublic(infoSignaturaID);
+    }
 }

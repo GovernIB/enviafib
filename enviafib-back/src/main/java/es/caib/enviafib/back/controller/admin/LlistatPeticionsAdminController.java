@@ -41,10 +41,11 @@ import es.caib.enviafib.persistence.PeticioJPA;
  *
  */
 @Controller
-@RequestMapping(value = "/admin/peticio")
+@RequestMapping(value = LlistatPeticionsAdminController.CONTEXT)
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class, PeticioMultipleForm.class })
 public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsController {
 
+    public static final String CONTEXT = "/admin/peticio";
     
     public static final String VISTA_FULL_VIEW = "fullView";
     public static final String VISTA_ERROR = "error";
@@ -126,6 +127,18 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
                 
             }
             peticioForm.setHiddenFields(hiddens);
+
+            Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
+            if (infosignaturaID != null) {
+                peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
+                        "/admin/infoSignatura/view/" + infosignaturaID, "btn-info"));
+            }
+            Long infoArxiuID = peticioForm.getPeticio().getInfoArxiuID();
+            if (infoArxiuID != null) {
+                peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "user.infoarxiu",
+                        "/admin/infoArxiu/view/" + infoArxiuID, "btn-info"));
+            }
+
         }
 
 
@@ -177,7 +190,6 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             request.getSession().setAttribute("PETICIONS_REINTENTAR_ARXIU", list);
             filterForm.addAdditionalButton(new AdditionalButton("fas fa-cogs icon-white", "peticio.arxiu.reintentar.tots",
                     "javascript: reintentarArxivarTotes()",
-//                    getContextWeb() + "/reintentarArxivarTotes/", 
                     "btn-warning"));
         }
         super.postList(request, mav, filterForm, list);

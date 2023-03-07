@@ -15,7 +15,7 @@ public interface InfoSignaturaLogicaService extends InfoSignaturaService{
 
     public static final String JNDI_NAME = "java:app/enviafib-ejb/InfoSignaturaLogicaEJB!es.caib.enviafib.logic.InfoSignaturaLogicaService";
 
-    public InfoSignaturaJPA findByPrimaryKey(Long _ID_);
+    public InfoSignaturaJPA findByPrimaryKeyPublic(Long _ID_);
     
     public InfoSignatura createPublic(InfoSignatura instance) throws I18NException;
 

@@ -53,8 +53,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
 
-    @EJB(mappedName = es.caib.enviafib.ejb.InfoSignaturaService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.InfoSignaturaService infoSignaturaEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoSignaturaLogicaService infoSignaturaLogicEjb;
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb;
@@ -75,15 +75,11 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         firmaPathByTipus.put(TIPUS_PETICIO_PLANTILLAFLUX_USUARI, FirmaPlantillaFluxUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT, FirmaPlantillaFluxEntitatUserController.CONTEXT_WEB);
 
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_GERENT_PRESIDENT,
-                FirmaCarrecGerentPresidentUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPAREA_CONSELLER,
-                FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR,
-                FirmaCarrecDirectorUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_GERENT_PRESIDENT, FirmaCarrecGerentPresidentUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPAREA_CONSELLER, FirmaCarrecCapAreaConsellerUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_CAPDEPARTAMENT_DIRECTOR, FirmaCarrecDirectorUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_SECRETARI, FirmaCarrecSecretariUserController.CONTEXT_WEB);
-        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ENCARREGAT_COMPRES,
-                FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB);
+        firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ENCARREGAT_COMPRES, FirmaCarrecEncarregatCompresUserController.CONTEXT_WEB);
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_RECURSOS_HUMANS, FirmaCarrecRecursosHumansUserController.CONTEXT_WEB);
 
         firmaPathByTipus.put(TIPUS_PETICIO_CARREC_ADDICIONAL_1, FirmaCarrecAddicional1UserController.CONTEXT_WEB);

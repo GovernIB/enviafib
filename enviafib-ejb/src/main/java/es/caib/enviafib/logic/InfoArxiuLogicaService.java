@@ -7,6 +7,8 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.ejb.InfoArxiuService;
 import es.caib.enviafib.model.entity.InfoArxiu;
+import es.caib.enviafib.persistence.InfoArxiuJPA;
+import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
 /**
  * 
@@ -21,4 +23,5 @@ public interface InfoArxiuLogicaService extends InfoArxiuService {
     
     public InfoArxiu createPublic(InfoArxiu instance) throws I18NException;
 
+    public InfoArxiuJPA findByPrimaryKeyPublic(Long _ID_);
 }

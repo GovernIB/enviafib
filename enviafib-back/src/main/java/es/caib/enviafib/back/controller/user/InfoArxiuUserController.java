@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.AbstractPeticioUserController;
+import es.caib.enviafib.back.controller.admin.LlistatPeticionsAdminController;
 import es.caib.enviafib.back.controller.webdb.InfoArxiuController;
 import es.caib.enviafib.back.form.webdb.InfoArxiuFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoArxiuForm;
@@ -28,11 +29,14 @@ import es.caib.enviafib.persistence.InfoArxiuJPA;
  */
 @Controller
 @RequestMapping(value = "/user/infoArxiu")
-@SessionAttributes(types = { InfoArxiu.class, InfoArxiu.class })
+@SessionAttributes(types = { InfoArxiuForm.class, InfoArxiuFilterForm.class })
 public class InfoArxiuUserController extends InfoArxiuController {
 
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+
+    @EJB(mappedName = es.caib.enviafib.logic.InfoArxiuLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoArxiuLogicaService infoArxiuLogicEjb;
 
     @Override
     public boolean isActiveList() {
@@ -112,31 +116,47 @@ public class InfoArxiuUserController extends InfoArxiuController {
         return infoArxiuFilterForm;
     }
 
+    public boolean isAdmin() {
+        return false;
+    }
+    
     @Override
     public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long infoarxiuid) {
 
         try {
-            Select2Columns<Long, Integer> s2c;
-            s2c = new Select2Columns<Long, Integer>(PeticioFields.PETICIOID.select, PeticioFields.TIPUS.select);
-            List<Select2Values<Long, Integer>> list;
-            list = peticioLogicaEjb.executeQuery(s2c, PeticioFields.INFOARXIUID.equal(infoarxiuid));
+            if (isAdmin()) {
+                Long peticioID = peticioLogicaEjb.executeQueryOne(PeticioFields.PETICIOID, PeticioFields.INFOARXIUID.equal(infoarxiuid));
+                String context = LlistatPeticionsAdminController.CONTEXT;
+                return "redirect:" + context + "/view/" + peticioID;
+            } else {
 
-            if (list == null || list.size() != 1) {
-                //            HtmlUtils.saveMessageError(request, msg);
-                log.error("InfoArxiuUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat",
-                        new Exception());
-                return AbstractFirmaUserController.getRedirectToList();
+                Select2Columns<Long, Integer> s2c;
+                s2c = new Select2Columns<Long, Integer>(PeticioFields.PETICIOID.select, PeticioFields.TIPUS.select);
+                List<Select2Values<Long, Integer>> list;
+                list = peticioLogicaEjb.executeQuery(s2c, PeticioFields.INFOARXIUID.equal(infoarxiuid));
+
+                if (list == null || list.size() != 1) {
+                    //            HtmlUtils.saveMessageError(request, msg);
+                    log.error("InfoArxiuUserController:: getRedirectWhenCancel: La consulta no ha retornat cap resultat",
+                            new Exception());
+                    return AbstractFirmaUserController.getRedirectToList();
+                }
+
+                Long peticioID = list.get(0).getValue1();
+                Integer tipus = list.get(0).getValue2();
+                
+                String context = AbstractPeticioUserController.firmaPathByTipus.get(tipus);
+                return "redirect:" + context + "/view/" + peticioID;
             }
-
-            Long peticioID = list.get(0).getValue1();
-            Integer tipus = list.get(0).getValue2();
-            String context = AbstractPeticioUserController.firmaPathByTipus.get(tipus);
-            return "redirect:" + context + "/view/" + peticioID;
         } catch (I18NException e) {
             log.error("InfoArrxiuUserController:: getRedirectWhenCancel: La consulta no no ha be", e);
             return AbstractFirmaUserController.getRedirectToList();
         }
-
     }
+
+    @Override
+    public InfoArxiuJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long infoArxiuID) throws I18NException {
+        return (InfoArxiuJPA) infoArxiuLogicEjb.findByPrimaryKeyPublic(infoArxiuID);
+      }
 
 }

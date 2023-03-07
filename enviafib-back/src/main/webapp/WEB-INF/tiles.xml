@@ -118,20 +118,6 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/detallsinfosignatura.jsp" />
     </definition>
 
-    <definition name="infoSignaturaFormUser" extends="user">
-        <put-attribute name="titol" value="infoSignatura.infoSignatura" />
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaForm.jsp" />
-    </definition>
-    
-    <definition name="infoSignaturaListUser" extends="user">
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaList.jsp" />
-    </definition>
-	
-	<definition name="infoArxiuFormUser" extends="user">
-        <put-attribute name="titol" value="infoArxiu.infoArxiu" />
-        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuForm.jsp" />
-    </definition>
-  
     <definition name="flowview" extends="user">
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/urlflow_iframe.jsp" />
     </definition>
@@ -139,6 +125,24 @@
     <definition name="finaliframe" extends="fullview">
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/final_iframe.jsp" />
     </definition>
+
+
+
+
+
+
+    <definition name="infoSignaturaFormUser" extends="user">
+        <put-attribute name="titol" value="infoSignatura.infoSignatura" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaForm.jsp" />
+    </definition>
+    
+    <definition name="infoArxiuFormUser" extends="user">
+        <put-attribute name="titol" value="infoArxiu.infoArxiu" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuForm.jsp" />
+    </definition>
+
+
+
 
     <!--  ===========  ADMIN  ================== -->
         
@@ -240,6 +244,20 @@
     <definition name="organitzacioListAdmin" extends="admin">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/organitzacioList.jsp" />
     </definition>
+
+
+
+    <definition name="infoSignaturaFormAdmin" extends="admin">
+        <put-attribute name="titol" value="infoSignatura.infoSignatura" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoSignaturaForm.jsp" />
+    </definition>
+    
+    <definition name="infoArxiuFormAdmin" extends="admin">
+        <put-attribute name="titol" value="infoArxiu.infoArxiu" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuForm.jsp" />
+    </definition>
+
+
 
     
     

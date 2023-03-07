@@ -185,6 +185,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
                             "/user/infoSignatura/view/" + infosignaturaID, "btn-info"));
+                    
                     Long infoArxiuID = peticioForm.getPeticio().getInfoArxiuID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "user.infoarxiu",
                             "/user/infoArxiu/view/" + infoArxiuID, "btn-info"));
@@ -352,7 +353,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             HtmlUtils.saveMessageError(request, "Error. No hi ha informació d'aquesta signatura.");
 
         } else {
-            InfoSignatura is = infoSignaturaEjb.findByPrimaryKey(infoSignaturaID);
+            InfoSignatura is = infoSignaturaLogicEjb.findByPrimaryKeyPublic(infoSignaturaID);
             log.info("      -> InfoSignaturaID: " + is.getInfoSignaturaID());
 
             ModelAndView mav = new ModelAndView("detallsinfosignatura");
