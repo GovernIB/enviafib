@@ -11,6 +11,7 @@ import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import org.fundaciobit.genapp.common.web.form.BaseForm;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.ejb.EJB;
 
@@ -63,5 +64,24 @@ public abstract class EnviaFIBFilesBaseController<I extends IGenAppEntity,PK ext
     }
     return true;
   }
+
+  /**
+   * 
+   * @param mav
+   * @param pagina
+   * @param itemsPerPagina
+   * @param total
+   */
+  @Override
+  public void omplirDadesPaginacio(ModelAndView mav, Integer pagina, Integer itemsPerPagina,
+      Long total) {
+    
+      super.omplirDadesPaginacio(mav, pagina, itemsPerPagina, total);
+
+      mav.addObject("totalItems", total);
+      mav.addObject("itemsPerPagina", itemsPerPagina);
+      mav.addObject("pagina", pagina);
+  }
+  
 
 }

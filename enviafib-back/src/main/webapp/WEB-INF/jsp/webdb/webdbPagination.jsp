@@ -31,7 +31,6 @@ function reassignAction() {
     <div class="col-3" style="text-align: left;"
         id="${formName}_pagination_left">
         <c:if test="${__theFilterForm.visibleExportList}">
-
             <%
             for (IDataExporter dataExporter : DataExporterManager.getAllDataExporters()) {
             %>
@@ -45,7 +44,27 @@ function reassignAction() {
             }
             %>
         </c:if>
-    </div>
+
+		<div id="infoNumRegistres">
+			<c:set var="start" value="${(pagina-1) * itemsPerPagina + 1}" />
+
+			<c:set var="end"
+				value="${(start + itemsPerPagina > totalItems) ? totalItems : (start + itemsPerPagina - 1)}" />
+
+			<fmt:message key="show.results.from.to" var="showNResults">
+				<fmt:param> ${start} </fmt:param>
+				<fmt:param> ${end} </fmt:param>
+				<fmt:param> ${totalItems} </fmt:param>
+
+<%-- 				<fmt:param>
+					<fmt:message key="${__theFilterForm.entityNameCodePlural}" />
+				</fmt:param>
+ --%>
+			</fmt:message>
+			<c:out value="${showNResults}" />
+		</div>
+
+	</div>
 
 
     <div class="col-6 text-center"

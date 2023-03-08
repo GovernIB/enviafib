@@ -39,29 +39,9 @@
 	</div>
 
 	<div class="clearfix"></div>
-
-
-<%--     <div id="infoNumRegistres">
-		<fmt:message key="show.n.results" var="showNResults">
-			<fmt:param>
-				<fmt:message key="${__entry.value.codeName}" />
-                5
-			</fmt:param>
-            <fmt:param>
-               <fmt:message key="${__entry.value.codeName}" />
-                16
-            </fmt:param>
-		</fmt:message>
-		<c:out value="${showNResults}" />
-	</div>
- --%>    
-
 </div>
 
 <script>
-
-/* $("#GroupDiv").after($("#infoNumRegistres")); */
-
 $('#ocultar').click(function() {
         show('#mostrarMenu');
 		hide('#ocultarMenu');
@@ -141,11 +121,15 @@ $('#ocultar').click(function() {
 #contingut {
     width: 100%;
 }
+</style>
 
-/* #infoNumRegistres{
-    margin-bottom: 5px;
-}
- */
- 
+<<script type="text/javascript">
+$("#GroupDiv").after($("#infoNumRegistres"));
+</script>
+
+<style>
+    #infoNumRegistres{
+        margin-bottom: 5px;
+    }
 </style>
 

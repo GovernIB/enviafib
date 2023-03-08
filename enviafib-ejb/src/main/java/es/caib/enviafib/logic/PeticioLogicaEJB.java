@@ -147,7 +147,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         FirmaAsyncSimpleFile fitxerAAnexar = null;
         ApiFirmaAsyncSimple api = null;
         api = getApiFirmaAsyncSimple();
-
+        
         Long idPortafib;
 
         try {
