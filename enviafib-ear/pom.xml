@@ -58,7 +58,6 @@
 		</dependency>
 		<!-- API INTERNA END -->
 
-
 		<!-- Tenir en compte a l'hora de incloure dependències només si és imprescindible 
 			i no està ja dins un mòdul sobre el que es pugui establir una dependència 
 			als descriptors. https://docs.jboss.org/author/display/AS72/Implicit+module+dependencies+for+deployments -->
@@ -66,8 +65,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
-
-
 
 		<!-- Externes -->
 		<!-- ====================================== -->
@@ -102,6 +99,18 @@
 					<groupId>org.jboss.resteasy</groupId>
 					<artifactId>resteasy-jackson2-provider</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -126,6 +135,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<!-- ============================================ -->
 		<!-- ========== PLUGINS DE DATAEXPORT =========== -->
 		<!-- ============================================ -->
@@ -204,30 +214,25 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<!--
-			<version>2.6</version>
-			-->
+			<!-- <version>2.6</version> -->
 		</dependency>
 		<dependency>
 			<groupId>apache-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.0</version>
 		</dependency>
-		<!--
-		<dependency>
+		<!-- <dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
-		</dependency>
-		<dependency>
+		</dependency> -->
+		<!-- <dependency>
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>
 			<version>2.0</version>
-		</dependency>
-		-->
+		</dependency> -->
 
 		<!-- DEPENDENCIES DE ARXIU-->
-
 		<dependency>
 			<groupId>org.fundaciobit.pluginsib.arxiu</groupId>
 			<artifactId>pluginsib-arxiu-caib</artifactId>
@@ -241,6 +246,19 @@
 					<groupId>com.sun.jersey</groupId>
 					<artifactId>jersey-client</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
+
 			</exclusions>
 		</dependency>
 	
@@ -254,11 +272,11 @@
 			<version>1.0.6</version>
 		</dependency>
 		
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
 		    <artifactId>pluginsib-estructuraorganitzativa-database</artifactId>
 			<version>1.0.6</version>
-		</dependency>
+		</dependency> -->
 
 	</dependencies>
 
