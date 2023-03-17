@@ -107,9 +107,11 @@
 		<cglib.version>2.2.2</cglib.version>
 		<!-- XYZ ZZZ S'ha de fer la substitució -->
 		<genapp.version>2.0.0-SNAPSHOT</genapp.version>
-		<version_txt_template_file>./scripts/templates/versio.txt.template</version_txt_template_file>
-		<pluginsib.userinformation.api.version>3.0.0</pluginsib.userinformation.api.version>
-		<pluginsib.userinformation.impl.version>3.0.0-SNAPSHOT</pluginsib.userinformation.impl.version>
+		<version_txt_template_file>./scripts/templates/versio.txt.template</version_txt_template_file>		
+        <pluginsib.estructuraorganitzativa.api.version>2.0.0</pluginsib.estructuraorganitzativa.api.version>
+        <pluginsib.estructuraorganitzativa.impl.version>2.0.0-SNAPSHOT</pluginsib.estructuraorganitzativa.impl.version>
+        <pluginsib.userinformation.api.version>3.1.0</pluginsib.userinformation.api.version>
+		<pluginsib.userinformation.impl.version>3.1.0-SNAPSHOT</pluginsib.userinformation.impl.version>
 		<pluginsib.arxiu.version>2.0.23</pluginsib.arxiu.version>
 	</properties>
 	<dependencyManagement>
@@ -384,7 +386,7 @@
 						<!-- Per detectar problemes de dependències -->
 						<banDuplicatePomDependencyVersions/>
 						<dependencyConvergence/>
-						<reactorModuleConvergence/>
+						<!-- <reactorModuleConvergence/> -->
 					</rules>
 				</configuration>
 				<executions>

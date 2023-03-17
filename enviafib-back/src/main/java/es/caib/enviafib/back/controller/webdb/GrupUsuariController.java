@@ -440,9 +440,9 @@ public class GrupUsuariController
       return null;
     }
     try {
-      GrupUsuari grupUsuari = grupUsuariEjb.findByPrimaryKey(grupUsuariID);
+      GrupUsuari grupUsuari = this.findByPrimaryKey(request, grupUsuariID);
       if (grupUsuari == null) {
-        String __msg =createMessageError(request, "error.notfound", grupUsuariID);
+        String __msg = createMessageError(request, "error.notfound", grupUsuariID);
         return getRedirectWhenDelete(request, grupUsuariID, new Exception(__msg));
       } else {
         delete(request, grupUsuari);

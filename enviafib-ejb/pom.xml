@@ -161,7 +161,7 @@
 	<dependency>
 		<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
 		<artifactId>pluginsib-estructuraorganitzativa-api</artifactId>
-		<version>1.0.6</version>
+		<version>${pluginsib.estructuraorganitzativa.api.version}</version>
 	</dependency>
 	
         <!--

@@ -15,11 +15,13 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.html.IconUtils;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.pluginsib.core.utils.PluginsManager;
 import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
 import org.fundaciobit.pluginsib.userinformation.UserInfo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -58,12 +60,13 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
 
     public static final String TIPUS_SECRETARI_NAME = "SEC_NAME";
     public static final String TIPUS_SECRETARI_USERNAME = "SEC_USERNAME";
+    public static final String TIPUS_SECRETARI_NIF = "SEC_NIF";
 
     public static final String TIPUS_CAP_NAME = "CAP_NAME";
     public static final String TIPUS_CAP_USERNAME = "CAP_USERNAME";
+    public static final String TIPUS_CAP_NIF = "CAP_NIF";
 
     public static final String TIPUS_NAME = "NAME";
-
     public static final String TIPUS_DIR3 = "DIR3";
     public static final String TIPUS_NIF = "NIF";
 
@@ -103,19 +106,51 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
 
             organitzacioFilterForm.setTitleCode("info.organitzacio.titol");
 
+            // REGENERAR
             organitzacioFilterForm.addAdditionalButton(new AdditionalButton("fas fa-cogs icon-white",
-                    "info.organitzacio.regenerar", getContextWeb() + "/regenerar", "btn-warning"));
+                    "info.organitzacio.regenerar", "javascript:regenerar()", "btn-warning"));
+
+            // ESBORRAR TOT
+            organitzacioFilterForm.addAdditionalButton(new AdditionalButton(
+                    IconUtils.getWhite(IconUtils.ICON_TRASH), "info.organitzacio.esborrartot", "javascript:openModal('"
+                            + request.getContextPath() + this.getContextWeb() + "/esborrartot','show');",
+                    "btn-danger"));
+
+            // AFEGIR
+            organitzacioFilterForm
+                    .addAdditionalButton(new AdditionalButton(IconUtils.getWhite(IconUtils.ICON_PLUS_SIGN),
+                            "info.organitzacio.afegir", getContextWeb() + "/new", "btn-warning"));
 
             organitzacioFilterForm.setDeleteSelectedButtonVisible(false);
-
             organitzacioFilterForm.setVisibleMultipleSelection(false);
+            organitzacioFilterForm.setAddButtonVisible(false);
+            
+            organitzacioFilterForm.setAttachedAdditionalJspCode(true);
 
         }
         return organitzacioFilterForm;
     }
 
-    @RequestMapping(value = "/regenerar", method = RequestMethod.GET)
-    public String regenerar(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/esborrartot", method = RequestMethod.GET)
+    public String esborrartot(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
+            // Esborram tot
+            this.organitzacioEjb.delete((Where) null);
+        } catch (Exception e) {
+            // TODO
+            // XYZ ZZZ Controlar I18N Exption
+            String msg = "Error esborrant Estructura organitzativa: " + e.getMessage();
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
+        }
+
+        return "redirect:" + getContextWeb() + "/list";
+    }
+
+    @RequestMapping(value = "/regenerar/{dir3company}", method = RequestMethod.GET)
+    public String regenerar(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable String dir3company) {
 
         try {
 
@@ -123,16 +158,20 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
             this.organitzacioEjb.delete((Where) null);
 
             // Afegim tots de NOU
-            List<OrganitzacioJPA> list = internalGenerator();
+            List<OrganitzacioJPA> list = internalGenerator(dir3company);
 
             for (OrganitzacioJPA organitzacioJPA : list) {
                 this.organitzacioEjb.create(organitzacioJPA);
             }
 
+            // TODO
             HtmlUtils.saveMessageSuccess(request,
                     "XYZ ZZZ Afegides " + list.size() + " entrades a l'Estructura Organitzativa.");
 
         } catch (Exception e) {
+
+            // TODO
+            // XYZ ZZZ Controlar I18N Exption
             String msg = "Error regenerant Estructura organitzativa: " + e.getMessage();
             log.error(msg, e);
 
@@ -146,7 +185,7 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
 
     final String EOPB = Constants.ENVIAFIB_PROPERTY_BASE + "pluginsib.estructuraorganitzativa.database.";
 
-    protected List<OrganitzacioJPA> internalGenerator() throws Exception {
+    protected List<OrganitzacioJPA> internalGenerator(String dir3company) throws Exception {
 
         // Informació de generació:
 
@@ -155,8 +194,8 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
             String generadorProperties = "gerentpresident.name=Nom del President/Gerent\r\n"
                     + "gerentpresident.username=username_del_president_gerent\r\n" + "\r\n"
                     + "organitzacioempresa.name.ca=Govern de les Illes Balears\r\n"
-                    + "organitzacioempresa.name.es=Gobierno de las Illes Balears\r\n"
-                    + "organitzacioempresa.dir3=A04003003\r\n" + "organitzacioempresa.nif=S0711001H\r\n";
+                    + "organitzacioempresa.name.es=Gobierno de las Illes Balears\r\n" + "organitzacioempresa.dir3="
+                    + dir3company + "\r\n" + "organitzacioempresa.nif=S0711001H\r\n";
             propGenerals.load(new ByteArrayInputStream(generadorProperties.getBytes()));
         }
 
@@ -209,6 +248,28 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
 
         IUserInformationPlugin pluginUserInformation = getPluginUserInformation(propDatabase);
 
+        generateUsingAreaAndDepartment(pluginUserInformation, generador, ROL_CAP_AREA, ROL_CAP_DEPARTAMENT,
+                ROL_SECRETARI);
+
+        return generador.getInfoOrganitzacio();
+
+    }
+
+
+    /**
+     * Retorna errors
+     * @param pluginUserInformation
+     * @param generador
+     * @param ROL_CAP_AREA
+     * @param ROL_CAP_DEPARTAMENT
+     * @param ROL_SECRETARI
+     * @return
+     * @throws Exception
+     */
+    protected List<String> generateUsingAreaAndDepartment(IUserInformationPlugin pluginUserInformation,
+            GeneradorSql generador, String ROL_CAP_AREA, String ROL_CAP_DEPARTAMENT, String ROL_SECRETARI)
+            throws Exception {
+        ArrayList<String> errors = new ArrayList<String>();
         {
 
             generador.addComment(" ==========================================");
@@ -224,9 +285,10 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
                     "getCapAreaConsellerUsername(String username) i getCapAreaConsellerName(String username)");
 
             String[] consellers = pluginUserInformation.getUsernamesByRol(ROL_CAP_AREA);
-            if (consellers == null) {
-                generador.addComment(" Consellers es NULL");
-
+            if (consellers == null || consellers.length == 0) {
+                final String msg = " Error: No s'han trobat Caps d'Area/Consellers. ";
+                generador.addComment(msg);
+                errors.add(msg);
             } else {
                 //System.out.println(" #Consellers = " + consellers.length);
                 for (int i = 0; i < consellers.length; i++) {
@@ -235,9 +297,18 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
 
                     //System.out.println(" - " + consellers[i] +  " (" + userInfo.getCompanyArea() + " | " + userInfo.getCompanyDepartment() + ")");
 
-                    generador.generaSql(userInfo.getCompanyArea(), null, TIPUS_CAP_USERNAME, userInfo.getUsername(),
-                            null);
-                    generador.generaSql(userInfo.getCompanyArea(), null, TIPUS_CAP_NAME, userInfo.getFullName(), null);
+                    final String area = userInfo.getCompanyArea();
+
+                    generador.generaSql(area, null, TIPUS_CAP_USERNAME, userInfo.getUsername(), null);
+                    generador.generaSql(area, null, TIPUS_CAP_NAME, userInfo.getFullName(), null);
+
+                    if (userInfo.getDir3() != null) {
+                        generador.generaSql(area, null, TIPUS_DIR3, userInfo.getDir3(), null);
+                    }
+
+                    if (userInfo.getAdministrationID() != null) {
+                        generador.generaSql(area, null, TIPUS_CAP_NIF, userInfo.getAdministrationID(), null);
+                    }
                 }
             }
         }
@@ -257,18 +328,28 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
             // Carregar tots els Directors Generals ( Cap de Departaments)
 
             String[] directorsGenerals = pluginUserInformation.getUsernamesByRol(ROL_CAP_DEPARTAMENT);
-            if (directorsGenerals == null) {
-                generador.addComment(" directorsGenerals es NULL");
+            if (directorsGenerals == null || directorsGenerals.length == 0) {
+                final String msg = " Error: No s'han trobat Caps de Departament/Directors Generals.";
+                generador.addComment(msg);
+                errors.add(msg);
             } else {
                 //System.out.println(" #directorsGenerals = " + directorsGenerals.length);
                 for (int i = 0; i < directorsGenerals.length; i++) {
 
                     UserInfo userInfo = pluginUserInformation.getUserInfoByUserName(directorsGenerals[i]);
 
-                    generador.generaSql(userInfo.getCompanyArea(), userInfo.getCompanyDepartment(), TIPUS_CAP_USERNAME,
-                            userInfo.getUsername(), null);
-                    generador.generaSql(userInfo.getCompanyArea(), userInfo.getCompanyDepartment(), TIPUS_CAP_NAME,
-                            userInfo.getFullName(), null);
+                    final String area = userInfo.getCompanyArea();
+                    final String dep = userInfo.getCompanyDepartment();
+
+                    generador.generaSql(area, dep, TIPUS_CAP_USERNAME, userInfo.getUsername(), null);
+                    generador.generaSql(area, dep, TIPUS_CAP_NAME, userInfo.getFullName(), null);
+                    String dir3 = userInfo.getDir3();
+                    if (dir3 != null) {
+                        generador.generaSql(area, dep, TIPUS_DIR3, dir3, null);
+                    }
+                    if (userInfo.getAdministrationID() != null) {
+                        generador.generaSql(area, dep, TIPUS_CAP_NIF, userInfo.getAdministrationID(), null);
+                    }
                 }
             }
         }
@@ -281,25 +362,34 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
 
             generador.addComment("getSecretariUsername(String username) i getSecretariName(String username)");
 
-            String[] directorsGenerals = pluginUserInformation.getUsernamesByRol(ROL_SECRETARI);
-            if (directorsGenerals == null) {
-                generador.addComment(" directorsGenerals es NULL");
+            String[] secretaris = pluginUserInformation.getUsernamesByRol(ROL_SECRETARI);
+            if (secretaris == null || secretaris.length == 0) {
+                final String msg = " Error: No s'han trobat Secretaris.";
+                generador.addComment(msg);
+                errors.add(msg);
             } else {
                 //System.out.println(" #directorsGenerals = " + directorsGenerals.length);
-                for (int i = 0; i < directorsGenerals.length; i++) {
+                for (int i = 0; i < secretaris.length; i++) {
 
-                    UserInfo userInfo = pluginUserInformation.getUserInfoByUserName(directorsGenerals[i]);
+                    UserInfo userInfo = pluginUserInformation.getUserInfoByUserName(secretaris[i]);
 
-                    generador.generaSql(userInfo.getCompanyArea(), userInfo.getCompanyDepartment(),
-                            TIPUS_SECRETARI_USERNAME, userInfo.getUsername(), null);
-                    generador.generaSql(userInfo.getCompanyArea(), userInfo.getCompanyDepartment(),
-                            TIPUS_SECRETARI_NAME, userInfo.getFullName(), null);
+                    final String area = userInfo.getCompanyArea();
+                    final String dep = userInfo.getCompanyDepartment();
+
+                    generador.generaSql(area, dep, TIPUS_SECRETARI_USERNAME, userInfo.getUsername(), null);
+                    generador.generaSql(area, dep, TIPUS_SECRETARI_NAME, userInfo.getFullName(), null);
+                    String dir3 = userInfo.getDir3();
+                    if (dir3 != null) {
+                        generador.generaSql(area, dep, TIPUS_DIR3, dir3, null);
+                    }
+                    if (userInfo.getAdministrationID() != null) {
+                        generador.generaSql(area, dep, TIPUS_SECRETARI_NIF, userInfo.getAdministrationID(), null);
+                    }
                 }
             }
         }
 
-        return generador.getInfoOrganitzacio();
-
+        return errors;
     }
 
     public IUserInformationPlugin getPluginUserInformation(Properties database) throws Exception {

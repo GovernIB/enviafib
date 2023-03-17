@@ -70,6 +70,13 @@
 		<!-- ====================================== -->
 		<!-- ===== PLUGINS DE USERINFORMATION ===== -->
 		<!-- ====================================== -->
+        
+        <dependency>
+            <artifactId>pluginsib-userinformation-api</artifactId>
+            <groupId>org.fundaciobit.pluginsib.userinformation</groupId>
+            <version>${pluginsib.userinformation.api.version}</version>
+        </dependency>
+        
 		<dependency>
 			<groupId>org.fundaciobit.pluginsib.userinformation</groupId>
 			<artifactId>pluginsib-userinformation-keycloak</artifactId>
@@ -265,18 +272,24 @@
 		<!-- ============================================ -->
 		<!-- ==== PLUGINS DE ESTRUCTURA ORGANITZATIVA === -->
 		<!-- ============================================ -->
+        
+        <dependency>
+		  <groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
+		  <artifactId>pluginsib-estructuraorganitzativa-api</artifactId>
+		  <version>${pluginsib.estructuraorganitzativa.api.version}</version>
+	    </dependency>
 
 		<dependency>
 			<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
 		    <artifactId>pluginsib-estructuraorganitzativa-mock</artifactId>
-			<version>1.0.6</version>
+			<version>${pluginsib.estructuraorganitzativa.impl.version}</version>
 		</dependency>
 		
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
 		    <artifactId>pluginsib-estructuraorganitzativa-database</artifactId>
-			<version>1.0.6</version>
-		</dependency> -->
+			<version>${pluginsib.estructuraorganitzativa.impl.version}</version>
+		</dependency>
 
 	</dependencies>
 

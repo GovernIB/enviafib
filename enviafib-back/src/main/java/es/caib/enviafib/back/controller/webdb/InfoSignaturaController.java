@@ -467,9 +467,9 @@ public class InfoSignaturaController
       return null;
     }
     try {
-      InfoSignatura infoSignatura = infoSignaturaEjb.findByPrimaryKey(infoSignaturaID);
+      InfoSignatura infoSignatura = this.findByPrimaryKey(request, infoSignaturaID);
       if (infoSignatura == null) {
-        String __msg =createMessageError(request, "error.notfound", infoSignaturaID);
+        String __msg = createMessageError(request, "error.notfound", infoSignaturaID);
         return getRedirectWhenDelete(request, infoSignaturaID, new Exception(__msg));
       } else {
         delete(request, infoSignatura);

@@ -412,9 +412,9 @@ public class OrganitzacioController
       return null;
     }
     try {
-      Organitzacio organitzacio = organitzacioEjb.findByPrimaryKey(organitzacioID);
+      Organitzacio organitzacio = this.findByPrimaryKey(request, organitzacioID);
       if (organitzacio == null) {
-        String __msg =createMessageError(request, "error.notfound", organitzacioID);
+        String __msg = createMessageError(request, "error.notfound", organitzacioID);
         return getRedirectWhenDelete(request, organitzacioID, new Exception(__msg));
       } else {
         delete(request, organitzacio);
@@ -599,8 +599,10 @@ public java.lang.Long stringToPK(String value) {
     __tmp.add(new StringKeyValue("COMPRES_USERNAME" , "COMPRES_USERNAME"));
     __tmp.add(new StringKeyValue("SEC_NAME" , "SEC_NAME"));
     __tmp.add(new StringKeyValue("SEC_USERNAME" , "SEC_USERNAME"));
+    __tmp.add(new StringKeyValue("SEC_NIF" , "SEC_NIF"));
     __tmp.add(new StringKeyValue("CAP_NAME" , "CAP_NAME"));
     __tmp.add(new StringKeyValue("CAP_USERNAME" , "CAP_USERNAME"));
+    __tmp.add(new StringKeyValue("CAP_NIF" , "CAP_NIF"));
     __tmp.add(new StringKeyValue("NAME.ca" , "NAME.ca"));
     __tmp.add(new StringKeyValue("NAME.es" , "NAME.es"));
     __tmp.add(new StringKeyValue("NAME.en" , "NAME.en"));

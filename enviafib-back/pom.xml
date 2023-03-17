@@ -47,7 +47,7 @@
             <groupId>org.fundaciobit.genapp</groupId>
             <artifactId>genapp-web</artifactId>
             <version>${genapp.version}</version>
-             <exclusions>
+            <exclusions>
                 <exclusion>
                     <groupId>javax.activation</groupId>
                     <artifactId>javax.activation-api</artifactId>
@@ -64,7 +64,7 @@
             <artifactId>genapp-core</artifactId>
             <version>${genapp.version}</version>
             <scope>provided</scope>
-             <exclusions>
+            <exclusions>
                 <exclusion>
                     <groupId>javax.activation</groupId>
                     <artifactId>javax.activation-api</artifactId>
@@ -76,10 +76,10 @@
             </exclusions>
         </dependency>
 
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>apache-lang</groupId>
