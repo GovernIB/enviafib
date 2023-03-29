@@ -28,7 +28,7 @@ function reassignAction() {
 <div class="row" id="${formName}_pagination"
     style="width: 100%;">
 
-    <div class="col-3" style="text-align: left;"
+    <div class="col" style="text-align: left;"
         id="${formName}_pagination_left">
         <c:if test="${__theFilterForm.visibleExportList}">
             <%
@@ -45,7 +45,7 @@ function reassignAction() {
             %>
         </c:if>
 
-		<div id="infoNumRegistres">
+		<%--<div id="infoNumRegistres">
 			<c:set var="start" value="${(pagina-1) * itemsPerPagina + 1}" />
 
 			<c:set var="end"
@@ -56,95 +56,27 @@ function reassignAction() {
 				<fmt:param> ${end} </fmt:param>
 				<fmt:param> ${totalItems} </fmt:param>
 
-<%-- 				<fmt:param>
+ 				<fmt:param>
 					<fmt:message key="${__theFilterForm.entityNameCodePlural}" />
 				</fmt:param>
- --%>
+
 			</fmt:message>
 			<c:out value="${showNResults}" />
-		</div>
+		</div> --%>
 
 	</div>
 
 
-    <div class="col-6 text-center"
+    <div class="col-md-auto text-center"
         id="${formName}_pagination_center">
         <c:if test="${not empty __theFilterForm.itemsPerPage}">
-
-            <c:url var="firstUrl" value="${contexte}/list/1" />
-            <c:url var="lastUrl"
-                value="${contexte}/list/${totalPages}" />
-            <c:url var="prevUrl"
-                value="${contexte}/list/${currentIndex - 1}" />
-            <c:url var="nextUrl"
-                value="${contexte}/list/${currentIndex + 1}" />
-
-
-            <nav aria-label="Page navigation">
-                <ul class="pagination pagination-sm" style="display:inline-flex;">
-                    <c:choose>
-                        <c:when test="${currentIndex == 1}">
-                            <li class="page-item disabled"><a
-                                class="page-link" href="#">&lt;&lt;</a></li>
-                            <li class="page-item disabled"><a
-                                class="page-link" href="#">&lt;</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a
-                                class="page-link" href="#"
-                                onclick="submitForm('${firstUrl}', false)">&lt;&lt;</a></li>
-                            <li class="page-item"><a
-                                class="page-link" href="#"
-                                onclick="submitForm('${prevUrl}', false)">&lt;</a></li>
-                        </c:otherwise>
-                    </c:choose>
-
-                    <c:forEach var="i" begin="${beginIndex}"
-                        end="${endIndex}">
-                        <c:url var="pageUrl"
-                            value="${contexte}/list/${i}" />
-                        <c:choose>
-                            <c:when test="${i == currentIndex}">
-                                <li class="page-item active"><a
-                                    class="page-link" href="#"><c:out
-                                            value="${i}" /></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="page-item"><a
-                                    class="page-link" href="#"
-                                    onclick="submitForm('${pageUrl}', false)">
-                                        <c:out value="${i}" />
-                                </a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-
-                    <c:choose>
-                        <c:when
-                            test="${currentIndex == totalPages}">
-                            <li class="page-item disabled"><a
-                                class="page-link" href="#"> &gt;</a></li>
-                            <li class="page-item disabled"><a
-                                class="page-link" href="#">&gt;&gt;</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a
-                                class="page-link" href="#"
-                                onclick="submitForm('${nextUrl}', false)">&gt;</a></li>
-                            <li class="page-item"><a
-                                class="page-link" href="#"
-                                onclick="submitForm('${lastUrl}', false)">&gt;&gt;</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </nav>
-
+          <%@include file="webdbPaginationOnlyBar.jsp" %>
         </c:if>
     </div>
 
 
     <fmt:message var="allitems" key="genapp.form.allitems" />
-    <div class="col-3" style="text-align: right"
+    <div class="col" style="text-align: right"
         id="${formName}_pagination_right">
         <label><fmt:message key="genapp.form.itemsperpage" />:</label>
         <form:select cssClass="input-small" cssStyle="width:4em;"
