@@ -16,6 +16,7 @@
 		<module>api</module>
 		<module>mock</module>
 		<module>database</module>
+        <module>ldapcaib</module>
 	</modules>
 	<properties>
 		<!-- Propietats que afecten els plugins -->

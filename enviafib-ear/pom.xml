@@ -140,6 +140,10 @@
 					<groupId>org.fundaciobit.pluginsib.core</groupId>
 					<artifactId>pluginsib-core</artifactId>
 				</exclusion>
+                <exclusion>
+					<groupId>org.fundaciobit.pluginsib.utils</groupId>
+					<artifactId>pluginsib-utils-ldap</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
@@ -288,6 +292,12 @@
 		<dependency>
 			<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
 		    <artifactId>pluginsib-estructuraorganitzativa-database</artifactId>
+			<version>${pluginsib.estructuraorganitzativa.impl.version}</version>
+		</dependency>
+        
+        <dependency>
+			<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
+		    <artifactId>pluginsib-estructuraorganitzativa-ldapcaib</artifactId>
 			<version>${pluginsib.estructuraorganitzativa.impl.version}</version>
 		</dependency>
 
