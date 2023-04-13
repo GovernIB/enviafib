@@ -77,7 +77,6 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
         return getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "organitzacio." + "nif");
     }
 
-   
     /** =================  ÀREA - CONSELLERIA ========= */
 
     @Override
@@ -106,25 +105,27 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
         if (dir3 == null) {
             throw new Exception("No s'ha trobat el codi DIR3 de l'Area/Conselleria on es troba l'usuari " + username);
         }
-        
+
         // Check de ROLE_CAPAREA o Mapping
         String mapping = getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "mappingdir3consellerusername");
         String roleConseller = getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "rolcaparea");
-        
+
         if (mapping != null && roleConseller != null) {
-            throw new Exception("No es pot definir a la vegada les propietats 'mappingdir3consellerusername' i 'rolcaparea'");
+            throw new Exception(
+                    "No es pot definir a la vegada les propietats 'mappingdir3consellerusername' i 'rolcaparea'");
         }
 
         if (mapping == null && roleConseller == null) {
-            throw new Exception("S'ha de definir com a mínim una de les propietats següents: 'mappingdir3consellerusername' o 'rolcaparea'");
+            throw new Exception(
+                    "S'ha de definir com a mínim una de les propietats següents: 'mappingdir3consellerusername' o 'rolcaparea'");
         }
-        
+
         if (roleConseller == null) {
             File properties = new File(mapping);
-    
+
             Properties props = new Properties();
             props.load(new FileInputStream(properties));
-    
+
             return props.getProperty(dir3);
         } else {
 
@@ -137,9 +138,7 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
 
                 return user.getUserName();
             }
-            
-            
-            
+
         }
     }
 
@@ -189,7 +188,12 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
     @Override
     public String getCodeDepartamentDireccioGeneral(String username) throws Exception {
         LDAPUser usuari = getLDAPUserManager().getUserByUsername(username);
-        return usuari.getDepartment();
+        if (usuari == null) {
+            log.warn("No s'ha trobat informació de l'usuari " + username + " al servidor LDAP.");
+            return null;
+        } else {
+            return usuari.getDepartment();
+        }
     }
 
     @Override
@@ -333,7 +337,6 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
      * 
      */
 
-    
     private LDAPUserManager ldapUserManager = null;
 
     public LDAPUserManager getLDAPUserManager() {
@@ -358,7 +361,6 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
         return ldapUserManager;
     }
 
-    
     protected LDAPUser getEncarregatAssociatAlRol(String username, String rol) throws Exception {
 
         LDAPUser user = null;
@@ -379,7 +381,7 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
     }
 
     public Departament getDepartamentInfoByCode(String codiDep) throws Exception {
-        
+
         // TODO Cache !!!!
 
         try {
