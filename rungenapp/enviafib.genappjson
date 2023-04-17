@@ -2352,8 +2352,8 @@
           "digits": 0,
           "isNotNullable": false,
           "labels": {
-            "es": "Reason",
-            "ca": "Reason"
+            "es": "Motivo de firna",
+            "ca": "Motiu de firma"
           },
           "javaName": "reason",
           "javaType": "java.lang.String",
