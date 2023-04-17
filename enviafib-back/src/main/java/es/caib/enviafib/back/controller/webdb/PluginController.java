@@ -415,9 +415,9 @@ public class PluginController
       return null;
     }
     try {
-      Plugin plugin = pluginEjb.findByPrimaryKey(pluginID);
+      Plugin plugin = this.findByPrimaryKey(request, pluginID);
       if (plugin == null) {
-        String __msg =createMessageError(request, "error.notfound", pluginID);
+        String __msg = createMessageError(request, "error.notfound", pluginID);
         return getRedirectWhenDelete(request, pluginID, new Exception(__msg));
       } else {
         delete(request, plugin);

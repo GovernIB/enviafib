@@ -1,0 +1,43 @@
+
+
+# Classe org.fundaciobit.pluginsib.estructuraorganitzativa.ldapcaib.LdapCaibEstructuraOrganitzativaPlugin
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.users_context_dn=dc\=caib,dc\=es
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.host_url=ldap\://ldap.caib.es\:389
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_authentication=simple
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.search_scope=subtree
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_principal=cn=ldapusername,dc=caib,dc=es
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_credentials=mypassword
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.username=cn
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.mail=mail
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.administration_id=nif
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.name=givenName
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.surname=sn
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.surname1=sn1
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.surname2=sn2
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.telephone=
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.department=departmentNumber
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.memberof=memberOf
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.prefix_role_match_memberof=cn=
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.suffix_role_match_memberof=,dc=caib,dc=es
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.dir3host=https://se.caib.es/dir3caib/rest
+
+# S'ha de definir una de les dues propietats: o mappingdir3consellerusername o rolcaparea
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.mappingdir3consellerusername=mappingdir3consellerusername.properties
+#es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolcaparea=IBK_CONSELLER
+
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolcapdepartament=IBK_DIRECTOR
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolsecretari=IBK_SECRETARI
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.gerentpresident.nom=Francina Armengol i Socias
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.gerentpresident.username=u131313
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.organitzacio.nom=Govern de les Illes Balears
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.organitzacio.dir3=A04003003
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.organitzacio.nif=S0711001H
+
+

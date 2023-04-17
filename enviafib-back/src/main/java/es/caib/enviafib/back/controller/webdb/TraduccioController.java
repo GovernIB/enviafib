@@ -387,9 +387,9 @@ public class TraduccioController
       return null;
     }
     try {
-      Traduccio traduccio = traduccioEjb.findByPrimaryKey(traduccioID);
+      Traduccio traduccio = this.findByPrimaryKey(request, traduccioID);
       if (traduccio == null) {
-        String __msg =createMessageError(request, "error.notfound", traduccioID);
+        String __msg = createMessageError(request, "error.notfound", traduccioID);
         return getRedirectWhenDelete(request, traduccioID, new Exception(__msg));
       } else {
         delete(request, traduccio);

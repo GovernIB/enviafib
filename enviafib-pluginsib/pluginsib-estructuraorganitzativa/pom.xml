@@ -3,18 +3,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>pluginsib-estructuraorganitzativa</artifactId>
 	<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
-	<version>1.0.6</version>
+	<version>2.0.0</version>
 	<packaging>pom</packaging>
 	<name>PluginsIB - Estructura Organitzativa</name>
-	<parent>
+    	<parent>
 		<groupId>es.caib.enviafib</groupId>
-		<version>1.0.6</version>
 		<artifactId>enviafib-pluginsib</artifactId>
+		<version>1.0.6</version>
 	</parent>
+
 	<modules>
 		<module>api</module>
 		<module>mock</module>
 		<module>database</module>
+        <module>ldapcaib</module>
 	</modules>
 	<properties>
 		<!-- Propietats que afecten els plugins -->
@@ -29,4 +31,37 @@
 			<version>2.0.2</version>
 		</dependency>
 	</dependencies>
+    <build>
+    <plugins>
+    <!-- Gestió de requisits del build -->
+			<!-- Veure: https://maven.apache.org/enforcer/enforcer-rules/index.html -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M3</version>
+				<configuration>
+					<rules>
+						<!-- Fixam mínim Maven 3.6 i Java 11 -->
+						<requireMavenVersion>
+							<version>3.6.1</version>
+						</requireMavenVersion>
+						<requireJavaVersion>
+							<version>11</version>
+						</requireJavaVersion>
+						<!-- Per detectar problemes de dependències -->
+						<banDuplicatePomDependencyVersions/>
+						<dependencyConvergence/>
+						<!-- <reactorModuleConvergence/> -->
+					</rules>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+    </plugins>
+    </build>
 </project>

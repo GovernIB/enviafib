@@ -16,14 +16,18 @@ public interface Constants {
     // TRUE ROLES
     public static final String EFI_ADMIN = "EFI_ADMIN";
     public static final String EFI_USER = "EFI_USER";
+    public static final String EFI_WS = "EFI_WS";
 
     // VIRTUAL SECURITY ROLES
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER = "ROLE_USER";
+     
 
     // EJB HIGH LEVEL ROLES
     public static final String ROLE_EJB_FULL_ACCESS = EFI_ADMIN;
     public static final String ROLE_EJB_BASIC_ACCESS = EFI_USER;
+    
+    public static final String ROLE_EJB_WS_ACCESS = EFI_WS;
 
     // ESTATS DE PETICIO DE FIRMA D'ENVIAFIB
 

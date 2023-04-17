@@ -11,6 +11,7 @@ import org.fundaciobit.pluginsib.userinformation.UserInfo;
 
 /**
  * 
+ * 
  * @author anadal
  *
  */
@@ -67,8 +68,6 @@ public class GeneradorEstructuraOrganitzativa {
             generador.addComment("/** =  ENTITAT - ORGANITZACIÓ - EMPRESA = */");
             generador.addComment(" ==========================================\n");
             
-            generador.addComment(" getGerentPresidentName(), GetGerentPresidentUsername(), getNameOrganitzacioEmpresa(lang),");
-            generador.addComment(" getDir3OrganitzacioEmpresa() i getNifOrganitzacioEmpresa()");
 
                 String[][] valors = {
                         { "getGerentPresidentName()", DatabaseEstructuraOrganitzativaPlugin.TIPUS_CAP_NAME,

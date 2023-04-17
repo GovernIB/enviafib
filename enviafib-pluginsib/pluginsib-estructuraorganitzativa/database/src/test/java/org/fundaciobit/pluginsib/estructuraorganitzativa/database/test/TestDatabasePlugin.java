@@ -20,9 +20,6 @@ import org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstruc
 import org.hibernate.Session;
 import org.junit.Test;
 
-import es.caib.enviafib.model.EnviaFIBDaoManager;
-import es.caib.enviafib.persistence.EnviaFIBJPADaoManagers;
-
 /**
  * 
  * @author anadal
@@ -168,8 +165,6 @@ public class TestDatabasePlugin {
         EntityManager em = emf.createEntityManager();
 
         em.setFlushMode(FlushModeType.AUTO);
-
-        EnviaFIBDaoManager.setDaoManagers(new EnviaFIBJPADaoManagers(em));
 
         return em;
     }
