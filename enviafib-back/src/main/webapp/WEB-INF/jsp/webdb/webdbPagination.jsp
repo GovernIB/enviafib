@@ -45,7 +45,7 @@ function reassignAction() {
             %>
         </c:if>
 
-		<%--<div id="infoNumRegistres">
+		<div id="infoNumRegistres">
 			<c:set var="start" value="${(pagina-1) * itemsPerPagina + 1}" />
 
 			<c:set var="end"
@@ -62,7 +62,7 @@ function reassignAction() {
 
 			</fmt:message>
 			<c:out value="${showNResults}" />
-		</div> --%>
+		</div>
 
 	</div>
 

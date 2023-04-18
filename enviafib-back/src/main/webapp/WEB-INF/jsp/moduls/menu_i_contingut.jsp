@@ -123,7 +123,7 @@ $('#ocultar').click(function() {
 }
 </style>
 
-<<script type="text/javascript">
+<script type="text/javascript">
 $("#GroupDiv").after($("#infoNumRegistres"));
 </script>
 
