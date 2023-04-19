@@ -197,20 +197,27 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             switch (estat) {
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-user-friends",
-                            "flux.info", getContextWeb() + "/fluxinfo/" + peticioID, "btn-info"));
+                    
+                    String urlRedirect = request.getContextPath() +  getContextWeb() + "/fluxinfo/" + peticioID;
+                    
+                    urlRedirect = getURLtoFluxInfo(peticioID);
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-user-friends", "flux.info",
+                                    "javascript:openWindowToFluxInfo('" + urlRedirect + "');",
+                                    "btn-info"));
+                    
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
-                            "arxiu.reintentar", "javascript: reintentarArxivat(" + peticioID + ")", "btn-warning"));
+                            "arxiu.reintentar", "javascript:reintentarArxivat(" + peticioID + ")", "btn-warning"));
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
-                                    "javascript: reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
+                                    "javascript:reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",
-                            "peticio.btn.sendmail", "javascript: cridaEmail(" + peticioID + ")", "btn-success"));
+                            "peticio.btn.sendmail", "javascript:cridaEmail(" + peticioID + ")", "btn-success"));
 
                     String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                             InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
@@ -483,18 +490,23 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         }
     }
 
-    @RequestMapping(value = "/fluxinfo/{peticioID}", method = RequestMethod.GET)
-    public String fluxInfo(@PathVariable("peticioID") java.lang.Long peticioID, HttpServletRequest request,
-            HttpServletResponse response) throws I18NException {
-
+    public String getURLtoFluxInfo(Long peticioID) throws I18NException {
         Peticio peticio = this.peticioLogicaEjb.findByPrimaryKey(peticioID);
 
         long portafibID = Long.parseLong(peticio.getPeticioPortafirmes()); // XYZ ZZZ
 
         String url = this.peticioLogicaEjb.getUrlToViewFlow(portafibID, LocaleContextHolder.getLocale().getLanguage());
-
-        return "redirect:" + url;
-
+        return url;
     }
 
+//    @RequestMapping(value = "/fluxinfo/{peticioID}", method = RequestMethod.GET)
+//    public String fluxInfo(@PathVariable("peticioID") java.lang.Long peticioID, HttpServletRequest request,
+//            HttpServletResponse response) throws I18NException {
+//
+//        Peticio peticio = this.peticioLogicaEjb.findByPrimaryKey(peticioID);
+//        long portafibID = Long.parseLong(peticio.getPeticioPortafirmes()); // XYZ ZZZ
+//        String url = this.peticioLogicaEjb.getUrlToViewFlow(portafibID, LocaleContextHolder.getLocale().getLanguage());
+//        return "redirect:" + url;
+//    }
+    
 }

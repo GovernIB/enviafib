@@ -60,7 +60,7 @@ function reintentarArxivarTotes() {
 				</button>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<span class="fa fa-spinner fa-pulse fa-3x"></span
+				<span class="fa fa-spinner fa-pulse fa-3x"></span>
 			</div>
 		</div>
 	</div>
@@ -365,3 +365,38 @@ td:last-child {
 
 </style>
 
+
+
+<div class="modal fade" style="display: none" id="fluxInfoModal"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <fmt:message key="arxiu.reintent.loading" />
+                </h5>
+                <button type="button" class="close" aria-label="Close" onclick="$('#fluxInfoModal').modal('hide')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body" style="text-align: center;">
+				<iframe width="450px" height="400px" id="iFramefluxInfo"></iframe>
+			</div>
+		</div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+function openWindowToFluxInfo(urlFluxInfo) {
+	
+	$('#fluxInfoModal').on('shown.bs.modal',function(){
+		$(this).find('iframe').attr('src',urlFluxInfo);
+	});
+		
+    $("#fluxInfoModal").modal('show');
+}
+
+</script>

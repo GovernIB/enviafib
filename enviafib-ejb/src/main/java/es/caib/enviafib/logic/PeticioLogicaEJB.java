@@ -1232,8 +1232,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-            log.info("peticioPortaFIB: " + peticioPortaFIB);
-            log.info("languageUI: " + languageUI);
+//            log.info("peticioPortaFIB: " + peticioPortaFIB);
+//            log.info("languageUI: " + languageUI);
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortaFIB, languageUI);
             String url = api.getUrlToViewFlow(rinfo);
             return url;

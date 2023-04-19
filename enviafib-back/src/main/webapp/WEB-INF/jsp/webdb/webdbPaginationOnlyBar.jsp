@@ -47,9 +47,7 @@ function submitPage(page) {
 
         }
 
-        System.out.println("\n\n ");
         System.out.println(" Valor de Start |"+start+"|");
-        System.out.println("\n\n ");
         request.setAttribute("start", start);
         request.setAttribute("end", end);
 
