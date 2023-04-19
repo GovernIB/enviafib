@@ -374,7 +374,7 @@ td:last-child {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    <fmt:message key="arxiu.reintent.loading" />
+                    <fmt:message key="peticio.portafib.flux.info" />
                 </h5>
                 <button type="button" class="close" aria-label="Close" onclick="$('#fluxInfoModal').modal('hide')">
                     <span aria-hidden="true">&times;</span>
