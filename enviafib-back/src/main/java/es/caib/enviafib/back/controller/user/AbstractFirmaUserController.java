@@ -146,17 +146,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         hiddens.remove(TIPUSDOCUMENTAL);
         hiddens.remove(IDIOMADOC);
         hiddens.remove(ARXIUPARAMFUNCIONARIDIR3);
-        hiddens.remove(ARXIUREQPARAMDOCESTATELABORA);
         hiddens.remove(ARXIUREQPARAMORIGEN);
         hiddens.remove(ARXIUREQPARAMINTERESSATS);
         hiddens.remove(ARXIUREQPARAMORGANS);
 
+        
         if (__isView) {
             hiddens.remove(DATACREACIO);
             hiddens.remove(TIPUS);
             hiddens.remove(IDIOMAID);
             hiddens.remove(ESTAT);
             hiddens.remove(FITXERID);
+            hiddens.remove(ARXIUREQPARAMDOCESTATELABORA);
 
             switch ((int) peticioForm.getPeticio().getEstat()) {
 
@@ -237,7 +238,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             LoginInfo li = LoginInfo.getInstance();
             peticio.setArxiuFuncionariUsername(li.getUsername());
-
+            peticio.setArxiuReqParamDocEstatElabora("EE01");
+            
             String nomcomplet = li.getUsuari().getNom() + " " + li.getUsuari().getLlinatge1();
             if (li.getUsuari().getLlinatge2() != null) {
                 nomcomplet = nomcomplet + li.getUsuari().getLlinatge2();
