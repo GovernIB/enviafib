@@ -804,8 +804,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
 
             for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
-                StringKeyValue skv = new StringKeyValue(String.valueOf(t.getDocumentType()), t.getName());
-                __tmp.add(skv);
+                long id = t.getDocumentType();
+                if (id > 0 && id < 100) {
+
+                    String key = String.valueOf(id);
+                    String val = t.getName();
+
+                    StringKeyValue skv = new StringKeyValue(key, val);
+                    __tmp.add(skv);
+                }else {
+                    log.info("Uno que no ha entrado: " + id + " - " + t.getName());
+                }
             }
 
             return __tmp;
