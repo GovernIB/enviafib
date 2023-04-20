@@ -46,31 +46,22 @@ function reassignAction() {
 		</c:if>
 
 		<div id="infoNumRegistres">
-			<c:out value="__itemsPerPagina: ${__itemsPerPagina} " />
-			<br>
-			<c:out value="__totalItems: ${__totalItems}" />
-			<br>
-			<c:out value="__pagina: ${pagi__paginana}" />
-			<br>
-
-			<c:if test="${__itemsPerPagina == -1}">
-				<c:out value="Mostrant tots els resultats" />
+			<c:if test="${itemsPerPagina == -1}">
+                <fmt:message key="show.results.all" var="showNResults">
+                    <fmt:param> ${totalItems} </fmt:param>
+                </fmt:message>
+                <c:out value="${showNResults}" />
 			</c:if>
 			
-			<c:if test="${__itemsPerPagina != -1}">
-				<c:set var="start" value="${(__pagina-1) * __itemsPerPagina + 1}" />
-				<c:set var="end"
-					value="${(start + __itemsPerPagina > __totalItems) ? __totalItems : (start + __itemsPerPagina - 1)}" />
+			<c:if test="${itemsPerPagina != -1}">
+				<c:set var="__start" value="${(pagina-1) * itemsPerPagina + 1}" />
+				<c:set var="__end"
+					value="${(__start + itemsPerPagina > totalItems) ? totalItems : (__start + itemsPerPagina - 1)}" />
 
 				<fmt:message key="show.results.from.to" var="showNResults">
-					<fmt:param> ${start} </fmt:param>
-					<fmt:param> ${end} </fmt:param>
-					<fmt:param> ${__totalItems} </fmt:param>
-
-					<fmt:param>
-						<fmt:message key="${__theFilterForm.entityNameCodePlural}" />
-					</fmt:param>
-
+					<fmt:param> ${__start} </fmt:param>
+					<fmt:param> ${__end} </fmt:param>
+					<fmt:param> ${totalItems} </fmt:param>
 				</fmt:message>
 				<c:out value="${showNResults}" />
 			</c:if>

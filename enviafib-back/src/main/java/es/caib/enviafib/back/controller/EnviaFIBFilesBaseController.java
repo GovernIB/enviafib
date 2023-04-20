@@ -76,19 +76,11 @@ public abstract class EnviaFIBFilesBaseController<I extends IGenAppEntity,PK ext
   public void omplirDadesPaginacio(ModelAndView mav, Integer pagina, Integer itemsPerPagina,
       Long total) {
 
-      log.info("total:" + total);
-      log.info("itemsPerPagina:" + itemsPerPagina);
-      log.info("pagina:" + pagina);
-    
       super.omplirDadesPaginacio(mav, pagina, itemsPerPagina, total);
 
-      log.info("total:" + total);
-      log.info("itemsPerPagina:" + itemsPerPagina);
-      log.info("pagina:" + pagina);
-
-      mav.addObject("__totalItems", total);
-      mav.addObject("__itemsPerPagina", itemsPerPagina);
-      mav.addObject("__pagina", pagina);
+      mav.addObject("totalItems", total);
+      mav.addObject("itemsPerPagina", itemsPerPagina);
+      mav.addObject("pagina", pagina);
   }
   
 
