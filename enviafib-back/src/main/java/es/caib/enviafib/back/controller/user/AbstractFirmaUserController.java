@@ -56,6 +56,7 @@ import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
+import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -379,7 +380,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         try {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
             
-            final String solicitantUsr = LoginInfo.getInstance().getUsername();
+            final Usuari solicitant = LoginInfo.getInstance().getUsuari();
 
             final int tipus = getTipusPeticio();
             switch (tipus) {
@@ -387,19 +388,19 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 case Constants.TIPUS_PETICIO_FLUX_JSON:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
                             (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
-                                    .getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY), solicitantUsr);
+                                    .getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY), solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_FLUX_SIMPLE:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
                             (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
-                                    .getAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY), solicitantUsr);
+                                    .getAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY), solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_FLUX:
                     peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI,
                             (FlowTemplateSimpleFlowTemplate) request.getSession()
-                                    .getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY), solicitantUsr);
+                                    .getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY), solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
@@ -414,13 +415,13 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                     FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
-                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux, solicitantUsr);
+                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux, solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
                 break;
                 default:
-                    p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI, solicitantUsr);
+                    p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI, solicitant);
                 break;
             }
 

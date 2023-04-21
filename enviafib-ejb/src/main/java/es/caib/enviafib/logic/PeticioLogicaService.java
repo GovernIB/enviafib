@@ -13,6 +13,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.ejb.PeticioService;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -28,13 +29,13 @@ public interface PeticioLogicaService extends PeticioService {
 
     public static final String JNDI_NAME = "java:app/enviafib-ejb/PeticioLogicaEJB!es.caib.enviafib.logic.PeticioLogicaService";
 
-    public PeticioJPA arrancarPeticio(long peticioID, String languageUI, String solicitantUsr) throws I18NException;
+    public PeticioJPA arrancarPeticio(long peticioID, String languageUI, Usuari solicitant) throws I18NException;
 
-    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, String solicitantUsr)
+    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, Usuari solicitant)
             throws I18NException;
     
     public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
-            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, String solicitantUsr) throws I18NException;
+            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, Usuari solicitant) throws I18NException;
     
     public FirmaAsyncSimpleSignatureBlock[] convertFluxToSignatureBlocks(FlowTemplateSimpleFlowTemplate flux)
             throws I18NException;

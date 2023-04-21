@@ -20,6 +20,7 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 
@@ -85,8 +86,8 @@ public abstract class LlistatPeticionsUserController extends AbstractLlistatPeti
             @PathVariable("peticioID") Long peticioID) {
 
         try {
-            final String solicitantUsr = LoginInfo.getInstance().getUsername();
-            peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage(), solicitantUsr);
+            final Usuari solicitant = LoginInfo.getInstance().getUsuari();
+            peticioLogicaEjb.arrancarPeticio(peticioID, LoginInfo.getInstance().getLanguage(), solicitant);
 
         } catch (LoginException e) {
             String msg = "La sessio de l'usuari ha caducat.";
