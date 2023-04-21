@@ -390,13 +390,25 @@ td:last-child {
 
 <script type="text/javascript">
 
-function openWindowToFluxInfo(urlFluxInfo) {
-	
-	$('#fluxInfoModal').on('shown.bs.modal',function(){
-		$(this).find('iframe').attr('src',urlFluxInfo);
-	});
-		
-    $("#fluxInfoModal").modal('show');
+function openModalFluxInfo(peticioID) {
+	var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        	    var urlFluxInfo = this.responseText;
+        	    $('#fluxInfoModal').on('shown.bs.modal',function(){
+        	        $(this).find('iframe').attr('src',urlFluxInfo);
+        	    });
+        	        
+        	    $("#fluxInfoModal").modal('show');
+         }
+    };
+    
+    var urlEnviaFIB = '<%=request.getContextPath()%>${contexte}/geturlflow/' + peticioID;
+    xhttp.open("GET", urlEnviaFIB, true);
+
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send('');
 }
+
 
 </script>
