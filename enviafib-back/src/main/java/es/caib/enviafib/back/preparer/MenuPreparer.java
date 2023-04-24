@@ -39,7 +39,6 @@ public class MenuPreparer implements ViewPreparer {
     public void execute(Request tilesRequest, AttributeContext attributeContext) throws PreparerException {
 
         Map<String, Object> request = tilesRequest.getContext("request");
-
         Object pipella = attributeContext.getAttribute("pipella");
     }
 

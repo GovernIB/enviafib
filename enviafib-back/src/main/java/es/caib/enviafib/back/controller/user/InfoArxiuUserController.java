@@ -18,7 +18,6 @@ import es.caib.enviafib.back.controller.admin.LlistatPeticionsAdminController;
 import es.caib.enviafib.back.controller.webdb.InfoArxiuController;
 import es.caib.enviafib.back.form.webdb.InfoArxiuFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoArxiuForm;
-import es.caib.enviafib.model.entity.InfoArxiu;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 

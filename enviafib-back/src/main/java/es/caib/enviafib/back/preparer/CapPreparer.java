@@ -29,7 +29,6 @@ public class CapPreparer extends MenuPreparer {
         Map<String, Object> request = tilesRequest.getContext("request");
 
         Object pipella = attributeContext.getAttribute("pipella");
-
 //        super.execute(tilesRequest, attributeContext);
 	    
         request.put("url_sortida", Configuracio.getSortirURL());

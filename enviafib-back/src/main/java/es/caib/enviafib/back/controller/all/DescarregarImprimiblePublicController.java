@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import es.caib.enviafib.back.controller.AbstractLlistatPeticionsController;
-import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController;
 import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController.TipusFile;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
