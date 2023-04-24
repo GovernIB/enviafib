@@ -38,10 +38,6 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
 
     public static final String CONTEXT_WEB = "/user/peticio/firmades";
 
-    public enum TipusFile {
-        ORIGINAL, ENI_DOC, VERSIO_IMPRIMIBLE
-    }
-    
     @Override
     public String getEntityNameCode() {
         return "peticio.list.firmades";

@@ -14,11 +14,13 @@
 
 	<!--  INICI MENU col-2 -->
 	<div id="principal" class="mainMenu">
+        
         <div id="ocultarMenu" class="upper-right-corner disponible">
             <a id="ocultar" href="#" data-toggle="tooltip"
                 title="Ocultar Menu"> <i class="fas fa-compress-alt"></i>
             </a>
         </div>
+        
 		<div id="thumbnailmenu" class="thumbnail disponible">
 			<tiles:insertAttribute name="menu">
 			</tiles:insertAttribute>
@@ -42,11 +44,10 @@
 </div>
 
 <script>
-$('#ocultar').click(function() {
+    $('#ocultar').click(function() {
         show('#mostrarMenu');
 		hide('#ocultarMenu');
 
-		
         $("#principal").css("display","none");        
         return false;
 	});
@@ -133,3 +134,12 @@ $("#GroupDiv").after($("#infoNumRegistres"));
     }
 </style>
 
+
+
+<c:if test="${pipella eq 'user'}">
+	<script>
+/* 		show('#mostrarMenu');
+		hide('#ocultarMenu');
+ */		$("#principal").css("display", "none");
+	</script>
+</c:if>

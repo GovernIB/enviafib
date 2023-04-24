@@ -84,17 +84,42 @@ function reintentarArxivarTotes() {
 	</div>
 </div>
 
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.NOM)}">
+	<c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.NOM)}">
+		<div id="page-body" class="form-inline">
+			<%-- FILTRE STRING - NOM --%>
+			<div class="filtre-div input-prepend">
+				<fmt:message key="peticio.nom" var="nom" />
+				<form:input cssClass="form-control search-query input-medium"
+					placeholder="${nom}" path="nom" />
+			</div>
+	</c:if>
 
-<div id="page-body" class="form-inline">
-	<%-- FILTRE STRING - NOM --%>
-	<div class="filtre-div input-prepend">
-		<fmt:message key="peticio.nom" var="nom" />
-		<form:input cssClass="form-control search-query input-medium"
-			placeholder="${nom}" path="nom" />
+<c:if test="${gen:contains(__theFilterForm.filterByFields, PeticioFields.ESTAT)}">
+	<%-- FILTRE NUMERO --%>
+	<div class="filtre-div input-group">
+		<div id="estatContainer" class="">
+			<div class="form-group group-item float-left">
+				<div class="input-group" id="estatDesde" data-target-input="nearest">
+					<fmt:message key="estat.from" var="estatFrom" />
+					<form:input cssClass="form-control search-query input-medium"
+						data-target="estatDesde" path="estatDesde"
+						placeholder="${estatFrom}..." />
+				</div>
+			</div>
+			<div class="form-group group-item float-right">
+				<div class="input-group" id="estatFins" data-target-input="nearest">
+					<fmt:message key="estat.to" var="estatTo" />
+
+					<form:input cssClass="form-control search-query input-medium"
+						data-target="#estatFins" path="estatFins"
+						placeholder="${estatTo}..." />
+				</div>
+			</div>
+		</div>
 	</div>
-          </c:if>
-	<%-- FILTRE DATE-TIME --%>
+</c:if>
+
+<%-- FILTRE DATE-TIME --%>
             <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.DATACREACIO)}">
 	<div class="filtre-div input-group">
 		<div id="dataCreacioContainer" class="">
@@ -390,13 +415,25 @@ td:last-child {
 
 <script type="text/javascript">
 
-function openWindowToFluxInfo(urlFluxInfo) {
-	
-	$('#fluxInfoModal').on('shown.bs.modal',function(){
-		$(this).find('iframe').attr('src',urlFluxInfo);
-	});
-		
-    $("#fluxInfoModal").modal('show');
+function openModalFluxInfo(peticioID) {
+	var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+        	    var urlFluxInfo = this.responseText;
+        	    $('#fluxInfoModal').on('shown.bs.modal',function(){
+        	        $(this).find('iframe').attr('src',urlFluxInfo);
+        	    });
+        	        
+        	    $("#fluxInfoModal").modal('show');
+         }
+    };
+    
+    var urlEnviaFIB = '<%=request.getContextPath()%>${contexte}/geturlflow/' + peticioID;
+    xhttp.open("GET", urlEnviaFIB, true);
+
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send('');
 }
+
 
 </script>

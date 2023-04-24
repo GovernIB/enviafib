@@ -64,11 +64,11 @@ public class PrincipalController {
 			// Es poden afegir altres pipelles !!!!!
 
 			if ("admin".equals(pipella)) {
-				return new ModelAndView(new RedirectView("/admin/usuari/list/1", true));
+				return new ModelAndView(new RedirectView("/admin/peticio/list/1", true));
 			}
 
 			if ("user".equals(pipella)) {
-				return new ModelAndView(new RedirectView("/user/peticio/pendents/list/1", true));
+				return new ModelAndView(new RedirectView("/user/peticio/list/1", true));
 			}
 
 			if ("webdb".equals(pipella)) {

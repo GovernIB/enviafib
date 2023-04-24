@@ -65,6 +65,7 @@ import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -105,7 +106,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     private static long lastRefresh = 0;
 
     @Override
-    public PeticioJPA arrancarPeticio(long peticioID, String languageUI, String solicitantUsr) throws I18NException {
+    public PeticioJPA arrancarPeticio(long peticioID, String languageUI, Usuari solicitant) throws I18NException {
 
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
@@ -113,13 +114,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertNifToSignatureBlocks(nifDestinatari);
 
-        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitantUsr);
+        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitant);
 
         return (PeticioJPA) peticio;
     }
 
     @Override
-    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, String solicitantUsr)
+    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, Usuari solicitant)
             throws I18NException {
 
         if (log.isDebugEnabled()) {
@@ -130,13 +131,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertFluxToSignatureBlocks(flux);
 
-        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitantUsr);
+        arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitant);
 
     }
 
     @Override
     public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
-            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, String solicitantUsr ) throws I18NException {
+            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, Usuari solicitant ) throws I18NException {
 
         String perfil = Configuracio.getPortafibProfile();
         FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
@@ -152,7 +153,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         try {
             idPortafib = createSignatureRequestAndStart(languageUI, signatureBlocks, perfil, fitxerAFirmar,
-                    fitxerAAnexar, tipusDoc, idiomaDoc, api, peticio.getTipus(), peticio.getNom(), solicitantUsr);
+                    fitxerAAnexar, tipusDoc, idiomaDoc, api, peticio.getTipus(), peticio.getNom(), solicitant);
 
             peticio.setPeticioPortafirmes(String.valueOf(idPortafib));
             peticio.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
@@ -169,7 +170,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     protected Long createSignatureRequestAndStart(String languageUI, FirmaAsyncSimpleSignatureBlock[] signatureBlocks,
             String profileCode, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
             String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api, int tipusPeticio,
-            String titolPeticio, String solicitantUsr) throws Exception {
+            String titolPeticio, Usuari solicitant) throws Exception {
 
         // Annexes
         List<FirmaAsyncSimpleAnnex> annexs = null;
@@ -193,7 +194,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
         //sdf.format(new Date(System.currentTimeMillis()))
         
-        String title = "ENVIAFIB_" + solicitantUsr  + "_" + titolPeticio;
+        String title = "ENVIAFIB_" + titolPeticio;
         if(title.length() > 250) {
             title = title.substring(0, 250);
         }
@@ -233,8 +234,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String languageDoc = idiomaDocumental;
 
         int priority = FirmaAsyncSimpleSignatureRequestWithSignBlockList.PRIORITY_NORMAL_NORMAL;
-        String senderName = "Tester Firma Async";
-        String senderDescription = "Tester Firma Async - Description";
+        
+        String l1 = solicitant.getLlinatge1() == null ? "" : solicitant.getLlinatge1();
+        String l2 = solicitant.getLlinatge2() == null ? "" : solicitant.getLlinatge2();
+        String fullName = solicitant.getNom() + " " + l1 + " " + l2;
+
+        String senderName = fullName;
+        String senderDescription = solicitant.getUsername(); // + " - " + solicitant.getNif();
+
         String expedientCode = null;
         String expedientName = null;
         String expedientUrl = null;

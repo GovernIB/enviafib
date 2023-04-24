@@ -47,8 +47,10 @@ function submitPage(page) {
 
         }
 
+
         request.setAttribute("start", start);
         request.setAttribute("end", end);
+
 
         // Si el parametre onClickSelectElementsByPage te valor, existeix una funcio per canviar el nº de elements
         // per tant s'ha de incloure l'element per canviar el nº de elements.

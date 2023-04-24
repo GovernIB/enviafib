@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.all.DescarregarImprimiblePublicController;
-import es.caib.enviafib.back.controller.user.LlistatPeticionsFirmadesUserController.TipusFile;
+import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController.TipusFile;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
@@ -40,7 +40,6 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
-import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.DocumentContingut;
 import es.caib.plugins.arxiu.api.IArxiuPlugin;
@@ -111,7 +110,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             newFilterBy.add(NOM);
             newFilterBy.add(DATACREACIO);
             newFilterBy.add(DATAFINAL);
+//            newFilterBy.add(ESTAT);
             peticioFilterForm.setFilterByFields(newFilterBy);
+
+            List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
+            newGroupBy.add(ESTAT);
+            peticioFilterForm.setGroupByFields(newGroupBy);
 
             peticioFilterForm.setVisibleFilterBy(false);
 
@@ -198,14 +202,11 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                     
-                    String urlRedirect = request.getContextPath() +  getContextWeb() + "/fluxinfo/" + peticioID;
-                    
-                    urlRedirect = getURLtoFluxInfo(peticioID);
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-user-friends", "flux.info",
-                                    "javascript:openWindowToFluxInfo('" + urlRedirect + "');",
+                                    "javascript:openModalFluxInfo(" + peticioID + ");",
                                     "btn-info"));
-                    
+
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
@@ -490,23 +491,17 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         }
     }
 
-    public String getURLtoFluxInfo(Long peticioID) throws I18NException {
-        Peticio peticio = this.peticioLogicaEjb.findByPrimaryKey(peticioID);
+    @RequestMapping(value = "/geturlflow/{peticioID}", method = RequestMethod.GET)
+    public void getURLtoFluxInfo(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("peticioID") Long peticioID) throws I18NException, IOException {
 
+        Peticio peticio = this.peticioLogicaEjb.findByPrimaryKey(peticioID);
         long portafibID = Long.parseLong(peticio.getPeticioPortafirmes()); // XYZ ZZZ
 
         String url = this.peticioLogicaEjb.getUrlToViewFlow(portafibID, LocaleContextHolder.getLocale().getLanguage());
-        return url;
-    }
 
-//    @RequestMapping(value = "/fluxinfo/{peticioID}", method = RequestMethod.GET)
-//    public String fluxInfo(@PathVariable("peticioID") java.lang.Long peticioID, HttpServletRequest request,
-//            HttpServletResponse response) throws I18NException {
-//
-//        Peticio peticio = this.peticioLogicaEjb.findByPrimaryKey(peticioID);
-//        long portafibID = Long.parseLong(peticio.getPeticioPortafirmes()); // XYZ ZZZ
-//        String url = this.peticioLogicaEjb.getUrlToViewFlow(portafibID, LocaleContextHolder.getLocale().getLanguage());
-//        return "redirect:" + url;
-//    }
-    
+        response.getWriter().write(url);
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
 }

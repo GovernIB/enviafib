@@ -56,6 +56,7 @@ import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
+import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -126,7 +127,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             return mav;
         } catch (I18NException e) {
             HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
-            return new ModelAndView("redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
+            return new ModelAndView("redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
         }
     }
 
@@ -216,7 +217,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 log.error(msg, e);
                 mav.setViewName("errorIniciPeticioUser");
                 mav.addObject("errorMsg", msg);
-                mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
+                mav.addObject("tornarUrl", LlistatPeticionsUserController.CONTEXT_WEB + "/list");
                 return peticioForm;
             }
             
@@ -289,11 +290,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
             String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg();
             log.error(msg);
-            return "redirect:" + LlistatPeticionsRebutjadesUserController.CONTEXT_WEB + "/list";
+            return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
         } else {
             String msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", peticioID);
             log.info(msg);
-            return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
+            return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
         }
     }
 
@@ -337,7 +338,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public static String getRedirectToList() {
-        return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
 
     /*
@@ -379,7 +380,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         try {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
             
-            final String solicitantUsr = LoginInfo.getInstance().getUsername();
+            final Usuari solicitant = LoginInfo.getInstance().getUsuari();
 
             final int tipus = getTipusPeticio();
             switch (tipus) {
@@ -387,19 +388,19 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 case Constants.TIPUS_PETICIO_FLUX_JSON:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
                             (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
-                                    .getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY), solicitantUsr);
+                                    .getAttribute(FirmaPerFluxFirmaJsonUserController.FLUX_JSON_SESSION_KEY), solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_FLUX_SIMPLE:
                     peticioLogicaEjb.arrancarPeticioBySignatureBlocks(p, languageUI,
                             (FirmaAsyncSimpleSignatureBlock[]) request.getSession()
-                                    .getAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY), solicitantUsr);
+                                    .getAttribute(FirmaPerFluxFirmaSimpleUserController.FLUX_SIMPLE_SESSION_KEY), solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_FLUX:
                     peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI,
                             (FlowTemplateSimpleFlowTemplate) request.getSession()
-                                    .getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY), solicitantUsr);
+                                    .getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY), solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
@@ -414,13 +415,13 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                     FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
-                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux, solicitantUsr);
+                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux, solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
                 break;
                 default:
-                    p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI, solicitantUsr);
+                    p = peticioLogicaEjb.arrancarPeticio(p.getPeticioID(), languageUI, solicitant);
                 break;
             }
 
