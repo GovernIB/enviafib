@@ -55,7 +55,7 @@
                 "field": null,
                 "hasChildren": true,
                 "children": [{
-                        "id": "${groupby_item.value}",
+                        "id": '${groupby_item.value}',
                         "text": "&#8811; <span style='${(__theFilterForm.groupBy eq null)? "font-weight: bold;" : ""}'><fmt:message key="genapp.form.groupby.noneitem"/></span>",
                         "field": ' ',
                         "hasChildren": false,

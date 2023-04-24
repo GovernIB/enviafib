@@ -412,9 +412,9 @@ public class OrganitzacioController
       return null;
     }
     try {
-      Organitzacio organitzacio = this.findByPrimaryKey(request, organitzacioID);
+      Organitzacio organitzacio = organitzacioEjb.findByPrimaryKey(organitzacioID);
       if (organitzacio == null) {
-        String __msg = createMessageError(request, "error.notfound", organitzacioID);
+        String __msg =createMessageError(request, "error.notfound", organitzacioID);
         return getRedirectWhenDelete(request, organitzacioID, new Exception(__msg));
       } else {
         delete(request, organitzacio);

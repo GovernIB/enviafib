@@ -1,13 +1,13 @@
 
 <%-- ========= FITXER AUTOGENERAT - NO MODIFICAR !!!!! --%>
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
- 
-  <%@include file="infoArxiuFormTitle.jsp" %>
 
 
 <form:form modelAttribute="infoArxiuForm" method="${(empty method)?'post':method}"
   enctype="multipart/form-data">
   
+  <%@include file="infoArxiuFormTitle.jsp" %>
+ 
   <c:set var="contexte" value="${infoArxiuForm.contexte}"/>
   <form:hidden path="nou" />
   

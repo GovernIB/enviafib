@@ -250,8 +250,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setArxiuReqParamOrigen(Constants.ORIGEN_ADMINISTRACIO);
 
             // Ha d'escriure els DNIs, CIFs o NIFs de les persones interessades separats per coma.
-            String msgIn = I18NUtils.tradueix("transaccio.interessats.ajuda");
-            peticioForm.addHelpToField(ARXIUREQPARAMINTERESSATS, msgIn);
+            String NIFInteresatsAjuda = I18NUtils.tradueix("transaccio.interessats.nif.ajuda");
+            peticioForm.addHelpToField(ARXIUREQPARAMINTERESSATS, NIFInteresatsAjuda);
+
+            String DIR3InteresatsAjuda = I18NUtils.tradueix("transaccio.interessats.dir3.ajuda");
+            peticioForm.addHelpToField(ARXIUREQPARAMORGANS, DIR3InteresatsAjuda);
 
             // Ha d'escriure la unitat DIR3 del funcionari. Pot esbrinar aquest codi accedint a la pàgina web
             // https://intranet.caib.es/dir3caib i introduint les dades requerides.";

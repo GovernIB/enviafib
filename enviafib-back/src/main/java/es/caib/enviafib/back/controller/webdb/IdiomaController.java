@@ -390,9 +390,9 @@ public class IdiomaController
       return null;
     }
     try {
-      Idioma idioma = this.findByPrimaryKey(request, idiomaID);
+      Idioma idioma = idiomaEjb.findByPrimaryKey(idiomaID);
       if (idioma == null) {
-        String __msg = createMessageError(request, "error.notfound", idiomaID);
+        String __msg =createMessageError(request, "error.notfound", idiomaID);
         return getRedirectWhenDelete(request, idiomaID, new Exception(__msg));
       } else {
         delete(request, idioma);

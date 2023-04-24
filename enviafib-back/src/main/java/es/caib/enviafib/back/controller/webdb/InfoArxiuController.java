@@ -387,9 +387,9 @@ public class InfoArxiuController
       return null;
     }
     try {
-      InfoArxiu infoArxiu = this.findByPrimaryKey(request, infoArxiuID);
+      InfoArxiu infoArxiu = infoArxiuEjb.findByPrimaryKey(infoArxiuID);
       if (infoArxiu == null) {
-        String __msg = createMessageError(request, "error.notfound", infoArxiuID);
+        String __msg =createMessageError(request, "error.notfound", infoArxiuID);
         return getRedirectWhenDelete(request, infoArxiuID, new Exception(__msg));
       } else {
         delete(request, infoArxiu);
