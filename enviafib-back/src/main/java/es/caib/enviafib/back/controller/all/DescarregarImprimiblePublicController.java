@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import es.caib.enviafib.back.controller.user.LlistatPeticionsFirmadesUserController;
-import es.caib.enviafib.back.controller.user.LlistatPeticionsFirmadesUserController.TipusFile;
+import es.caib.enviafib.back.controller.AbstractLlistatPeticionsController;
+import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController;
+import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController.TipusFile;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 
@@ -48,7 +49,7 @@ public class DescarregarImprimiblePublicController {
         TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
         final String docName = "_imprimible";
 
-        LlistatPeticionsFirmadesUserController.internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb,
+        AbstractLlistatPeticionsController.internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb,
                 pluginArxiuEjb, peticioEjb, log);
     }
 

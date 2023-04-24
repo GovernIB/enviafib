@@ -98,7 +98,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 log.error(msg, e);
                 mav.setViewName("errorIniciPeticioUser");
                 mav.addObject("errorMsg", msg);
-                mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
+                mav.addObject("tornarUrl", LlistatPeticionsUserController.CONTEXT_WEB + "/list");
 
                 return peticioForm;
             }

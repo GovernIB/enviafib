@@ -220,7 +220,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                         peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
                         return new ModelAndView(
-                                new RedirectView(LlistatPeticionsFirmadesUserController.CONTEXT_WEB + "/list", true));
+                                new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
                     } else {
                         errorException = null;
                         errorMsg = I18NUtils.tradueix("procesdefirma.status.final.firmaterror", SIGNID);
@@ -271,7 +271,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
         peticioLogicaEjb.update(pet);
 
-        return new ModelAndView(new RedirectView(LlistatPeticionsRebutjadesUserController.CONTEXT_WEB + "/list", true));
+        return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
 
         //        ModelAndView mav = new ModelAndView("finaliframe"); 
         //        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");

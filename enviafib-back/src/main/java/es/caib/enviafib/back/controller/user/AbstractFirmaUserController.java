@@ -127,7 +127,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             return mav;
         } catch (I18NException e) {
             HtmlUtils.saveMessageError(request, I18NUtils.getMessage(e));
-            return new ModelAndView("redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
+            return new ModelAndView("redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
         }
     }
 
@@ -217,7 +217,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 log.error(msg, e);
                 mav.setViewName("errorIniciPeticioUser");
                 mav.addObject("errorMsg", msg);
-                mav.addObject("tornarUrl", LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list");
+                mav.addObject("tornarUrl", LlistatPeticionsUserController.CONTEXT_WEB + "/list");
                 return peticioForm;
             }
             
@@ -290,11 +290,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
             String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg();
             log.error(msg);
-            return "redirect:" + LlistatPeticionsRebutjadesUserController.CONTEXT_WEB + "/list";
+            return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
         } else {
             String msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", peticioID);
             log.info(msg);
-            return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
+            return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
         }
     }
 
@@ -338,7 +338,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     }
 
     public static String getRedirectToList() {
-        return "redirect:" + LlistatPeticionsPendentsUserController.CONTEXT_WEB + "/list";
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
 
     /*

@@ -151,9 +151,6 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
 
         if (peticioFilterForm.isNou()) {
-            List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
-            newGroupBy.add(PeticioFields.ESTAT);
-            peticioFilterForm.setGroupByFields(newGroupBy);
         }
         return peticioFilterForm;
     }

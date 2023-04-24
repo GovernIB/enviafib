@@ -110,7 +110,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             newFilterBy.add(NOM);
             newFilterBy.add(DATACREACIO);
             newFilterBy.add(DATAFINAL);
+//            newFilterBy.add(ESTAT);
             peticioFilterForm.setFilterByFields(newFilterBy);
+
+            List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
+            newGroupBy.add(ESTAT);
+            peticioFilterForm.setGroupByFields(newGroupBy);
 
             peticioFilterForm.setVisibleFilterBy(false);
 
