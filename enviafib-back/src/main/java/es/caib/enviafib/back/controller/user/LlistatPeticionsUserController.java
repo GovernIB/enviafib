@@ -46,7 +46,7 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
     public static final String CONTEXT_WEB = "/user/peticio";
 
     public enum TipusFile {
-        ORIGINAL, ENI_DOC, VERSIO_IMPRIMIBLE
+        FIRMAT, ENI_DOC, VERSIO_IMPRIMIBLE
     }
     
     @Override
