@@ -622,9 +622,9 @@ public class PeticioController
       return null;
     }
     try {
-      Peticio peticio = this.findByPrimaryKey(request, peticioID);
+      Peticio peticio = peticioEjb.findByPrimaryKey(peticioID);
       if (peticio == null) {
-        String __msg = createMessageError(request, "error.notfound", peticioID);
+        String __msg =createMessageError(request, "error.notfound", peticioID);
         return getRedirectWhenDelete(request, peticioID, new Exception(__msg));
       } else {
         delete(request, peticio);

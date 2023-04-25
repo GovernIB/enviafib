@@ -1,19 +1,15 @@
 package es.caib.enviafib.back.controller.user;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +42,7 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
     public static final String CONTEXT_WEB = "/user/peticio";
 
     public enum TipusFile {
-        ORIGINAL, ENI_DOC, VERSIO_IMPRIMIBLE
+        FIRMAT, ENI_DOC, VERSIO_IMPRIMIBLE
     }
     
     @Override

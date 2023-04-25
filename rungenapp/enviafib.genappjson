@@ -2503,8 +2503,8 @@
           "digits": 0,
           "isNotNullable": false,
           "labels": {
-            "es": "NIF de interesados, separados por comas",
-            "ca": "NIF d´interessats, separats per comes"
+            "es": "NIF de interesados",
+            "ca": "NIF d´interessats"
           },
           "javaName": "arxiuReqParamInteressats",
           "javaType": "java.lang.String",
@@ -2578,8 +2578,8 @@
           "digits": 0,
           "isNotNullable": false,
           "labels": {
-            "es": "Códigos DIR3 de los òrganos afectados",
-            "ca": "Codis DIR3 dels òrgans afectats"
+            "es": "Códigos Dir3 de interesados",
+            "ca": "Codis Dir3 d\u0027interesats"
           },
           "javaName": "arxiuReqParamOrgans",
           "javaType": "java.lang.String",

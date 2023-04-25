@@ -412,9 +412,9 @@ public class SerieDocumentalController
       return null;
     }
     try {
-      SerieDocumental serieDocumental = this.findByPrimaryKey(request, serieDocumentalID);
+      SerieDocumental serieDocumental = serieDocumentalEjb.findByPrimaryKey(serieDocumentalID);
       if (serieDocumental == null) {
-        String __msg = createMessageError(request, "error.notfound", serieDocumentalID);
+        String __msg =createMessageError(request, "error.notfound", serieDocumentalID);
         return getRedirectWhenDelete(request, serieDocumentalID, new Exception(__msg));
       } else {
         delete(request, serieDocumental);

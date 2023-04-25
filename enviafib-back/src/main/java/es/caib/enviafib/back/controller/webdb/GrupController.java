@@ -387,9 +387,9 @@ public class GrupController
       return null;
     }
     try {
-      Grup grup = this.findByPrimaryKey(request, grupID);
+      Grup grup = grupEjb.findByPrimaryKey(grupID);
       if (grup == null) {
-        String __msg = createMessageError(request, "error.notfound", grupID);
+        String __msg =createMessageError(request, "error.notfound", grupID);
         return getRedirectWhenDelete(request, grupID, new Exception(__msg));
       } else {
         delete(request, grup);

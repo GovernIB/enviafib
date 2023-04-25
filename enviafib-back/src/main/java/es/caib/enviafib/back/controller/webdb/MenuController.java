@@ -514,9 +514,9 @@ public class MenuController
       return null;
     }
     try {
-      Menu menu = this.findByPrimaryKey(request, menuID);
+      Menu menu = menuEjb.findByPrimaryKey(menuID);
       if (menu == null) {
-        String __msg = createMessageError(request, "error.notfound", menuID);
+        String __msg =createMessageError(request, "error.notfound", menuID);
         return getRedirectWhenDelete(request, menuID, new Exception(__msg));
       } else {
         delete(request, menu);

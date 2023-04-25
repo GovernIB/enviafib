@@ -223,7 +223,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                     String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                             InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
-                            "download.arxivat.original", getContextWeb() + "/descarregaroriginal/" + csv, "btn-info"));
+                            "download.arxivat.firmat", getContextWeb() + "/descarregarfirmat/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
                             "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID,
@@ -381,13 +381,13 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         peticioLogicaEjb.deleteFull(peticio);
     }
 
-    @RequestMapping(value = "/descarregaroriginal/{csv}", method = RequestMethod.GET)
-    public void descarregarOriginal(@PathVariable("csv") String csv, HttpServletRequest request,
+    @RequestMapping(value = "/descarregarfirmat/{csv}", method = RequestMethod.GET)
+    public void descarregarFirmat(@PathVariable("csv") String csv, HttpServletRequest request,
             HttpServletResponse response) throws I18NException, IOException {
 
         final String format = "PDF";
-        final String docName = "_original";
-        TipusFile tipusFile = TipusFile.ORIGINAL;
+        final String docName = "_firmat";
+        TipusFile tipusFile = TipusFile.FIRMAT;
 
         internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioEjb, log);
     }
@@ -431,9 +431,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         byte[] data = null;
 
         switch (tipusFile) {
-            case ORIGINAL:
-                Document original = plugin.documentDetalls(docID, null, true);
-                data = original.getContingut().getContingut();
+            case FIRMAT:
+                Document firmat = plugin.documentDetalls(docID, null, true);
+                data = firmat.getContingut().getContingut();
             break;
 
             case ENI_DOC:

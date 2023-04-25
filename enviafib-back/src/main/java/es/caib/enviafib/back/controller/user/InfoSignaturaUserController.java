@@ -21,7 +21,6 @@ import es.caib.enviafib.back.controller.admin.LlistatPeticionsAdminController;
 import es.caib.enviafib.back.controller.webdb.InfoSignaturaController;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoSignaturaForm;
-import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 

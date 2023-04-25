@@ -1,6 +1,5 @@
 package es.caib.enviafib.back.controller.admin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashSet;
