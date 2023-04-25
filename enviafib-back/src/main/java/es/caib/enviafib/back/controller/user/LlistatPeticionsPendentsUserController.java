@@ -1,8 +1,12 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +47,12 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.addHiddenField(DATAFINAL);
             peticioFilterForm.getFilterByFields().remove(DATAFINAL);
+            
+            // XYZ ZZZ
+            peticioFilterForm.getFilterByFields().add(ESTAT);
+            
+            
+            
 
         }
 
