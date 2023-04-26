@@ -187,8 +187,9 @@ form {
 }
 
 .lead label{
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     margin: 0px;
+    font-size: 1.35rem !important;
 }
 
 </style>

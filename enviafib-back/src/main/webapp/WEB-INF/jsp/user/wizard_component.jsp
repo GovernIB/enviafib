@@ -13,30 +13,6 @@ ul.nav-wizard {
   position: relative;
   overflow: hidden;
 }
-ul.nav-wizard:before {
-  display: block;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  top: 46px;
-  height: 47px;
-  border-top: 1px solid #d4d4d4;
-  border-bottom: 1px solid #d4d4d4;
-  z-index: 11;
-  content: " ";
-}
-ul.nav-wizard:after {
-  display: block;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  top: 138px;
-  height: 47px;
-  border-top: 1px solid #d4d4d4;
-  border-bottom: 1px solid #d4d4d4;
-  z-index: 11;
-  content: " ";
-}
 ul.nav-wizard li {
   position: relative;
   float: left;
@@ -137,22 +113,19 @@ ul.nav-wizard.nav-wizard-backnav .active ~ li a:focus {
 
 </style>
 
-<br/>
-
 <c:if test="${not empty wizardstep}">
 
-<ul class='nav nav-wizard'>
-  
-  <li ${(wizardstep==1)?"class='active'":""}><a ${(wizardstep>=1)?'href="#step1" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.init" /></a></li>
-  
-  <li ${(wizardstep==2)?"class='active'":""}><a ${(wizardstep>=2)?'href="#step2" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.validar" /></a></li>
-  
-  <li ${(wizardstep==3)?"class='active'":""}><a ${(wizardstep>=3)?'href="#step3" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.fitxer" /></a></li>
-
-  <li ${(wizardstep==4)?"class='active'":""}><a ${(wizardstep>=4)?'href="#step4" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.final" /></a></li>
-
-</ul>
-<br/>
+	<ul class='nav nav-wizard'>
+	  
+	  <li ${(wizardstep==1)?"class='active'":""}><a ${(wizardstep>=1)?'href="#step1" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.init" /></a></li>
+	  
+	  <li ${(wizardstep==2)?"class='active'":""}><a ${(wizardstep>=2)?'href="#step2" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.validar" /></a></li>
+	  
+	  <li ${(wizardstep==3)?"class='active'":""}><a ${(wizardstep>=3)?'href="#step3" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.fitxer" /></a></li>
+	
+	  <li ${(wizardstep==4)?"class='active'":""}><a ${(wizardstep>=4)?'href="#step4" data-toggle="tab"':''} ><fmt:message key="menu.flux.wizard.final" /></a></li>
+	
+	</ul>
 
 </c:if>
 
