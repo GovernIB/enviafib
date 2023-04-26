@@ -2103,9 +2103,9 @@
           "transientField": false,
           "defaultValue": "1",
           "minAllowedValue": "0,1,2,3,4,5,6,7",
-          "filter": false,
+          "filter": true,
           "orderBy": 1,
-          "groupBy": false,
+          "groupBy": true,
           "webFieldInfo": {
             "webtype": 16
           },

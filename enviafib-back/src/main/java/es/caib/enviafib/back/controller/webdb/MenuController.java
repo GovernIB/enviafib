@@ -514,9 +514,9 @@ public class MenuController
       return null;
     }
     try {
-      Menu menu = menuEjb.findByPrimaryKey(menuID);
+      Menu menu = this.findByPrimaryKey(request, menuID);
       if (menu == null) {
-        String __msg =createMessageError(request, "error.notfound", menuID);
+        String __msg = createMessageError(request, "error.notfound", menuID);
         return getRedirectWhenDelete(request, menuID, new Exception(__msg));
       } else {
         delete(request, menu);
@@ -668,7 +668,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, MenuFilterForm menuFilterForm,
        List<Menu> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (menuFilterForm.isHiddenField(TITOLMENUID)
-      && !menuFilterForm.isGroupByField(TITOLMENUID)) {
+       && !menuFilterForm.isGroupByField(TITOLMENUID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -693,7 +693,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, MenuFilterForm menuFilterForm,
        List<Menu> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (menuFilterForm.isHiddenField(AJUDAMENUID)
-      && !menuFilterForm.isGroupByField(AJUDAMENUID)) {
+       && !menuFilterForm.isGroupByField(AJUDAMENUID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -728,7 +728,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, MenuFilterForm menuFilterForm,
        List<Menu> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (menuFilterForm.isHiddenField(TIPUS)
-      && !menuFilterForm.isGroupByField(TIPUS)) {
+       && !menuFilterForm.isGroupByField(TIPUS)
+       && !menuFilterForm.isFilterByField(TIPUS)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -772,7 +773,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, MenuFilterForm menuFilterForm,
        List<Menu> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (menuFilterForm.isHiddenField(GRUPID)
-      && !menuFilterForm.isGroupByField(GRUPID)) {
+       && !menuFilterForm.isGroupByField(GRUPID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -808,7 +809,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, MenuFilterForm menuFilterForm,
        List<Menu> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (menuFilterForm.isHiddenField(PARAMETRECOMBO)
-      && !menuFilterForm.isGroupByField(PARAMETRECOMBO)) {
+       && !menuFilterForm.isGroupByField(PARAMETRECOMBO)
+       && !menuFilterForm.isFilterByField(PARAMETRECOMBO)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;

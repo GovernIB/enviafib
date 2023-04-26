@@ -47,11 +47,9 @@ function submitPage(page) {
 
         }
 
-//        System.out.println(" Valor de Start |"+start+"|");
+
         request.setAttribute("start", start);
         request.setAttribute("end", end);
-
-//        System.out.println(" S'ha ficat atribut Start correctament");
 
 
         // Si el parametre onClickSelectElementsByPage te valor, existeix una funcio per canviar el nº de elements

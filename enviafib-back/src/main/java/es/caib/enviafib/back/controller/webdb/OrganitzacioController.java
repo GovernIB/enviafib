@@ -412,9 +412,9 @@ public class OrganitzacioController
       return null;
     }
     try {
-      Organitzacio organitzacio = organitzacioEjb.findByPrimaryKey(organitzacioID);
+      Organitzacio organitzacio = this.findByPrimaryKey(request, organitzacioID);
       if (organitzacio == null) {
-        String __msg =createMessageError(request, "error.notfound", organitzacioID);
+        String __msg = createMessageError(request, "error.notfound", organitzacioID);
         return getRedirectWhenDelete(request, organitzacioID, new Exception(__msg));
       } else {
         delete(request, organitzacio);
@@ -576,7 +576,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, OrganitzacioFilterForm organitzacioFilterForm,
        List<Organitzacio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (organitzacioFilterForm.isHiddenField(TIPUS)
-      && !organitzacioFilterForm.isGroupByField(TIPUS)) {
+       && !organitzacioFilterForm.isGroupByField(TIPUS)
+       && !organitzacioFilterForm.isFilterByField(TIPUS)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;

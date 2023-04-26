@@ -51,8 +51,8 @@
 
 
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.PETICIOID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="peticio.peticioID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -182,8 +182,8 @@
     
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.SOLICITANTID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="peticio.solicitantID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -226,19 +226,28 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ESTAT)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="peticio.estat" />:</span>
+              <%-- FILTRE NUMERO SELECT MULTIPLE --%>
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+                 <span class="add-on"><fmt:message key="peticio.estat" />:</span>
+              </div>
 
-              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
-              
-              <form:input cssClass="input-append input-small" path="estatDesde" />
+              <div class="input-group-prepend" style="min-width:200px">
+                <form:select id="peticio_estat_select" path="estatSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                    <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForEstat}">
+                      <option value="${_entry.key}" ${fn:contains(__theFilterForm.estatSelect, _entry.key)?'selected':''} >${_entry.value}</option>
+                    </c:forEach>
+                </form:select>
+              </div>
 
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
-
-              <form:input cssClass="input-append input-small search-query" path="estatFins" />
-
+              <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#peticio_estat_select').select2({
+                        closeOnSelect: false
+                    });
+                    $('.select2-selection__rendered').css('padding-bottom','5px');
+                });
+              </script>
             </div>
 
 
@@ -270,8 +279,8 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.INFOSIGNATURAID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="peticio.infoSignaturaID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -288,19 +297,28 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.TIPUS)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="peticio.tipus" />:</span>
+              <%-- FILTRE NUMERO SELECT MULTIPLE --%>
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+                 <span class="add-on"><fmt:message key="peticio.tipus" />:</span>
+              </div>
 
-              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
-              
-              <form:input cssClass="input-append input-small" path="tipusDesde" />
+              <div class="input-group-prepend" style="min-width:200px">
+                <form:select id="peticio_tipus_select" path="tipusSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                    <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForTipus}">
+                      <option value="${_entry.key}" ${fn:contains(__theFilterForm.tipusSelect, _entry.key)?'selected':''} >${_entry.value}</option>
+                    </c:forEach>
+                </form:select>
+              </div>
 
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
-
-              <form:input cssClass="input-append input-small search-query" path="tipusFins" />
-
+              <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#peticio_tipus_select').select2({
+                        closeOnSelect: false
+                    });
+                    $('.select2-selection__rendered').css('padding-bottom','5px');
+                });
+              </script>
             </div>
 
 
@@ -527,26 +545,35 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.ARXIUREQPARAMORIGEN)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="peticio.arxiuReqParamOrigen" />:</span>
+              <%-- FILTRE NUMERO SELECT MULTIPLE --%>
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+                 <span class="add-on"><fmt:message key="peticio.arxiuReqParamOrigen" />:</span>
+              </div>
 
-              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
-              
-              <form:input cssClass="input-append input-small" path="arxiuReqParamOrigenDesde" />
+              <div class="input-group-prepend" style="min-width:200px">
+                <form:select id="peticio_arxiuReqParamOrigen_select" path="arxiuReqParamOrigenSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                    <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForArxiuReqParamOrigen}">
+                      <option value="${_entry.key}" ${fn:contains(__theFilterForm.arxiuReqParamOrigenSelect, _entry.key)?'selected':''} >${_entry.value}</option>
+                    </c:forEach>
+                </form:select>
+              </div>
 
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
-
-              <form:input cssClass="input-append input-small search-query" path="arxiuReqParamOrigenFins" />
-
+              <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#peticio_arxiuReqParamOrigen_select').select2({
+                        closeOnSelect: false
+                    });
+                    $('.select2-selection__rendered').css('padding-bottom','5px');
+                });
+              </script>
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PeticioFields.INFOARXIUID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="peticio.infoArxiuID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>

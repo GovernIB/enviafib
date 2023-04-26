@@ -51,8 +51,8 @@
 
 
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,OrganitzacioFields.ORGANITZACIOID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="organitzacio.organitzacioID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>

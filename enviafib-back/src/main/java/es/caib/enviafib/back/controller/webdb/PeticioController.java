@@ -622,9 +622,9 @@ public class PeticioController
       return null;
     }
     try {
-      Peticio peticio = peticioEjb.findByPrimaryKey(peticioID);
+      Peticio peticio = this.findByPrimaryKey(request, peticioID);
       if (peticio == null) {
-        String __msg =createMessageError(request, "error.notfound", peticioID);
+        String __msg = createMessageError(request, "error.notfound", peticioID);
         return getRedirectWhenDelete(request, peticioID, new Exception(__msg));
       } else {
         delete(request, peticio);
@@ -823,7 +823,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(SOLICITANTID)
-      && !peticioFilterForm.isGroupByField(SOLICITANTID)) {
+       && !peticioFilterForm.isGroupByField(SOLICITANTID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -862,7 +862,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(IDIOMAID)
-      && !peticioFilterForm.isGroupByField(IDIOMAID)) {
+       && !peticioFilterForm.isGroupByField(IDIOMAID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -897,7 +897,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(ESTAT)
-      && !peticioFilterForm.isGroupByField(ESTAT)) {
+       && !peticioFilterForm.isGroupByField(ESTAT)
+       && !peticioFilterForm.isFilterByField(ESTAT)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -933,7 +934,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(TIPUSDOCUMENTAL)
-      && !peticioFilterForm.isGroupByField(TIPUSDOCUMENTAL)) {
+       && !peticioFilterForm.isGroupByField(TIPUSDOCUMENTAL)
+       && !peticioFilterForm.isFilterByField(TIPUSDOCUMENTAL)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -965,7 +967,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(IDIOMADOC)
-      && !peticioFilterForm.isGroupByField(IDIOMADOC)) {
+       && !peticioFilterForm.isGroupByField(IDIOMADOC)
+       && !peticioFilterForm.isFilterByField(IDIOMADOC)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -999,7 +1002,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(INFOSIGNATURAID)
-      && !peticioFilterForm.isGroupByField(INFOSIGNATURAID)) {
+       && !peticioFilterForm.isGroupByField(INFOSIGNATURAID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -1035,7 +1038,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(TIPUS)
-      && !peticioFilterForm.isGroupByField(TIPUS)) {
+       && !peticioFilterForm.isGroupByField(TIPUS)
+       && !peticioFilterForm.isFilterByField(TIPUS)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -1069,7 +1073,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(ARXIUREQPARAMDOCESTATELABORA)
-      && !peticioFilterForm.isGroupByField(ARXIUREQPARAMDOCESTATELABORA)) {
+       && !peticioFilterForm.isGroupByField(ARXIUREQPARAMDOCESTATELABORA)
+       && !peticioFilterForm.isFilterByField(ARXIUREQPARAMDOCESTATELABORA)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -1102,7 +1107,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(ARXIUREQPARAMORIGEN)
-      && !peticioFilterForm.isGroupByField(ARXIUREQPARAMORIGEN)) {
+       && !peticioFilterForm.isGroupByField(ARXIUREQPARAMORIGEN)
+       && !peticioFilterForm.isFilterByField(ARXIUREQPARAMORIGEN)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -1136,7 +1142,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, PeticioFilterForm peticioFilterForm,
        List<Peticio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (peticioFilterForm.isHiddenField(INFOARXIUID)
-      && !peticioFilterForm.isGroupByField(INFOARXIUID)) {
+       && !peticioFilterForm.isGroupByField(INFOARXIUID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;

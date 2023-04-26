@@ -51,8 +51,8 @@
 
 
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,MenuFields.MENUID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="menu.menuID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -95,8 +95,8 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,MenuFields.TITOLMENUID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="menu.titolMenuID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -113,8 +113,8 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,MenuFields.AJUDAMENUID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="menu.ajudaMenuID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -131,8 +131,8 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,MenuFields.ORDRE)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="menu.ordre" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -149,26 +149,35 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,MenuFields.TIPUS)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
-              <span class="add-on"><fmt:message key="menu.tipus" />:</span>
+              <%-- FILTRE NUMERO SELECT MULTIPLE --%>
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+                 <span class="add-on"><fmt:message key="menu.tipus" />:</span>
+              </div>
 
-              <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
-              
-              <form:input cssClass="input-append input-small" path="tipusDesde" />
+              <div class="input-group-prepend" style="min-width:200px">
+                <form:select id="menu_tipus_select" path="tipusSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                    <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForTipus}">
+                      <option value="${_entry.key}" ${fn:contains(__theFilterForm.tipusSelect, _entry.key)?'selected':''} >${_entry.value}</option>
+                    </c:forEach>
+                </form:select>
+              </div>
 
-
-              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
-
-              <form:input cssClass="input-append input-small search-query" path="tipusFins" />
-
+              <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#menu_tipus_select').select2({
+                        closeOnSelect: false
+                    });
+                    $('.select2-selection__rendered').css('padding-bottom','5px');
+                });
+              </script>
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,MenuFields.GRUPID)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="menu.grupID" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -211,8 +220,8 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,MenuFields.ACTIU)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="menu.actiu" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>

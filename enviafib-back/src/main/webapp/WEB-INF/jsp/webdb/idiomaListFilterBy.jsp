@@ -77,8 +77,8 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,IdiomaFields.SUPORTAT)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="idioma.suportat" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
@@ -95,8 +95,8 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,IdiomaFields.ORDRE)}">
-            <%-- FILTRE NUMERO --%>      
             <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <%-- FILTRE NUMERO DESDE-FINS --%>
               <span class="add-on"><fmt:message key="idioma.ordre" />:</span>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>

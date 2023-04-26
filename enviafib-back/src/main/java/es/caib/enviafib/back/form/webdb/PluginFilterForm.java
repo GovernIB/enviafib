@@ -87,25 +87,14 @@ public class PluginFilterForm extends EnviaFIBBaseFilterForm implements PluginFi
   }
 
 
-  private java.lang.Integer tipusDesde;
+  private java.util.List<java.lang.Integer> tipusSelect;
 
-  public java.lang.Integer getTipusDesde() {
-    return this.tipusDesde;
+  public java.util.List<java.lang.Integer> getTipusSelect() {
+    return this.tipusSelect;
   }
 
-  public void setTipusDesde(java.lang.Integer tipusDesde) {
-    this.tipusDesde = tipusDesde;
-  }
-
-
-  private java.lang.Integer tipusFins;
-
-  public java.lang.Integer getTipusFins() {
-    return this.tipusFins;
-  }
-
-  public void setTipusFins(java.lang.Integer tipusFins) {
-    this.tipusFins = tipusFins;
+  public void setTipusSelect(java.util.List<java.lang.Integer> tipusSelect) {
+    this.tipusSelect = tipusSelect;
   }
 
 
@@ -120,8 +109,7 @@ public class PluginFilterForm extends EnviaFIBBaseFilterForm implements PluginFi
     this.descripcio = __toClone.descripcio;
     this.classe = __toClone.classe;
     this.properties = __toClone.properties;
-    this.tipusDesde = __toClone.tipusDesde;
-    this.tipusFins = __toClone.tipusFins;
+    this.tipusSelect = __toClone.tipusSelect;
     this.mapOfValuesForTipus = __toClone.mapOfValuesForTipus;
   }
   
