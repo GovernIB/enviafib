@@ -120,7 +120,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     @Override
-    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, Usuari solicitant)
+    public PeticioJPA arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, Usuari solicitant)
             throws I18NException {
 
         if (log.isDebugEnabled()) {
@@ -133,6 +133,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitant);
 
+        return (PeticioJPA) peticio;
     }
 
     @Override
@@ -262,20 +263,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Long peticioDeFirmaID2;
 
         // Utilitzar Blocs de Firmes
-        //        log.info("Petició de Firma emprant Blocs de Firmes");
+//        log.info("Petició de Firma emprant Blocs de Firmes");
         FirmaAsyncSimpleSignatureRequestWithSignBlockList signatureRequest;
         signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(signatureRequestBase, signatureBlocks);
         peticioDeFirmaID2 = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
 
-        //        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
+//        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
 
-        //FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-        //rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
+        FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
 
-        //String url = api.getUrlToViewFlow(rinfo);
-        //        log.info("URL to view flow: " + url);
+        String url = api.getUrlToViewFlow(rinfo);
+//        log.info("URL to view flow: " + url);
         return peticioDeFirmaID2;
-
     }
 
     @Override
