@@ -416,9 +416,9 @@ public class UsuariController
       return null;
     }
     try {
-      Usuari usuari = usuariEjb.findByPrimaryKey(usuariID);
+      Usuari usuari = this.findByPrimaryKey(request, usuariID);
       if (usuari == null) {
-        String __msg =createMessageError(request, "error.notfound", usuariID);
+        String __msg = createMessageError(request, "error.notfound", usuariID);
         return getRedirectWhenDelete(request, usuariID, new Exception(__msg));
       } else {
         delete(request, usuari);
@@ -584,7 +584,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, UsuariFilterForm usuariFilterForm,
        List<Usuari> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (usuariFilterForm.isHiddenField(IDIOMAID)
-      && !usuariFilterForm.isGroupByField(IDIOMAID)) {
+       && !usuariFilterForm.isGroupByField(IDIOMAID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;

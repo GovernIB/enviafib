@@ -43,25 +43,14 @@ public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements I
   }
 
 
-  private java.lang.Integer signOperationDesde;
+  private java.util.List<java.lang.Integer> signOperationSelect;
 
-  public java.lang.Integer getSignOperationDesde() {
-    return this.signOperationDesde;
+  public java.util.List<java.lang.Integer> getSignOperationSelect() {
+    return this.signOperationSelect;
   }
 
-  public void setSignOperationDesde(java.lang.Integer signOperationDesde) {
-    this.signOperationDesde = signOperationDesde;
-  }
-
-
-  private java.lang.Integer signOperationFins;
-
-  public java.lang.Integer getSignOperationFins() {
-    return this.signOperationFins;
-  }
-
-  public void setSignOperationFins(java.lang.Integer signOperationFins) {
-    this.signOperationFins = signOperationFins;
+  public void setSignOperationSelect(java.util.List<java.lang.Integer> signOperationSelect) {
+    this.signOperationSelect = signOperationSelect;
   }
 
 
@@ -87,47 +76,25 @@ public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements I
   }
 
 
-  private java.lang.Integer signModeDesde;
+  private java.util.List<java.lang.Integer> signModeSelect;
 
-  public java.lang.Integer getSignModeDesde() {
-    return this.signModeDesde;
+  public java.util.List<java.lang.Integer> getSignModeSelect() {
+    return this.signModeSelect;
   }
 
-  public void setSignModeDesde(java.lang.Integer signModeDesde) {
-    this.signModeDesde = signModeDesde;
-  }
-
-
-  private java.lang.Integer signModeFins;
-
-  public java.lang.Integer getSignModeFins() {
-    return this.signModeFins;
-  }
-
-  public void setSignModeFins(java.lang.Integer signModeFins) {
-    this.signModeFins = signModeFins;
+  public void setSignModeSelect(java.util.List<java.lang.Integer> signModeSelect) {
+    this.signModeSelect = signModeSelect;
   }
 
 
-  private java.lang.Integer signaturesTableLocationDesde;
+  private java.util.List<java.lang.Integer> signaturesTableLocationSelect;
 
-  public java.lang.Integer getSignaturesTableLocationDesde() {
-    return this.signaturesTableLocationDesde;
+  public java.util.List<java.lang.Integer> getSignaturesTableLocationSelect() {
+    return this.signaturesTableLocationSelect;
   }
 
-  public void setSignaturesTableLocationDesde(java.lang.Integer signaturesTableLocationDesde) {
-    this.signaturesTableLocationDesde = signaturesTableLocationDesde;
-  }
-
-
-  private java.lang.Integer signaturesTableLocationFins;
-
-  public java.lang.Integer getSignaturesTableLocationFins() {
-    return this.signaturesTableLocationFins;
-  }
-
-  public void setSignaturesTableLocationFins(java.lang.Integer signaturesTableLocationFins) {
-    this.signaturesTableLocationFins = signaturesTableLocationFins;
+  public void setSignaturesTableLocationSelect(java.util.List<java.lang.Integer> signaturesTableLocationSelect) {
+    this.signaturesTableLocationSelect = signaturesTableLocationSelect;
   }
 
 
@@ -204,14 +171,11 @@ public class InfoSignaturaFilterForm extends EnviaFIBBaseFilterForm implements I
     super(__toClone);
     this.infoSignaturaIDDesde = __toClone.infoSignaturaIDDesde;
     this.infoSignaturaIDFins = __toClone.infoSignaturaIDFins;
-    this.signOperationDesde = __toClone.signOperationDesde;
-    this.signOperationFins = __toClone.signOperationFins;
+    this.signOperationSelect = __toClone.signOperationSelect;
     this.signType = __toClone.signType;
     this.signAlgorithm = __toClone.signAlgorithm;
-    this.signModeDesde = __toClone.signModeDesde;
-    this.signModeFins = __toClone.signModeFins;
-    this.signaturesTableLocationDesde = __toClone.signaturesTableLocationDesde;
-    this.signaturesTableLocationFins = __toClone.signaturesTableLocationFins;
+    this.signModeSelect = __toClone.signModeSelect;
+    this.signaturesTableLocationSelect = __toClone.signaturesTableLocationSelect;
     this.eniTipoFirma = __toClone.eniTipoFirma;
     this.eniPerfilFirma = __toClone.eniPerfilFirma;
     this.eniRolFirma = __toClone.eniRolFirma;

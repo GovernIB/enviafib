@@ -440,9 +440,9 @@ public class GrupUsuariController
       return null;
     }
     try {
-      GrupUsuari grupUsuari = grupUsuariEjb.findByPrimaryKey(grupUsuariID);
+      GrupUsuari grupUsuari = this.findByPrimaryKey(request, grupUsuariID);
       if (grupUsuari == null) {
-        String __msg =createMessageError(request, "error.notfound", grupUsuariID);
+        String __msg = createMessageError(request, "error.notfound", grupUsuariID);
         return getRedirectWhenDelete(request, grupUsuariID, new Exception(__msg));
       } else {
         delete(request, grupUsuari);
@@ -608,7 +608,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, GrupUsuariFilterForm grupUsuariFilterForm,
        List<GrupUsuari> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (grupUsuariFilterForm.isHiddenField(GRUPID)
-      && !grupUsuariFilterForm.isGroupByField(GRUPID)) {
+       && !grupUsuariFilterForm.isGroupByField(GRUPID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -647,7 +647,7 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, GrupUsuariFilterForm grupUsuariFilterForm,
        List<GrupUsuari> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (grupUsuariFilterForm.isHiddenField(USUARIID)
-      && !grupUsuariFilterForm.isGroupByField(USUARIID)) {
+       && !grupUsuariFilterForm.isGroupByField(USUARIID)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;

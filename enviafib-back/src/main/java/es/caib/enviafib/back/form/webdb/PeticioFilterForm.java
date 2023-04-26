@@ -142,25 +142,14 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.Integer estatDesde;
+  private java.util.List<java.lang.Integer> estatSelect;
 
-  public java.lang.Integer getEstatDesde() {
-    return this.estatDesde;
+  public java.util.List<java.lang.Integer> getEstatSelect() {
+    return this.estatSelect;
   }
 
-  public void setEstatDesde(java.lang.Integer estatDesde) {
-    this.estatDesde = estatDesde;
-  }
-
-
-  private java.lang.Integer estatFins;
-
-  public java.lang.Integer getEstatFins() {
-    return this.estatFins;
-  }
-
-  public void setEstatFins(java.lang.Integer estatFins) {
-    this.estatFins = estatFins;
+  public void setEstatSelect(java.util.List<java.lang.Integer> estatSelect) {
+    this.estatSelect = estatSelect;
   }
 
 
@@ -208,25 +197,14 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.Integer tipusDesde;
+  private java.util.List<java.lang.Integer> tipusSelect;
 
-  public java.lang.Integer getTipusDesde() {
-    return this.tipusDesde;
+  public java.util.List<java.lang.Integer> getTipusSelect() {
+    return this.tipusSelect;
   }
 
-  public void setTipusDesde(java.lang.Integer tipusDesde) {
-    this.tipusDesde = tipusDesde;
-  }
-
-
-  private java.lang.Integer tipusFins;
-
-  public java.lang.Integer getTipusFins() {
-    return this.tipusFins;
-  }
-
-  public void setTipusFins(java.lang.Integer tipusFins) {
-    this.tipusFins = tipusFins;
+  public void setTipusSelect(java.util.List<java.lang.Integer> tipusSelect) {
+    this.tipusSelect = tipusSelect;
   }
 
 
@@ -417,25 +395,14 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
-  private java.lang.Integer arxiuReqParamOrigenDesde;
+  private java.util.List<java.lang.Integer> arxiuReqParamOrigenSelect;
 
-  public java.lang.Integer getArxiuReqParamOrigenDesde() {
-    return this.arxiuReqParamOrigenDesde;
+  public java.util.List<java.lang.Integer> getArxiuReqParamOrigenSelect() {
+    return this.arxiuReqParamOrigenSelect;
   }
 
-  public void setArxiuReqParamOrigenDesde(java.lang.Integer arxiuReqParamOrigenDesde) {
-    this.arxiuReqParamOrigenDesde = arxiuReqParamOrigenDesde;
-  }
-
-
-  private java.lang.Integer arxiuReqParamOrigenFins;
-
-  public java.lang.Integer getArxiuReqParamOrigenFins() {
-    return this.arxiuReqParamOrigenFins;
-  }
-
-  public void setArxiuReqParamOrigenFins(java.lang.Integer arxiuReqParamOrigenFins) {
-    this.arxiuReqParamOrigenFins = arxiuReqParamOrigenFins;
+  public void setArxiuReqParamOrigenSelect(java.util.List<java.lang.Integer> arxiuReqParamOrigenSelect) {
+    this.arxiuReqParamOrigenSelect = arxiuReqParamOrigenSelect;
   }
 
 
@@ -477,14 +444,12 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.solicitantIDFins = __toClone.solicitantIDFins;
     this.idiomaID = __toClone.idiomaID;
     this.destinatariNif = __toClone.destinatariNif;
-    this.estatDesde = __toClone.estatDesde;
-    this.estatFins = __toClone.estatFins;
+    this.estatSelect = __toClone.estatSelect;
     this.tipusDocumental = __toClone.tipusDocumental;
     this.idiomaDoc = __toClone.idiomaDoc;
     this.infoSignaturaIDDesde = __toClone.infoSignaturaIDDesde;
     this.infoSignaturaIDFins = __toClone.infoSignaturaIDFins;
-    this.tipusDesde = __toClone.tipusDesde;
-    this.tipusFins = __toClone.tipusFins;
+    this.tipusSelect = __toClone.tipusSelect;
     this.errorMsg = __toClone.errorMsg;
     this.errorException = __toClone.errorException;
     this.peticioPortafirmes = __toClone.peticioPortafirmes;
@@ -502,8 +467,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.arxiuOptParamProcedimentNom = __toClone.arxiuOptParamProcedimentNom;
     this.arxiuOptParamSerieDocumental = __toClone.arxiuOptParamSerieDocumental;
     this.arxiuOptParamExpedientId = __toClone.arxiuOptParamExpedientId;
-    this.arxiuReqParamOrigenDesde = __toClone.arxiuReqParamOrigenDesde;
-    this.arxiuReqParamOrigenFins = __toClone.arxiuReqParamOrigenFins;
+    this.arxiuReqParamOrigenSelect = __toClone.arxiuReqParamOrigenSelect;
     this.infoArxiuIDDesde = __toClone.infoArxiuIDDesde;
     this.infoArxiuIDFins = __toClone.infoArxiuIDFins;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
@@ -522,12 +486,12 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { NOM }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { NOM ,ESTAT }));
   }
 
   @Override
   public List<Field<?>> getDefaultGroupByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { DATACREACIO ,TIPUSDOCUMENTAL ,TIPUS }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { DATACREACIO ,ESTAT ,TIPUSDOCUMENTAL ,TIPUS }));
   }
 
 

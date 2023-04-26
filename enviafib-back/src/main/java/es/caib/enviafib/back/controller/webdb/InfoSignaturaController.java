@@ -467,9 +467,9 @@ public class InfoSignaturaController
       return null;
     }
     try {
-      InfoSignatura infoSignatura = infoSignaturaEjb.findByPrimaryKey(infoSignaturaID);
+      InfoSignatura infoSignatura = this.findByPrimaryKey(request, infoSignaturaID);
       if (infoSignatura == null) {
-        String __msg =createMessageError(request, "error.notfound", infoSignaturaID);
+        String __msg = createMessageError(request, "error.notfound", infoSignaturaID);
         return getRedirectWhenDelete(request, infoSignaturaID, new Exception(__msg));
       } else {
         delete(request, infoSignatura);
@@ -631,7 +631,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, InfoSignaturaFilterForm infoSignaturaFilterForm,
        List<InfoSignatura> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (infoSignaturaFilterForm.isHiddenField(SIGNOPERATION)
-      && !infoSignaturaFilterForm.isGroupByField(SIGNOPERATION)) {
+       && !infoSignaturaFilterForm.isGroupByField(SIGNOPERATION)
+       && !infoSignaturaFilterForm.isFilterByField(SIGNOPERATION)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -662,7 +663,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, InfoSignaturaFilterForm infoSignaturaFilterForm,
        List<InfoSignatura> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (infoSignaturaFilterForm.isHiddenField(SIGNMODE)
-      && !infoSignaturaFilterForm.isGroupByField(SIGNMODE)) {
+       && !infoSignaturaFilterForm.isGroupByField(SIGNMODE)
+       && !infoSignaturaFilterForm.isFilterByField(SIGNMODE)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;
@@ -692,7 +694,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, InfoSignaturaFilterForm infoSignaturaFilterForm,
        List<InfoSignatura> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (infoSignaturaFilterForm.isHiddenField(SIGNATURESTABLELOCATION)
-      && !infoSignaturaFilterForm.isGroupByField(SIGNATURESTABLELOCATION)) {
+       && !infoSignaturaFilterForm.isGroupByField(SIGNATURESTABLELOCATION)
+       && !infoSignaturaFilterForm.isFilterByField(SIGNATURESTABLELOCATION)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;

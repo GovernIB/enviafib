@@ -412,9 +412,9 @@ public class SerieDocumentalController
       return null;
     }
     try {
-      SerieDocumental serieDocumental = serieDocumentalEjb.findByPrimaryKey(serieDocumentalID);
+      SerieDocumental serieDocumental = this.findByPrimaryKey(request, serieDocumentalID);
       if (serieDocumental == null) {
-        String __msg =createMessageError(request, "error.notfound", serieDocumentalID);
+        String __msg = createMessageError(request, "error.notfound", serieDocumentalID);
         return getRedirectWhenDelete(request, serieDocumentalID, new Exception(__msg));
       } else {
         delete(request, serieDocumental);
@@ -576,7 +576,8 @@ public java.lang.Long stringToPK(String value) {
        ModelAndView mav, SerieDocumentalFilterForm serieDocumentalFilterForm,
        List<SerieDocumental> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
     if (serieDocumentalFilterForm.isHiddenField(TIPUSDOCUMENTAL)
-      && !serieDocumentalFilterForm.isGroupByField(TIPUSDOCUMENTAL)) {
+       && !serieDocumentalFilterForm.isGroupByField(TIPUSDOCUMENTAL)
+       && !serieDocumentalFilterForm.isFilterByField(TIPUSDOCUMENTAL)) {
       return EMPTY_STRINGKEYVALUE_LIST;
     }
     Where _w = null;

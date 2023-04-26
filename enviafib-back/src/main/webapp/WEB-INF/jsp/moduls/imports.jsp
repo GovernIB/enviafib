@@ -6,173 +6,177 @@
 <title>Benvingut a EnviaFIB</title>
 
 
-    <link rel="icon" type="image/vnd.microsoft.icon" href="<c:url value="/img/favicon.ico"/>">
-    
-    <!-- CSS -->
-    <link href="<c:url value="/css/styles.css"/>" rel="stylesheet">
-    <link href="<c:url value="/css/default.css"/>" rel="stylesheet">
-   
-    <link href="<c:url value="/css/genapp.css"/>" rel="stylesheet">
-    
-    <!-- Bootstrap CSS-->
-    <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
-    <link href="<c:url value="/css/datatables.min.css"/>" rel="stylesheet">
+<link rel="icon" type="image/vnd.microsoft.icon" href="<c:url value="/img/favicon.ico"/>">
 
-    <!-- Bootstrap TREE CSS-->
-    <link href="<c:url value="/css/gijgo.min.css"/>" rel="stylesheet">
+<!-- CSS -->
+<link href="<c:url value="/css/styles.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/default.css"/>" rel="stylesheet">
 
-    <!-- Bootstrap DateTimepicker CSS -->
-    <link href="<c:url value="/css/datetimepicker/tempusdominus-bootstrap-4.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/genapp.css"/>" rel="stylesheet">
 
-    <!-- JS -->
-    <script src="<c:url value="/js/jquery.js"/>"></script>
-    <script src="<c:url value="/js/popper.min.js"/>"></script>
+<!-- Bootstrap CSS-->
+<link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/datatables.min.css"/>" rel="stylesheet">
 
-    <!-- JS bootstrap -->
-    <script src="<c:url value="/js/bootstrap.js"/>"></script>
+<!-- Bootstrap TREE CSS-->
+<link href="<c:url value="/css/gijgo.min.css"/>" rel="stylesheet">
 
-    <%-- https://fontawesome.com/icons?d=gallery&m=free --%>
-    <script src="<c:url value="/js/fontawesome-all.js"/>"></script>
+<!-- Bootstrap DateTimepicker CSS -->
+<link href="<c:url value="/css/datetimepicker/tempusdominus-bootstrap-4.css"/>" rel="stylesheet">
 
+<%--  Select Multiple --%> 
+<link href="<c:url value="/css/select2.min.css"/>" rel="stylesheet">
 
-    <!-- Bootstrap TREE JS-->
-    <script src="<c:url value="/js/gijgo.min.js"/>"></script>
+<!-- JS -->
+<script src="<c:url value="/js/jquery.js"/>"></script>
+<script src="<c:url value="/js/popper.min.js"/>"></script>
 
-    <!-- Bootstrap DateTimePicker JS -->
-    <script src="<c:url value="/js/datetimepicker/moment-with-locales.js"/>"></script>
-    <script src="<c:url value="/js/datetimepicker/tempusdominus-bootstrap-4.js"/>"></script>
+<!-- JS bootstrap -->
+<script src="<c:url value="/js/bootstrap.js"/>"></script>
 
-    <!-- TinyMCE -->
-    <script type="text/javascript">
-        var lang = '<c:out value="${pageContext.response.locale.language}"/>';
-    </script>
-    <script src="<c:url value="/js/tiny_mce/tiny_mce.js"/>" type="text/javascript"></script>
-    <script src="<c:url value="/js/tinymce.js"/>" type="text/javascript"></script>
+<%-- https://fontawesome.com/icons?d=gallery&m=free --%>
+<script src="<c:url value="/js/fontawesome-all.js"/>"></script>
+
+<!-- Bootstrap TREE JS-->
+<script src="<c:url value="/js/gijgo.min.js"/>"></script>
+
+<!-- Bootstrap DateTimePicker JS -->
+<script src="<c:url value="/js/datetimepicker/moment-with-locales.js"/>"></script>
+<script src="<c:url value="/js/datetimepicker/tempusdominus-bootstrap-4.js"/>"></script>
+
+<!-- TinyMCE -->
+<script type="text/javascript">
+    var lang = '<c:out value="${pageContext.response.locale.language}"/>';
+</script>
+<script src="<c:url value="/js/tiny_mce/tiny_mce.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/js/tinymce.js"/>" type="text/javascript"></script>
+
+<%-- Select Multiple --%>
+<script src="<c:url value="/js/select2.min.js"/>"></script>
 
 <script type="text/javascript">
-
     function clear_form_elements(ele) {
-    
+
         tags = ele.getElementsByTagName('input');
-        for(i = 0; i < tags.length; i++) {
-            switch(tags[i].type) {
-                case 'password': 
-                case 'text': 
-                    tags[i].value = '';
-                    break;
-                case 'checkbox':
-                case 'radio':
-                    tags[i].checked = false;
-                    break;
+        for (i = 0; i < tags.length; i++) {
+            switch (tags[i].type) {
+            case 'password':
+            case 'text':
+                tags[i].value = '';
+                break;
+            case 'checkbox':
+            case 'radio':
+                tags[i].checked = false;
+                break;
             }
         }
-        
+
         tags = ele.getElementsByTagName('select');
-        for(i = 0; i < tags.length; i++) {
-            if(tags[i].type == 'select-one') {
+        for (i = 0; i < tags.length; i++) {
+            if (tags[i].type == 'select-one') {
                 tags[i].selectedIndex = 0;
-            }
-            else {
-                for(j = 0; j < tags[i].options.length; j++) {
+            } else {
+                for (j = 0; j < tags[i].options.length; j++) {
                     tags[i].options[j].selected = false;
                 }
             }
         }
-    
+
         tags = ele.getElementsByTagName('textarea');
-        for(i = 0; i < tags.length; i++) {
+        for (i = 0; i < tags.length; i++) {
             tags[i].value = '';
         }
     }
 
-	function goTo(url) {
-		document.location.href = url;
-	}
-
-	function submitTo(formName, url) {
-      var __theForm = document.forms[formName]; 
-      __theForm.action = url;
-      __theForm.submit();
+    function goTo(url) {
+        document.location.href = url;
     }
 
-    function openModal(url,accio) {
-             createDivModal(traduccions.type['dialogoTituloEliminar'],
-         traduccions.type['dialogoMensajeEliminar'],url);
-         $('#myModal').modal(accio);
+    function submitTo(formName, url) {
+        var __theForm = document.forms[formName];
+        __theForm.action = url;
+        __theForm.submit();
     }
 
-
-    function openModalSubmit(url,accio, formName) {
-          createDivModal(traduccions.type['dialogoTituloEliminar'],
-      traduccions.type['dialogoMensajeEliminar'],url, formName);
-      $('#myModal').modal(accio);
+    function openModal(url, accio) {
+        createDivModal(traduccions.type['dialogoTituloEliminar'], traduccions.type['dialogoMensajeEliminar'], url);
+        $('#myModal').modal(accio);
     }
-    
-    
 
-    function createDivModal(tituloDialog, msgDialog,url, formName) {
-    $('body')
-         .append(
-                 '<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
-                 + '<div class="modal-dialog" role="document">'
-                 + '<div class="modal-content">'
-                 + '<div class="modal-header">'
-                 + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>'
-                 + '<h3 id="myModalLabel">'+tituloDialog+'</h3>'
-                 + '</div>'
-                 + '<div class="modal-body">'
-                 + '<p>'+msgDialog+'</p>'
-                 + '</div>'
-                 + '<div class="modal-footer">'
-                 + '<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">'+traduccions.type['boto.cancelar']+'</button>'
-                 + '<button class="btn btn-danger" type="button" onclick="' 
-                 + (formName? ('submitTo(\'' + formName + '\',') : 'goTo(') 
-                 + '\''+url+'\')">'+traduccions.type['boto.continuar']+'</button>'
-                 + '</div>'
-                 + '</div>'
-                 + '</div></div>');
+    function openModalSubmit(url, accio, formName) {
+        createDivModal(traduccions.type['dialogoTituloEliminar'], traduccions.type['dialogoMensajeEliminar'], url,
+                formName);
+        $('#myModal').modal(accio);
     }
-    
+
+    function createDivModal(tituloDialog, msgDialog, url, formName) {
+        $('body')
+                .append(
+                        '<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
+                                + '<div class="modal-dialog" role="document">'
+                                + '<div class="modal-content">'
+                                + '<div class="modal-header">'
+                                + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>'
+                                + '<h3 id="myModalLabel">'
+                                + tituloDialog
+                                + '</h3>'
+                                + '</div>'
+                                + '<div class="modal-body">'
+                                + '<p>'
+                                + msgDialog
+                                + '</p>'
+                                + '</div>'
+                                + '<div class="modal-footer">'
+                                + '<button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">'
+                                + traduccions.type['boto.cancelar']
+                                + '</button>'
+                                + '<button class="btn btn-danger" type="button" onclick="'
+                                + (formName ? ('submitTo(\'' + formName + '\',') : 'goTo(')
+                                + '\''
+                                + url
+                                + '\')">'
+                                + traduccions.type['boto.continuar']
+                                + '</button>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div></div>');
+    }
+
     var traduccions = {
-      "type" : {
-         "dialogoTituloEliminar" : "<fmt:message key="genapp.delete"/>",
-         "dialogoMensajeEliminar" : "<fmt:message key="genapp.delete.info"/>",
-        //MARILEN
-         "boto.cancelar":"<fmt:message key="genapp.cancel"/>",
-         "boto.continuar":"<fmt:message key="genapp.continue"/>"
-       }
+        "type" : {
+            "dialogoTituloEliminar" : "<fmt:message key="genapp.delete"/>",
+            "dialogoMensajeEliminar" : "<fmt:message key="genapp.delete.info"/>",
+            //MARILEN
+            "boto.cancelar" : "<fmt:message key="genapp.cancel"/>",
+            "boto.continuar" : "<fmt:message key="genapp.continue"/>"
+        }
     }
 
     function selectUnselectCheckBoxes(source) {
-      checkboxes = document.getElementsByName('selectedItems');
-      for(var i=0, n=checkboxes.length;i<n;i++) {
-        checkboxes[i].checked = source.checked;
-      }
+        checkboxes = document.getElementsByName('selectedItems');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
     }
-
 </script>
 
 <style>
 body {
-    background-image: url(<c:url value="/img/background-pattern.png"></c:url>);
+    background-image: url(< c : url value = "/img/background-pattern.png" ></ c : url >);
 }
 
 .well.well-white {
-    padding: 20px 0.75rem ;
+    padding: 20px 0.75rem;
     margin: 0rem 4rem;
 }
 
-.btn-primary,
-.btn-warning,
-.btn-secondary {
+.btn-primary, .btn-warning, .btn-secondary {
     background-color: #246EB9;
     border-color: #246EB9;
     color: #FDFFFC;
 }
 
-.btn-primary:hover,
-.btn-warning:hover,
-.btn-secondary:hover {
+.btn-primary:hover, .btn-warning:hover, .btn-secondary:hover {
     background-color: #00B2FF;
     border-color: #00B2FF;
 }
@@ -186,10 +190,9 @@ form {
     padding-top: 0px;
 }
 
-.lead label{
+.lead label {
     font-weight: 400 !important;
     margin: 0px;
 }
-
 </style>
-  
+
