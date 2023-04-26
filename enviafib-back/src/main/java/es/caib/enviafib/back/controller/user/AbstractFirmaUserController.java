@@ -401,7 +401,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 break;
 
                 case Constants.TIPUS_PETICIO_FLUX:
-                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI,
+                    p = peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI,
                             (FlowTemplateSimpleFlowTemplate) request.getSession()
                                     .getAttribute(FirmaFluxUserController.FLUX_SESSION_KEY), solicitant);
                 break;
@@ -418,7 +418,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                     FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
-                    peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux, solicitant);
+                    p = peticioLogicaEjb.arrancarPeticioFlux(peticio.getPeticioID(), languageUI, flux, solicitant);
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
@@ -489,7 +489,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         CommonsMultipartFile[] files = peticioForm.getHiddenFile();
         String originalName = peticioForm.getPeticio().getNom();
 
-        if (files == null) {
+        log.info("files: " + files);
+        
+        if (files == null || files.length == 0) {
             if (peticioForm.getFitxerID().isEmpty()) {
                 files = new CommonsMultipartFile[0];
                 result.rejectValue(get(FITXERID), "error.fitxers.postcreate",

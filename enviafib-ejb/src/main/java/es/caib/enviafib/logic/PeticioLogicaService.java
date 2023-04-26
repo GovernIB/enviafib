@@ -31,7 +31,7 @@ public interface PeticioLogicaService extends PeticioService {
 
     public PeticioJPA arrancarPeticio(long peticioID, String languageUI, Usuari solicitant) throws I18NException;
 
-    public void arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, Usuari solicitant)
+    public PeticioJPA arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, Usuari solicitant)
             throws I18NException;
     
     public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
