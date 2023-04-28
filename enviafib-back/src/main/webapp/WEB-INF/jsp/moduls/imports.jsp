@@ -73,6 +73,9 @@
 
         tags = ele.getElementsByTagName('select');
         for (i = 0; i < tags.length; i++) {
+        	if (tags[i].id == "itemsPerPage") {
+				continue;
+			}
             if (tags[i].type == 'select-one') {
                 tags[i].selectedIndex = 0;
             } else {
@@ -86,6 +89,10 @@
         for (i = 0; i < tags.length; i++) {
             tags[i].value = '';
         }
+        
+        //Esborrar divs del camp Estat
+//        $(".select2-selection__choice").remove();
+        $('.select2').val(null).trigger('change'); 
     }
 
     function goTo(url) {
