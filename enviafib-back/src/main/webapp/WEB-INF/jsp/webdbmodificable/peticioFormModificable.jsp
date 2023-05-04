@@ -58,6 +58,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", initApp);
+    document.getElementById("fitxerID").setAttribute("multiple", true);
 
     const handleDrop = (e) => {
     	$('.loader').show(); // show loader
@@ -83,6 +84,10 @@
     
     function refreshFileList(ALL_FILES){
 
+/*     	if (autofirma){
+    		ALL_FILES.splice(1, ALL_FILES.length);
+    	}
+ */    	
         let fullList = new DataTransfer();
 
     	var hiddenInput = document.getElementById("myHiddenInput");
