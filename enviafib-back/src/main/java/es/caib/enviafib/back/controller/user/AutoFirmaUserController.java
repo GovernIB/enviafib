@@ -2,6 +2,7 @@ package es.caib.enviafib.back.controller.user;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -107,10 +108,16 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, PeticioForm peticioForm) {
 
-        //No ha de sortir cap missatge quan es autofirma
-        HtmlUtils.deleteMessages(request);
-
-        return "redirect:" + getContextWeb() + "/viewiniframe";
+        Map<String, List<String>> missatges =  HtmlUtils.getAllMessages(request);
+        if (missatges.get(HtmlUtils.WARN) == null && missatges.get(HtmlUtils.ERROR) == null) {
+            //No ha de sortir cap missatge de INFO o SUCCES quan es autofirma, perque no s'envia res a portafib
+            //Aquest missatge te el consentiment de Toni Nadal.
+            HtmlUtils.deleteMessages(request);
+            return "redirect:" + getContextWeb() + "/viewiniframe";
+        }else {
+            //Si va malament tornam al llistat, sense acabar el proces de AutoFirma
+            return getRedirectToList();
+        }
     }
 
     @RequestMapping(value = "/viewiniframe", method = RequestMethod.GET)
