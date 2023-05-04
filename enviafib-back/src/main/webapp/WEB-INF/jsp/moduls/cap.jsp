@@ -241,9 +241,11 @@
 </script>
 
 <style>
-.bg-aplicacio {
+nav.bg-aplicacio {
     height: 6rem;
     padding: 0px 5rem;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .subtitolMay {

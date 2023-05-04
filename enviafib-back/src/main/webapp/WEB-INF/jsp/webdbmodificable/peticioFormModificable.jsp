@@ -1,4 +1,5 @@
 <%@page import="es.caib.enviafib.model.fields.PeticioFields"%>
+
 <c:if test="${not empty dragdrop}">
 
     <div class="droparea">
@@ -19,9 +20,13 @@
         </div>
 
     </div>
-    <div class="loader" style="display: none;"></div>
+    <div class="loader" style="display: none; list-style-type: none;"></div>
 
+    <ul id="ul_files"></ul>
     <script type="text/javascript">    
+
+    var ALL_FILES = [];
+    
     const initApp = () => {
         const droparea = document.querySelector('.droparea');
         
@@ -48,104 +53,24 @@
 //        $(".tab_container").append('<h5><fmt:message key="dragdrop.title"/><h5>');   
         $("#peticio_tableid").append($("#peticio_idiomaDoc_rowid"));   
         $("#peticio_tableid").append($("#peticio_fitxerID_rowid"));   
+        $(".tab_container").append($("#ul_files"));   
         $(".tab_container").append($(".droparea"));   
-        
-        
     }
 
     document.addEventListener("DOMContentLoaded", initApp);
 
     const handleDrop = (e) => {
+    	$('.loader').show(); // show loader
         
-        $('.loader').show(); // show loader
-
-/*         Input = document.getElementById("fitxerID");
-        fileInput.files = e.dataTransfer.files;
- */        
-        document.getElementById("fitxerID").files = e.dataTransfer.files;
- 
         var files = e.dataTransfer.files;
 
-         console.log(files);
- 
-         var hiddenInput = document.getElementById("myHiddenInput");
-        hiddenInput.value = files.length;
-        
-        var fitxers = [];
-        
         for (var i = 0; i < files.length; i++) {
-
-            var input = document.createElement("input");
-    
-            input.setAttribute("type", "file");
-    
-            input.setAttribute("id", "hiddenFile" + i );
-            input.setAttribute("name", "hiddenFile" );
-            input.setAttribute("style", "display:none");
-            input.setAttribute("value", "hiddenFile" + i );
-    
-            document.getElementById("peticioForm").appendChild(input);
-
-            var fileInput = document.getElementById("hiddenFile" + i);
-            
-            let list = new DataTransfer();
-            let file = files.item(i);
-            list.items.add(file);
-
-            let myFileList = list.files;
-            fileInput.files = myFileList;
-
-            fitxers.push(file.name);
+            ALL_FILES.push(files.item(i));
         }
         
-    <%-- 
-/*         var fitxers = [];
-        var fileName = "";
+        refreshFileList(ALL_FILES);
 
-        var transferencia = [];
-        
-        for (const file of fileInput.files) {
-
-            
-            fileName += file.name + ", ";
-            fitxers.push(file.name);
-
-//            console.log(file);
-
-            setTimeout(function(){
-                var fr = new FileReader();
-                fr.onload = function() {
-                    var data = fr.result;
-                    var array = new Int8Array(data);
-//                    console.log(array);
-//                    console.log(JSON.stringify(array, null, '  '));
-                    var fileObject = {
-                        name : file.name,
-                        data : array,
-                        mime : file.type,
-                        size : file.size
-                    };
-                    console.log(fileObject);
-                    transferencia.push(fileObject);
-                };
-
-                 fr.readAsArrayBuffer(file);
-            }, 200);
-        }
-        
-        console.log("transferencia: " + transferencia);
- */
- 
-     --%>
- 
- 
          setTimeout(function(){
-            var fileLabel= $("#fitxerID-custom-file-label");
-            fileLabel.show();
-            fileLabel.children("small").html(fitxers)
-            
-            console.log(fitxers); 
-            
             $('.loader').hide(); // show loader
         }, 500);
     }
@@ -155,6 +80,82 @@
        classList.remove(classList.item(0));
     }
     
+    
+    function refreshFileList(ALL_FILES){
+
+        let fullList = new DataTransfer();
+
+    	var hiddenInput = document.getElementById("myHiddenInput");
+        hiddenInput.value = ALL_FILES.length;
+
+    	var ul_files = document.getElementById("ul_files");
+        ul_files.innerHTML = "";
+        
+        for (var i = 0; i < ALL_FILES.length; i++) {
+
+            var li_input = document.createElement("li");
+            li_input.setAttribute("id", "div_hiddenFile" + i );
+            li_input.setAttribute("class", "div_hiddenFile" );
+
+            var input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("id", "hiddenFile" + i );
+            input.setAttribute("name", "hiddenFile" );
+            input.setAttribute("value", "hiddenFile" + i );
+            input.setAttribute("style", "display:none");
+            input.setAttribute("oninput", "");
+
+            var a = document.createElement("a");
+            a.setAttribute("id", "eliminarFitxer" + i );
+            a.setAttribute("class", "eliminarFitxer bg-aplicacio");
+            a.setAttribute("style", "cursor:pointer");
+            a.setAttribute("onclick", "deleteFitxer(ALL_FILES, " + i + " )");
+            a.innerHTML = '<span class="label label-success"><b><i class="fas fa-times"></i></b></span>';
+            
+            li_input.innerHTML = ALL_FILES[i].name;
+            li_input.appendChild(input);
+            li_input.appendChild(a);
+           
+            ul_files.appendChild(li_input);
+
+            //Afegim el fitxer al input amb un fileList
+            let list = new DataTransfer();
+            let file = ALL_FILES[i];
+            list.items.add(file);
+            //També l'afegim al llistat total de fitxers, per enviar-los tots
+            fullList.items.add(file);
+
+            let myFileList = list.files;
+            input.files = myFileList;
+        }
+        
+        document.getElementById("fitxerID").files = fullList.files;
+        
+        var fileLabel= $("#fitxerID-custom-file-label");
+        if (ALL_FILES.length == 0) {
+            fileLabel.hide();
+		}else{
+			fileLabel.show();
+			fileLabel.children("small").html(ALL_FILES.length + " fitxers");
+        }
+    }
+    
+    
+    document.getElementById("fitxerID").onchange = function() {
+    	ALL_FILES = [];
+    	
+    	var files = this.files;
+
+        for (var i = 0; i < files.length; i++) {
+            ALL_FILES.push(files.item(i));
+        }
+        refreshFileList(ALL_FILES);
+    };
+    
+    function deleteFitxer(ALL_FILES, id){
+    	ALL_FILES.splice(id, 1);
+    	refreshFileList(ALL_FILES);
+    }
      </script>
 
     <style>
@@ -209,12 +210,39 @@ td label {
     margin: 0;
 }
 
-#showHideButton {
-    
+.eliminarFitxer{
+    border-radius: 4px;
+
+	padding-left: 6px;
+	margin-left: 10px;
+
+	margin-right: 0px;
+	padding-right: 6px;
 }
+
+.div_hiddenFile{
+    background-color: rgba(255,149,35,0.5);
+    
+    float: left;
+    border-radius: 5px;
+
+    padding: 2px 8px;
+    margin: 5px 10px;
+}
+
+#ul_files{
+	list-style: none;
+    margin: 1rem 3rem 0rem;
+	display: inline-block;
+ }
+
 </style>
 
 </c:if>
+
+
+
+
 
 <c:if test="${not empty plantillaflux}">
     <script type="text/javascript">
