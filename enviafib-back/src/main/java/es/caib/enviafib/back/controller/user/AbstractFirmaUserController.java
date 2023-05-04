@@ -806,10 +806,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         
         //Validació de que el titol no es buit
         {
-            log.info("VAMOS A VER SI PASA POR AQUI O NO");
             Peticio peticio = peticioForm.getPeticio();
             String nom = peticio.getNom();
-            log.info("nom: ]" + nom + "[");
             if (nom == null || nom.isEmpty() || nom.trim().length() == 0 || nom.equals("null")) {
                 result.rejectValue(get(NOM), "genapp.validation.required",
                         new String[] { I18NUtils.tradueix(NOM.fullName) }, null);
