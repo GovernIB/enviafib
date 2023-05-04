@@ -520,7 +520,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
                 petFor.setErrorMsg(null);
                 petFor.setErrorException(null);
-                petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
+                if (originalName != null && originalName.trim().length() > 0) {
+                    petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
+                }
 
                 BeanPropertyBindingResult result2 = new BeanPropertyBindingResult(peticioForm, "peticioForm");
 
@@ -739,7 +741,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
 
         {
-
             Field<?>[] reqFields = { ARXIUREQPARAMDOCESTATELABORA, ARXIUREQPARAMORIGEN };
 
             for (Field<?> field : reqFields) {
@@ -801,6 +802,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
             peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
             peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
+        }
+        
+        //Validació de que el titol no es buit
+        {
+            log.info("VAMOS A VER SI PASA POR AQUI O NO");
+            Peticio peticio = peticioForm.getPeticio();
+            String nom = peticio.getNom();
+            log.info("nom: ]" + nom + "[");
+            if (nom == null || nom.isEmpty() || nom.trim().length() == 0 || nom.equals("null")) {
+                result.rejectValue(get(NOM), "genapp.validation.required",
+                        new String[] { I18NUtils.tradueix(NOM.fullName) }, null);
+            }
         }
     }
 }
