@@ -702,7 +702,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 break;
 
                 case Constants.TIPUS_PETICIO_AUTOFIRMA:
-                //Reason ha de ser obligatori
+                    //Reason ha de ser obligatori quan es AutoFirma
+                    String reason = peticioForm.getPeticio().getReason();
+                    if (reason == null || reason.trim().length() == 0) {
+                        result.rejectValue(get(REASON), "genapp.validation.required",
+                                new String[] { I18NUtils.tradueix(REASON.fullName) }, null);
+                    }
 
                 break;
 
