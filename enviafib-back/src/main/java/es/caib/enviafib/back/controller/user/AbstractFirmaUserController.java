@@ -142,6 +142,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         peticioForm.setTitleParam((String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO));
 
+        
         hiddens.remove(NOM);
         hiddens.remove(FITXERID);
         hiddens.remove(TIPUSDOCUMENTAL);
@@ -200,9 +201,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         peticioForm.setHiddenFields(hiddens);
 
         if (peticioForm.isNou()) {
+            
             mav.addObject("dragdrop", true);
             peticioForm.setTitleCode(getTitolCode(request));
-
+            
             Peticio peticio = peticioForm.getPeticio();
 
             // COIDDIR3
@@ -261,13 +263,34 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             String msgFD3 = I18NUtils.tradueix("transaccio.fundacionaridir3.ajuda");
             peticioForm.addHelpToField(ARXIUPARAMFUNCIONARIDIR3, msgFD3);
 
+            peticioForm.setSaveButtonVisible(false);
+            peticioForm.addAdditionalButton(new AdditionalButton("", getSubmitLabel(),
+                    "javascript:document.getElementById('" + PeticioFields._TABLE_MODEL + "Form').submit()",
+                    "btn-secondary"));
+
             peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "advanced.show",
                     "javascript:mostrarOcultarCampsAvanzats(this)", "btn-warning"));
+
+            peticioForm.setCancelButtonVisible(false);
+            peticioForm.addAdditionalButton(
+                    new AdditionalButton("", "genapp.cancel", getContextWeb() + "/0/cancel", "btn-secondary"));
 
         }
         return peticioForm;
     }
 
+
+    private String getSubmitLabel() {
+        String codeLabel;
+
+        if (getTipusPeticio() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
+            codeLabel = "peticiodefirma.autofirma.continuar";
+        }else {
+            codeLabel = "peticiodefirma.continuar";
+        }
+        return codeLabel;
+    }
+    
     public String getCodiDIR3() throws I18NException {
 
         IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstance();
