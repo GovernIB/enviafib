@@ -211,8 +211,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             try {
                 String codiDIR3 = getCodiDIR3();
                 peticio.setArxiuParamFuncionariDir3(codiDIR3);
-                peticioForm.addHiddenField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
+//                peticioForm.addHiddenField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
                 peticioForm.addReadOnlyField(PeticioFields.ARXIUPARAMFUNCIONARIDIR3);
+                peticioForm.addLabel(ARXIUPARAMFUNCIONARIDIR3, "elmeudir3");
 
             } catch (I18NException e) {
                 String msg = I18NUtils.getMessage(e);
@@ -260,8 +261,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             // Ha d'escriure la unitat DIR3 del funcionari. Pot esbrinar aquest codi accedint a la pàgina web
             // https://intranet.caib.es/dir3caib i introduint les dades requerides.";
-            String msgFD3 = I18NUtils.tradueix("transaccio.fundacionaridir3.ajuda");
-            peticioForm.addHelpToField(ARXIUPARAMFUNCIONARIDIR3, msgFD3);
+//            String msgFD3 = I18NUtils.tradueix("transaccio.fundacionaridir3.ajuda");
+//            peticioForm.addHelpToField(ARXIUPARAMFUNCIONARIDIR3, msgFD3);
 
             peticioForm.setSaveButtonVisible(false);
             peticioForm.addAdditionalButton(new AdditionalButton("", getSubmitLabel(),
