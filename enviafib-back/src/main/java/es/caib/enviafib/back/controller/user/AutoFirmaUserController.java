@@ -75,8 +75,13 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         peticioForm.addHiddenField(DESTINATARINIF);
         peticioForm.getHiddenFields().remove(PeticioFields.REASON);
 
-        return peticioForm;
+        peticioForm.addLabel(REASON, "autofirma.reason.obligatori");
 
+        mav.addObject("enviarASignar", "Signar amb AutoFirma");
+        
+        
+        
+        return peticioForm;
     }
 
     @Override
