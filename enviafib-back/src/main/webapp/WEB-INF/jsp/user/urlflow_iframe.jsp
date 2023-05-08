@@ -40,7 +40,6 @@
 <style>
 #firmaFluxContainer {
 	padding: 0rem 0.85rem;
-	text-align: center;
 }
 
 #leadTitle {
@@ -50,6 +49,7 @@
 
 #botonsFluxContainer{
     margin: 1rem;
+    text-align: center;
 }
 
 .btn-flux{

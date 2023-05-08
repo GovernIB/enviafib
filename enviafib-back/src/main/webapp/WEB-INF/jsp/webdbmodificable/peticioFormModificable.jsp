@@ -83,11 +83,12 @@
     
     
     function refreshFileList(ALL_FILES){
-
-/*     	if (autofirma){
+/*
+        var autofirma = true;
+     	if (autofirma){
     		ALL_FILES.splice(1, ALL_FILES.length);
     	}
- */    	
+ */     	
         let fullList = new DataTransfer();
 
     	var hiddenInput = document.getElementById("myHiddenInput");
