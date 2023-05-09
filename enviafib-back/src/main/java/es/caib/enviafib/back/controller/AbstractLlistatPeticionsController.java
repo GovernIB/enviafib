@@ -329,7 +329,6 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
                 throw new I18NException("genapp.comodi", "No e spot enviar email de peticio no finalitzada");
             }
-            Fitxer file = fitxerEjb.findByPrimaryKey(peticio.getFitxerFirmatID());
 
             String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                     InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
@@ -337,20 +336,14 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             String fileUrl;
             Map<String, Object> map = new HashMap<String, Object>();
 
-            map.put("nomFitxer", file.getNom());
-            // Recuperam el CSV d'arxiu.
-            // fileUrl = infoArxiuEjb.executeQueryOne(InfoArxiuFields.PRINTABLEURL,
-            // InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-
             fileUrl = Configuracio.getUrlBase(decodedUrl, request.getContextPath())
                     + DescarregarImprimiblePublicController.CONTEXT_WEB + "/" + csv;
 
+            map.put("titolPeticio", peticio.getNom());
             map.put("fileUrl", fileUrl);
 
             String subject = I18NUtils.tradueix("email.download.file.subject");
-            String message = "<h4>" + I18NUtils.tradueix("email.download.file.title") + "</h4>" + "<div>" + "<p>"
-                    + I18NUtils.tradueix("email.download.file.message") + "<br/><a href='${fileUrl}'>"
-                    + I18NUtils.tradueix("email.download.file.linktext") + "</a>" + "</p>" + "</div>";
+            String message = I18NUtils.tradueix("email.download.file.message");
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
