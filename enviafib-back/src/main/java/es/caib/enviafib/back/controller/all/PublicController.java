@@ -6,33 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.caib.enviafib.commons.utils.StaticVersion;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * 
- * @autor anadal
- * 
- */
 @Controller
 public class PublicController {
 
 	protected final Logger log = Logger.getLogger(getClass());
 
-	@RequestMapping(value = "/public/index.html")
-	public ModelAndView principal(HttpSession session, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-
-		Boolean initialized = (Boolean) session.getAttribute("inicialitzat");
-
-		if (initialized == null) {
-			HtmlUtils.saveMessageInfo(request, "MessageInfo : Benvingut a EnviaFIB");
-			session.setAttribute("inicialitzat", true);
-		}
-
-		return new ModelAndView("homepublic");
-
-	}
-
+	@RequestMapping(value = "/public/versio")
+    public void versio(HttpServletResponse response)
+            throws Exception {
+        response.getWriter().write(StaticVersion.VERSION);
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
 }
