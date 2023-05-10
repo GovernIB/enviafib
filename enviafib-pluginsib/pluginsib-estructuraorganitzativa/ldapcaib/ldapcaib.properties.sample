@@ -25,13 +25,49 @@ es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.suffix_role_mat
 
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.dir3host=https://se.caib.es/dir3caib/rest
 
-# S'ha de definir una de les dues propietats: o mappingdir3consellerusername o rolcaparea
-es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.mappingdir3consellerusername=mappingdir3consellerusername.properties
-#es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolcaparea=IBK_CONSELLER
-
-
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolcapdepartament=IBK_DIRECTOR
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolsecretari=IBK_SECRETARI
+
+# S'ha de definir una de les dues propietats: o conselleria.dir o rolcaparea
+#es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolcaparea=IBK_CONSELLER
+
+#S'ha de definir una de les dues propietats: o mappingdir3consellerusername o rolcaparea
+#es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.rolcaparea=IBK_CONSELLER
+
+#Mapeig de DIR3 de Conselleries i Consellers
+# Juan Pedro Yllanes Suarez Yllanes Suarez
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026972=u143134
+
+# Mercedes Garrido Rodriguez
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04027007=e18227253y
+
+# Rosario Sanchez Grau
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026911=u135358
+
+# Iago Negueruela Vázquez
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026960=u93566
+
+# Fina De Santiago Rodríguez
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026929=u06246
+
+# Marti Xavier March Cerda
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026923=u06196
+
+# Patricia Juana Gomez Picard
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026919=u89586
+
+# Miquel Company Pons
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026906=e41507318t
+
+# Miquel Mir Gual
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026953=u97173
+
+# María Asunción Jacoba Pía de la Concha García-Mauriño
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026949=u143142
+
+# Josep Mari Ribas
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.conselleria.A04026937=e41439526n
+
 
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.gerentpresident.nom=Francina Armengol i Socias
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.gerentpresident.username=u131313
@@ -41,3 +77,8 @@ es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.organitzacio.dir3=A0
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.organitzacio.nif=S0711001H
 
 
+#Mapeig dels grups que no tenen DIR3 associat a grups que si el tenen
+#es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.group.nomdelgrup=nounomdelgrup
+
+#Mapeig d'usuaris usuaris de grups que no tenen DIR3 associats a un grup que si en te
+#es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.user.codiusuari=nounomdelgrup

@@ -107,38 +107,39 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
         }
 
         // Check de ROLE_CAPAREA o Mapping
-        String mapping = getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "mappingdir3consellerusername");
+        {
+            String mapping = getProperty(
+                    LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "mappingdir3consellerusername");
+            if (mapping != null) {
+                throw new Exception(
+                        "La propietat 'mappingdir3consellerusername' ja no s'utilitza i s'ha d'esborrar de les propietats");
+            }
+        }
         String roleConseller = getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "rolcaparea");
+        String consellerUsername = getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "conselleria." + dir3);
 
-        if (mapping != null && roleConseller != null) {
+
+        if (consellerUsername != null && roleConseller != null) {
             throw new Exception(
-                    "No es pot definir a la vegada les propietats 'mappingdir3consellerusername' i 'rolcaparea'");
+                    "No es pot definir a la vegada les propietats 'conselleria.dir3' i 'rolcaparea'");
         }
 
-        if (mapping == null && roleConseller == null) {
+        if (consellerUsername == null && roleConseller == null) {
             throw new Exception(
-                    "S'ha de definir com a mínim una de les propietats següents: 'mappingdir3consellerusername' o 'rolcaparea'");
+                    "S'ha de definir com a mínim una de les propietats següents: 'conselleria.dir3' o 'rolcaparea'");
         }
 
-        if (roleConseller == null) {
-            File properties = new File(mapping);
-
-            Properties props = new Properties();
-            props.load(new FileInputStream(properties));
-
-            return props.getProperty(dir3);
+        if (consellerUsername != null) {
+            return consellerUsername;
         } else {
-
             LDAPUser user = getEncarregatAssociatAlRol(username, roleConseller);
 
             if (user == null) {
                 log.warn("No s'ha trobat el Cap d'Area/Conseller on es troba l'usuari " + username);
                 return null;
             } else {
-
                 return user.getUserName();
             }
-
         }
     }
 
@@ -187,18 +188,28 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
 
     @Override
     public String getCodeDepartamentDireccioGeneral(String username) throws Exception {
-        LDAPUser usuari = getLDAPUserManager().getUserByUsername(username);
-        if (usuari == null) {
-            log.warn("No s'ha trobat informació de l'usuari " + username + " al servidor LDAP.");
-            return null;
-        } else {
-            return usuari.getDepartment();
-        }
-    }
 
+            String codiDep = getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "user." + username);
+
+            if (codiDep == null) {
+                LDAPUser usuari = getLDAPUserManager().getUserByUsername(username);
+                if (usuari == null) {
+                    log.warn("No s'ha trobat informació de l'usuari " + username + " al servidor LDAP.");
+                    codiDep = null;
+                } else {
+                    final String codiDepOrig = usuari.getDepartment();
+                    codiDep = getProperty(LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "group." + codiDepOrig);
+
+                    if (codiDep == null) {
+                        codiDep = codiDepOrig;
+                    }
+                }
+            }
+            return codiDep;
+    }
+    
     @Override
     public String getCapDepartamentDirectorGeneralUsername(String username) throws Exception {
-
         LDAPUser user = getCapDepartamentDirectorGeneral(username);
 
         if (user == null) {
@@ -206,7 +217,6 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
         } else {
             return user.getUserName();
         }
-
     }
 
     @Override
