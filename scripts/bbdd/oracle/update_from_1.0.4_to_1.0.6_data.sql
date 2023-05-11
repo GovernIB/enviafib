@@ -48,12 +48,13 @@ CREATE TABLE efi_organitzacio
    CONSTRAINT efi_organitzacio_pk PRIMARY KEY (organitzacioid)
 );
 
-create index efi_organitzacio_pk_i on efi_organitzacio (organitzacioid);
-
+ create index efi_organitzacio_pk_i on efi_organitzacio (organitzacioid);
+ 
 
 ---
 --- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
 ---
+
 INSERT INTO efi_plugin(pluginid, classe, properties, actiu, tipus, nom, descripcio) 
       VALUES (30, 'org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstructuraOrganitzativaPlugin', '# =================  TAULA DE BBDD =========
 

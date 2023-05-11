@@ -245,3 +245,57 @@ anadal | ${Secretari} | ${UsuariActual}', NULL, 0);
 
 
 
+
+---
+--- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+---
+
+INSERT INTO efi_plugin(pluginid, classe, properties, actiu, tipus, nom, descripcio) 
+      VALUES (30, 'org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstructuraOrganitzativaPlugin', '# =================  TAULA DE BBDD =========
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.datasourcejndi=java:jboss/datasources/enviafibDS
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.tablename=efi_organitzacio
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.areacodi=codiconselleria
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.departamentcodi=codidirecciogeneral
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.tipus=tipus
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.columns.valor=valor
+
+
+# =================  PLUGIN DE USER INFORMATION =========
+
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.class=org.fundaciobit.pluginsib.userinformation.keycloak.KeyCloakUserInformationPlugin
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertybase=es.caib.enviafib.
+# Si la següent propietat està comentada, llavors les propietats
+# del plugin de user information han d''estar al System.getProperties()
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.propertiesfile=D:\\dades\\dades\\CarpetesPersonals\\ProjecteBase\\jboss7\\standalone\\deploy_enviafib\\enviafib.properties
+
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcaparea=RolCapArea
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolcapdepartament=RolCapDepartament
+es.caib.enviafib.pluginsib.estructuraorganitzativa.database.userinformation.rolsecretari=RolSecretari', true, 1, 'Database', 'Recull informació de l''Estructura d''una taula de la Base de Dades');
+
+---
+--- 11/05/2023 -   Revisar com s'informen les metadades mínimes obligatòries #266
+---
+INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES
+   (1010, 'SD01333', '1', 'Enviafib TD01 Resolució', '---'),
+   (1011, 'SD01334', '2', 'Enviafib TD02 Acords', '---'),
+   (1012, 'SD01335', '3', 'Enviafib TD03 Contractes', '---'),
+   (1013, 'SD01336', '4', 'Enviafib TD04 Convenis', '---'),
+   (1014, 'SD01337', '5', 'Enviafib TD05 Declaracions', '---'),
+   (1015, 'SD01338', '6', 'Enviafib TD06 Comunicacions', '---'),
+   (1016, 'SD01339', '7', 'Enviafib TD07 Notificacions', '---'),
+   (1017, 'SD01340', '8', 'Enviafib TD08 Publicacions', '---'),
+   (1018, 'SD01342', '9', 'Enviafib TD09 Justificants de recepció', '---'),
+   (1019, 'SD01342', '10', 'Enviafib TD10 Actes', '---'),
+   (1020, 'SD01343', '11', 'Enviafib TD11 Certificats', '---'),
+   (1021, 'SD01344', '12', 'Enviafib TD12 Diligències', '---'),
+   (1022, 'SD01345', '13', 'Enviafib TD13 Informes', '---'),
+   (1023, 'SD01346', '14', 'Enviafib TD14 Sol·licituds', '---'),
+   (1024, 'SD01347', '15', 'Enviafib TD15 Denúncies', '---'),
+   (1025, 'SD01348', '16', 'Enviafib TD16 Al·legacions', '---'),
+   (1026, 'SD01349', '17', 'Enviafib TD17 Recursos', '---'),
+   (1027, 'SD01350', '18', 'Enviafib TD18 Comunicacions ciutadà', '---'),
+   (1028, 'SD01351', '19', 'Enviafib TD19 Factures', '---'),
+   (1029, 'SD01352', '20', 'Enviafib TD20 Altre documentació aportada', '---'),
+   (1030, 'SD01353', '99', 'Enviafib TD99 Altres', '---');
