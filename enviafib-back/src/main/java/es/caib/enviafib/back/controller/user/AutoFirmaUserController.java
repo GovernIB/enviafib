@@ -205,37 +205,36 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
                 case FirmaSimpleStatus.STATUS_FINAL_OK: {
                     List<FirmaSimpleSignatureStatus> results = fullTransactionStatus.getSignaturesStatusList();
 
-                    final boolean isDebug = true; // log.isDebugEnabled();
-                    if (isDebug) {
+                    if (log.isDebugEnabled()) {
                         log.debug(" ===== WEB RESULTATS [" + results.size() + "] =========");
                     }
 
                     FirmaSimpleSignatureResult fssr = null;
-                    for (FirmaSimpleSignatureStatus signatureStatus : results) {
+                    String signID = results.get(0).getSignID();
 
-                        String signID = signatureStatus.getSignID();
-
-                        if (isDebug) {
-                            log.debug(" ------ WEB SIGNID ]" + signID + "[");
-                        }
-
-                        if (!SIGNID.equals(signID)) {
-                            log.warn("S'ha rebut de PortaFIB una petició de firma amb un SIGNID que no s'ha enviat ("
-                                    + signID + ")");
-                            continue;
-                        }
-                        fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
+                    if (log.isDebugEnabled()) {
+                        log.debug(" ------ WEB SIGNID ]" + signID + "[");
                     }
 
-                    // Final for de fitxers firmats
-                    if (fssr != null && fssr.getSignedFileInfo() != null) {
-                        peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
+                    if (SIGNID.equals(signID)) {
+                        
+                        fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
+                        
+                        if (fssr != null && fssr.getSignedFileInfo() != null) {
+                            //Aquest mètode pot retornar un I18NException que va directe al catch i mostra l'error
+                            peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
 
-                        return new ModelAndView(
-                                new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                            return new ModelAndView(
+                                    new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                        } else {
+                            //Error de getSignatureResult ha anat malament;
+                            errorException = null;
+                            errorMsg = I18NUtils.tradueix("procesdefirma.status.final.error.portafib", transactionID, signID);
+                        }
                     } else {
+                        //Error de SignID
                         errorException = null;
-                        errorMsg = I18NUtils.tradueix("procesdefirma.status.final.firmaterror", SIGNID);
+                        errorMsg = I18NUtils.tradueix("procesdefirma.status.final.error.signID", signID, SIGNID);
                     }
                 }
                 break;
