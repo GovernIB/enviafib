@@ -223,13 +223,13 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
                     String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                             InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
+                                    getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
                             "download.arxivat.firmat", getContextWeb() + "/descarregarfirmat/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
                             "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
-                                    getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
                 break;
                 default:
                 break;
@@ -337,11 +337,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             Map<String, Object> map = new HashMap<String, Object>();
 
             map.put("nomFitxer", peticio.getFitxer().getNom());
-            map.put("titolPeticio", peticio.getNom());
+            map.put("numeroPeticio", "" + peticio.getPeticioID());
+//            map.put("titolPeticio", peticio.getNom());
             map.put("fileUrl", fileUrl);
 
-            String subject = I18NUtils.tradueix("email.download.file.subject");
-            String message = I18NUtils.tradueix("email.download.file.message");
+            String subject = I18NUtils.tradueix("email.download.file.subject3");
+            String message = I18NUtils.tradueix("email.download.file.message3");
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
