@@ -40,6 +40,7 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
+import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.DocumentContingut;
 import es.caib.plugins.arxiu.api.IArxiuPlugin;
@@ -324,21 +325,18 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             // Recuperacio del fitxer firmat a partir del ID de peticio
             Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
-
+            
             // Si a petició s'ha arxivat correctament, s'ha de passar el link amb CSV:
             if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
                 throw new I18NException("genapp.comodi", "No e spot enviar email de peticio no finalitzada");
             }
 
-            String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
-                    InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-
-            String fileUrl;
+            InfoArxiuJPA ia = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
+            String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
+            
             Map<String, Object> map = new HashMap<String, Object>();
 
-            fileUrl = Configuracio.getUrlBase(decodedUrl, request.getContextPath())
-                    + DescarregarImprimiblePublicController.CONTEXT_WEB + "/" + csv;
-
+            map.put("nomFitxer", peticio.getFitxer().getNom());
             map.put("titolPeticio", peticio.getNom());
             map.put("fileUrl", fileUrl);
 
@@ -347,7 +345,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
-
+            
             EmailUtil.postMail(subject, message, isHTML, Configuracio.getAppEmail(), decodedEmail);
             String successMsg = "S'ha enviat el email correctament";
             HtmlUtils.saveMessageSuccess(request, successMsg);
