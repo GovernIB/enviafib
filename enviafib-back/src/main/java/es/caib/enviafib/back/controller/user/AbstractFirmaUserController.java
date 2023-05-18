@@ -142,6 +142,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         peticioForm.setTitleParam((String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO));
 
+        //Comprovacions de seguretat
+        if (!peticioForm.isNou()) {
+            String usuariDeLaPeticio = peticioForm.getPeticio().getArxiuFuncionariUsername();
+            String usuariLogejat = LoginInfo.getInstance().getUsername();
+
+            if (!usuariDeLaPeticio.equals(usuariLogejat)) {
+                Long peticioID = peticioForm.getPeticio().getPeticioID();
+                createMessageWarning(request, "error.notfound", peticioID);
+                mav.setView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list"  , true));
+                return peticioForm;
+            }
+        }
         
         hiddens.remove(NOM);
         hiddens.remove(FITXERID);
@@ -826,6 +838,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
             peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
             peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
+//            peticio.setArxiuOptParamSerieDocumental("S0001");
+//            peticio.setArxiuOptParamProcedimentCodi("organo1_PRO_123456789");
+//            peticio.setArxiuOptParamProcedimentNom("Subvenciones empleo");
         }
         
         //Validació de que el titol no es buit
