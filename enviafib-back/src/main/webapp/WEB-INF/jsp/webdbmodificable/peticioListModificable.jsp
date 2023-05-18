@@ -387,10 +387,10 @@ th span {
 	cursor: pointer !important;
 }
 
-td:nth-child(1), td:nth-child(5) {
+td:nth-child(1), td:nth-child(7) {
 	vertical-align: middle !important;
 }
-td:nth-child(2) {
+td:nth-child(3) {
     text-align: left;
     padding-left: 1rem;
 }

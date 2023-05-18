@@ -90,6 +90,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
+            hiddens.remove(PETICIOID);
             hiddens.remove(NOM);
             hiddens.remove(DATACREACIO);
             hiddens.remove(TIPUSDOCUMENTAL);
