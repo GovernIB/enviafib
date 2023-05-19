@@ -846,7 +846,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
 
-        log.info("Autofirma Recuperada Informació de firma: "
+        log.info("Autofirma Recuperada Informació de firma: \n"
                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
 
         Peticio pet = this.findByPrimaryKey(peticioID);
