@@ -54,11 +54,14 @@
         $("#peticio_tableid").append($("#peticio_idiomaDoc_rowid"));   
         $("#peticio_tableid").append($("#peticio_fitxerID_rowid"));   
         $(".tab_container").append($("#ul_files"));   
-        $(".tab_container").append($(".droparea"));   
+        $(".tab_container").append($(".droparea"));  
+        
+        var pdfFilesInput = document.getElementById('fitxerID');
+        pdfFilesInput.setAttribute('multiple', true);
+        pdfFilesInput.setAttribute('accept', '.pdf');
     }
 
     document.addEventListener("DOMContentLoaded", initApp);
-    document.getElementById("fitxerID").setAttribute("multiple", true);
 
     const handleDrop = (e) => {
     	$('.loader').show(); // show loader
