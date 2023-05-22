@@ -446,7 +446,7 @@ td:last-child {
                 </button>
             </div>
 			<div class="modal-body" style="text-align: center;">
-				<iframe width="450px" height="400px" id="iFramefluxInfo"></iframe>
+				<embed width="450px" height="400px" id="iFramefluxInfo"></embed>
 			</div>
 		</div>
     </div>
@@ -458,15 +458,22 @@ td:last-child {
 function openModalFluxInfo(peticioID) {
 	var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
+    	console.log("1-status: " + this.status);
          if (this.readyState == 4 && this.status == 200) {
+             console.log("2-status: " + this.status);
         	    var urlFluxInfo = this.responseText;
+                console.log("1: " + urlFluxInfo);
+                console.log("3-status: " + this.status);
         	    $('#fluxInfoModal').on('shown.bs.modal',function(){
-        	        $(this).find('iframe').attr('src',urlFluxInfo);
+                    console.log("URL: " + urlFluxInfo);
+                    var embeb = $(this).find('embed');
+                    embeb. attr('src',urlFluxInfo);
         	    });
         	        
         	    $("#fluxInfoModal").modal('show');
          }
     };
+
     
     var urlEnviaFIB = '<%=request.getContextPath()%>${contexte}/geturlflow/' + peticioID;
     xhttp.open("GET", urlEnviaFIB, true);

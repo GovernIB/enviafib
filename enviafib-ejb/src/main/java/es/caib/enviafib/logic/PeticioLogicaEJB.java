@@ -362,7 +362,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         peticio.setErrorMsg(LogicUtils.split255(msg));
         this.update(peticio);
 
-        enviarMailSolicitant(peticio.getPeticioID(), "REBUTJADA", languageUI, Configuracio.getUrlBase());
+        try {
+            enviarMailSolicitant(peticio, Configuracio.getUrlBase());
+        } catch (Exception e) {
+            log.error("Error enviant correu: " + e.getMessage(), e);
+        }
+
     }
 
     /*
@@ -475,7 +480,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             msg = null;
 
             try {
-                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID(), urlBase);
+                enviarMailSolicitant(peticio, urlBase);
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
@@ -517,7 +522,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             peticio.setErrorException(null);
 
             try {
-                enviarMailSolicitant(peticio.getPeticioID(), "FIRMADA", peticio.getIdiomaID(), urlBase);
+                enviarMailSolicitant(peticio, urlBase);
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
@@ -575,55 +580,52 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    protected void enviarMailSolicitant(long peticioID, String estat, String idiomaId, String baseUrl) {
+    protected void enviarMailSolicitant(Peticio peticio, String baseUrl) {
 
-        final Locale loc = new Locale(idiomaId);
+        if (peticio.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
 
-        try {
-            Peticio peticio = this.findByPrimaryKeyPublic(peticioID);
+            try {
+                final Locale loc = new Locale(peticio.getIdiomaID());
 
-            String nomPeticio = peticio.getNom().replace("'", "`");
+                String nomPeticio = peticio.getNom().replace("'", "`");
+                long estatPeticio = peticio.getEstat();
+                Long solicitantID = peticio.getSolicitantID();
 
-            long estatPeticio = peticio.getEstat();
-
-            Long solicitantID = peticio.getSolicitantID();
-
-            //String baseUrl = Configuracio.getUrlBase();
-
-            String email = usuariEjb.executeQueryOne(UsuariFields.EMAIL, UsuariFields.USUARIID.equal(solicitantID));
-            String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
-
-            String code = "";
-            switch ((int) estatPeticio) {
-                case Constants.ESTAT_PETICIO_FIRMADA:
-                    code = "email.peticio.body.success";
-                break;
-                case Constants.ESTAT_PETICIO_ERROR:
-                    code = "email.peticio.body.error";
-                break;
-                case Constants.ESTAT_PETICIO_EN_PROCES:
-                    code = "email.peticio.body.process";
-                break;
-                case Constants.ESTAT_PETICIO_ARXIVANT:
-                    code = "email.peticio.body.arxivant";
-                break;
-                case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT: {
-                    code = "email.peticio.body.error.arxivant";
+                String code = "";
+                switch ((int) estatPeticio) {
+                    case Constants.ESTAT_PETICIO_FIRMADA:
+                        code = "email.peticio.body.success";
+                    break;
+                    case Constants.ESTAT_PETICIO_ERROR:
+                        code = "email.peticio.body.error";
+                    break;
+                    case Constants.ESTAT_PETICIO_EN_PROCES:
+                        code = "email.peticio.body.process";
+                    break;
+                    case Constants.ESTAT_PETICIO_ARXIVANT:
+                        code = "email.peticio.body.arxivant";
+                    break;
+                    case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
+                    case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT: {
+                        code = "email.peticio.body.error.arxivant";
+                    }
+                    break;
                 }
-                break;
+
+                String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
+                String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
+                boolean isHTML = true;
+                String from = Configuracio.getAppEmail();
+                String emailDestinatari = usuariEjb.executeQueryOne(UsuariFields.EMAIL,
+                        UsuariFields.USUARIID.equal(solicitantID));
+
+                EmailUtil.postMail(subject, message, isHTML, from, emailDestinatari);
+
+            } catch (Throwable t) {
+                log.error("EJB: Error enviant mail: " + t.getMessage(), t);
             }
-
-            String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
-
-            boolean isHTML = true;
-
-            String from = Configuracio.getAppEmail();
-
-            EmailUtil.postMail(subject, message, isHTML, from, email);
-
-        } catch (Throwable t) {
-            log.error("EJB: Error enviant mail: " + t.getMessage(), t);
+        }else {
+            log.info("No enviam cap correu quan es autofirma");
         }
 
     }

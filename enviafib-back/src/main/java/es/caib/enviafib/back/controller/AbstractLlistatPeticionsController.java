@@ -491,7 +491,8 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         Peticio peticio = this.peticioLogicaEjb.findByPrimaryKey(peticioID);
         long portafibID = Long.parseLong(peticio.getPeticioPortafirmes()); // XYZ ZZZ
 
-        String url = this.peticioLogicaEjb.getUrlToViewFlow(portafibID, LocaleContextHolder.getLocale().getLanguage());
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        String url = this.peticioLogicaEjb.getUrlToViewFlow(portafibID, lang);
 
         response.getWriter().write(url);
         response.getWriter().flush();
