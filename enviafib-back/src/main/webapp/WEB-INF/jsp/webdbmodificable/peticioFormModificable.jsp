@@ -317,8 +317,3 @@ mostrarOcultarCampsAvanzats();
 
 </script>
 
-
-
-
-
-

@@ -126,6 +126,9 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/user/final_iframe.jsp" />
     </definition>
 
+    <definition name="finaliframeespera" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/user/final_iframe_espera.jsp" />
+    </definition>
 
 
 

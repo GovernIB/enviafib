@@ -76,11 +76,6 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         peticioForm.getHiddenFields().remove(PeticioFields.REASON);
 
         peticioForm.addLabel(REASON, "autofirma.reason.obligatori");
-
-        mav.addObject("enviarASignar", "Signar amb AutoFirma");
-        
-        
-        
         return peticioForm;
     }
 
@@ -140,11 +135,23 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
     @RequestMapping(value = "/finalWeb/{transactionID}")
     public ModelAndView finalProcesDeFirmaWeb(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("transactionID") String transactionID) throws Exception {
+        
         ModelAndView mav = new ModelAndView("finaliframe");
-        mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/finalWebAuth/" + transactionID);
+        mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/finalWebEspera/" + transactionID);
+//        mav.addObject("transactionID", transactionID);
         return mav;
     }
 
+    @RequestMapping(value = "/finalWebEspera/{transactionID}")
+    public ModelAndView finalProcesDeFirmaWebEspera(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("transactionID") String transactionID) throws Exception {
+        
+        ModelAndView mav = new ModelAndView("finaliframeespera");
+        mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/finalWebAuth/" + transactionID);
+//        mav.addObject("transactionID", transactionID);
+        return mav;
+    }
+    
     @RequestMapping(value = "/finalWebAuth/{transactionID}")
     public ModelAndView finalProcesDeFirmaWebAuth(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("transactionID") String transactionID) throws Exception {
