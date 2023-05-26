@@ -248,6 +248,7 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
 
     @Override
     public String getSecretariUsername(String username) throws Exception {
+
         LDAPUser user = getSecretari(username);
 
         if (user == null) {
@@ -259,6 +260,7 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
     };
 
     public String getSecretariName(String username) throws Exception {
+
         LDAPUser user = getSecretari(username);
 
         if (user == null) {
@@ -271,8 +273,9 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
     protected LDAPUser getSecretari(String username) throws Exception {
         final String rolSecretari = getPropertyRequired(
                 LDAPCAIB_ESTRUCTURAORGANITZATIVA_PROPERTY_BASE + "rolsecretari");
-
-        LDAPUser user = getEncarregatAssociatAlRol(username, rolSecretari);
+        
+        LDAPUser user = getSecretariViaDIR3Pare(username, rolSecretari);
+//        LDAPUser user = getEncarregatAssociatAlRol(username, rolSecretari);
 
         if (user == null) {
             log.warn("No s'ha trobat el Secretari on es troba l'usuari " + username);
@@ -390,6 +393,30 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
         return user;
     }
 
+
+    protected LDAPUser getSecretariViaDIR3Pare(String username, String rol) throws Exception {
+        LDAPUser user = null;
+
+        String dir3PareUsuari = getCodeAreaConselleria(username);
+        log.info("rol :" + rol);
+        
+        List<LDAPUser> users = getLDAPUserManager().getUsersByRol(rol);
+
+        for (LDAPUser ldapUser : users) {
+
+            String codiDep = ldapUser.getDepartment();
+            Departament dep = getDepartamentInfoByCode(codiDep);
+            String dir3Pare = dep.getDir3pare();
+
+            if (dir3Pare != null && dir3Pare.equals(dir3PareUsuari)) {
+                log.info("USR: " + ldapUser.getUserName() + " DEP: " + dep.getCodi() + " DIR3PARE: " + dir3Pare);
+                user = ldapUser;
+                break;
+            }
+        }
+        return user;
+    }
+    
     public Departament getDepartamentInfoByCode(String codiDep) throws Exception {
 
         // TODO Cache !!!!
