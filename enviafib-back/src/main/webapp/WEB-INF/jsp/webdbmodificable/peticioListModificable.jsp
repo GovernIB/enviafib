@@ -446,7 +446,7 @@ td:last-child {
                 </button>
             </div>
 			<div class="modal-body" style="text-align: center;">
-				<embed width="450px" height="400px" id="iFramefluxInfo"></embed>
+				<iframe width="450px" height="400px" id="iFramefluxInfo"></iframe>
 			</div>
 		</div>
     </div>
@@ -466,8 +466,8 @@ function openModalFluxInfo(peticioID) {
                 console.log("3-status: " + this.status);
         	    $('#fluxInfoModal').on('shown.bs.modal',function(){
                     console.log("URL: " + urlFluxInfo);
-                    var embeb = $(this).find('embed');
-                    embeb. attr('src',urlFluxInfo);
+                    var iframe = $(this).find('iframe');
+                    iframe. attr('src',urlFluxInfo);
         	    });
         	        
         	    $("#fluxInfoModal").modal('show');
