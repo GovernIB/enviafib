@@ -35,7 +35,7 @@ import es.caib.enviafib.commons.utils.Constants;
  * @author anadal
  * 
  */
-@RunAs("EFI_USER")
+@RunAs(Constants.EFI_USER)
 public class InitServlet extends HttpServlet {
 
     protected final Logger log = Logger.getLogger(getClass());

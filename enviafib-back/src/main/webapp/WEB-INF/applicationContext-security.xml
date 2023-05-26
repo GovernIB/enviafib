@@ -79,9 +79,9 @@
 	<bean id="attributes2GrantedAuthoritiesMapper" class="es.caib.enviafib.back.security.RolesBasedAttributes2GrantedAuthoritiesMapper">
 		<property name="baseRoleMapping">
 			<map>
-				<entry key="EFI_USER" value="ROLE_USER"/>
+				<entry key="tothom" value="ROLE_USER"/>
 				<entry key="EFI_ADMIN" value="ROLE_ADMIN"/>
-				<entry key="@EFI_USER" value="ROLE_USER"/>
+				<entry key="@tothom" value="ROLE_USER"/>
                 <entry key="@EFI_ADMIN" value="ROLE_ADMIN"/>
 			</map>
 		</property>
@@ -91,7 +91,7 @@
 	<bean id="mappableAttributesRetriever" class="es.caib.enviafib.back.security.RolesBasedMappableAttributesRetriever">
 		<property name="defaultMappableAttributes">
 			<set>
-				<value>EFI_USER</value>
+				<value>tothom</value>
 				<value>EFI_ADMIN</value>
 			</set>
 		</property>

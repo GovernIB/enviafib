@@ -15,7 +15,7 @@ public interface Constants {
 
     // TRUE ROLES
     public static final String EFI_ADMIN = "EFI_ADMIN";
-    public static final String EFI_USER = "EFI_USER";
+    public static final String EFI_USER = "tothom";
     public static final String EFI_WS = "EFI_WS";
 
     // VIRTUAL SECURITY ROLES
