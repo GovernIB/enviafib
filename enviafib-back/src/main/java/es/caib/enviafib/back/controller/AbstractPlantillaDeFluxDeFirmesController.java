@@ -104,8 +104,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
             hiddens.remove(UsuariFields.NOM);
 
-            usuariFilterForm.addLabel(UsuariFields.LLINATGE1, FitxerFields.DESCRIPCIO.fullName);
-            hiddens.remove(UsuariFields.LLINATGE1);
+//            usuariFilterForm.addLabel(UsuariFields.LLINATGE1, FitxerFields.DESCRIPCIO.fullName);
+//            hiddens.remove(UsuariFields.LLINATGE1);
 
             usuariFilterForm.addLabel(UsuariFields.EMAIL, PeticioFields.DATACREACIO.fullName);
             hiddens.remove(UsuariFields.EMAIL);
@@ -206,7 +206,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
             List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
 
-            log.info(" PLANTILLES OBTINGUDES: " + plantilles.size());
+            log.info("Llistat de plantilles:: PLANTILLES OBTINGUDES: " + plantilles.size());
 
             List<Usuari> usuaris = new ArrayList<Usuari>();
 
@@ -249,6 +249,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
                 usuaris.add(usuari);
             }
 
+            setTotalPlantilles(usuaris.size());
+            
             log.info("OrderBy " + orderBy);
             if (orderBy != null) {
                 for (OrderBy o : orderBy) {
@@ -276,6 +278,23 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
             throw new I18NException("genapp.comodi", msg);
         }
 
+    }
+
+    @Override
+    public void omplirDadesPaginacio(ModelAndView mav, Integer pagina, Integer itemsPerPagina, Long total) {
+
+        super.omplirDadesPaginacio(mav, pagina, itemsPerPagina, total);
+        mav.addObject("totalItems", getTotalPlantilles());
+    }
+
+    private int totalPlantilles = 0;
+
+    private int getTotalPlantilles() {
+        return this.totalPlantilles;
+    }
+
+    private void setTotalPlantilles(int totalPlantilles) {
+        this.totalPlantilles = totalPlantilles;
     }
 
     /**

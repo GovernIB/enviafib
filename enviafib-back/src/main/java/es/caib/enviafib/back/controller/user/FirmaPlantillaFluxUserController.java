@@ -87,7 +87,7 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
             List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
 
-            log.info(" PLANTILLES OBTINGUDES: " + plantilles.size());
+            log.info("Firma amb plantilla de flux:: PLANTILLES OBTINGUDES: " + plantilles.size());
 
             List<Usuari> usuaris = new ArrayList<Usuari>();
 

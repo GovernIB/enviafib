@@ -52,6 +52,7 @@ import es.caib.enviafib.model.entity.Usuari;
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })
 public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeFluxDeFirmesController {
 
+    
     @Override
     public String getEntityNameCode() {
         return "plantillesfluxfirmes";

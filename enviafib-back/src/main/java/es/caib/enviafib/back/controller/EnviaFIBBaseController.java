@@ -25,9 +25,9 @@ public abstract class EnviaFIBBaseController<I extends IGenAppEntity, PK extends
       
         super.omplirDadesPaginacio(mav, pagina, itemsPerPagina, total);
 
-        mav.addObject("__totalItems", total);
-        mav.addObject("__itemsPerPagina", itemsPerPagina);
-        mav.addObject("__pagina", pagina);
+        mav.addObject("totalItems", total);
+        mav.addObject("itemsPerPagina", itemsPerPagina);
+        mav.addObject("pagina", pagina);
     }
 
 }

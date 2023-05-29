@@ -59,7 +59,7 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
 
         if (usuariFilterForm.isNou()) {
             usuariFilterForm.setTitleCode("llistatplantillesflux.netejar");
-
+            usuariFilterForm.setAttachedAdditionalJspCode(true);
         }
 
         return usuariFilterForm;
