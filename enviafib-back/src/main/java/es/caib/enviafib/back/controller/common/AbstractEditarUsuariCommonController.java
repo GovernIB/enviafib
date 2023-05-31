@@ -1,8 +1,10 @@
 package es.caib.enviafib.back.controller.common;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.UsuariController;
@@ -16,6 +18,9 @@ import es.caib.enviafib.persistence.UsuariJPA;
  */
 
 public abstract class AbstractEditarUsuariCommonController extends UsuariController {
+
+    @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
 	@Override
 	public boolean isActiveList() {
@@ -58,6 +63,12 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
 		if(nif != null && nif.trim().length() > 0) {
             userForm.addReadOnlyField(NIF);
         }
+
+        String username = userForm.getUsuari().getUsername();
+        mav.addObject("elCodiDir3", getCodiDIR3(username));
+
+        userForm.setAttachedAdditionalJspCode(true);
+        
 		return userForm;
 	}
 
@@ -69,5 +80,19 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
 			return getTileForm();
 		}
 	}
+	
+    public String getCodiDIR3(String username) throws I18NException {
 
+        IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstance();
+
+        String codiDIR3;
+        try {
+            codiDIR3 = instance.getDir3DepartamentDireccioGeneral(username);
+            log.info("El codiDIR3 de " + username + " es: " + codiDIR3);
+            return codiDIR3;
+
+        } catch (Exception e) {
+            throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());
+        }
+    }
 }
