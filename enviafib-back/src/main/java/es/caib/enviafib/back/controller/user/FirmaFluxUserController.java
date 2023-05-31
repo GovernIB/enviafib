@@ -107,34 +107,9 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
         peticioForm.addHiddenField(DESTINATARINIF);
 
-        try {
-            String intermediateID = request.getParameter("intermediateID");
-            final String languageUI = LocaleContextHolder.getLocale().getLanguage();
-
-            ApiFlowTemplateSimple api = getApiFlowTemplateSimple();
-
-            FlowTemplateSimpleFlowTemplateRequest flowRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI,
-                    intermediateID);
-            FlowTemplateSimpleFlowTemplate flowInfo = api.getFlowInfoByFlowTemplateID(flowRequest);
-
-            String fluxname = flowInfo.getName();
-            peticioForm.getPeticio().setNom(fluxname);
-
-        } catch (AbstractApisIBException aaie) {
-            String error = I18NUtils.tradueix("error.flux.obtenintnom", aaie.getMessage());
-            log.error(error, aaie);
-            HtmlUtils.saveMessageError(request, error);
-
-            return peticioForm;
-        }
-        if (!__isView) {
-            //    peticioForm.setTitleCode("emptystring");
-        }
-
         mav.addObject("wizardstep", 3);
 
         return peticioForm;
-
     }
 
     @Override
