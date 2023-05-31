@@ -728,10 +728,23 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
-        Long infoSignID = instance.getInfoSignaturaID();
 
         this.deleteIncludingFiles(instance, fitxerEjb);
+        
+        String portaFIBID = instance.getPeticioPortafirmes();
+        
+        long portafibID = Long.parseLong(portaFIBID);
+        final String languageUI = "ca";
 
+        if (esborrarPeticioPortafib(portafibID, languageUI)) {
+            log.info("Peticio " + portafibID + "esborrada de PORTAFIB correctament");
+        } else {
+            log.error("No s'ha pogut esborrar la petició amb portafibID=" + portaFIBID);
+        }
+        
+
+        Long infoSignID = instance.getInfoSignaturaID();
+        
         if (infoSignID != null) {
             InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignID);
             infoSignaturaLogicaEjb.delete(is);
