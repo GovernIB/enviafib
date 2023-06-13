@@ -75,6 +75,10 @@ public class PrincipalController {
 				return new ModelAndView("webdb");
 			}
 
+	         if ("ajuda".equals(pipella)) {
+	                return new ModelAndView(new RedirectView("/ajuda/faq/list/1", true));
+            }
+
 			if (Configuracio.isDesenvolupament() && "desenvolupament".equals(pipella)) {
 				return new ModelAndView("desenvolupament");
 			}

@@ -67,6 +67,26 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/common/home.jsp" />
     </definition>
 
+    <!--  ===========  AJUDA  ================== -->
+   
+    <definition name="menu.ajuda" template="/WEB-INF/jsp/ajuda/faqsindex.jsp" preparer="es.caib.enviafib.back.preparer.MenuPreparer">
+       <put-attribute name="pipella" value="ajuda" />
+    </definition>
+    
+    <definition name="ajuda" extends="base.definition">
+        <put-attribute name="menu" value="menu.ajuda" />
+        <put-attribute name="pipella" value="ajuda" />
+    </definition>
+
+    <definition name="faqCommonForm" extends="ajuda">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/faqForm.jsp" />
+    </definition>
+    
+    <definition name="faqCommonList" extends="ajuda">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/ajuda/faqsiframe.jsp" />
+        <put-attribute name="titol" value="EdicioUsuari" />
+    </definition>
+
     <!--  ===========  USER  ================== -->
     
     <definition name="menu.user" template="/WEB-INF/jsp/moduls/menu_user.jsp" preparer="es.caib.enviafib.back.preparer.MenuPreparer">
@@ -297,6 +317,16 @@
     </definition>
 
 <!-- ==== GENAPP MARK START -->
+
+
+    <definition name="faqFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="faq.faq" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/faqForm.jsp" />
+    </definition>
+    
+    <definition name="faqListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/faqList.jsp" />
+    </definition>
 
 
     <definition name="fitxerFormWebDB" extends="webdb">

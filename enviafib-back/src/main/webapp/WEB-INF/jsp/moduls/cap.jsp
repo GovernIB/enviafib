@@ -171,6 +171,12 @@
                                 class="fas fa-user"></i> <fmt:message key="inici.menu.editar.usuari" />
                             </a>
 
+                            <a class="dropdown-item" href="<c:url value="/ajuda/faq/list/1"></c:url>"> <i
+                                class="fas fa-question"></i> FAQs
+                            </a>
+
+
+
                             <c:if test="${not empty url_sortida}">
                                 <a class="dropdown-item" href="<c:url value="${url_sortida}"></c:url>"> <i
                                     class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />

@@ -7,6 +7,7 @@
     <persistence-unit name="enviafibPULocal" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+		<class>es.caib.enviafib.persistence.FaqJPA</class>
 		<class>es.caib.enviafib.persistence.FitxerJPA</class>
 		<class>es.caib.enviafib.persistence.GrupJPA</class>
 		<class>es.caib.enviafib.persistence.GrupUsuariJPA</class>

@@ -38,6 +38,7 @@
 <c:if test = "${!(efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN'))}">
         <ul class="nav nav-tabs custom-submenu" style="padding: 0 0 0 1rem !important;">
 			
+			
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 	            <li class="nav-item"><a
 	                class="nav-link ${(empty pipella)?'active' : '' }"
@@ -65,6 +66,13 @@
                     class="nav-link ${(pipella eq 'webdb')?'active' : '' }"
                     href="<c:url value="/canviarPipella/webdb"/>">
                         WebDatabase</a></li>
+            </sec:authorize>
+
+            <sec:authorize access="hasRole('ROLE_USER')">
+                <li class="nav-item"><a
+                    class="nav-link ${(pipella eq 'ajuda')?'active' : '' }"
+                    href="<c:url value="/canviarPipella/ajuda"/>">
+                        Pipella Ajuda</a></li>
             </sec:authorize>
 
             <c:if test="${prefixLowercase}:isDesenvolupament()}">

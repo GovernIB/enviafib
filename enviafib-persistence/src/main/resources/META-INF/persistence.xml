@@ -10,6 +10,7 @@
         <provider>es.caib.enviafib.hibernate.CustomHibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/enviafibDS</jta-data-source>
         
+		<class>es.caib.enviafib.persistence.FaqJPA</class>
 		<class>es.caib.enviafib.persistence.FitxerJPA</class>
 		<class>es.caib.enviafib.persistence.GrupJPA</class>
 		<class>es.caib.enviafib.persistence.GrupUsuariJPA</class>

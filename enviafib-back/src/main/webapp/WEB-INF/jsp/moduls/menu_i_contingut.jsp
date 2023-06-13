@@ -114,7 +114,7 @@
 #principal {
 /*     width: 30%; */
     min-width: 250px;
-    max-width: 300px;
+    max-width: 350px;
 
     padding: 0px 0.75rem;
 }
@@ -137,7 +137,7 @@ $("#GroupDiv").after($("#infoNumRegistres"));
 
 
 <c:if test="${pipella eq 'user'}">
-	<script>
+    <script type="text/javascript">
 /* 		show('#mostrarMenu');
 		hide('#ocultarMenu');
  */		$("#principal").css("display", "none");

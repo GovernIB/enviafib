@@ -13,6 +13,296 @@
   "schema": "public",
   "tables": [
     {
+      "name": "efi_faq",
+      "nameJava": "Faq",
+      "shortName": "faq",
+      "labels": {
+        "ca": "Pregunta Freqüent",
+        "es": "Pregunta Frecuente"
+      },
+      "labelsPlural": {
+        "ca": "Preguntes Freqüents",
+        "es": "Preguntas Frecuentes"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_faq_pk",
+          "index": "efi_faq_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "faqid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "faqid",
+            "es": "faqid"
+          },
+          "javaName": "faqID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_faq_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enunciat_es",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Enunciado",
+            "es": "Enunciado"
+          },
+          "javaName": "enunciat_es",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "enunciat_ca",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Enunciat",
+            "es": "Enunciat"
+          },
+          "javaName": "enunciat_ca",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "resposta_es",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Respuesta",
+            "es": "Respuesta"
+          },
+          "javaName": "resposta_es",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 8
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "resposta_ca",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Resposta",
+            "es": "Resposta"
+          },
+          "javaName": "resposta_ca",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 8
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "ordre",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "ordre",
+            "es": "ordre"
+          },
+          "javaName": "ordre",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_faq_fitxer1id_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "fitxer1id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "fitxer1id",
+            "es": "fitxer1id"
+          },
+          "javaName": "fitxer1ID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_faq_fitxer_fitxer1id_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_faq_fitxer_fitxer1id_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_faq_fitxer2id_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "fitxer2id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "fitxer2id",
+            "es": "fitxer2id"
+          },
+          "javaName": "fitxer2ID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_faq_fitxer_fitxer2id_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_faq_fitxer_fitxer2id_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_faq_fitxer3id_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "fitxer3id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "fitxer3id",
+            "es": "fitxer3id"
+          },
+          "javaName": "fitxer3ID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_faq_fitxer_fitxer3id_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_faq_fitxer_fitxer3id_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "efi_fitxer",
       "nameJava": "Fitxer",
       "shortName": "fitxer",
@@ -63,6 +353,24 @@
             "webtype": 0
           },
           "foreignKeys": [
+            {
+              "name": "efi_faq_fitxer_fitxer1id_fk",
+              "table": "efi_faq",
+              "field": "fitxer1id",
+              "type": 0
+            },
+            {
+              "name": "efi_faq_fitxer_fitxer2id_fk",
+              "table": "efi_faq",
+              "field": "fitxer2id",
+              "type": 0
+            },
+            {
+              "name": "efi_faq_fitxer_fitxer3id_fk",
+              "table": "efi_faq",
+              "field": "fitxer3id",
+              "type": 0
+            },
             {
               "name": "efi_peticio_fitxer_ffirm_fk",
               "table": "efi_peticio",

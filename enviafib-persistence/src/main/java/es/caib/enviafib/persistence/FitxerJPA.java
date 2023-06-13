@@ -122,6 +122,45 @@ public class FitxerJPA implements Fitxer {
     return __result;
   }
 
+// EXP  Field:fitxer1id | Table: efi_faq | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxer1ID")
+    private Set<FaqJPA> faq_fitxer1ids = new HashSet<FaqJPA>(0);
+    public  Set<FaqJPA> getFaq_fitxer1ids() {
+    return this.faq_fitxer1ids;
+  }
+
+    public void setFaq_fitxer1ids(Set<FaqJPA> faq_fitxer1ids) {
+      this.faq_fitxer1ids = faq_fitxer1ids;
+    }
+
+
+// EXP  Field:fitxer2id | Table: efi_faq | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxer2ID")
+    private Set<FaqJPA> faq_fitxer2ids = new HashSet<FaqJPA>(0);
+    public  Set<FaqJPA> getFaq_fitxer2ids() {
+    return this.faq_fitxer2ids;
+  }
+
+    public void setFaq_fitxer2ids(Set<FaqJPA> faq_fitxer2ids) {
+      this.faq_fitxer2ids = faq_fitxer2ids;
+    }
+
+
+// EXP  Field:fitxer3id | Table: efi_faq | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxer3ID")
+    private Set<FaqJPA> faq_fitxer3ids = new HashSet<FaqJPA>(0);
+    public  Set<FaqJPA> getFaq_fitxer3ids() {
+    return this.faq_fitxer3ids;
+  }
+
+    public void setFaq_fitxer3ids(Set<FaqJPA> faq_fitxer3ids) {
+      this.faq_fitxer3ids = faq_fitxer3ids;
+    }
+
+
 // EXP  Field:fitxer_firmatid | Table: efi_peticio | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxerFirmatID")
@@ -233,6 +272,10 @@ public class FitxerJPA implements Fitxer {
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
+    if(!"FaqJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.faq_fitxer2ids) || org.hibernate.Hibernate.isInitialized(__jpa.getFaq_fitxer2ids())) ) {
+      __tmp.setFaq_fitxer2ids(FaqJPA.copyJPA(__jpa.getFaq_fitxer2ids(), __alreadyCopied,"FitxerJPA"));
+    }
     if(!"PeticioJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticio_fitxerids) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticio_fitxerids())) ) {
       __tmp.setPeticio_fitxerids(PeticioJPA.copyJPA(__jpa.getPeticio_fitxerids(), __alreadyCopied,"FitxerJPA"));
@@ -240,6 +283,14 @@ public class FitxerJPA implements Fitxer {
     if(!"PeticioJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticio_fitxer_firmatids) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticio_fitxer_firmatids())) ) {
       __tmp.setPeticio_fitxer_firmatids(PeticioJPA.copyJPA(__jpa.getPeticio_fitxer_firmatids(), __alreadyCopied,"FitxerJPA"));
+    }
+    if(!"FaqJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.faq_fitxer3ids) || org.hibernate.Hibernate.isInitialized(__jpa.getFaq_fitxer3ids())) ) {
+      __tmp.setFaq_fitxer3ids(FaqJPA.copyJPA(__jpa.getFaq_fitxer3ids(), __alreadyCopied,"FitxerJPA"));
+    }
+    if(!"FaqJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.faq_fitxer1ids) || org.hibernate.Hibernate.isInitialized(__jpa.getFaq_fitxer1ids())) ) {
+      __tmp.setFaq_fitxer1ids(FaqJPA.copyJPA(__jpa.getFaq_fitxer1ids(), __alreadyCopied,"FitxerJPA"));
     }
     // Copia de beans complexes (IMP)
 
