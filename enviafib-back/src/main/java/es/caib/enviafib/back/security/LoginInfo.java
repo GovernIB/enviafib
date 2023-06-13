@@ -30,7 +30,7 @@ public class LoginInfo {
 
 	final String username;
 
-	final Usuari usuari;
+	Usuari usuari;
 	
 	final String language;
 	
@@ -84,6 +84,17 @@ public class LoginInfo {
 		return usuari;
 	}
 
+    public void setUsuari(Usuari usuari) {
+        this.usuari =  usuari;
+    }
+    
+//    public void updateLoginInfo(Usuari usuari) {
+//        this.username = usuari.getUsername();
+//        this.language = usuari.getIdiomaID();
+//        this.usuari = usuari;
+//    }
+    
+	
 	public String getLanguage() {
 		return this.language;
 	}

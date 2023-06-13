@@ -80,6 +80,12 @@ public class EditarUsuariNouCommonController extends AbstractEditarUsuariCommonC
     
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, UsuariForm usuariForm) {
+        Usuari usuari = usuariForm.getUsuari();
+        LoginInfo.getInstance().setUsuari(usuari);
+        
+        Long userid = LoginInfo.getInstance().getUsuari().getUsuariID();
+        
+        log.info("userid: " + userid );
         return "redirect:/";
     }
 
