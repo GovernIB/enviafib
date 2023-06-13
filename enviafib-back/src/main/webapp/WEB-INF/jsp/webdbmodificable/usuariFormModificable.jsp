@@ -9,40 +9,42 @@
 	</tr>
  -->
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		var table = $('#usuari_tableid');
+<c:if test="${not empty elCodiDir3}">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var table = $('#usuari_tableid');
 
-		var tr = document.createElement("tr");
-		tr.id = "usuari_dir3_rowid";
+			var tr = document.createElement("tr");
+			tr.id = "usuari_dir3_rowid";
 
-		var tdLabel = document.createElement("td");
-		tdLabel.id = "usuari_dir3_columnlabelid";
+			var tdLabel = document.createElement("td");
+			tdLabel.id = "usuari_dir3_columnlabelid";
 
-		var label = document.createElement("label");
-		label.innerHTML = "Codi DIR3 &nbsp;";
-		tdLabel.appendChild(label);
+			var label = document.createElement("label");
+			label.innerHTML = "Codi DIR3 &nbsp;";
+			tdLabel.appendChild(label);
 
-		var tdValue = document.createElement("td");
-		tdValue.id = "usuari_dir3_columnvalueid";
+			var tdValue = document.createElement("td");
+			tdValue.id = "usuari_dir3_columnvalueid";
 
-		var input = document.createElement("input");
-		input.id = "usuari.dir3";
-		input.name = "usuari.dir3";
-		input.readOnly = true;
-		input.type = "text";
-		input.maxlength = "50";
-		input.className = "w-75 form-control uneditable-input";
+			var input = document.createElement("input");
+			input.id = "usuari.dir3";
+			input.name = "usuari.dir3";
+			input.readOnly = true;
+			input.type = "text";
+			input.maxlength = "50";
+			input.className = "w-75 form-control uneditable-input";
 
-		input.value = "${elCodiDir3}";
+			input.value = "${elCodiDir3}";
 
-		tdLabel.appendChild(label);
-		tdValue.appendChild(input);
+			tdLabel.appendChild(label);
+			tdValue.appendChild(input);
 
-		tr.appendChild(tdLabel);
-		tr.appendChild(tdValue);
+			tr.appendChild(tdLabel);
+			tr.appendChild(tdValue);
 
-		table[0].children[0].appendChild(tr);
+			table[0].children[0].appendChild(tr);
 
-	});
-</script>
+		});
+	</script>
+</c:if>
