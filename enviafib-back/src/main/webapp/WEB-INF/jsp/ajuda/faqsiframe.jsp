@@ -2,6 +2,42 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
+<div id="faq_list_title">
+	<h2>Preguntes frequents</h2>
+
+
+	<c:if test="${efi:hasRole('ROLE_ADMIN')}">
+		<c:set var="backToList"
+			value="admin" />
+	</c:if>
+	<c:if test="${efi:hasRole('ROLE_USER')}">
+		<c:set var="backToList"
+			value="user" />
+	</c:if>
+
+	<a id="backToListBtn" class="btn btn-sm btn-primary float-right botoselecciolist" style=""
+		href="<%=request.getContextPath()%>/${backToList}/peticio/list/1"> <i class="fas fa-list icon-white"></i>
+		<fmt:message key="back.to.list" />
+	</a>
+</div>
+
+<style>
+#backToListBtn {
+	margin-left: auto;
+	margin-right: 3rem;
+	font-size: 16px;
+	display: block;
+	padding: 0.25rem 1rem;
+	display: block;
+}
+
+#faq_list_title {
+	display: flex;
+	align-items: center;
+}
+</style>
+
+
 <div id="faq_list_div">
 	<c:forEach var="faq" items="${faqItems}">
 		<div class="faq_row" id="faq_rowid_${faq.faqID}">
@@ -56,8 +92,8 @@
 }
 
 .faq_row {
-	padding: 0 1rem;
-}
+/* 	padding: 0 1rem;
+ */}
 
 .pregunta {
 	word-wrap: break-word;

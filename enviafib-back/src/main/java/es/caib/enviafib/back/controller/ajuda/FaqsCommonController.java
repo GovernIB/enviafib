@@ -71,42 +71,46 @@ public class FaqsCommonController extends FaqController {
         return true;
     }
 
+    
+    
+    
     @Override
     public FaqFilterForm getFaqFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
         FaqFilterForm faqFilterForm = super.getFaqFilterForm(pagina, mav, request);
 
-            Set<Field<?>> hiddens = new HashSet<Field<?>>();
-            hiddens.add(FAQID);
+        Set<Field<?>> hiddens = new HashSet<Field<?>>();
+        hiddens.add(FAQID);
 
-            String lang = LocaleContextHolder.getLocale().getLanguage();
-            log.info("lang: " + lang);
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        log.info("lang: " + lang);
 
-            mav.addObject("lang", lang);
-            
-//            if (lang.equals("es")) {
-//                hiddens.add(ENUNCIAT_CA);
-//                hiddens.add(RESPOSTA_CA);
-//            } else {
-//                hiddens.add(ENUNCIAT_ES);
-//                hiddens.add(RESPOSTA_ES);
-//            }
-            faqFilterForm.setHiddenFields(hiddens);
+        mav.addObject("lang", lang);
 
-            if (faqFilterForm.isNou()) {
-                faqFilterForm.setVisibleMultipleSelection(false);
-                faqFilterForm.setAddButtonVisible(false);
-                faqFilterForm.setDeleteButtonVisible(false);
-                faqFilterForm.setDeleteSelectedButtonVisible(false);
-                faqFilterForm.setEditButtonVisible(false);
-                
-                faqFilterForm.addAdditionalButton(new AdditionalButton("fas fa-list",
-                        "back.to.list", LlistatPeticionsUserController.CONTEXT_WEB + "/list", "btn-primary"));
-            }
+//        if (lang.equals("es")) {
+//            hiddens.add(ENUNCIAT_CA);
+//            hiddens.add(RESPOSTA_CA);
+//        } else {
+//            hiddens.add(ENUNCIAT_ES);
+//            hiddens.add(RESPOSTA_ES);
+//        }
 
-            OrderBy[] ordre = { new OrderBy(ORDRE) };
-            faqFilterForm.setDefaultOrderBy(ordre);
-            
+        faqFilterForm.setHiddenFields(hiddens);
+
+        if (faqFilterForm.isNou()) {
+            faqFilterForm.setVisibleMultipleSelection(false);
+            faqFilterForm.setAddButtonVisible(false);
+            faqFilterForm.setDeleteButtonVisible(false);
+            faqFilterForm.setDeleteSelectedButtonVisible(false);
+            faqFilterForm.setEditButtonVisible(false);
+
+            faqFilterForm.addAdditionalButton(new AdditionalButton("fas fa-list", "back.to.list",
+                    LlistatPeticionsUserController.CONTEXT_WEB + "/list", "btn-primary"));
+        }
+
+        OrderBy[] ordre = { new OrderBy(ORDRE) };
+        faqFilterForm.setDefaultOrderBy(ordre);
+
         return faqFilterForm;
     }
 
