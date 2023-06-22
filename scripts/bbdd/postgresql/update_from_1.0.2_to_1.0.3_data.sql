@@ -14,21 +14,22 @@ VALUES
 ---
 INSERT INTO public.efi_plugin (pluginid, classe, properties, actiu, tipus, nom, descripcio) VALUES (10, 'es.caib.plugins.arxiu.caib.ArxiuPluginCaib', 
 '# PLUGIN ARXIU - CAIB
-es.caib.enviafib.plugin.arxiu.caib.base.url=https://esbse.caib.es:4430/esb
-es.caib.enviafib.plugin.arxiu.caib.aplicacio.codi=Tests
-es.caib.enviafib.plugin.arxiu.caib.usuari=username
-es.caib.enviafib.plugin.arxiu.caib.contrasenya=password
+es.caib.enviafib.plugin.arxiu.caib.base.url=[=SP["es.caib.enviafib.plugin.arxiu.caib.base.url"]]
+es.caib.enviafib.plugin.arxiu.caib.aplicacio.codi=[=SP["es.caib.enviafib.plugin.arxiu.caib.aplicacio.codi"]]
+es.caib.enviafib.plugin.arxiu.caib.usuari=[=SP["es.caib.enviafib.plugin.arxiu.caib.usuari"]]
+es.caib.enviafib.plugin.arxiu.caib.contrasenya=[=SP["es.caib.enviafib.plugin.arxiu.caib.contrasenya"]]
 
-es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.url=https://se.caib.es/concsv/rest/printable/uuid
-es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.usuari=username
-es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.contrasenya=password
+es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.url=[=SP["es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.url"]]
+es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.usuari=[=SP["es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.usuari"]]
+es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.contrasenya=[=SP["es.caib.enviafib.plugin.arxiu.caib.conversio.imprimible.contrasenya"]]
 
-es.caib.enviafib.plugin.arxiu.caib.original_file_url_EL=https://se.caib.es/concsv/rest/original/${csv}
-es.caib.enviafib.plugin.arxiu.caib.printable_file_url_EL=https://se.caib.es/concsv/rest/printable/${csv}
-es.caib.enviafib.plugin.arxiu.caib.eni_file_url_EL=https://se.caib.es/concsv/enidoc/${csv}
-es.caib.enviafib.plugin.arxiu.caib.csv_validation_web_EL=http://se.caib.es/concsv/${csv}
+es.caib.enviafib.plugin.arxiu.caib.original_file_url_EL=https://se.caib.es/concsvapi/interna/original/${csv}
+es.caib.enviafib.plugin.arxiu.caib.printable_file_url_EL=https://se.caib.es/concsvapi/interna/printable/${csv}
+es.caib.enviafib.plugin.arxiu.caib.eni_file_url_EL=https://se.caib.es/concsvapi/enidoc/${csv}
+es.caib.enviafib.plugin.arxiu.caib.csv_validation_web_EL=https://se.caib.es/concsvfront/
 
 # Valor a definir per cada entiat
 es.caib.enviafib.plugin.arxiu.caib.csv.definicio=https://se.caib.es/def_csv_gen.pdf
-es.caib.enviafib.plugin.arxiu.caib.validation_file_url_EL=https://se.caib.es/concsv/hash/${csv}'
+es.caib.enviafib.plugin.arxiu.caib.validation_file_url_EL=https://se.caib.es/concsvapi/hash/${csv}
+'
 , true, 2, 'Plugin Arxiu Prova', 'Plugin Arxiu Prova');
