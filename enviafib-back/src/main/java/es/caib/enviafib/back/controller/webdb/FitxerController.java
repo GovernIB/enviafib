@@ -586,7 +586,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getSessionAttributeFilterForm() {
-    return "FitxerWebDB_FilterForm";
+    return "Fitxer_FilterForm_" + this.getClass().getName();
   }
 
 

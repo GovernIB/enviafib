@@ -61,6 +61,8 @@ public class ArxiuPluginAdminController extends AbstractPluginAdminController {
             pluginFilterForm.addHiddenField(PluginFields.TIPUS);
 
             pluginFilterForm.setTitleCode("arxiuplugin.title");
+            
+            pluginFilterForm.setFooterListVisible(true);
 
             pluginFilterForm.setAttachedAdditionalJspCode(true);
         }

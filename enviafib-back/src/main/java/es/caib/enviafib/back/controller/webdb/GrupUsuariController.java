@@ -717,7 +717,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getSessionAttributeFilterForm() {
-    return "GrupUsuariWebDB_FilterForm";
+    return "GrupUsuari_FilterForm_" + this.getClass().getName();
   }
 
 

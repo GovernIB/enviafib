@@ -589,7 +589,7 @@ public java.lang.String stringToPK(String value) {
   }
 
   public String getSessionAttributeFilterForm() {
-    return "IdiomaWebDB_FilterForm";
+    return "Idioma_FilterForm_" + this.getClass().getName();
   }
 
 

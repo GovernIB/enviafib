@@ -90,8 +90,9 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
                     // getContextWeb() + "/provar/{0}",
                     "btn-primary"));
 
+            pluginFilterForm.setFooterListVisible(false);
+            
             pluginFilterForm.setAttachedAdditionalJspCode(true);
-
         }
 
         return pluginFilterForm;

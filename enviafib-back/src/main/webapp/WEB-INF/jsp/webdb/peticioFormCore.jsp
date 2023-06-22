@@ -32,7 +32,7 @@
             </td>
           <td id="peticio_dataCreacio_columnvalueid">
     <form:errors path="peticio.dataCreacio" cssClass="errorField alert alert-danger" />
-            <div class="form-group">
+            <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="peticio_dataCreacio" data-target-input="nearest">
                       <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DATACREACIO)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#peticio_dataCreacio" path="peticio.dataCreacio" />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.DATACREACIO)}" >
@@ -68,7 +68,7 @@
             </td>
           <td id="peticio_dataFinal_columnvalueid">
     <form:errors path="peticio.dataFinal" cssClass="errorField alert alert-danger" />
-            <div class="form-group">
+            <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="peticio_dataFinal" data-target-input="nearest">
                       <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#peticio_dataFinal" path="peticio.dataFinal" />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.DATAFINAL)}" >

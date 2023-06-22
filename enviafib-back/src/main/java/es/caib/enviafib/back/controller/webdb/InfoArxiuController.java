@@ -586,7 +586,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getSessionAttributeFilterForm() {
-    return "InfoArxiuWebDB_FilterForm";
+    return "InfoArxiu_FilterForm_" + this.getClass().getName();
   }
 
 

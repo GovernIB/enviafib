@@ -761,7 +761,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getSessionAttributeFilterForm() {
-    return "InfoSignaturaWebDB_FilterForm";
+    return "InfoSignatura_FilterForm_" + this.getClass().getName();
   }
 
 

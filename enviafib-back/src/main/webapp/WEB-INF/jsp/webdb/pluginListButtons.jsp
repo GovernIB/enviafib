@@ -1,7 +1,7 @@
 <%-- ========= FITXER AUTOGENERAT - NO MODIFICAR !!!!! --%>
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
   
-          <c:if test="${__theFilterForm.editButtonVisible || __theFilterForm.deleteButtonVisible || not empty __theFilterForm.additionalButtonsForEachItem || not empty __theFilterForm.additionalButtonsByPK}">
+          <c:if test="${__theFilterForm.editButtonVisible || __theFilterForm.viewButtonVisible ||__theFilterForm.deleteButtonVisible || not empty __theFilterForm.additionalButtonsForEachItem || not empty __theFilterForm.additionalButtonsByPK}">
           <td>
           <c:set var="pk" value="${plugin.pluginID}"/>
           <c:choose>
@@ -10,6 +10,11 @@
             <c:if test="${__theFilterForm.editButtonVisible}">
             <a class="btn btn-warning" href="<c:url value="${contexte}/${plugin.pluginID}/edit"/>" role="button"  title="<fmt:message key="genapp.edit"/>">
                <i class="fas fa-edit"></i>
+            </a>
+            </c:if>
+            <c:if test="${__theFilterForm.viewButtonVisible}">
+            <a class="btn btn-info" href="<c:url value="${contexte}/view/${plugin.pluginID}"/>" role="button"  title="<fmt:message key="genapp.viewtitle"/>">
+               <i class="fas fa-eye"></i>
             </a>
             </c:if>
             <c:if test="${__theFilterForm.deleteButtonVisible}">
@@ -68,6 +73,14 @@
             <a class="btn btn-warning btn-sm a_item" style="margin-bottom:5px;color: white;" href="<c:url value="${contexte}/${plugin.pluginID}/edit"/>" onclick="null">
             <i class="fas fa-edit"></i>
              <fmt:message key="genapp.edit"/>
+            </a>
+            </li>
+            </c:if>
+            <c:if test="${__theFilterForm.viewButtonVisible}">
+            <li>
+            <a class="btn btn-info btn-sm a_item" style="margin-bottom:5px;color: white;" href="<c:url value="${contexte}/view/${plugin.pluginID}"/>" onclick="null">
+            <i class="fas fa-eye"></i>
+             <fmt:message key="genapp.viewtitle"/>
             </a>
             </li>
             </c:if>

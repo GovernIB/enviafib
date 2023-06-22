@@ -1213,7 +1213,7 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getSessionAttributeFilterForm() {
-    return "PeticioWebDB_FilterForm";
+    return "Peticio_FilterForm_" + this.getClass().getName();
   }
 
 
