@@ -1,7 +1,10 @@
 package es.caib.enviafib.logic;
 
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 import org.fundaciobit.genapp.common.i18n.I18NArgumentCode;
@@ -11,7 +14,9 @@ import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.IPlugin;
 import org.fundaciobit.pluginsib.core.utils.PluginsManager;
+import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PluginEJB;
 import es.caib.enviafib.model.entity.Plugin;
@@ -71,61 +76,44 @@ public abstract class AbstractPluginLogicaEJB<I extends IPlugin> extends PluginE
     public I getInstanceByPluginID(long pluginID) throws I18NException {
 
         IPlugin pluginInstance = null;
+        
+        PluginJPA plugin = (PluginJPA) findByPrimaryKey(pluginID);
+
+        if (plugin == null) {
+            return null;
+        }
+
+        Properties prop = new Properties();
+        if (plugin.getProperties() != null && plugin.getProperties().trim().length() != 0) {
+            try {
+
+                // Exemple:
+                // [=SP["es.caib.digitalib.plugins.signatureserver.afirmaserver.authorization.password"]]
+
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("SP", Configuracio.getSystemAndFileProperties());
+
+                String plantilla = plugin.getProperties();
+                String generat = TemplateEngine.processExpressionLanguageSquareBrackets(plantilla, map,
+                        new Locale("ca"));
+
+                // final String generat = plantilla;
+                // log.error("PROPIETATS DESPRES DE generat:\n" + generat + "\n");
+
+                prop.load(new StringReader(generat));
+
+            } catch (Exception e) {
+                throw new I18NException(e, "genapp.comodi", new I18NArgumentString(
+                        "Error desconegut processant propietats del plugin " + pluginID + ": " + e.getMessage()));
+            }
+        }
+
+        pluginInstance = (IPlugin) PluginsManager.instancePluginByClassName(plugin.getClasse(),
+                Constants.ENVIAFIB_PROPERTY_BASE, prop);
 
         if (pluginInstance == null) {
-
-            PluginJPA plugin = (PluginJPA) findByPrimaryKey(pluginID);
-
-            if (plugin == null) {
-                return null;
-            }
-
-            Properties prop = new Properties();
-
-            // CODI ORIGINAL
-//      if (plugin.getProperties() != null && plugin.getProperties().trim().length() != 0) {
-//        try {
-//
-//          prop.load(new StringReader(plugin.getProperties()));
-//
-//        } catch (Exception e) {
-//          // TODO Crec que no es cridarà mai
-//        }
-//      }
-
-            if (plugin.getProperties() != null && plugin.getProperties().trim().length() != 0) {
-                try {
-
-                    // Exemple:
-                    // [=SP["es.caib.digitalib.plugins.signatureserver.afirmaserver.authorization.password"]]
-
-//                    Map<String, Object> map = new HashMap<String, Object>();
-//                    map.put("SP", System.getProperties());
-//
-                    String plantilla = plugin.getProperties();
-//                    String generat = TemplateEngine.processExpressionLanguageSquareBrackets(plantilla, map,
-//                            new Locale("ca"));
-
-                    final String generat = plantilla;
-                    // log.error("PROPIETATS DESPRES DE generat:\n" + generat + "\n");
-
-                    prop.load(new StringReader(generat));
-
-                } catch (Exception e) {
-                    throw new I18NException(e, "genapp.comodi", new I18NArgumentString(
-                            "Error desconegut processant propietats del plugin " + pluginID + ": " + e.getMessage()));
-                }
-            }
-
-            pluginInstance = (IPlugin) PluginsManager.instancePluginByClassName(plugin.getClasse(),
-                    Constants.ENVIAFIB_PROPERTY_BASE, prop);
-
-            if (pluginInstance == null) {
-                throw new I18NException("error.plugin.donotinstantiate", getName() + " (" + plugin.getClasse() + ")");
-            }
-
+            throw new I18NException("error.plugin.donotinstantiate", getName() + " (" + plugin.getClasse() + ")");
         }
         return (I) pluginInstance;
     }
-
 }
