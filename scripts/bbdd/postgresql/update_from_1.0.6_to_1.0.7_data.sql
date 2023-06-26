@@ -1,6 +1,6 @@
 
 ---
---- 11/05/2023 -   Revisar com s'informen les metadades mínimes obligatòries #266
+--- 11/05/2023 - Revisar com s'informen les metadades mínimes obligatòries #266
 ---
 
  INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES

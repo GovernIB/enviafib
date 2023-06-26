@@ -1,6 +1,6 @@
 ﻿
 ---
---- 15/09/2022 -  Crear una taula efi_menu #212 
+--- 15/09/2022 - Crear una taula efi_menu #212 
 ---
 
 INSERT INTO efi_traduccio VALUES (110);
@@ -100,7 +100,7 @@ INSERT INTO efi_menu(menuid, nom, descripcio, titolmenuid, ajudamenuid, ordre, t
 
 
 ---
---- 22/09/2022 -  Controladors per Tipus de Firma per Càrrec restants. #218 
+--- 22/09/2022 - Controladors per Tipus de Firma per Càrrec restants. #218 
 ---
 
 UPDATE efi_peticio SET tipus=13 WHERE tipus=3;
@@ -108,7 +108,7 @@ UPDATE efi_peticio SET tipus=14 WHERE tipus=4;
 
 
 ---
---- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+--- 26/09/2022 - Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
 ---
 
 INSERT INTO efi_plugin(pluginid, classe, properties, actiu, tipus, nom, descripcio) VALUES (30, 'org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstructuraOrganitzativaPlugin',

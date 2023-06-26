@@ -1,5 +1,5 @@
 ---
---- 15/09/2022 -  Crear una taula efi_menu #212 
+--- 15/09/2022 - Crear una taula efi_menu #212 
 ---
 
 CREATE SEQUENCE efi_menu_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807  START 1000 CACHE 1;
@@ -32,7 +32,7 @@ CREATE TABLE efi_menu
 
 
 ---
---- 26/09/2022 -   Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+--- 26/09/2022 - Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
 ---
 
 CREATE SEQUENCE efi_organitzacio_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807  START 1000 CACHE 1;

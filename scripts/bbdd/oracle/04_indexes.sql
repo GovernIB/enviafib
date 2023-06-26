@@ -1,3 +1,5 @@
+-- create index efi_faq_pk_i on efi_faq (faqid);
+create index efi_faq_fitxer2id_fk_i on efi_faq (fitxer2id);
 -- create index efi_fitxer_pk_i on efi_fitxer (fitxerid);
 -- create index efi_grupusuari_pk_i on efi_grupusuari (grupusuariid);
 create index efi_grupusuari_usuariid_fk_i on efi_grupusuari (usuariid);

@@ -1,0 +1,60 @@
+0 -> 1:
+SCHEMA
+--- 08/06/2022 - Canviar nom de taula efi_seriedocu a efi_seriedocumental #62
+--- 14/06/2022 - Guardar informació de la firma realitzada en BBDD #41
+--- 15/06/2022 -  Firma de Documents per un Mateix #23 
+--- 15/06/2022 -  Eliminar multiples titols per multiples idiomes de la pantalla de creació de petició de firma. #61
+DATA
+---  Canviar estat REBUTJAT per ERROR #82 
+---  Arrancar Directament les peticions de tipus nif, director i secretari #114 
+
+1 -> 2:
+SCHEMA
+--- 12/07/2022 - Estat de Petició ha de ser de tipus integer en java i bbdd #125
+--- 12/07/2022 - Afegir IdiomaId al a taula efi_usuari #103
+--- 14/07/2022 - Posar el camp destinatariNif nullable #102
+--- 14/07/2022 - Afegir a base de dades camp "reason" per autofirma #101
+--- 15/07/2022 - Preparar la BBDD per suportar enviament a Plugin d'Arxiu #32
+--- 27/07/2022 - Prepara BBDD per guardar informació retornada de la cridada a Arxiu #40
+--- 28/07/2022 - Gestió de grups d'usuaris #135
+--- 04/08/2022 - Gestió de PLugins de Estructura Organitzativa #142
+DATA
+--- 04/08/2022 - Gestió de PLugins de Estructura Organitzativa #142
+
+2 -> 3:
+SCHEMA
+--- 10/08/2022 - Millorar test de Plugin d'Estructura organitzativa #148
+--- 12/08/2022 Revisió de Seqüències - https://github.com/GovernIB/genapp/issues/118
+--- 12/08/2022 - Afegir camps Procediment Nom i Procediment codi a taula efi_seriedocumental #157
+DATA
+--- 16/08/2022 - Afegir camps Procediment Nom i Procediment codi a taula efi_seriedocumental #157
+--- 17/08/2022 - Fer que Plugin d'Arxiu llegeixi properties i classe de BBDD enlloc de Propietats de sistema #169
+
+3 -> 4:
+SCHEMA
+--- 15/09/2022 -  Crear una taula efi_menu #212 
+--- 26/09/2022 -  Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+DATA
+--- 15/09/2022 - Crear una taula efi_menu #212 
+--- 22/09/2022 - Controladors per Tipus de Firma per Càrrec restants. #218 
+--- 26/09/2022 - Estudi Plugin Estructura Organitzativa en taula de BBDD #225 
+
+4 -> 5:
+NO SCHEMA
+NO DATA
+
+5 -> 6:
+NO SCHEMA
+NO DATA
+
+6 -> 7:
+NO SCHEMA
+DATA
+--- 11/05/2023 -  Revisar com s'informen les metadades mínimes obligatòries #266
+--- 26/05/2023 - Modificar mètode per obtenir el secreatri del plugin d'estructura organitzativa amb LDAP #317
+
+7 -> 8:
+SCHEMA
+--- 15/06/2023 - Crear una ajuda-manual d'usuari a dins l'aplicació que es pugui informar dinàmicament. #315
+NO DATA
+

@@ -1,5 +1,5 @@
 ---
---- 16/08/2022 Afegir camps Procediment Nom i Procediment codi a taula efi_seriedocumental #157
+--- 16/08/2022 - Afegir camps Procediment Nom i Procediment codi a taula efi_seriedocumental #157
 ---
 
 INSERT INTO efi_seriedocumental
@@ -10,7 +10,7 @@ VALUES
 
 
 ---
---- 17/08/2022 Fer que Plugin d'Arxiu llegeixi properties i classe de BBDD enlloc de Propietats de sistema #169
+--- 17/08/2022 - Fer que Plugin d'Arxiu llegeixi properties i classe de BBDD enlloc de Propietats de sistema #169
 ---
 INSERT INTO public.efi_plugin (pluginid, classe, properties, actiu, tipus, nom, descripcio) VALUES (10, 'es.caib.plugins.arxiu.caib.ArxiuPluginCaib', 
 '# PLUGIN ARXIU - CAIB

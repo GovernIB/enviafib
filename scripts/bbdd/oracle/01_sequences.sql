@@ -1,3 +1,4 @@
+create sequence efi_faq_seq start with 1000 increment by  1;
 create sequence efi_fitxer_seq start with 1000 increment by  1;
 create sequence efi_grup_seq start with 1000 increment by  1;
 create sequence efi_grupusuari_seq start with 1000 increment by  1;

@@ -1,0 +1,1 @@
+-- No hi ha canvis al esquema per aquesta versió

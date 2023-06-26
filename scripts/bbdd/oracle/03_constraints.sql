@@ -1,5 +1,7 @@
 
  -- INICI PKs
+    alter table efi_faq add constraint efi_faq_pk primary key (faqid);
+
     alter table efi_fitxer add constraint efi_fitxer_pk primary key (fitxerid);
 
     alter table efi_grup add constraint efi_grup_pk primary key (grupid);
@@ -32,6 +34,21 @@
 
 
  -- INICI FKs
+
+    alter table efi_faq 
+       add constraint efi_faq_fitxer_fitxer1id_fk 
+       foreign key (fitxer1id) 
+       references efi_fitxer;
+
+    alter table efi_faq 
+       add constraint efi_faq_fitxer_fitxer2id_fk 
+       foreign key (fitxer2id) 
+       references efi_fitxer;
+
+    alter table efi_faq 
+       add constraint efi_faq_fitxer_fitxer3id_fk 
+       foreign key (fitxer3id) 
+       references efi_fitxer;
 
     alter table efi_grupusuari 
        add constraint efi_grupusuari_grup_grupid_fk 

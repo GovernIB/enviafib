@@ -1,4 +1,6 @@
 
+    drop table efi_faq cascade constraints;
+
     drop table efi_fitxer cascade constraints;
 
     drop table efi_grup cascade constraints;
@@ -10,6 +12,10 @@
     drop table efi_infoarxiu cascade constraints;
 
     drop table efi_infosignatura cascade constraints;
+
+    drop table efi_menu cascade constraints;
+
+    drop table efi_organitzacio cascade constraints;
 
     drop table efi_peticio cascade constraints;
 
@@ -23,6 +29,8 @@
 
     drop table efi_usuari cascade constraints;
 
+    drop sequence efi_faq_seq;
+
     drop sequence efi_fitxer_seq;
 
     drop sequence efi_grup_seq;
@@ -32,6 +40,10 @@
     drop sequence efi_infoarxiu_seq;
 
     drop sequence efi_infosignatura_seq;
+
+    drop sequence efi_menu_seq;
+
+    drop sequence efi_organitzacio_seq;
 
     drop sequence efi_peticio_seq;
 

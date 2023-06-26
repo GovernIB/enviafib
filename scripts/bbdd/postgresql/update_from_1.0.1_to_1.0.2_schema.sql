@@ -24,9 +24,9 @@ ALTER TABLE efi_usuari
 ALTER TABLE efi_peticio
    ALTER COLUMN destinatarinif DROP NOT NULL;
 
---
--- 14/07/2022 - Afegir a base de dades camp "reason" per autofirma #101
---
+---
+--- 14/07/2022 - Afegir a base de dades camp "reason" per autofirma #101
+---
 ALTER TABLE efi_peticio
    ADD COLUMN reason character varying(255);
 

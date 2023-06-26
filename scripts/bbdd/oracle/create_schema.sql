@@ -1,13 +1,29 @@
+create sequence efi_faq_seq start with 1000 increment by  1;
 create sequence efi_fitxer_seq start with 1000 increment by  1;
 create sequence efi_grup_seq start with 1000 increment by  1;
 create sequence efi_grupusuari_seq start with 1000 increment by  1;
 create sequence efi_infoarxiu_seq start with 1000 increment by  1;
 create sequence efi_infosignatura_seq start with 1000 increment by  1;
+create sequence efi_menu_seq start with 1000 increment by  1;
+create sequence efi_organitzacio_seq start with 1000 increment by  1;
 create sequence efi_peticio_seq start with 1000 increment by  1;
 create sequence efi_plugin_seq start with 1000 increment by  1;
 create sequence efi_seriedocumental_seq start with 1000 increment by  1;
 create sequence efi_traduccio_seq start with 1000 increment by  1;
 create sequence efi_usuari_seq start with 1000 increment by  1;
+
+    create table efi_faq (
+       faqid number(19,0) not null,
+        enunciat_ca varchar2(255 char),
+        enunciat_es varchar2(255 char),
+        fitxer1id number(19,0),
+        fitxer2id number(19,0),
+        fitxer3id number(19,0),
+        ordre number(19,0),
+        resposta_ca long,
+        resposta_es long,
+        primary key (faqid)
+    );
 
     create table efi_fitxer (
        fitxerid number(19,0) not null,
@@ -73,6 +89,30 @@ create sequence efi_usuari_seq start with 1000 increment by  1;
         signaturestablelocation number(10,0),
         timestampincluded number(1,0),
         primary key (infosignaturaid)
+    );
+
+    create table efi_menu (
+       menuid number(19,0) not null,
+        actiu number(1,0) not null,
+        ajudamenuid number(19,0) not null,
+        descripcio varchar2(255 char),
+        grupid number(19,0),
+        nom varchar2(255 char) not null,
+        ordre number(10,0) not null,
+        parametrecombo varchar2(255 char),
+        parametretext long,
+        tipus number(10,0) not null,
+        titolmenuid number(19,0) not null,
+        primary key (menuid)
+    );
+
+    create table efi_organitzacio (
+       organitzacioid number(19,0) not null,
+        codiconselleria varchar2(100 char),
+        codidirecciogeneral varchar2(100 char),
+        tipus varchar2(100 char),
+        valor varchar2(255 char),
+        primary key (organitzacioid)
     );
 
     create table efi_peticio (
@@ -155,6 +195,10 @@ create sequence efi_usuari_seq start with 1000 increment by  1;
         username varchar2(100 char) not null,
         primary key (usuariid)
     );
+create index efi_faq_pk_i on efi_faq (faqid);
+create index efi_faq_fitxer1id_fk_i on efi_faq (fitxer1id);
+create index efi_faq_fitxer2id_fk_i on efi_faq (fitxer2id);
+create index efi_faq_fitxer3id_fk_i on efi_faq (fitxer3id);
 create index efi_fitxer_pk_i on efi_fitxer (fitxerid);
 create index efi_grup_pk_i on efi_grup (grupid);
 create index efi_grupusuari_pk_i on efi_grupusuari (grupusuariid);
@@ -166,6 +210,11 @@ create index efi_grupusuari_usuariid_fk_i on efi_grupusuari (usuariid);
 create index efi_idioma_pk_i on efi_idioma (idiomaid);
 create index efi_infoarxiu_pk_i on efi_infoarxiu (infoarxiuid);
 create index efi_infosignatura_pk_i on efi_infosignatura (infosignaturaid);
+create index efi_menu_pk_i on efi_menu (menuid);
+create index efi_menu_titolmenuid_fk_i on efi_menu (titolmenuid);
+create index efi_menu_ajudamenuid_fk_i on efi_menu (ajudamenuid);
+create index efi_menu_grupid_fk_i on efi_menu (grupid);
+create index efi_organitzacio_pk_i on efi_organitzacio (organitzacioid);
 create index efi_peticio_pk_i on efi_peticio (peticioid);
 create index efi_peticio_fitxerid_fk_i on efi_peticio (fitxerid);
 create index efi_peticio_solicitantid_fk_i on efi_peticio (solicitantid);
@@ -185,6 +234,21 @@ create index efi_usuari_idiomaid_fk_i on efi_usuari (idiomaid);
     alter table efi_usuari 
        add constraint UK_rhi053fw7q637iv8ohhiasjad unique (nif);
 
+    alter table efi_faq 
+       add constraint efi_faq_fitxer_fitxer1id_fk 
+       foreign key (fitxer1id) 
+       references efi_fitxer;
+
+    alter table efi_faq 
+       add constraint efi_faq_fitxer_fitxer2id_fk 
+       foreign key (fitxer2id) 
+       references efi_fitxer;
+
+    alter table efi_faq 
+       add constraint efi_faq_fitxer_fitxer3id_fk 
+       foreign key (fitxer3id) 
+       references efi_fitxer;
+
     alter table efi_grupusuari 
        add constraint efi_grupusuari_grup_grupid_fk 
        foreign key (grupid) 
@@ -194,6 +258,21 @@ create index efi_usuari_idiomaid_fk_i on efi_usuari (idiomaid);
        add constraint efi_grupusuari_usuari_usuar_fk 
        foreign key (usuariid) 
        references efi_usuari;
+
+    alter table efi_menu 
+       add constraint efi_menu_traduccio_ajuda_fk 
+       foreign key (ajudamenuid) 
+       references efi_traduccio;
+
+    alter table efi_menu 
+       add constraint efi_menu_grup_grupid_fk 
+       foreign key (grupid) 
+       references efi_grup;
+
+    alter table efi_menu 
+       add constraint efi_menu_traduccio_titol_fk 
+       foreign key (titolmenuid) 
+       references efi_traduccio;
 
     alter table efi_peticio 
        add constraint efi_peticio_fitxer_fitxer_fk 

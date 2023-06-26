@@ -1,4 +1,16 @@
 
+    create table efi_faq (
+       faqid number(19,0) not null,
+        enunciat_ca varchar2(255 char),
+        enunciat_es varchar2(255 char),
+        fitxer1id number(19,0),
+        fitxer2id number(19,0),
+        fitxer3id number(19,0),
+        ordre number(19,0),
+        resposta_ca clob,
+        resposta_es clob
+    );
+
     create table efi_fitxer (
        fitxerid number(19,0) not null,
         descripcio varchar2(1000 char),

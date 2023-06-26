@@ -1,3 +1,4 @@
+    grant select on efi_faq_seq to www_enviafib;
     grant select on efi_fitxer_seq to www_enviafib;
     grant select on efi_grup_seq to www_enviafib;
     grant select on efi_grupusuari_seq to www_enviafib;
@@ -10,6 +11,7 @@
     grant select on efi_seriedocumental_seq to www_enviafib;
     grant select on efi_traduccio_seq to www_enviafib;
     grant select on efi_usuari_seq to www_enviafib;
+    grant select,insert,delete,update on efi_faq to www_enviafib;
     grant select,insert,delete,update on efi_fitxer to www_enviafib;
     grant select,insert,delete,update on efi_grup to www_enviafib;
     grant select,insert,delete,update on efi_grupusuari to www_enviafib;

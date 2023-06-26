@@ -7,7 +7,7 @@ ALTER TABLE efi_grup
 
    
 ---
---- 12/08/2022 Revisió de Seqüències - https://github.com/GovernIB/genapp/issues/118
+--- 12/08/2022 - Revisió de Seqüències - https://github.com/GovernIB/genapp/issues/118
 ---
    
 SELECT setval('efi_peticio_seq', 1000, true);
