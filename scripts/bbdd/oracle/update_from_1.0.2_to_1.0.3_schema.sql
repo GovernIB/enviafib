@@ -1,14 +1,14 @@
----
---- 10/08/2022 - Millorar test de Plugin d'Estructura organitzativa #148
----
+-- 
+--  10/08/2022 - Millorar test de Plugin d'Estructura organitzativa #148
+-- 
 
 ALTER TABLE efi_grup
    MODIFY (nom NOT NULL);
 
 
----
---- 11/08/2022 - Afegir camps Procediment Nom i Procediment codi a taula efi_seriedocumental #157
----
+-- 
+--  11/08/2022 - Afegir camps Procediment Nom i Procediment codi a taula efi_seriedocumental #157
+-- 
 
 
 ALTER TABLE efi_seriedocumental

@@ -11,7 +11,7 @@ VALUES
 ---
 --- 17/08/2022 Fer que Plugin d'Arxiu llegeixi properties i classe de BBDD enlloc de Propietats de sistema #169
 ---
-INSERT INTO public.efi_plugin (pluginid, classe, properties, actiu, tipus, nom, descripcio) VALUES (10, 'es.caib.plugins.arxiu.caib.ArxiuPluginCaib', 
+INSERT INTO efi_plugin (pluginid, classe, properties, actiu, tipus, nom, descripcio) VALUES (10, 'es.caib.plugins.arxiu.caib.ArxiuPluginCaib', 
 '# PLUGIN ARXIU - CAIB
 es.caib.enviafib.plugin.arxiu.caib.base.url=https://esbse.caib.es:4430/esb
 es.caib.enviafib.plugin.arxiu.caib.aplicacio.codi=Tests

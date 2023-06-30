@@ -174,7 +174,7 @@ ALTER TABLE efi_plugin DROP COLUMN descripciocurtaid;
 ALTER TABLE efi_plugin DROP COLUMN nomid;
 
 ALTER TABLE efi_plugin
-   ADD COLUMN nom character varying(255) NOT NULL;
-ALTER TABLE efi_plugin
-   ADD COLUMN descripcio character varying(255) NOT NULL;
+ADD COLUMN nom VARCHAR(255) NOT NULL DEFAULT '-';
 
+ALTER TABLE efi_plugin
+ADD COLUMN descripcio VARCHAR(255) NOT NULL DEFAULT '-';
