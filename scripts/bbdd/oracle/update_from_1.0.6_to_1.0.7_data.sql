@@ -1,40 +1,7 @@
 
----
---- 11/05/2023 - Revisar com s'informen les metadades mínimes obligatòries #266
----
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1010, 'SD01333', '1', 'Enviafib TD01 Resolució', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1011, 'SD01334', '2', 'Enviafib TD02 Acords', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1012, 'SD01335', '3', 'Enviafib TD03 Contractes', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1013, 'SD01336', '4', 'Enviafib TD04 Convenis', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1014, 'SD01337', '5', 'Enviafib TD05 Declaracions', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1015, 'SD01338', '6', 'Enviafib TD06 Comunicacions', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1016, 'SD01339', '7', 'Enviafib TD07 Notificacions', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1017, 'SD01340', '8', 'Enviafib TD08 Publicacions', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1018, 'SD01342', '9', 'Enviafib TD09 Justificants de recepció', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1019, 'SD01342', '10', 'Enviafib TD10 Actes', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1020, 'SD01343', '11', 'Enviafib TD11 Certificats', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1021, 'SD01344', '12', 'Enviafib TD12 Diligències', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1022, 'SD01345', '13', 'Enviafib TD13 Informes', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1023, 'SD01346', '14', 'Enviafib TD14 Sol·licituds', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1024, 'SD01347', '15', 'Enviafib TD15 Denúncies', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1025, 'SD01348', '16', 'Enviafib TD16 Al·legacions', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1026, 'SD01349', '17', 'Enviafib TD17 Recursos', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1027, 'SD01350', '18', 'Enviafib TD18 Comunicacions ciutadà', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1028, 'SD01351', '19', 'Enviafib TD19 Factures', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1029, 'SD01352', '20', 'Enviafib TD20 Altre documentació aportada', '---'),
-INSERT INTO efi_seriedocumental (seriedocumentalid, nom, tipusdocumental, procedimentnom, procedimentcodi) VALUES (1030, 'SD01353', '99', 'Enviafib TD99 Altres', '---');
-
-
-
-
----
---- 26/05/2023 - Modificar mètode per obtenir el secreatri del plugin d'estructura organitzativa amb LDAP #317
----
-declare
-  vMyClob Clob;
-begin
-
-  vMyClob := to_clob('# PLUGIN ESTRUCTURA ORGANITZATIVA - LDAP CAIB
+-- PLUGIN ESTRUCTURA ORGANITZATIVA - LDAP CAIB
+UPDATE efi_plugin SET properties = 
+'# PLUGIN ESTRUCTURA ORGANITZATIVA - LDAP CAIB
 
 # Classe org.fundaciobit.pluginsib.estructuraorganitzativa.ldapcaib.LdapCaibEstructuraOrganitzativaPlugin
 
@@ -43,7 +10,7 @@ es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.host_url=[=SP["
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_authentication=simple
 
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.search_scope=subtree
-es.caib.enviafib.pluginsib.estucturaorganitzativa.ldapcaib.ldap.security_principal=[=SP["es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_principal"]]
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_principal=[=SP["es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_principal"]]
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_credentials=[=SP["es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.security_credentials"]]
 
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.ldap.attribute.username=cn
@@ -107,10 +74,10 @@ es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.group.externs=dgtic
 #Mapeig d´usuaris usuaris de grups que no tenen DIR3 associats a un grup que si en te
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.user.u80067=dgtic
 es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.user.e45186147w=dgtic
-es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.user.ptrias=dgtic');
+es.caib.enviafib.pluginsib.estructuraorganitzativa.ldapcaib.user.ptrias=dgtic
+'
+WHERE classe = 'org.fundaciobit.pluginsib.estructuraorganitzativa.ldapcaib.LdapCaibEstructuraOrganitzativaPlugin';
 
-  INSERT INTO efi_plugin (PLUGINID, CLASSE, PROPERTIES, ACTIU, TIPUS,NOM, DESCRIPCIO) VALUES 
-    (50, 'org.fundaciobit.pluginsib.estructuraorganitzativa.ldapcaib.LdapCaibEstructuraOrganitzativaPlugin', vMyClob, 1, 1, 'Plugin LDAPCAIB', 'Plugin LDAPCAIB');
-  commit;
 
-end;
+
+--- Falta afegir FAQs
