@@ -4,14 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <display-name>Carpeta: API REST EXTERNA</display-name>
- 
-
-    <!-- Paràmetre que indica els locales soportats -->
-    <context-param>
-        <param-name>es.caib.carpeta.commons.rest.supportedLocales</param-name>
-        <param-value>ca,es</param-value>
-    </context-param>
+    <display-name>EnviaFIB: API REST INTERNA</display-name>
 
     <!-- All html files at any path -->
     <!-- Specifically index.html at the root -->
@@ -40,29 +33,23 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>carpeta_api_interna_secured</web-resource-name>
+            <web-resource-name>enviafib_api_interna_secure</web-resource-name>
             <url-pattern>/secure/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>CAR_ADMIN</role-name>
-            <role-name>CAR_SUPER</role-name>
+            <role-name>EFI_WS</role-name>
         </auth-constraint>
     </security-constraint>
 
     <login-config>
         <!-- Per defecte BASIC. Si profile -Pcaib llavors KEYCLOAK  -->
-        <auth-method>BASIC</auth-method>
+        <auth-method>KEYCLOAK</auth-method>
         <realm-name>Govern de les Illes Balears</realm-name>
     </login-config>
 
     <security-role>
-        <description>Super Administrador de Carpeta</description>
-        <role-name>CAR_SUPER</role-name>
-    </security-role>
-
-    <security-role>
-        <description>Administrador d'Entitat de Carpeta</description>
-        <role-name>CAR_ADMIN</role-name>
+        <description>Usuari WS de EnviaFIB</description>
+        <role-name>EFI_WS</role-name>
     </security-role>
 
 </web-app>

@@ -3883,5 +3883,6 @@
     "es"
   ],
   "generateBack": true,
-  "generateWS": false
+  "generateFront": false,
+  "generateWS": true
 }

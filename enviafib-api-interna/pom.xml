@@ -114,8 +114,13 @@
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency>S
 -->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -148,7 +153,6 @@
 			</plugin>
 			<!-- Genera el Client Rest per Java a partir del fitxer openapi.json -->
 			<!-- https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/README.md#general-configuration-parameters -->
-			<!--
 			<plugin>
 				<groupId>io.swagger.codegen.v3</groupId>
 				<artifactId>swagger-codegen-maven-plugin</artifactId>
@@ -188,12 +192,11 @@
 					</execution>
 				</executions>
 			</plugin>
-			-->
 
 			<!-- Profile per incloure swagger-ui dins el mòdul -->
 			<!-- Davalla la versió de swagger-ui (Web UI que parseja openapi.json. 
                 Veure index.html) -->
-			<!-- 			<plugin>
+ 			<plugin>
 				<groupId>com.googlecode.maven-download-plugin</groupId>
 				<artifactId>download-maven-plugin</artifactId>
 				<executions>
@@ -211,10 +214,10 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>-->
+			</plugin>
 			<!-- Canvia l'adreça de la configuració d'exemple per la real, 
                 ./openapi.json -->
-			<!-- 			<plugin>
+   			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<executions>
@@ -234,9 +237,9 @@
 						</replacement>
 					</replacements>
 				</configuration>
-			</plugin>-->
+			</plugin>
 			<!-- Inclou el openapi.json i el swagger-ui dins el war -->
-			<!-- 		<plugin>
+     		<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
@@ -250,10 +253,10 @@
 						</resource>
 					</webResources>
 				</configuration>
-			</plugin>-->
-
+			</plugin>
+			
 			<!--   Llevar el .gitignore del codi generat -->
-			<!-- 		<plugin>
+    		<plugin>
 				<groupId>com.coderplus.maven.plugins</groupId>
 				<artifactId>copy-rename-maven-plugin</artifactId>
 				<version>1.0</version>
@@ -271,7 +274,6 @@
 					</execution>
 				</executions>
 			</plugin>
--->
 		</plugins>
 		<pluginManagement>
 			<plugins>
