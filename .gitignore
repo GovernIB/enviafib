@@ -161,3 +161,4 @@ installCerts.bat
 /enviafib-api-interna-client/settings.gradle
 /enviafib-api-interna-client/.settings
 /api.bat
+/enviafib-api-interna-client/test.properties

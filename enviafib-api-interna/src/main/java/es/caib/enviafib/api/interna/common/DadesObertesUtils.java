@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +19,7 @@ public class DadesObertesUtils {
 
     public static final SimpleDateFormat SDF = new SimpleDateFormat("dd-MM-yyyy");
 
-    public static Date parseDate(final String inputDate, final String paramName) throws WebApplicationException {
+    public static Date parseDate(final String inputDate, final String paramName) throws OpenApiException {
         Date dateStart;
         if (StringUtils.isBlank(inputDate)) {
             dateStart = null;
@@ -30,7 +29,7 @@ public class DadesObertesUtils {
                 dateStart = SDF.parse(inputDate);
             } catch (ParseException pe) {
                 final String msg = "Error en el format del paràmetre " + paramName + ": " + pe.getMessage();
-                throw new WebApplicationException(msg, pe, Status.BAD_REQUEST);
+                throw new OpenApiException(msg, pe, Status.BAD_REQUEST);
             }
         }
         return dateStart;

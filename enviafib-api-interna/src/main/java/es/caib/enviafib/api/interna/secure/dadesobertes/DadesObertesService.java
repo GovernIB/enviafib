@@ -22,14 +22,16 @@ import java.util.Calendar;
 import java.util.Map;
 
 import es.caib.enviafib.api.interna.common.DadesObertesUtils;
+import es.caib.enviafib.api.interna.common.OpenApiException;
+import es.caib.enviafib.api.interna.common.OpenApiExceptionInfo;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.PeticioLogicaService;
 import es.caib.enviafib.model.fields.PeticioFields;
 import java.sql.Timestamp;
 import java.util.HashMap;
+
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.GET;
 
 import javax.ws.rs.Consumes;
@@ -72,16 +74,12 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 @SecurityScheme(type = SecuritySchemeType.HTTP, name = DadesObertesService.SECURITY_NAME, scheme = "basic")
 public class DadesObertesService extends DadesObertesUtils {
 
-
-
     // No modificar !!!
     protected static final String TAG_NAME = "DadesObertesEnviaFib";
 
     protected static final String SECURITY_NAME = "BasicAuth";
 
     protected Logger log = Logger.getLogger(DadesObertesService.class);
-
-
 
     protected static final Map<String, String> MAP_TIPUS_PETICIO = new HashMap<String, String>();
 
@@ -219,10 +217,13 @@ public class DadesObertesService extends DadesObertesUtils {
             tags = { DadesObertesService.TAG_NAME },
             operationId = "peticionsdefirma",
             summary = "Retorna un llistat amb la informacio de les peticions de firma")
-    @ApiResponses({ @ApiResponse(
-            responseCode = "400",
-            description = "EFIB: Paràmetres incorrectes",
-            content = { @Content(mediaType = MIME_APPLICATION_JSON, schema = @Schema(implementation = String.class)) }),
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "EFIB: Paràmetres incorrectes",
+                    content = { @Content(
+                            mediaType = MIME_APPLICATION_JSON,
+                            schema = @Schema(implementation = OpenApiExceptionInfo.class)) }),
             @ApiResponse(
                     responseCode = "401",
                     description = "EFIB: No Autenticat",
@@ -240,7 +241,7 @@ public class DadesObertesService extends DadesObertesUtils {
                     description = "EFIB: Error durant la consulta de les dades obertes",
                     content = { @Content(
                             mediaType = MIME_APPLICATION_JSON,
-                            schema = @Schema(implementation = String.class)) }),
+                            schema = @Schema(implementation = OpenApiExceptionInfo.class)) }),
             @ApiResponse(
                     responseCode = "200",
                     description = "EFIB: Retornades dades obertes correctament",
@@ -278,7 +279,8 @@ public class DadesObertesService extends DadesObertesUtils {
                     example = "ca",
                     examples = { @ExampleObject(name = "Català", value = "ca"),
                             @ExampleObject(name = "Castellano", value = "es") },
-                    schema = @Schema(implementation = String.class)) @QueryParam("language") String language)  {
+                    schema = @Schema(implementation = String.class)) @QueryParam("language") String language)
+            throws OpenApiException {
 
         // Check de page i pagesize
         if (page == null || page <= 0) {
@@ -329,7 +331,9 @@ public class DadesObertesService extends DadesObertesUtils {
         if (dateStart.getTime() >= dateEnd.getTime()) {
             final String msg = "La data d'inici ha de ser menor que la data de fi (" + dataIniciRequest + " | "
                     + dataFiRequest + ")";
-            throw new WebApplicationException(msg, Status.BAD_REQUEST);
+
+            throw new OpenApiException(msg, Status.BAD_REQUEST);
+
         }
 
         // Realitzar Consulta
@@ -339,9 +343,9 @@ public class DadesObertesService extends DadesObertesUtils {
             final Timestamp to = new Timestamp(atEndOfDay(dateEnd).getTime());
             final Where w = PeticioFields.DATACREACIO.between(from, to);
             final OrderBy orderBy = new OrderBy(PeticioFields.DATACREACIO, OrderType.DESC);
-            final int firstResult = (page - 1)*pagesize;
+            final int firstResult = (page - 1) * pagesize;
             final int maxResults = pagesize;
-            final List<Peticio> llistat = this.peticioLogicaEjb.select(w, null,firstResult  , maxResults, orderBy);
+            final List<Peticio> llistat = this.peticioLogicaEjb.select(w, null, firstResult, maxResults, orderBy);
             final List<PeticioDeFirma> peticionsInfo = new ArrayList<PeticioDeFirma>();
             for (final Peticio item : llistat) {
                 final String nif = item.getDestinatariNif();
@@ -380,11 +384,9 @@ public class DadesObertesService extends DadesObertesUtils {
                 msg = th.getMessage();
             }
             this.log.error("Error desconegut retornant dades obertes: " + msg, th);
-            throw new WebApplicationException(msg, th, Status.INTERNAL_SERVER_ERROR);
+            throw new OpenApiException(msg, th, Status.INTERNAL_SERVER_ERROR);
         }
     }
-
-    
 
     @Path("/tipusdocumentals")
     @GET
@@ -425,7 +427,6 @@ public class DadesObertesService extends DadesObertesUtils {
                             mediaType = MIME_APPLICATION_JSON,
                             schema = @Schema(implementation = TipusDocumentalsPaginacio.class)) }) })
     public TipusDocumentalsPaginacio getTipusDocumentals(
-
             @Parameter(
                     name = "language",
                     description = "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",

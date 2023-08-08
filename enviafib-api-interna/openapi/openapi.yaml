@@ -41,7 +41,7 @@ paths:
         description: "Data fi, en format dd-MM-yyyy, fins la qual volem tenir dades"
         schema:
           type: string
-        example: 31-08-2023
+        example: 31-12-2023
       - name: page
         in: query
         description: Pàgina de la que es vol obtenir les dades
@@ -76,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/OpenApiExceptionInfo'
         "401":
           description: "EFIB: No Autenticat"
           content:
@@ -94,7 +94,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/OpenApiExceptionInfo'
         "200":
           description: "EFIB: Retornades dades obertes correctament"
           content:
@@ -159,6 +159,23 @@ paths:
       - BasicAuth: []
 components:
   schemas:
+    OpenApiExceptionInfo:
+      required:
+      - code
+      - errorMessage
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errorMessage:
+          type: string
+        stackTrace:
+          type: string
+        causeException:
+          type: string
+        causeStackTrace:
+          type: string
     PeticioDeFirma:
       type: object
       properties:

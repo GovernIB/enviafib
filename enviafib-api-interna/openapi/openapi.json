@@ -52,7 +52,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "31-08-2023"
+          "example" : "31-12-2023"
         }, {
           "name" : "page",
           "in" : "query",
@@ -96,7 +96,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "string"
+                  "$ref" : "#/components/schemas/OpenApiExceptionInfo"
                 }
               }
             }
@@ -126,7 +126,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "string"
+                  "$ref" : "#/components/schemas/OpenApiExceptionInfo"
                 }
               }
             }
@@ -231,6 +231,28 @@
   },
   "components" : {
     "schemas" : {
+      "OpenApiExceptionInfo" : {
+        "required" : [ "code", "errorMessage" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "errorMessage" : {
+            "type" : "string"
+          },
+          "stackTrace" : {
+            "type" : "string"
+          },
+          "causeException" : {
+            "type" : "string"
+          },
+          "causeStackTrace" : {
+            "type" : "string"
+          }
+        }
+      },
       "PeticioDeFirma" : {
         "type" : "object",
         "properties" : {

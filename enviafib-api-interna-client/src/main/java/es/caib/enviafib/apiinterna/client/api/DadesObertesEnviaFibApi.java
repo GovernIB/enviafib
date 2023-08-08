@@ -7,6 +7,7 @@ import es.caib.enviafib.apiinterna.client.services.Pair;
 
 import javax.ws.rs.core.GenericType;
 
+import es.caib.enviafib.apiinterna.client.model.OpenApiExceptionInfo;
 import es.caib.enviafib.apiinterna.client.model.PeticioDeFirmaPaginacio;
 import es.caib.enviafib.apiinterna.client.model.TipusDocumentalsPaginacio;
 

@@ -18,53 +18,61 @@ import es.caib.enviafib.apiinterna.client.model.PeticioDeFirmaPaginacio;
 import es.caib.enviafib.apiinterna.client.model.TipusDocumentalsPaginacio;
 
 import org.junit.Test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.junit.Ignore;
 
 /**
  * API tests for DadesObertesEnviaFibApi
+ * @author anadal
  */
 @Ignore
 public class DadesObertesEnviaFibApiTest {
 
     public static void main(String[] args) {
         try {
-            //new DadesObertesEnviaFibApiTest().tipusdocumentalsTest();
-            new DadesObertesEnviaFibApiTest().peticionsdefirmaTest();
-            
+
+            DadesObertesEnviaFibApi api = getApi();
+            //new DadesObertesEnviaFibApiTest().tipusdocumentalsTest(api);
+            new DadesObertesEnviaFibApiTest().peticionsdefirmaTest(api);
+
             System.out.println("FINAL");
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (ApiException e) {
-            
-            System.err.println(e.getCode());
-            System.err.println(e.getLocalizedMessage());
-            System.err.println(e.getMessage());
-            System.err.println(e.getResponseBody());
-            
-            
-            
+
+            System.err.println("Class: " + e.getClass());
+            System.err.println("Code:  " + e.getCode());
+            System.err.println("Msg: " + e.getMessage());
+            System.err.println("Body: " + e.getResponseBody());
+
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    
-    protected DadesObertesEnviaFibApi getApi() {
-        
-        
+
+    protected static DadesObertesEnviaFibApi getApi() throws IOException {
+
+        Properties props = new Properties();
+        props.load(new FileInputStream(new File("test.properties")));
+
         ApiClient apiclient = new ApiClient();
-        
-        apiclient.setBasePath("http://anadal:8888/enviafibapi/interna");
-        
-        apiclient.setUsername("enviafibapp");
-        apiclient.setPassword("enviafibapp");
-        
+
+        apiclient.setBasePath(props.getProperty("host"));
+
+        apiclient.setUsername(props.getProperty("username"));
+        apiclient.setPassword(props.getProperty("password"));
+
         apiclient.setDebugging(true);
-        
-        //apiclient.addDefaultHeader("content-type", "application/json");
-        
+
         DadesObertesEnviaFibApi api = new DadesObertesEnviaFibApi(apiclient);
-        
+
         return api;
     }
-    
 
     /**
      * Retorna un llistat amb la informacio de totes les peticions
@@ -75,17 +83,19 @@ public class DadesObertesEnviaFibApiTest {
      *          if the Api call fails
      */
     @Test
-    public void peticionsdefirmaTest() throws ApiException {
+    public void peticionsdefirmaTest(DadesObertesEnviaFibApi api) throws ApiException {
+
         String inici = "11-08-2022";
-        String fi = "11-12-2021";
+        String fi = "11-12-2022";
         Integer page = 1;
         Integer pagesize = 10;
         String language = "es";
-        DadesObertesEnviaFibApi api = getApi();
+
         PeticioDeFirmaPaginacio response = api.peticionsdefirma(inici, fi, page, pagesize, language);
 
         System.out.println(response);
     }
+
     /**
      * Retorna un llistat dels tipus documentals
      *
@@ -95,9 +105,8 @@ public class DadesObertesEnviaFibApiTest {
      *          if the Api call fails
      */
     @Test
-    public void tipusdocumentalsTest() throws ApiException {
+    public void tipusdocumentalsTest(DadesObertesEnviaFibApi api) throws ApiException {
         String language = "ca";
-        DadesObertesEnviaFibApi api = getApi();
         TipusDocumentalsPaginacio response = api.tipusdocumentals(language);
 
         System.out.println(response);

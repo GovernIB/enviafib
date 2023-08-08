@@ -189,10 +189,10 @@
                             <apiPackage>${client.default.package}.api</apiPackage>
                             <modelPackage>${client.default.package}.model</modelPackage>
                             <invokerPackage>${client.default.package}.services</invokerPackage>
-                            
+                            <!-- 
                             <variableNamingConvention>camelCase</variableNamingConvention>
-                            <!-- <serializableModel>true</serializableModel> -->
-                            <fullJavaUtil>true</fullJavaUtil>
+                           
+                            <fullJavaUtil>true</fullJavaUtil> -->
 
                         </configuration>
                     </execution>
