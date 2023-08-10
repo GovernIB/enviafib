@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
-import es.caib.enviafib.api.interna.common.DadesObertesUtils;
+import es.caib.enviafib.api.interna.common.OpenApiUtils;
 import es.caib.enviafib.api.interna.common.OpenApiException;
 import es.caib.enviafib.api.interna.common.OpenApiExceptionInfo;
 import es.caib.enviafib.commons.utils.Constants;
@@ -72,7 +72,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 @Produces({ DadesObertesService.MIME_APPLICATION_JSON })
 @Consumes({ DadesObertesService.MIME_APPLICATION_JSON })
 @SecurityScheme(type = SecuritySchemeType.HTTP, name = DadesObertesService.SECURITY_NAME, scheme = "basic")
-public class DadesObertesService extends DadesObertesUtils {
+public class DadesObertesService extends OpenApiUtils {
 
     // No modificar !!!
     protected static final String TAG_NAME = "DadesObertesEnviaFib";
@@ -84,8 +84,19 @@ public class DadesObertesService extends DadesObertesUtils {
     protected static final Map<String, String> MAP_TIPUS_PETICIO = new HashMap<String, String>();
 
     protected static final Map<String, String> MAP_TIPUS_DOCUMENTAL = new HashMap<String, String>();
+    
+    protected static final Map<String, String> MAP_IDIOMA = new HashMap<String, String>();
 
     static {
+        
+        
+        MAP_IDIOMA.put("ca_ca", "Català");
+        MAP_IDIOMA.put("es_ca", "Castellà");
+        
+        MAP_IDIOMA.put("ca_es", "Catalan");
+        MAP_IDIOMA.put("es_es", "Castellano");
+
+        
         MAP_TIPUS_PETICIO.put("0_ca", "NIF");
         MAP_TIPUS_PETICIO.put("1_ca", "Autofirma");
         MAP_TIPUS_PETICIO.put("2_ca", "Flux");
@@ -250,16 +261,16 @@ public class DadesObertesService extends DadesObertesUtils {
                             schema = @Schema(implementation = PeticioDeFirmaPaginacio.class)) }) })
     public PeticioDeFirmaPaginacio getPeticionsDeFirma(
             @Parameter(
-                    description = "Data d'inici, en format dd-MM-yyyy, a partir de la qual volem obtenir dades",
+                    description = "Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades",
                     in = ParameterIn.QUERY,
                     required = false,
-                    example = "31-08-2022",
+                    example = "2022-08-29",
                     schema = @Schema(implementation = String.class)) @QueryParam("inici") final String dataIniciRequest,
             @Parameter(
-                    description = "Data fi, en format dd-MM-yyyy, fins la qual volem tenir dades",
+                    description = "Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades",
                     in = ParameterIn.QUERY,
                     required = false,
-                    example = "31-12-2023",
+                    example = "2023-12-31",
                     schema = @Schema(implementation = String.class)) @QueryParam("fi") final String dataFiRequest,
             @Parameter(
                     description = "Pàgina de la que es vol obtenir les dades",
@@ -286,7 +297,7 @@ public class DadesObertesService extends DadesObertesUtils {
         if (page == null || page <= 0) {
             page = 1;
         }
-        if (pagesize == null || pagesize <= 5) {
+        if (pagesize == null || pagesize < 1) {
             pagesize = 10;
         }
 
@@ -347,21 +358,29 @@ public class DadesObertesService extends DadesObertesUtils {
             final int maxResults = pagesize;
             final List<Peticio> llistat = this.peticioLogicaEjb.select(w, null, firstResult, maxResults, orderBy);
             final List<PeticioDeFirma> peticionsInfo = new ArrayList<PeticioDeFirma>();
-            for (final Peticio item : llistat) {
-                final String nif = item.getDestinatariNif();
-                final String titol = item.getNom();
-                final String idioma = item.getIdiomaID();
-                final String dir3 = item.getArxiuParamFuncionariDir3();
-                final String tipusPeticio = MAP_TIPUS_PETICIO.get(item.getTipusDocumental() + "_" + language);
-                final String tipusDocumental = MAP_TIPUS_DOCUMENTAL.get(item.getTipusDocumental() + "_" + language);
-                final String creada = SDF.format(new Date(item.getDataCreacio().getTime()));
-                String finalitzada = null;
-                if (item.getDataFinal() != null) {
-                    finalitzada = SDF.format(new Date(item.getDataFinal().getTime()));
-                }
-                final PeticioDeFirma peticio = new PeticioDeFirma(nif, titol, creada, finalitzada, idioma,
-                        tipusDocumental, tipusPeticio, dir3);
-                peticionsInfo.add(peticio);
+            for (final Peticio peticio : llistat) {
+                final String nif = peticio.getDestinatariNif();
+                final String titol = peticio.getNom();
+                final String idiomaCode = peticio.getIdiomaID();
+                final String idiomaDescription = MAP_IDIOMA.get(idiomaCode + "_" + language);
+                final String dir3 = peticio.getArxiuParamFuncionariDir3();
+                
+                
+                final int tipusPeticioCode = peticio.getTipus();
+                final String tipusPeticioDescription = MAP_TIPUS_PETICIO.get(peticio.getTipus() + "_" + language);
+                
+                String tipusDocumentalCode = peticio.getTipusDocumental();
+                
+                final String tipusDocumentalDescription = MAP_TIPUS_DOCUMENTAL.get(tipusDocumentalCode + "_" + language);
+                
+                tipusDocumentalCode = "TD" + (tipusDocumentalCode.length() == 1 ? "0" : "") + tipusDocumentalCode;
+                
+                final Timestamp creada =  peticio.getDataCreacio();
+                final Timestamp finalitzada = peticio.getDataFinal();
+                
+                final PeticioDeFirma p = new PeticioDeFirma(nif, titol, creada, finalitzada, idiomaCode, idiomaDescription,
+                        tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode, tipusPeticioDescription, dir3);
+                peticionsInfo.add(p);
             }
 
             long countTotal = this.peticioLogicaEjb.count(w);
@@ -398,10 +417,7 @@ public class DadesObertesService extends DadesObertesUtils {
             tags = { DadesObertesService.TAG_NAME },
             operationId = "tipusdocumentals",
             summary = "Retorna un llistat dels tipus documentals")
-    @ApiResponses({ @ApiResponse(
-            responseCode = "400",
-            description = "EFIB: Parametres incorrectes",
-            content = { @Content(mediaType = MIME_APPLICATION_JSON, schema = @Schema(implementation = String.class)) }),
+    @ApiResponses({ 
             @ApiResponse(
                     responseCode = "401",
                     description = "EFIB: No Autenticat",
@@ -419,7 +435,7 @@ public class DadesObertesService extends DadesObertesUtils {
                     description = "EFIB: Error durant la consulta de les dades obertes",
                     content = { @Content(
                             mediaType = MIME_APPLICATION_JSON,
-                            schema = @Schema(implementation = String.class)) }),
+                            schema = @Schema(implementation = OpenApiExceptionInfo.class)) }),
             @ApiResponse(
                     responseCode = "200",
                     description = "EFIB: Retornades dades obertes correctament",

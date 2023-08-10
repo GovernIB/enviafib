@@ -120,7 +120,7 @@ public class TipusDocumentalsPaginacio {
 
   public TipusDocumentalsPaginacio addDataItem(String dataItem) {
     if (this.data == null) {
-      this.data = new ArrayList<>();
+      this.data = new ArrayList<String>();
     }
     this.data.add(dataItem);
     return this;

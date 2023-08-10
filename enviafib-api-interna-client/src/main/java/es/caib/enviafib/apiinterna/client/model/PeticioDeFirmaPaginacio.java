@@ -121,7 +121,7 @@ public class PeticioDeFirmaPaginacio {
 
   public PeticioDeFirmaPaginacio addDataItem(PeticioDeFirma dataItem) {
     if (this.data == null) {
-      this.data = new ArrayList<>();
+      this.data = new ArrayList<PeticioDeFirma>();
     }
     this.data.add(dataItem);
     return this;

@@ -179,7 +179,7 @@
                                 <groupId>es.caib.enviafib</groupId>
                                 <artifactId>enviafib-api-interna-client</artifactId>
                                 <artifactVersion>1.0</artifactVersion>
-                                <dateLibrary>java8</dateLibrary>
+                                <dateLibrary>joda</dateLibrary>
                                 <useTags>true</useTags>
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
                             </configOptions>

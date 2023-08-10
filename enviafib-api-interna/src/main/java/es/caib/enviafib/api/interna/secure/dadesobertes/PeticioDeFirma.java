@@ -1,5 +1,12 @@
 package es.caib.enviafib.api.interna.secure.dadesobertes;
 
+import java.util.Date;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import es.caib.enviafib.api.interna.common.ISO8601DateTimeSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * 
  * @author anadal
@@ -8,26 +15,44 @@ package es.caib.enviafib.api.interna.secure.dadesobertes;
 public class PeticioDeFirma {
     private String nif;
     private String titol;
-    private String creada;
-    private String finalitzada;
-    private String idioma;
-    private String tipusDocumental;
-    private String tipus;
+
+    @Schema(type = "string", format = "date-time", pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = ISO8601DateTimeSerializer.class)
+    private Date creada;
+
+    @Schema(type = "string", format = "date-time", pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonSerialize(using = ISO8601DateTimeSerializer.class)
+    private Date finalitzada;
+
+    private String idiomaCode;
+    private String idiomaDescription;
+
+    private String tipusDocumentalCode;
+    private String tipusDocumentalDescription;
+
+    private int tipusPeticioCode;
+    private String tipusPeticioCodeDescription;
+
     private String dir3;
 
-    public PeticioDeFirma(final String nif, final String titol, final String creada, final String finalitzada,
-            final String idioma, final String tipusDocumental, final String tipus, final String dir3) {
+    public PeticioDeFirma() {
+    }
+
+    public PeticioDeFirma(String nif, String titol, Date creada, Date finalitzada, String idiomaCode,
+            String idiomaDescription, String tipusDocumentalCode, String tipusDocumentalDescription,
+            int tipusPeticioCode, String tipusPeticioCodeDescription, String dir3) {
+        super();
         this.nif = nif;
         this.titol = titol;
         this.creada = creada;
         this.finalitzada = finalitzada;
-        this.idioma = idioma;
-        this.tipusDocumental = tipusDocumental;
-        this.tipus = tipus;
+        this.idiomaCode = idiomaCode;
+        this.idiomaDescription = idiomaDescription;
+        this.tipusDocumentalCode = tipusDocumentalCode;
+        this.tipusDocumentalDescription = tipusDocumentalDescription;
+        this.tipusPeticioCode = tipusPeticioCode;
+        this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
         this.dir3 = dir3;
-    }
-
-    public PeticioDeFirma() {
     }
 
     public String getNif() {
@@ -46,44 +71,68 @@ public class PeticioDeFirma {
         this.titol = titol;
     }
 
-    public String getCreada() {
+    public Date getCreada() {
         return this.creada;
     }
 
-    public void setCreada(final String creada) {
+    public void setCreada(final Date creada) {
         this.creada = creada;
     }
 
-    public String getFinalitzada() {
+    public Date getFinalitzada() {
         return this.finalitzada;
     }
 
-    public void setFinalitzada(final String finalitzada) {
+    public void setFinalitzada(final Date finalitzada) {
         this.finalitzada = finalitzada;
     }
 
-    public String getIdioma() {
-        return this.idioma;
+    public String getIdiomaCode() {
+        return idiomaCode;
     }
 
-    public void setIdioma(final String idioma) {
-        this.idioma = idioma;
+    public void setIdiomaCode(String idiomaCode) {
+        this.idiomaCode = idiomaCode;
     }
 
-    public String getTipusDocumental() {
-        return this.tipusDocumental;
+    public String getIdiomaDescription() {
+        return idiomaDescription;
     }
 
-    public void setTipusDocumental(final String tipusDocumental) {
-        this.tipusDocumental = tipusDocumental;
+    public void setIdiomaDescription(String idiomaDescription) {
+        this.idiomaDescription = idiomaDescription;
     }
 
-    public String getTipus() {
-        return this.tipus;
+    public String getTipusDocumentalCode() {
+        return tipusDocumentalCode;
     }
 
-    public void setTipus(final String tipus) {
-        this.tipus = tipus;
+    public void setTipusDocumentalCode(String tipusDocumentalCode) {
+        this.tipusDocumentalCode = tipusDocumentalCode;
+    }
+
+    public String getTipusDocumentalDescription() {
+        return tipusDocumentalDescription;
+    }
+
+    public void setTipusDocumentalDescription(String tipusDocumentalDescription) {
+        this.tipusDocumentalDescription = tipusDocumentalDescription;
+    }
+
+    public int getTipusPeticioCode() {
+        return tipusPeticioCode;
+    }
+
+    public void setTipusPeticioCode(int tipusPeticioCode) {
+        this.tipusPeticioCode = tipusPeticioCode;
+    }
+
+    public String getTipusPeticioCodeDescription() {
+        return tipusPeticioCodeDescription;
+    }
+
+    public void setTipusPeticioCodeDescription(String tipusPeticioCodeDescription) {
+        this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
     }
 
     public String getDir3() {
@@ -95,8 +144,8 @@ public class PeticioDeFirma {
     }
 
     public String toString() {
-        return "PeticioDTO {nif=" + this.nif + ", titol=" + this.titol + ", creada=" + this.creada + ", finalitzada="
-                + this.finalitzada + ", idioma=" + this.idioma + ", tipusDocumental=" + this.tipusDocumental
-                + ", tipus=" + this.tipus + ", dir3=" + this.dir3 + "}";
+        return this.getClass().getName() + " {nif=" + this.nif + ", titol=" + this.titol + ", creada=" + this.creada + ", finalitzada="
+                + this.finalitzada + ", idioma=" + this.idiomaCode + ", tipusDocumental=" + this.tipusDocumentalCode
+                + ", tipus=" + this.tipusPeticioCode + ", dir3=" + this.dir3 + "}";
     }
 }

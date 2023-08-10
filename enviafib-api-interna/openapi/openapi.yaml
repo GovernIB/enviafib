@@ -31,17 +31,18 @@ paths:
       parameters:
       - name: inici
         in: query
-        description: "Data d'inici, en format dd-MM-yyyy, a partir de la qual volem\
-          \ obtenir dades"
+        description: "Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la\
+          \ qual volem obtenir dades"
         schema:
           type: string
-        example: 31-08-2022
+        example: 2022-08-29
       - name: fi
         in: query
-        description: "Data fi, en format dd-MM-yyyy, fins la qual volem tenir dades"
+        description: "Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem\
+          \ tenir dades"
         schema:
           type: string
-        example: 31-12-2023
+        example: 2023-12-31
       - name: page
         in: query
         description: Pàgina de la que es vol obtenir les dades
@@ -125,12 +126,6 @@ paths:
             value: es
         example: ca
       responses:
-        "400":
-          description: "EFIB: Parametres incorrectes"
-          content:
-            application/json:
-              schema:
-                type: string
         "401":
           description: "EFIB: No Autenticat"
           content:
@@ -148,7 +143,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/OpenApiExceptionInfo'
         "200":
           description: "EFIB: Retornades dades obertes correctament"
           content:
@@ -184,14 +179,25 @@ components:
         titol:
           type: string
         creada:
+          pattern: yyyy-MM-dd'T'HH:mm:ss
           type: string
+          format: date-time
         finalitzada:
+          pattern: yyyy-MM-dd'T'HH:mm:ss
           type: string
-        idioma:
+          format: date-time
+        idiomaCode:
           type: string
-        tipusDocumental:
+        idiomaDescription:
           type: string
-        tipus:
+        tipusDocumentalCode:
+          type: string
+        tipusDocumentalDescription:
+          type: string
+        tipusPeticioCode:
+          type: integer
+          format: int32
+        tipusPeticioCodeDescription:
           type: string
         dir3:
           type: string

@@ -10,12 +10,11 @@ import es.caib.enviafib.api.interna.common.DadesObertesPaginacio;
  *
  */
 public class PeticioDeFirmaPaginacio extends DadesObertesPaginacio<PeticioDeFirma> {
-    
-    
+
     public PeticioDeFirmaPaginacio() {
         super();
     }
-    
+
     public PeticioDeFirmaPaginacio(int pagesize, int page, int totalpages, int totalcount, List<PeticioDeFirma> data) {
         super(pagesize, page, totalpages, totalcount, data);
     }

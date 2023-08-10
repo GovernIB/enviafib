@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.joda.time.DateTime;
 /**
  * PeticioDeFirma
  */
@@ -31,19 +32,28 @@ public class PeticioDeFirma {
   private String titol = null;
 
   @JsonProperty("creada")
-  private String creada = null;
+  private DateTime creada = null;
 
   @JsonProperty("finalitzada")
-  private String finalitzada = null;
+  private DateTime finalitzada = null;
 
-  @JsonProperty("idioma")
-  private String idioma = null;
+  @JsonProperty("idiomaCode")
+  private String idiomaCode = null;
 
-  @JsonProperty("tipusDocumental")
-  private String tipusDocumental = null;
+  @JsonProperty("idiomaDescription")
+  private String idiomaDescription = null;
 
-  @JsonProperty("tipus")
-  private String tipus = null;
+  @JsonProperty("tipusDocumentalCode")
+  private String tipusDocumentalCode = null;
+
+  @JsonProperty("tipusDocumentalDescription")
+  private String tipusDocumentalDescription = null;
+
+  @JsonProperty("tipusPeticioCode")
+  private Integer tipusPeticioCode = null;
+
+  @JsonProperty("tipusPeticioCodeDescription")
+  private String tipusPeticioCodeDescription = null;
 
   @JsonProperty("dir3")
   private String dir3 = null;
@@ -84,7 +94,7 @@ public class PeticioDeFirma {
     this.titol = titol;
   }
 
-  public PeticioDeFirma creada(String creada) {
+  public PeticioDeFirma creada(DateTime creada) {
     this.creada = creada;
     return this;
   }
@@ -94,15 +104,15 @@ public class PeticioDeFirma {
    * @return creada
   **/
   @Schema(description = "")
-  public String getCreada() {
+  public DateTime getCreada() {
     return creada;
   }
 
-  public void setCreada(String creada) {
+  public void setCreada(DateTime creada) {
     this.creada = creada;
   }
 
-  public PeticioDeFirma finalitzada(String finalitzada) {
+  public PeticioDeFirma finalitzada(DateTime finalitzada) {
     this.finalitzada = finalitzada;
     return this;
   }
@@ -112,66 +122,120 @@ public class PeticioDeFirma {
    * @return finalitzada
   **/
   @Schema(description = "")
-  public String getFinalitzada() {
+  public DateTime getFinalitzada() {
     return finalitzada;
   }
 
-  public void setFinalitzada(String finalitzada) {
+  public void setFinalitzada(DateTime finalitzada) {
     this.finalitzada = finalitzada;
   }
 
-  public PeticioDeFirma idioma(String idioma) {
-    this.idioma = idioma;
+  public PeticioDeFirma idiomaCode(String idiomaCode) {
+    this.idiomaCode = idiomaCode;
     return this;
   }
 
    /**
-   * Get idioma
-   * @return idioma
+   * Get idiomaCode
+   * @return idiomaCode
   **/
   @Schema(description = "")
-  public String getIdioma() {
-    return idioma;
+  public String getIdiomaCode() {
+    return idiomaCode;
   }
 
-  public void setIdioma(String idioma) {
-    this.idioma = idioma;
+  public void setIdiomaCode(String idiomaCode) {
+    this.idiomaCode = idiomaCode;
   }
 
-  public PeticioDeFirma tipusDocumental(String tipusDocumental) {
-    this.tipusDocumental = tipusDocumental;
+  public PeticioDeFirma idiomaDescription(String idiomaDescription) {
+    this.idiomaDescription = idiomaDescription;
     return this;
   }
 
    /**
-   * Get tipusDocumental
-   * @return tipusDocumental
+   * Get idiomaDescription
+   * @return idiomaDescription
   **/
   @Schema(description = "")
-  public String getTipusDocumental() {
-    return tipusDocumental;
+  public String getIdiomaDescription() {
+    return idiomaDescription;
   }
 
-  public void setTipusDocumental(String tipusDocumental) {
-    this.tipusDocumental = tipusDocumental;
+  public void setIdiomaDescription(String idiomaDescription) {
+    this.idiomaDescription = idiomaDescription;
   }
 
-  public PeticioDeFirma tipus(String tipus) {
-    this.tipus = tipus;
+  public PeticioDeFirma tipusDocumentalCode(String tipusDocumentalCode) {
+    this.tipusDocumentalCode = tipusDocumentalCode;
     return this;
   }
 
    /**
-   * Get tipus
-   * @return tipus
+   * Get tipusDocumentalCode
+   * @return tipusDocumentalCode
   **/
   @Schema(description = "")
-  public String getTipus() {
-    return tipus;
+  public String getTipusDocumentalCode() {
+    return tipusDocumentalCode;
   }
 
-  public void setTipus(String tipus) {
-    this.tipus = tipus;
+  public void setTipusDocumentalCode(String tipusDocumentalCode) {
+    this.tipusDocumentalCode = tipusDocumentalCode;
+  }
+
+  public PeticioDeFirma tipusDocumentalDescription(String tipusDocumentalDescription) {
+    this.tipusDocumentalDescription = tipusDocumentalDescription;
+    return this;
+  }
+
+   /**
+   * Get tipusDocumentalDescription
+   * @return tipusDocumentalDescription
+  **/
+  @Schema(description = "")
+  public String getTipusDocumentalDescription() {
+    return tipusDocumentalDescription;
+  }
+
+  public void setTipusDocumentalDescription(String tipusDocumentalDescription) {
+    this.tipusDocumentalDescription = tipusDocumentalDescription;
+  }
+
+  public PeticioDeFirma tipusPeticioCode(Integer tipusPeticioCode) {
+    this.tipusPeticioCode = tipusPeticioCode;
+    return this;
+  }
+
+   /**
+   * Get tipusPeticioCode
+   * @return tipusPeticioCode
+  **/
+  @Schema(description = "")
+  public Integer getTipusPeticioCode() {
+    return tipusPeticioCode;
+  }
+
+  public void setTipusPeticioCode(Integer tipusPeticioCode) {
+    this.tipusPeticioCode = tipusPeticioCode;
+  }
+
+  public PeticioDeFirma tipusPeticioCodeDescription(String tipusPeticioCodeDescription) {
+    this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
+    return this;
+  }
+
+   /**
+   * Get tipusPeticioCodeDescription
+   * @return tipusPeticioCodeDescription
+  **/
+  @Schema(description = "")
+  public String getTipusPeticioCodeDescription() {
+    return tipusPeticioCodeDescription;
+  }
+
+  public void setTipusPeticioCodeDescription(String tipusPeticioCodeDescription) {
+    this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
   }
 
   public PeticioDeFirma dir3(String dir3) {
@@ -206,15 +270,18 @@ public class PeticioDeFirma {
         Objects.equals(this.titol, peticioDeFirma.titol) &&
         Objects.equals(this.creada, peticioDeFirma.creada) &&
         Objects.equals(this.finalitzada, peticioDeFirma.finalitzada) &&
-        Objects.equals(this.idioma, peticioDeFirma.idioma) &&
-        Objects.equals(this.tipusDocumental, peticioDeFirma.tipusDocumental) &&
-        Objects.equals(this.tipus, peticioDeFirma.tipus) &&
+        Objects.equals(this.idiomaCode, peticioDeFirma.idiomaCode) &&
+        Objects.equals(this.idiomaDescription, peticioDeFirma.idiomaDescription) &&
+        Objects.equals(this.tipusDocumentalCode, peticioDeFirma.tipusDocumentalCode) &&
+        Objects.equals(this.tipusDocumentalDescription, peticioDeFirma.tipusDocumentalDescription) &&
+        Objects.equals(this.tipusPeticioCode, peticioDeFirma.tipusPeticioCode) &&
+        Objects.equals(this.tipusPeticioCodeDescription, peticioDeFirma.tipusPeticioCodeDescription) &&
         Objects.equals(this.dir3, peticioDeFirma.dir3);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nif, titol, creada, finalitzada, idioma, tipusDocumental, tipus, dir3);
+    return Objects.hash(nif, titol, creada, finalitzada, idiomaCode, idiomaDescription, tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode, tipusPeticioCodeDescription, dir3);
   }
 
 
@@ -227,9 +294,12 @@ public class PeticioDeFirma {
     sb.append("    titol: ").append(toIndentedString(titol)).append("\n");
     sb.append("    creada: ").append(toIndentedString(creada)).append("\n");
     sb.append("    finalitzada: ").append(toIndentedString(finalitzada)).append("\n");
-    sb.append("    idioma: ").append(toIndentedString(idioma)).append("\n");
-    sb.append("    tipusDocumental: ").append(toIndentedString(tipusDocumental)).append("\n");
-    sb.append("    tipus: ").append(toIndentedString(tipus)).append("\n");
+    sb.append("    idiomaCode: ").append(toIndentedString(idiomaCode)).append("\n");
+    sb.append("    idiomaDescription: ").append(toIndentedString(idiomaDescription)).append("\n");
+    sb.append("    tipusDocumentalCode: ").append(toIndentedString(tipusDocumentalCode)).append("\n");
+    sb.append("    tipusDocumentalDescription: ").append(toIndentedString(tipusDocumentalDescription)).append("\n");
+    sb.append("    tipusPeticioCode: ").append(toIndentedString(tipusPeticioCode)).append("\n");
+    sb.append("    tipusPeticioCodeDescription: ").append(toIndentedString(tipusPeticioCodeDescription)).append("\n");
     sb.append("    dir3: ").append(toIndentedString(dir3)).append("\n");
     sb.append("}");
     return sb.toString();

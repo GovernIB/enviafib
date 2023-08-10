@@ -85,10 +85,10 @@ public class DadesObertesEnviaFibApiTest {
     @Test
     public void peticionsdefirmaTest(DadesObertesEnviaFibApi api) throws ApiException {
 
-        String inici = "11-08-2022";
-        String fi = "11-12-2022";
+        String inici = "2022-08-29";
+        String fi = "2022-11-30";
         Integer page = 1;
-        Integer pagesize = 10;
+        Integer pagesize = 2;
         String language = "es";
 
         PeticioDeFirmaPaginacio response = api.peticionsdefirma(inici, fi, page, pagesize, language);

@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @param <D>
  */
-public class DadesObertesPaginacio<D> {
+public abstract class DadesObertesPaginacio<D> {
 
     protected int pagesize;
     protected int page;

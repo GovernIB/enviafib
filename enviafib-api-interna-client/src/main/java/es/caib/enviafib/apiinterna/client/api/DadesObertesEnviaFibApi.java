@@ -38,8 +38,8 @@ public class DadesObertesEnviaFibApi {
   /**
    * Retorna un llistat amb la informacio de les peticions de firma
    * 
-   * @param inici Data d&#x27;inici, en format dd-MM-yyyy, a partir de la qual volem obtenir dades (optional)
-   * @param fi Data fi, en format dd-MM-yyyy, fins la qual volem tenir dades (optional)
+   * @param inici Data d&#x27;inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades (optional)
+   * @param fi Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades (optional)
    * @param page Pàgina de la que es vol obtenir les dades (optional)
    * @param pagesize Elements retornats per la pàgina (optional)
    * @param language Idioma en que s&#x27;han de retornar les dades(Només suportat &#x27;ca&#x27; o &#x27;es&#x27;) (optional)
