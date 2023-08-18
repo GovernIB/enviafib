@@ -2,11 +2,6 @@ package es.caib.enviafib.api.interna.secure.dadesobertes;
 
 import java.util.Date;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
-import es.caib.enviafib.api.interna.common.ISO8601DateTimeSerializer;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * 
  * @author anadal
@@ -16,12 +11,12 @@ public class PeticioDeFirma {
     private String nif;
     private String titol;
 
-    @Schema(type = "string", format = "date-time", pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonSerialize(using = ISO8601DateTimeSerializer.class)
+//    @Schema(type = "string", format = "date-time", pattern = "yyyy-MM-dd'T'HH:mm:ss")
+//    @JsonSerialize(using = ISO8601DateTimeSerializer.class)
     private Date creada;
 
-    @Schema(type = "string", format = "date-time", pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonSerialize(using = ISO8601DateTimeSerializer.class)
+//    @Schema(type = "string", format = "date-time", pattern = "yyyy-MM-dd'T'HH:mm:ss")
+//    @JsonSerialize(using = ISO8601DateTimeSerializer.class)
     private Date finalitzada;
 
     private String idiomaCode;
@@ -31,7 +26,7 @@ public class PeticioDeFirma {
     private String tipusDocumentalDescription;
 
     private int tipusPeticioCode;
-    private String tipusPeticioCodeDescription;
+    private String tipusPeticioDescription;
 
     private String dir3;
 
@@ -40,7 +35,7 @@ public class PeticioDeFirma {
 
     public PeticioDeFirma(String nif, String titol, Date creada, Date finalitzada, String idiomaCode,
             String idiomaDescription, String tipusDocumentalCode, String tipusDocumentalDescription,
-            int tipusPeticioCode, String tipusPeticioCodeDescription, String dir3) {
+            int tipusPeticioCode, String tipusPeticioDescription, String dir3) {
         super();
         this.nif = nif;
         this.titol = titol;
@@ -51,7 +46,7 @@ public class PeticioDeFirma {
         this.tipusDocumentalCode = tipusDocumentalCode;
         this.tipusDocumentalDescription = tipusDocumentalDescription;
         this.tipusPeticioCode = tipusPeticioCode;
-        this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
+        this.tipusPeticioDescription = tipusPeticioDescription;
         this.dir3 = dir3;
     }
 
@@ -127,12 +122,12 @@ public class PeticioDeFirma {
         this.tipusPeticioCode = tipusPeticioCode;
     }
 
-    public String getTipusPeticioCodeDescription() {
-        return tipusPeticioCodeDescription;
+    public String getTipusPeticioDescription() {
+        return tipusPeticioDescription;
     }
 
-    public void setTipusPeticioCodeDescription(String tipusPeticioCodeDescription) {
-        this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
+    public void setTipusPeticioDescription(String tipusPeticioDescription) {
+        this.tipusPeticioDescription = tipusPeticioDescription;
     }
 
     public String getDir3() {

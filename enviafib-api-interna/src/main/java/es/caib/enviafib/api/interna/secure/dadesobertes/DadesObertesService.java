@@ -1,14 +1,15 @@
 package es.caib.enviafib.api.interna.secure.dadesobertes;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 import javax.annotation.security.RolesAllowed;
 
 import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.OrderType;
 import org.fundaciobit.genapp.common.query.Where;
-
+import org.fundaciobit.pluginsib.utils.rest.RestException;
+import org.fundaciobit.pluginsib.utils.rest.RestExceptionInfo;
+import org.fundaciobit.pluginsib.utils.rest.RestUtils;
 import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import java.util.Date;
@@ -21,9 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
-import es.caib.enviafib.api.interna.common.OpenApiUtils;
-import es.caib.enviafib.api.interna.common.OpenApiException;
-import es.caib.enviafib.api.interna.common.OpenApiExceptionInfo;
+
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.PeticioLogicaService;
 import es.caib.enviafib.model.fields.PeticioFields;
@@ -69,10 +68,10 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
         tags = { @Tag(
                 name = DadesObertesService.TAG_NAME,
                 description = "Conjunt de mètodes que es poden consultar per obtenir dades obertes") })
-@Produces({ DadesObertesService.MIME_APPLICATION_JSON })
-@Consumes({ DadesObertesService.MIME_APPLICATION_JSON })
+@Produces({ RestUtils.MIME_APPLICATION_JSON })
+@Consumes({ RestUtils.MIME_APPLICATION_JSON })
 @SecurityScheme(type = SecuritySchemeType.HTTP, name = DadesObertesService.SECURITY_NAME, scheme = "basic")
-public class DadesObertesService extends OpenApiUtils {
+public class DadesObertesService extends RestUtils {
 
     // No modificar !!!
     protected static final String TAG_NAME = "DadesObertesEnviaFib";
@@ -234,7 +233,7 @@ public class DadesObertesService extends OpenApiUtils {
                     description = "EFIB: Paràmetres incorrectes",
                     content = { @Content(
                             mediaType = MIME_APPLICATION_JSON,
-                            schema = @Schema(implementation = OpenApiExceptionInfo.class)) }),
+                            schema = @Schema(implementation = RestExceptionInfo.class)) }),
             @ApiResponse(
                     responseCode = "401",
                     description = "EFIB: No Autenticat",
@@ -252,7 +251,7 @@ public class DadesObertesService extends OpenApiUtils {
                     description = "EFIB: Error durant la consulta de les dades obertes",
                     content = { @Content(
                             mediaType = MIME_APPLICATION_JSON,
-                            schema = @Schema(implementation = OpenApiExceptionInfo.class)) }),
+                            schema = @Schema(implementation = RestExceptionInfo.class)) }),
             @ApiResponse(
                     responseCode = "200",
                     description = "EFIB: Retornades dades obertes correctament",
@@ -291,7 +290,7 @@ public class DadesObertesService extends OpenApiUtils {
                     examples = { @ExampleObject(name = "Català", value = "ca"),
                             @ExampleObject(name = "Castellano", value = "es") },
                     schema = @Schema(implementation = String.class)) @QueryParam("language") String language)
-            throws OpenApiException {
+            throws RestException {
 
         // Check de page i pagesize
         if (page == null || page <= 0) {
@@ -343,15 +342,15 @@ public class DadesObertesService extends OpenApiUtils {
             final String msg = "La data d'inici ha de ser menor que la data de fi (" + dataIniciRequest + " | "
                     + dataFiRequest + ")";
 
-            throw new OpenApiException(msg, Status.BAD_REQUEST);
+            throw new RestException(msg, Status.BAD_REQUEST);
 
         }
 
         // Realitzar Consulta
         try {
 
-            final Timestamp from = new Timestamp(atStartOfDay(dateStart).getTime());
-            final Timestamp to = new Timestamp(atEndOfDay(dateEnd).getTime());
+            final Timestamp from = new Timestamp(RestUtils.atStartOfDay(dateStart).getTime());
+            final Timestamp to = new Timestamp(RestUtils.atEndOfDay(dateEnd).getTime());
             final Where w = PeticioFields.DATACREACIO.between(from, to);
             final OrderBy orderBy = new OrderBy(PeticioFields.DATACREACIO, OrderType.DESC);
             final int firstResult = (page - 1) * pagesize;
@@ -403,7 +402,7 @@ public class DadesObertesService extends OpenApiUtils {
                 msg = th.getMessage();
             }
             this.log.error("Error desconegut retornant dades obertes: " + msg, th);
-            throw new OpenApiException(msg, th, Status.INTERNAL_SERVER_ERROR);
+            throw new RestException(msg, th, Status.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -411,8 +410,8 @@ public class DadesObertesService extends OpenApiUtils {
     @GET
     @RolesAllowed({ Constants.EFI_WS })
     @SecurityRequirement(name = SECURITY_NAME)
-    @Produces(MIME_APPLICATION_JSON)
-    @Consumes(MIME_APPLICATION_JSON)
+    @Produces(RestUtils.MIME_APPLICATION_JSON)
+    @Consumes(RestUtils.MIME_APPLICATION_JSON)
     @Operation(
             tags = { DadesObertesService.TAG_NAME },
             operationId = "tipusdocumentals",
@@ -422,25 +421,25 @@ public class DadesObertesService extends OpenApiUtils {
                     responseCode = "401",
                     description = "EFIB: No Autenticat",
                     content = { @Content(
-                            mediaType = MIME_APPLICATION_JSON,
+                            mediaType = RestUtils.MIME_APPLICATION_JSON,
                             schema = @Schema(implementation = String.class)) }),
             @ApiResponse(
                     responseCode = "403",
                     description = "EFIB: No Autoritzat",
                     content = { @Content(
-                            mediaType = MIME_APPLICATION_JSON,
+                            mediaType = RestUtils.MIME_APPLICATION_JSON,
                             schema = @Schema(implementation = String.class)) }),
             @ApiResponse(
                     responseCode = "500",
                     description = "EFIB: Error durant la consulta de les dades obertes",
                     content = { @Content(
-                            mediaType = MIME_APPLICATION_JSON,
-                            schema = @Schema(implementation = OpenApiExceptionInfo.class)) }),
+                            mediaType = RestUtils.MIME_APPLICATION_JSON,
+                            schema = @Schema(implementation = RestExceptionInfo.class)) }),
             @ApiResponse(
                     responseCode = "200",
                     description = "EFIB: Retornades dades obertes correctament",
                     content = { @Content(
-                            mediaType = MIME_APPLICATION_JSON,
+                            mediaType = RestUtils.MIME_APPLICATION_JSON,
                             schema = @Schema(implementation = TipusDocumentalsPaginacio.class)) }) })
     public TipusDocumentalsPaginacio getTipusDocumentals(
             @Parameter(
@@ -480,11 +479,5 @@ public class DadesObertesService extends OpenApiUtils {
         return dades;
     }
 
-    public static Date atEndOfDay(final Date date) {
-        return DateUtils.addMilliseconds(DateUtils.ceiling(date, Calendar.DAY_OF_MONTH), -1);
-    }
 
-    public static Date atStartOfDay(final Date date) {
-        return DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
-    }
 }

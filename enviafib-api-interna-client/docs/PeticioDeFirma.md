@@ -12,5 +12,5 @@ Name | Type | Description | Notes
 **tipusDocumentalCode** | **String** |  |  [optional]
 **tipusDocumentalDescription** | **String** |  |  [optional]
 **tipusPeticioCode** | **Integer** |  |  [optional]
-**tipusPeticioCodeDescription** | **String** |  |  [optional]
+**tipusPeticioDescription** | **String** |  |  [optional]
 **dir3** | **String** |  |  [optional]

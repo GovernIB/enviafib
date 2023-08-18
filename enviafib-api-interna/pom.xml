@@ -58,7 +58,12 @@
                     <artifactId>jaxb-api</artifactId>
                 </exclusion>
             </exclusions>
-
+        </dependency>
+        
+        <dependency>
+            <artifactId>portafib-callback-beans</artifactId>
+            <groupId>es.caib.portafib</groupId>
+            <version>1.1</version>
         </dependency>
 
         <dependency>
@@ -67,61 +72,40 @@
             <version>1.0.8</version>
             <scope>provided</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+        </dependency>
 
-        <!--        
-		 <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>-->
+
         <!-- Anotacions de documentació de openapi -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>2.1.13</version>
         </dependency>
-        <!-- Dependències de test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Llibreries necessàries implementació client JAX-RS Només són 
-            necessàries perquè al test el client s'executa fora del servidor d'aplicacions. -->
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-json-binding-provider</artifactId>
-            <scope>test</scope>
-        </dependency>
 
-        <dependency>
-            <artifactId>portafib-callback-beans</artifactId>
-            <groupId>es.caib.portafib</groupId>
-            <version>1.1</version>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
-
-        <!--        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>commons-logging-jboss-logging</artifactId>
-            <scope>test</scope>
-        </dependency>-->
-        <!-- Per tests amb Arquillian 
         <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
+            <artifactId>pluginsib-utils-rest</artifactId>
+            <groupId>org.fundaciobit.pluginsib.utils</groupId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Dependències de test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
--->
+
+
     </dependencies>
 
     <build>
@@ -180,8 +164,11 @@
                                 <artifactId>enviafib-api-interna-client</artifactId>
                                 <artifactVersion>1.0</artifactVersion>
                                 <dateLibrary>joda</dateLibrary>
+                                
+                                
                                 <useTags>true</useTags>
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                
                             </configOptions>
 
                             <addCompileSourceRoot>false</addCompileSourceRoot>
@@ -189,6 +176,8 @@
                             <apiPackage>${client.default.package}.api</apiPackage>
                             <modelPackage>${client.default.package}.model</modelPackage>
                             <invokerPackage>${client.default.package}.services</invokerPackage>
+                            <java8>true</java8>
+                            
                             <!-- 
                             <variableNamingConvention>camelCase</variableNamingConvention>
                            

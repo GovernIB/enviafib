@@ -2,14 +2,15 @@ package es.caib.enviafib.api.interna.secure.dadesobertes;
 
 import java.util.List;
 
-import es.caib.enviafib.api.interna.common.DadesObertesPaginacio;
+import org.fundaciobit.pluginsib.utils.rest.RestPagination;
+
 
 /**
  * 
  * @author anadal
  *
  */
-public class TipusDocumentalsPaginacio extends DadesObertesPaginacio<String> {
+public class TipusDocumentalsPaginacio extends RestPagination<String> {
     
     
     public TipusDocumentalsPaginacio() {

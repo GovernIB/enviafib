@@ -52,8 +52,8 @@ public class PeticioDeFirma {
   @JsonProperty("tipusPeticioCode")
   private Integer tipusPeticioCode = null;
 
-  @JsonProperty("tipusPeticioCodeDescription")
-  private String tipusPeticioCodeDescription = null;
+  @JsonProperty("tipusPeticioDescription")
+  private String tipusPeticioDescription = null;
 
   @JsonProperty("dir3")
   private String dir3 = null;
@@ -220,22 +220,22 @@ public class PeticioDeFirma {
     this.tipusPeticioCode = tipusPeticioCode;
   }
 
-  public PeticioDeFirma tipusPeticioCodeDescription(String tipusPeticioCodeDescription) {
-    this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
+  public PeticioDeFirma tipusPeticioDescription(String tipusPeticioDescription) {
+    this.tipusPeticioDescription = tipusPeticioDescription;
     return this;
   }
 
    /**
-   * Get tipusPeticioCodeDescription
-   * @return tipusPeticioCodeDescription
+   * Get tipusPeticioDescription
+   * @return tipusPeticioDescription
   **/
   @Schema(description = "")
-  public String getTipusPeticioCodeDescription() {
-    return tipusPeticioCodeDescription;
+  public String getTipusPeticioDescription() {
+    return tipusPeticioDescription;
   }
 
-  public void setTipusPeticioCodeDescription(String tipusPeticioCodeDescription) {
-    this.tipusPeticioCodeDescription = tipusPeticioCodeDescription;
+  public void setTipusPeticioDescription(String tipusPeticioDescription) {
+    this.tipusPeticioDescription = tipusPeticioDescription;
   }
 
   public PeticioDeFirma dir3(String dir3) {
@@ -275,13 +275,13 @@ public class PeticioDeFirma {
         Objects.equals(this.tipusDocumentalCode, peticioDeFirma.tipusDocumentalCode) &&
         Objects.equals(this.tipusDocumentalDescription, peticioDeFirma.tipusDocumentalDescription) &&
         Objects.equals(this.tipusPeticioCode, peticioDeFirma.tipusPeticioCode) &&
-        Objects.equals(this.tipusPeticioCodeDescription, peticioDeFirma.tipusPeticioCodeDescription) &&
+        Objects.equals(this.tipusPeticioDescription, peticioDeFirma.tipusPeticioDescription) &&
         Objects.equals(this.dir3, peticioDeFirma.dir3);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nif, titol, creada, finalitzada, idiomaCode, idiomaDescription, tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode, tipusPeticioCodeDescription, dir3);
+    return Objects.hash(nif, titol, creada, finalitzada, idiomaCode, idiomaDescription, tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode, tipusPeticioDescription, dir3);
   }
 
 
@@ -299,7 +299,7 @@ public class PeticioDeFirma {
     sb.append("    tipusDocumentalCode: ").append(toIndentedString(tipusDocumentalCode)).append("\n");
     sb.append("    tipusDocumentalDescription: ").append(toIndentedString(tipusDocumentalDescription)).append("\n");
     sb.append("    tipusPeticioCode: ").append(toIndentedString(tipusPeticioCode)).append("\n");
-    sb.append("    tipusPeticioCodeDescription: ").append(toIndentedString(tipusPeticioCodeDescription)).append("\n");
+    sb.append("    tipusPeticioDescription: ").append(toIndentedString(tipusPeticioDescription)).append("\n");
     sb.append("    dir3: ").append(toIndentedString(dir3)).append("\n");
     sb.append("}");
     return sb.toString();

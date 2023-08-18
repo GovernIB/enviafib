@@ -96,7 +96,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/OpenApiExceptionInfo"
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
                 }
               }
             }
@@ -126,7 +126,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/OpenApiExceptionInfo"
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
                 }
               }
             }
@@ -197,7 +197,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/OpenApiExceptionInfo"
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
                 }
               }
             }
@@ -221,7 +221,7 @@
   },
   "components" : {
     "schemas" : {
-      "OpenApiExceptionInfo" : {
+      "RestExceptionInfo" : {
         "required" : [ "code", "errorMessage" ],
         "type" : "object",
         "properties" : {
@@ -253,12 +253,10 @@
             "type" : "string"
           },
           "creada" : {
-            "pattern" : "yyyy-MM-dd'T'HH:mm:ss",
             "type" : "string",
             "format" : "date-time"
           },
           "finalitzada" : {
-            "pattern" : "yyyy-MM-dd'T'HH:mm:ss",
             "type" : "string",
             "format" : "date-time"
           },
@@ -278,7 +276,7 @@
             "type" : "integer",
             "format" : "int32"
           },
-          "tipusPeticioCodeDescription" : {
+          "tipusPeticioDescription" : {
             "type" : "string"
           },
           "dir3" : {
