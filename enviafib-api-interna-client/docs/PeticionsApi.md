@@ -1,6 +1,6 @@
 # PeticionsApi
 
-All URIs are relative to *http://localhost:8080/enviafibapi/interna*
+All URIs are relative to */enviafibapi/interna*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

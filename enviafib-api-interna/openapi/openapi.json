@@ -1,0 +1,439 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Dades Obertes de EnviaFIB",
+    "description" : "Conjunt de Serveis REST de EnviaFIB que ofereixen Dades Obertes"
+  },
+  "externalDocs" : {
+    "description" : "Java Client (GovernIB Github)",
+    "url" : "https://github.com/GovernIB/enviafib/tree/enviafib-1.0/enviafib-api-interna-client"
+  },
+  "servers" : [ {
+    "url" : "/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "http://localhost:8080/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://dev.caib.es/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://proves.caib.es/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://se.caib.es/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://www.caib.es/enviafibapi/interna",
+    "variables" : { }
+  } ],
+  "tags" : [ {
+    "name" : "DadesObertesEnviaFib",
+    "description" : "Conjunt de mètodes que es poden consultar per obtenir dades obertes"
+  }, {
+    "name" : "Peticions",
+    "description" : "informacio básica de les peticions d'EnviaFIB"
+  } ],
+  "paths" : {
+    "/secure/dadesobertes/peticionsdefirma" : {
+      "get" : {
+        "tags" : [ "DadesObertesEnviaFib" ],
+        "summary" : "Retorna un llistat amb la informacio de les peticions de firma",
+        "operationId" : "peticionsdefirma",
+        "parameters" : [ {
+          "name" : "inici",
+          "in" : "query",
+          "description" : "Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "2022-08-29"
+        }, {
+          "name" : "fi",
+          "in" : "query",
+          "description" : "Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "2023-12-31"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Pàgina de la que es vol obtenir les dades",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        }, {
+          "name" : "pagesize",
+          "in" : "query",
+          "description" : "Elements retornats per la pàgina",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 10
+        }, {
+          "name" : "language",
+          "in" : "query",
+          "description" : "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
+          "schema" : {
+            "type" : "string"
+          },
+          "examples" : {
+            "Català" : {
+              "description" : "Català",
+              "value" : "ca"
+            },
+            "Castellano" : {
+              "description" : "Castellano",
+              "value" : "es"
+            }
+          },
+          "example" : "ca"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "EFIB: Paràmetres incorrectes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "EFIB: No Autenticat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "EFIB: No Autoritzat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "EFIB: Error durant la consulta de les dades obertes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "EFIB: Retornades dades obertes correctament",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PeticioDeFirmaPaginacio"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    },
+    "/secure/dadesobertes/tipusdocumentals" : {
+      "get" : {
+        "tags" : [ "DadesObertesEnviaFib" ],
+        "summary" : "Retorna un llistat dels tipus documentals",
+        "operationId" : "tipusdocumentals",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
+          "schema" : {
+            "type" : "string"
+          },
+          "examples" : {
+            "Català" : {
+              "description" : "Català",
+              "value" : "ca"
+            },
+            "Castellano" : {
+              "description" : "Castellano",
+              "value" : "es"
+            }
+          },
+          "example" : "ca"
+        } ],
+        "responses" : {
+          "401" : {
+            "description" : "EFIB: No Autenticat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "EFIB: No Autoritzat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "EFIB: Error durant la consulta de les dades obertes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "EFIB: Retornades dades obertes correctament",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TipusDocumentalsPaginacio"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    },
+    "/secure/peticio/peticions" : {
+      "get" : {
+        "tags" : [ "Peticions" ],
+        "summary" : "Retorna un llistat amb la informacio de totes les peticions",
+        "operationId" : "obtenirDadesPeticions",
+        "parameters" : [ {
+          "name" : "inici",
+          "in" : "query",
+          "description" : "Data d'inici, en format dd/MM/yyyy, a partir de la qual volem obtenir estadistiques",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "31/08/2022"
+        }, {
+          "name" : "fi",
+          "in" : "query",
+          "description" : "Data fi, en format dd/MM/yyyy, fins la qual volem tenir estadistiques",
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "31/09/2022"
+        } ],
+        "responses" : {
+          "404" : {
+            "description" : "EFIB: Paràmetres incorrectes",
+            "content" : {
+              "application/json" : { }
+            }
+          },
+          "401" : {
+            "description" : "EFIB: No Autenticat",
+            "content" : {
+              "application/json" : { }
+            }
+          },
+          "403" : {
+            "description" : "EFIB: No Autoritzat",
+            "content" : {
+              "application/json" : { }
+            }
+          },
+          "400" : {
+            "description" : "EFIB: Error durant el processament o enviament del missatge",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "EFIB: Enviat missatge correctament",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "RestExceptionInfo" : {
+        "required" : [ "code", "errorMessage" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "description" : "Codi de HTTP de l'error. Veure https://en.wikipedia.org/wiki/List_of_HTTP_status_codes.",
+            "format" : "int32"
+          },
+          "errorMessage" : {
+            "type" : "string",
+            "description" : "Missatge de l'error"
+          },
+          "stackTrace" : {
+            "type" : "string",
+            "description" : "Stacktrace de l'excepció si n'hi hagués."
+          },
+          "causeException" : {
+            "type" : "string",
+            "description" : "Tipus de l'excepció origen (cause) si n'hi hagués."
+          },
+          "causeStackTrace" : {
+            "type" : "string",
+            "description" : "Stacktrace de l'excepció origen (cause) si n'hi hagués."
+          }
+        },
+        "description" : "Estructura de dades utilitzada per passar informació d'un error"
+      },
+      "PeticioDeFirma" : {
+        "type" : "object",
+        "properties" : {
+          "nif" : {
+            "type" : "string"
+          },
+          "titol" : {
+            "type" : "string"
+          },
+          "creada" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "finalitzada" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "idiomaCode" : {
+            "type" : "string"
+          },
+          "idiomaDescription" : {
+            "type" : "string"
+          },
+          "tipusDocumentalCode" : {
+            "type" : "string"
+          },
+          "tipusDocumentalDescription" : {
+            "type" : "string"
+          },
+          "tipusPeticioCode" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "tipusPeticioDescription" : {
+            "type" : "string"
+          },
+          "dir3" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Elements retornats"
+      },
+      "PeticioDeFirmaPaginacio" : {
+        "required" : [ "data", "page", "pagesize", "totalcount", "totalpages" ],
+        "type" : "object",
+        "properties" : {
+          "pagesize" : {
+            "type" : "integer",
+            "description" : "Mida de pàgina",
+            "format" : "int32"
+          },
+          "page" : {
+            "type" : "integer",
+            "description" : "Número pàgina. Comença per 1.",
+            "format" : "int32"
+          },
+          "totalpages" : {
+            "type" : "integer",
+            "description" : "Número total de pàgines",
+            "format" : "int32"
+          },
+          "totalcount" : {
+            "type" : "integer",
+            "description" : "Numero total d'elements",
+            "format" : "int32"
+          },
+          "data" : {
+            "type" : "array",
+            "description" : "Elements retornats",
+            "items" : {
+              "$ref" : "#/components/schemas/PeticioDeFirma"
+            }
+          }
+        }
+      },
+      "TipusDocumentalsPaginacio" : {
+        "required" : [ "data", "page", "pagesize", "totalcount", "totalpages" ],
+        "type" : "object",
+        "properties" : {
+          "pagesize" : {
+            "type" : "integer",
+            "description" : "Mida de pàgina",
+            "format" : "int32"
+          },
+          "page" : {
+            "type" : "integer",
+            "description" : "Número pàgina. Comença per 1.",
+            "format" : "int32"
+          },
+          "totalpages" : {
+            "type" : "integer",
+            "description" : "Número total de pàgines",
+            "format" : "int32"
+          },
+          "totalcount" : {
+            "type" : "integer",
+            "description" : "Numero total d'elements",
+            "format" : "int32"
+          },
+          "data" : {
+            "type" : "array",
+            "description" : "Elements retornats",
+            "items" : {
+              "type" : "string",
+              "description" : "Elements retornats"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "BasicAuth" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  }
+}

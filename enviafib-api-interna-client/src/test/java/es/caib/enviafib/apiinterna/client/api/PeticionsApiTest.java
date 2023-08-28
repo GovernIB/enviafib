@@ -39,7 +39,7 @@ public class PeticionsApiTest {
      */
     @Test
     public void obtenirDadesPeticionsTest() throws ApiException {
-        String response = api.obtenirDadesPeticions();
+        String response = api.obtenirDadesPeticions(null, null);
 
         // TODO: test validations
     }

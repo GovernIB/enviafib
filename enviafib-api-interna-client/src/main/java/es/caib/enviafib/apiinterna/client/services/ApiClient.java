@@ -46,7 +46,7 @@ import es.caib.enviafib.apiinterna.client.services.auth.OAuth;
 
 public class ApiClient {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private String basePath = "http://localhost:8080/enviafibapi/interna";
+  private String basePath = "/enviafibapi/interna";
   private boolean debugging = false;
 
   private Client httpClient;
@@ -72,7 +72,7 @@ public class ApiClient {
     this.json.setDateFormat((DateFormat) dateFormat.clone());
 
     // Set default User-Agent.
-    setUserAgent("Swagger-Codegen/1.1/java");
+    setUserAgent("Swagger-Codegen/1.0/java");
 
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();

@@ -1,4 +1,4 @@
-package es.caib.enviafib.api.interna;
+package es.caib.enviafib.api.interna.config;
 
 import java.io.IOException;
 

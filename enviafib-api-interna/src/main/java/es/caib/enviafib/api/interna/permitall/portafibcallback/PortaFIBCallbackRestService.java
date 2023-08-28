@@ -29,6 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * 
+ * @author anadal
  * @author fbosch
  * @author ptrias
  * 
@@ -45,18 +46,21 @@ public class PortaFIBCallbackRestService {
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
-    @Operation(tags = "Callback", operationId = "event", summary = "Reb l'event de portafib realitza les accions corresponents", method = "post")
+    @Operation(tags = "Callback", operationId = "versio", summary = "Informa de la versió de l'API de CallBack Implementada")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "404", description = "Paràmetres incorrectes", content = @Content(mediaType = MediaType.APPLICATION_JSON)),
-            @ApiResponse(responseCode = "200", description = "Callback PortaFIB", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = PortaFIBEvent.class))) })
-
+            @ApiResponse(responseCode = "500", description = "Error intern", content = @Content(mediaType = MediaType.APPLICATION_JSON)),
+            @ApiResponse(responseCode = "200", description = "Retorna Versió", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = String.class))) })
     @GET
     @Path("/versio")
     public String getVersio() {
-        log.info("URL de CallBack Validada");
         return "1";
     }
 
+    @Operation(tags = "Callback", operationId = "event", summary = "Reb events de firmes de PortaFIB i realitza les accions corresponents")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "500", description = "Error intern. Retorna l'error", content = @Content(mediaType = MediaType.TEXT_PLAIN, schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "404", description = "Paràmetres incorrectes. Retorna l'error.", content = @Content(mediaType = MediaType.APPLICATION_JSON)),
+            @ApiResponse(responseCode = "200", description = "Retorna un simple String 'OK' si s'ha rocessat correctament l'event.", content = @Content(mediaType = MediaType.TEXT_PLAIN, schema = @Schema(implementation = String.class))) })
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -147,16 +151,16 @@ public class PortaFIBCallbackRestService {
             return Response.status(Response.Status.OK).entity("OK").build();
 
         } catch (I18NException e) {
-            log.error("CALLBACK -> ERROR");
+            log.error("CALLBACK -> ERROR I18N");
             String msg = I18NCommonUtils.getMessage(e, new Locale("ca"));
             log.error(msg, e);
-            return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(msg).build();
 
         } catch (Throwable th) {
             log.error("CALLBACK -> ERROR");
             String msg = "Error desconegut processant event de Peticio de Firma REST: " + th.getMessage();
             log.error(msg, th);
-            return Response.status(Response.Status.BAD_REQUEST).entity(msg).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(msg).build();
         }
 
     }
