@@ -5,7 +5,7 @@
     <parent>
         <artifactId>enviafib</artifactId>
         <groupId>es.caib.enviafib</groupId>
-        <version>1.0.8</version>
+        <version>1.0.9</version>
     </parent>
 
     <artifactId>enviafib-api-interna</artifactId>
@@ -39,14 +39,14 @@
         <dependency>
             <groupId>es.caib.enviafib</groupId>
             <artifactId>enviafib-commons</artifactId>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>es.caib.enviafib</groupId>
             <artifactId>enviafib-persistence</artifactId>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>es.caib.enviafib</groupId>
             <artifactId>enviafib-ejb</artifactId>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
             <scope>provided</scope>
         </dependency>
         
