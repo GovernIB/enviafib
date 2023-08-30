@@ -21,8 +21,6 @@ servers:
 tags:
 - name: DadesObertesEnviaFib
   description: Conjunt de mètodes que es poden consultar per obtenir dades obertes
-- name: Peticions
-  description: informacio básica de les peticions d'EnviaFIB
 paths:
   /secure/dadesobertes/peticionsdefirma:
     get:
@@ -65,6 +63,7 @@ paths:
           o 'es')
         schema:
           type: string
+          default: ca
         examples:
           Català:
             description: Català
@@ -72,7 +71,6 @@ paths:
           Castellano:
             description: Castellano
             value: es
-        example: ca
       responses:
         "400":
           description: "EFIB: Paràmetres incorrectes"
@@ -119,6 +117,7 @@ paths:
           o 'es')
         schema:
           type: string
+          default: ca
         examples:
           Català:
             description: Català
@@ -126,7 +125,6 @@ paths:
           Castellano:
             description: Castellano
             value: es
-        example: ca
       responses:
         "401":
           description: "EFIB: No Autenticat"
@@ -152,53 +150,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TipusDocumentalsPaginacio'
-      security:
-      - BasicAuth: []
-  /secure/peticio/peticions:
-    get:
-      tags:
-      - Peticions
-      summary: Retorna un llistat amb la informacio de totes les peticions
-      operationId: obtenirDadesPeticions
-      parameters:
-      - name: inici
-        in: query
-        description: "Data d'inici, en format dd/MM/yyyy, a partir de la qual volem\
-          \ obtenir estadistiques"
-        schema:
-          type: string
-        example: 31/08/2022
-      - name: fi
-        in: query
-        description: "Data fi, en format dd/MM/yyyy, fins la qual volem tenir estadistiques"
-        schema:
-          type: string
-        example: 31/09/2022
-      responses:
-        "404":
-          description: "EFIB: Paràmetres incorrectes"
-          content:
-            application/json: {}
-        "401":
-          description: "EFIB: No Autenticat"
-          content:
-            application/json: {}
-        "403":
-          description: "EFIB: No Autoritzat"
-          content:
-            application/json: {}
-        "400":
-          description: "EFIB: Error durant el processament o enviament del missatge"
-          content:
-            application/json:
-              schema:
-                type: string
-        "200":
-          description: "EFIB: Enviat missatge correctament"
-          content:
-            application/json:
-              schema:
-                type: string
       security:
       - BasicAuth: []
 components:

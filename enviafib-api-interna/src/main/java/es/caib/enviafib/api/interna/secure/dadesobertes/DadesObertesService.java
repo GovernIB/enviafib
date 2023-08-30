@@ -286,10 +286,9 @@ public class DadesObertesService extends RestUtils {
                     description = "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
                     in = ParameterIn.QUERY,
                     required = false,
-                    example = "ca",
                     examples = { @ExampleObject(name = "Català", value = "ca"),
                             @ExampleObject(name = "Castellano", value = "es") },
-                    schema = @Schema(implementation = String.class)) @QueryParam("language") String language)
+                    schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("language") String language)
             throws RestException {
 
         // Check de page i pagesize
@@ -447,10 +446,9 @@ public class DadesObertesService extends RestUtils {
                     description = "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
                     in = ParameterIn.QUERY,
                     required = false,
-                    example = "ca",
                     examples = { @ExampleObject(name = "Català", value = "ca"),
                             @ExampleObject(name = "Castellano", value = "es") },
-                    schema = @Schema(implementation = String.class)) @QueryParam("language") String language) {
+                    schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("language") String language) {
 
         if (StringUtils.isBlank(language)) {
             language = "ca";

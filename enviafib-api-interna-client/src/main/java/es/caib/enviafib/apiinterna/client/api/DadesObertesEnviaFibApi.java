@@ -42,7 +42,7 @@ public class DadesObertesEnviaFibApi {
    * @param fi Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades (optional)
    * @param page Pàgina de la que es vol obtenir les dades (optional)
    * @param pagesize Elements retornats per la pàgina (optional)
-   * @param language Idioma en que s&#x27;han de retornar les dades(Només suportat &#x27;ca&#x27; o &#x27;es&#x27;) (optional)
+   * @param language Idioma en que s&#x27;han de retornar les dades(Només suportat &#x27;ca&#x27; o &#x27;es&#x27;) (optional, default to ca)
    * @return PeticioDeFirmaPaginacio
    * @throws ApiException if fails to make API call
    */
@@ -81,7 +81,7 @@ public class DadesObertesEnviaFibApi {
   /**
    * Retorna un llistat dels tipus documentals
    * 
-   * @param language Idioma en que s&#x27;han de retornar les dades(Només suportat &#x27;ca&#x27; o &#x27;es&#x27;) (optional)
+   * @param language Idioma en que s&#x27;han de retornar les dades(Només suportat &#x27;ca&#x27; o &#x27;es&#x27;) (optional, default to ca)
    * @return TipusDocumentalsPaginacio
    * @throws ApiException if fails to make API call
    */
