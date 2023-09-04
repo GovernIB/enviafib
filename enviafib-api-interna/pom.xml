@@ -59,7 +59,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <dependency>
             <artifactId>portafib-callback-beans</artifactId>
             <groupId>es.caib.portafib</groupId>
@@ -72,7 +72,7 @@
             <version>1.0.9</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
@@ -110,17 +110,41 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
+
         <plugins>
-            <!-- Genera el descriptor openapi.json de forma estàtica, després 
-                el posarem l'arrel del WAR -->
-            <!-- https://github.com/swagger-api/swagger-core/tree/master/modules/swagger-maven-plugin -->
+ 
             <plugin>
+                <!-- Genera el descriptor openapi.json de forma estàtica, després 
+                     el posarem l'arrel del WAR -->
+                <!-- https://github.com/swagger-api/swagger-core/tree/master/modules/swagger-maven-plugin -->
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
-                <version>2.2.0</version>
-
+                <version>2.2.15</version>
                 <executions>
+                <!--   OK  Això NO funciona -->
+                <!-- FET ISSUE "swagger-maven-plugin do not allow multiple executions #4471" -->
+                <!-- https://github.com/swagger-api/swagger-core/issues/4471 -->
+                <!--  
                     <execution>
+                        <id>portafib</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                        <configuration>
+                            <outputFileName>openapi_portafib</outputFileName>
+                            <outputPath>${project.basedir}/openapi/</outputPath>
+                            <outputFormat>JSON</outputFormat>
+                            <resourcePackages>
+                                <package>es.caib.enviafib.api.interna.config</package>
+                                <package>es.caib.enviafib.api.interna.permitall</package>
+                            </resourcePackages>
+                            <prettyPrint>TRUE</prettyPrint>
+                        </configuration>
+                    </execution>
+                    -->
+                    <execution>
+                        <id>dadesobertes</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>resolve</goal>
@@ -128,7 +152,7 @@
                         <configuration>
                             <outputFileName>openapi</outputFileName>
                             <outputPath>${project.basedir}/openapi/</outputPath>
-                            <outputFormat>JSONANDYAML</outputFormat>
+                            <outputFormat>JSON</outputFormat>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
                                 <package>es.caib.enviafib.api.interna.secure</package>
@@ -136,39 +160,45 @@
                             <prettyPrint>TRUE</prettyPrint>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
-            <!-- Genera el Client Rest per Java a partir del fitxer openapi.json -->
-            <!-- https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/README.md#general-configuration-parameters -->
 
+
+
+            <!-- Genera el Client Rest per Java a partir del fitxer openapi.json -->
             <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
             <!-- <configHelp>java</configHelp> -->
 
             <plugin>
-                <groupId>io.swagger.codegen.v3</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>3.0.27</version>
-
+                <!-- https://openapi-generator.tech/docs/generators/java/ -->
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>6.6.0</version>
                 <executions>
                     <execution>
+                        <id>dadesobertes</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <phase>install</phase>
                         <configuration>
                             <inputSpec>${project.basedir}/openapi/openapi.json</inputSpec>
+
+                            <generatorName>java</generatorName>
+                            <skipValidateSpec>true</skipValidateSpec>
+
                             <language>java</language>
                             <library>resteasy</library>
                             <configOptions>
                                 <groupId>es.caib.enviafib</groupId>
                                 <artifactId>enviafib-api-interna-client</artifactId>
                                 <artifactVersion>1.0</artifactVersion>
-                                <dateLibrary>joda</dateLibrary>
-                                
-                                
+                                <artifactDescription>EvidenciesIB - API Rest - Externa Client</artifactDescription>
+                                <dateLibrary>java8</dateLibrary>
                                 <useTags>true</useTags>
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
-                                
+                                <java11>true</java11>
                             </configOptions>
 
                             <addCompileSourceRoot>false</addCompileSourceRoot>
@@ -176,15 +206,53 @@
                             <apiPackage>${client.default.package}.api</apiPackage>
                             <modelPackage>${client.default.package}.model</modelPackage>
                             <invokerPackage>${client.default.package}.services</invokerPackage>
-                            <java8>true</java8>
                             
-                            <!-- 
                             <variableNamingConvention>camelCase</variableNamingConvention>
-                           
-                            <fullJavaUtil>true</fullJavaUtil> -->
+                            <fullJavaUtil>true</fullJavaUtil>
+
 
                         </configuration>
                     </execution>
+                    
+                    <!--   OK  Això funciona -->
+                    <!--
+                    <execution>
+                        <id>portafib</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>install</phase>
+                        <configuration>
+                            <inputSpec>${project.basedir}/openapi/openapi_portafib.json</inputSpec>
+
+                            <generatorName>java</generatorName>
+                            <skipValidateSpec>true</skipValidateSpec>
+
+                            <language>java</language>
+                            <library>resteasy</library>
+                            <configOptions>
+                                <groupId>es.caib.enviafib</groupId>
+                                <artifactId>enviafib-api-interna-client-portafib</artifactId>
+                                <artifactVersion>1.0</artifactVersion>
+                                <dateLibrary>java8</dateLibrary>
+
+                                <java11>true</java11>
+
+                                <useTags>true</useTags>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+
+                            </configOptions>
+
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <output>${project.basedir}/../enviafib-api-interna-client-portafib</output>
+                            <apiPackage>${client.default.package}.portafib.api</apiPackage>
+                            <modelPackage>${client.default.package}.portafib.model</modelPackage>
+                            <invokerPackage>${client.default.package}.portafib.services</invokerPackage>
+
+
+                        </configuration>
+                    </execution>
+                    -->
                 </executions>
             </plugin>
 

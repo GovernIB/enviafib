@@ -9,23 +9,17 @@
     "url" : "https://github.com/GovernIB/enviafib/tree/enviafib-1.0/enviafib-api-interna-client"
   },
   "servers" : [ {
-    "url" : "/enviafibapi/interna",
-    "variables" : { }
+    "url" : "/enviafibapi/interna"
   }, {
-    "url" : "http://localhost:8080/enviafibapi/interna",
-    "variables" : { }
+    "url" : "http://localhost:8080/enviafibapi/interna"
   }, {
-    "url" : "https://dev.caib.es/enviafibapi/interna",
-    "variables" : { }
+    "url" : "https://dev.caib.es/enviafibapi/interna"
   }, {
-    "url" : "https://proves.caib.es/enviafibapi/interna",
-    "variables" : { }
+    "url" : "https://proves.caib.es/enviafibapi/interna"
   }, {
-    "url" : "https://se.caib.es/enviafibapi/interna",
-    "variables" : { }
+    "url" : "https://se.caib.es/enviafibapi/interna"
   }, {
-    "url" : "https://www.caib.es/enviafibapi/interna",
-    "variables" : { }
+    "url" : "https://www.caib.es/enviafibapi/interna"
   } ],
   "tags" : [ {
     "name" : "DadesObertesEnviaFib",

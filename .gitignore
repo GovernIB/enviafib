@@ -163,3 +163,7 @@ installCerts.bat
 /api.bat
 /enviafib-api-interna-client/test.properties
 /enviafib-api-externa
+/enviafib-api-interna-client/.github
+/enviafib-api-interna-client/.openapi-generator
+/enviafib-api-interna-client/api
+/enviafib-api-interna-client/.openapi-generator-ignore
