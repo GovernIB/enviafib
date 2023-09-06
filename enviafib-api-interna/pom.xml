@@ -121,6 +121,26 @@
                 <artifactId>swagger-maven-plugin</artifactId>
                 <version>2.2.15</version>
                 <executions>
+
+                    <execution>
+                        <id>dadesobertes</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                        <configuration>
+                            <contextId>dadesobertes</contextId>
+                            <outputFileName>openapi_dadesobertes</outputFileName>
+                            <outputPath>${project.basedir}/openapi/</outputPath>
+                            <outputFormat>JSON</outputFormat>
+                            <resourcePackages>
+                                <package>es.caib.enviafib.api.interna.config</package>
+                                <package>es.caib.enviafib.api.interna.secure.dadesobertes</package>
+                            </resourcePackages>
+                            <prettyPrint>TRUE</prettyPrint>
+                        </configuration>
+                    </execution>
+                    
                 <!--   OK  Això   funciona -->
                 <!-- FET ISSUE "swagger-maven-plugin do not allow multiple executions #4471" -->
                 <!-- https://github.com/swagger-api/swagger-core/issues/4471 -->
@@ -138,30 +158,12 @@
                             <outputFormat>JSON</outputFormat>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
-                                <package>es.caib.enviafib.api.interna.permitall</package>
+                                <package>es.caib.enviafib.api.interna.permitall.portafibcallback</package>
                             </resourcePackages>
                             <prettyPrint>TRUE</prettyPrint>
                         </configuration>
                     </execution>
                -->
-                    <execution>
-                        <id>dadesobertes</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>resolve</goal>
-                        </goals>
-                        <configuration>
-                            <contextId>dadesobertes</contextId>
-                            <outputFileName>openapi</outputFileName>
-                            <outputPath>${project.basedir}/openapi/</outputPath>
-                            <outputFormat>JSON</outputFormat>
-                            <resourcePackages>
-                                <package>es.caib.enviafib.api.interna.config</package>
-                                <package>es.caib.enviafib.api.interna.secure</package>
-                            </resourcePackages>
-                            <prettyPrint>TRUE</prettyPrint>
-                        </configuration>
-                    </execution>
 
                 </executions>
             </plugin>
@@ -185,32 +187,31 @@
                         </goals>
                         <phase>install</phase>
                         <configuration>
-                            <inputSpec>${project.basedir}/openapi/openapi.json</inputSpec>
-
+                            <inputSpec>${project.basedir}/openapi/openapi_dadesobertes.json</inputSpec>
                             <generatorName>java</generatorName>
                             <skipValidateSpec>true</skipValidateSpec>
                             <library>resteasy</library>
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <output>${project.basedir}/../enviafib-api-interna-client-dadesobertes</output>
+                            <apiPackage>${client.default.package}.dadesobertes.api</apiPackage>
+                            <modelPackage>${client.default.package}.dadesobertes.model</modelPackage>
+                            <invokerPackage>${client.default.package}.dadesobertes.services</invokerPackage>
+
+                            <generateModelTests>false</generateModelTests>
+                            
                             <configOptions>
                                 <groupId>es.caib.enviafib</groupId>
-                                <artifactId>enviafib-api-interna-client</artifactId>
+                                <artifactId>enviafib-api-interna-client-dadesobertes</artifactId>
                                 <artifactVersion>1.0</artifactVersion>
-                                <artifactDescription>EvidenciesIB - API Rest - Externa Client</artifactDescription>
+                                <artifactDescription>EvidenciesIB - API Rest - Externa Client - DadesObertes</artifactDescription>
                                 <dateLibrary>java8</dateLibrary>
                                 <useTags>true</useTags>
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
                                 <java11>true</java11>
+
                             </configOptions>
 
-                            <addCompileSourceRoot>false</addCompileSourceRoot>
-                            <output>${project.basedir}/../enviafib-api-interna-client</output>
-                            <apiPackage>${client.default.package}.api</apiPackage>
-                            <modelPackage>${client.default.package}.model</modelPackage>
-                            <invokerPackage>${client.default.package}.services</invokerPackage>
-                            
-                            <variableNamingConvention>camelCase</variableNamingConvention>
-                            <fullJavaUtil>true</fullJavaUtil>
-
-
+                           
                         </configuration>
                     </execution>
                     
@@ -318,6 +319,7 @@
             </plugin>
 
             <!--   Llevar el .gitignore del codi generat -->
+            <!--
             <plugin>
                 <groupId>com.coderplus.maven.plugins</groupId>
                 <artifactId>copy-rename-maven-plugin</artifactId>
@@ -330,12 +332,13 @@
                             <goal>rename</goal>
                         </goals>
                         <configuration>
-                            <sourceFile>${basedir}/../enviafib-api-interna-client/.gitignore</sourceFile>
+                            <sourceFile>${basedir}/../enviafib-api-interna-client-dadesobertes/.gitignore</sourceFile>
                             <destinationFile>${project.build.directory}/client_gitignore_renamed.txt</destinationFile>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            -->
 
         </plugins>
         <pluginManagement>
