@@ -121,10 +121,10 @@
                 <artifactId>swagger-maven-plugin</artifactId>
                 <version>2.2.15</version>
                 <executions>
-                <!--   OK  Això NO funciona -->
+                <!--   OK  Això   funciona -->
                 <!-- FET ISSUE "swagger-maven-plugin do not allow multiple executions #4471" -->
                 <!-- https://github.com/swagger-api/swagger-core/issues/4471 -->
-                <!--  
+                <!--
                     <execution>
                         <id>portafib</id>
                         <phase>compile</phase>
@@ -132,6 +132,7 @@
                             <goal>resolve</goal>
                         </goals>
                         <configuration>
+                            <contextId>portafib</contextId>
                             <outputFileName>openapi_portafib</outputFileName>
                             <outputPath>${project.basedir}/openapi/</outputPath>
                             <outputFormat>JSON</outputFormat>
@@ -142,7 +143,7 @@
                             <prettyPrint>TRUE</prettyPrint>
                         </configuration>
                     </execution>
-                    -->
+               -->
                     <execution>
                         <id>dadesobertes</id>
                         <phase>compile</phase>
@@ -150,6 +151,7 @@
                             <goal>resolve</goal>
                         </goals>
                         <configuration>
+                            <contextId>dadesobertes</contextId>
                             <outputFileName>openapi</outputFileName>
                             <outputPath>${project.basedir}/openapi/</outputPath>
                             <outputFormat>JSON</outputFormat>
@@ -187,8 +189,6 @@
 
                             <generatorName>java</generatorName>
                             <skipValidateSpec>true</skipValidateSpec>
-
-                            <language>java</language>
                             <library>resteasy</library>
                             <configOptions>
                                 <groupId>es.caib.enviafib</groupId>
@@ -215,7 +215,7 @@
                     </execution>
                     
                     <!--   OK  Això funciona -->
-                    <!--
+                   <!--
                     <execution>
                         <id>portafib</id>
                         <goals>
@@ -227,8 +227,6 @@
 
                             <generatorName>java</generatorName>
                             <skipValidateSpec>true</skipValidateSpec>
-
-                            <language>java</language>
                             <library>resteasy</library>
                             <configOptions>
                                 <groupId>es.caib.enviafib</groupId>
