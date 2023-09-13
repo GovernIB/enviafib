@@ -163,3 +163,4 @@ installCerts.bat
 /api.bat
 /enviafib-api-interna-client/test.properties
 /enviafib-api-externa
+/enviafib-back/*.bak

@@ -77,7 +77,7 @@
                             <i class="fas fa-file-signature"></i>
                             <fmt:message key="ferfirma" />
                         </button>
-
+                        
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <c:if test="${empty menus}">
                                 <a class="dropdown-item" href="#">
@@ -119,120 +119,121 @@
                 </c:if>
 
 
-
-
                 <%--  MENU D'IDIOMES, ELS AGAFA DE LA BASE DE DADES--%>
                 <li class="dropdown">
-
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-language fa-lg"></i>
-                        <fmt:message key="idiomes" />
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <c:forEach var="idioma" items="${idiomes}" varStatus="status">
-                            <c:set var="idiomaID" value="${idioma.idiomaID}" />
-                            <a class="dropdown-item" href="?lang=${idiomaID}"> <img
-                                src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>"
-                                alt="${idiomaID}" style="margin-right: 0.5rem;" width="17" height="14" border="0" />${idioma.nom}
-                            </a>
-                        </c:forEach>
-
-                    </div>
+					<button class="btn btn-secondary" type="button"
+						id="dropdownMenu2" onclick="location.href='<c:url value="/ajuda/faq/list/1"></c:url>'">
+						<i class="fas fa-question"></i> FAQs
+					</button>
                 </li>
+				
 
-
-
+				
                 <%--   OPCIONS  --%>
-                <li class="dropdown">
+				<li class="dropdown">
 
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-cog"></i> <fmt:message key="configuracio" />
-                    </button>
-                    <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownMenu3">
-
-
-
-                        <c:if test="${ empty loginInfo  }">
-                            <a class="dropdown-item" href="<c:url value="/common/principal.html"></c:url>"> <i
-                                class="fas fa-sign-in-alt"></i> Login
-                            </a>
-                        </c:if>
-                        <c:if test="${ not empty loginInfo  }">
-                            <c:set var="userNoAdmin" value="${efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN')}"></c:set>
-                            <c:if test="${userNoAdmin}">
-                                <c:set var="edicioUsuariUrl" value="/user/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
-                            </c:if>
-                            <c:if test="${!userNoAdmin}">
-                                <c:set var="edicioUsuariUrl" value="/common/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
-                            </c:if>
-                            <a class="dropdown-item" href="<c:url value="${edicioUsuariUrl}"></c:url>"> <i
-                                class="fas fa-user"></i> <fmt:message key="inici.menu.editar.usuari" />
-                            </a>
-
-                            <a class="dropdown-item" href="<c:url value="/ajuda/faq/list/1"></c:url>"> <i
-                                class="fas fa-question"></i> FAQs
-                            </a>
+					<button class="btn btn-secondary dropdown-toggle" type="button"
+						id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">
+						<i class="fas fa-cog"></i>
+						<fmt:message key="configuracio" />
+					</button>
+					<div class="dropdown-menu  dropdown-menu-right"
+						aria-labelledby="dropdownMenu3">
 
 
 
-                            <c:if test="${not empty url_sortida}">
-                                <a class="dropdown-item" href="<c:url value="${url_sortida}"></c:url>"> <i
-                                    class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
-                                </a>
-                            </c:if>
-                        </c:if>
+						<c:if test="${ empty loginInfo  }">
+							<a class="dropdown-item"
+								href="<c:url value="/common/principal.html"></c:url>"> <i
+								class="fas fa-sign-in-alt"></i> Login
+							</a>
+						</c:if>
+						<c:if test="${ not empty loginInfo  }">
+							<c:set var="userNoAdmin"
+								value="${efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN')}"></c:set>
+							<c:if test="${userNoAdmin}">
+								<c:set var="edicioUsuariUrl"
+									value="/user/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
+							</c:if>
+							<c:if test="${!userNoAdmin}">
+								<c:set var="edicioUsuariUrl"
+									value="/common/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
+							</c:if>
+							<a class="dropdown-item"
+								href="<c:url value="${edicioUsuariUrl}"></c:url>"> <i
+								class="fas fa-user"></i> <fmt:message
+									key="inici.menu.editar.usuari" />
+							</a>
 
+							<hr style="margin: 6px 6px;" />
 
-                    </div>
-                </li>
+							<div id="titol-idiomes" class="dropdown-item">
+								<!-- <i class="fas fa-language fa-lg"></i> -->
+								<fmt:message key="idiomes" />
+							</div>
 
+							<c:forEach var="idioma" items="${idiomes}" varStatus="status">
+								<c:set var="idiomaID" value="${idioma.idiomaID}" />
+								<a class="dropdown-item" href="?lang=${idiomaID}"> <img
+									src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>"
+									alt="${idiomaID}" style="margin-right: 0.5rem;" width="17"
+									height="14" border="0" />${idioma.nom}
+								</a>
+							</c:forEach>
 
-
-
-            </ul>
+							<c:if test="${not empty url_sortida}">
+								<a class="dropdown-item"
+									href="<c:url value="${url_sortida}"></c:url>"> <i
+									class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
+								</a>
+							</c:if>
+						</c:if>
+					</div>
+				</li>
+			</ul>
 
 <!--         </div> -->
         <!-- FI Botons -->
     </nav>
 
     <!-- FI Header -->
-    <script type="text/javascript">
-                    var xrknpass = 0;
-                    $(function() {
-                        $(window)
-                                .keydown(
-                                        function(e) {
-                                            var ev = e || window.event;
-                                            var key = ev.which || ev.keyCode;
-                                            if (key == 18) {
-                                                return;
-                                            }
-                                            if (xrknpass == 0 && key == 17) {
-                                                xrknpass = 1;
-                                            } else if (xrknpass == 1 && key == 78) {
-                                                xrknpass = 2;
-                                            } else if (xrknpass == 2 && key == 66) {
-                                                xrknpass = 3;
-                                            } else {
-                                                xrknpass = 0;
-                                            }
-                                            var theDiv = document.getElementById('xrkn');
-                                            if (xrknpass === 3) {
-                                                var url = unescape("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0074\u0069\u006e\u0079\u002e\u0063\u0063\u002f\u0070\u006f\u0072\u0074\u0061\u0066\u0069\u0062");
-                                                theDiv.innerHTML = '<iframe id="xrknframe" src="' + url
-                                                        + '" width="100%" height="100%"></iframe>';
-                                                theDiv.style.visibility = 'visible';
-                                                xrknpass = 0;
-                                            } else {
-                                                theDiv.innerHTML = '';
-                                                theDiv.style.visibility = 'none';
-                                            }
-                                        });
-                    });
-                </script>
-    <div id="xrkn"
+	<script type="text/javascript">
+		var xrknpass = 0;
+		$(function() {
+			$(window)
+					.keydown(
+							function(e) {
+								var ev = e || window.event;
+								var key = ev.which || ev.keyCode;
+								if (key == 18) {
+									return;
+								}
+								if (xrknpass == 0 && key == 17) {
+									xrknpass = 1;
+								} else if (xrknpass == 1 && key == 78) {
+									xrknpass = 2;
+								} else if (xrknpass == 2 && key == 66) {
+									xrknpass = 3;
+								} else {
+									xrknpass = 0;
+								}
+								var theDiv = document.getElementById('xrkn');
+								if (xrknpass === 3) {
+									var url = unescape("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0074\u0069\u006e\u0079\u002e\u0063\u0063\u002f\u0070\u006f\u0072\u0074\u0061\u0066\u0069\u0062");
+									theDiv.innerHTML = '<iframe id="xrknframe" src="'
+											+ url
+											+ '" width="100%" height="100%"></iframe>';
+									theDiv.style.visibility = 'visible';
+									xrknpass = 0;
+								} else {
+									theDiv.innerHTML = '';
+									theDiv.style.visibility = 'none';
+								}
+							})
+		});
+	</script>
+	<div id="xrkn"
         style="position: absolute; width: 500px; height: 530px; top: 150px; left: 300px; z-index: 1000; visibility: hidden;">
     </div>
 </header>
@@ -248,69 +249,76 @@
 
 <style>
 nav.bg-aplicacio {
-    height: 6rem;
-    padding: 0px 5rem;
-    padding-left: 0px;
-    padding-right: 0px;
+	height: 6rem;
+	padding: 0px 5rem;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 .subtitolMay {
-    font-size: 1rem;
+	font-size: 1rem;
 }
 
 .main {
-    padding-top: 1rem;
+	padding-top: 1rem;
 }
 
 #logoGovernContainer {
-    border-right: 1px solid white;
+	border-right: 1px solid white;
 }
 
 #menuCapContainer {
-    margin-top: 2rem;
-    /*   margin-bottom: 1rem; */
+	margin-top: 2rem;
+	/*   margin-bottom: 1rem; */
 }
 
 #menuCapContainer button {
-    padding: 0.25rem 0.75rem;
+	padding: 0.25rem 0.75rem;
 }
 
 #userInfoContainer {
-    font-size: large;
+	font-size: large;
 }
 
 @font-face {
-    font-family: CaviarDreamsFont;
-    src: url(/fonts/RubikGlitch-Regular.ttf);
+	font-family: CaviarDreamsFont;
+	src: url(/fonts/RubikGlitch-Regular.ttf);
 }
 
 h1 {
-    font-family: CaviarDreamsFont;
-    color: darkgreen;
+	font-family: CaviarDreamsFont;
+	color: darkgreen;
 }
 
-#FilterButton,
-#GroupButton {
-    background-color: #E1E1E1;
-    border-color: #E1E1E1;
-    margin-left: 3px;
+#FilterButton, #GroupButton {
+	background-color: #E1E1E1;
+	border-color: #E1E1E1;
+	margin-left: 3px;
 }
 
-#FilterButton:hover,
-#GroupButton:hover {
-    background-color: #A1A1A1;
-    border-color: #A1A1A1;
+#FilterButton:hover, #GroupButton:hover {
+	background-color: #A1A1A1;
+	border-color: #A1A1A1;
 }
-
 
 .dropdown .btn-secondary {
-    margin: 0 5px;
-}
-.dropdown-menu {
-    margin-top: 0px;
+	margin: 0 5px;
 }
 
-#nomApp{
+.dropdown-menu {
+	margin-top: 0px;
+}
+
+#titol-idiomes {
+    color: #314b87;
+  font-weight: bold;
+}
+
+#titol-idiomes:hover{
+  background-color: transparent;
+}
+
+#nomApp {
 	text-transform: uppercase;
 	font-size: 2rem;
 	margin: 0;
