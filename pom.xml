@@ -16,7 +16,8 @@
 		<module>enviafib-api-interna</module>
 		<module>enviafib-ear</module>
 		<module>scripts</module>
-        <module>enviafib-api-interna-client</module>
+		<module>enviafib-api-interna-client</module>
+        <module>enviafib-api-interna-client-dadesobertes</module>
 	</modules>
 	<repositories>
 
