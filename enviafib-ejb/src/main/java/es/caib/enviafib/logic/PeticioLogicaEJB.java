@@ -9,8 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Asynchronous;
@@ -65,6 +67,7 @@ import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
@@ -102,9 +105,100 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
     protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
 
+    @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.SerieDocumentalService serieDocEjb;
+
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
 
+    
+    protected static final Map<String, String> MAP_TIPUS_DOCUMENTAL_ES = new HashMap<String, String>();
+    protected static final Map<String, String> MAP_TIPUS_DOCUMENTAL_CA= new HashMap<String, String>();
+
+    static {
+        MAP_TIPUS_DOCUMENTAL_CA.put("1", "Resolució");
+        MAP_TIPUS_DOCUMENTAL_CA.put("2", "Acord");
+        MAP_TIPUS_DOCUMENTAL_CA.put("3", "Contracte");
+        MAP_TIPUS_DOCUMENTAL_CA.put("4", "Conveni");
+        MAP_TIPUS_DOCUMENTAL_CA.put("5", "Declaració");
+        MAP_TIPUS_DOCUMENTAL_CA.put("6", "Comunicació");
+        MAP_TIPUS_DOCUMENTAL_CA.put("7", "Notificació");
+        MAP_TIPUS_DOCUMENTAL_CA.put("8", "Publicació");
+        MAP_TIPUS_DOCUMENTAL_CA.put("9", "Justificant de recepció");
+        MAP_TIPUS_DOCUMENTAL_CA.put("10", "Acta");
+        MAP_TIPUS_DOCUMENTAL_CA.put("11", "Certificat");
+        MAP_TIPUS_DOCUMENTAL_CA.put("12", "Diligència");
+        MAP_TIPUS_DOCUMENTAL_CA.put("13", "Informe");
+        MAP_TIPUS_DOCUMENTAL_CA.put("14", "Sol·licitud");
+        MAP_TIPUS_DOCUMENTAL_CA.put("15", "Denúncia");
+        MAP_TIPUS_DOCUMENTAL_CA.put("16", "Al·legació");
+        MAP_TIPUS_DOCUMENTAL_CA.put("17", "Recursos");
+        MAP_TIPUS_DOCUMENTAL_CA.put("18", "Comunicació ciutadà");
+        MAP_TIPUS_DOCUMENTAL_CA.put("19", "Factura");
+        MAP_TIPUS_DOCUMENTAL_CA.put("20", "Altre documentació aportada");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("51", "Llei");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("52", "Moció");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("53", "Instrucció");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("54", "Convocatòria");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("55", "Ordre del dia");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("56", "Informe de Ponència");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("57", "Dictamen de Comissió");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("58", "Iniciativa legislativa");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("59", "Pregunta");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("60", "Interpel·lació");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("61", "Resposta");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("62", "Proposició no de llei");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("63", "Esmena");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("64", "Proposada de resolució");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("65", "Compareixença");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("66", "Sol·licitud d'informació");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("67", "Escrit");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("68", "Iniciativa legislativa");
+//        MAP_TIPUS_DOCUMENTAL_CA.put("69", "Petició");
+        MAP_TIPUS_DOCUMENTAL_CA.put("99", "Altres tipus de documents");
+
+        MAP_TIPUS_DOCUMENTAL_ES.put("1", "Resolución");
+        MAP_TIPUS_DOCUMENTAL_ES.put("2", "Acuerdo");
+        MAP_TIPUS_DOCUMENTAL_ES.put("3", "Contrato");
+        MAP_TIPUS_DOCUMENTAL_ES.put("4", "Convenio");
+        MAP_TIPUS_DOCUMENTAL_ES.put("5", "Declaración");
+        MAP_TIPUS_DOCUMENTAL_ES.put("6", "Comunicación");
+        MAP_TIPUS_DOCUMENTAL_ES.put("7", "Notificación");
+        MAP_TIPUS_DOCUMENTAL_ES.put("8", "Publicación");
+        MAP_TIPUS_DOCUMENTAL_ES.put("9", "Justificante de recepción");
+        MAP_TIPUS_DOCUMENTAL_ES.put("10", "Acta");
+        MAP_TIPUS_DOCUMENTAL_ES.put("11", "Certificado");
+        MAP_TIPUS_DOCUMENTAL_ES.put("12", "Diligencia");
+        MAP_TIPUS_DOCUMENTAL_ES.put("13", "Informe");
+        MAP_TIPUS_DOCUMENTAL_ES.put("14", "Solicitud");
+        MAP_TIPUS_DOCUMENTAL_ES.put("15", "Denuncia");
+        MAP_TIPUS_DOCUMENTAL_ES.put("16", "Alegación");
+        MAP_TIPUS_DOCUMENTAL_ES.put("17", "Recursos");
+        MAP_TIPUS_DOCUMENTAL_ES.put("18", "Comunicación ciudadano");
+        MAP_TIPUS_DOCUMENTAL_ES.put("19", "Factura");
+        MAP_TIPUS_DOCUMENTAL_ES.put("20", "Otra documentación aportada");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("51", "Ley");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("52", "Moción");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("53", "Instrucción");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("54", "Convocatoria");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("55", "Orden del día");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("56", "Informe de Ponencia");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("57", "Dictamen de Comisión");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("58", "Iniciativa legislativa");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("59", "Pregunta");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("60", "Interpelación");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("61", "Respuesta");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("62", "Proposición no de ley");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("63", "Enmienda");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("64", "Propuesta de resolución");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("65", "Comparecencia");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("66", "Solicitud de información");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("67", "Escrito");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("68", "Iniciativa legislativa");
+//        MAP_TIPUS_DOCUMENTAL_ES.put("69", "Petición");
+        MAP_TIPUS_DOCUMENTAL_ES.put("99", "Otros tipos de documentos");
+    }
+    
     @Override
     public PeticioJPA arrancarPeticio(long peticioID, String languageUI, Usuari solicitant) throws I18NException {
 
@@ -819,43 +913,94 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException {
 
-        ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+  //      ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
 
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-        try {
-            List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
+//        try {
+//            List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
 
-            for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
-                long id = t.getDocumentType();
-                if (id > 0 && id < 100) {
+        
+        /*
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('S0001', '','Subvenciones empleo', 'organo1_PRO_123456789' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01334', '02','Acord', 'Enviafib TD02 Acords' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01335', '03','Contracte', 'Enviafib TD03 Contractes' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01336', '04','Conveni', 'Enviafib TD04 Convenis' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01337', '05','Declaració', 'Enviafib TD05 Declaracions' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01338', '06','Comunicació', 'Enviafib TD06 Comunicacions' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01339', '07','Notificació', 'Enviafib TD07 Notificacions' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01340', '08','Publicació', 'Enviafib TD08 Publicacions' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01341', '09','Justificant de recepció', 'Enviafib TD09 Justificants de recepció' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01342', '10','Acta', 'Enviafib TD10 Actes' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01343', '11','Certificat', 'Enviafib TD11 Certificats' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01344', '12','Diligència', 'Enviafib TD12 Diligències' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01345', '13','Informe', 'Enviafib TD13 Informes' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01346', '14','Sol.licitud', 'Enviafib TD14 Sol·licituds' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01347', '15','Denúncia', 'Enviafib TD15 Denúncies' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01348', '16','Al.legació', 'Enviafib TD16 Al·legacions' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01349', '17','Recurs', 'Enviafib TD17 Recursos' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01350', '18','Comunicació al ciutadà', 'Enviafib TD18 Comunicacions ciutadà' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01351', '19','Factura', 'Enviafib TD19 Factures' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01352', '20','Altres confiscats', 'Enviafib TD20 Altre documentació aportada' );
+INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01353', '99','Altres tipus de documents', 'Enviafib TD99 Altres' );
 
-                    String key = String.valueOf(id);
-                    String val = t.getName();
+         */
 
-                    StringKeyValue skv = new StringKeyValue(key, val);
-                    __tmp.add(skv);
-                }else {
-                    log.info("Uno que no ha entrado: " + id + " - " + t.getName());
-                }
-            }
-
-            return __tmp;
-
-        } catch (Exception e) {
-            
-            String[] tipusDocumentalsENI = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
-                    "13", "14", "15", "16", "17", "18", "19", "20", "51", "52", "53", "54", "55", "56", "57", "58",
-                    "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "99", };
-
-            for (String key : tipusDocumentalsENI) {
-                StringKeyValue skv = new StringKeyValue(key, I18NLogicUtils.tradueix(new Locale(lang), "td." + key));
-                __tmp.add(skv);
-            }
-            
-            log.error("Error obtenint els tipus documentals: " + e.getMessage(), e);
-//            throw new I18NException("error.tipusdocumentals.obtencio", e.getMessage());
-            return __tmp;
+        Map<String, String>  tipusDocs;
+        
+        if (lang.equals("es")) {
+            tipusDocs = MAP_TIPUS_DOCUMENTAL_ES;
+        }else {
+            tipusDocs = MAP_TIPUS_DOCUMENTAL_CA;            
         }
+            
+        for (Map.Entry<String, String> tipusDoc : tipusDocs.entrySet()) {
+            String key = tipusDoc.getKey();
+            String val = tipusDoc.getValue();
+            
+            StringKeyValue skv = new StringKeyValue(key, val);
+            __tmp.add(skv);
+        }
+
+//            List<SerieDocumental> seriesDocumentals =  serieDocEjb.select();
+//
+//            
+//            for (SerieDocumental serieDoc : seriesDocumentals) {
+//                String key = serieDoc.getTipusDocumental(); //02
+//                String val = serieDoc.getProcedimentNom(); //Acord
+//                
+//                StringKeyValue skv = new StringKeyValue(key, val);
+//                __tmp.add(skv);
+//            }
+//
+
+            
+//            for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
+//                long tipusDoc= t.getDocumentType();
+//                
+//                if (tipusDoc > 0 && tipusDoc < 100) {
+//
+//                }else {
+//                    log.info("Uno que no ha entrado: " + tipusDoc + " - " + t.getName());
+//                }
+//            }
+
+            return __tmp;
+
+//        } catch (Exception e) {
+//            
+//            String[] tipusDocumentalsENI = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+//                    "13", "14", "15", "16", "17", "18", "19", "20", "51", "52", "53", "54", "55", "56", "57", "58",
+//                    "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "99", };
+//
+//            for (String key : tipusDocumentalsENI) {
+//                StringKeyValue skv = new StringKeyValue(key, I18NLogicUtils.tradueix(new Locale(lang), "td." + key));
+//                __tmp.add(skv);
+//            }
+//            
+//            log.error("Error obtenint els tipus documentals: " + e.getMessage(), e);
+////            throw new I18NException("error.tipusdocumentals.obtencio", e.getMessage());
+//            return __tmp;
+//        }
     }
 
     @Override

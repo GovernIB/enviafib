@@ -76,6 +76,13 @@
 
         <hr style="margin-top: 6px; margin-bottom: 6px;" />
 
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/admin/faq/list"/>">
+                <span style="${(fn:contains(url, '/admin/faq'))? "font-weight:bold;" : ""}"><fmt:message
+                        key="faq.gestio" /></span>
+        </a></li>
+
+        <hr style="margin-top: 6px; margin-bottom: 6px;" />
+
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/admin/menu/list"/>">
                 <span style="${(fn:contains(url, '/admin/menu'))? "font-weight:bold;" : ""}"><fmt:message
                         key="menus.gestio" /></span>

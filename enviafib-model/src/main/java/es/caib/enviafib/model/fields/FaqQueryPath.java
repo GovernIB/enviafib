@@ -15,6 +15,10 @@ public class FaqQueryPath extends org.fundaciobit.genapp.common.query.QueryPath 
     return new LongField(getQueryPath(), FaqFields.FAQID);
   }
 
+  public LongField ORDRE() {
+    return new LongField(getQueryPath(), FaqFields.ORDRE);
+  }
+
   public StringField ENUNCIAT_ES() {
     return new StringField(getQueryPath(), FaqFields.ENUNCIAT_ES);
   }
@@ -29,10 +33,6 @@ public class FaqQueryPath extends org.fundaciobit.genapp.common.query.QueryPath 
 
   public StringField RESPOSTA_CA() {
     return new StringField(getQueryPath(), FaqFields.RESPOSTA_CA);
-  }
-
-  public LongField ORDRE() {
-    return new LongField(getQueryPath(), FaqFields.ORDRE);
   }
 
   public LongField FITXER1ID() {

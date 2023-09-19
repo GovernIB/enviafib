@@ -2,6 +2,24 @@
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <un:useConstants var="FaqFields" className="es.caib.enviafib.model.fields.FaqFields"/>
   
+        <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.ORDRE)}">
+        <tr id="faq_ordre_rowid">
+          <td id="faq_ordre_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[FaqFields.ORDRE])?'faq.ordre':__theForm.labels[FaqFields.ORDRE]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[FaqFields.ORDRE]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[FaqFields.ORDRE]}" ></i>
+              </c:if>
+            </td>
+          <td id="faq_ordre_columnvalueid">
+            <form:errors path="faq.ordre" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FaqFields.ORDRE)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,FaqFields.ORDRE)? ' uneditable-input' : ''}"  style=""  path="faq.ordre"   />
+
+           </td>
+        </tr>
+        </c:if>
+        
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.ENUNCIAT_ES)}">
         <tr id="faq_enunciat_es_rowid">
           <td id="faq_enunciat_es_columnlabelid">
@@ -110,24 +128,6 @@
           <td id="faq_resposta_ca_columnvalueid">
               <form:errors path="faq.resposta_ca" cssClass="errorField alert alert-danger" />
        <form:textarea cssClass=" ${gen:contains(__theForm.readOnlyFields ,FaqFields.RESPOSTA_CA)? 'mceEditorReadOnly':'mceEditor'}"  path="faq.resposta_ca"  />
-           </td>
-        </tr>
-        </c:if>
-        
-        <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.ORDRE)}">
-        <tr id="faq_ordre_rowid">
-          <td id="faq_ordre_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[FaqFields.ORDRE])?'faq.ordre':__theForm.labels[FaqFields.ORDRE]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[FaqFields.ORDRE]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[FaqFields.ORDRE]}" ></i>
-              </c:if>
-            </td>
-          <td id="faq_ordre_columnvalueid">
-            <form:errors path="faq.ordre" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FaqFields.ORDRE)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,FaqFields.ORDRE)? ' uneditable-input' : ''}"  style=""  path="faq.ordre"   />
-
            </td>
         </tr>
         </c:if>

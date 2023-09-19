@@ -5,6 +5,9 @@ public interface Faq extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public long getFaqID();
 	public void setFaqID(long _faqID_);
 
+	public java.lang.Long getOrdre();
+	public void setOrdre(java.lang.Long _ordre_);
+
 	public java.lang.String getEnunciat_es();
 	public void setEnunciat_es(java.lang.String _enunciat_es_);
 
@@ -16,9 +19,6 @@ public interface Faq extends org.fundaciobit.genapp.common.IGenAppEntity {
 
 	public java.lang.String getResposta_ca();
 	public void setResposta_ca(java.lang.String _resposta_ca_);
-
-	public java.lang.Long getOrdre();
-	public void setOrdre(java.lang.Long _ordre_);
 
 	public java.lang.Long getFitxer1ID();
 	public void setFitxer1ID(java.lang.Long _fitxer1ID_);

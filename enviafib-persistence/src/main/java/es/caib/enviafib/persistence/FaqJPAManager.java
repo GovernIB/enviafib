@@ -55,8 +55,8 @@ public class FaqJPAManager
         return list.toArray(new Faq[list.size()]);
     };
 
-    public Faq create( java.lang.String _enunciat_es_, java.lang.String _enunciat_ca_, java.lang.String _resposta_es_, java.lang.String _resposta_ca_, java.lang.Long _ordre_, java.lang.Long _fitxer1ID_, java.lang.Long _fitxer2ID_, java.lang.Long _fitxer3ID_) throws I18NException {
-        FaqJPA __bean =  new FaqJPA(_enunciat_es_,_enunciat_ca_,_resposta_es_,_resposta_ca_,_ordre_,_fitxer1ID_,_fitxer2ID_,_fitxer3ID_);
+    public Faq create( java.lang.Long _ordre_, java.lang.String _enunciat_es_, java.lang.String _enunciat_ca_, java.lang.String _resposta_es_, java.lang.String _resposta_ca_, java.lang.Long _fitxer1ID_, java.lang.Long _fitxer2ID_, java.lang.Long _fitxer3ID_) throws I18NException {
+        FaqJPA __bean =  new FaqJPA(_ordre_,_enunciat_es_,_enunciat_ca_,_resposta_es_,_resposta_ca_,_fitxer1ID_,_fitxer2ID_,_fitxer3ID_);
         return create(__bean);
     }
 

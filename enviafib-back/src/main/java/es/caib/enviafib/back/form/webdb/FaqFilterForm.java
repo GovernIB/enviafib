@@ -42,6 +42,28 @@ public class FaqFilterForm extends EnviaFIBBaseFilterForm implements FaqFields {
   }
 
 
+  private java.lang.Long ordreDesde;
+
+  public java.lang.Long getOrdreDesde() {
+    return this.ordreDesde;
+  }
+
+  public void setOrdreDesde(java.lang.Long ordreDesde) {
+    this.ordreDesde = ordreDesde;
+  }
+
+
+  private java.lang.Long ordreFins;
+
+  public java.lang.Long getOrdreFins() {
+    return this.ordreFins;
+  }
+
+  public void setOrdreFins(java.lang.Long ordreFins) {
+    this.ordreFins = ordreFins;
+  }
+
+
   private java.lang.String enunciat_es;
 
   public java.lang.String getEnunciat_es() {
@@ -86,28 +108,6 @@ public class FaqFilterForm extends EnviaFIBBaseFilterForm implements FaqFields {
   }
 
 
-  private java.lang.Long ordreDesde;
-
-  public java.lang.Long getOrdreDesde() {
-    return this.ordreDesde;
-  }
-
-  public void setOrdreDesde(java.lang.Long ordreDesde) {
-    this.ordreDesde = ordreDesde;
-  }
-
-
-  private java.lang.Long ordreFins;
-
-  public java.lang.Long getOrdreFins() {
-    return this.ordreFins;
-  }
-
-  public void setOrdreFins(java.lang.Long ordreFins) {
-    this.ordreFins = ordreFins;
-  }
-
-
   public FaqFilterForm() {
   }
   
@@ -115,12 +115,12 @@ public class FaqFilterForm extends EnviaFIBBaseFilterForm implements FaqFields {
     super(__toClone);
     this.faqIDDesde = __toClone.faqIDDesde;
     this.faqIDFins = __toClone.faqIDFins;
+    this.ordreDesde = __toClone.ordreDesde;
+    this.ordreFins = __toClone.ordreFins;
     this.enunciat_es = __toClone.enunciat_es;
     this.enunciat_ca = __toClone.enunciat_ca;
     this.resposta_es = __toClone.resposta_es;
     this.resposta_ca = __toClone.resposta_ca;
-    this.ordreDesde = __toClone.ordreDesde;
-    this.ordreFins = __toClone.ordreFins;
   }
   
   /* ========= UTILS ========== */
