@@ -913,94 +913,24 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException {
 
-  //      ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
-
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-//        try {
-//            List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(lang);
 
-        
-        /*
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('S0001', '','Subvenciones empleo', 'organo1_PRO_123456789' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01334', '02','Acord', 'Enviafib TD02 Acords' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01335', '03','Contracte', 'Enviafib TD03 Contractes' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01336', '04','Conveni', 'Enviafib TD04 Convenis' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01337', '05','Declaració', 'Enviafib TD05 Declaracions' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01338', '06','Comunicació', 'Enviafib TD06 Comunicacions' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01339', '07','Notificació', 'Enviafib TD07 Notificacions' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01340', '08','Publicació', 'Enviafib TD08 Publicacions' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01341', '09','Justificant de recepció', 'Enviafib TD09 Justificants de recepció' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01342', '10','Acta', 'Enviafib TD10 Actes' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01343', '11','Certificat', 'Enviafib TD11 Certificats' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01344', '12','Diligència', 'Enviafib TD12 Diligències' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01345', '13','Informe', 'Enviafib TD13 Informes' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01346', '14','Sol.licitud', 'Enviafib TD14 Sol·licituds' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01347', '15','Denúncia', 'Enviafib TD15 Denúncies' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01348', '16','Al.legació', 'Enviafib TD16 Al·legacions' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01349', '17','Recurs', 'Enviafib TD17 Recursos' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01350', '18','Comunicació al ciutadà', 'Enviafib TD18 Comunicacions ciutadà' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01351', '19','Factura', 'Enviafib TD19 Factures' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01352', '20','Altres confiscats', 'Enviafib TD20 Altre documentació aportada' );
-INSERT INTO efi_seriedocumental (nom, tipusdocumental, procedimentnom, procedimentcodi ) VALUES ('SD01353', '99','Altres tipus de documents', 'Enviafib TD99 Altres' );
+        Map<String, String> tipusDocs;
 
-         */
-
-        Map<String, String>  tipusDocs;
-        
         if (lang.equals("es")) {
             tipusDocs = MAP_TIPUS_DOCUMENTAL_ES;
-        }else {
-            tipusDocs = MAP_TIPUS_DOCUMENTAL_CA;            
+        } else {
+            tipusDocs = MAP_TIPUS_DOCUMENTAL_CA;
         }
-            
+
         for (Map.Entry<String, String> tipusDoc : tipusDocs.entrySet()) {
             String key = tipusDoc.getKey();
             String val = tipusDoc.getValue();
-            
+
             StringKeyValue skv = new StringKeyValue(key, val);
             __tmp.add(skv);
         }
-
-//            List<SerieDocumental> seriesDocumentals =  serieDocEjb.select();
-//
-//            
-//            for (SerieDocumental serieDoc : seriesDocumentals) {
-//                String key = serieDoc.getTipusDocumental(); //02
-//                String val = serieDoc.getProcedimentNom(); //Acord
-//                
-//                StringKeyValue skv = new StringKeyValue(key, val);
-//                __tmp.add(skv);
-//            }
-//
-
-            
-//            for (FirmaAsyncSimpleDocumentTypeInformation t : tipus) {
-//                long tipusDoc= t.getDocumentType();
-//                
-//                if (tipusDoc > 0 && tipusDoc < 100) {
-//
-//                }else {
-//                    log.info("Uno que no ha entrado: " + tipusDoc + " - " + t.getName());
-//                }
-//            }
-
-            return __tmp;
-
-//        } catch (Exception e) {
-//            
-//            String[] tipusDocumentalsENI = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
-//                    "13", "14", "15", "16", "17", "18", "19", "20", "51", "52", "53", "54", "55", "56", "57", "58",
-//                    "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "99", };
-//
-//            for (String key : tipusDocumentalsENI) {
-//                StringKeyValue skv = new StringKeyValue(key, I18NLogicUtils.tradueix(new Locale(lang), "td." + key));
-//                __tmp.add(skv);
-//            }
-//            
-//            log.error("Error obtenint els tipus documentals: " + e.getMessage(), e);
-////            throw new I18NException("error.tipusdocumentals.obtencio", e.getMessage());
-//            return __tmp;
-//        }
+        return __tmp;
     }
 
     @Override
