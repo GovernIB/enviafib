@@ -556,7 +556,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
                 petFor.setErrorMsg(null);
                 petFor.setErrorException(null);
-                if (originalName != null && originalName.trim().length() > 0) {
+                if (nFitxers > 1 && originalName != null && originalName.trim().length() > 0) {
                     petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
                 }
 
