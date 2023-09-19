@@ -19,12 +19,15 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import es.caib.enviafib.ejb.IdiomaService;
 import es.caib.enviafib.ejb.UsuariService;
 import es.caib.enviafib.logic.utils.EjbManager;
 import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
+import es.caib.enviafib.back.utils.EnviaFIBSessionLocaleResolver;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 
@@ -42,7 +45,10 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
     public synchronized void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
 
         log.info("Entram a AuthenticationSuccessListener");
-
+        
+        
+        log.info("\n XXXXX Entra a AuthenticationSuccessListener  Configuracio.getDefaultLanguage() => '" +  Configuracio.getDefaultLanguage() + "' \n");
+        
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
 
@@ -131,12 +137,27 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
                     UsuariJPA persona = new UsuariJPA();
                     persona.setEmail(info.getEmail());
                     String lang = LocaleContextHolder.getLocale().getLanguage();
+                    
+                    log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma '" + lang + "' \n");
                     if (lang == null) {
                         lang = Configuracio.getDefaultLanguage();
                         if (lang == null) {
                             lang = "ca";
                         }
                     }
+                    log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma POST getDefaultLanguage() '" + lang + "' \n");
+                    
+                    
+                    IdiomaService idiomaEjb;
+                    try {
+                       idiomaEjb = EjbManager.getIdiomaEJB();
+                       lang = EnviaFIBSessionLocaleResolver.checkLanguage(idiomaEjb, lang);
+                       log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma POST checkLanguage() '" + lang + "' \n");
+                    } catch (Throwable e) {
+                        String msg = I18NUtils.tradueix("comodi", "Error intentant validar l'idioma per defecte: " + e.getMessage());
+                        throw new LoginException(msg, e);
+                    }
+                    
                     persona.setIdiomaID(lang);
 
                     // Omplir nom i llinatges segons info de userinfo

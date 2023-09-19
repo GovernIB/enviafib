@@ -41,7 +41,6 @@ import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.model.entity.Usuari;
-import es.caib.enviafib.model.fields.FitxerFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;

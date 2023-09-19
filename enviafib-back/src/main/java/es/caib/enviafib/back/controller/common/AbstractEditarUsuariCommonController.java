@@ -1,15 +1,20 @@
 package es.caib.enviafib.back.controller.common;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 
+import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
@@ -105,4 +110,12 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
             //            throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());
         }
     }
+
+    @Override
+    public List<StringKeyValue> getReferenceListForIdiomaID(HttpServletRequest request, ModelAndView mav, Where where)
+            throws I18NException {
+        Where w = Where.AND(where, IdiomaFields.SUPORTAT.equal(true));
+        return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, w);
+    }
+
 }
