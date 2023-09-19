@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,18 +55,17 @@ import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
+import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
-import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
-import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
@@ -685,40 +683,59 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 long estatPeticio = peticio.getEstat();
                 Long solicitantID = peticio.getSolicitantID();
 
-                String code = "";
-                switch ((int) estatPeticio) {
-                    case Constants.ESTAT_PETICIO_FIRMADA:
-                        code = "email.peticio.body.success";
-                    break;
-                    case Constants.ESTAT_PETICIO_ERROR:
-                        code = "email.peticio.body.error";
-                    break;
-                    case Constants.ESTAT_PETICIO_EN_PROCES:
-                        code = "email.peticio.body.process";
-                    break;
-                    case Constants.ESTAT_PETICIO_ARXIVANT:
-                        code = "email.peticio.body.arxivant";
-                    break;
-                    case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                    case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT: {
-                        code = "email.peticio.body.error.arxivant";
-                    }
-                    break;
-                }
-
-                String subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
-                String message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
+                String subject;
+                String message;
                 boolean isHTML = true;
                 String from = Configuracio.getAppEmail();
                 String emailDestinatari = usuariEjb.executeQueryOne(UsuariFields.EMAIL,
                         UsuariFields.USUARIID.equal(solicitantID));
+
+                if ((int) estatPeticio == Constants.ESTAT_PETICIO_FIRMADA) {
+                    Map<String, Object> map = new HashMap<String, Object>();
+
+                    map.put("nomFitxer", peticio.getFitxer().getNom());
+                    map.put("numeroPeticio", "" + peticio.getPeticioID());
+                    map.put("titolPeticio", peticio.getNom());
+                    
+                    InfoArxiuJPA ia = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
+                    String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
+                    map.put("fileUrl", fileUrl);
+                    
+                    subject = I18NCommonUtils.tradueix(loc, "email.peticio.finalitzada.subject");
+                    message = I18NCommonUtils.tradueix(loc, "email.peticio.finalitzada.message");
+
+                    subject = TemplateEngine.processExpressionLanguage(subject, map);
+                    message = TemplateEngine.processExpressionLanguage(message, map);
+                } else {
+
+                    String code = "";
+                    switch ((int) estatPeticio) {
+                        case Constants.ESTAT_PETICIO_ERROR:
+                            code = "email.peticio.body.error";
+                        break;
+                        case Constants.ESTAT_PETICIO_EN_PROCES:
+                            code = "email.peticio.body.process";
+                        break;
+                        case Constants.ESTAT_PETICIO_ARXIVANT:
+                            code = "email.peticio.body.arxivant";
+                        break;
+                        case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
+                        case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT: {
+                            code = "email.peticio.body.error.arxivant";
+                        }
+                        break;
+                    }
+
+                    subject = I18NCommonUtils.tradueix(loc, "email.peticio.subject");
+                    message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
+                }
 
                 EmailUtil.postMail(subject, message, isHTML, from, emailDestinatari);
 
             } catch (Throwable t) {
                 log.error("EJB: Error enviant mail: " + t.getMessage(), t);
             }
-        }else {
+        } else {
             log.info("No enviam cap correu quan es autofirma");
         }
 

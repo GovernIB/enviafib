@@ -819,6 +819,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             String tipusDocumental = peticio.getTipusDocumental();
 
+            log.info("tipusDocumental: " + tipusDocumental);
             // Mapeig de Series Documentals
             List<SerieDocumental> list = serieDocumentalEjb
                     .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
@@ -835,6 +836,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             SerieDocumental serieDocumental = list.get(0);
 
+            log.info("getNom: " + serieDocumental.getNom());
+            log.info("getProcedimentCodi: " + serieDocumental.getProcedimentCodi());
+            log.info("getProcedimentNom: " + serieDocumental.getProcedimentNom());
+            
+            
             peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
             peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
             peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());

@@ -39,6 +39,7 @@ import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
+import es.caib.enviafib.persistence.UsuariJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.DocumentContingut;
 import es.caib.plugins.arxiu.api.IArxiuPlugin;
@@ -333,15 +334,20 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             InfoArxiuJPA ia = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
             String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
             
+            UsuariJPA user = usuariEjb.findByPrimaryKey((Long) peticio.getSolicitantID());
+            String nomSolicitant = user.getNom() + " " + user.getLlinatge1()
+                    + (user.getLlinatge2() == null ? "" : " " + user.getLlinatge2());
+            
             Map<String, Object> map = new HashMap<String, Object>();
 
             map.put("nomFitxer", peticio.getFitxer().getNom());
             map.put("numeroPeticio", "" + peticio.getPeticioID());
-//            map.put("titolPeticio", peticio.getNom());
+            map.put("titolPeticio", peticio.getNom());
             map.put("fileUrl", fileUrl);
+            map.put("solicitantNom", nomSolicitant);
 
-            String subject = I18NUtils.tradueix("email.download.file.subject3");
-            String message = I18NUtils.tradueix("email.download.file.message3");
+            String subject = I18NUtils.tradueix("email.download.file.subject4");
+            String message = I18NUtils.tradueix("email.download.file.message4");
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
