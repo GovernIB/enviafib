@@ -1,481 +1,484 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>es.caib.enviafib</groupId>
-	<version>1.0.9</version>
-	<artifactId>enviafib</artifactId>
-	<packaging>pom</packaging>
-	<name>EnviaFIB</name>
-	<modules>
-		<module>enviafib-pluginsib</module>
-		<module>enviafib-model</module>
-		<module>enviafib-persistence</module>
-		<module>enviafib-ejb</module>
-		<module>enviafib-commons</module>
-		<module>enviafib-back</module>
-		<module>enviafib-front</module>
-		<module>enviafib-api-interna</module>
-		<module>enviafib-ear</module>
-		<module>scripts</module>
-		<module>enviafib-api-interna-client</module>
-	</modules>
-	<repositories>
-
-		<repository>
-			<id>maven-nuxeo</id>
-			<name>Maven Nuxeo Repository</name>
-			<url>https://maven.nuxeo.org/nexus/content/groups/public/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</repository>
-
-		<repository>
-			<id>repository.spring.release</id>
-			<name>Spring GA Repository</name>
-			<url>https://repo.spring.io/release</url>
-		</repository>
-		<repository>
-			<id>jboss-releases</id>
-			<name>JBoss Releases Repository</name>
-			<url>https://maven.repository.redhat.com/ga/</url>
-			<releases>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>github_governib_maven</id>
-			<name>GitHub GovernIB Maven Repository</name>
-			<url>https://governib.github.io/maven/maven/</url>
-		</repository>
-	</repositories>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-	<!-- Referència al sistema de control de versions, ja sigui GIT, SVN, CVS... -->
-	<!-- permetrà al plugin buildnumber-maven-plugin agafar la revisió/versió -->
-	<scm>
-		<connection>scm:git:https://github.com/GovernIB/enviafib.git</connection>
-		<url>https://github.com/GovernIB/enviafib</url>
-	</scm>
-	<properties>
-		<!-- Versions de JBoss -->
-		<jboss-eap.version>7.2.6.GA</jboss-eap.version>
-		<jboss-javaee.version>1.0.1.Final-redhat-00003</jboss-javaee.version>
-		<!-- Propietats que afecten els plugins -->
-		<maven.compiler.release>11</maven.compiler.release>
-		<maven.compiler.target>11</maven.compiler.target>
-		<maven.compiler.source>11</maven.compiler.source>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- No fer els tests per defecte. -->
-		<maven.test.skip>true</maven.test.skip>
-		<!-- Versions de les llibreries emprades dins els mòduls -->
-		<javaee-api.version>8.0.1</javaee-api.version>
-		<activation.version>1.1.1</activation.version>
-		<mp-openapi.version>1.0.1</mp-openapi.version>
-		<jaxb-api.version>2.3.1</jaxb-api.version>
-		<slf4j.version>1.7.30</slf4j.version>
-		<keycloak.version>6.0.1</keycloak.version>
-		<cxf.version>3.3.3</cxf.version>
-		<junit.version>4.13.1</junit.version>
-		<hibernate.version>5.3.15.Final</hibernate.version>
-		<hibernate.annotations.version>5.3.15.Final</hibernate.annotations.version>
-		<resteasy.version>3.6.3.Final</resteasy.version>
-		<jboss-logging.version>3.3.2.Final</jboss-logging.version>
-		<spring.version>4.3.26.RELEASE</spring.version>
-		<springsecurity.version>4.2.14.RELEASE</springsecurity.version>
-		<spring-data-jpa>1.6.6.RELEASE</spring-data-jpa>
-		<tiles.version>3.0.8</tiles.version>
-		<!-- XYZ ZZZ -->
-		<cxf.version>2.2.12</cxf.version>
-		<global.version>${project.version}</global.version>
-		<cglib.version>2.2.2</cglib.version>
-		<!-- XYZ ZZZ S'ha de fer la substitució -->
-		<genapp.version>2.0.0-SNAPSHOT</genapp.version>
-		<version_txt_template_file>./scripts/templates/versio.txt.template</version_txt_template_file>		
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>es.caib.enviafib</groupId>
+    <version>1.0.9</version>
+    <artifactId>enviafib</artifactId>
+    <packaging>pom</packaging>
+    <name>EnviaFIB</name>
+    <modules>
+        <module>enviafib-pluginsib</module>
+        <module>enviafib-model</module>
+        <module>enviafib-persistence</module>
+        <module>enviafib-ejb</module>
+        <module>enviafib-commons</module>
+        <module>enviafib-back</module>
+        <module>enviafib-front</module>
+        <module>enviafib-api-interna</module>
+        <module>enviafib-ear</module>
+        <module>scripts</module>
+        <module>enviafib-api-interna-client</module>
+    </modules>
+    <repositories>
+        <repository>
+            <id>maven-nuxeo</id>
+            <name>Maven Nuxeo Repository</name>
+            <url>https://maven.nuxeo.org/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repository.spring.release</id>
+            <name>Spring GA Repository</name>
+            <url>https://repo.spring.io/release</url>
+        </repository>
+        <repository>
+            <id>jboss-releases</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://maven.repository.redhat.com/ga/</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>github_governib_maven</id>
+            <name>GitHub GovernIB Maven Repository</name>
+            <url>https://governib.github.io/maven/maven/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <!-- Referència al sistema de control de versions, ja sigui GIT, SVN, CVS... -->
+    <!-- permetrà al plugin buildnumber-maven-plugin agafar la revisió/versió -->
+    <scm>
+        <connection>scm:git:https://github.com/GovernIB/enviafib.git</connection>
+        <url>https://github.com/GovernIB/enviafib</url>
+    </scm>
+    <properties>
+        <!-- Versions de JBoss -->
+        <jboss-eap.version>7.2.6.GA</jboss-eap.version>
+        <jboss-javaee.version>1.0.1.Final-redhat-00003</jboss-javaee.version>
+        <!-- Propietats que afecten els plugins -->
+        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- No fer els tests per defecte. -->
+        <maven.test.skip>true</maven.test.skip>
+        <!-- Versions de les llibreries emprades dins els mòduls -->
+        <javaee-api.version>8.0.1</javaee-api.version>
+        <activation.version>1.1.1</activation.version>
+        <mp-openapi.version>1.0.1</mp-openapi.version>
+        <jaxb-api.version>2.3.1</jaxb-api.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <keycloak.version>6.0.1</keycloak.version>
+        <cxf.version>3.3.3</cxf.version>
+        <junit.version>4.13.1</junit.version>
+        <hibernate.version>5.3.15.Final</hibernate.version>
+        <hibernate.annotations.version>5.3.15.Final</hibernate.annotations.version>
+        <resteasy.version>3.6.3.Final</resteasy.version>
+        <jboss-logging.version>3.3.2.Final</jboss-logging.version>
+        <spring.version>4.3.26.RELEASE</spring.version>
+        <springsecurity.version>4.2.14.RELEASE</springsecurity.version>
+        <spring-data-jpa>1.6.6.RELEASE</spring-data-jpa>
+        <tiles.version>3.0.8</tiles.version>
+        <!-- XYZ ZZZ -->
+        <cxf.version>2.2.12</cxf.version>
+        <global.version>${project.version}</global.version>
+        <cglib.version>2.2.2</cglib.version>
+        <!-- XYZ ZZZ S'ha de fer la substitució -->
+        <genapp.version>2.0.0-SNAPSHOT</genapp.version>
+        <version_txt_template_file>./scripts/templates/versio.txt.template</version_txt_template_file>
         <pluginsib.estructuraorganitzativa.api.version>2.0.0</pluginsib.estructuraorganitzativa.api.version>
         <pluginsib.estructuraorganitzativa.impl.version>2.0.0-SNAPSHOT</pluginsib.estructuraorganitzativa.impl.version>
         <pluginsib.userinformation.api.version>3.1.0</pluginsib.userinformation.api.version>
-		<pluginsib.userinformation.impl.version>3.1.0-SNAPSHOT</pluginsib.userinformation.impl.version>
-		<pluginsib.arxiu.version>2.0.23</pluginsib.arxiu.version>
-	</properties>
-	<dependencyManagement>
-		<dependencies>
-			<!-- Dependències de JAVA EE 8 -->
-			<dependency>
-				<groupId>javax</groupId>
-				<artifactId>javaee-api</artifactId>
-				<version>${javaee-api.version}</version>
-				<exclusions>
-					<!-- La dependència de javax.mail fa referència a activation 1.1 enlloc 
+        <pluginsib.userinformation.impl.version>3.1.0-SNAPSHOT</pluginsib.userinformation.impl.version>
+        <pluginsib.arxiu.version>2.0.23</pluginsib.arxiu.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!-- Dependències de JAVA EE 8 -->
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${javaee-api.version}</version>
+                <exclusions>
+                    <!-- La dependència de javax.mail fa referència a activation 1.1 enlloc 
 						de 1.1.1 -->
-					<exclusion>
-						<groupId>javax.activation</groupId>
-						<artifactId>activation</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>javax.activation</groupId>
-				<artifactId>activation</artifactId>
-				<version>${activation.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.microprofile.openapi</groupId>
-				<artifactId>microprofile-openapi-api</artifactId>
-				<version>${mp-openapi.version}</version>
-			</dependency>
-			<!-- A partir de Java 11 les llibreries JAXB ja no s'inclouen al JDK -->
-			<dependency>
-				<groupId>javax.xml.bind</groupId>
-				<artifactId>jaxb-api</artifactId>
-				<version>${jaxb-api.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.persistence</groupId>
-				<artifactId>javax.persistence-api</artifactId>
-				<version>2.2.0.redhat-1</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.keycloak</groupId>
-				<artifactId>keycloak-core</artifactId>
-				<version>${keycloak.version}</version>
-			</dependency>
-			<!-- Dependència per persistència - implementació de JPA -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<!-- Dependències de test -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<!-- fixar versió de jboss-logging ja que Hibernate i RestEasy fan referència 
+                    <exclusion>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>${activation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.microprofile.openapi</groupId>
+                <artifactId>microprofile-openapi-api</artifactId>
+                <version>${mp-openapi.version}</version>
+            </dependency>
+            <!-- A partir de Java 11 les llibreries JAXB ja no s'inclouen al JDK -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>javax.persistence-api</artifactId>
+                <version>2.2.0.redhat-1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-core</artifactId>
+                <version>${keycloak.version}</version>
+            </dependency>
+            <!-- Dependència per persistència - implementació de JPA -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <!-- Dependències de test -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- fixar versió de jboss-logging ja que Hibernate i RestEasy fan referència 
 				a varies versions -->
-			<dependency>
-				<groupId>org.jboss.logging</groupId>
-				<artifactId>jboss-logging</artifactId>
-				<version>${jboss-logging.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<!-- Dependències per tests REST - implementació del Client JAX-RS -->
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-client</artifactId>
-				<version>${resteasy.version}</version>
-				<scope>test</scope>
-				<exclusions>
-					<!-- JSON-API ja està inclòs dins les apis JAVA EE 8 -->
-					<exclusion>
-						<groupId>javax.json</groupId>
-						<artifactId>javax.json-api</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<!-- Dependències per tests REST - suport estàndar per JSONB -->
-			<dependency>
-				<groupId>org.jboss.resteasy</groupId>
-				<artifactId>resteasy-json-binding-provider</artifactId>
-				<version>${resteasy.version}</version>
-				<scope>test</scope>
-				<exclusions>
-					<!-- JSON-API ja està inclòs dins les apis JAVA EE 8 -->
-					<exclusion>
-						<groupId>javax.json</groupId>
-						<artifactId>javax.json-api</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<!-- ==== JBOSS ========== -->
-			<dependency>
-				<groupId>org.jboss.bom</groupId>
-				<artifactId>eap-runtime-artifacts</artifactId>
-				<version>${jboss-eap.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.bom</groupId>
-				<artifactId>jboss-eap-javaee8-with-tools</artifactId>
-				<version>${jboss-eap.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.spec</groupId>
-				<artifactId>jboss-javaee-8.0</artifactId>
-				<version>${jboss-javaee.version}</version>
-				<type>pom</type>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<build>
-		<pluginManagement>
-			<plugins>
-				<!-- Definició dels plugins estàndar de maven -->
-				<plugin>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.1.0</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-install-plugin</artifactId>
-					<version>3.0.0-M1</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.1.0</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.1.1</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.1</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.0.0-M4</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-failsafe-plugin</artifactId>
-					<version>3.0.0-M4</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.2.0</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-ejb-plugin</artifactId>
-					<version>3.0.1</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.2.3</version>
-					<configuration>
-						<useCache>true</useCache>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-ear-plugin</artifactId>
-					<version>3.0.2</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>3.0.0-M1</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.8.2</version>
-				</plugin>
-				<!-- Altres plugins generals -->
-				<plugin>
-					<groupId>com.googlecode.maven-download-plugin</groupId>
-					<artifactId>download-maven-plugin</artifactId>
-					<version>1.4.2</version>
-				</plugin>
-				<plugin>
-					<groupId>com.google.code.maven-replacer-plugin</groupId>
-					<artifactId>replacer</artifactId>
-					<version>1.5.3</version>
-				</plugin>
-				<!-- Pluguin per generar informació OpenAPI de apis REST -->
-				<plugin>
-					<groupId>org.apache.geronimo</groupId>
-					<artifactId>geronimo-openapi-maven-plugin</artifactId>
-					<version>1.0.12</version>
-				</plugin>
-				<!-- Plugin per generar la propietat ${buildNumber} amb 
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>${jboss-logging.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- Dependències per tests REST - implementació del Client JAX-RS -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-client</artifactId>
+                <version>${resteasy.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <!-- JSON-API ja està inclòs dins les apis JAVA EE 8 -->
+                    <exclusion>
+                        <groupId>javax.json</groupId>
+                        <artifactId>javax.json-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- Dependències per tests REST - suport estàndar per JSONB -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-json-binding-provider</artifactId>
+                <version>${resteasy.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <!-- JSON-API ja està inclòs dins les apis JAVA EE 8 -->
+                    <exclusion>
+                        <groupId>javax.json</groupId>
+                        <artifactId>javax.json-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- ==== JBOSS ========== -->
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>eap-runtime-artifacts</artifactId>
+                <version>${jboss-eap.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-eap-javaee8-with-tools</artifactId>
+                <version>${jboss-eap.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-8.0</artifactId>
+                <version>${jboss-javaee.version}</version>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Definició dels plugins estàndar de maven -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M4</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0-M4</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.3</version>
+                    <configuration>
+                        <useCache>true</useCache>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.8.2</version>
+                </plugin>
+                <!-- Altres plugins generals -->
+                <plugin>
+                    <groupId>com.googlecode.maven-download-plugin</groupId>
+                    <artifactId>download-maven-plugin</artifactId>
+                    <version>1.4.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.code.maven-replacer-plugin</groupId>
+                    <artifactId>replacer</artifactId>
+                    <version>1.5.3</version>
+                </plugin>
+                <!-- Pluguin per generar informació OpenAPI de apis REST -->
+                <plugin>
+                    <groupId>org.apache.geronimo</groupId>
+                    <artifactId>geronimo-openapi-maven-plugin</artifactId>
+                    <version>1.0.12</version>
+                </plugin>
+                <!-- Plugin per generar la propietat ${buildNumber} amb 
 					la versio/revisio de GIT o SVN o CVS... -->
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>buildnumber-maven-plugin</artifactId>
-					<version>1.4</version>
-					<executions>
-						<execution>
-							<phase>validate</phase>
-							<goals>
-								<goal>create</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<!-- Veure https://www.mojohaus.org/buildnumber-maven-plugin/usage.html -->
-						<!-- si volem que falli si s'intenta compilar i hi ha canvis no pujats 
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.4</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- Veure https://www.mojohaus.org/buildnumber-maven-plugin/usage.html -->
+                        <!-- si volem que falli si s'intenta compilar i hi ha canvis no pujats 
 							o hi ha canvis no davallats. -->
-						<!-- S'hauria de crear un profile per quan es fa una release s'activin. -->
-						<!-- Sinó val més que estiguin a false (per defecte): -->
-						<!-- <doCheck>true</doCheck> -->
-						<!-- <doUpdate>true</doUpdate> -->
-						<getRevisionOnlyOnce>true</getRevisionOnlyOnce>
-						<!-- Longitut màxima de la revisió -->
-						<shortRevisionLength>8</shortRevisionLength>
-					</configuration>
-				</plugin>
-				<!-- Plugin per permetre desplegar l'aplicació a un sevidor d'aplicacions 
+                        <!-- S'hauria de crear un profile per quan es fa una release s'activin. -->
+                        <!-- Sinó val més que estiguin a false (per defecte): -->
+                        <!-- <doCheck>true</doCheck> -->
+                        <!-- <doUpdate>true</doUpdate> -->
+                        <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                        <!-- Longitut màxima de la revisió -->
+                        <shortRevisionLength>8</shortRevisionLength>
+                    </configuration>
+                </plugin>
+                <!-- Plugin per permetre desplegar l'aplicació a un sevidor d'aplicacions 
 					local -->
-				<plugin>
-					<groupId>org.codehaus.cargo</groupId>
-					<artifactId>cargo-maven2-plugin</artifactId>
-					<version>1.7.8</version>
-					<configuration>
-						<!-- Només estarà activat als mòduls que volem que es despleguin, com 
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>1.7.8</version>
+                    <configuration>
+                        <!-- Només estarà activat als mòduls que volem que es despleguin, com 
 							l'EAR -->
-						<skip>true</skip>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<!-- Gestió de versions de dependències/plugins -->
-			<!-- Veure: https://www.mojohaus.org/versions-maven-plugin/ -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>versions-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<allowAnyUpdates>false</allowAnyUpdates>
-					<allowSnapshots>false</allowSnapshots>
-					<allowMajorUpdates>false</allowMajorUpdates>
-					<allowMinorUpdates>false</allowMinorUpdates>
-					<allowIncrementalUpdates>true</allowIncrementalUpdates>
-					<rulesUri>file:///${session.executionRootDirectory}/version-ruleset.xml</rulesUri>
-				</configuration>
-			</plugin>
-			<!-- Gestió de requisits del build -->
-			<!-- Veure: https://maven.apache.org/enforcer/enforcer-rules/index.html -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>3.0.0-M3</version>
-				<configuration>
-					<rules>
-						<!-- Fixam mínim Maven 3.6 i Java 11 -->
-						<requireMavenVersion>
-							<version>3.6.1</version>
-						</requireMavenVersion>
-						<requireJavaVersion>
-							<version>11</version>
-						</requireJavaVersion>
-						<!-- Per detectar problemes de dependències -->
-						<banDuplicatePomDependencyVersions/>
-						<dependencyConvergence/>
-						<!-- <reactorModuleConvergence/> -->
-					</rules>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.google.code.maven-replacer-plugin</groupId>
-				<artifactId>maven-replacer-plugin</artifactId>
-				<version>1.4.0</version>
-				<inherited>false</inherited>
-				<executions>
-					<execution>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>replace</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<file>${version_txt_template_file}</file>
-					<outputFile>versio.txt</outputFile>
-					<replacements>
-						<replacement>
-							<token>@project.version@</token>
-							<value>${project.version}</value>
-						</replacement>
-					</replacements>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.1</version>
-				<configuration>
-					<altDeploymentRepository>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <!-- Gestió de versions de dependències/plugins -->
+            <!-- Veure: https://www.mojohaus.org/versions-maven-plugin/ -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <allowAnyUpdates>false</allowAnyUpdates>
+                    <allowSnapshots>false</allowSnapshots>
+                    <allowMajorUpdates>false</allowMajorUpdates>
+                    <allowMinorUpdates>false</allowMinorUpdates>
+                    <allowIncrementalUpdates>true</allowIncrementalUpdates>
+                    <rulesUri>file:///${session.executionRootDirectory}/version-ruleset.xml</rulesUri>
+                </configuration>
+            </plugin>
+            <!-- Gestió de requisits del build -->
+            <!-- Veure: https://maven.apache.org/enforcer/enforcer-rules/index.html -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <configuration>
+                    <rules>
+                        <!-- Fixam mínim Maven 3.6 i Java 11 -->
+                        <requireMavenVersion>
+                            <version>3.6.1</version>
+                        </requireMavenVersion>
+                        <requireJavaVersion>
+                            <version>11</version>
+                        </requireJavaVersion>
+                        <!-- Per detectar problemes de dependències -->
+                        <banDuplicatePomDependencyVersions/>
+                        <dependencyConvergence/>
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+                <version>1.4.0</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>${version_txt_template_file}</file>
+                    <outputFile>versio.txt</outputFile>
+                    <replacements>
+                        <replacement>
+                            <token>@project.version@</token>
+                            <value>${project.version}</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version>
+                <configuration>
+                    <altDeploymentRepository>
             internal.repo::default::file://${project.build.directory}/mvn-repo
           </altDeploymentRepository>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>0.12</version>
-				<configuration>
-					<!-- git commit message -->
-					<message>Maven artifacts for ${project.version}</message>
-					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-					<noJekyll>true</noJekyll>
-					<!-- remote branch name -->
-					<branch>refs/heads/gh-pages</branch>
-					<includes>
-						<include>**/*</include>
-					</includes>
-					<path>maven</path>
-					<!-- github repo name -->
-					<repositoryName>maven</repositoryName>
-					<!-- github username or organization  -->
-					<repositoryOwner>GovernIB</repositoryOwner>
-					<server>github_governib_maven</server>
-					<merge>true</merge>
-					<dryRun>false</dryRun>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>deploy</phase>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-	<distributionManagement>
-		<repository>
-			<id>github_governib_maven</id>
-			<name>GitHub GovernIB Maven Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
-		</repository>
-	</distributionManagement>
-	<!--   COM UTILITZAR: AFEGIR AQUEST CODI AL pom.xml    -->
-	<!--
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.12</version>
+                <configuration>
+                    <!-- git commit message -->
+                    <message>Maven artifacts for ${project.version}</message>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <noJekyll>true</noJekyll>
+                    <!-- remote branch name -->
+                    <branch>refs/heads/gh-pages</branch>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <path>maven</path>
+                    <!-- github repo name -->
+                    <repositoryName>maven</repositoryName>
+                    <!-- github username or organization  -->
+                    <repositoryOwner>GovernIB</repositoryOwner>
+                    <server>github_governib_maven</server>
+                    <merge>true</merge>
+                    <dryRun>false</dryRun>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <distributionManagement>
+        <repository>
+            <id>github_governib_maven</id>
+            <name>GitHub GovernIB Maven Repository</name>
+            <url>file://${project.build.directory}/mvn-repo</url>
+        </repository>
+    </distributionManagement>
+    <!--   COM UTILITZAR: AFEGIR AQUEST CODI AL pom.xml    -->
+    <!--
         <repositories>
            <repository>
              <id>github-governib-maven-repos</id>
@@ -484,28 +487,28 @@
            </repository>
         </repositories>
   -->
-	<profiles>
-		<profile>
-			<id>revisionnumber</id>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>buildnumber-maven-plugin</artifactId>
-							<version>1.4</version>
-							<executions>
-								<execution>
-									<phase>validate</phase>
-									<goals>
-										<goal>create</goal>
-									</goals>
-								</execution>
-							</executions>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>revisionnumber</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>buildnumber-maven-plugin</artifactId>
+                            <version>1.4</version>
+                            <executions>
+                                <execution>
+                                    <phase>validate</phase>
+                                    <goals>
+                                        <goal>create</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -356,6 +356,7 @@
 						</archive>
 	
 						<defaultLibBundleDir>lib</defaultLibBundleDir>
+                        <skinnyWars>true</skinnyWars>
 	
 						<modules>
 

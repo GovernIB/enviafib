@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <artifactId>enviafib</artifactId>
         <groupId>es.caib.enviafib</groupId>
         <version>1.0.9</version>
     </parent>
-
     <artifactId>enviafib-api-interna</artifactId>
     <packaging>war</packaging>
     <name>enviafib - API Rest - Interna</name>
-
     <properties>
         <auth.method>BASIC</auth.method>
         <client.default.package>es.caib.enviafib.apiinterna.client</client.default.package>
         <!-- La darrera versió disponible: https://github.com/swagger-api/swagger-ui/releases -->
         <swagger-ui.version>3.35.1</swagger-ui.version>
     </properties>
-
     <dependencies>
         <!-- Especificacions i llibreries proporcionades per JBoss -->
-
         <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-8.0</artifactId>
-            <!-- XYZ ZZZZ 			<version>1.0.4.Final</version> -->
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -35,14 +29,12 @@
             <scope>provided</scope>
         </dependency>
         <!-- Altres mòduls del projecte -->
-
         <dependency>
             <groupId>es.caib.enviafib</groupId>
             <artifactId>enviafib-commons</artifactId>
             <version>1.0.9</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>es.caib.enviafib</groupId>
             <artifactId>enviafib-persistence</artifactId>
@@ -59,55 +51,50 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
         <dependency>
             <artifactId>portafib-callback-beans</artifactId>
             <groupId>es.caib.portafib</groupId>
             <version>1.1</version>
         </dependency>
-
         <dependency>
             <groupId>es.caib.enviafib</groupId>
             <artifactId>enviafib-ejb</artifactId>
             <version>1.0.9</version>
             <scope>provided</scope>
         </dependency>
-        
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
         </dependency>
-
-
         <!-- Anotacions de documentació de openapi -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>2.1.13</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-
         <dependency>
             <artifactId>pluginsib-utils-rest</artifactId>
             <groupId>org.fundaciobit.pluginsib.utils</groupId>
             <version>2.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <!-- Esta en LIB de l'EAR -->
+                    <groupId>org.fundaciobit.pluginsib.core</groupId>
+                    <artifactId>pluginsib-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
         <!-- Dependències de test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
-
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
@@ -118,7 +105,6 @@
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
                 <version>2.2.0</version>
-
                 <executions>
                     <execution>
                         <phase>compile</phase>
@@ -128,7 +114,7 @@
                         <configuration>
                             <outputFileName>openapi</outputFileName>
                             <outputPath>${project.basedir}/openapi/</outputPath>
-                            <outputFormat>JSONANDYAML</outputFormat>
+                            <outputFormat>JSON</outputFormat>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
                                 <package>es.caib.enviafib.api.interna.secure</package>
@@ -139,16 +125,11 @@
                 </executions>
             </plugin>
             <!-- Genera el Client Rest per Java a partir del fitxer openapi.json -->
-            <!-- https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/README.md#general-configuration-parameters -->
-
-            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
-            <!-- <configHelp>java</configHelp> -->
-
             <plugin>
-                <groupId>io.swagger.codegen.v3</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>3.0.27</version>
-
+                <!-- https://openapi-generator.tech/docs/generators/java/ -->
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>6.6.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -157,38 +138,32 @@
                         <phase>install</phase>
                         <configuration>
                             <inputSpec>${project.basedir}/openapi/openapi.json</inputSpec>
-                            <language>java</language>
+                            <generatorName>java</generatorName>
+                            <skipValidateSpec>true</skipValidateSpec>
                             <library>resteasy</library>
-                            <configOptions>
-                                <groupId>es.caib.enviafib</groupId>
-                                <artifactId>enviafib-api-interna-client</artifactId>
-                                <artifactVersion>1.0</artifactVersion>
-                                <dateLibrary>joda</dateLibrary>
-                                
-                                
-                                <useTags>true</useTags>
-                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
-                                
-                            </configOptions>
-
+                            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
+                            <!-- <configHelp>true</configHelp> -->
                             <addCompileSourceRoot>false</addCompileSourceRoot>
                             <output>${project.basedir}/../enviafib-api-interna-client</output>
                             <apiPackage>${client.default.package}.api</apiPackage>
                             <modelPackage>${client.default.package}.model</modelPackage>
                             <invokerPackage>${client.default.package}.services</invokerPackage>
-                            <java8>true</java8>
-                            
-                            <!-- 
                             <variableNamingConvention>camelCase</variableNamingConvention>
-                           
-                            <fullJavaUtil>true</fullJavaUtil> -->
-
+                            <fullJavaUtil>true</fullJavaUtil>
+                            <configOptions>
+                                <groupId>es.caib.enviafib</groupId>
+                                <artifactId>enviafib-api-interna-client</artifactId>
+                                <artifactVersion>1.0</artifactVersion>
+                                <artifactDescription>EnviaFIB - API Rest - Interna Client</artifactDescription>
+                                <dateLibrary>java8</dateLibrary>
+                                <useTags>true</useTags>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <java11>true</java11>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
-
             <!-- Inclou swagger-ui dins el mòdul -->
             <!-- Davalla la versió de swagger-ui (Web UI que parseja openapi.json. 
                 Veure index.html) -->
@@ -218,6 +193,7 @@
                 <artifactId>replacer</artifactId>
                 <executions>
                     <execution>
+                        <id>index</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>replace</goal>
@@ -240,7 +216,6 @@
                 <configuration>
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                     <webResources>
-
                         <resource>
                             <directory>${project.build.directory}/swagger-ui-${swagger-ui.version}/dist</directory>
                         </resource>
@@ -250,7 +225,6 @@
                     </webResources>
                 </configuration>
             </plugin>
-
             <!--   Llevar el .gitignore del codi generat -->
             <plugin>
                 <groupId>com.coderplus.maven.plugins</groupId>
@@ -270,7 +244,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
         <pluginManagement>
             <plugins>
@@ -299,7 +272,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore></ignore>
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
@@ -318,7 +291,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore></ignore>
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -328,34 +301,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <!-- Realitza els tests arrancant automàticament un JBoss ubicat 
-            a la variable d'entorn JBOSS_HOME -->
-        <profile>
-            <id>arq-jboss-managed</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencies>
-                <!-- <dependency>
-                    <groupId>org.wildfly.arquillian</groupId>
-                    <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <scope>test</scope>
-                </dependency>-->
-            </dependencies>
-        </profile>
-        <!-- Realitza els tests connectant a una instància de JBoss en marxa 
-            a localhost -->
-        <profile>
-            <id>arq-jboss-remote</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.wildfly.arquillian</groupId>
-                    <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 </project>
