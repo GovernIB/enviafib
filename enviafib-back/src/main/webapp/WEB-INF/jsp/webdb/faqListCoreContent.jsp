@@ -29,6 +29,11 @@
           ${faq.faqID}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.ORDRE)}">
+          <td>
+          ${faq.ordre}
+          </td>
+        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.ENUNCIAT_ES)}">
           <td>
           ${faq.enunciat_es}
@@ -47,11 +52,6 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.RESPOSTA_CA)}">
           <td>
           ${faq.resposta_ca}
-          </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.ORDRE)}">
-          <td>
-          ${faq.ordre}
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.FITXER1ID)}">

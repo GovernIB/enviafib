@@ -15,6 +15,9 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.FAQID)}">
         <th>${efi:getSortIcons(__theFilterForm,FaqFields.FAQID)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.ORDRE)}">
+        <th>${efi:getSortIcons(__theFilterForm,FaqFields.ORDRE)}</th>
+        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.ENUNCIAT_ES)}">
         <th>${efi:getSortIcons(__theFilterForm,FaqFields.ENUNCIAT_ES)}</th>
         </c:if>
@@ -26,9 +29,6 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.RESPOSTA_CA)}">
         <th>${efi:getSortIcons(__theFilterForm,FaqFields.RESPOSTA_CA)}</th>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.ORDRE)}">
-        <th>${efi:getSortIcons(__theFilterForm,FaqFields.ORDRE)}</th>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,FaqFields.FITXER1ID)}">
         <th>${efi:getSortIcons(__theFilterForm,FaqFields.FITXER1ID)}</th>

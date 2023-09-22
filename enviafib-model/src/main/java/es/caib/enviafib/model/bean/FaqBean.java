@@ -9,11 +9,11 @@ public class FaqBean implements Faq {
 
 
 	long faqID;// PK
+	java.lang.Long ordre;
 	java.lang.String enunciat_es;
 	java.lang.String enunciat_ca;
 	java.lang.String resposta_es;
 	java.lang.String resposta_ca;
-	java.lang.Long ordre;
 	java.lang.Long fitxer1ID;
 	java.lang.Long fitxer2ID;
 	java.lang.Long fitxer3ID;
@@ -24,24 +24,24 @@ public class FaqBean implements Faq {
   }
 
   /** Constructor amb tots els camps  */
-  public FaqBean(long faqID , java.lang.String enunciat_es , java.lang.String enunciat_ca , java.lang.String resposta_es , java.lang.String resposta_ca , java.lang.Long ordre , java.lang.Long fitxer1ID , java.lang.Long fitxer2ID , java.lang.Long fitxer3ID) {
+  public FaqBean(long faqID , java.lang.Long ordre , java.lang.String enunciat_es , java.lang.String enunciat_ca , java.lang.String resposta_es , java.lang.String resposta_ca , java.lang.Long fitxer1ID , java.lang.Long fitxer2ID , java.lang.Long fitxer3ID) {
     this.faqID=faqID;
+    this.ordre=ordre;
     this.enunciat_es=enunciat_es;
     this.enunciat_ca=enunciat_ca;
     this.resposta_es=resposta_es;
     this.resposta_ca=resposta_ca;
-    this.ordre=ordre;
     this.fitxer1ID=fitxer1ID;
     this.fitxer2ID=fitxer2ID;
     this.fitxer3ID=fitxer3ID;
 }
   /** Constructor sense valors autoincrementals */
-  public FaqBean(java.lang.String enunciat_es , java.lang.String enunciat_ca , java.lang.String resposta_es , java.lang.String resposta_ca , java.lang.Long ordre , java.lang.Long fitxer1ID , java.lang.Long fitxer2ID , java.lang.Long fitxer3ID) {
+  public FaqBean(java.lang.Long ordre , java.lang.String enunciat_es , java.lang.String enunciat_ca , java.lang.String resposta_es , java.lang.String resposta_ca , java.lang.Long fitxer1ID , java.lang.Long fitxer2ID , java.lang.Long fitxer3ID) {
+    this.ordre=ordre;
     this.enunciat_es=enunciat_es;
     this.enunciat_ca=enunciat_ca;
     this.resposta_es=resposta_es;
     this.resposta_ca=resposta_ca;
-    this.ordre=ordre;
     this.fitxer1ID=fitxer1ID;
     this.fitxer2ID=fitxer2ID;
     this.fitxer3ID=fitxer3ID;
@@ -52,11 +52,11 @@ public class FaqBean implements Faq {
 }
   public FaqBean(Faq __bean) {
     this.setFaqID(__bean.getFaqID());
+    this.setOrdre(__bean.getOrdre());
     this.setEnunciat_es(__bean.getEnunciat_es());
     this.setEnunciat_ca(__bean.getEnunciat_ca());
     this.setResposta_es(__bean.getResposta_es());
     this.setResposta_ca(__bean.getResposta_ca());
-    this.setOrdre(__bean.getOrdre());
     this.setFitxer1ID(__bean.getFitxer1ID());
     this.setFitxer2ID(__bean.getFitxer2ID());
     this.setFitxer3ID(__bean.getFitxer3ID());
@@ -73,6 +73,13 @@ public class FaqBean implements Faq {
 	};
 	public void setFaqID(long _faqID_) {
 		this.faqID = _faqID_;
+	};
+
+	public java.lang.Long getOrdre() {
+		return(ordre);
+	};
+	public void setOrdre(java.lang.Long _ordre_) {
+		this.ordre = _ordre_;
 	};
 
 	public java.lang.String getEnunciat_es() {
@@ -101,13 +108,6 @@ public class FaqBean implements Faq {
 	};
 	public void setResposta_ca(java.lang.String _resposta_ca_) {
 		this.resposta_ca = _resposta_ca_;
-	};
-
-	public java.lang.Long getOrdre() {
-		return(ordre);
-	};
-	public void setOrdre(java.lang.Long _ordre_) {
-		this.ordre = _ordre_;
 	};
 
 	public java.lang.Long getFitxer1ID() {
@@ -139,11 +139,11 @@ public class FaqBean implements Faq {
     if (__bean == null) { return null;}
     FaqBean __tmp = new FaqBean();
     __tmp.setFaqID(__bean.getFaqID());
+    __tmp.setOrdre(__bean.getOrdre());
     __tmp.setEnunciat_es(__bean.getEnunciat_es());
     __tmp.setEnunciat_ca(__bean.getEnunciat_ca());
     __tmp.setResposta_es(__bean.getResposta_es());
     __tmp.setResposta_ca(__bean.getResposta_ca());
-    __tmp.setOrdre(__bean.getOrdre());
     __tmp.setFitxer1ID(__bean.getFitxer1ID());
     __tmp.setFitxer2ID(__bean.getFitxer2ID());
     __tmp.setFitxer3ID(__bean.getFitxer3ID());
