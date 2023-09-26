@@ -66,5 +66,4 @@ public interface PeticioLogicaService extends PeticioService {
 
     public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String languageUI, String urlBase) throws I18NException;
 
-
 }

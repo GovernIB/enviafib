@@ -17,6 +17,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
+import es.caib.portafib.callback.beans.v1.SigningRequest;
 import es.caib.portafib.utils.ConstantsV2;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;

@@ -100,8 +100,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
 
-    @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.InfoArxiuLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoArxiuLogicaService infoArxiuLogicEjb;
 
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocEjb;
@@ -660,6 +660,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, languageUI);
 
             ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+            
+//            rinfo.getSignatureRequestID()
+            
             api.deleteSignatureRequest(rinfo);
             return true;
         } catch (ApisIBServerException e) {
@@ -697,7 +700,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     map.put("numeroPeticio", "" + peticio.getPeticioID());
                     map.put("titolPeticio", peticio.getNom());
                     
-                    InfoArxiuJPA ia = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
+                    Long infoArxiuID = peticio.getInfoArxiuID();
+                    log.info("infoArxiuID :" + infoArxiuID );
+                    
+                    InfoArxiuJPA ia = infoArxiuLogicEjb.findByPrimaryKey(infoArxiuID );
                     String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
                     map.put("fileUrl", fileUrl);
                     

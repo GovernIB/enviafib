@@ -235,7 +235,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 break;
             }
 
-            if (peticio.getInfoArxiuID() == null && peticio.isEsborrable() == true) {
+            if (peticio.getInfoArxiuID() == null) {
                 filterForm.addAdditionalButtonByPK(peticioID,
                         new AdditionalButton("fas fa-trash ", "peticio.btn.delete", "javascript: openModal('"
                                 + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
