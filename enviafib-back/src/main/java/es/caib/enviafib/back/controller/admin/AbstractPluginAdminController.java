@@ -92,10 +92,7 @@ public abstract class AbstractPluginAdminController extends PluginController {
 
         for (Plugin p : list) {
             long pluginID = p.getPluginID();
-            if (p.isActiu()) {
-                filterForm.addAdditionalButtonByPK(pluginID, new AdditionalButton("fas fa-ban icon-white",
-                        "plugin.desactivar", getContextWebPlugin() + "/desactivarplugin/" + pluginID, "btn-warning"));
-            } else {
+            if (!p.isActiu()) {
                 filterForm.addAdditionalButtonByPK(pluginID, new AdditionalButton("far fa-check-circle icon-white",
                         "plugin.activar", getContextWebPlugin() + "/activarplugin/" + p.getPluginID(), "btn-success"));
             }
@@ -128,10 +125,15 @@ public abstract class AbstractPluginAdminController extends PluginController {
             throws I18NException {
 
         PluginJPA p = pluginLogicaEjb.findByPrimaryKey(pluginid);
-
+        
         p.setActiu(true);
         pluginLogicaEjb.update(p);
 
+        Where wTipus = TIPUS.equal(p.getTipus());
+        Where wNotId= PLUGINID.notEqual(pluginid);
+        pluginLogicaEjb.update(ACTIU, false, Where.AND(wTipus, wNotId));
+                
+        
         String msg = I18NUtils.tradueix("success.activarplugin", String.valueOf(p.getPluginID()));
         HtmlUtils.saveMessageSuccess(request, msg);
 

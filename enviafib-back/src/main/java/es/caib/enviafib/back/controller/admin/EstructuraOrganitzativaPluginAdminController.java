@@ -84,7 +84,7 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
 
             pluginFilterForm.setTitleCode("estructuraorganitzativaplugin.title");
 
-            pluginFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-check",
+            pluginFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-user-check",
                     "estructuraorganitzativaplugin.button", "javascript: provarPlugin({0})",
 
                     // getContextWeb() + "/provar/{0}",
