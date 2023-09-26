@@ -21,4 +21,6 @@ public interface MenuLogicaService extends MenuService {
 
     public List<Menu> getAllOptionMenusByUsername(Long userID) throws I18NException;
 
+    public List<Menu> getOptionMenusSenseDir3() throws I18NException;
+
 }

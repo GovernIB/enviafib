@@ -61,14 +61,13 @@
 
 
 
-
                 <%--  MENÚ d'Usuari SI NOMES TE ROL EFI_USER --%>
                 <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && pipella eq 'user'}">
 
 					<%
-					List<Menu> menus = MenuPreparer.getMenuUser();
+/* 					List<Menu> menus = MenuPreparer.getMenuUser();
 					request.getSession().setAttribute("menus", menus);
-					%>
+ */					%>
 
 					<li class="dropdown">
 
