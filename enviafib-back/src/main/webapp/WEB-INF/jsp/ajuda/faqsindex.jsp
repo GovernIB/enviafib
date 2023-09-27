@@ -8,7 +8,7 @@
 		<div class="faq-index-item" id="faq_index_rowid_${faq.faqID}">
 			<div class="faq-index-pregunta" onclick="gotofaq(${faq.faqID});">
 				<c:if test="${lang == 'ca'}">${faq.enunciat_ca}</c:if>
-				<c:if test="${lang == 'es'}">${faq.enunciat_es}</c:if>
+				<c:if test="${lang == 'es'}">${not empty faq.enunciat_es ? faq.enunciat_es : faq.enunciat_ca}</c:if>
 			</div>
 		</div>
 	</c:forEach>

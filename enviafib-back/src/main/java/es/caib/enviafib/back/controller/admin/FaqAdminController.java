@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.OrderBy;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -56,17 +57,22 @@ public class FaqAdminController extends FaqController {
             throws I18NException {
         FaqFilterForm faqFilterForm = super.getFaqFilterForm(pagina, mav, request);
         
-        if (faqFilterForm.isNou()) {
-
-            
-            Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(FaqFields.ALL_FAQ_FIELDS));
-            hiddens.remove(ENUNCIAT_CA);
+        Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(FaqFields.ALL_FAQ_FIELDS));
+        hiddens.remove(ORDRE);
+        
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        log.info("Idioma lang: " + lang);
+        
+        if (lang.equals("es")) {
             hiddens.remove(ENUNCIAT_ES);
-            hiddens.remove(ORDRE);
-            faqFilterForm.setHiddenFields(hiddens );
+        } else {
+            hiddens.remove(ENUNCIAT_CA);
+        }
+        
+        faqFilterForm.setHiddenFields(hiddens);
 
-
-            OrderBy[] orderBy = { new OrderBy(ORDRE)};
+        if (faqFilterForm.isNou()) {
+            OrderBy[] orderBy = { new OrderBy(ORDRE) };
             faqFilterForm.setDefaultOrderBy(orderBy);
         }
         return faqFilterForm;

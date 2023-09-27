@@ -42,15 +42,17 @@
 	<c:forEach var="faq" items="${faqItems}">
 		<div class="faq_row" id="faq_rowid_${faq.faqID}">
 
-			<c:if test="${lang == 'ca'}">
-	            <div class="pregunta">${faq.enunciat_ca}</div>
-	            <div class="resposta">${faq.resposta_ca}</div>
-			</c:if>
-
-            <c:if test="${lang == 'es'}">
-                <div class="pregunta">${faq.enunciat_es}</div>
-                <div class="resposta">${faq.resposta_es}</div>
+		    <c:if test="${lang == 'es'}">
+		        <div class="pregunta">${not empty faq.enunciat_es ? faq.enunciat_es : faq.enunciat_ca}</div>
+		        <div class="resposta">${not empty faq.resposta_es ? faq.resposta_es : faq.resposta_ca}</div>
             </c:if>
+            <c:if test="${lang == 'ca'}">
+		        <div class="pregunta">${faq.enunciat_ca}</div>
+		        <div class="resposta">${faq.resposta_ca}</div>
+            </c:if>
+		
+
+
 
 			<%-- 			
 			<p class="pregunta">${faq.enunciat_es}</p>
