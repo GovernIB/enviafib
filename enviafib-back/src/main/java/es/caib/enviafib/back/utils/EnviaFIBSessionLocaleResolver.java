@@ -8,16 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.util.WebUtils;
 
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.ejb.IdiomaEJB;
 import es.caib.enviafib.ejb.IdiomaService;
 import es.caib.enviafib.model.fields.IdiomaFields;
-
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.springframework.web.util.WebUtils;
 
 /**
  * 
@@ -94,9 +93,8 @@ public class EnviaFIBSessionLocaleResolver extends SessionLocaleResolver {
             log.warn("L'idioma '" + idioma + "' no està suportat. Activam '" + nouIdioma +"' com a idioma per defecte. ");
             
             idioma = nouIdioma;
-            
-        } catch (I18NException e) {
-            log.error("Error intentant descobrir si l'idioma elegit està suportat: " + e.getMessage(), e);
+        } catch (Throwable th) {
+            log.error("Error intentant descobrir si l'idioma elegit està suportat: " + th.getMessage(), th);
         }
 	    
 	    return idioma;

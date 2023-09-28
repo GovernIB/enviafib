@@ -3,6 +3,7 @@ package es.caib.enviafib.back.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
+import es.caib.enviafib.back.utils.EnviaFIBSessionLocaleResolver;
 import es.caib.enviafib.model.entity.Usuari;
 
 
@@ -21,6 +23,8 @@ import es.caib.enviafib.model.entity.Usuari;
  * 
  */
 public class LoginInfo {
+
+    protected final static Logger log = Logger.getLogger(LoginInfo.class);
 
 	final User springSecurityUser;
 
@@ -108,26 +112,28 @@ public class LoginInfo {
 	}
 
 	public static LoginInfo getInstance() throws LoginException {
-		Object obj;
-		try {
-			obj = SecurityContextHolder.getContext().getAuthentication().getDetails();
-		} catch (Exception e) {
-		    String msg = I18NUtils.tradueix("error.logininfo.obtenirinformacio");
-			throw new LoginException(msg, e);
-		}
+	    Object obj;
+	    try {
+	      obj = SecurityContextHolder.getContext().getAuthentication().getDetails();
+	    } catch (Exception e) {
+	      // TODO traduccio
+	      throw new LoginException("Error intentant obtenir informació de Login.", e);
+	    }
 
-		if (obj == null) {
-            String msg = I18NUtils.tradueix("error.logininfo.informaciobuida");
-            throw new LoginException(msg);
-		}
+	    if (obj == null) {
+	      // TODO traduccio
+	      throw new LoginException("La informació de Login és buida");
+	    }
 
-		if (obj instanceof LoginInfo) {
-			return (LoginInfo) obj;
-		} else {
-            String msg = I18NUtils.tradueix("error.logininfo.unexpectedtypeinfo", LoginInfo.class.getName(), obj.getClass().getName());
-			throw new LoginException(msg);
-		}
-	}
+	    if (obj instanceof LoginInfo) {
+	      return (LoginInfo) obj;
+	    } else {
+	      // TODO traduccio
+	      throw new LoginException("La informació de Login no és del tipus esperat."
+	          + " Hauria de ser de tipus " + LoginInfo.class.getName() + " i és del tipus "
+	          + obj.getClass().getName());
+	    }
+	  }
 	
 	public boolean isNecesitaConfigurar() {
 		return necesitaConfigurar;
