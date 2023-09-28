@@ -79,6 +79,7 @@ public class CapPreparer extends MenuPreparer {
             } else {
                 menus = menuLogicaEjb.getAllOptionMenusByUsername(LoginInfo.getInstance().getUsuari().getUsuariID());
             }
+            
 
         } catch (LoginException e) {
             log.error("Error intentant obtenir l'ID de l'usuari de BBDD: " + e.getMessage(), e);
@@ -107,6 +108,7 @@ public class CapPreparer extends MenuPreparer {
         } catch (Throwable e) {
             log.error(e.getMessage(), e);
 
+            
             log.info("No hem trobat el DIR3 de " + username);
             return null;
             //            throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());

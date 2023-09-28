@@ -316,6 +316,14 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             return codiDIR3;
 
         } catch (Exception e) {
+            int tipus = getTipusPeticio();
+            log.info("tipus: " + tipus);
+            if (tipus == Constants.TIPUS_PETICIO_AUTOFIRMA || tipus == Constants.TIPUS_PETICIO_FLUX) {
+                codiDIR3 = "A04003003";
+                log.error("No s'ha trobat el dir3. Per ser Autofirma o Flux, s'assigna un per defecte: " + codiDIR3);
+                return codiDIR3;
+                
+            }
             throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());
         }
     }
