@@ -126,7 +126,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         tipusDocumentalList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
 
         List<StringKeyValue> tmpList;
-        tmpList = peticioLogicaEjb.getAvailableTipusDocumental(lang);
+        boolean obtenerTodos = false;
+        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, obtenerTodos);
         
         if (tmpList != null && !tmpList.isEmpty()) {
             java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);

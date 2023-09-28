@@ -55,7 +55,10 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
         // de PortaFIB per obtenir els tipus de documents que gestiona:
         List<StringKeyValue> tmpList = null;
 
-        tmpList = peticioLogicaEjb.getAvailableTipusDocumental(LocaleContextHolder.getLocale().getLanguage());
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        boolean obtenerTodos = true;
+        
+        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, obtenerTodos);
         tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
 
         return tmpList;

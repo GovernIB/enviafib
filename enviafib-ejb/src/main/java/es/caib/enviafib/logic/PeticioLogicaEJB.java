@@ -69,6 +69,7 @@ import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
+import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
@@ -134,25 +135,25 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         MAP_TIPUS_DOCUMENTAL_CA.put("18", "Comunicació ciutadà");
         MAP_TIPUS_DOCUMENTAL_CA.put("19", "Factura");
         MAP_TIPUS_DOCUMENTAL_CA.put("20", "Altre documentació aportada");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("51", "Llei");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("52", "Moció");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("53", "Instrucció");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("54", "Convocatòria");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("55", "Ordre del dia");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("56", "Informe de Ponència");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("57", "Dictamen de Comissió");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("58", "Iniciativa legislativa");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("59", "Pregunta");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("60", "Interpel·lació");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("61", "Resposta");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("62", "Proposició no de llei");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("63", "Esmena");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("64", "Proposada de resolució");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("65", "Compareixença");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("66", "Sol·licitud d'informació");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("67", "Escrit");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("68", "Iniciativa legislativa");
-//        MAP_TIPUS_DOCUMENTAL_CA.put("69", "Petició");
+        MAP_TIPUS_DOCUMENTAL_CA.put("51", "Llei");
+        MAP_TIPUS_DOCUMENTAL_CA.put("52", "Moció");
+        MAP_TIPUS_DOCUMENTAL_CA.put("53", "Instrucció");
+        MAP_TIPUS_DOCUMENTAL_CA.put("54", "Convocatòria");
+        MAP_TIPUS_DOCUMENTAL_CA.put("55", "Ordre del dia");
+        MAP_TIPUS_DOCUMENTAL_CA.put("56", "Informe de Ponència");
+        MAP_TIPUS_DOCUMENTAL_CA.put("57", "Dictamen de Comissió");
+        MAP_TIPUS_DOCUMENTAL_CA.put("58", "Iniciativa legislativa");
+        MAP_TIPUS_DOCUMENTAL_CA.put("59", "Pregunta");
+        MAP_TIPUS_DOCUMENTAL_CA.put("60", "Interpel·lació");
+        MAP_TIPUS_DOCUMENTAL_CA.put("61", "Resposta");
+        MAP_TIPUS_DOCUMENTAL_CA.put("62", "Proposició no de llei");
+        MAP_TIPUS_DOCUMENTAL_CA.put("63", "Esmena");
+        MAP_TIPUS_DOCUMENTAL_CA.put("64", "Proposada de resolució");
+        MAP_TIPUS_DOCUMENTAL_CA.put("65", "Compareixença");
+        MAP_TIPUS_DOCUMENTAL_CA.put("66", "Sol·licitud d'informació");
+        MAP_TIPUS_DOCUMENTAL_CA.put("67", "Escrit");
+        MAP_TIPUS_DOCUMENTAL_CA.put("68", "Iniciativa legislativa");
+        MAP_TIPUS_DOCUMENTAL_CA.put("69", "Petició");
         MAP_TIPUS_DOCUMENTAL_CA.put("99", "Altres tipus de documents");
 
         MAP_TIPUS_DOCUMENTAL_ES.put("1", "Resolución");
@@ -175,25 +176,25 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         MAP_TIPUS_DOCUMENTAL_ES.put("18", "Comunicación ciudadano");
         MAP_TIPUS_DOCUMENTAL_ES.put("19", "Factura");
         MAP_TIPUS_DOCUMENTAL_ES.put("20", "Otra documentación aportada");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("51", "Ley");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("52", "Moción");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("53", "Instrucción");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("54", "Convocatoria");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("55", "Orden del día");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("56", "Informe de Ponencia");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("57", "Dictamen de Comisión");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("58", "Iniciativa legislativa");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("59", "Pregunta");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("60", "Interpelación");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("61", "Respuesta");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("62", "Proposición no de ley");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("63", "Enmienda");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("64", "Propuesta de resolución");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("65", "Comparecencia");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("66", "Solicitud de información");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("67", "Escrito");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("68", "Iniciativa legislativa");
-//        MAP_TIPUS_DOCUMENTAL_ES.put("69", "Petición");
+        MAP_TIPUS_DOCUMENTAL_ES.put("51", "Ley");
+        MAP_TIPUS_DOCUMENTAL_ES.put("52", "Moción");
+        MAP_TIPUS_DOCUMENTAL_ES.put("53", "Instrucción");
+        MAP_TIPUS_DOCUMENTAL_ES.put("54", "Convocatoria");
+        MAP_TIPUS_DOCUMENTAL_ES.put("55", "Orden del día");
+        MAP_TIPUS_DOCUMENTAL_ES.put("56", "Informe de Ponencia");
+        MAP_TIPUS_DOCUMENTAL_ES.put("57", "Dictamen de Comisión");
+        MAP_TIPUS_DOCUMENTAL_ES.put("58", "Iniciativa legislativa");
+        MAP_TIPUS_DOCUMENTAL_ES.put("59", "Pregunta");
+        MAP_TIPUS_DOCUMENTAL_ES.put("60", "Interpelación");
+        MAP_TIPUS_DOCUMENTAL_ES.put("61", "Respuesta");
+        MAP_TIPUS_DOCUMENTAL_ES.put("62", "Proposición no de ley");
+        MAP_TIPUS_DOCUMENTAL_ES.put("63", "Enmienda");
+        MAP_TIPUS_DOCUMENTAL_ES.put("64", "Propuesta de resolución");
+        MAP_TIPUS_DOCUMENTAL_ES.put("65", "Comparecencia");
+        MAP_TIPUS_DOCUMENTAL_ES.put("66", "Solicitud de información");
+        MAP_TIPUS_DOCUMENTAL_ES.put("67", "Escrito");
+        MAP_TIPUS_DOCUMENTAL_ES.put("68", "Iniciativa legislativa");
+        MAP_TIPUS_DOCUMENTAL_ES.put("69", "Petición");
         MAP_TIPUS_DOCUMENTAL_ES.put("99", "Otros tipos de documentos");
     }
     
@@ -934,8 +935,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     @Override
-    public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException {
-
+    public List<StringKeyValue> getTipusDocumentals(String lang, boolean obtenerTodos) throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
 
         Map<String, String> tipusDocs;
@@ -950,8 +950,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             String key = tipusDoc.getKey();
             String val = tipusDoc.getValue();
 
-            StringKeyValue skv = new StringKeyValue(key, val);
-            __tmp.add(skv);
+            Long taulaSeriesOk = serieDocEjb.count(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(key));
+
+            if (obtenerTodos || taulaSeriesOk == 1) {
+                StringKeyValue skv = new StringKeyValue(key, val);
+                __tmp.add(skv);
+            }
         }
         return __tmp;
     }

@@ -40,8 +40,6 @@ public interface PeticioLogicaService extends PeticioService {
     public FirmaAsyncSimpleSignatureBlock[] convertFluxToSignatureBlocks(FlowTemplateSimpleFlowTemplate flux)
             throws I18NException;
 
-    public List<StringKeyValue> getAvailableTipusDocumental(String lang) throws I18NException;
-
     public void updatePublic(Peticio peticio) throws I18NException;
 
     public PeticioJPA findByPrimaryKeyPublic(Long _ID_);
@@ -65,5 +63,7 @@ public interface PeticioLogicaService extends PeticioService {
     public void guardarPeticioArxiu(Peticio peticio, String languageUI, InfoSignatura infoSignatura, String urlBase) throws I18NException;
 
     public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String languageUI, String urlBase) throws I18NException;
+
+    public List<StringKeyValue> getTipusDocumentals(String lang, boolean obtenerTodos) throws I18NException;
 
 }
