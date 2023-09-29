@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -60,7 +61,11 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
         boolean obtenerTodos = true;
         
         tmpList = peticioLogicaEjb.getTipusDocumentals(lang, obtenerTodos);
-        tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
+        if (tmpList.isEmpty()) {
+            HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
+        }else {
+            tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
+        }
 
         return tmpList;
     }

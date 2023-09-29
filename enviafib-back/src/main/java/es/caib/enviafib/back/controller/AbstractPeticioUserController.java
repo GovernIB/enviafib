@@ -119,23 +119,19 @@ public abstract class AbstractPeticioUserController extends PeticioController im
             Where where) throws I18NException {
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:
+        List<StringKeyValue> tmpList;
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
-
-        List<StringKeyValue> tipusDocumentalList = new ArrayList<StringKeyValue>();
-        tipusDocumentalList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
-
-        List<StringKeyValue> tmpList;
         boolean obtenerTodos = false;
-        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, obtenerTodos);
         
-        if (tmpList != null && !tmpList.isEmpty()) {
-            java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
+        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, obtenerTodos);
+        if (tmpList.isEmpty()) {
+            HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
         }else {
-            HtmlUtils.saveMessageError(request, "No s'han pogut obtenir els tipus documentals de portafib");
+            tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
+            java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
         }
-        tipusDocumentalList.addAll(tmpList);
-        return tipusDocumentalList;
+        return tmpList;
     }
 
     @Override
@@ -175,13 +171,4 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     public boolean isActiveDelete() {
         return false;
     }
-
-    @Override
-    public void fillReferencesForForm(PeticioForm peticioForm, HttpServletRequest request, ModelAndView mav)
-            throws I18NException {
-        super.fillReferencesForForm(peticioForm, request, mav);
-        List<StringKeyValue> _listSKV = getReferenceListForTipusDocumental(request, mav, peticioForm, null);
-        peticioForm.setListOfValuesForTipusDocumental(_listSKV);
-    }
-
 }
