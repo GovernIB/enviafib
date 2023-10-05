@@ -303,11 +303,11 @@ function mostrarOcultarCampsAvanzats(boto) {
     
     if (esMostrenCampsAvanzats) {
         $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMINTERESSATS.getJavaName()%>_rowid").show();
-        $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORGANS.getJavaName()%>_rowid").show();
+<%--         $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORGANS.getJavaName()%>_rowid").show(); --%>
         $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORIGEN.getJavaName()%>_rowid").show();
     } else {
         $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMINTERESSATS.getJavaName()%>_rowid").hide();
-        $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORGANS.getJavaName()%>_rowid").hide();
+<%--         $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORGANS.getJavaName()%>_rowid").hide(); --%>
         $("#<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.ARXIUREQPARAMORIGEN.getJavaName()%>_rowid").hide();
     }
     

@@ -162,7 +162,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         hiddens.remove(ARXIUPARAMFUNCIONARIDIR3);
         hiddens.remove(ARXIUREQPARAMORIGEN);
         hiddens.remove(ARXIUREQPARAMINTERESSATS);
-        hiddens.remove(ARXIUREQPARAMORGANS);
+//        hiddens.remove(ARXIUREQPARAMORGANS);
 
         
         if (__isView) {
