@@ -67,9 +67,12 @@
     	$('.loader').show(); // show loader
         
         var files = e.dataTransfer.files;
-
+        
         for (var i = 0; i < files.length; i++) {
-            ALL_FILES.push(files.item(i));
+        	var myFile = files.item(i);
+        	if (myFile.type ===  "application/pdf") {
+        	    ALL_FILES.push(myFile);
+			}
         }
         
         refreshFileList(ALL_FILES);
@@ -156,7 +159,10 @@
     	var files = this.files;
 
         for (var i = 0; i < files.length; i++) {
-            ALL_FILES.push(files.item(i));
+            var myFile = files.item(i);
+            if (myFile.type ===  "application/pdf") {
+                ALL_FILES.push(myFile);
+            }
         }
         refreshFileList(ALL_FILES);
     };
