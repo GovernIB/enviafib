@@ -287,8 +287,7 @@ td label {
 </c:if>
 
 
-<%-- ================================================  --%>
-
+<%-- ===================== MOSTRAR CAMPS AVANÇATS ===========================  --%>
 
 <script type="text/javascript"> 
 
@@ -322,4 +321,34 @@ function mostrarOcultarCampsAvanzats(boto) {
 mostrarOcultarCampsAvanzats();
 
 </script>
+
+<%-- ==== FER QUE L'OPCIÓ NULL DE TIPUS DOCUMENTALS PAREXQUI UN PLACEHOLDER ==========  --%>
+
+<script type="text/javascript"> 
+    var select = document.getElementById("peticio_tipusDocumental");
+	var options = select.childNodes;
+	options.forEach( function(option, index, array) {
+		if(option.value === ""){
+			option.disabled = "true";
+	        $(option).appendTo(select);
+		}
+	});
+	
+	testNull();
+	
+	function testNull(){
+		if (select.selectedOptions[0].value == "") {
+			console.log("vacio");
+		}
+		
+	}
+
+</script>
+
+
+
+
+
+
+
 

@@ -129,7 +129,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
             HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
         }else {
             tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
-            java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
+//            tmpList.add(new StringKeyValue("", ""));
+       //     java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
         }
         return tmpList;
     }
