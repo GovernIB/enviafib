@@ -354,18 +354,16 @@ mostrarOcultarCampsAvanzats();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    <fmt:message key="peticions.procesades" />
-                    <span id="progresText"></span>
+                <h5 class="modal-title" id="modalTitle">
+                    <span id="textPujantFitxers">Pujant fitxers ...</span>
                 </h5>
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" style="text-align: center;">
-				<div id="myProgress">
-					<div id="myBar"></div>
-				</div>
+				<div id="myProgress"><div id="myBar"></div></div>
+				<span id="mySpinner" class="fa fa-spinner fa-pulse fa-3x"></span>
 			</div>
         </div>
     </div>
@@ -391,26 +389,32 @@ var peticionsTotals = -1;
 
 function enviar(){
 	
-	var intervalID = setInterval(myCallback, 200);
+	var intervalID = setInterval(myCallback, 10);
 
 	function myCallback() {
 		
 		  var xhttp = new XMLHttpRequest();
 		    xhttp.onreadystatechange = function() {
+
 		        if (this.readyState == 4 && this.status == 200) {
 		            var myObj = this.response;
 		            if (peticionsTotals == -1) {
+		            	$("#myProgress").hide();
 		            	peticionsTotals = myObj.total;
+		            	console.log("Pujant fitxers ...");
 					}else{
+                        $("#myProgress").show();
+                        $("#mySpinner").hide();
+                        $("#textPujantFitxers").hide();
 			            var width = (myObj.enviades / myObj.total)*100;
 			            if (width == 0) width  = 1;
 
 			            console.log("Enviades: " + myObj.enviades + " de " + myObj.total + ": " + width + "%" + " petsTotals: " +peticionsTotals );		
 			            
-			            var span = document.getElementById("progresText");
 			            if (myObj.enviades == -1) myObj.enviades = peticionsTotals;
-			            
-			            span.innerHTML = myObj.enviades + " de " + peticionsTotals;
+
+			            var title = document.getElementById("modalTitle");
+			            title.innerHTML = '<fmt:message key="peticions.procesades" />' + myObj.enviades + " de " + peticionsTotals;
 	
 			            var elem = document.getElementById("myBar");
 			            elem.style.width = width + "%";
