@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -278,7 +279,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             peticioForm.setSaveButtonVisible(false);
             peticioForm.addAdditionalButton(new AdditionalButton("", getSubmitLabel(),
-                    "javascript:document.getElementById('" + PeticioFields._TABLE_MODEL + "Form').submit()",
+                    "javascript:enviar();",
                     "btn-secondary"));
 
             peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "advanced.show",
@@ -553,9 +554,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             int PETICIONS_CREADES_OK = 0;
             List<String> missatgesErrors = new ArrayList<String>();
 
+            ProgresInfo pi = new ProgresInfo(nFitxers, 0);
+            request.getSession().setAttribute(SESSION_PROGRES_KEY, pi);
+            
             int i;
             for (i = 0; i < nFitxers; i++) {
-
+                pi.enviades = i;
                 Peticio petFor = peticioForm.getPeticio();
                 peticioForm.setFitxerID(files[i]);
 
@@ -656,6 +660,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 }
             }
 
+            
             log.warn("\n\nAtributs del result final:");
             showErrorInfo(result);
 
@@ -674,6 +679,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             }
         }
 
+        request.getSession().removeAttribute(SESSION_PROGRES_KEY);
+
         if (result.hasErrors()) {
             request.setAttribute("dragdrop", true);
             peticioForm.getPeticio().setNom(originalName);
@@ -684,6 +691,33 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         }
     }
 
+    public static final String SESSION_PROGRES_KEY = "_SESSION_PROGRES_KEY_";
+    
+    public static class ProgresInfo{
+        public int total;
+        public int enviades;
+        public ProgresInfo(int total, int enviades) {
+            super();
+            this.total = total;
+            this.enviades = enviades;
+        }
+       
+        
+    }
+
+    @RequestMapping(value = "/progres", method = RequestMethod.GET)
+    public void getProgresPeticionsEnviades(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        ProgresInfo info = (ProgresInfo) request.getSession().getAttribute(SESSION_PROGRES_KEY);
+        
+        if (info == null) {
+            info = new ProgresInfo(-1, -1);
+        }
+        
+        response.getWriter().append("{\"total\" : " + info.total + ", \"enviades\": " +  info.enviades + "}");
+    }
+    
+    
     public boolean hasSameError(Peticio firstPet, Peticio secondPet) {
 
         String error1 = firstPet.getErrorMsg();
