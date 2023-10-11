@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -25,45 +26,60 @@ public class EnviaFIBMaxUploadSizeExceededExceptionHandler implements
   public ModelAndView resolveException(HttpServletRequest request,
       HttpServletResponse response, Object handler, Exception ex) {
 
+      log.info(" ++++ Exception: " + ex.getClass());
+
+      
     if (ex instanceof EnviaFIBMaxUploadSizeExceededException
         || ex instanceof MaxUploadSizeExceededException
-        || ex instanceof SizeLimitExceededException) {
+        || ex instanceof SizeLimitExceededException
+        || ex instanceof MultipartException) {
 
-      /*
-       * log.info(" ++++ Scheme: " + request.getScheme());
-       * log.info(" ++++ PathInfo: " + request.getPathInfo());
-       * log.info(" ++++ PathTrans: " + request.getPathTranslated());
-       * log.info(" ++++ ContextPath: " + request.getContextPath());
-       * log.info(" ++++ ServletPath: " + request.getServletPath());
-       * log.info(" ++++ getRequestURI: " + request.getRequestURI());
-       * log.info(" ++++ getRequestURL: " + request.getRequestURL().toString());
-       * log.info(" ++++ getQueryString: " + request.getQueryString());
-       */
+      
+        log.info(" ++++ Scheme: " + request.getScheme());
+        log.info(" ++++ PathInfo: " + request.getPathInfo());
+        log.info(" ++++ PathTrans: " + request.getPathTranslated());
+        log.info(" ++++ ContextPath: " + request.getContextPath());
+        log.info(" ++++ ServletPath: " + request.getServletPath());
+        log.info(" ++++ getRequestURI: " + request.getRequestURI());
+        log.info(" ++++ getRequestURL: " + request.getRequestURL().toString());
+        log.info(" ++++ getQueryString: " + request.getQueryString());
+       
       String maxUploadSize = "???";
       String currentSize = "???";
       String msgCode;
       if (ex instanceof MaxUploadSizeExceededException) {
-        MaxUploadSizeExceededException musee = (MaxUploadSizeExceededException) ex;
-        if (musee instanceof EnviaFIBMaxUploadSizeExceededException) {
-          msgCode = ((EnviaFIBMaxUploadSizeExceededException) musee).getMsgCode();
-        } else {
-          msgCode = "tamanyfitxerpujatsuperat";
-        }
+          MaxUploadSizeExceededException musee = (MaxUploadSizeExceededException) ex;
+          if (musee instanceof EnviaFIBMaxUploadSizeExceededException) {
+              msgCode = ((EnviaFIBMaxUploadSizeExceededException) musee).getMsgCode();
+          } else {
+              msgCode = "tamanyfitxerpujatsuperat";
+          }
 
-        // log.error(" YYYYYYYYYYYY  CAUSE: " + musee.getCause());
-        if (musee.getCause() instanceof SizeLimitExceededException) {
-          SizeLimitExceededException slee = (SizeLimitExceededException) musee.getCause();
+          // log.error(" YYYYYYYYYYYY  CAUSE: " + musee.getCause());
+          if (musee.getCause() instanceof SizeLimitExceededException) {
+              SizeLimitExceededException slee = (SizeLimitExceededException) musee.getCause();
+              maxUploadSize = String.valueOf(slee.getPermittedSize());
+              currentSize = String.valueOf(slee.getActualSize());
+          } else {
+              maxUploadSize = String.valueOf(musee.getMaxUploadSize());
+          }
+
+      } else if (ex instanceof SizeLimitExceededException) {
+          SizeLimitExceededException slee = (SizeLimitExceededException) ex;
           maxUploadSize = String.valueOf(slee.getPermittedSize());
           currentSize = String.valueOf(slee.getActualSize());
-        } else {
-          maxUploadSize = String.valueOf(musee.getMaxUploadSize());
-        }
+          msgCode = "tamanyfitxerpujatsuperat";
+      } else if(ex instanceof MultipartException) {
+          MultipartException mpe = (MultipartException) ex;
 
-      } else {
-        SizeLimitExceededException slee = (SizeLimitExceededException) ex;
-        maxUploadSize = String.valueOf(slee.getPermittedSize());
-        currentSize = String.valueOf(slee.getActualSize());
-        msgCode = "tamanyfitxerpujatsuperat";
+          maxUploadSize = "-1";
+          currentSize = "-1";
+          msgCode = "tamanyfitxerpujatsuperat";
+      }else {
+          log.info("Error de EnviaFIBMaxUploadSizeExceededException");
+          maxUploadSize = "-1";
+          currentSize = "-1";
+          msgCode = "tamanyfitxerpujatsuperat";
       }
 
       HtmlUtils.saveMessageError(request,
