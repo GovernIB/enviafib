@@ -89,12 +89,17 @@
     
     
     function refreshFileList(ALL_FILES){
-/*
-        var autofirma = true;
-     	if (autofirma){
-    		ALL_FILES.splice(1, ALL_FILES.length);
-    	}
- */     	
+    	
+        var autofirma = 1;
+        var tipus = document.getElementById("peticio.tipus").value;
+
+        if(tipus == autofirma){
+        	if (ALL_FILES.length > 1) {
+				alert("Nomes un fitxer");
+			}
+        	var removed = ALL_FILES.splice(1); //, ALL_FILES.length);
+        }
+        
         let fullList = new DataTransfer();
 
     	var hiddenInput = document.getElementById("myHiddenInput");
