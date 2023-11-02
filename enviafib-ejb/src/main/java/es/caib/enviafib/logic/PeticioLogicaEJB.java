@@ -849,17 +849,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         this.deleteIncludingFiles(instance, fitxerEjb);
         
-        String portaFIBID = instance.getPeticioPortafirmes();
-        
-        long portafibID = Long.parseLong(portaFIBID);
-        final String languageUI = "ca";
+        if (instance.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
+            String portaFIBID = instance.getPeticioPortafirmes();
 
-        if (esborrarPeticioPortafib(portafibID, languageUI)) {
-            log.info("Peticio " + portafibID + "esborrada de PORTAFIB correctament");
+            long portafibID = Long.parseLong(portaFIBID);
+            final String languageUI = "ca";
+
+            if (esborrarPeticioPortafib(portafibID, languageUI)) {
+                log.info("Peticio " + portafibID + "esborrada de PORTAFIB correctament");
+            } else {
+                log.error("No s'ha pogut esborrar la petició amb portafibID=" + portaFIBID);
+            }
         } else {
-            log.error("No s'ha pogut esborrar la petició amb portafibID=" + portaFIBID);
+            log.info("La petició " + instance.getPeticioID() + " es AutoFirma i no te res PortaFIB");
         }
-        
 
         Long infoSignID = instance.getInfoSignaturaID();
         
