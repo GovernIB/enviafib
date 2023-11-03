@@ -313,16 +313,20 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         try {
             String username = LoginInfo.getInstance().getUsername();
             codiDIR3 = instance.getDir3DepartamentDireccioGeneral(username);
-            log.info("El meu codiDIR3 es: " + codiDIR3);
-            return codiDIR3;
+            
+            if (codiDIR3 != null && codiDIR3.trim().length() > 0) {
+                log.info("El meu codiDIR3 es: " + codiDIR3);
+                return codiDIR3;
+            }else {
+                throw new Exception ("El codi DIR3 de l'usuari " + username + " es null o buit ]" + codiDIR3 + "[");
+            }
 
         } catch (Exception e) {
             int tipus = getTipusPeticio();
             if (tipus == Constants.TIPUS_PETICIO_AUTOFIRMA || tipus == Constants.TIPUS_PETICIO_FLUX) {
                 codiDIR3 = "A04003003";
-                log.error("No s'ha trobat el dir3. Per ser Autofirma o Flux, s'assigna un per defecte: " + codiDIR3);
+                log.error("No s'ha trobat el dir3, o val null. Per ser Autofirma o Flux, s'assigna un per defecte: " + codiDIR3);
                 return codiDIR3;
-                
             }
             throw new I18NException("error.plugin.estructuraorganitzativa.dir3notfount", e.getMessage());
         }
