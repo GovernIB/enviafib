@@ -43,6 +43,7 @@ import es.caib.plugins.arxiu.api.FirmaPerfil;
 import es.caib.plugins.arxiu.api.FirmaTipus;
 import es.caib.plugins.arxiu.api.IArxiuPlugin;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -475,7 +476,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             infoCust = (InfoArxiuJPA) infoArxiuEjb.createPublic(infoCust);
 
             peticio.setInfoArxiuID(infoCust.getInfoArxiuID());
-
             log.info("XYZ ZZZ  Guardada Informació Document Arxivat ... ");
 
         } catch (Throwable e) {
@@ -505,18 +505,17 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             return null; // Indicam un error
         }
-
-        boolean tancatExpedient;
-
-        tancatExpedient = tancarExpedient(peticio, plugin, expedientId);
-
-        if (!tancatExpedient) {
-            return null;
-        }
-
-        // XYZ Cridades de Plugin: No esta implementat?
-        // peticioLogicaEjb.postCridadaOK(monitor, "expedientID=" + expedientId +
-        // "\nDocumentID=" + uuidDoc);
+//        boolean tancatExpedient;
+//
+//        tancatExpedient = tancarExpedient(peticio, plugin, expedientId);
+//
+//        if (!tancatExpedient) {
+//            return null;
+//        }
+//
+//        // XYZ Cridades de Plugin: No esta implementat?
+//        // peticioLogicaEjb.postCridadaOK(monitor, "expedientID=" + expedientId +
+//        // "\nDocumentID=" + uuidDoc);
 
         log.info("\n FINAL \n");
 
@@ -561,6 +560,11 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             log.info("XYZ ZZZ  Tancat Expedient ... ");
 
             tancatExpedient = true;
+            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+            peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
+            peticio.setErrorMsg(null);
+            peticio.setErrorException(null);
+
 
         } catch (Throwable th) {
 
@@ -572,6 +576,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
             tancatExpedient = false; // Indicam un error
         }
+        
         return tancatExpedient;
     }
 

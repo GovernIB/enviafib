@@ -42,7 +42,7 @@ public class LlistatPeticionsFirmadesUserController extends LlistatPeticionsUser
 
         final Where defaultCondition = super.getAdditionalCondition(request);
 
-        Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA };
+        Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT };
 
         return Where.AND(defaultCondition, ESTAT.in(estats));
     }

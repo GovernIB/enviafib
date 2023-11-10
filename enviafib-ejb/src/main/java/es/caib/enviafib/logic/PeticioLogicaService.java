@@ -54,9 +54,9 @@ public interface PeticioLogicaService extends PeticioService {
     
     public void cosesAFerPeticioFirmadaPart2(long portafibID, String languageUI, InfoSignatura infoSignatura) throws I18NException;
     
-    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException;
+    public void reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException;
 
-    public String reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException;
+    public void tancarExpedientPeticio(long peticioID, String urlBase) throws I18NException;
         
     public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException;
 

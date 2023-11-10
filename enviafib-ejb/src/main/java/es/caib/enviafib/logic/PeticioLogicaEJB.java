@@ -550,41 +550,30 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     
     @Override
-    public String reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException {
-
-        //        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
-        //                PeticioFields.PETICIOID.equal(peticioID));
-        //        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
-
+    public void tancarExpedientPeticio(long peticioID, String urlBase) throws I18NException {
+        
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
         String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
                 PETICIOID.equal(peticioID));
 
-        log.info("\n\n Reintentant el tancament d'expedient de la Petició " + peticioID + " dins d'Arxiu.");
         boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, expedientID);
-
-        String msg;
+        this.update(peticio);
+        
         if (tancatExpedient) {
-            peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
-            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-            peticio.setErrorMsg(null);
-            peticio.setErrorException(null);
-            msg = null;
-
             try {
                 enviarMailSolicitant(peticio, urlBase);
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
-
-        } else {
-            msg = peticio.getErrorMsg();
         }
+    }    
+    
+    @Override
+    public void reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException {
 
-        this.update(peticio);
-
-        return msg;
+        log.info("\n\n Reintentant el tancament d'expedient de la Petició " + peticioID + " dins d'Arxiu.");
+        tancarExpedientPeticio(peticioID, urlBase); 
     }
 
     /**
@@ -610,7 +599,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         if (ia != null) {
             peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
-            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+            peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
 
@@ -740,7 +729,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 EmailUtil.postMail(subject, message, isHTML, from, emailDestinatari);
 
             } catch (Throwable t) {
-                log.error("EJB: Error enviant mail: " + t.getMessage(), t);
+                log.error("EJB: Error enviant mail: " + t.getMessage());
             }
         } else {
             log.info("No enviam cap correu quan es autofirma");
@@ -1355,6 +1344,61 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Acaba eliminarFitxersSignatsDeLocal()");
     }
 
+    
+    
+    
+    /**
+     * Funció que s'executa cada vespre a les 12:00 i tanca tots els expedients oberts.
+     */
+    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
+    @Schedule(hour = "12", persistent = false)
+    protected void tancarTotsElsExpedients() {
+        log.info("Comença tancarTotsElsExpedients()");
+
+        long startTime = System.currentTimeMillis();
+        final String languageUI = "ca";
+        
+        Integer[] estatsPendents = {Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT, Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT};
+        
+        try {
+            //Llistat de peticions pendents de tancar expedient: 
+            List<Peticio> peticions = this.select(PeticioFields.ESTAT.in(estatsPendents));
+            
+            for (Peticio peticio : peticions) {
+                Long peticioID = peticio.getPeticioID();
+                
+                String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
+                        PETICIOID.equal(peticioID));
+                
+                boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, expedientID);
+                this.update(peticio);
+
+                if (tancatExpedient) {
+                    log.info("Expedient de la petició " + peticioID + " tancat correctament");
+                }else {
+                    log.error("Error tancant expedient de la petició " + peticioID + ": " + peticio.getErrorMsg());
+                    
+                }
+                
+                //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
+                if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
+                    log.warn("Timeout.");
+                    break;
+                }
+            }
+        } catch (I18NException e) {
+
+            final String msg = "Error obtenint llistat de fitxersFirmatsID durant el cron nocturn: "
+                    + I18NCommonUtils.getMessage(e, new Locale(languageUI));
+            log.error(msg, e);
+        }
+
+        long endTime = System.currentTimeMillis();
+        log.info("Total time: " + (endTime - startTime));
+        log.info("Acaba tancarTotsElsExpedients()");
+    }
+
+    
     /**
      * 
      * @param peticioPortaFIB
@@ -1385,9 +1429,4 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    @Override
-    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

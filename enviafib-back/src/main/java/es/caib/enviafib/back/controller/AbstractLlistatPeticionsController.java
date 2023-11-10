@@ -115,7 +115,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             peticioFilterForm.setFilterByFields(newFilterBy);
 
             List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
-            newGroupBy.add(ESTAT);
+//            newGroupBy.add(ESTAT);
             peticioFilterForm.setGroupByFields(newGroupBy);
 
             peticioFilterForm.setVisibleFilterBy(false);
@@ -156,8 +156,13 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             switch (estat) {
                 case Constants.ESTAT_PETICIO_FIRMADA:
+                case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
                     color = "green";
-                    iconList.add("fas fa-file-signature");
+                    if (estat == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
+                        iconList.add("fas fa-box-open");
+                    }else {
+                        iconList.add("fas fa-file-signature");
+                    }
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
@@ -217,15 +222,21 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
                                     "javascript:reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
+                    
+                case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-redo-alt ", "arxiu.tancar.expedient",
+                                    "javascript:tancarExpedient(" + peticioID + ")", "btn-warning"));
+                    
                 case Constants.ESTAT_PETICIO_FIRMADA:
+                    
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",
                             "peticio.btn.sendmail", "javascript:cridaEmail(" + peticioID + ")", "btn-success"));
 
                     String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                             InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
-                                    getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fas fa-print",
+                            "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
                             "download.arxivat.firmat", getContextWeb() + "/descarregarfirmat/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
@@ -242,6 +253,31 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                                 "btn-danger"));
             }
         }
+    }
+
+    @RequestMapping(value = "/tancatexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
+    public String tancarExpedient(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
+
+        try {
+            // Decodificam la URL que arriba en base64
+            String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+            
+            peticioLogicaEjb.tancarExpedientPeticio(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
+
+            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.expedient.success"));
+
+        } catch (I18NException e) {
+            String msg = I18NUtils.getMessage(e);
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
+        }
+
+        return "redirect:" + getContextWeb() + "/list";
     }
 
     @RequestMapping(value = "/reintentararxivat/{peticioId}/{windowUrl}", method = RequestMethod.GET)
@@ -278,7 +314,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         return "redirect:" + getContextWeb() + "/list";
 
     }
-
+    
     @RequestMapping(value = "/reintentartancamentexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String reintentarTancamentExpedient(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
@@ -287,14 +323,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             // Decodificam la URL que arriba en base64
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
-            String msg = peticioLogicaEjb.reintentarTancarExpedient(peticioId,
-                    Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
+            peticioLogicaEjb.reintentarTancarExpedient(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
 
-            if (msg == null) {
-                HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
-            } else {
-                HtmlUtils.saveMessageError(request, msg);
-            }
+            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.expedient.reintent.success"));
 
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);

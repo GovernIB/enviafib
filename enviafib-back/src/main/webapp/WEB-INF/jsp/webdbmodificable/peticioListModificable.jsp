@@ -9,6 +9,19 @@ function cridaEmail(peticioId){
 	}
 }
 
+
+function tancarExpedient(peticioId) {
+	document.getElementById("exampleModalLabel").innerHTML = "Tancant Expedient";
+    $('#spinnerModal').modal(
+            {
+                backdrop : "static",
+                keyboard: false
+            });
+    window.location = '<%=request.getContextPath()%>
+    ${contexte}/tancarexpedient/'
+                + peticioId + "/" + btoa(window.location);
+}
+
 function reintentarArxivat(peticioId) {
 	$('#spinnerModal').modal(
 			{
