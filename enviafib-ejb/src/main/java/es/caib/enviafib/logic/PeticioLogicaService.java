@@ -66,4 +66,6 @@ public interface PeticioLogicaService extends PeticioService {
 
     public List<StringKeyValue> getTipusDocumentals(String lang, boolean obtenerTodos) throws I18NException;
 
+    public void initScheduler();
+    
 }

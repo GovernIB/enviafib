@@ -224,6 +224,18 @@ public class Configuracio implements Constants {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
     }
 
+//    public static String getHoraTancamentExpedientsScheduler() {
+//        return getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancar.expedient.hora");
+//        
+////        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
+//    }
+
+    public static String getHoraTancamentExpedientsScheduler() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancarexpedient.scheduler.hora");
+//        es.caib.enviafib.=4:30
+//        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
+    }
+
     /**
      * 
      * 

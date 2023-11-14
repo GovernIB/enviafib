@@ -13,11 +13,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
+import javax.ejb.ScheduleExpression;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerService;
 
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleAnnex;
@@ -1345,41 +1353,74 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     
-    
+    final String HORA_TANCAR_EXPEDIENTS = Configuracio.getHoraTancamentExpedientsScheduler();
     
     /**
      * Funció que s'executa cada vespre a les 12:00 i tanca tots els expedients oberts.
      */
-    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
-    @Schedule(hour = "12", persistent = false)
-    protected void tancarTotsElsExpedients() {
+    
+    
+    @Resource
+    private TimerService ejbTimerService;
+
+    @Override
+    public void initScheduler() {
+        ScheduleExpression schedule = new ScheduleExpression();
+        
+        String hora, h, m;
+        try {
+            hora = Configuracio.getHoraTancamentExpedientsScheduler();
+            h = hora.split(":")[0];
+            m = hora.split(":")[1];
+
+            if (h == null || h.trim().length() == 0) {
+                h = "4";
+            }
+            if (m == null || m.trim().length() == 0) {
+                m = "30";
+            }
+        } catch (Throwable t) {
+            h = "4";
+            m = "30";
+        }
+        schedule.hour(h);
+        schedule.minute(m);
+
+        Timer timer = ejbTimerService.createCalendarTimer(schedule);
+
+        log.info("Calendar based programmatic timer " + timer.toString() + " created");
+    }
+
+    @Timeout
+    public void onTimeout(Timer timer) {
         log.info("Comença tancarTotsElsExpedients()");
 
         long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
-        
-        Integer[] estatsPendents = {Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT, Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT};
-        
+
+        Integer[] estatsPendents = { Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT,
+                Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT };
+
         try {
             //Llistat de peticions pendents de tancar expedient: 
             List<Peticio> peticions = this.select(PeticioFields.ESTAT.in(estatsPendents));
-            
+
             for (Peticio peticio : peticions) {
                 Long peticioID = peticio.getPeticioID();
-                
+
                 String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
                         PETICIOID.equal(peticioID));
-                
+
                 boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, expedientID);
                 this.update(peticio);
 
                 if (tancatExpedient) {
                     log.info("Expedient de la petició " + peticioID + " tancat correctament");
-                }else {
+                } else {
                     log.error("Error tancant expedient de la petició " + peticioID + ": " + peticio.getErrorMsg());
-                    
+
                 }
-                
+
                 //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
                 if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
                     log.warn("Timeout.");
@@ -1397,7 +1438,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Total time: " + (endTime - startTime));
         log.info("Acaba tancarTotsElsExpedients()");
     }
-
     
     /**
      * 
