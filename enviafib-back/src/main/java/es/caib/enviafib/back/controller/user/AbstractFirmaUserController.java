@@ -1,6 +1,10 @@
 package es.caib.enviafib.back.controller.user;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +46,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfReader;
 
 import es.caib.enviafib.back.controller.AbstractPeticioUserController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
@@ -594,10 +601,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     if (result2.hasErrors()) {
 
                         showErrorInfo(result2);
-                        for (ObjectError objectError : result2.getAllErrors()) {
-                            result.addError(objectError);
-                        }
-
                         int nErrorsFields = result2.getFieldErrorCount();
                         int nErrorsFitxers = result2.getFieldErrorCount(PeticioFields.FITXERID.fullName);
 
@@ -620,6 +623,10 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                         } else {
                             //Al formulari hi errors que no son de fitxers -> Aturar
                             //Aquest missatge sobra, genapp ja en posa un per defecte
+                            for (ObjectError objectError : result2.getAllErrors()) {
+                                result.addError(objectError);
+                            }
+
                             String msg = "POST: Errors al formulari";
 //                            HtmlUtils.saveMessageError(request, msg);
                             log.error(msg);
@@ -725,6 +732,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     
     public boolean hasSameError(Peticio firstPet, Peticio secondPet) {
 
+        if (firstPet == null || secondPet == null) {
+            return false;
+        }
         String error1 = firstPet.getErrorMsg();
         String error2 = secondPet.getErrorMsg();
 
@@ -902,6 +912,26 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             if (nom == null || nom.isEmpty() || nom.trim().length() == 0 || nom.equals("null")) {
                 result.rejectValue(get(NOM), "genapp.validation.required",
                         new String[] { I18NUtils.tradueix(NOM.fullName) }, null);
+            }
+        }
+        
+        
+        // Validació de que el document es un PDF
+        {
+            Long fileID = peticioForm.getPeticio().getFitxerID();
+            File file = FileSystemManager.getFile(fileID);
+            try {
+                log.info("Provant si fitxer es PDF:" + file.getAbsolutePath());
+                
+                PdfReader reader = new PdfReader(new FileInputStream(file));
+                int pages = reader.getNumberOfPages();
+                reader.close();
+                log.info("El fitxer " + file.getAbsolutePath() + " es un PDF de " + pages + " pagines");
+
+            } catch (IOException e) {
+                String msg = "El fitxer " + file.getAbsolutePath() + " del document no es PDF";
+                log.error(msg);
+                result.rejectValue(get(FITXERID), "error.unknown", new String[] { msg }, null);
             }
         }
     }
