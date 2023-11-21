@@ -219,11 +219,13 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                             "arxiu.reintentar", "javascript:reintentarArxivat(" + peticioID + ")", "btn-warning"));
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
+                    
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
                                     "javascript:reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
                     
                 case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
+                    
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-redo-alt ", "arxiu.tancar.expedient",
                                     "javascript:tancarExpedient(" + peticioID + ")", "btn-warning"));
@@ -358,7 +360,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
             
             // Si a petició s'ha arxivat correctament, s'ha de passar el link amb CSV:
-            if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
+            if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA && peticio.getEstat() != Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
                 throw new I18NException("genapp.comodi", "No e spot enviar email de peticio no finalitzada");
             }
 

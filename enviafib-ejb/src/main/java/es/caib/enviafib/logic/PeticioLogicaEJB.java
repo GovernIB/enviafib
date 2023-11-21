@@ -695,7 +695,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 String emailDestinatari = usuariEjb.executeQueryOne(UsuariFields.EMAIL,
                         UsuariFields.USUARIID.equal(solicitantID));
 
-                if ((int) estatPeticio == Constants.ESTAT_PETICIO_FIRMADA) {
+                if ((int) estatPeticio == Constants.ESTAT_PETICIO_FIRMADA || (int) estatPeticio == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
                     Map<String, Object> map = new HashMap<String, Object>();
 
                     map.put("nomFitxer", peticio.getFitxer().getNom());
@@ -705,7 +705,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     Long infoArxiuID = peticio.getInfoArxiuID();
                     log.info("infoArxiuID :" + infoArxiuID );
                     
-                    InfoArxiuJPA ia = infoArxiuLogicEjb.findByPrimaryKey(infoArxiuID );
+                    InfoArxiuJPA ia = infoArxiuLogicEjb.findByPrimaryKeyPublic(infoArxiuID );
                     String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
                     map.put("fileUrl", fileUrl);
                     
@@ -739,7 +739,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 }
 
                 EmailUtil.postMail(subject, message, isHTML, from, emailDestinatari);
-
+                log.info("Enviat email a " + emailDestinatari + ": " + subject);
+                
             } catch (I18NException e) {
                 log.error("EJB: Error I18NException enviant mail: " + e.getMessage(), e);
             } catch (IOException e) {
