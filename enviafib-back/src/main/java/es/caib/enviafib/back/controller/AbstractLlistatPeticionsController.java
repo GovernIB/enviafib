@@ -255,7 +255,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         }
     }
 
-    @RequestMapping(value = "/tancatexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
+    @RequestMapping(value = "/tancarexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String tancarExpedient(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
 
@@ -265,7 +265,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             
             peticioLogicaEjb.tancarExpedientPeticio(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
 
-            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.expedient.success"));
+            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.tancarexpedient.success"));
 
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);
@@ -325,7 +325,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             peticioLogicaEjb.reintentarTancarExpedient(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
 
-            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.expedient.reintent.success"));
+            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
 
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);

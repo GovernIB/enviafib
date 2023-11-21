@@ -2,7 +2,9 @@ package es.caib.enviafib.logic;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -422,6 +424,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
 
     @Override
+    @PermitAll
+    @Asynchronous
     public void cosesAFerPeticioFirmadaPart2(long portaFIBID, String languageUI, InfoSignatura infoSignatura)
             throws I18NException {
     
@@ -736,8 +740,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
                 EmailUtil.postMail(subject, message, isHTML, from, emailDestinatari);
 
+            } catch (I18NException e) {
+                log.error("EJB: Error I18NException enviant mail: " + e.getMessage(), e);
+            } catch (IOException e) {
+                log.error("EJB: Error IOException enviant mail: " + e.getMessage(), e);
             } catch (Throwable t) {
-                log.error("EJB: Error enviant mail: " + t.getMessage());
+                log.error("EJB: Error enviant mail al postMail: " + t.getMessage(), t);
             }
         } else {
             log.info("No enviam cap correu quan es autofirma");
