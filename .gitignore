@@ -172,3 +172,11 @@ installCerts.bat
 /enviafib-api-interna-client-dadesobertes/.project
 /enviafib-api-interna-client-dadesobertes/.openapi-generator
 /enviafib-api-interna-client-dadesobertes/.settings
+/enviafib-back/.settings/org.eclipse.jdt.apt.core.prefs
+/enviafib-commons/.settings/org.eclipse.jdt.apt.core.prefs
+/enviafib-ear/.settings/org.eclipse.m2e.core.prefs
+/enviafib-ejb/.settings/org.eclipse.jdt.apt.core.prefs
+/enviafib-model/.settings/org.eclipse.jdt.apt.core.prefs
+/enviafib-persistence/.settings/org.eclipse.jdt.apt.core.prefs
+/interna.bat
+/test.bat
