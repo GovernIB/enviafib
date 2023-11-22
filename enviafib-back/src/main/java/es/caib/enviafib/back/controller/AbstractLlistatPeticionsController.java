@@ -54,6 +54,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
     public static final int COLUMN_ESTAT_IMG = 1;
 
+    public abstract boolean isAdmin();
+    
+    
     @Override
     public boolean isActiveList() {
         return true;
@@ -115,7 +118,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             peticioFilterForm.setFilterByFields(newFilterBy);
 
             List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
-//            newGroupBy.add(ESTAT);
+            newGroupBy.remove(ESTAT);
             peticioFilterForm.setGroupByFields(newGroupBy);
 
             peticioFilterForm.setVisibleFilterBy(false);
@@ -156,13 +159,20 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             switch (estat) {
                 case Constants.ESTAT_PETICIO_FIRMADA:
-                case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
                     color = "green";
-                    if (estat == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
-                        iconList.add("fas fa-box-open");
-                    }else {
+                    iconList.add("fas fa-file-signature");
+                    break;
+                    
+                case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
+                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
+                    if (isAdmin()) {
+                        color = "orange";
+                        iconList.add("fas fa-unlock");
+                    } else {
+                        color = "green";
                         iconList.add("fas fa-file-signature");
                     }
+                    
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
@@ -177,13 +187,10 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                     color = "red";
                     iconList.add("fas fa-exclamation-triangle");
                     if (estat == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                         iconList.add("fas fa-archive");
-                    } else if (estat == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
-                        iconList.add("fas fa-lock");
                     }
                 break;
 
@@ -218,18 +225,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
                             "arxiu.reintentar", "javascript:reintentarArxivat(" + peticioID + ")", "btn-warning"));
                 break;
+                
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
-                    
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
-                                    "javascript:reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
-                    
                 case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
-                    
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-redo-alt ", "arxiu.tancar.expedient",
-                                    "javascript:tancarExpedient(" + peticioID + ")", "btn-warning"));
-                    
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",

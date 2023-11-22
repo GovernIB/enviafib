@@ -167,10 +167,21 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             
             filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view", getContextWeb() + "/veurePeticioFull/" + peticioID, "btn-info"));
             
+            
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
-                numErrorsArxivant ++;
+                numErrorsArxivant++;
             }
 
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
+                filterForm.addAdditionalButtonByPK(peticioID,
+                        new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
+                                "javascript:reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
+            }
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
+                        "arxiu.tancar.expedient", "javascript:tancarExpedient(" + peticioID + ")", "btn-warning"));
+            }            
+            
             
             if (peticio.getErrorMsg() != null) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-exclamation-circle", "peticio.btn.show.error", getContextWeb() + "/veurePeticioError/" + peticioID, "btn-danger"));
@@ -269,6 +280,11 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
         }
 
         return "redirect:" + getContextWeb() + "/list/";
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return true;
     }
 
 }
