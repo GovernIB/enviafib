@@ -71,7 +71,7 @@ public class LlistatPeticionsPendentsUserController extends LlistatPeticionsUser
         final Where defaultCondition = super.getAdditionalCondition(request);
 
         Integer[] estats = { Constants.ESTAT_PETICIO_EN_PROCES, Constants.ESTAT_PETICIO_ARXIVANT,
-                Constants.ESTAT_PETICIO_REINTENTAR_TANCAR_EXPEDIENT, Constants.ESTAT_PETICIO_ERROR_ARXIVANT,
+                Constants.ESTAT_PETICIO_ERROR_ARXIVANT,
                 Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT };
 
         return Where.AND(defaultCondition, ESTAT.in(estats));

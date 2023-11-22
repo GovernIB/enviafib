@@ -100,8 +100,10 @@ public abstract class AbstractPeticioUserController extends PeticioController im
             throws I18NException {
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
         for (int i = 0; i < Constants.ESTATS_PETICIO.length; i++) {
-            __tmp.add(new StringKeyValue(String.valueOf(Constants.ESTATS_PETICIO[i]),
-                    I18NUtils.tradueix("estat." + Constants.ESTATS_PETICIO[i])));
+            int estat = Constants.ESTATS_PETICIO[i];
+            String key = String.valueOf(estat);
+            String value = I18NUtils.tradueix("estat." + estat);
+            __tmp.add(new StringKeyValue(key, value));
         }
         return __tmp;
     }
