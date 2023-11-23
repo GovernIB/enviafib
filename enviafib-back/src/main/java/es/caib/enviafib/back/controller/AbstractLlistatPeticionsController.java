@@ -166,8 +166,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                     if (isAdmin()) {
-                        color = "orange";
                         iconList.add("fas fa-unlock");
+                        if (estat ==Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT ) {
+                            color = "red";
+                        }else {
+                            color = "orange";
+                        }
                     } else {
                         color = "green";
                         iconList.add("fas fa-file-signature");
