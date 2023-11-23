@@ -351,8 +351,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String expedientUrl = null;
         String procedureCode = null;
         String procedureName = null;
-        String additionalInformation = "Ninguna info";
-        Double additionalInformationEvaluable = (double) System.currentTimeMillis();
+        String additionalInformation = null; //"Ninguna info";
+        Double additionalInformationEvaluable = null; //(double) System.currentTimeMillis();
 
         List<FirmaAsyncSimpleMetadata> metadadaList = null;
 
@@ -363,22 +363,22 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 additionalInformation, additionalInformationEvaluable, annexs, metadadaList);
 
         // Crear Peticio
-        Long peticioDeFirmaID2;
+        Long peticioDeFirmaID;
 
         // Utilitzar Blocs de Firmes
 //        log.info("Petició de Firma emprant Blocs de Firmes");
         FirmaAsyncSimpleSignatureRequestWithSignBlockList signatureRequest;
         signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(signatureRequestBase, signatureBlocks);
-        peticioDeFirmaID2 = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
+        peticioDeFirmaID = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
 
 //        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
 
         FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID2, languageUI);
+        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID, languageUI);
 
         String url = api.getUrlToViewFlow(rinfo);
 //        log.info("URL to view flow: " + url);
-        return peticioDeFirmaID2;
+        return peticioDeFirmaID;
     }
 
     @Override
