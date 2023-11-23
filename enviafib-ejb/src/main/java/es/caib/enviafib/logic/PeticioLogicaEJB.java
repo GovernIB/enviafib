@@ -298,10 +298,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
         //sdf.format(new Date(System.currentTimeMillis()))
         
-        String title = "ENVIAFIB_" + titolPeticio;
-        if(title.length() > 250) {
-            title = title.substring(0, 250);
-        }
+        String title = titolPeticio.length() > 250 ? titolPeticio.substring(0, 250) : titolPeticio;
+
         final String description = "Firma des d´EnviaFIB. Tipus: " + tipusPeticio;
         final String reason = "Firma des de EnviaFIB.";
         FirmaAsyncSimpleFile originalDetachedSignature = null;
