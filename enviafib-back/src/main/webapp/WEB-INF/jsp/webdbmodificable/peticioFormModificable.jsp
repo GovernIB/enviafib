@@ -22,6 +22,7 @@
     </div>
     <div class="loader" style="display: none; list-style-type: none;"></div>
 
+    <div id="btn-clear-files" class="btn-secondary" onclick="clearAllFiles()"><fmt:message key="btn.clear.all.files" /></div>
     <ul id="ul_files"></ul>
     <script type="text/javascript">    
 
@@ -53,8 +54,12 @@
 //        $(".tab_container").append('<h5><fmt:message key="dragdrop.title"/><h5>');   
         $("#peticio_tableid").append($("#peticio_idiomaDoc_rowid"));   
         $("#peticio_tableid").append($("#peticio_fitxerID_rowid"));   
+        
+        $(".tab_container").append($("#btn-clear-files"));   
         $(".tab_container").append($("#ul_files"));   
         $(".tab_container").append($(".droparea"));  
+        
+        $("#btn-clear-files").hide();
         
         var pdfFilesInput = document.getElementById('fitxerID');
         pdfFilesInput.setAttribute('multiple', true);
@@ -107,6 +112,12 @@
 
     	var ul_files = document.getElementById("ul_files");
         ul_files.innerHTML = "";
+        
+        if (ALL_FILES.length > 0) {
+            $("#btn-clear-files").show();
+		}else{
+            $("#btn-clear-files").hide();
+		}
         
         for (var i = 0; i < ALL_FILES.length; i++) {
 
@@ -176,86 +187,94 @@
     	ALL_FILES.splice(id, 1);
     	refreshFileList(ALL_FILES);
     }
-     </script>
+
+    function clearAllFiles(){
+    	ALL_FILES = [];
+        refreshFileList(ALL_FILES);
+    }
+</script>
 
     <style>
 .droparea {
-    margin: 1rem auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
-    border: 3.5px dashed darkslategray;
-    border-radius: 15px;
-    width: 100%;
+	margin: 1rem auto;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	border: 3.5px dashed darkslategray;
+	border-radius: 15px;
+	width: 100%;
 }
 
 .draging {
-    background-color: rgba(0, 195, 255, 0.1);
-    border: 3.5px solid black;
+	background-color: rgba(0, 195, 255, 0.1);
+	border: 3.5px solid black;
 }
 
 .dragdrop_text {
-    color: orange;
-    font-size: 1.5rem;
+	color: orange;
+	font-size: 1.5rem;
 }
 
 .loader {
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: 1000;
-    background: #fcfcfc
-        url("https://cdn.dribbble.com/users/765253/screenshots/2540865/loader.gif")
-        no-repeat scroll center center;
-    top: 0;
-    left: 0;
-    opacity: 0.8;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	z-index: 1000;
+	background: #fcfcfc
+		url("https://cdn.dribbble.com/users/765253/screenshots/2540865/loader.gif")
+		no-repeat scroll center center;
+	top: 0;
+	left: 0;
+	opacity: 0.8;
 }
 
 #peticio_tableid {
-    margin: auto;
+	margin: auto;
 }
 
 #peticio_tableid>tbody>tr>td:first-child {
-    font-weight: bold;
-    text-align: right;
-    padding: 1rem;
+	font-weight: bold;
+	text-align: right;
+	padding: 1rem;
 }
 
 td label {
-    font-size: 0.9rem;
-    margin: 0;
+	font-size: 0.9rem;
+	margin: 0;
 }
 
-.eliminarFitxer{
-    border-radius: 4px;
-
+.eliminarFitxer {
+	border-radius: 4px;
 	padding-left: 6px;
 	margin-left: 10px;
-
 	margin-right: 0px;
 	padding-right: 6px;
 }
 
-.div_hiddenFile{
-    background-color: rgba(255,149,35,0.5);
-    
-    float: left;
-    border-radius: 5px;
-
-    padding: 2px 8px;
-    margin: 5px 10px;
+.div_hiddenFile {
+	background-color: rgba(255, 149, 35, 0.5);
+	float: left;
+	border-radius: 5px;
+	padding: 2px 8px;
+	margin: 5px 10px;
 }
 
-#ul_files{
+#ul_files {
 	list-style: none;
-    margin: 1rem 3rem 0rem;
+	margin: 1rem 3rem 0rem;
 	display: inline-block;
- }
+}
 
+#btn-clear-files {
+	float: right;
+	margin-right: 3rem;
+	color: white;
+	padding: 0.3rem 0.7rem;
+	border-radius: 5px;
+}
 </style>
 
 </c:if>
