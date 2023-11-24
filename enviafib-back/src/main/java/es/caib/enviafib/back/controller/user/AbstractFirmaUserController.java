@@ -567,6 +567,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             ProgresInfo pi = new ProgresInfo(nFitxers, 0);
             request.getSession().setAttribute(SESSION_PROGRES_KEY, pi);
+
+            
+            String flowTemplateId = peticioForm.getPeticio().getPeticioPortafirmes();
             
             int i;
             for (i = 0; i < nFitxers; i++) {
@@ -586,8 +589,14 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                 log.info("\n\nSTART CREATE POST");
 
+                if (petFor.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI
+                        || petFor.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT) {
+                    petFor.setPeticioPortafirmes(flowTemplateId);
+                }
+                
                 String ret = super.crearPeticioPost(peticioForm, result2, request, response);
                 petFor = peticioForm.getPeticio();
+                
 
                 log.info("POST: ret=" + ret);
                 if (ret == null) {
