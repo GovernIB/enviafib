@@ -251,10 +251,17 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             }
 
             if (peticio.getInfoArxiuID() == null) {
-                filterForm.addAdditionalButtonByPK(peticioID,
-                        new AdditionalButton("fas fa-trash ", "peticio.btn.delete", "javascript: openModal('"
-                                + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-                                "btn-danger"));
+                String reason = peticio.getReason();
+
+                if (estat == Constants.ESTAT_PETICIO_EN_PROCES && reason != null
+                        && reason.equals(Constants.FIRMADA_PARCIAL)) {
+                    log.info("La peticio " + peticio.getPeticioID() + " ja te una firma i no es pot esborrar");
+                } else {
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-trash ", "peticio.btn.delete", "javascript: openModal('"
+                                    + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
+                                    "btn-danger"));
+                }
             }
         }
     }

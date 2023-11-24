@@ -398,29 +398,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
-//    @Override
-//    @PermitAll
-//    @Asynchronous
-//    public void cosesAFerPeticioFirmadaPart2(long portaFIBID, String languageUI, InfoSignatura infoSignatura)
-//            throws I18NException {
-//
-//        Long peticioID = getPeticioIdFromPortafibId(portaFIBID);
-//
-//        Peticio peticio = this.findByPrimaryKey(peticioID);
-//
-//        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-//        this.update(peticio);
-//
-//        log.info("cosesAFerPeticioFirmada():: Guardam dins arxiu de forma asyncrona .... ");
-//
-//        guardarFitxerArxiuSync(peticio.getPeticioID(), languageUI, infoSignatura, Configuracio.getUrlBase());
-//
-//        //guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
-//
-//        log.info("cosesAFerPeticioFirmada()::  SORTIM !!!!! ");
-//    }
-
-
     @Override
     @PermitAll
     @Asynchronous
@@ -473,18 +450,23 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
-    /*
-    protected void guardarFitxerArxiu(long peticioID, String languageUI, InfoSignaturaJPA infoSignatura)
-            throws I18NException {
+    public void cosesAFerPeticioFirmaParcial(long portafibID) throws I18NException {
+
+        Long peticioID = getPeticioIdFromPortafibId(portafibID);
     
+        log.info("cosesAFerPeticioFirmaParcial():: Informam al camp REASON de la petició .... ");
         Peticio peticio = findByPrimaryKey(peticioID);
-        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-        this.update(peticio);
-    
-        guardarFitxerArxiuAsync(peticioID, languageUI, infoSignatura);
-    
+        
+        String reason = peticio.getReason();
+        
+        if (reason != null && reason.trim().length() > 0) {
+            log.info("Ja tenia firma parcial: " + reason);
+        }else {
+            peticio.setReason(Constants.FIRMADA_PARCIAL);
+            this.update(peticio);
+            log.info("Nou camp reason: " + peticio.getReason());
+        }
     }
-    */
 
     @Override
     @PermitAll

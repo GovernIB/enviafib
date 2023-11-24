@@ -53,6 +53,8 @@ public interface PeticioLogicaService extends PeticioService {
     public InfoSignaturaJPA cosesAFerPeticioFirmadaPart1(long portafibID, String languageUI) throws I18NException;
     
     public void cosesAFerPeticioFirmadaPart2(long portafibID, String languageUI, InfoSignatura infoSignatura) throws I18NException;
+
+    public void cosesAFerPeticioFirmaParcial(long portafibID) throws I18NException;
     
     public void reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException;
 

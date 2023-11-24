@@ -99,6 +99,10 @@ public class PortaFIBCallbackRestService {
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_FIRMA_PARCIAL: {
                     log.info("NOTIFICACIOAVIS_FIRMA_PARCIAL = " + eventID);
+                    
+                    Long portafibID = event.getSigningRequest().getID();
+                    peticioLogicaEjb.cosesAFerPeticioFirmaParcial(portafibID);
+                    
                 }
                 break;
 
