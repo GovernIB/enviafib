@@ -87,6 +87,9 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             usuariFilterForm.addAdditionalButton(new AdditionalButton("fas fa-plus-circle", "nouflux",
                     getContextWeb() + "/crearflux", "btn-success"));
             
+            usuariFilterForm.addAdditionalButton(new AdditionalButton("fas fa-list", "back.to.list",
+                    LlistatPeticionsUserController.CONTEXT_WEB + "/list", "btn-primary"));
+            
             usuariFilterForm.setAttachedAdditionalJspCode(true);
         }
 

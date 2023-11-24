@@ -28,26 +28,26 @@ function editarFlux(url) {
     });
 
     $('#peticio_listheader label').addClass('titol-llistat');
+    
 </script>
 
 <style>
-
 table {
-    width: 100% !important;
-    text-align: center;
+	width: 100% !important;
+	text-align: center;
 }
 
 th {
-    border-bottom-width: 3px !important;
-    background-image: none !important;
+	border-bottom-width: 3px !important;
+	background-image: none !important;
 }
 
 th span {
-    cursor: pointer !important;
+	cursor: pointer !important;
 }
 
-td{
-    vertical-align: middle !important;
+td {
+	vertical-align: middle !important;
 }
 
 /* td:nth-child(1), td:nth-child(3) {
@@ -59,37 +59,42 @@ td:nth-child(2) {
 }
 
  */
- 
 td:last-child {
-    width: 0px;
-    text-align: left;
+	width: 0px;
+	text-align: left;
 }
 
 .titol-llistat {
-    font-weight: 400 !important;
-    margin: 0px;
+	font-weight: 400 !important;
+	margin: 0px;
 }
 
 .a_item {
-    margin: 0 !important;
-    color: black !important;
-    background-color: transparent !important;
-    border: none;
+	margin: 0 !important;
+	color: black !important;
+	background-color: transparent !important;
+	border: none;
 }
 
 .a_item:hover {
-    color: white !important;
+	color: white !important;
 }
 
 .a_item svg {
-    min-width: 1rem;
+	min-width: 1rem;
 }
 
 .dropdown .btn-secondary {
-    margin: 0 5px;
-}
-.dropdown-menu {
-    margin-top: 0px;
+	margin: 0 5px;
 }
 
+.dropdown-menu {
+	margin-top: 0px;
+}
+
+#usuari_listheader a {
+	margin-right: 1rem;
+	padding: 0.3rem 0.7rem;
+	font-size: initial;
+}
 </style>
