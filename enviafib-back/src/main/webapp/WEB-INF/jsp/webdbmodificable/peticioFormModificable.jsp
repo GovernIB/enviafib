@@ -159,7 +159,7 @@
     
     
     document.getElementById("fitxerID").onchange = function() {
-    	ALL_FILES = [];
+    	//ALL_FILES = [];
     	
     	var files = this.files;
 
