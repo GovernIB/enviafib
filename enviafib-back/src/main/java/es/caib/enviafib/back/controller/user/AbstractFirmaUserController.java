@@ -186,6 +186,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
+                case Constants.ESTAT_PETICIO_REBUTJADA:
                     hiddens.remove(DATAFINAL);
                     hiddens.remove(ERRORMSG);
                     if (peticioForm.getPeticio().getErrorException() != null) {

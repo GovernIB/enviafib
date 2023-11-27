@@ -436,7 +436,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Peticio peticio = peticioList.get(0);
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
-        peticio.setEstat(Constants.ESTAT_PETICIO_ERROR);
+        peticio.setEstat(Constants.ESTAT_PETICIO_REBUTJADA);
 
         String msg = I18NCommonUtils.tradueix(new Locale(peticio.getIdiomaID()), "peticio.motiu.rebuig", motiuRebuig);
         peticio.setErrorMsg(LogicUtils.split255(msg));
@@ -706,6 +706,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         break;
                         case Constants.ESTAT_PETICIO_ARXIVANT:
                             code = "email.peticio.body.arxivant";
+                        break;
+                        case Constants.ESTAT_PETICIO_REBUTJADA:
+                            code = "email.peticio.body.rebutjada";
                         break;
                         case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
                         case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT: {
@@ -1215,7 +1218,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             Where w1 = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
 
-            Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR };
+            Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR , Constants.ESTAT_PETICIO_REBUTJADA};
             Where w2 = PeticioFields.ESTAT.in(estats);
 
             Where w3 = PeticioFields.PETICIOPORTAFIRMES.notLike(prefixeEsborrat);

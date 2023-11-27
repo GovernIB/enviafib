@@ -46,7 +46,7 @@ public class LlistatPeticionsRebutjadesUserController extends LlistatPeticionsUs
 
         final Where defaultCondition = super.getAdditionalCondition(request);
 
-        Integer[] estats = { Constants.ESTAT_PETICIO_ERROR };
+        Integer[] estats = { Constants.ESTAT_PETICIO_ERROR, Constants.ESTAT_PETICIO_REBUTJADA};
 
         return Where.AND(defaultCondition, ESTAT.in(estats));
 

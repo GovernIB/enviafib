@@ -197,6 +197,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                         iconList.add("fas fa-archive");
                     }
                 break;
+                
+                case Constants.ESTAT_PETICIO_REBUTJADA:
+                    color = "red";
+                    iconList.add("fas fa-times-circle");
+                    break;
+
 
                 default:
                     color = "#f128";
