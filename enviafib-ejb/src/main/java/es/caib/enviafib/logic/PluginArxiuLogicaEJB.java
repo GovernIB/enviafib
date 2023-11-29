@@ -546,6 +546,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
     }
 
+    
     protected boolean tancarExpedient(Peticio peticio, IArxiuPlugin plugin, String expedientId) {
         boolean tancatExpedient;
         log.info("XYZ ZZZ  Tancant Expedient ... ");

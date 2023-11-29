@@ -188,8 +188,9 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             }
         }
         
-
-        log.info("numErrorsArxivant=" +numErrorsArxivant + " size()=" + list.size());
+        if (numErrorsArxivant > 0) {
+            log.info("numErrorsArxivant=" +numErrorsArxivant + " size()=" + list.size());
+        }
         
         filterForm.getAdditionalButtons().clear();
         boolean botonOculto = false;

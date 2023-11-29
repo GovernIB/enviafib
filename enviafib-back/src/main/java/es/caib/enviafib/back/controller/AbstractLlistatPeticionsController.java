@@ -342,7 +342,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             peticioLogicaEjb.reintentarTancarExpedient(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
 
-            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
+            HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.tancarexpedient.reintent.success"));
 
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);

@@ -10,7 +10,9 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -558,6 +560,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
+        }else {
+            throw new I18NException("genapp.comodi", peticio.getErrorMsg());
         }
     }    
     
@@ -1358,10 +1362,25 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     public void initScheduler() {
         ScheduleExpression schedule = new ScheduleExpression();
-        
+
         String hora, h, m;
         try {
+            Collection<Timer> allTimers = ejbTimerService.getAllTimers();
+
+            if (allTimers.size() == 1) {
+                log.info("initScheduler:: Schedule per tancament d'expedients JA ESTAVA CREAT: "
+                        + allTimers.iterator().next().toString());
+                return;
+            } else {
+                log.info("initScheduler:: havia " + allTimers.size() + " timers");
+                
+                for (Timer timer : allTimers) {
+                    timer.cancel();
+                }
+            }
+
             hora = Configuracio.getHoraTancamentExpedientsScheduler();
+//            hora = "13:33";
             h = hora.split(":")[0];
             m = hora.split(":")[1];
 
@@ -1377,10 +1396,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
         schedule.hour(h);
         schedule.minute(m);
+        Timer newTimer = ejbTimerService.createCalendarTimer(schedule);
 
-        Timer timer = ejbTimerService.createCalendarTimer(schedule);
+        log.info("initScheduler:: CREAT Schedule per tancar expedients:" + newTimer.toString());
+        log.info("Timers finals");
+        for (Timer timer : ejbTimerService.getAllTimers()) {
+            log.info("initScheduler:: timer: " + timer.toString());
+        }
 
-        log.info("Calendar based programmatic timer " + timer.toString() + " created");
     }
 
     @Timeout
@@ -1389,7 +1412,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
-
+        
         Integer[] estatsPendents = { Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT,
                 Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT };
 
@@ -1397,17 +1420,21 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             //Llistat de peticions pendents de tancar expedient: 
             List<Peticio> peticions = this.select(PeticioFields.ESTAT.in(estatsPendents));
 
+            log.info("Expedients que s'han de tancar: " + peticions.size());
+            
+            int i = 1;
             for (Peticio peticio : peticions) {
                 Long peticioID = peticio.getPeticioID();
 
                 String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
                         PETICIOID.equal(peticioID));
+                log.info("Tancarem expedient " + i + " de " + peticions.size());
 
                 boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, expedientID);
                 this.update(peticio);
 
                 if (tancatExpedient) {
-                    log.info("Expedient de la petició " + peticioID + " tancat correctament");
+                    log.info("Expedient de la petició " + peticioID + " tancat correctament. ExpedientID: " + expedientID);
                 } else {
                     log.error("Error tancant expedient de la petició " + peticioID + ": " + peticio.getErrorMsg());
 
@@ -1415,9 +1442,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
                 //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
                 if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-                    log.warn("Timeout.");
+                    log.warn("Timeout. Hem processat " + i + " expedients");
                     break;
                 }
+                i++;
             }
         } catch (I18NException e) {
 
