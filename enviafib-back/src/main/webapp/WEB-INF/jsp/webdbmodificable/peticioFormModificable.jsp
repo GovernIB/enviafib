@@ -274,6 +274,7 @@ td label {
 	color: white;
 	padding: 0.3rem 0.7rem;
 	border-radius: 5px;
+	cursor: pointer;
 }
 </style>
 

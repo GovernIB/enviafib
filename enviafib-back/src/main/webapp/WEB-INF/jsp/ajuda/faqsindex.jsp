@@ -33,6 +33,7 @@
 
 .faq-index-pregunta {
 	padding: 4px 8px;
+	cursor: pointer;
 }
 
 #principal {
