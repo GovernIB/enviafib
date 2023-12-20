@@ -11,7 +11,7 @@
         </p>
 
         <input type="hidden" name="myHiddenInput" id="myHiddenInput">
-        <input type="hidden" name="nFitxers" id="nFitxers">
+        <input type="hidden" name="fileInfoFlag" id="fileInfoFlag">
 
         <div id="progress_bar" class="progress" style="display: none;">
             <div class="progress-bar progress-bar-striped active"
@@ -24,9 +24,12 @@
 
     <div id="btn-clear-files" class="btn-secondary" onclick="clearAllFiles()"><fmt:message key="btn.clear.all.files" /></div>
     <ul id="ul_files"></ul>
-    <script type="text/javascript">    
+
+
+	<script type="text/javascript">    
 
     var ALL_FILES = [];
+    var FLAG = "";
     
     const initApp = () => {
         const droparea = document.querySelector('.droparea');
@@ -75,8 +78,10 @@
         
         for (var i = 0; i < files.length; i++) {
         	var myFile = files.item(i);
+        	myFile.tipo = "fitxer";
         	if (myFile.type ===  "application/pdf") {
         	    ALL_FILES.push(myFile);
+                FLAG += "F";
 			}
         }
         
@@ -87,7 +92,7 @@
         }, 500);
     }
     
-     var classList = document.getElementById("peticio_tableid").classList;
+    var classList = document.getElementById("peticio_tableid").classList;
     while (classList.length > 0) {
        classList.remove(classList.item(0));
     }
@@ -119,45 +124,145 @@
             $("#btn-clear-files").hide();
 		}
         
-        for (var i = 0; i < ALL_FILES.length; i++) {
-
+        var i = 0;
+        //UTILIZAR EL FLAG PARA TRATAR COMO FICHERO O ADJUNTO.
+        while (i < ALL_FILES.length){
+        	
             var li_input = document.createElement("li");
-            li_input.setAttribute("id", "div_hiddenFile" + i );
-            li_input.setAttribute("class", "div_hiddenFile" );
+            li_input.setAttribute("id", "li_file" + i );
+            li_input.setAttribute("class", "li_file" );
 
-            var input = document.createElement("input");
-            input.setAttribute("type", "file");
-            input.setAttribute("id", "hiddenFile" + i );
-            input.setAttribute("name", "hiddenFile" );
-            input.setAttribute("value", "hiddenFile" + i );
-            input.setAttribute("style", "display:none");
-            input.setAttribute("oninput", "");
+            if (FLAG.charAt(i) === "F") {
+                var div_file = document.createElement("div");
+                div_file.setAttribute("id", "div_file" + i );
+                div_file.setAttribute("class", "div_file" );
+                
+                var input = document.createElement("input");
+                input.setAttribute("type", "file");
+                input.setAttribute("id", "hiddenFile" + i );
+                input.setAttribute("name", "hiddenFile" );
+                input.setAttribute("value", "hiddenFile" + i );
+                input.setAttribute("style", "display:none");
+                input.setAttribute("oninput", "");
 
-            var a = document.createElement("a");
-            a.setAttribute("id", "eliminarFitxer" + i );
-            a.setAttribute("class", "eliminarFitxer bg-aplicacio");
-            a.setAttribute("style", "cursor:pointer");
-            a.setAttribute("onclick", "deleteFitxer(ALL_FILES, " + i + " )");
-            a.innerHTML = '<span class="label label-success"><b><i class="fas fa-times"></i></b></span>';
-            
-            li_input.innerHTML = ALL_FILES[i].name;
-            li_input.appendChild(input);
-            li_input.appendChild(a);
-           
-            ul_files.appendChild(li_input);
+                var anex_aux= document.createElement("input");
+                anex_aux.setAttribute("type", "file");
+                anex_aux.setAttribute("id", "anex_aux" + i );
+                anex_aux.setAttribute("name", "anex_aux" );
+                anex_aux.setAttribute("value", "anex_aux" + i );
+                anex_aux.setAttribute("style", "display:none");
+                anex_aux.setAttribute("oninput", "afegirAnex(this, " + i + " )");
+                anex_aux.setAttribute('multiple', true);
+                
+                var div_botonera = document.createElement("div");
+                div_botonera.setAttribute("id", "botonera" + i );
+                div_botonera.setAttribute("class", "botonera");
+                
+                var btn_delete = document.createElement("a");
+                btn_delete.setAttribute("id", "eliminarFitxer" + i );
+                btn_delete.setAttribute("class", "eliminarFitxer bg-aplicacio");
+                btn_delete.setAttribute("onclick", "deleteFitxer(ALL_FILES, " + i + " )");
+                btn_delete.innerHTML = '<span class="label label-success"><b><i class="fas fa-times"></i></b></span>';
+                
+                var btn_afegir_anex = document.createElement("label");
+                btn_afegir_anex.setAttribute("id", "afegirAnex" + i );
+                btn_afegir_anex.setAttribute("for", "anex_aux" + i );
+                btn_afegir_anex.setAttribute("class", "afegirAnex bg-aplicacio");
+                btn_afegir_anex.innerHTML = '<span class="label label-success"><b><i class="fas fa-plus"></i></b></span>';
 
-            //Afegim el fitxer al input amb un fileList
-            let list = new DataTransfer();
-            let file = ALL_FILES[i];
-            list.items.add(file);
-            //També l'afegim al llistat total de fitxers, per enviar-los tots
-            fullList.items.add(file);
+                div_botonera.appendChild(btn_afegir_anex);
+                div_botonera.appendChild(btn_delete);
+                
+                var titolFitxer = document.createElement("span");
+                titolFitxer.setAttribute("style", "width: fit-content");
+                titolFitxer.innerHTML = ALL_FILES[i].name;
+                
+                div_file.appendChild(input);
+                div_file.appendChild(anex_aux);
+                div_file.appendChild(titolFitxer);
+                div_file.appendChild(div_botonera);
+                
+                
+                //Afegim el fitxer al input amb un fileList
+                let list = new DataTransfer();
+                let file = ALL_FILES[i];
+                list.items.add(file);
+                
+                //També l'afegim al llistat total de fitxers, per enviar-los tots
+                fullList.items.add(file);
 
-            let myFileList = list.files;
-            input.files = myFileList;
+                let myFileList = list.files;
+                input.files = myFileList;
+                
+                li_input.appendChild(div_file);
+                
+                //Cuando hemos añadido el fichero, comprovamos si el siguiente es su anexo...
+                
+                var div_attached = document.createElement("div");
+                div_attached.setAttribute("id", "div_attached" + i );
+                div_attached.setAttribute("class", "div_attached" );
+
+                var ul_attached = document.createElement("ul");
+                ul_attached.setAttribute("id", "ul_attached" + i );
+                ul_attached.setAttribute("class", "ul_attached" );
+                
+                i++;
+                //Si el siguiente es anexo, añadelo. Si no, añadimos otro fichero
+                while (FLAG.charAt(i) === "A"){
+                	console.log("fichero: " + i);
+                	
+                    var li_anex = document.createElement("li");
+                    li_anex.setAttribute("id", "li_anex" + i );
+                    li_anex.setAttribute("class", "li_anex" );
+                    
+                    var input_anex = document.createElement("input");
+                    input_anex.setAttribute("type", "file");
+                    input_anex.setAttribute("id", "input_anex" + i );
+                    input_anex.setAttribute("name", "hiddenFile" );
+                    input_anex.setAttribute("value", "input_anex" + i );
+                    input_anex.setAttribute("style", "display:none");
+                    input_anex.setAttribute("oninput", "");
+
+                    var btn_delete_anex = document.createElement("a");
+                    btn_delete_anex.setAttribute("id", "eliminarAnex" + i );
+                    btn_delete_anex.setAttribute("class", "eliminarAnex btn-primary");
+                    btn_delete_anex.setAttribute("style", "cursor:pointer");
+                    btn_delete_anex.setAttribute("onclick", "deleteFitxer(ALL_FILES, " + i + " )");
+                    btn_delete_anex.innerHTML = '<span class="label label-success"><b><i class="fas fa-times"></i></b></span>';
+                    
+                    li_anex.innerHTML = ALL_FILES[i].name;
+                    li_anex.appendChild(input_anex);
+                    li_anex.appendChild(btn_delete_anex);
+                    
+                    ul_attached.appendChild(li_anex);
+                    
+                    //Afegim el fitxer al input amb un fileList
+                    let list = new DataTransfer();
+                    let file = ALL_FILES[i];
+                    list.items.add(file);
+                    
+                    //També l'afegim al llistat total de fitxers, per enviar-los tots
+                    fullList.items.add(file);
+
+                    let myFileList = list.files;
+                    input_anex.files = myFileList;
+                    
+                    i++;
+                }
+                div_attached.appendChild(ul_attached);
+                
+                //Cuando hemos rellenado el div con el ul con anexos. Lo añadimos al li. Puede estar vacio      
+                li_input.appendChild(div_attached);
+                ul_files.appendChild(li_input);
+                
+            }else{
+            	//No puede empezar por anex.
+            	i++;
+            }
         }
         
         document.getElementById("fitxerID").files = fullList.files;
+        document.getElementById("fileInfoFlag").value = FLAG;
         
         var fileLabel= $("#fitxerID-custom-file-label");
         if (ALL_FILES.length == 0) {
@@ -176,20 +281,60 @@
 
         for (var i = 0; i < files.length; i++) {
             var myFile = files.item(i);
+            myFile.tipo = "fitxer";
             if (myFile.type ===  "application/pdf") {
                 ALL_FILES.push(myFile);
+                FLAG += "F";
             }
         }
         refreshFileList(ALL_FILES);
     };
     
     function deleteFitxer(ALL_FILES, id){
-    	ALL_FILES.splice(id, 1);
-    	refreshFileList(ALL_FILES);
+    	var tmp = FLAG.split('');
+
+    	if(tmp[id] === "F"){
+          ALL_FILES.splice(id, 1);
+    	  tmp.splice(id, 1);
+    	  
+    	  while(id < tmp.length && tmp[id] === "A"){
+            ALL_FILES.splice(id, 1);
+            tmp.splice(id, 1);
+    	  }
+    	  
+    	}else if(tmp[id] === "A"){
+          ALL_FILES.splice(id, 1);
+          tmp.splice(id, 1);
+    	}
+    	
+        FLAG = tmp.join('');
+        console.log(FLAG);
+        refreshFileList(ALL_FILES);
     }
 
+    function afegirAnex(elem, id){
+    	
+        var files = elem.files;
+        id++;
+        for (var i = 0; i < files.length; i++) {
+            var myFile = files.item(i);
+            myFile.tipo = "anex";
+//            if (myFile.type ===  "application/pdf") {
+                ALL_FILES.splice(id, 0, myFile);
+                var output = [FLAG.slice(0, id), "A", FLAG.slice(id)].join('');
+                FLAG = output;
+                console.log(FLAG);
+  //          }
+        }
+        
+        refreshFileList(ALL_FILES);
+     }
+
+    
     function clearAllFiles(){
     	ALL_FILES = [];
+        FLAG = "";
+
         refreshFileList(ALL_FILES);
     }
 </script>
@@ -246,26 +391,48 @@ td label {
 	margin: 0;
 }
 
-.eliminarFitxer {
+.eliminarAnex, .afegirAnex, .eliminarFitxer {
 	border-radius: 4px;
 	padding-left: 6px;
-	margin-left: 10px;
+	margin-left: 6px;
 	margin-right: 0px;
 	padding-right: 6px;
+	cursor: pointer;
+	display: inline;
 }
 
-.div_hiddenFile {
+.afegirAnex:hover{
+    background-color: rgba(36, 110, 185, 0.8) !important
+}
+
+.eliminarFitxer:hover {
+    background-color: #f56545 !important
+}
+
+.afegirAnex {
+	font-size: 1rem;
+}
+
+.div_file {
 	background-color: rgba(255, 149, 35, 0.5);
-	float: left;
 	border-radius: 5px;
-	padding: 2px 8px;
+	padding: 3px 8px;
 	margin: 5px 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.li_file {
+	float: left;
 }
 
 #ul_files {
 	list-style: none;
 	margin: 1rem 3rem 0rem;
 	display: inline-block;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 #btn-clear-files {
@@ -275,6 +442,23 @@ td label {
 	padding: 0.3rem 0.7rem;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+.li_anex {
+	background-color: rgba(36, 110, 185, 0.5);
+	border-radius: 5px;
+	padding: 2px 8px;
+	margin: 5px 10px;
+	width: fit-content;
+}
+
+.ul_attached {
+	list-style: disclosure-closed;
+	margin-left: 1rem;
+}
+
+.botonera{
+  margin-left: 0.5rem;
 }
 </style>
 
@@ -412,12 +596,65 @@ mostrarOcultarCampsAvanzats();
 
 var peticionsTotals = -1;
 
-function enviar(){
+function validacioFormulario() {
+	//<span id="peticio.dataCreacio.errors" class="errorField alert alert-danger">El camp Creada és obligatori.</span>
+	var validacio = true;
+	$(".errorField").remove();
 	
-	var intervalID = setInterval(myCallback, 10);
+	
+    var fitxerID = document.getElementById("fitxerID");
+    if (fitxerID.value === "") {
+        var span = document.createElement("span");
+        span.id = "peticio.fitxerID.errors";
+        span.classList = "errorField alert alert-danger";
+        span.innerHTML = "No hi ha fitxers per enviar.";
+        $("#peticioForm").prepend(span);
+        validacio &= false;
+    }
+    var titol = document.getElementById("peticio.nom");
+    if (titol.value === "") {
+        var span = document.createElement("span");
+        span.id = "peticio.nom.errors";
+        span.classList = "errorField alert alert-danger";
+        span.innerHTML = "El camp Titol és obligatori.";
+        titol.parentElement.prepend(span);
+        validacio &= false;
+    }
+
+    var nif = document.getElementById("peticio.destinatariNif");
+    var regex = /^[0-9]{8,8}[A-Za-z]$/;
+    if (!regex.test(nif.value)) {
+        var span = document.createElement("span");
+        span.id = "peticio.destinatariNif.errors";
+        span.classList = "errorField alert alert-danger";
+        span.innerHTML = "El camp NIF no té el format correcte.";
+        nif.parentElement.prepend(span);
+        validacio &= false;
+    }
+
+    var tipusDoc = document.getElementById("peticio_tipusDocumental");
+    if (tipusDoc.value === "") {
+        var span = document.createElement("span");
+        span.id = "peticio_tipusDocumental.errors";
+        span.classList = "errorField alert alert-danger";
+        span.innerHTML = "El Tipus documental és obligatori.";
+        tipusDoc.parentElement.prepend(span);
+        validacio &= false;
+    }
+    return validacio;
+}
+
+
+function enviar(){
+
+	if(validacioFormulario()){
+		var intervalID = setInterval(myCallback, 10);
+	    $("#progresModal").modal('show');
+	    document.getElementById('peticioForm').submit();
+	}
+	
 
 	function myCallback() {
-		
 		  var xhttp = new XMLHttpRequest();
 		    xhttp.onreadystatechange = function() {
 
@@ -454,14 +691,15 @@ function enviar(){
 		    xhttp.setRequestHeader("Content-type", "application/json");
 		    xhttp.send('');
 	}
-	
-	$("#progresModal").modal('show');
-	document.getElementById('peticioForm').submit();
 }
 
 </script>
 
-
-
+<<style>
+.errorField{
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+}
+</style>
 
 

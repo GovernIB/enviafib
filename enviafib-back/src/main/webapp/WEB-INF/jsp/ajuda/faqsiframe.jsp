@@ -89,13 +89,19 @@
 </div>
 
 <style>
+#contingut * {
+	max-width: 100%;
+}
+
 #faq_list_div {
-	width: 75%;
+	width: 90%;
 }
 
 .faq_row {
-/* 	padding: 0 1rem;
- */}
+	/* 	padding: 0 1rem;
+ */
+	
+}
 
 .pregunta {
 	word-wrap: break-word;

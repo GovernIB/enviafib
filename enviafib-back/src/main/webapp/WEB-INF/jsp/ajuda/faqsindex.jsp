@@ -57,23 +57,30 @@
 <script type="text/javascript">
             document.getElementById("thumbnailmenu").classList = "";
             $("#ocultarMenu").css("display", "none");
-
+            
+            var menu = $('#thumbnailmenu');
+            var topMenu = menu.position().top;
+            
             $(window).scroll(function (e) {
-                var $el = $('#thumbnailmenu');
-                var isPositionFixed = ($el.css('position') == 'fixed');
-                if ($(this).scrollTop() > 150 && !isPositionFixed) {
-                    $el.css({
-                        'position': 'fixed',
-                        'top': '25px'
-                    });
-                }
-                if ($(this).scrollTop() < 150 && isPositionFixed) {
-                    $el.css({
-                        'position': 'static',
-                        'top': '0px'
-                    });
-                }
-            });
+	           	var isPositionFixed = (menu.css('position') == 'fixed');
+	           	
+	           	console.log($(this).scrollTop() + " " + topMenu + " " + isPositionFixed);
+	           	
+	           	if ($(this).scrollTop() > (topMenu - 25) && !isPositionFixed) {
+	           		console.log("uep");
+	           		menu.css({
+	           			'position': 'fixed',
+	           	        'top': '25px'
+	           	    });
+	           	}
+	           	if ($(this).scrollTop() < (topMenu - 25) && isPositionFixed) {
+                    console.log("No uep");
+	           		menu.css({
+	           			'position': 'static',
+	           	        'top': '0px'
+	           	     });
+           	    }
+	         });
 
 
             function gotofaq(faqid) {
