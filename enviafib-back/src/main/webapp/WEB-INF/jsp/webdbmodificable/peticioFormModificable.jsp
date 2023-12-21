@@ -22,7 +22,7 @@
     </div>
     <div class="loader" style="display: none; list-style-type: none;"></div>
 
-    <div id="btn-clear-files" class="btn-secondary" onclick="clearAllFiles()"><fmt:message key="btn.clear.all.files" /></div>
+    <div id="btn-clear-files" class="btn-danger" onclick="clearAllFiles()"><fmt:message key="btn.clear.all.files" /></div>
     <ul id="ul_files"></ul>
 
 
@@ -401,12 +401,14 @@ td label {
 	display: inline;
 }
 
-.afegirAnex:hover{
-    background-color: rgba(36, 110, 185, 0.8) !important
+.afegirAnex:hover {
+	background-color: #b96f24 !important
 }
-
 .eliminarFitxer:hover {
-    background-color: #f56545 !important
+	background-color: #c82333 !important
+}
+.eliminarAnex:hover {
+	background-color: #e04958 !important;
 }
 
 .afegirAnex {
@@ -457,8 +459,8 @@ td label {
 	margin-left: 1rem;
 }
 
-.botonera{
-  margin-left: 0.5rem;
+.botonera {
+	margin-left: 0.5rem;
 }
 </style>
 
@@ -695,7 +697,7 @@ function enviar(){
 
 </script>
 
-<<style>
+<style>
 .errorField{
       margin-bottom: 0.5rem;
       margin-top: 1rem;

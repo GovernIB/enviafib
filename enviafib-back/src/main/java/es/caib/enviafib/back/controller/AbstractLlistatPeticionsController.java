@@ -39,6 +39,7 @@ import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
+import es.caib.enviafib.persistence.PeticioJPA;
 import es.caib.enviafib.persistence.UsuariJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.DocumentContingut;
@@ -88,6 +89,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
         if (peticioFilterForm.isNou()) {
 
+            request.getSession().setAttribute("myContext", getContextWeb());
+
+            
             peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
 
             Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
@@ -221,6 +225,17 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             mapRemitent.put(peticioID, "<center>" + iconsStr.toString() + "</center>");
 
+
+            //Gestió annexos
+            {
+                Long annexes = infoAnexEjb.count(PETICIOID.equal(peticioID));
+                if (annexes > 0) {
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-folder-open",
+                            "user.veureannexes", "/" + (isAdmin()? "admin": "user") + "/infoAnnex/mostrarAnnexes/" + peticioID + "/toList", "btn-info"));
+                }
+            }
+
+            
             switch (estat) {
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:

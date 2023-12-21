@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
@@ -72,13 +73,16 @@ import org.jboss.ejb3.annotation.TransactionTimeout;
 
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.ejb.FitxerService;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
+import es.caib.enviafib.model.entity.InfoAnex;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
+import es.caib.enviafib.model.fields.InfoAnexFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
@@ -103,6 +107,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
     protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
+
+    @EJB(mappedName = es.caib.enviafib.ejb.InfoAnexService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.InfoAnexService infoAnexEjb;
 
     @EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
     protected es.caib.enviafib.ejb.UsuariService usuariEjb;
@@ -251,7 +258,16 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String idiomaDoc = peticio.getIdiomaDoc();
         String tipusDoc = peticio.getTipusDocumental();
 
-        FirmaAsyncSimpleFile fitxerAAnexar = null;
+        List<Long> anexes = infoAnexEjb.executeQuery(InfoAnexFields.ANEXID, InfoAnexFields.PETICIOID.equal(peticio.getPeticioID()));
+        
+        List <FirmaAsyncSimpleFile> fitxersAAnexar = new ArrayList<FirmaAsyncSimpleFile>();
+        for (Long anexID : anexes) {
+            FitxerJPA file = fitxerEjb.findByPrimaryKey(anexID);
+            fitxersAAnexar.add(getFitxer(file));
+            log.info("Afegit annex per enviar: " + anexID);
+        }
+        
+        
         ApiFirmaAsyncSimple api = null;
         api = getApiFirmaAsyncSimple();
         
@@ -259,7 +275,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         try {
             idPortafib = createSignatureRequestAndStart(languageUI, signatureBlocks, perfil, fitxerAFirmar,
-                    fitxerAAnexar, tipusDoc, idiomaDoc, api, peticio.getTipus(), peticio.getNom(), solicitant);
+                    fitxersAAnexar, tipusDoc, idiomaDoc, api, peticio.getTipus(), peticio.getNom(), solicitant);
 
             peticio.setPeticioPortafirmes(String.valueOf(idPortafib));
             peticio.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
@@ -274,20 +290,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     protected Long createSignatureRequestAndStart(String languageUI, FirmaAsyncSimpleSignatureBlock[] signatureBlocks,
-            String profileCode, FirmaAsyncSimpleFile fitxerAFirmar, FirmaAsyncSimpleFile fitxerAAnexar,
+            String profileCode, FirmaAsyncSimpleFile fitxerAFirmar, List<FirmaAsyncSimpleFile> fitxersAAnexar,
             String tipusDocumental, String idiomaDocumental, ApiFirmaAsyncSimple api, int tipusPeticio,
             String titolPeticio, Usuari solicitant) throws Exception {
 
         // Annexes
-        List<FirmaAsyncSimpleAnnex> annexs = null;
-        {
-            FirmaAsyncSimpleFile file = fitxerAAnexar;
-            if (file != null) {
+        List<FirmaAsyncSimpleAnnex> annexs = new ArrayList<FirmaAsyncSimpleAnnex>();
+        for (FirmaAsyncSimpleFile fileAnnex: fitxersAAnexar) {            
+            if (fileAnnex != null) {
                 boolean attach = true;
                 boolean sign = true;
-                FirmaAsyncSimpleAnnex annex = new FirmaAsyncSimpleAnnex(file, attach, sign);
-                annexs = new ArrayList<FirmaAsyncSimpleAnnex>();
+                FirmaAsyncSimpleAnnex annex = new FirmaAsyncSimpleAnnex(fileAnnex, attach, sign);
                 annexs.add(annex);
+                log.info("PORTAFIB: Afegit Annex");
             }
         }
 
@@ -863,6 +878,29 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignID);
             infoSignaturaLogicaEjb.delete(is);
         }
+    }
+
+    @Override
+    public void deleteIncludingFiles(Peticio instance, FitxerService fitxerEjb) throws I18NException {
+
+
+        List<Long> anexes = infoAnexEjb.executeQuery(InfoAnexFields.ANEXID,
+                InfoAnexFields.PETICIOID.equal(instance.getPeticioID()));
+
+        java.util.Set<Long> annexesEsborrar = new java.util.HashSet<Long>();
+        // Borram annexes a BD
+        for (Long annexID : anexes) {
+            if (annexID != null) {
+                infoAnexEjb.delete(InfoAnexFields.ANEXID.equal(annexID));
+                fitxerEjb.delete(annexID);
+                annexesEsborrar.add(annexID);
+            }
+        }
+        super.deleteIncludingFiles(instance, fitxerEjb);
+
+        // Borram fitxers fisic
+        __tsRegistry.registerInterposedSynchronization(
+                new es.caib.enviafib.ejb.utils.CleanFilesSynchronization(annexesEsborrar));
     }
 
     protected FirmaAsyncSimpleFile getFitxer(Fitxer fitxer) throws I18NException {

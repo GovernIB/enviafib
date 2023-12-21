@@ -11,6 +11,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
    private final GrupJPAManager efi_grup;
    private final GrupUsuariJPAManager efi_grupusuari;
    private final IdiomaJPAManager efi_idioma;
+   private final InfoAnexJPAManager efi_infoanex;
    private final InfoArxiuJPAManager efi_infoarxiu;
    private final InfoSignaturaJPAManager efi_infosignatura;
    private final MenuJPAManager efi_menu;
@@ -27,6 +28,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
     this.efi_grup = new GrupJPAManager(__em);
     this.efi_grupusuari = new GrupUsuariJPAManager(__em);
     this.efi_idioma = new IdiomaJPAManager(__em);
+    this.efi_infoanex = new InfoAnexJPAManager(__em);
     this.efi_infoarxiu = new InfoArxiuJPAManager(__em);
     this.efi_infosignatura = new InfoSignaturaJPAManager(__em);
     this.efi_menu = new MenuJPAManager(__em);
@@ -56,6 +58,10 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
     public IIdiomaManager getIdiomaManager() {
         return this.efi_idioma;
+    };
+
+    public IInfoAnexManager getInfoAnexManager() {
+        return this.efi_infoanex;
     };
 
     public IInfoArxiuManager getInfoArxiuManager() {

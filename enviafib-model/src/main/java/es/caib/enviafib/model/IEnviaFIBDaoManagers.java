@@ -8,6 +8,7 @@ public interface IEnviaFIBDaoManagers {
 	public IGrupManager getGrupManager();
 	public IGrupUsuariManager getGrupUsuariManager();
 	public IIdiomaManager getIdiomaManager();
+	public IInfoAnexManager getInfoAnexManager();
 	public IInfoArxiuManager getInfoArxiuManager();
 	public IInfoSignaturaManager getInfoSignaturaManager();
 	public IMenuManager getMenuManager();

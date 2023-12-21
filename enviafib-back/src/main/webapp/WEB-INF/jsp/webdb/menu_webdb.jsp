@@ -42,6 +42,13 @@ ${entityname}
         </span></a>
         </li>
 
+    <%-- InfoAnex --%>
+       <fmt:message var="entityname" key="infoAnex.infoAnex.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/infoAnex/list/1"/>" ><span style="${(fn:contains(url, 'infoAnex/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
+
     <%-- InfoArxiu --%>
        <fmt:message var="entityname" key="infoArxiu.infoArxiu.plural"/>
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/infoArxiu/list/1"/>" ><span style="${(fn:contains(url, 'infoArxiu/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >

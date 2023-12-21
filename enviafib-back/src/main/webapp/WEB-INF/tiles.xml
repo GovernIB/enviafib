@@ -164,7 +164,14 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuForm.jsp" />
     </definition>
 
-
+    <definition name="infoAnexFormUser" extends="user">
+        <put-attribute name="titol" value="infoAnex.infoAnex" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoAnexForm.jsp" />
+    </definition>
+    
+    <definition name="infoAnexListUser" extends="user">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoAnexList.jsp" />
+    </definition>
 
 
     <!--  ===========  ADMIN  ================== -->
@@ -288,6 +295,15 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoArxiuForm.jsp" />
     </definition>
 
+    <definition name="infoAnexFormAdmin" extends="admin">
+        <put-attribute name="titol" value="infoAnex.infoAnex" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoAnexForm.jsp" />
+    </definition>
+    
+    <definition name="infoAnexListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoAnexList.jsp" />
+    </definition>
+
 
 
     
@@ -374,6 +390,16 @@
     
     <definition name="idiomaListWebDB" extends="webdb">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/idiomaList.jsp" />
+    </definition>
+
+
+    <definition name="infoAnexFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="infoAnex.infoAnex" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoAnexForm.jsp" />
+    </definition>
+    
+    <definition name="infoAnexListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoAnexList.jsp" />
     </definition>
 
 

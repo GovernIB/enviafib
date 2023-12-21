@@ -372,6 +372,12 @@
               "type": 0
             },
             {
+              "name": "efi_infoanex_fitxer_fk",
+              "table": "efi_infoanex",
+              "field": "anexid",
+              "type": 0
+            },
+            {
               "name": "efi_peticio_fitxer_ffirm_fk",
               "table": "efi_peticio",
               "field": "fitxer_firmatid",
@@ -891,6 +897,132 @@
             "webtype": 14
           },
           "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "efi_infoanex",
+      "nameJava": "InfoAnex",
+      "shortName": "infoanex",
+      "labels": {
+        "ca": "Annex",
+        "es": "Adjunto"
+      },
+      "labelsPlural": {
+        "ca": "Annexos",
+        "es": "Adjuntos"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_infoanex_pk",
+          "index": "efi_infoanex_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "infoanexid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "infoanexid",
+            "es": "infoanexid"
+          },
+          "javaName": "infoanexid",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_infoanex_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_infoanex_peticioid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "peticioid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "peticioid",
+            "es": "peticioid"
+          },
+          "javaName": "peticioID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_infoanex_peticio_fk",
+              "table": "efi_peticio",
+              "field": "peticioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_infoanex_peticio_fk",
+              "table": "efi_peticio",
+              "field": "peticioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_infoanex_anexid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "anexid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "anexid",
+            "es": "anexid"
+          },
+          "javaName": "anexID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_infoanex_fitxer_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_infoanex_fitxer_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
         }
       ]
     },
@@ -2171,7 +2303,14 @@
           "webFieldInfo": {
             "webtype": 0
           },
-          "foreignKeys": []
+          "foreignKeys": [
+            {
+              "name": "efi_infoanex_peticio_fk",
+              "table": "efi_infoanex",
+              "field": "peticioid",
+              "type": 0
+            }
+          ]
         },
         {
           "isAutoIncrement": false,

@@ -4,16 +4,19 @@ import es.caib.enviafib.model.entity.*;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GenerationType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.Set;
+import org.hibernate.annotations.Type;
+import java.util.HashSet;
+import javax.persistence.GenerationType;
 import javax.persistence.Index;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
-import org.hibernate.annotations.Type;
 import javax.persistence.Id;
 
 
@@ -512,6 +515,19 @@ public class PeticioJPA implements Peticio {
     return __result;
   }
 
+// EXP  Field:peticioid | Table: efi_infoanex | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "peticio")
+    private Set<InfoAnexJPA> infoAnexs = new HashSet<InfoAnexJPA>(0);
+    public  Set<InfoAnexJPA> getInfoAnexs() {
+    return this.infoAnexs;
+  }
+
+    public void setInfoAnexs(Set<InfoAnexJPA> infoAnexs) {
+      this.infoAnexs = infoAnexs;
+    }
+
+
 // IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -667,6 +683,10 @@ public class PeticioJPA implements Peticio {
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
+    if(!"InfoAnexJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoAnexs) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoAnexs())) ) {
+      __tmp.setInfoAnexs(InfoAnexJPA.copyJPA(__jpa.getInfoAnexs(), __alreadyCopied,"PeticioJPA"));
+    }
     // Copia de beans complexes (IMP)
     if(!"IdiomaJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.idioma) || org.hibernate.Hibernate.isInitialized(__jpa.getIdioma()) ) ) {

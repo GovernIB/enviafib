@@ -161,6 +161,19 @@ public class FitxerJPA implements Fitxer {
     }
 
 
+// EXP  Field:anexid | Table: efi_infoanex | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "anexID")
+    private Set<InfoAnexJPA> infoAnexs = new HashSet<InfoAnexJPA>(0);
+    public  Set<InfoAnexJPA> getInfoAnexs() {
+    return this.infoAnexs;
+  }
+
+    public void setInfoAnexs(Set<InfoAnexJPA> infoAnexs) {
+      this.infoAnexs = infoAnexs;
+    }
+
+
 // EXP  Field:fitxer_firmatid | Table: efi_peticio | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxerFirmatID")
@@ -283,6 +296,10 @@ public class FitxerJPA implements Fitxer {
     if(!"PeticioJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticio_fitxer_firmatids) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticio_fitxer_firmatids())) ) {
       __tmp.setPeticio_fitxer_firmatids(PeticioJPA.copyJPA(__jpa.getPeticio_fitxer_firmatids(), __alreadyCopied,"FitxerJPA"));
+    }
+    if(!"InfoAnexJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoAnexs) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoAnexs())) ) {
+      __tmp.setInfoAnexs(InfoAnexJPA.copyJPA(__jpa.getInfoAnexs(), __alreadyCopied,"FitxerJPA"));
     }
     if(!"FaqJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.faq_fitxer3ids) || org.hibernate.Hibernate.isInitialized(__jpa.getFaq_fitxer3ids())) ) {

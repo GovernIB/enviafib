@@ -8,7 +8,9 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +31,7 @@ import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
@@ -61,6 +64,7 @@ import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.commons.utils.NifUtils.NifInfo;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
+import es.caib.enviafib.model.entity.InfoAnex;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
@@ -69,6 +73,7 @@ import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.FitxerJPA;
+import es.caib.enviafib.persistence.InfoAnexJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
@@ -84,6 +89,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocumentalEjb;
 
+    @EJB(mappedName = es.caib.enviafib.ejb.InfoAnexService.JNDI_NAME)
+    protected es.caib.enviafib.ejb.InfoAnexService infoAnexEjb;   
+    
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
@@ -180,6 +188,15 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             hiddens.remove(ESTAT);
             hiddens.remove(FITXERID);
             hiddens.remove(ARXIUREQPARAMDOCESTATELABORA);
+            
+            Long peticioID = peticioForm.getPeticio().getPeticioID();
+            Long annexes = infoAnexEjb.count(PETICIOID.equal(peticioID));
+            if (annexes > 0) {
+                peticioForm.addAdditionalButton(new AdditionalButton("fas fa-folder-open",
+                        "user.veureannexes", "/user/infoAnnex/mostrarAnnexes/" + peticioID + "/toForm", "btn-info"));
+                
+                request.getSession().setAttribute("myContext", getContextWebByTipus(peticioForm.getPeticio().getTipus()) );
+            }
 
             switch ((int) peticioForm.getPeticio().getEstat()) {
 
@@ -435,6 +452,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         PeticioJPA p = super.create(request, peticio);
 
+        Set<InfoAnexJPA> anexesPeticio = peticio.getInfoAnexs();
+        
+        
+        for (InfoAnexJPA infoAnexJPA : anexesPeticio) {
+            
+            infoAnexJPA.setPeticioID(p.getPeticioID());
+            
+            log.info("InfoAnexJPA:: anexID: " + infoAnexJPA.getAnexID() + " peticioID:" + infoAnexJPA.getPeticioID());
+            InfoAnex infoAnex = infoAnexEjb.create(infoAnexJPA);
+            log.info("CREATED: " + infoAnex.getInfoanexid());
+        }
+        
         final int tipus = getTipusPeticio();
         if (tipus == Constants.TIPUS_PETICIO_AUTOFIRMA) {
             log.info("AbstractFirmaUserController:: Estam creant un AutoFirma");
@@ -511,6 +540,30 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return p;
     }
 
+    
+    private class AnexInfo {
+        
+        private CommonsMultipartFile peticio;
+        private CommonsMultipartFile anex;
+        public CommonsMultipartFile getPeticio() {
+            return peticio;
+        }
+        public void setPeticio(CommonsMultipartFile peticio) {
+            this.peticio = peticio;
+        }
+        public CommonsMultipartFile getAnex() {
+            return anex;
+        }
+        public void setAnex(CommonsMultipartFile anex) {
+            this.anex = anex;
+        }
+        public AnexInfo(CommonsMultipartFile peticio, CommonsMultipartFile anex) {
+            super();
+            this.peticio = peticio;
+            this.anex = anex;
+        }
+    }
+
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String crearPeticioPost(@ModelAttribute PeticioForm peticioForm2, BindingResult result,
@@ -518,22 +571,57 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
         PeticioMultipleForm peticioForm = (PeticioMultipleForm) peticioForm2;
 
-        CommonsMultipartFile[] files = peticioForm.getHiddenFile();
-        String originalName = peticioForm.getPeticio().getNom();
-
-        log.info("AbstractFirmaUserController:: files: " + files);
+        CommonsMultipartFile[] allHiddenFiles = peticioForm.getHiddenFile();
+        String flag = peticioForm.getFileInfoFlag();
         
-        if (files == null || files.length == 0) {
+        for (CommonsMultipartFile files : allHiddenFiles) {
+            log.info("fitxers: " + files.getOriginalFilename());
+        }
+        
+        if (flag == null ||  allHiddenFiles == null || allHiddenFiles.length == 0) {
             if (peticioForm.getFitxerID().isEmpty()) {
-                files = new CommonsMultipartFile[0];
+                allHiddenFiles = new CommonsMultipartFile[0];
                 result.rejectValue(get(FITXERID), "error.fitxers.postcreate",
                         new String[] {}, null);
+                flag ="";
+
             } else {
-                files = new CommonsMultipartFile[1];
-                files[0] = peticioForm.getFitxerID();
+                allHiddenFiles = new CommonsMultipartFile[1];
+                allHiddenFiles[0] = peticioForm.getFitxerID();
+                flag+="F";
             }
         }
-        int nFitxers = files.length;
+
+        
+        List<CommonsMultipartFile> files = new ArrayList<CommonsMultipartFile>();
+        List<AnexInfo> infoAnexes = new ArrayList<AnexInfo>();
+        
+        log.info("FLAG: " + flag);
+        int idx = 0;
+        int contadorPeticio = 0;
+        CommonsMultipartFile actual = null;
+        while (flag.length()> 0 && idx < allHiddenFiles.length) {
+            if(flag.charAt(idx) == 'A') {
+                log.info("Afegim anex");
+                infoAnexes.add(new AnexInfo(actual, allHiddenFiles[idx]));
+            } else if(flag.charAt(idx) == 'F'){
+                log.info("Afegim fitxerPeticio");
+                contadorPeticio++;
+                actual = allHiddenFiles[idx];
+                files.add(actual);
+            }
+            idx++;
+        }
+        
+        for (AnexInfo anexInfo : infoAnexes) {
+            log.info(anexInfo.getPeticio().getOriginalFilename() + " - " + anexInfo.getAnex().getOriginalFilename());
+        }
+        
+        log.info("AbstractFirmaUserController:: files: " + files);
+        
+       
+        int nFitxers = contadorPeticio;
+        String originalName = peticioForm.getPeticio().getNom();
 
         if (peticioForm.getPeticio().getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA) {
 
@@ -542,8 +630,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             int i;
             for (i = 0; i < nFitxers; i++) {
 
-                CommonsMultipartFile file = files[i];
+                CommonsMultipartFile file = files.get(i);
 
+                
                 FitxerJPA fitxer = new FitxerJPA();
 
                 fitxer.setNom(file.getOriginalFilename());
@@ -576,14 +665,16 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             for (i = 0; i < nFitxers; i++) {
                 pi.enviades = i;
                 Peticio petFor = peticioForm.getPeticio();
-                peticioForm.setFitxerID(files[i]);
+
+                CommonsMultipartFile file = files.get(i);
+                peticioForm.setFitxerID(file);
 
                 petFor.setPeticioID(0);
                 petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
                 petFor.setErrorMsg(null);
                 petFor.setErrorException(null);
                 if (nFitxers > 1 && originalName != null && originalName.trim().length() > 0) {
-                    petFor.setNom(originalName + "-" + files[i].getOriginalFilename());
+                    petFor.setNom(originalName + "-" + file.getOriginalFilename());
                 }
 
                 BeanPropertyBindingResult result2 = new BeanPropertyBindingResult(peticioForm, "peticioForm");
@@ -594,11 +685,49 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                         || petFor.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT) {
                     petFor.setPeticioPortafirmes(flowTemplateId);
                 }
+
+                Set<InfoAnexJPA> anexes = new HashSet<InfoAnexJPA>();
+                
+                for (AnexInfo anexInfo : infoAnexes) {
+                    if (anexInfo.getPeticio().equals(file)) {
+                        CommonsMultipartFile anex = anexInfo.getAnex();
+                        String nomAnnex = anex.getOriginalFilename();
+//                        try {
+//                            log.info("Provant si anex es PDF:" + nomAnnex);
+//
+//                            PdfReader reader = new PdfReader(anex.getInputStream());
+//                            int pages = reader.getNumberOfPages();
+//                            reader.close();
+//                            log.info("El fitxer " + nomAnnex + " es un PDF de " + pages + " pagines");
+
+                            FitxerJPA fitxer = new FitxerJPA();
+                            fitxer.setNom(anex.getOriginalFilename());
+                            fitxer.setMime(anex.getContentType());
+                            final byte[] data = anex.getBytes();
+                            fitxer.setTamany(data.length);
+
+                            Fitxer f = fitxerEjb.create(fitxer);
+                            FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
+
+                            InfoAnexJPA ia = new InfoAnexJPA();
+                            ia.setAnexID(fitxer.getFitxerID());
+
+                            anexes.add(ia);
+                            log.info("Afegirem anex " + nomAnnex + " a la peticio " + file.getOriginalFilename());
+//                        } catch (IOException e) {
+//                            String msg = "L'annex '" + nomAnnex + "' del document no es PDF";
+//                            log.error(msg);
+//                            HtmlUtils.saveMessageWarning(request, msg);
+//                        }
+                    }
+                }
+                peticioForm.getPeticio().setInfoAnexs(anexes);
                 
                 String ret = super.crearPeticioPost(peticioForm, result2, request, response);
                 petFor = peticioForm.getPeticio();
-                
 
+                
+                
                 log.info("POST: ret=" + ret);
                 if (ret == null) {
                     //Aturar
@@ -624,7 +753,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                             String msgError = I18NUtils.tradueix(fieldFileError.getCode(), arguments);
 
                             String msg = "POST: No s'ha pogut crear la peticio amb el fitxer "
-                                    + files[i].getOriginalFilename() + ": " + msgError;
+                                    + files.get(i).getOriginalFilename() + ": " + msgError;
 
                             missatgesErrors.add(msg);
                             log.warn(msg);

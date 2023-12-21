@@ -127,6 +127,14 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             }
             peticioForm.setHiddenFields(hiddens);
 
+            Long peticioID = peticioForm.getPeticio().getPeticioID();
+            Long annexes = infoAnexEjb.count(PETICIOID.equal(peticioID));
+            if (annexes > 0) {
+                peticioForm.addAdditionalButton(new AdditionalButton("fas fa-folder-open", "user.veureannexes",
+                        "/admin/infoAnnex/mostrarAnnexes/" + peticioID + "/toForm", "btn-info"));
+                request.getSession().setAttribute("myContext", getContextWebByTipus(peticioForm.getPeticio().getTipus()) );
+
+            }
             Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
             if (infosignaturaID != null) {
                 peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
