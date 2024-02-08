@@ -30,55 +30,71 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * PeticioDeFirmaPaginacio
  */
 @JsonPropertyOrder({
-  PeticioDeFirmaPaginacio.JSON_PROPERTY_PAGESIZE,
+  PeticioDeFirmaPaginacio.JSON_PROPERTY_NAME,
   PeticioDeFirmaPaginacio.JSON_PROPERTY_PAGE,
-  PeticioDeFirmaPaginacio.JSON_PROPERTY_TOTALPAGES,
-  PeticioDeFirmaPaginacio.JSON_PROPERTY_TOTALCOUNT,
+  PeticioDeFirmaPaginacio.JSON_PROPERTY_PAGE_SIZE,
+  PeticioDeFirmaPaginacio.JSON_PROPERTY_TOTAL_PAGES,
+  PeticioDeFirmaPaginacio.JSON_PROPERTY_TOTAL_COUNT,
+  PeticioDeFirmaPaginacio.JSON_PROPERTY_ITEMS_RETURNED,
+  PeticioDeFirmaPaginacio.JSON_PROPERTY_NEXT,
+  PeticioDeFirmaPaginacio.JSON_PROPERTY_DATE_DOWNLOAD,
   PeticioDeFirmaPaginacio.JSON_PROPERTY_DATA
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class PeticioDeFirmaPaginacio {
-  public static final String JSON_PROPERTY_PAGESIZE = "pagesize";
-  private Integer pagesize;
+  public static final String JSON_PROPERTY_NAME = "name";
+  private String name;
 
   public static final String JSON_PROPERTY_PAGE = "page";
   private Integer page;
 
-  public static final String JSON_PROPERTY_TOTALPAGES = "totalpages";
-  private Integer totalpages;
+  public static final String JSON_PROPERTY_PAGE_SIZE = "page-size";
+  private Integer pageSize;
 
-  public static final String JSON_PROPERTY_TOTALCOUNT = "totalcount";
-  private Integer totalcount;
+  public static final String JSON_PROPERTY_TOTAL_PAGES = "total-pages";
+  private Integer totalPages;
+
+  public static final String JSON_PROPERTY_TOTAL_COUNT = "total-count";
+  private Integer totalCount;
+
+  public static final String JSON_PROPERTY_ITEMS_RETURNED = "items-returned";
+  private Integer itemsReturned;
+
+  public static final String JSON_PROPERTY_NEXT = "next";
+  private String next;
+
+  public static final String JSON_PROPERTY_DATE_DOWNLOAD = "date-download";
+  private String dateDownload;
 
   public static final String JSON_PROPERTY_DATA = "data";
-  private List<PeticioDeFirma> data = new ArrayList<>();
+  private List<PeticioDeFirma> data;
 
   public PeticioDeFirmaPaginacio() {
   }
 
-  public PeticioDeFirmaPaginacio pagesize(Integer pagesize) {
+  public PeticioDeFirmaPaginacio name(String name) {
     
-    this.pagesize = pagesize;
+    this.name = name;
     return this;
   }
 
    /**
-   * Mida de pàgina
-   * @return pagesize
+   * Nom descriptiu del que s&#39;està retornant
+   * @return name
   **/
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_PAGESIZE)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Integer getPagesize() {
-    return pagesize;
+  public String getName() {
+    return name;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PAGESIZE)
+  @JsonProperty(JSON_PROPERTY_NAME)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setPagesize(Integer pagesize) {
-    this.pagesize = pagesize;
+  public void setName(String name) {
+    this.name = name;
   }
 
 
@@ -108,55 +124,159 @@ public class PeticioDeFirmaPaginacio {
   }
 
 
-  public PeticioDeFirmaPaginacio totalpages(Integer totalpages) {
+  public PeticioDeFirmaPaginacio pageSize(Integer pageSize) {
     
-    this.totalpages = totalpages;
+    this.pageSize = pageSize;
+    return this;
+  }
+
+   /**
+   * Mida de pàgina
+   * @return pageSize
+  **/
+  @javax.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+
+  public Integer getPageSize() {
+    return pageSize;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_PAGE_SIZE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPageSize(Integer pageSize) {
+    this.pageSize = pageSize;
+  }
+
+
+  public PeticioDeFirmaPaginacio totalPages(Integer totalPages) {
+    
+    this.totalPages = totalPages;
     return this;
   }
 
    /**
    * Número total de pàgines
-   * @return totalpages
+   * @return totalPages
   **/
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_TOTALPAGES)
+  @JsonProperty(JSON_PROPERTY_TOTAL_PAGES)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Integer getTotalpages() {
-    return totalpages;
+  public Integer getTotalPages() {
+    return totalPages;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_TOTALPAGES)
+  @JsonProperty(JSON_PROPERTY_TOTAL_PAGES)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setTotalpages(Integer totalpages) {
-    this.totalpages = totalpages;
+  public void setTotalPages(Integer totalPages) {
+    this.totalPages = totalPages;
   }
 
 
-  public PeticioDeFirmaPaginacio totalcount(Integer totalcount) {
+  public PeticioDeFirmaPaginacio totalCount(Integer totalCount) {
     
-    this.totalcount = totalcount;
+    this.totalCount = totalCount;
     return this;
   }
 
    /**
-   * Numero total d&#39;elements
-   * @return totalcount
+   * Número total d&#39;elements
+   * @return totalCount
   **/
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_TOTALCOUNT)
+  @JsonProperty(JSON_PROPERTY_TOTAL_COUNT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Integer getTotalcount() {
-    return totalcount;
+  public Integer getTotalCount() {
+    return totalCount;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_TOTALCOUNT)
+  @JsonProperty(JSON_PROPERTY_TOTAL_COUNT)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setTotalcount(Integer totalcount) {
-    this.totalcount = totalcount;
+  public void setTotalCount(Integer totalCount) {
+    this.totalCount = totalCount;
+  }
+
+
+  public PeticioDeFirmaPaginacio itemsReturned(Integer itemsReturned) {
+    
+    this.itemsReturned = itemsReturned;
+    return this;
+  }
+
+   /**
+   * Numero d&#39;elements retornats
+   * @return itemsReturned
+  **/
+  @javax.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_ITEMS_RETURNED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+
+  public Integer getItemsReturned() {
+    return itemsReturned;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ITEMS_RETURNED)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setItemsReturned(Integer itemsReturned) {
+    this.itemsReturned = itemsReturned;
+  }
+
+
+  public PeticioDeFirmaPaginacio next(String next) {
+    
+    this.next = next;
+    return this;
+  }
+
+   /**
+   * Si hi ha més elements, llavors retorna la URL a la següent pàgina de dades.
+   * @return next
+  **/
+  @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_NEXT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getNext() {
+    return next;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NEXT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setNext(String next) {
+    this.next = next;
+  }
+
+
+  public PeticioDeFirmaPaginacio dateDownload(String dateDownload) {
+    
+    this.dateDownload = dateDownload;
+    return this;
+  }
+
+   /**
+   * Data i hora en que s&#39;han retornat les dades. Format ISO-8601
+   * @return dateDownload
+  **/
+  @javax.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_DATE_DOWNLOAD)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+
+  public String getDateDownload() {
+    return dateDownload;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_DATE_DOWNLOAD)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setDateDownload(String dateDownload) {
+    this.dateDownload = dateDownload;
   }
 
 
@@ -175,12 +295,12 @@ public class PeticioDeFirmaPaginacio {
   }
 
    /**
-   * Elements retornats
+   * Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.
    * @return data
   **/
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_DATA)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<PeticioDeFirma> getData() {
     return data;
@@ -188,7 +308,7 @@ public class PeticioDeFirmaPaginacio {
 
 
   @JsonProperty(JSON_PROPERTY_DATA)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setData(List<PeticioDeFirma> data) {
     this.data = data;
   }
@@ -202,26 +322,34 @@ public class PeticioDeFirmaPaginacio {
       return false;
     }
     PeticioDeFirmaPaginacio peticioDeFirmaPaginacio = (PeticioDeFirmaPaginacio) o;
-    return Objects.equals(this.pagesize, peticioDeFirmaPaginacio.pagesize) &&
+    return Objects.equals(this.name, peticioDeFirmaPaginacio.name) &&
         Objects.equals(this.page, peticioDeFirmaPaginacio.page) &&
-        Objects.equals(this.totalpages, peticioDeFirmaPaginacio.totalpages) &&
-        Objects.equals(this.totalcount, peticioDeFirmaPaginacio.totalcount) &&
+        Objects.equals(this.pageSize, peticioDeFirmaPaginacio.pageSize) &&
+        Objects.equals(this.totalPages, peticioDeFirmaPaginacio.totalPages) &&
+        Objects.equals(this.totalCount, peticioDeFirmaPaginacio.totalCount) &&
+        Objects.equals(this.itemsReturned, peticioDeFirmaPaginacio.itemsReturned) &&
+        Objects.equals(this.next, peticioDeFirmaPaginacio.next) &&
+        Objects.equals(this.dateDownload, peticioDeFirmaPaginacio.dateDownload) &&
         Objects.equals(this.data, peticioDeFirmaPaginacio.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pagesize, page, totalpages, totalcount, data);
+    return Objects.hash(name, page, pageSize, totalPages, totalCount, itemsReturned, next, dateDownload, data);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PeticioDeFirmaPaginacio {\n");
-    sb.append("    pagesize: ").append(toIndentedString(pagesize)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
-    sb.append("    totalpages: ").append(toIndentedString(totalpages)).append("\n");
-    sb.append("    totalcount: ").append(toIndentedString(totalcount)).append("\n");
+    sb.append("    pageSize: ").append(toIndentedString(pageSize)).append("\n");
+    sb.append("    totalPages: ").append(toIndentedString(totalPages)).append("\n");
+    sb.append("    totalCount: ").append(toIndentedString(totalCount)).append("\n");
+    sb.append("    itemsReturned: ").append(toIndentedString(itemsReturned)).append("\n");
+    sb.append("    next: ").append(toIndentedString(next)).append("\n");
+    sb.append("    dateDownload: ").append(toIndentedString(dateDownload)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("}");
     return sb.toString();

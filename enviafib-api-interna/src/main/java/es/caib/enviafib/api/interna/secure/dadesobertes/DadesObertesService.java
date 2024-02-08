@@ -1,7 +1,5 @@
 package es.caib.enviafib.api.interna.secure.dadesobertes;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.annotation.security.RolesAllowed;
 
 import org.fundaciobit.genapp.common.query.OrderBy;
@@ -19,16 +17,16 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Locale;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Map;
 
-
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.PeticioLogicaService;
 import es.caib.enviafib.model.fields.PeticioFields;
 import java.sql.Timestamp;
 import java.util.HashMap;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.GET;
@@ -38,6 +36,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Path;
 
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -51,7 +50,6 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
@@ -60,7 +58,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
  * @author anadal
  *
  */
-@Path("/secure/dadesobertes")
+@Path(DadesObertesService.PATH)
 @OpenAPIDefinition(
         info = @Info(
                 title = "Dades Obertes de EnviaFIB",
@@ -73,29 +71,33 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 @SecurityScheme(type = SecuritySchemeType.HTTP, name = DadesObertesService.SECURITY_NAME, scheme = "basic")
 public class DadesObertesService extends RestUtils {
 
+    public static final String PATH = "/secure/dadesobertes";
+
     // No modificar !!!
     protected static final String TAG_NAME = "DadesObertesEnviaFib";
 
     protected static final String SECURITY_NAME = "BasicAuth";
 
+    protected static final int DEFAULT_PAGESIZE = 10;
+
     protected Logger log = Logger.getLogger(DadesObertesService.class);
 
     protected static final Map<String, String> MAP_TIPUS_PETICIO = new HashMap<String, String>();
 
-    protected static final Map<String, String> MAP_TIPUS_DOCUMENTAL = new HashMap<String, String>();
-    
+    protected static final Map<String, List<TipusDocumental>> MAP_TIPUS_DOCUMENTAL_BY_LANG = new HashMap<String, List<TipusDocumental>>();
+
+    protected static final Map<String, Map<String, String>> MAP_TIPUS_DOCUMENTAL_BY_CODE = new HashMap<String, Map<String, String>>();
+
     protected static final Map<String, String> MAP_IDIOMA = new HashMap<String, String>();
 
     static {
-        
-        
+
         MAP_IDIOMA.put("ca_ca", "Català");
         MAP_IDIOMA.put("es_ca", "Castellà");
-        
+
         MAP_IDIOMA.put("ca_es", "Catalan");
         MAP_IDIOMA.put("es_es", "Castellano");
 
-        
         MAP_TIPUS_PETICIO.put("0_ca", "NIF");
         MAP_TIPUS_PETICIO.put("1_ca", "Autofirma");
         MAP_TIPUS_PETICIO.put("2_ca", "Flux");
@@ -128,89 +130,113 @@ public class DadesObertesService extends RestUtils {
         MAP_TIPUS_PETICIO.put("17_es", "Cargo Adicional 1");
         MAP_TIPUS_PETICIO.put("18_es", "Cargo Adicional 2");
 
-        // 
+        {
+            List<TipusDocumental> llista = new ArrayList<TipusDocumental>();
+            llista.add(new TipusDocumental("TD01", "Resolució"));
+            llista.add(new TipusDocumental("TD02", "Acord"));
+            llista.add(new TipusDocumental("TD03", "Contracte"));
+            llista.add(new TipusDocumental("TD04", "Conveni"));
+            llista.add(new TipusDocumental("TD05", "Declaració"));
+            llista.add(new TipusDocumental("TD06", "Comunicació"));
+            llista.add(new TipusDocumental("TD07", "Notificació"));
+            llista.add(new TipusDocumental("TD08", "Publicació"));
+            llista.add(new TipusDocumental("TD09", "Justificant de recepció"));
+            llista.add(new TipusDocumental("TD10", "Acta"));
+            llista.add(new TipusDocumental("TD11", "Certificat"));
+            llista.add(new TipusDocumental("TD12", "Diligència"));
+            llista.add(new TipusDocumental("TD13", "Informe"));
+            llista.add(new TipusDocumental("TD14", "Sol·licitud"));
+            llista.add(new TipusDocumental("TD15", "Denúncia"));
+            llista.add(new TipusDocumental("TD16", "Al·legació"));
+            llista.add(new TipusDocumental("TD17", "Recursos"));
+            llista.add(new TipusDocumental("TD18", "Comunicació ciutadà"));
+            llista.add(new TipusDocumental("TD19", "Factura"));
+            llista.add(new TipusDocumental("TD20", "Uns altres confiscats"));
+            llista.add(new TipusDocumental("TD51", "Llei"));
+            llista.add(new TipusDocumental("TD52", "Moció"));
+            llista.add(new TipusDocumental("TD53", "Instrucció"));
+            llista.add(new TipusDocumental("TD54", "Convocatòria"));
+            llista.add(new TipusDocumental("TD55", "Ordre del dia"));
+            llista.add(new TipusDocumental("TD56", "Informe de Ponència"));
+            llista.add(new TipusDocumental("TD57", "Dictamen de Comissió"));
+            llista.add(new TipusDocumental("TD58", "Iniciativa legislativa"));
+            llista.add(new TipusDocumental("TD59", "Pregunta"));
+            llista.add(new TipusDocumental("TD60", "Interpel·lació"));
+            llista.add(new TipusDocumental("TD61", "Resposta"));
+            llista.add(new TipusDocumental("TD62", "Proposició no de llei"));
+            llista.add(new TipusDocumental("TD63", "Esmena"));
+            llista.add(new TipusDocumental("TD64", "Proposada de resolució"));
+            llista.add(new TipusDocumental("TD65", "Compareixença"));
+            llista.add(new TipusDocumental("TD66", "Sol·licitud d'informació"));
+            llista.add(new TipusDocumental("TD67", "Escrit"));
+            llista.add(new TipusDocumental("TD68", "Iniciativa legislativa"));
+            llista.add(new TipusDocumental("TD69", "Petició"));
+            llista.add(new TipusDocumental("TD99", "Altres tipus de documents"));
 
-        MAP_TIPUS_DOCUMENTAL.put("1_ca", "Resolució");
-        MAP_TIPUS_DOCUMENTAL.put("2_ca", "Acord");
-        MAP_TIPUS_DOCUMENTAL.put("3_ca", "Contracte");
-        MAP_TIPUS_DOCUMENTAL.put("4_ca", "Conveni");
-        MAP_TIPUS_DOCUMENTAL.put("5_ca", "Declaració");
-        MAP_TIPUS_DOCUMENTAL.put("6_ca", "Comunicació");
-        MAP_TIPUS_DOCUMENTAL.put("7_ca", "Notificació");
-        MAP_TIPUS_DOCUMENTAL.put("8_ca", "Publicació");
-        MAP_TIPUS_DOCUMENTAL.put("9_ca", "Justificant de recepció");
-        MAP_TIPUS_DOCUMENTAL.put("10_ca", "Acta");
-        MAP_TIPUS_DOCUMENTAL.put("11_ca", "Certificat");
-        MAP_TIPUS_DOCUMENTAL.put("12_ca", "Diligència");
-        MAP_TIPUS_DOCUMENTAL.put("13_ca", "Informe");
-        MAP_TIPUS_DOCUMENTAL.put("14_ca", "Sol·licitud");
-        MAP_TIPUS_DOCUMENTAL.put("15_ca", "Denúncia");
-        MAP_TIPUS_DOCUMENTAL.put("16_ca", "Al·legació");
-        MAP_TIPUS_DOCUMENTAL.put("17_ca", "Recursos");
-        MAP_TIPUS_DOCUMENTAL.put("18_ca", "Comunicació ciutadà");
-        MAP_TIPUS_DOCUMENTAL.put("19_ca", "Factura");
-        MAP_TIPUS_DOCUMENTAL.put("20_ca", "Uns altres confiscats");
-        MAP_TIPUS_DOCUMENTAL.put("51_ca", "Llei");
-        MAP_TIPUS_DOCUMENTAL.put("52_ca", "Moció");
-        MAP_TIPUS_DOCUMENTAL.put("53_ca", "Instrucció");
-        MAP_TIPUS_DOCUMENTAL.put("54_ca", "Convocatòria");
-        MAP_TIPUS_DOCUMENTAL.put("55_ca", "Ordre del dia");
-        MAP_TIPUS_DOCUMENTAL.put("56_ca", "Informe de Ponència");
-        MAP_TIPUS_DOCUMENTAL.put("57_ca", "Dictamen de Comissió");
-        MAP_TIPUS_DOCUMENTAL.put("58_ca", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL.put("59_ca", "Pregunta");
-        MAP_TIPUS_DOCUMENTAL.put("60_ca", "Interpel·lació");
-        MAP_TIPUS_DOCUMENTAL.put("61_ca", "Resposta");
-        MAP_TIPUS_DOCUMENTAL.put("62_ca", "Proposició no de llei");
-        MAP_TIPUS_DOCUMENTAL.put("63_ca", "Esmena");
-        MAP_TIPUS_DOCUMENTAL.put("64_ca", "Proposada de resolució");
-        MAP_TIPUS_DOCUMENTAL.put("65_ca", "Compareixença");
-        MAP_TIPUS_DOCUMENTAL.put("66_ca", "Sol·licitud d'informació");
-        MAP_TIPUS_DOCUMENTAL.put("67_ca", "Escrit");
-        MAP_TIPUS_DOCUMENTAL.put("68_ca", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL.put("69_ca", "Petició");
-        MAP_TIPUS_DOCUMENTAL.put("99_ca", "Altres tipus de documents");
+            MAP_TIPUS_DOCUMENTAL_BY_LANG.put("ca", llista);
 
-        MAP_TIPUS_DOCUMENTAL.put("1_es", "Resolución");
-        MAP_TIPUS_DOCUMENTAL.put("2_es", "Acuerdo");
-        MAP_TIPUS_DOCUMENTAL.put("3_es", "Contrato");
-        MAP_TIPUS_DOCUMENTAL.put("4_es", "Convenio");
-        MAP_TIPUS_DOCUMENTAL.put("5_es", "Declaración");
-        MAP_TIPUS_DOCUMENTAL.put("6_es", "Comunicación");
-        MAP_TIPUS_DOCUMENTAL.put("7_es", "Notificación");
-        MAP_TIPUS_DOCUMENTAL.put("8_es", "Publicación");
-        MAP_TIPUS_DOCUMENTAL.put("9_es", "Justificante de recepción");
-        MAP_TIPUS_DOCUMENTAL.put("10_es", "Acta");
-        MAP_TIPUS_DOCUMENTAL.put("11_es", "Certificado");
-        MAP_TIPUS_DOCUMENTAL.put("12_es", "Diligencia");
-        MAP_TIPUS_DOCUMENTAL.put("13_es", "Informe");
-        MAP_TIPUS_DOCUMENTAL.put("14_es", "Solicitud");
-        MAP_TIPUS_DOCUMENTAL.put("15_es", "Denuncia");
-        MAP_TIPUS_DOCUMENTAL.put("16_es", "Alegación");
-        MAP_TIPUS_DOCUMENTAL.put("17_es", "Recursos");
-        MAP_TIPUS_DOCUMENTAL.put("18_es", "Comunicación ciudadano");
-        MAP_TIPUS_DOCUMENTAL.put("19_es", "Factura");
-        MAP_TIPUS_DOCUMENTAL.put("20_es", "Otros incautados");
-        MAP_TIPUS_DOCUMENTAL.put("51_es", "Ley");
-        MAP_TIPUS_DOCUMENTAL.put("52_es", "Moción");
-        MAP_TIPUS_DOCUMENTAL.put("53_es", "Instrucción");
-        MAP_TIPUS_DOCUMENTAL.put("54_es", "Convocatoria");
-        MAP_TIPUS_DOCUMENTAL.put("55_es", "Orden del día");
-        MAP_TIPUS_DOCUMENTAL.put("56_es", "Informe de Ponencia");
-        MAP_TIPUS_DOCUMENTAL.put("57_es", "Dictamen de Comisión");
-        MAP_TIPUS_DOCUMENTAL.put("58_es", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL.put("59_es", "Pregunta");
-        MAP_TIPUS_DOCUMENTAL.put("60_es", "Interpelación");
-        MAP_TIPUS_DOCUMENTAL.put("61_es", "Respuesta");
-        MAP_TIPUS_DOCUMENTAL.put("62_es", "Proposición no de ley");
-        MAP_TIPUS_DOCUMENTAL.put("63_es", "Enmienda");
-        MAP_TIPUS_DOCUMENTAL.put("64_es", "Propuesta de resolución");
-        MAP_TIPUS_DOCUMENTAL.put("65_es", "Comparecencia");
-        MAP_TIPUS_DOCUMENTAL.put("66_es", "Solicitud de información");
-        MAP_TIPUS_DOCUMENTAL.put("67_es", "Escrito");
-        MAP_TIPUS_DOCUMENTAL.put("68_es", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL.put("69_es", "Petición");
-        MAP_TIPUS_DOCUMENTAL.put("99_es", "Otros tipos de documentos");
+            Map<String, String> code = new HashMap<String, String>();
+            for (TipusDocumental tipusDocumental : llista) {
+                code.put(tipusDocumental.getCode(), tipusDocumental.getName());
+            }
+
+            MAP_TIPUS_DOCUMENTAL_BY_CODE.put("ca", code);
+
+        }
+
+        {
+            List<TipusDocumental> llista = new ArrayList<TipusDocumental>();
+
+            llista.add(new TipusDocumental("TD01", "Resolución"));
+            llista.add(new TipusDocumental("TD02", "Acuerdo"));
+            llista.add(new TipusDocumental("TD03", "Contrato"));
+            llista.add(new TipusDocumental("TD04", "Convenio"));
+            llista.add(new TipusDocumental("TD05", "Declaración"));
+            llista.add(new TipusDocumental("TD06", "Comunicación"));
+            llista.add(new TipusDocumental("TD07", "Notificación"));
+            llista.add(new TipusDocumental("TD08", "Publicación"));
+            llista.add(new TipusDocumental("TD09", "Justificante de recepción"));
+            llista.add(new TipusDocumental("TD10", "Acta"));
+            llista.add(new TipusDocumental("TD11", "Certificado"));
+            llista.add(new TipusDocumental("TD12", "Diligencia"));
+            llista.add(new TipusDocumental("TD13", "Informe"));
+            llista.add(new TipusDocumental("TD14", "Solicitud"));
+            llista.add(new TipusDocumental("TD15", "Denuncia"));
+            llista.add(new TipusDocumental("TD16", "Alegación"));
+            llista.add(new TipusDocumental("TD17", "Recursos"));
+            llista.add(new TipusDocumental("TD18", "Comunicación ciudadano"));
+            llista.add(new TipusDocumental("TD19", "Factura"));
+            llista.add(new TipusDocumental("TD20", "Otros incautados"));
+            llista.add(new TipusDocumental("TD51", "Ley"));
+            llista.add(new TipusDocumental("TD52", "Moción"));
+            llista.add(new TipusDocumental("TD53", "Instrucción"));
+            llista.add(new TipusDocumental("TD54", "Convocatoria"));
+            llista.add(new TipusDocumental("TD55", "Orden del día"));
+            llista.add(new TipusDocumental("TD56", "Informe de Ponencia"));
+            llista.add(new TipusDocumental("TD57", "Dictamen de Comisión"));
+            llista.add(new TipusDocumental("TD58", "Iniciativa legislativa"));
+            llista.add(new TipusDocumental("TD59", "Pregunta"));
+            llista.add(new TipusDocumental("TD60", "Interpelación"));
+            llista.add(new TipusDocumental("TD61", "Respuesta"));
+            llista.add(new TipusDocumental("TD62", "Proposición no de ley"));
+            llista.add(new TipusDocumental("TD63", "Enmienda"));
+            llista.add(new TipusDocumental("TD64", "Propuesta de resolución"));
+            llista.add(new TipusDocumental("TD65", "Comparecencia"));
+            llista.add(new TipusDocumental("TD66", "Solicitud de información"));
+            llista.add(new TipusDocumental("TD67", "Escrito"));
+            llista.add(new TipusDocumental("TD68", "Iniciativa legislativa"));
+            llista.add(new TipusDocumental("TD69", "Petición"));
+            llista.add(new TipusDocumental("TD99", "Otros tipos de documentos"));
+
+            MAP_TIPUS_DOCUMENTAL_BY_LANG.put("es", llista);
+
+            Map<String, String> code = new HashMap<String, String>();
+            for (TipusDocumental tipusDocumental : llista) {
+                code.put(tipusDocumental.getCode(), tipusDocumental.getName());
+            }
+
+            MAP_TIPUS_DOCUMENTAL_BY_CODE.put("es", code);
+        }
 
     }
 
@@ -258,29 +284,36 @@ public class DadesObertesService extends RestUtils {
                     content = { @Content(
                             mediaType = MIME_APPLICATION_JSON,
                             schema = @Schema(implementation = PeticioDeFirmaPaginacio.class)) }) })
-    public PeticioDeFirmaPaginacio getPeticionsDeFirma(
+    public PeticioDeFirmaPaginacio getPeticionsDeFirma(@Parameter(
+            name = "startdate",
+            description = "Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades",
+            in = ParameterIn.QUERY,
+            required = false,
+            example = "2022-08-29",
+            schema = @Schema(
+                    implementation = String.class,
+                    pattern = DATE_PATTERN_ISO8601_ONLYDATE)) @QueryParam("startdate") final String startdate,
             @Parameter(
-                    description = "Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades",
-                    in = ParameterIn.QUERY,
-                    required = false,
-                    example = "2022-08-29",
-                    schema = @Schema(implementation = String.class)) @QueryParam("inici") final String dataIniciRequest,
-            @Parameter(
+                    name = "enddate",
                     description = "Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades",
                     in = ParameterIn.QUERY,
                     required = false,
                     example = "2023-12-31",
-                    schema = @Schema(implementation = String.class)) @QueryParam("fi") final String dataFiRequest,
+                    schema = @Schema(
+                            implementation = String.class,
+                            pattern = DATE_PATTERN_ISO8601_ONLYDATE)) @QueryParam("enddate") final String enddate,
             @Parameter(
-                    description = "Pàgina de la que es vol obtenir les dades",
+                    name = "page",
+                    description = "Pàgina de la que es vol obtenir les dades. Comença en 1.",
                     in = ParameterIn.QUERY,
                     required = false,
                     example = "1") @QueryParam("page") Integer page,
             @Parameter(
-                    description = "Elements retornats per la pàgina",
-                    in = ParameterIn.QUERY,
+                    name = "page-size",
+                    description = "Número d'elements a retornar per pàgina. Opcional. Per defecte " + DEFAULT_PAGESIZE,
                     required = false,
-                    example = "10") @QueryParam("pagesize") Integer pagesize,
+                    in = ParameterIn.QUERY,
+                    schema = @Schema(implementation = Integer.class)) @QueryParam("page-size") Integer pagesize,
             @Parameter(
                     name = "language",
                     description = "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
@@ -288,96 +321,91 @@ public class DadesObertesService extends RestUtils {
                     required = false,
                     examples = { @ExampleObject(name = "Català", value = "ca"),
                             @ExampleObject(name = "Castellano", value = "es") },
-                    schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("language") String language)
-            throws RestException {
+                    schema = @Schema(
+                            defaultValue = "ca",
+                            implementation = String.class)) @QueryParam("language") String language,
+            @Parameter(hidden = true) @Context HttpServletRequest request) throws RestException {
 
         // Check de page i pagesize
         if (page == null || page <= 0) {
             page = 1;
         }
         if (pagesize == null || pagesize < 1) {
-            pagesize = 10;
+            pagesize = DEFAULT_PAGESIZE;
         }
 
+        StringBuilder nextQuery = new StringBuilder("page=" + page + 1 + "&pagesize=" + pagesize);
+
         // Check de language
-        if (StringUtils.isBlank(language)) {
-            language = "ca";
-        } else {
-            if (!"es".equals(language) && !"ca".equals(language)) {
-                language = "ca";
-            }
-        }
+        language = checkLanguage(language);
 
         // Convertir Data en format dd/MM/yyyy a tipus Date
         // i check de dates
-
-        Date dateStart = parseDate(dataIniciRequest, "inici");
-
-        Date dateEnd = parseDate(dataFiRequest, "fi");
-
-        if (dateStart == null) {
-            Calendar cal = Calendar.getInstance();
-            if (dateEnd == null) {
-                dateEnd = cal.getTime();
-            } else {
-                cal.setTime(dateEnd);
-            }
-            cal.add(Calendar.MONTH, -1);
-            dateStart = cal.getTime();
-        } else {
-            Calendar cal = Calendar.getInstance();
-            if (dateEnd == null) {
-                cal.setTime(dateStart);
-                cal.add(Calendar.MONTH, +1);
-                dateEnd = cal.getTime();
-            } else {
-                // OK Cap dels dos és null
-            }
-        }
-
-        // Comprovar que la data d'inici és anterior a la de final
-
-        if (dateStart.getTime() >= dateEnd.getTime()) {
-            final String msg = "La data d'inici ha de ser menor que la data de fi (" + dataIniciRequest + " | "
-                    + dataFiRequest + ")";
-
-            throw new RestException(msg, Status.BAD_REQUEST);
-
+        Date dateStart;
+        Date dateEnd;
+        {
+            Date[] dates = checkRangeOfOnlyDates(startdate, "startdate", enddate, "enddate", language);
+            dateStart = dates[0];
+            dateEnd = dates[1];
         }
 
         // Realitzar Consulta
         try {
 
-            final Timestamp from = new Timestamp(RestUtils.atStartOfDay(dateStart).getTime());
-            final Timestamp to = new Timestamp(RestUtils.atEndOfDay(dateEnd).getTime());
-            final Where w = PeticioFields.DATACREACIO.between(from, to);
+            final Where w;
+
+            if (dateStart == null) {
+                if (dateEnd == null) {
+                    w = null;
+                } else {
+                    final Timestamp to = new Timestamp(RestUtils.atEndOfDay(dateEnd).getTime());
+                    w = PeticioFields.DATACREACIO.lessThanOrEqual(to);
+                    nextQuery.append("&enddate=" + enddate);
+                }
+            } else {
+                final Timestamp from = new Timestamp(RestUtils.atStartOfDay(dateStart).getTime());
+                if (dateEnd == null) {
+                    w = PeticioFields.DATACREACIO.greaterThanOrEqual(from);
+                    nextQuery.append("&startdate=" + startdate);
+                } else {
+                    final Timestamp to = new Timestamp(RestUtils.atEndOfDay(dateEnd).getTime());
+                    w = PeticioFields.DATACREACIO.between(from, to);
+                    nextQuery.append("&startdate=" + startdate + "&enddate=" + enddate);
+                }
+            }
+
             final OrderBy orderBy = new OrderBy(PeticioFields.DATACREACIO, OrderType.DESC);
             final int firstResult = (page - 1) * pagesize;
             final int maxResults = pagesize;
             final List<Peticio> llistat = this.peticioLogicaEjb.select(w, null, firstResult, maxResults, orderBy);
             final List<PeticioDeFirma> peticionsInfo = new ArrayList<PeticioDeFirma>();
+
+            Map<String, String> mapTD = MAP_TIPUS_DOCUMENTAL_BY_CODE.get(language);
+            if (mapTD == null) {
+                mapTD = MAP_TIPUS_DOCUMENTAL_BY_CODE.get("ca");
+            }
+
             for (final Peticio peticio : llistat) {
                 final String nif = peticio.getDestinatariNif();
                 final String titol = peticio.getNom();
                 final String idiomaCode = peticio.getIdiomaID();
                 final String idiomaDescription = MAP_IDIOMA.get(idiomaCode + "_" + language);
                 final String dir3 = peticio.getArxiuParamFuncionariDir3();
-                
-                
+
                 final int tipusPeticioCode = peticio.getTipus();
                 final String tipusPeticioDescription = MAP_TIPUS_PETICIO.get(peticio.getTipus() + "_" + language);
-                
+
                 String tipusDocumentalCode = peticio.getTipusDocumental();
-                
-                final String tipusDocumentalDescription = MAP_TIPUS_DOCUMENTAL.get(tipusDocumentalCode + "_" + language);
-                
                 tipusDocumentalCode = "TD" + (tipusDocumentalCode.length() == 1 ? "0" : "") + tipusDocumentalCode;
-                
-                final Timestamp creada =  peticio.getDataCreacio();
+
+                final String tipusDocumentalDescription = mapTD.get(tipusDocumentalCode);
+
+                final Timestamp creada = peticio.getDataCreacio();
                 final Timestamp finalitzada = peticio.getDataFinal();
-                
-                final PeticioDeFirma p = new PeticioDeFirma(nif, titol, creada, finalitzada, idiomaCode, idiomaDescription,
-                        tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode, tipusPeticioDescription, dir3);
+
+                final PeticioDeFirma p = new PeticioDeFirma(nif, titol, creada, finalitzada, idiomaCode,
+                        idiomaDescription, tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode,
+                        tipusPeticioDescription, dir3);
                 peticionsInfo.add(p);
             }
 
@@ -388,8 +416,25 @@ public class DadesObertesService extends RestUtils {
             final int pageOutput = page;
             final int totalPages = (int) (countTotal / pagesize) + ((countTotal % pagesize == 0) ? 0 : 1);
 
+            final String nextUrl;
+            if (page >= totalPages) {
+                nextUrl = null;
+            } else {
+                nextUrl = ((Configuracio.getUrlBase().replace("enviafibback", "") + request.getContextPath() + PATH
+                        + "/peticionsdefirma?" + nextQuery.toString()).replace("//", "/"));
+            }
+
+            final String dateDownload = convertDateToDateTimeISO8601(new Date());
+
+            final String name;
+            if ("es".equals(language)) {
+                name = "Lista parcial de peticiones de firma creadas por EnviaFIB.";
+            } else {
+                name = "Llista parcial de peticions de Firma creades per EnviaFIB.";
+            }
+
             PeticioDeFirmaPaginacio paginacio = new PeticioDeFirmaPaginacio(pageSizeOutput, pageOutput, totalPages,
-                    (int) countTotal, peticionsInfo);
+                    (int) countTotal, peticionsInfo, nextUrl, dateDownload, name);
 
             return paginacio;
         } catch (Throwable th) {
@@ -414,8 +459,8 @@ public class DadesObertesService extends RestUtils {
     @Operation(
             tags = { DadesObertesService.TAG_NAME },
             operationId = "tipusdocumentals",
-            summary = "Retorna un llistat dels tipus documentals")
-    @ApiResponses({ 
+            summary = "Retorna un llistat de tots els tipus documentals")
+    @ApiResponses({
             @ApiResponse(
                     responseCode = "401",
                     description = "EFIB: No Autenticat",
@@ -439,43 +484,38 @@ public class DadesObertesService extends RestUtils {
                     description = "EFIB: Retornades dades obertes correctament",
                     content = { @Content(
                             mediaType = RestUtils.MIME_APPLICATION_JSON,
-                            schema = @Schema(implementation = TipusDocumentalsPaginacio.class)) }) })
-    public TipusDocumentalsPaginacio getTipusDocumentals(
-            @Parameter(
-                    name = "language",
-                    description = "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
-                    in = ParameterIn.QUERY,
-                    required = false,
-                    examples = { @ExampleObject(name = "Català", value = "ca"),
-                            @ExampleObject(name = "Castellano", value = "es") },
-                    schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("language") String language) {
+                            schema = @Schema(implementation = TipusDocumentalsAllElements.class)) }) })
+    public TipusDocumentalsAllElements getTipusDocumentals(@Parameter(
+            name = "language",
+            description = "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
+            in = ParameterIn.QUERY,
+            required = false,
+            examples = { @ExampleObject(name = "Català", value = "ca"),
+                    @ExampleObject(name = "Castellano", value = "es") },
+            schema = @Schema(
+                    defaultValue = "ca",
+                    implementation = String.class)) @QueryParam("language") String language) {
 
-        if (StringUtils.isBlank(language)) {
-            language = "ca";
+        language = checkLanguage(language);
+
+        List<TipusDocumental> tipusDocumentals = MAP_TIPUS_DOCUMENTAL_BY_LANG.get(language);
+        if (tipusDocumentals == null) {
+            tipusDocumentals = MAP_TIPUS_DOCUMENTAL_BY_LANG.get("ca");
+        }
+
+        final String dateDownload = convertDateToDateTimeISO8601(new Date());
+
+        final String name;
+        if ("es".equals(language)) {
+            name = "Lista de todos los Tipos Documentales de EnviaFIB.";
         } else {
-            if (!"es".equals(language) && !"ca".equals(language)) {
-                language = "ca";
-            }
+            name = "Llista de tots els Tipus Documentals d´EnviaFIB.";
         }
 
-        List<String> tipusDocumentals = new ArrayList<String>();
-
-        for (Map.Entry<String, String> entry : MAP_TIPUS_DOCUMENTAL.entrySet()) {
-            if (entry.getKey().endsWith(language)) {
-                tipusDocumentals.add(entry.getValue());
-            }
-        }
-
-        final int pageSizeOutput = tipusDocumentals.size();
-        final int pageOutput = 1;
-        final int totalPages = 1;
-        final int totalcount = pageSizeOutput;
-
-        TipusDocumentalsPaginacio dades = new TipusDocumentalsPaginacio(pageSizeOutput, pageOutput, totalPages,
-                totalcount, tipusDocumentals);
+        TipusDocumentalsAllElements dades = new TipusDocumentalsAllElements(tipusDocumentals, tipusDocumentals.size(),
+                dateDownload, name);
 
         return dades;
     }
-
 
 }

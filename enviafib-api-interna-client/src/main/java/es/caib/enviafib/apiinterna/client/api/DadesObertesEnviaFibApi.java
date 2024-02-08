@@ -9,7 +9,7 @@ import javax.ws.rs.core.GenericType;
 
 import es.caib.enviafib.apiinterna.client.model.PeticioDeFirmaPaginacio;
 import es.caib.enviafib.apiinterna.client.model.RestExceptionInfo;
-import es.caib.enviafib.apiinterna.client.model.TipusDocumentalsPaginacio;
+import es.caib.enviafib.apiinterna.client.model.TipusDocumentalsAllElements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,15 +39,15 @@ public class DadesObertesEnviaFibApi {
   /**
    * Retorna un llistat amb la informacio de les peticions de firma
    * 
-   * @param inici Data d&#39;inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades (optional)
-   * @param fi Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades (optional)
-   * @param page Pàgina de la que es vol obtenir les dades (optional)
-   * @param pagesize Elements retornats per la pàgina (optional)
+   * @param startdate Data d&#39;inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades (optional)
+   * @param enddate Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades (optional)
+   * @param page Pàgina de la que es vol obtenir les dades. Comença en 1. (optional)
+   * @param pageSize Número d&#39;elements a retornar per pàgina. Opcional. Per defecte 10 (optional)
    * @param language Idioma en que s&#39;han de retornar les dades(Només suportat &#39;ca&#39; o &#39;es&#39;) (optional, default to ca)
    * @return a {@code PeticioDeFirmaPaginacio}
    * @throws ApiException if fails to make API call
    */
-  public PeticioDeFirmaPaginacio peticionsdefirma(String inici, String fi, Integer page, Integer pagesize, String language) throws ApiException {
+  public PeticioDeFirmaPaginacio peticionsdefirma(String startdate, String enddate, Integer page, Integer pageSize, String language) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables
@@ -59,10 +59,10 @@ public class DadesObertesEnviaFibApi {
     Map<String, String> localVarCookieParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPairs("", "inici", inici));
-    localVarQueryParams.addAll(apiClient.parameterToPairs("", "fi", fi));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "startdate", startdate));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "enddate", enddate));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "page", page));
-    localVarQueryParams.addAll(apiClient.parameterToPairs("", "pagesize", pagesize));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "page-size", pageSize));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "language", language));
 
     
@@ -84,13 +84,13 @@ public class DadesObertesEnviaFibApi {
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Retorna un llistat dels tipus documentals
+   * Retorna un llistat de tots els tipus documentals
    * 
    * @param language Idioma en que s&#39;han de retornar les dades(Només suportat &#39;ca&#39; o &#39;es&#39;) (optional, default to ca)
-   * @return a {@code TipusDocumentalsPaginacio}
+   * @return a {@code TipusDocumentalsAllElements}
    * @throws ApiException if fails to make API call
    */
-  public TipusDocumentalsPaginacio tipusdocumentals(String language) throws ApiException {
+  public TipusDocumentalsAllElements tipusdocumentals(String language) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables
@@ -119,7 +119,7 @@ public class DadesObertesEnviaFibApi {
 
     String[] localVarAuthNames = new String[] { "BasicAuth" };
 
-    GenericType<TipusDocumentalsPaginacio> localVarReturnType = new GenericType<TipusDocumentalsPaginacio>() {};
+    GenericType<TipusDocumentalsAllElements> localVarReturnType = new GenericType<TipusDocumentalsAllElements>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
 }

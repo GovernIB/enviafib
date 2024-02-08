@@ -26,49 +26,41 @@ import org.junit.Test;
 
 
 /**
- * Model tests for TipusDocumentalsPaginacio
+ * Model tests for TipusDocumentalsAllElements
  */
-public class TipusDocumentalsPaginacioTest {
-    private final TipusDocumentalsPaginacio model = new TipusDocumentalsPaginacio();
+public class TipusDocumentalsAllElementsTest {
+    private final TipusDocumentalsAllElements model = new TipusDocumentalsAllElements();
 
     /**
-     * Model tests for TipusDocumentalsPaginacio
+     * Model tests for TipusDocumentalsAllElements
      */
     @Test
-    public void testTipusDocumentalsPaginacio() {
-        // TODO: test TipusDocumentalsPaginacio
+    public void testTipusDocumentalsAllElements() {
+        // TODO: test TipusDocumentalsAllElements
     }
 
     /**
-     * Test the property 'pagesize'
+     * Test the property 'name'
      */
     @Test
-    public void pagesizeTest() {
-        // TODO: test pagesize
+    public void nameTest() {
+        // TODO: test name
     }
 
     /**
-     * Test the property 'page'
+     * Test the property 'totalCount'
      */
     @Test
-    public void pageTest() {
-        // TODO: test page
+    public void totalCountTest() {
+        // TODO: test totalCount
     }
 
     /**
-     * Test the property 'totalpages'
+     * Test the property 'dateDownload'
      */
     @Test
-    public void totalpagesTest() {
-        // TODO: test totalpages
-    }
-
-    /**
-     * Test the property 'totalcount'
-     */
-    @Test
-    public void totalcountTest() {
-        // TODO: test totalcount
+    public void dateDownloadTest() {
+        // TODO: test dateDownload
     }
 
     /**
