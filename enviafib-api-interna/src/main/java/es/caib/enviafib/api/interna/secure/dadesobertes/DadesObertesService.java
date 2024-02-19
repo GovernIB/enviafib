@@ -5,6 +5,9 @@ import javax.annotation.security.RolesAllowed;
 import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.OrderType;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.pluginsib.utils.rest.GenAppEntityConverter;
+import org.fundaciobit.pluginsib.utils.rest.GenAppRangeOfDates;
+import org.fundaciobit.pluginsib.utils.rest.GenAppRestUtils;
 import org.fundaciobit.pluginsib.utils.rest.RestException;
 import org.fundaciobit.pluginsib.utils.rest.RestExceptionInfo;
 import org.fundaciobit.pluginsib.utils.rest.RestUtils;
@@ -334,97 +337,31 @@ public class DadesObertesService extends RestUtils {
             pagesize = DEFAULT_PAGESIZE;
         }
 
-        StringBuilder nextQuery = new StringBuilder("page=" + page + 1 + "&pagesize=" + pagesize);
+        StringBuilder nextQuery = new StringBuilder(
+                ((Configuracio.getUrlBase().replace("enviafibback", "") + request.getContextPath()).replace("//", "/"))
+                        + PATH + "/peticionsdefirma?" + "page=" + (int) (page + 1) + "&pagesize=" + pagesize);
 
         // Check de language
         language = checkLanguage(language);
 
         // Convertir Data en format dd/MM/yyyy a tipus Date
         // i check de dates
-        Date dateStart;
-        Date dateEnd;
-        {
-            Date[] dates = checkRangeOfOnlyDates(startdate, "startdate", enddate, "enddate", language);
-            dateStart = dates[0];
-            dateEnd = dates[1];
-        }
+        GenAppRangeOfDates grod = GenAppRestUtils.checkRangeOfOnlyDates(startdate, "startdate", enddate, "enddate",
+                PeticioFields.DATACREACIO, nextQuery, language);
 
         // Realitzar Consulta
         try {
 
-            final Where w;
-
-            if (dateStart == null) {
-                if (dateEnd == null) {
-                    w = null;
-                } else {
-                    final Timestamp to = new Timestamp(RestUtils.atEndOfDay(dateEnd).getTime());
-                    w = PeticioFields.DATACREACIO.lessThanOrEqual(to);
-                    nextQuery.append("&enddate=" + enddate);
-                }
-            } else {
-                final Timestamp from = new Timestamp(RestUtils.atStartOfDay(dateStart).getTime());
-                if (dateEnd == null) {
-                    w = PeticioFields.DATACREACIO.greaterThanOrEqual(from);
-                    nextQuery.append("&startdate=" + startdate);
-                } else {
-                    final Timestamp to = new Timestamp(RestUtils.atEndOfDay(dateEnd).getTime());
-                    w = PeticioFields.DATACREACIO.between(from, to);
-                    nextQuery.append("&startdate=" + startdate + "&enddate=" + enddate);
-                }
-            }
-
-            final OrderBy orderBy = new OrderBy(PeticioFields.DATACREACIO, OrderType.DESC);
-            final int firstResult = (page - 1) * pagesize;
-            final int maxResults = pagesize;
-            final List<Peticio> llistat = this.peticioLogicaEjb.select(w, null, firstResult, maxResults, orderBy);
-            final List<PeticioDeFirma> peticionsInfo = new ArrayList<PeticioDeFirma>();
+            final Where w = grod.getWhere();
 
             Map<String, String> mapTD = MAP_TIPUS_DOCUMENTAL_BY_CODE.get(language);
             if (mapTD == null) {
                 mapTD = MAP_TIPUS_DOCUMENTAL_BY_CODE.get("ca");
             }
 
-            for (final Peticio peticio : llistat) {
-                final String nif = peticio.getDestinatariNif();
-                final String titol = peticio.getNom();
-                final String idiomaCode = peticio.getIdiomaID();
-                final String idiomaDescription = MAP_IDIOMA.get(idiomaCode + "_" + language);
-                final String dir3 = peticio.getArxiuParamFuncionariDir3();
+            final OrderBy orderBy = new OrderBy(PeticioFields.DATACREACIO, OrderType.DESC);
 
-                final int tipusPeticioCode = peticio.getTipus();
-                final String tipusPeticioDescription = MAP_TIPUS_PETICIO.get(peticio.getTipus() + "_" + language);
-
-                String tipusDocumentalCode = peticio.getTipusDocumental();
-                tipusDocumentalCode = "TD" + (tipusDocumentalCode.length() == 1 ? "0" : "") + tipusDocumentalCode;
-
-                final String tipusDocumentalDescription = mapTD.get(tipusDocumentalCode);
-
-                final Timestamp creada = peticio.getDataCreacio();
-                final Timestamp finalitzada = peticio.getDataFinal();
-
-                final PeticioDeFirma p = new PeticioDeFirma(nif, titol, creada, finalitzada, idiomaCode,
-                        idiomaDescription, tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode,
-                        tipusPeticioDescription, dir3);
-                peticionsInfo.add(p);
-            }
-
-            long countTotal = this.peticioLogicaEjb.count(w);
-
-            // PAGINACIO
-            final int pageSizeOutput = pagesize;
-            final int pageOutput = page;
-            final int totalPages = (int) (countTotal / pagesize) + ((countTotal % pagesize == 0) ? 0 : 1);
-
-            final String nextUrl;
-            if (page >= totalPages) {
-                nextUrl = null;
-            } else {
-                nextUrl = ((Configuracio.getUrlBase().replace("enviafibback", "") + request.getContextPath() + PATH
-                        + "/peticionsdefirma?" + nextQuery.toString()).replace("//", "/"));
-            }
-
-            final String dateDownload = convertDateToDateTimeISO8601(new Date());
+            PeticioToPeticioDeFirmaConverter converter = new PeticioToPeticioDeFirmaConverter(mapTD, language);
 
             final String name;
             if ("es".equals(language)) {
@@ -433,8 +370,8 @@ public class DadesObertesService extends RestUtils {
                 name = "Llista parcial de peticions de Firma creades per EnviaFIB.";
             }
 
-            PeticioDeFirmaPaginacio paginacio = new PeticioDeFirmaPaginacio(pageSizeOutput, pageOutput, totalPages,
-                    (int) countTotal, peticionsInfo, nextUrl, dateDownload, name);
+            PeticioDeFirmaPaginacio paginacio = GenAppRestUtils.createRestPagination(PeticioDeFirmaPaginacio.class,
+                    this.peticioLogicaEjb, (int) page, (int) pagesize, w, orderBy, converter, name, nextQuery);
 
             return paginacio;
         } catch (Throwable th) {
@@ -448,6 +385,48 @@ public class DadesObertesService extends RestUtils {
             this.log.error("Error desconegut retornant dades obertes: " + msg, th);
             throw new RestException(msg, th, Status.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * 
+     * @author anadal
+     *
+     */
+    public class PeticioToPeticioDeFirmaConverter implements GenAppEntityConverter<Peticio, PeticioDeFirma> {
+
+        protected final Map<String, String> mapTD;
+
+        protected final String language;
+
+        public PeticioToPeticioDeFirmaConverter(Map<String, String> mapTD, String language) {
+            super();
+            this.mapTD = mapTD;
+            this.language = language;
+        }
+
+        @Override
+        public PeticioDeFirma convert(Peticio peticio) throws RestException {
+            final String nif = peticio.getDestinatariNif();
+            final String titol = peticio.getNom();
+            final String idiomaCode = peticio.getIdiomaID();
+            final String idiomaDescription = MAP_IDIOMA.get(idiomaCode + "_" + language);
+            final String dir3 = peticio.getArxiuParamFuncionariDir3();
+
+            final int tipusPeticioCode = peticio.getTipus();
+            final String tipusPeticioDescription = MAP_TIPUS_PETICIO.get(peticio.getTipus() + "_" + language);
+
+            String tipusDocumentalCode = peticio.getTipusDocumental();
+            tipusDocumentalCode = "TD" + (tipusDocumentalCode.length() == 1 ? "0" : "") + tipusDocumentalCode;
+
+            final String tipusDocumentalDescription = mapTD.get(tipusDocumentalCode);
+
+            final Timestamp creada = peticio.getDataCreacio();
+            final Timestamp finalitzada = peticio.getDataFinal();
+
+            return new PeticioDeFirma(nif, titol, creada, finalitzada, idiomaCode, idiomaDescription,
+                    tipusDocumentalCode, tipusDocumentalDescription, tipusPeticioCode, tipusPeticioDescription, dir3);
+        }
+
     }
 
     @Path("/tipusdocumentals")
