@@ -622,17 +622,20 @@ function validacioFormulario() {
         titol.parentElement.prepend(span);
         validacio &= false;
     }
-
+    
+    //Si la variable nif es hidden, no comprovamos si es obligatorio
     var nif = document.getElementById("peticio.destinatariNif");
-    var regex = /^[0-9]{8,8}[A-Za-z]$/;
-    if (!regex.test(nif.value)) {
-        var span = document.createElement("span");
-        span.id = "peticio.destinatariNif.errors";
-        span.classList = "errorField alert alert-danger";
-        span.innerHTML = "El camp NIF no té el format correcte.";
-        nif.parentElement.prepend(span);
-        validacio &= false;
-    }
+	if(nif.type != "hidden"){
+		var regex = /^[0-9]{8,8}[A-Za-z]$/;
+		if (!regex.test(nif.value)) {
+			var span = document.createElement("span");
+		    span.id = "peticio.destinatariNif.errors";
+		    span.classList = "errorField alert alert-danger";
+		    span.innerHTML = "El camp NIF no té el format correcte.";
+		    nif.parentElement.prepend(span);
+		    validacio &= false;
+		}
+	}
 
     var tipusDoc = document.getElementById("peticio_tipusDocumental");
     if (tipusDoc.value === "") {
