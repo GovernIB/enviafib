@@ -1,14 +1,18 @@
 package es.caib.enviafib.back.controller.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.ITableManager;
+import org.fundaciobit.genapp.common.query.StringField;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
@@ -182,4 +186,46 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
         return llistat;
     }
 
+    
+//	// Afegir dos camps al excel de l'exportacio. URL doc original i URL imprimible
+//	@Override
+//	public void exportList(@PathVariable("dataExporterID") String dataExporterID, HttpServletRequest request,
+//			HttpServletResponse response, PeticioFilterForm filterForm) throws Exception, I18NException {
+//
+//		ModelAndView mav = new ModelAndView(getTileList());
+//		List<Peticio> list = llistat(mav, request, filterForm);
+//		//Clonar el array, no asignarlo directamente
+//		List<Field<?>> allFields = Arrays.asList(ALL_PETICIO_FIELDS);
+//
+//		StringField URLINVENTADA = new StringField(_TABLE_MODEL, "urlinventada", "urlinventada");
+//
+//		allFields.add(URLINVENTADA);
+//
+//		java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
+//		__mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
+//		__mapping.put(SOLICITANTID, filterForm.getMapOfUsuariForSolicitantID());
+//		__mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
+//		__mapping.put(ESTAT, filterForm.getMapOfValuesForEstat());
+//		__mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusDocumental());
+//		__mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomaDoc());
+//		__mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfoSignaturaID());
+//		__mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
+//		__mapping.put(ARXIUREQPARAMDOCESTATELABORA, filterForm.getMapOfValuesForArxiuReqParamDocEstatElabora());
+//		__mapping.put(ARXIUREQPARAMORIGEN, filterForm.getMapOfValuesForArxiuReqParamOrigen());
+//		__mapping.put(INFOARXIUID, filterForm.getMapOfInfoArxiuForInfoArxiuID());
+//		__mapping.put(URLINVENTADA, getMapOfUrlInventada());
+//
+//		Field<?>[] allFieldsArray = allFields.toArray(new Field<?>[allFields.size()]);
+//		
+//		exportData(request, response, dataExporterID, filterForm, list, allFieldsArray, __mapping, PRIMARYKEY_FIELDS);
+//	}
+//
+//	private Map<String, String> getMapOfUrlInventada() {
+//		Map<String, String> map = new java.util.HashMap<String, String>();
+//		map.put("urlinventada", "URL Inventada");
+//		map.put("", "URL Inventada buida");
+//		return map;
+//	}
+
+	
 }

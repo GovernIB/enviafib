@@ -65,6 +65,15 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
             }
         }
 
+        if (__isView) {
+        	String plantillaFluxID = peticioForm.getPeticio().getPeticioPortafirmes();
+        	String nomPlantilla = getNomPlantillaFlux(plantillaFluxID);
+        	
+			if (nomPlantilla != null) {
+				peticioForm.getPeticio().setPeticioPortafirmes(nomPlantilla);
+			}
+		}
+        
         peticioForm.setAttachedAdditionalJspCode(true);
 
         return peticioForm;
@@ -146,4 +155,27 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
         return filter;
     }
+    
+	public String getNomPlantillaFlux(String plantillaFluxID) throws I18NException {
+
+		final String languageUI = "ca";
+		ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+		try {
+			
+			FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplates(languageUI);
+            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+            
+            for (FlowTemplateSimpleKeyValue flowKeyValue : plantilles) {
+            	if (flowKeyValue.getKey().equals(plantillaFluxID)) {
+            		return flowKeyValue.getValue();
+            	}
+            }
+            
+            return null;
+		} catch (AbstractApisIBException e) {
+			String msg = "Error consultant API de Plantilles de Flux: " + e.getMessage();
+			log.error(msg, e);
+			throw new I18NException("genapp.comodi", msg);
+		}
+	}
 }
