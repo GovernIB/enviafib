@@ -33,6 +33,7 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.Section;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -69,6 +70,7 @@ import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.entity.Usuari;
+import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -179,9 +181,17 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         hiddens.remove(ARXIUREQPARAMORIGEN);
         hiddens.remove(ARXIUREQPARAMINTERESSATS);
 //        hiddens.remove(ARXIUREQPARAMORGANS);
-
         
         if (__isView) {
+        	
+			Section PETICIO = new Section("s1", "peticio.peticio", NOM, DATACREACIO, DATAFINAL, IDIOMAID, ESTAT, TIPUS, PETICIOPORTAFIRMES);
+			Section FITXER = new Section("s2", "peticio.fitxerID", FITXERID, TIPUSDOCUMENTAL, IDIOMADOC, ARXIUREQPARAMDOCESTATELABORA, FITXERFIRMATID);
+			Section DESTINATARI = new Section("s3", "destinatari.destinatari", DESTINATARINIF, ARXIUPARAMFUNCIONARIDIR3, ARXIUREQPARAMORIGEN, ARXIUREQPARAMINTERESSATS);
+			
+			peticioForm.addSection(PETICIO);
+			peticioForm.addSection(FITXER);
+			peticioForm.addSection(DESTINATARI);
+			            
             hiddens.remove(DATACREACIO);
             hiddens.remove(TIPUS);
             hiddens.remove(IDIOMAID);
@@ -231,9 +241,22 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "user.infoarxiu",
                             "/user/infoArxiu/view/" + infoArxiuID, "btn-info"));
 
+                    //Si tenim el fitxer arxivat, ocultar el camp FitxerFirmatID, i afegir un botó per veure el fitxer arxivat d'arxiu
+                    if (infoArxiuID != null) {
+                    	String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
+                                InfoArxiuFields.INFOARXIUID.equal(infoArxiuID));
+                    	
+						hiddens.add(FITXERFIRMATID);
+						peticioForm.addAdditionalButton(new AdditionalButton("fas fas fa-print",
+	                            "download.arxivat.imprimible", LlistatPeticionsUserController.CONTEXT_WEB + "/descarregarimprimible/" + csv, "btn-success"));
+						peticioForm.addAdditionalButton(new AdditionalButton("fas fa-file-pdf",
+	                            "download.arxivat.firmat",  LlistatPeticionsUserController.CONTEXT_WEB + "/descarregarfirmat/" + csv, "btn-success"));
+					}
+                    
                 break;
             }
-        }
+
+		}
 
         peticioForm.setAttachedAdditionalJspCode(true);
         peticioForm.setHiddenFields(hiddens);
@@ -508,6 +531,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                         FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
                         p = peticioLogicaEjb.arrancarPeticioFlux(peticioID, languageUI, flux, solicitant);
+                        p.setPeticioPortafirmes(flowTemplateId);
+                        peticioLogicaEjb.update(p);
+
                     break;
                     default:
                         p = peticioLogicaEjb.arrancarPeticio(peticioID, languageUI, solicitant);
