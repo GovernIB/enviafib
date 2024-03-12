@@ -290,7 +290,7 @@
             "type" : "string"
           }
         },
-        "description" : "Elements retornats. Pot retornar un null o una llista bida si no hi ha elements."
+        "description" : "Elements retornats. Pot retornar un null o una llista buida si no hi ha elements."
       },
       "PeticioDeFirmaPaginacio" : {
         "required" : [ "date-download", "items-returned", "name", "page", "page-size", "total-count", "total-pages" ],
@@ -336,7 +336,7 @@
           },
           "data" : {
             "type" : "array",
-            "description" : "Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.",
+            "description" : "Elements retornats. Pot retornar un null o una llista buida si no hi ha elements.",
             "items" : {
               "$ref" : "#/components/schemas/PeticioDeFirma"
             }
@@ -378,7 +378,7 @@
           },
           "data" : {
             "type" : "array",
-            "description" : "Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.",
+            "description" : "Elements retornats. Pot retornar un null o una llista buida si no hi ha elements.",
             "items" : {
               "$ref" : "#/components/schemas/TipusDocumental"
             }

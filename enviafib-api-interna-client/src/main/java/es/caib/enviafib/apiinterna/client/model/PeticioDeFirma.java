@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
- * Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.
+ * Elements retornats. Pot retornar un null o una llista buida si no hi ha elements.
  */
 @JsonPropertyOrder({
   PeticioDeFirma.JSON_PROPERTY_NIF,

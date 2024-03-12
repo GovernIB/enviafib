@@ -295,7 +295,7 @@ public class PeticioDeFirmaPaginacio {
   }
 
    /**
-   * Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.
+   * Elements retornats. Pot retornar un null o una llista buida si no hi ha elements.
    * @return data
   **/
   @javax.annotation.Nullable
