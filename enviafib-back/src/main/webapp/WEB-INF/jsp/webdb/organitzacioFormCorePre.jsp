@@ -17,6 +17,6 @@
     </c:if>
 
     <form:errors cssClass="errorField alert alert-danger" delimiter="&lt;p/&gt;" />
-    <table id="organitzacio_tableid" class="tdformlabel table-sm table table-bordered table-striped marTop10 table-genapp" > 
+    <table id="organitzacio_tableid" class="tdformlabel table-sm table table-bordered table-striped marTop10 table-genapp table-genapp-form" > 
     <tbody>      
 

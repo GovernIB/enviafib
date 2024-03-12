@@ -6,7 +6,7 @@
   <c:if test="${not empty traduccioItems}">
 
   <div class="row" style="margin-left: 0px;">
-  <table class="table table-sm table-bordered table-striped table-genapp" style="width:auto;"> 
+  <table class="table table-sm table-bordered table-striped table-genapp table-genapp-list" style="width:auto;"> 
     <thead>
       <tr>
 
