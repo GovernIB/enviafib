@@ -469,20 +469,22 @@ td label {
 
 
 
+<%-- ===================== MOSTRAR PLANTILLES DE FLUX ===========================  --%>
 
 <c:if test="${not empty plantillaflux}">
     <script type="text/javascript">
 
-        var portafibDIV = "<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.PETICIOPORTAFIRMES.getJavaName()%>";
-        var portafibIDLabel = "<%=PeticioFields.PETICIOPORTAFIRMES.getCodeLabel()%>";
+        var reasonDIV = "<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.REASON.getJavaName()%>";
+        var reasonIDLabel = "<%=PeticioFields.REASON.getCodeLabel()%>";
 
-        $("#peticio_nom_rowid").after($("#" + portafibDIV + "_rowid"));
+        $("#peticio_nom_rowid").after($("#" + reasonDIV + "_rowid"));
         
         var html = "";     
         html += '<select '; 
-        html += 'id= "' + portafibIDLabel  + '" '; 
-        html += 'name= "' + portafibIDLabel  + '" '; 
+        html += 'id= "' + reasonIDLabel  + '" '; 
+        html += 'name= "' + reasonIDLabel  + '" '; 
         html += 'class="form-control col-md-9-optional"> ';
+        
         
         <c:forEach var="item" items="${plantillesUsuari}">
             html += '<option value="<c:out value="${item.nif}"/>"><c:out value="${item.nom}"/></option>';
@@ -492,7 +494,7 @@ td label {
         
         html += '</select>';
         
-        document.getElementById(portafibDIV + "_columnvalueid").innerHTML = html;
+        document.getElementById(reasonDIV + "_columnvalueid").innerHTML = html;
  
     </script>
 </c:if>
@@ -625,7 +627,7 @@ function validacioFormulario() {
     
     //Si la variable nif es hidden, no comprovamos si es obligatorio
     var nif = document.getElementById("peticio.destinatariNif");
-	if(nif.type != "hidden"){
+    if(nif.type != "hidden"){
 		var regex = /^[0-9]{8,8}[A-Za-z]$/;
 		if (!regex.test(nif.value)) {
 			var span = document.createElement("span");

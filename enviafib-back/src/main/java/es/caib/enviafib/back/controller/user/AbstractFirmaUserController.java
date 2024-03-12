@@ -184,7 +184,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         
         if (__isView) {
         	
-			Section PETICIO = new Section("s1", "peticio.peticio", NOM, DATACREACIO, DATAFINAL, IDIOMAID, ESTAT, TIPUS, PETICIOPORTAFIRMES);
+			Section PETICIO = new Section("s1", "peticio.peticio", NOM, DATACREACIO, DATAFINAL, IDIOMAID, ESTAT, TIPUS, PETICIOPORTAFIRMES, REASON);
 			Section FITXER = new Section("s2", "peticio.fitxerID", FITXERID, TIPUSDOCUMENTAL, IDIOMADOC, ARXIUREQPARAMDOCESTATELABORA, FITXERFIRMATID);
 			Section DESTINATARI = new Section("s3", "destinatari.destinatari", DESTINATARINIF, ARXIUPARAMFUNCIONARIDIR3, ARXIUREQPARAMORIGEN, ARXIUREQPARAMINTERESSATS);
 			
@@ -523,7 +523,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                         ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
-                        String flowTemplateId = peticio.getPeticioPortafirmes();
+                        String flowTemplateId = peticio.getReason();
 
                         FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
                         flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
@@ -531,9 +531,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                         FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
                         p = peticioLogicaEjb.arrancarPeticioFlux(peticioID, languageUI, flux, solicitant);
-                        p.setPeticioPortafirmes(flowTemplateId);
-                        peticioLogicaEjb.update(p);
-
                     break;
                     default:
                         p = peticioLogicaEjb.arrancarPeticio(peticioID, languageUI, solicitant);
@@ -685,7 +682,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             request.getSession().setAttribute(SESSION_PROGRES_KEY, pi);
 
             
-            String flowTemplateId = peticioForm.getPeticio().getPeticioPortafirmes();
+            String flowTemplateId = peticioForm.getPeticio().getReason();
             
             int i;
             for (i = 0; i < nFitxers; i++) {
@@ -709,7 +706,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                 if (petFor.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI
                         || petFor.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT) {
-                    petFor.setPeticioPortafirmes(flowTemplateId);
+                    petFor.setReason(flowTemplateId);
                 }
 
                 Set<InfoAnexJPA> anexes = new HashSet<InfoAnexJPA>();

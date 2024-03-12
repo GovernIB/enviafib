@@ -45,8 +45,8 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
             throws I18NException {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
-        peticioForm.getHiddenFields().remove(PeticioFields.PETICIOPORTAFIRMES);
-        peticioForm.addLabel(PeticioFields.PETICIOPORTAFIRMES, "plantilla.flux");
+        peticioForm.getHiddenFields().remove(PeticioFields.REASON);
+        peticioForm.addLabel(PeticioFields.REASON, "plantilla.flux");
 
         if (peticioForm.isNou()) {
 
@@ -66,11 +66,11 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         }
 
         if (__isView) {
-        	String plantillaFluxID = peticioForm.getPeticio().getPeticioPortafirmes();
+        	String plantillaFluxID = peticioForm.getPeticio().getReason();
         	String nomPlantilla = getNomPlantillaFlux(plantillaFluxID);
         	
 			if (nomPlantilla != null) {
-				peticioForm.getPeticio().setPeticioPortafirmes(nomPlantilla);
+				peticioForm.getPeticio().setReason(nomPlantilla);
 			}
 		}
         
