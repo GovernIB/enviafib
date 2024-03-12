@@ -2,7 +2,7 @@
 
 # PeticioDeFirma
 
-Elements retornats
+Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.
 
 ## Properties
 

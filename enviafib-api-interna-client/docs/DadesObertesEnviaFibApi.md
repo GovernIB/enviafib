@@ -5,13 +5,13 @@ All URIs are relative to */enviafibapi/interna*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**peticionsdefirma**](DadesObertesEnviaFibApi.md#peticionsdefirma) | **GET** /secure/dadesobertes/peticionsdefirma | Retorna un llistat amb la informacio de les peticions de firma |
-| [**tipusdocumentals**](DadesObertesEnviaFibApi.md#tipusdocumentals) | **GET** /secure/dadesobertes/tipusdocumentals | Retorna un llistat dels tipus documentals |
+| [**tipusdocumentals**](DadesObertesEnviaFibApi.md#tipusdocumentals) | **GET** /secure/dadesobertes/tipusdocumentals | Retorna un llistat de tots els tipus documentals |
 
 
 
 ## peticionsdefirma
 
-> PeticioDeFirmaPaginacio peticionsdefirma(inici, fi, page, pagesize, language)
+> PeticioDeFirmaPaginacio peticionsdefirma(startdate, enddate, page, pageSize, language)
 
 Retorna un llistat amb la informacio de les peticions de firma
 
@@ -37,13 +37,13 @@ public class Example {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         DadesObertesEnviaFibApi apiInstance = new DadesObertesEnviaFibApi(defaultClient);
-        String inici = "2022-08-29"; // String | Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades
-        String fi = "2023-12-31"; // String | Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades
-        Integer page = 1; // Integer | Pàgina de la que es vol obtenir les dades
-        Integer pagesize = 10; // Integer | Elements retornats per la pàgina
+        String startdate = "2022-08-29"; // String | Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades
+        String enddate = "2023-12-31"; // String | Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades
+        Integer page = 1; // Integer | Pàgina de la que es vol obtenir les dades. Comença en 1.
+        Integer pageSize = 56; // Integer | Número d'elements a retornar per pàgina. Opcional. Per defecte 10
         String language = "ca"; // String | Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')
         try {
-            PeticioDeFirmaPaginacio result = apiInstance.peticionsdefirma(inici, fi, page, pagesize, language);
+            PeticioDeFirmaPaginacio result = apiInstance.peticionsdefirma(startdate, enddate, page, pageSize, language);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DadesObertesEnviaFibApi#peticionsdefirma");
@@ -61,10 +61,10 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **inici** | **String**| Data d&#39;inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades | [optional] |
-| **fi** | **String**| Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades | [optional] |
-| **page** | **Integer**| Pàgina de la que es vol obtenir les dades | [optional] |
-| **pagesize** | **Integer**| Elements retornats per la pàgina | [optional] |
+| **startdate** | **String**| Data d&#39;inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades | [optional] |
+| **enddate** | **String**| Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades | [optional] |
+| **page** | **Integer**| Pàgina de la que es vol obtenir les dades. Comença en 1. | [optional] |
+| **pageSize** | **Integer**| Número d&#39;elements a retornar per pàgina. Opcional. Per defecte 10 | [optional] |
 | **language** | **String**| Idioma en que s&#39;han de retornar les dades(Només suportat &#39;ca&#39; o &#39;es&#39;) | [optional] [default to ca] |
 
 ### Return type
@@ -93,9 +93,9 @@ public class Example {
 
 ## tipusdocumentals
 
-> TipusDocumentalsPaginacio tipusdocumentals(language)
+> TipusDocumentalsAllElements tipusdocumentals(language)
 
-Retorna un llistat dels tipus documentals
+Retorna un llistat de tots els tipus documentals
 
 ### Example
 
@@ -121,7 +121,7 @@ public class Example {
         DadesObertesEnviaFibApi apiInstance = new DadesObertesEnviaFibApi(defaultClient);
         String language = "ca"; // String | Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')
         try {
-            TipusDocumentalsPaginacio result = apiInstance.tipusdocumentals(language);
+            TipusDocumentalsAllElements result = apiInstance.tipusdocumentals(language);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DadesObertesEnviaFibApi#tipusdocumentals");
@@ -143,7 +143,7 @@ public class Example {
 
 ### Return type
 
-[**TipusDocumentalsPaginacio**](TipusDocumentalsPaginacio.md)
+[**TipusDocumentalsAllElements**](TipusDocumentalsAllElements.md)
 
 ### Authorization
 

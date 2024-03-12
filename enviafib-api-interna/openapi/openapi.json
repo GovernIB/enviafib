@@ -38,39 +38,40 @@
         "summary" : "Retorna un llistat amb la informacio de les peticions de firma",
         "operationId" : "peticionsdefirma",
         "parameters" : [ {
-          "name" : "inici",
+          "name" : "startdate",
           "in" : "query",
           "description" : "Data d'inici, en format yyyy-MM-dd (ISO 8601), a partir de la qual volem obtenir dades",
           "schema" : {
+            "pattern" : "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29))$",
             "type" : "string"
           },
           "example" : "2022-08-29"
         }, {
-          "name" : "fi",
+          "name" : "enddate",
           "in" : "query",
           "description" : "Data fi, en format yyyy-MM-dd (ISO 8601), fins la qual volem tenir dades",
           "schema" : {
+            "pattern" : "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29))$",
             "type" : "string"
           },
           "example" : "2023-12-31"
         }, {
           "name" : "page",
           "in" : "query",
-          "description" : "Pàgina de la que es vol obtenir les dades",
+          "description" : "Pàgina de la que es vol obtenir les dades. Comença en 1.",
           "schema" : {
             "type" : "integer",
             "format" : "int32"
           },
           "example" : 1
         }, {
-          "name" : "pagesize",
+          "name" : "page-size",
           "in" : "query",
-          "description" : "Elements retornats per la pàgina",
+          "description" : "Número d'elements a retornar per pàgina. Opcional. Per defecte 10",
           "schema" : {
             "type" : "integer",
             "format" : "int32"
-          },
-          "example" : 10
+          }
         }, {
           "name" : "language",
           "in" : "query",
@@ -150,7 +151,7 @@
     "/secure/dadesobertes/tipusdocumentals" : {
       "get" : {
         "tags" : [ "DadesObertesEnviaFib" ],
-        "summary" : "Retorna un llistat dels tipus documentals",
+        "summary" : "Retorna un llistat de tots els tipus documentals",
         "operationId" : "tipusdocumentals",
         "parameters" : [ {
           "name" : "language",
@@ -207,7 +208,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/TipusDocumentalsPaginacio"
+                  "$ref" : "#/components/schemas/TipusDocumentalsAllElements"
                 }
               }
             }
@@ -289,71 +290,97 @@
             "type" : "string"
           }
         },
-        "description" : "Elements retornats"
+        "description" : "Elements retornats. Pot retornar un null o una llista bida si no hi ha elements."
       },
       "PeticioDeFirmaPaginacio" : {
-        "required" : [ "data", "page", "pagesize", "totalcount", "totalpages" ],
+        "required" : [ "date-download", "items-returned", "name", "page", "page-size", "total-count", "total-pages" ],
         "type" : "object",
         "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Nom descriptiu del que s'està retornant"
+          },
           "page" : {
             "type" : "integer",
             "description" : "Número pàgina. Comença per 1.",
             "format" : "int32"
           },
-          "pagesize" : {
+          "page-size" : {
             "type" : "integer",
             "description" : "Mida de pàgina",
             "format" : "int32"
           },
-          "totalpages" : {
+          "total-pages" : {
             "type" : "integer",
             "description" : "Número total de pàgines",
             "format" : "int32"
           },
-          "totalcount" : {
+          "total-count" : {
             "type" : "integer",
-            "description" : "Numero total d'elements",
+            "description" : "Número total d'elements",
             "format" : "int32"
+          },
+          "items-returned" : {
+            "type" : "integer",
+            "description" : "Numero d'elements retornats",
+            "format" : "int32"
+          },
+          "next" : {
+            "type" : "string",
+            "description" : "Si hi ha més elements, llavors retorna la URL a la següent pàgina de dades."
+          },
+          "date-download" : {
+            "pattern" : "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:Z|[+-][01]\\d:[0-5]\\d)$",
+            "type" : "string",
+            "description" : "Data i hora en que s'han retornat les dades. Format ISO-8601"
           },
           "data" : {
             "type" : "array",
-            "description" : "Elements retornats",
+            "description" : "Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.",
             "items" : {
               "$ref" : "#/components/schemas/PeticioDeFirma"
             }
           }
         }
       },
-      "TipusDocumentalsPaginacio" : {
-        "required" : [ "data", "page", "pagesize", "totalcount", "totalpages" ],
+      "TipusDocumental" : {
+        "required" : [ "code", "name" ],
         "type" : "object",
         "properties" : {
-          "page" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Identificador intern de l'objecte"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Nom del Tipus Documental"
+          }
+        },
+        "description" : "Informació bàsica d'un Tipus Documental"
+      },
+      "TipusDocumentalsAllElements" : {
+        "required" : [ "date-download", "name", "total-count" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Nom descriptiu del que s'està retornant"
+          },
+          "total-count" : {
             "type" : "integer",
-            "description" : "Número pàgina. Comença per 1.",
+            "description" : "Número total d'elements",
             "format" : "int32"
           },
-          "pagesize" : {
-            "type" : "integer",
-            "description" : "Mida de pàgina",
-            "format" : "int32"
-          },
-          "totalpages" : {
-            "type" : "integer",
-            "description" : "Número total de pàgines",
-            "format" : "int32"
-          },
-          "totalcount" : {
-            "type" : "integer",
-            "description" : "Numero total d'elements",
-            "format" : "int32"
+          "date-download" : {
+            "pattern" : "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:Z|[+-][01]\\d:[0-5]\\d)$",
+            "type" : "string",
+            "description" : "Data i hora en que s'han retornat les dades. Format ISO-8601"
           },
           "data" : {
             "type" : "array",
-            "description" : "Elements retornats",
+            "description" : "Elements retornats. Pot retornar un null o una llista bida si no hi ha elements.",
             "items" : {
-              "type" : "string",
-              "description" : "Elements retornats"
+              "$ref" : "#/components/schemas/TipusDocumental"
             }
           }
         }

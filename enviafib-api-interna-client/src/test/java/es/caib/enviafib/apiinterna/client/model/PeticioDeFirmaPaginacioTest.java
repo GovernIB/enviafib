@@ -41,11 +41,11 @@ public class PeticioDeFirmaPaginacioTest {
     }
 
     /**
-     * Test the property 'pagesize'
+     * Test the property 'name'
      */
     @Test
-    public void pagesizeTest() {
-        // TODO: test pagesize
+    public void nameTest() {
+        // TODO: test name
     }
 
     /**
@@ -57,19 +57,51 @@ public class PeticioDeFirmaPaginacioTest {
     }
 
     /**
-     * Test the property 'totalpages'
+     * Test the property 'pageSize'
      */
     @Test
-    public void totalpagesTest() {
-        // TODO: test totalpages
+    public void pageSizeTest() {
+        // TODO: test pageSize
     }
 
     /**
-     * Test the property 'totalcount'
+     * Test the property 'totalPages'
      */
     @Test
-    public void totalcountTest() {
-        // TODO: test totalcount
+    public void totalPagesTest() {
+        // TODO: test totalPages
+    }
+
+    /**
+     * Test the property 'totalCount'
+     */
+    @Test
+    public void totalCountTest() {
+        // TODO: test totalCount
+    }
+
+    /**
+     * Test the property 'itemsReturned'
+     */
+    @Test
+    public void itemsReturnedTest() {
+        // TODO: test itemsReturned
+    }
+
+    /**
+     * Test the property 'next'
+     */
+    @Test
+    public void nextTest() {
+        // TODO: test next
+    }
+
+    /**
+     * Test the property 'dateDownload'
+     */
+    @Test
+    public void dateDownloadTest() {
+        // TODO: test dateDownload
     }
 
     /**
