@@ -29,19 +29,19 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * TipusDocumentalsPaginacio
  */
 @JsonPropertyOrder({
-  TipusDocumentalsPaginacio.JSON_PROPERTY_PAGESIZE,
   TipusDocumentalsPaginacio.JSON_PROPERTY_PAGE,
+  TipusDocumentalsPaginacio.JSON_PROPERTY_PAGESIZE,
   TipusDocumentalsPaginacio.JSON_PROPERTY_TOTALPAGES,
   TipusDocumentalsPaginacio.JSON_PROPERTY_TOTALCOUNT,
   TipusDocumentalsPaginacio.JSON_PROPERTY_DATA
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class TipusDocumentalsPaginacio {
-  public static final String JSON_PROPERTY_PAGESIZE = "pagesize";
-  private Integer pagesize;
-
   public static final String JSON_PROPERTY_PAGE = "page";
   private Integer page;
+
+  public static final String JSON_PROPERTY_PAGESIZE = "pagesize";
+  private Integer pagesize;
 
   public static final String JSON_PROPERTY_TOTALPAGES = "totalpages";
   private Integer totalpages;
@@ -54,32 +54,6 @@ public class TipusDocumentalsPaginacio {
 
   public TipusDocumentalsPaginacio() {
   }
-
-  public TipusDocumentalsPaginacio pagesize(Integer pagesize) {
-    
-    this.pagesize = pagesize;
-    return this;
-  }
-
-   /**
-   * Mida de pàgina
-   * @return pagesize
-  **/
-  @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_PAGESIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-
-  public Integer getPagesize() {
-    return pagesize;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_PAGESIZE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setPagesize(Integer pagesize) {
-    this.pagesize = pagesize;
-  }
-
 
   public TipusDocumentalsPaginacio page(Integer page) {
     
@@ -104,6 +78,32 @@ public class TipusDocumentalsPaginacio {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setPage(Integer page) {
     this.page = page;
+  }
+
+
+  public TipusDocumentalsPaginacio pagesize(Integer pagesize) {
+    
+    this.pagesize = pagesize;
+    return this;
+  }
+
+   /**
+   * Mida de pàgina
+   * @return pagesize
+  **/
+  @javax.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_PAGESIZE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+
+  public Integer getPagesize() {
+    return pagesize;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_PAGESIZE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPagesize(Integer pagesize) {
+    this.pagesize = pagesize;
   }
 
 
@@ -201,8 +201,8 @@ public class TipusDocumentalsPaginacio {
       return false;
     }
     TipusDocumentalsPaginacio tipusDocumentalsPaginacio = (TipusDocumentalsPaginacio) o;
-    return Objects.equals(this.pagesize, tipusDocumentalsPaginacio.pagesize) &&
-        Objects.equals(this.page, tipusDocumentalsPaginacio.page) &&
+    return Objects.equals(this.page, tipusDocumentalsPaginacio.page) &&
+        Objects.equals(this.pagesize, tipusDocumentalsPaginacio.pagesize) &&
         Objects.equals(this.totalpages, tipusDocumentalsPaginacio.totalpages) &&
         Objects.equals(this.totalcount, tipusDocumentalsPaginacio.totalcount) &&
         Objects.equals(this.data, tipusDocumentalsPaginacio.data);
@@ -210,15 +210,15 @@ public class TipusDocumentalsPaginacio {
 
   @Override
   public int hashCode() {
-    return Objects.hash(pagesize, page, totalpages, totalcount, data);
+    return Objects.hash(page, pagesize, totalpages, totalcount, data);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TipusDocumentalsPaginacio {\n");
-    sb.append("    pagesize: ").append(toIndentedString(pagesize)).append("\n");
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    pagesize: ").append(toIndentedString(pagesize)).append("\n");
     sb.append("    totalpages: ").append(toIndentedString(totalpages)).append("\n");
     sb.append("    totalcount: ").append(toIndentedString(totalcount)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");

@@ -295,14 +295,14 @@
         "required" : [ "data", "page", "pagesize", "totalcount", "totalpages" ],
         "type" : "object",
         "properties" : {
-          "pagesize" : {
-            "type" : "integer",
-            "description" : "Mida de pàgina",
-            "format" : "int32"
-          },
           "page" : {
             "type" : "integer",
             "description" : "Número pàgina. Comença per 1.",
+            "format" : "int32"
+          },
+          "pagesize" : {
+            "type" : "integer",
+            "description" : "Mida de pàgina",
             "format" : "int32"
           },
           "totalpages" : {
@@ -328,14 +328,14 @@
         "required" : [ "data", "page", "pagesize", "totalcount", "totalpages" ],
         "type" : "object",
         "properties" : {
-          "pagesize" : {
-            "type" : "integer",
-            "description" : "Mida de pàgina",
-            "format" : "int32"
-          },
           "page" : {
             "type" : "integer",
             "description" : "Número pàgina. Comença per 1.",
+            "format" : "int32"
+          },
+          "pagesize" : {
+            "type" : "integer",
+            "description" : "Mida de pàgina",
             "format" : "int32"
           },
           "totalpages" : {
