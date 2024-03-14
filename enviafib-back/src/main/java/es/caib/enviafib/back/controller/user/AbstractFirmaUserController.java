@@ -181,7 +181,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         hiddens.remove(ARXIUREQPARAMORIGEN);
         hiddens.remove(ARXIUREQPARAMINTERESSATS);
 //        hiddens.remove(ARXIUREQPARAMORGANS);
-        
+
         if (__isView) {
         	
 			Section PETICIO = new Section("s1", "peticio.peticio", NOM, DATACREACIO, DATAFINAL, IDIOMAID, ESTAT, TIPUS, PETICIOPORTAFIRMES, REASON);
@@ -1095,5 +1095,49 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 result.rejectValue(get(FITXERID), "error.unknown", new String[] { msg }, null);
             }
         }
+    }
+
+
+
+
+    
+    @Override
+    public List<StringKeyValue> getReferenceListForRevisor(HttpServletRequest request, ModelAndView mav, Where where)  throws I18NException {
+
+
+//         List<StringKeyValue> tmpList;
+
+//         String lang = LocaleContextHolder.getLocale().getLanguage();
+//         boolean obtenerTodos = false;
+        
+//         tmpList = peticioLogicaEjb.getRevisorsUsuari(lang, obtenerTodos);
+//         if (tmpList.isEmpty()) {
+//             HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
+//         }else {
+//             tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
+// //            tmpList.add(new StringKeyValue("", ""));
+//        //     java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
+//         }
+//         return tmpList;
+
+
+
+
+        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+
+        // RevisorsApi api = new RevisorsApi();
+        // ApiClient c = api.getApiClient();
+
+        // c.setBasePath("https://governdigital.fundaciobit.org/portafibapi/interna");
+        // c.setUsername("");
+        // c.setPassword(p.getProperty("password"));
+
+        // BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, language);
+
+        // log.info(response);
+
+        __tmp.add(new StringKeyValue("45186147W" , "Juan Pablo Trias"));
+        __tmp.add(new StringKeyValue("12345678T" , "Revisor Inventat EnviaFIB"));
+        return __tmp;
     }
 }

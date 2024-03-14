@@ -428,6 +428,17 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.String revisor;
+
+  public java.lang.String getRevisor() {
+    return this.revisor;
+  }
+
+  public void setRevisor(java.lang.String revisor) {
+    this.revisor = revisor;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -470,6 +481,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.arxiuReqParamOrigenSelect = __toClone.arxiuReqParamOrigenSelect;
     this.infoArxiuIDDesde = __toClone.infoArxiuIDDesde;
     this.infoArxiuIDFins = __toClone.infoArxiuIDFins;
+    this.revisor = __toClone.revisor;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
@@ -480,6 +492,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.mapOfValuesForArxiuReqParamDocEstatElabora = __toClone.mapOfValuesForArxiuReqParamDocEstatElabora;
     this.mapOfValuesForArxiuReqParamOrigen = __toClone.mapOfValuesForArxiuReqParamOrigen;
     this.mapOfInfoArxiuForInfoArxiuID = __toClone.mapOfInfoArxiuForInfoArxiuID;
+    this.mapOfValuesForRevisor = __toClone.mapOfValuesForRevisor;
   }
   
   /* ========= UTILS ========== */
@@ -630,6 +643,18 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   public void setMapOfInfoArxiuForInfoArxiuID(Map<String, String> mapOfInfoArxiuForInfoArxiuID) {
     this.mapOfInfoArxiuForInfoArxiuID = mapOfInfoArxiuForInfoArxiuID;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForRevisor;
+
+  public Map<String, String> getMapOfValuesForRevisor() {
+    return this.mapOfValuesForRevisor;
+  }
+
+  public void setMapOfValuesForRevisor(Map<String, String> mapOfValuesForRevisor) {
+    this.mapOfValuesForRevisor = mapOfValuesForRevisor;
   }
 
 

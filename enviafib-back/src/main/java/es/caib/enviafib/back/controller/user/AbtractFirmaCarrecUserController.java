@@ -103,6 +103,11 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 return peticioForm;
             }
         }
+
+        if (peticioForm.getPeticio().getDestinatariNif() != null) {
+            log.info("Destinatari NIF: " + peticioForm.getPeticio().getDestinatariNif());
+            peticioForm.getHiddenFields().remove(REVISOR);
+        }
         return peticioForm;
     }
 

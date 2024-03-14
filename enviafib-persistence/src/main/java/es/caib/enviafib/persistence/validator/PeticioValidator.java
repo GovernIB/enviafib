@@ -254,6 +254,14 @@ public class PeticioValidator<I extends Peticio>
       }
     }
 
+    if (__vr.getFieldErrorCount(REVISOR) == 0) {
+      java.lang.String __revisor = __target__.getRevisor();
+      if (__revisor!= null && __revisor.length() > 255) {
+        __vr.rejectValue(REVISOR, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(REVISOR)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
     if (__isNou__) { // Creació
       // ================ CREATION
       // Fitxers 

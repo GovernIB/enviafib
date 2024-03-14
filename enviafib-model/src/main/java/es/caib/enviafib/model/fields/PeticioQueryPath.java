@@ -143,6 +143,10 @@ public class PeticioQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new LongField(getQueryPath(), PeticioFields.INFOARXIUID);
   }
 
+  public StringField REVISOR() {
+    return new StringField(getQueryPath(), PeticioFields.REVISOR);
+  }
+
 
 
   @Override

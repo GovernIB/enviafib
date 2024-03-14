@@ -30,6 +30,20 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- API Revisors PortaFIB -->
+        <dependency>
+            <groupId>es.caib.portafib</groupId>
+            <artifactId>portafib-api-interna-client</artifactId>
+            <version>3.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- Externas -->
         <dependency>
             <groupId>org.fundaciobit.genapp</groupId>

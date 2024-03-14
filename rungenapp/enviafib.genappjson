@@ -2,10 +2,10 @@
   "packageName": "es.caib.enviafib",
   "projectName": "EnviaFIB",
   "dataBaseInfo": {
-    "url": "jdbc:postgresql://localhost:5432/enviafib",
+    "url": "jdbc:postgresql://localhost:5432/enviafib2",
     "driver": "org.postgresql.Driver",
-    "usr": "enviafib",
-    "pwd": "enviafib"
+    "usr": "enviafib2",
+    "pwd": "enviafib2"
   },
   "modulSeguretat": "keycloak",
   "prefix": "efi",
@@ -3206,6 +3206,32 @@
               "type": 1
             }
           ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "revisor",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Revisor",
+            "es": "Revisor"
+          },
+          "javaName": "revisor",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "revi1,revi2",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
         }
       ]
     },

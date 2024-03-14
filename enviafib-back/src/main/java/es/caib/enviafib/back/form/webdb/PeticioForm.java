@@ -38,6 +38,7 @@ public class PeticioForm extends EnviaFIBBaseForm {
     this.listOfValuesForArxiuReqParamDocEstatElabora = __toClone.listOfValuesForArxiuReqParamDocEstatElabora;
     this.listOfValuesForArxiuReqParamOrigen = __toClone.listOfValuesForArxiuReqParamOrigen;
     this.listOfInfoArxiuForInfoArxiuID = __toClone.listOfInfoArxiuForInfoArxiuID;
+    this.listOfValuesForRevisor = __toClone.listOfValuesForRevisor;
   }
   
   public PeticioForm(PeticioJPA peticio, boolean nou) {
@@ -197,6 +198,18 @@ public class PeticioForm extends EnviaFIBBaseForm {
 
   public void setListOfInfoArxiuForInfoArxiuID(List<StringKeyValue> listOfInfoArxiuForInfoArxiuID) {
     this.listOfInfoArxiuForInfoArxiuID = listOfInfoArxiuForInfoArxiuID;
+  }
+
+
+
+  private List<StringKeyValue> listOfValuesForRevisor;
+
+  public List<StringKeyValue> getListOfValuesForRevisor() {
+    return this.listOfValuesForRevisor;
+  }
+
+  public void setListOfValuesForRevisor(List<StringKeyValue> listOfValuesForRevisor) {
+    this.listOfValuesForRevisor = listOfValuesForRevisor;
   }
 
 

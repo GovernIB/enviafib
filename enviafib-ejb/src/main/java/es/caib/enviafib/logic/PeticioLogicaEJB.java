@@ -1527,4 +1527,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
+
+
+
+    
 }

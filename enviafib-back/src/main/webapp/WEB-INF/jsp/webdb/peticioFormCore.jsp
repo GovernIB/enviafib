@@ -894,3 +894,43 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.REVISOR)}">
+        <tr id="peticio_revisor_rowid">
+          <td id="peticio_revisor_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.REVISOR])?'peticio.revisor':__theForm.labels[PeticioFields.REVISOR]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.REVISOR]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.REVISOR]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_revisor_columnvalueid">
+          <form:errors path="peticio.revisor" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,PeticioFields.REVISOR)}" >
+          <form:hidden path="peticio.revisor"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.peticio.revisor,__theForm.listOfValuesForRevisor)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,PeticioFields.REVISOR)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="peticio_revisor"  onchange="if(typeof onChangeRevisor == 'function') {  onChangeRevisor(this); };"  cssClass="form-control col-md-9-optional" path="peticio.revisor">
+            <c:forEach items="${__theForm.listOfValuesForRevisor}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.peticio.revisor }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.peticio.revisor }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        

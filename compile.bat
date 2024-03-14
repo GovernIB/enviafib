@@ -12,7 +12,7 @@ if %errorlevel% EQU 0 (
 	  @echo on
 	  echo --------- COPIANT EAR %ENVIAFIB_VERSIO% ---------
 
-	  xcopy /Y enviafib-ear\target\enviafib.ear %ENVIAFIB_DEPLOY_DIR%
+	  xcopy /Y enviafib-ear\target\enviafib.ear %ENVIAFIB2_DEPLOY_DIR%
 
 	) ELSE (
 	  echo  =================================================================
