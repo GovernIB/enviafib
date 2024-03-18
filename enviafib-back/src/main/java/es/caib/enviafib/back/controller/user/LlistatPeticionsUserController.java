@@ -39,6 +39,9 @@ import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
+import es.caib.portafib.apiinterna.client.api.RevisorsApi;
+import es.caib.portafib.apiinterna.client.model.BasicUserInfoList;
+import es.caib.portafib.apiinterna.client.services.ApiClient;
 
 /**
  * 
@@ -88,8 +91,42 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.addHiddenField(SOLICITANTID);
         }
+        
+        testRevisors();
+        
 
         return peticioFilterForm;
+    }
+
+    
+
+    
+    /** REVISORS XYZ
+     *  
+     */
+    public static  void testRevisors() {
+        try {
+            
+            RevisorsApi api = new RevisorsApi();
+            ApiClient c = api.getApiClient();
+
+            c.setBasePath("https://governdigital.fundaciobit.org/portafibapi/interna");
+            c.setUsername("xxxxxxxxxxx");
+            c.setPassword("xxxxxxxxxxxx");
+            
+            String administrationID =null;
+            String language = "ca";
+
+            BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, language);
+
+            System.out.println(response);
+            
+            
+        } catch (Throwable e) {
+            // TODO: handle exception
+            //log.error(e);
+            e.printStackTrace();
+        }
     }
 
 
