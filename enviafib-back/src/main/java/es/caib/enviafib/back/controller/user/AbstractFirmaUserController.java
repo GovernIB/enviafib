@@ -59,6 +59,7 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.form.webdb.PeticioMultipleForm;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
@@ -77,6 +78,10 @@ import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoAnexJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
+import es.caib.portafib.apiinterna.client.api.RevisorsApi;
+import es.caib.portafib.apiinterna.client.model.BasicUserInfo;
+import es.caib.portafib.apiinterna.client.model.BasicUserInfoList;
+import es.caib.portafib.apiinterna.client.services.ApiClient;
 
 /**
  * Codi comú per formulari dels diferents tipus de peticions.
@@ -88,6 +93,8 @@ import es.caib.enviafib.persistence.PeticioJPA;
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class, PeticioMultipleForm.class })
 public abstract class AbstractFirmaUserController extends AbstractPeticioUserController {
 
+	public static final String DESTINATARI_NIF = "destinatariNIF";
+	
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocumentalEjb;
 
@@ -1096,48 +1103,64 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             }
         }
     }
-
-
-
-
     
     @Override
-    public List<StringKeyValue> getReferenceListForRevisor(HttpServletRequest request, ModelAndView mav, Where where)  throws I18NException {
+	public List<StringKeyValue> getReferenceListForRevisor(HttpServletRequest request, ModelAndView mav, Where where)
+			throws I18NException {
 
+		List<StringKeyValue> tmpList;
 
-//         List<StringKeyValue> tmpList;
+		String destinatariNIF = "45186147W";
+	
+		destinatariNIF = (String) mav.getModel().get(DESTINATARI_NIF);
+		log.info("DESTINATARI_NIF: " + destinatariNIF);
+		
+		String lang = LocaleContextHolder.getLocale().getLanguage();
+		tmpList = getRevisorsDestinatari(destinatariNIF, lang);
+		if (tmpList.isEmpty()) {
+             HtmlUtils.saveMessageError(request, "No hi ha revisors per aquest destinatari.");
+		} else {
+//			tmpList.add(new StringKeyValue("", I18NUtils.tradueix("revisors.senservisor")));
+		}
+		return tmpList;
+	}
+    
+	public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException {
 
-//         String lang = LocaleContextHolder.getLocale().getLanguage();
-//         boolean obtenerTodos = false;
-        
-//         tmpList = peticioLogicaEjb.getRevisorsUsuari(lang, obtenerTodos);
-//         if (tmpList.isEmpty()) {
-//             HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
-//         }else {
-//             tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
-// //            tmpList.add(new StringKeyValue("", ""));
-//        //     java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
-//         }
-//         return tmpList;
+		try {
 
+			String url = Configuracio.getPortaFIBAPIRevisorsURL();
+			String username = Configuracio.getPortaFIBAPIRevisorsUsername();
+			String password = Configuracio.getPortaFIBAPIRevisorsPassword();
 
+			log.info("URL: " + url + " username: " + username + " password: " + password);
 
+			ApiClient c = new ApiClient();
 
-        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+			c.setBasePath(url);
+			c.setUsername(username);
+			c.setPassword(password);
 
-        // RevisorsApi api = new RevisorsApi();
-        // ApiClient c = api.getApiClient();
+			RevisorsApi api = new RevisorsApi(c);
+			BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, lang);
 
-        // c.setBasePath("https://governdigital.fundaciobit.org/portafibapi/interna");
-        // c.setUsername("");
-        // c.setPassword(p.getProperty("password"));
+			List<StringKeyValue> result = new ArrayList<StringKeyValue>();
+			for (BasicUserInfo userInfo : response.getData()) {
+				String key = userInfo.getAdministrationId();
+				
+				// 45186147W - Pepito Grillo Mola
+				String value = userInfo.getAdministrationId() + " - " + userInfo.getName() + " "
+						+ userInfo.getSurname();
+				result.add(new StringKeyValue(key, value));
+			}
 
-        // BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, language);
+			return result;
 
-        // log.info(response);
+		} catch (Throwable e) {
+			String msg = "Error consultant API de Revisors per username: " + e.getMessage();
+			log.error(msg, e);
+			throw new I18NException("genapp.comodi", msg);
+		}
 
-        __tmp.add(new StringKeyValue("45186147W" , "Juan Pablo Trias"));
-        __tmp.add(new StringKeyValue("12345678T" , "Revisor Inventat EnviaFIB"));
-        return __tmp;
-    }
+	}
 }

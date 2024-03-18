@@ -224,6 +224,16 @@ public class Configuracio implements Constants {
         return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
     }
 
+    public static String getPortaFIBAPIRevisorsURL() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.host");
+    }
+    public static String getPortaFIBAPIRevisorsUsername() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.username");
+    }
+    public static String getPortaFIBAPIRevisorsPassword() {
+        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.password");
+    }
+
 //    public static String getHoraTancamentExpedientsScheduler() {
 //        return getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancar.expedient.hora");
 //        

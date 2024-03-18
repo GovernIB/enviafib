@@ -47,6 +47,7 @@ import es.caib.portafib.apiinterna.client.services.ApiClient;
  * 
  * @author fbosch
  * @author anadal
+ * @author ptrias
  *
  */
 
@@ -91,44 +92,8 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
         if (peticioFilterForm.isNou()) {
             peticioFilterForm.addHiddenField(SOLICITANTID);
         }
-        
-        testRevisors();
-        
-
         return peticioFilterForm;
     }
-
-    
-
-    
-    /** REVISORS XYZ
-     *  
-     */
-    public static  void testRevisors() {
-        try {
-            
-            RevisorsApi api = new RevisorsApi();
-            ApiClient c = api.getApiClient();
-
-            c.setBasePath("https://governdigital.fundaciobit.org/portafibapi/interna");
-            c.setUsername("xxxxxxxxxxx");
-            c.setPassword("xxxxxxxxxxxx");
-            
-            String administrationID =null;
-            String language = "ca";
-
-            BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, language);
-
-            System.out.println(response);
-            
-            
-        } catch (Throwable e) {
-            // TODO: handle exception
-            //log.error(e);
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)

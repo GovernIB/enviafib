@@ -105,8 +105,9 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
         }
 
         if (peticioForm.getPeticio().getDestinatariNif() != null) {
-            log.info("Destinatari NIF: " + peticioForm.getPeticio().getDestinatariNif());
+//            log.info("Destinatari NIF: " + peticioForm.getPeticio().getDestinatariNif());
             peticioForm.getHiddenFields().remove(REVISOR);
+            mav.addObject(DESTINATARI_NIF, peticioForm.getPeticio().getDestinatariNif());
         }
         return peticioForm;
     }
