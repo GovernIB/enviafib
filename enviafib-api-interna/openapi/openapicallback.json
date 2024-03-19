@@ -1,0 +1,199 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "API REST INTERNA de EnviaFIB",
+    "description" : "Conjunt de Serveis REST de EnviaFIB per ser accedits des de l'interior",
+    "contact" : {
+      "name" : "Departament de Govern Digital a la Fundació Bit",
+      "url" : "http://governdigital.fundaciobit.org",
+      "email" : "governdigital.enviafib@fundaciobit.org"
+    },
+    "license" : {
+      "name" : "License Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "version" : "1.0"
+  },
+  "externalDocs" : {
+    "description" : "Java Client (GovernIB Github)",
+    "url" : "https://github.com/GovernIB/enviafib/tree/enviafib-1.0/enviafib-api-interna-client"
+  },
+  "servers" : [ {
+    "url" : "/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "http://localhost:8080/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://dev.caib.es/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://proves.caib.es/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://se.caib.es/enviafibapi/interna",
+    "variables" : { }
+  }, {
+    "url" : "https://www.caib.es/enviafibapi/interna",
+    "variables" : { }
+  } ],
+  "tags" : [ {
+    "name" : "Callback",
+    "description" : "Callback de PortaFIB"
+  } ],
+  "paths" : {
+    "/public/cbrest/v1/event" : {
+      "post" : {
+        "tags" : [ "Callback" ],
+        "summary" : "Reb events de firmes de PortaFIB i realitza les accions corresponents",
+        "operationId" : "event",
+        "responses" : {
+          "500" : {
+            "description" : "Error intern. Retorna l'error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Paràmetres incorrectes. Retorna l'error.",
+            "content" : {
+              "application/json" : { }
+            }
+          },
+          "200" : {
+            "description" : "Retorna un simple String 'OK' si s'ha rocessat correctament l'event.",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/cbrest/v1/versio" : {
+      "get" : {
+        "tags" : [ "Callback" ],
+        "summary" : "Informa de la versió de l'API de CallBack Implementada",
+        "operationId" : "versio",
+        "responses" : {
+          "500" : {
+            "description" : "Error intern",
+            "content" : {
+              "application/json" : { }
+            }
+          },
+          "200" : {
+            "description" : "Retorna Versió",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Actor" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "administrationID" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PortaFIBEvent" : {
+        "type" : "object",
+        "properties" : {
+          "eventTypeID" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "version" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "eventDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "applicationID" : {
+            "type" : "string"
+          },
+          "entityID" : {
+            "type" : "string"
+          },
+          "signingRequest" : {
+            "$ref" : "#/components/schemas/SigningRequest"
+          },
+          "sign" : {
+            "$ref" : "#/components/schemas/Sign"
+          },
+          "actor" : {
+            "$ref" : "#/components/schemas/Actor"
+          }
+        }
+      },
+      "Sign" : {
+        "type" : "object",
+        "properties" : {
+          "serialNumber" : {
+            "type" : "integer"
+          },
+          "issuer" : {
+            "type" : "string"
+          },
+          "subject" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "SigningRequest" : {
+        "type" : "object",
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "state" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "rejectionReason" : {
+            "type" : "string"
+          },
+          "additionalInformation" : {
+            "type" : "string"
+          },
+          "custodyURL" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      }
+    }
+  }
+}

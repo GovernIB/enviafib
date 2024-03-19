@@ -180,3 +180,5 @@ installCerts.bat
 /enviafib-persistence/.settings/org.eclipse.jdt.apt.core.prefs
 /interna.bat
 /test.bat
+/.settings/org.eclipse.core.resources.prefs
+/.settings/org.eclipse.m2e.core.prefs
