@@ -225,7 +225,57 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String nifDestinatari = peticio.getDestinatariNif();
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertNifToSignatureBlocks(nifDestinatari);
+        
+        /*
+ 				// Revisors
+                int minimumNumberOfRevisers = signOrigen.getMinimumNumberOfRevisers();
 
+                List<FirmaAsyncSimpleReviser> revisersDest;
+
+                List<FlowTemplateSimpleReviser> revisorsOrigen = signOrigen.getRevisers();
+
+                if (revisorsOrigen == null || revisorsOrigen.size() == 0) {
+                    revisersDest = null;
+                } else {
+                    revisersDest = new ArrayList<FirmaAsyncSimpleReviser>();
+                    for (FlowTemplateSimpleReviser revOrig : revisorsOrigen) {
+                        FirmaAsyncSimpleReviser revDest = new FirmaAsyncSimpleReviser();
+                        revDest.setAdministrationID(revOrig.getAdministrationID());
+                        revDest.setIntermediateServerUsername(revOrig.getIntermediateServerUsername());
+                        revDest.setPositionInTheCompany(revOrig.getPositionInTheCompany());
+                        revDest.setRequired(revOrig.isRequired());
+                        revDest.setUsername(revOrig.getUsername());
+                        revisersDest.add(revDest);
+                    }
+                }
+
+                signers.add(new FirmaAsyncSimpleSignature(personToSign, required, reason, minimumNumberOfRevisers,
+                        revisersDest));
+         */
+        
+        
+        if (peticio.getRevisor() != null && peticio.getRevisor().trim().length() > 0) {
+//        	FirmaAsyncSimpleReviser revisor = new FirmaAsyncSimpleReviser();
+        	List<FirmaAsyncSimpleReviser> revisorList  = new ArrayList<FirmaAsyncSimpleReviser>();
+        	
+            FirmaAsyncSimpleReviser revisor = new FirmaAsyncSimpleReviser();
+            String administrationID = peticio.getRevisor();
+            
+			revisor.setAdministrationID(administrationID);
+			revisor.setIntermediateServerUsername(null);
+			revisor.setPositionInTheCompany(null);
+			revisor.setRequired(true);
+			revisor.setUsername(null);
+			
+            
+            revisorList.add(revisor);
+        	
+            FirmaAsyncSimpleSignature signer = signatureBlocks[0].getSigners().get(0);
+            
+            signer.setRevisers(revisorList);
+            signer.setMinimumNumberOfRevisers(revisorList.size());
+		}
+        
         arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitant);
 
         return (PeticioJPA) peticio;

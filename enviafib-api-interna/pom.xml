@@ -107,17 +107,37 @@
                 <version>2.2.0</version>
                 <executions>
                     <execution>
+                        <id>openapi1</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>resolve</goal>
                         </goals>
                         <configuration>
+                            <contextId>openapi1</contextId>
                             <outputFileName>openapi</outputFileName>
                             <outputPath>${project.basedir}/openapi/</outputPath>
                             <outputFormat>JSON</outputFormat>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
                                 <package>es.caib.enviafib.api.interna.secure</package>
+                            </resourcePackages>
+                            <prettyPrint>TRUE</prettyPrint>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>openapi2</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                        <configuration>
+                            <contextId>openapi2</contextId>
+                            <outputFileName>openapicallback</outputFileName>
+                            <outputPath>${project.basedir}/openapi/</outputPath>
+                            <outputFormat>JSON</outputFormat>
+                            <resourcePackages>
+                                <package>es.caib.enviafib.api.interna.config</package>
+                                <package>es.caib.enviafib.api.interna.permitall</package>
                             </resourcePackages>
                             <prettyPrint>TRUE</prettyPrint>
                         </configuration>
@@ -204,8 +224,8 @@
                     <file>${project.build.directory}/swagger-ui-${swagger-ui.version}/dist/index.html</file>
                     <replacements>
                         <replacement>
-                            <token>https://petstore.swagger.io/v2/swagger.json</token>
-                            <value>./openapi.json</value>
+                            <token>url: "https://petstore.swagger.io/v2/swagger.json"</token>
+                            <value>urls: [{url: "./openapi.json", name: "api1"},{url: "./openapicallback.json", name: "api2"}]</value>
                         </replacement>
                     </replacements>
                 </configuration>

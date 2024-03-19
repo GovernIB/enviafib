@@ -1117,10 +1117,14 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 		
 		String lang = LocaleContextHolder.getLocale().getLanguage();
 		tmpList = getRevisorsDestinatari(destinatariNIF, lang);
+		//Afegir un element en blanc per a que es pugui seleccionar amb el text "Sense revisor"
+		tmpList.add(new StringKeyValue("", I18NUtils.tradueix("peticio.revisorsdestinatari.senserevisor")));
+		
+		
 		if (tmpList.isEmpty()) {
-             HtmlUtils.saveMessageError(request, "No hi ha revisors per aquest destinatari.");
-		} else {
-//			tmpList.add(new StringKeyValue("", I18NUtils.tradueix("revisors.senservisor")));
+			//"No hi ha revisors per aquest destinatari.")
+			String msg = I18NUtils.tradueix("peticio.revisorsdestinatari.empty");
+			HtmlUtils.saveMessageWarning(request, msg);
 		}
 		return tmpList;
 	}
@@ -1132,8 +1136,6 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 			String url = Configuracio.getPortaFIBAPIRevisorsURL();
 			String username = Configuracio.getPortaFIBAPIRevisorsUsername();
 			String password = Configuracio.getPortaFIBAPIRevisorsPassword();
-
-			log.info("URL: " + url + " username: " + username + " password: " + password);
 
 			ApiClient c = new ApiClient();
 
@@ -1148,9 +1150,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 			for (BasicUserInfo userInfo : response.getData()) {
 				String key = userInfo.getAdministrationId();
 				
-				// 45186147W - Pepito Grillo Mola
+				// 45186147W - Pepito Grillo Mola (pgrillo)
 				String value = userInfo.getAdministrationId() + " - " + userInfo.getName() + " "
-						+ userInfo.getSurname();
+						+ userInfo.getSurname() + " (" + userInfo.getUsername() +")";
 				result.add(new StringKeyValue(key, value));
 			}
 
