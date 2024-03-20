@@ -1110,9 +1110,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
 		List<StringKeyValue> tmpList;
 
-		String destinatariNIF = "45186147W";
-	
-		destinatariNIF = (String) mav.getModel().get(DESTINATARI_NIF);
+		String destinatariNIF = (String) mav.getModel().get(DESTINATARI_NIF);
 		log.info("DESTINATARI_NIF: " + destinatariNIF);
 		
 		String lang = LocaleContextHolder.getLocale().getLanguage();
@@ -1151,7 +1149,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 				String key = userInfo.getAdministrationId();
 				
 				// 45186147W - Pepito Grillo Mola (pgrillo)
-				String value = userInfo.getAdministrationId() + " - " + userInfo.getName() + " "
+				String nifOfuscat = "******" + userInfo.getAdministrationId().substring(6);
+				
+				String value = nifOfuscat + " - " + userInfo.getName() + " "
 						+ userInfo.getSurname() + " (" + userInfo.getUsername() +")";
 				result.add(new StringKeyValue(key, value));
 			}
