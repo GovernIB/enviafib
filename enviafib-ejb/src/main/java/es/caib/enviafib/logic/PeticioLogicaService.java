@@ -70,4 +70,6 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void initScheduler();
     
+    public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException;
+    
 }

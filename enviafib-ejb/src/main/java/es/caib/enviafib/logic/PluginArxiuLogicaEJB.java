@@ -368,7 +368,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             }
 
             final boolean esDetached;
-            esDetached = (infoSignatura.getSignMode() == FirmaSimpleSignedFileInfo.SIGN_MODE_EXPLICIT_DETACHED);
+            esDetached = (infoSignatura.getSignMode() == FirmaSimpleSignedFileInfo.SIGN_MODE_DETACHED);
 
             DocumentContingut documentContingut;
             if (esDetached) {

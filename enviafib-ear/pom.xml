@@ -368,7 +368,7 @@
 							</webModule>
 							
 							<webModule>
-						    <groupId>es.caib.enviafib</groupId>
+						        <groupId>es.caib.enviafib</groupId>
 								<artifactId>enviafib-front</artifactId>
 								<contextRoot>enviafibfront</contextRoot>
 	                            <bundleFileName>enviafib-front.war</bundleFileName>
@@ -390,6 +390,9 @@
 							<!-- API INTERNA END -->
 	
 						</modules>
+						
+						<!-- <packagingExcludes>lib/jackson-*.jar,lib/resteasy-*.jar</packagingExcludes> -->
+						
 					</configuration>
 				</plugin>
 	

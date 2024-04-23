@@ -52,7 +52,7 @@ try {
             log.error("[[" + idError + "]] Requested getStatusCode: "
                     + pageContext.getErrorData().getStatusCode() );
         }
-        int tipusError = !stipusError.isEmpty()?new Integer(stipusError).intValue():-1;
+        int tipusError = !stipusError.isEmpty()?Integer.parseInt(stipusError):-1;
 
         switch (tipusError) {
             case 403:

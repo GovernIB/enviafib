@@ -1,6 +1,5 @@
 package es.caib.enviafib.back.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ import es.caib.enviafib.back.controller.user.FirmaPerNifUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxUserController;
 import es.caib.enviafib.back.controller.webdb.PeticioController;
-import es.caib.enviafib.back.form.webdb.PeticioForm;
+
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.fields.IdiomaFields;
 

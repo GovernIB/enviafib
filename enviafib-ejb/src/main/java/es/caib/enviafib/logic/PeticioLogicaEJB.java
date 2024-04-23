@@ -2,7 +2,6 @@ package es.caib.enviafib.logic;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,21 +11,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.ScheduleExpression;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
@@ -78,7 +72,6 @@ import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
-import es.caib.enviafib.model.entity.InfoAnex;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
@@ -91,6 +84,10 @@ import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
+import es.caib.portafib.apiinterna.client.revisors.v1.api.RevisorsV1Api;
+import es.caib.portafib.apiinterna.client.revisors.v1.model.BasicUserInfo;
+import es.caib.portafib.apiinterna.client.revisors.v1.model.BasicUserInfoList;
+import es.caib.portafib.apiinterna.client.revisors.v1.services.ApiClient;
 
 /**
  * 
@@ -438,10 +435,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
 //        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
 
-        FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-        rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID, languageUI);
+        //FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+        //rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID, languageUI);
 
-        String url = api.getUrlToViewFlow(rinfo);
+//        String url = api.getUrlToViewFlow(rinfo);
 //        log.info("URL to view flow: " + url);
         return peticioDeFirmaID;
     }
@@ -1578,6 +1575,53 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
 
+
+    /**
+     * 
+     * @param administrationID
+     * @param lang
+     * @return
+     * @throws I18NException
+     */
+    @Override
+    public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException {
+
+        try {
+
+            String url = Configuracio.getPortaFIBAPIRevisorsURL();
+            String username = Configuracio.getPortaFIBAPIRevisorsUsername();
+            String password = Configuracio.getPortaFIBAPIRevisorsPassword();
+
+            ApiClient c = new ApiClient();
+
+            c.setBasePath(url);
+            c.setUsername(username);
+            c.setPassword(password);
+
+            RevisorsV1Api api = new RevisorsV1Api(c);
+            BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, lang);
+
+            List<StringKeyValue> result = new ArrayList<StringKeyValue>();
+            for (BasicUserInfo userInfo : response.getData()) {
+                String key = userInfo.getAdministrationId();
+                
+                // Pepito Grillo Mola (pgrillo)
+                String nifOfuscat = "******" + userInfo.getAdministrationId().substring(6);
+                
+                String value = nifOfuscat + " - " + userInfo.getName() + " "
+                        + userInfo.getSurname() + " (" + userInfo.getUsername() +")";
+                result.add(new StringKeyValue(key, value));
+            }
+
+            return result;
+
+        } catch (Throwable e) {
+            String msg = "Error consultant API de Revisors per username: " + e.getMessage();
+            log.error(msg, e);
+            throw new I18NException("genapp.comodi", msg);
+        }
+
+    }
 
 
     

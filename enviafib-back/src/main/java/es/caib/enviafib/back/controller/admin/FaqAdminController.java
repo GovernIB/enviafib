@@ -18,10 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.FaqController;
 import es.caib.enviafib.back.form.webdb.FaqFilterForm;
 import es.caib.enviafib.back.form.webdb.FaqForm;
-import es.caib.enviafib.back.form.webdb.PluginFilterForm;
-import es.caib.enviafib.back.form.webdb.PluginForm;
 import es.caib.enviafib.model.fields.FaqFields;
-import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.FaqJPA;
 
 /**

@@ -39,7 +39,6 @@ import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
-import es.caib.enviafib.persistence.PeticioJPA;
 import es.caib.enviafib.persistence.UsuariJPA;
 import es.caib.plugins.arxiu.api.Document;
 import es.caib.plugins.arxiu.api.DocumentContingut;
@@ -382,7 +381,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         String decodedEmail = new String(Base64.getDecoder().decode(email));
 
         // Decodificam la URL que arriba en base64
-        String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+        // String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
         try {
 

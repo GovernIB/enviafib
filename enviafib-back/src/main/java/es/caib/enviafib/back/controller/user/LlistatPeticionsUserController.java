@@ -1,7 +1,6 @@
 package es.caib.enviafib.back.controller.user;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.ITableManager;
-import org.fundaciobit.genapp.common.query.StringField;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
@@ -39,9 +37,6 @@ import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
-import es.caib.portafib.apiinterna.client.api.RevisorsApi;
-import es.caib.portafib.apiinterna.client.model.BasicUserInfoList;
-import es.caib.portafib.apiinterna.client.services.ApiClient;
 
 /**
  * 

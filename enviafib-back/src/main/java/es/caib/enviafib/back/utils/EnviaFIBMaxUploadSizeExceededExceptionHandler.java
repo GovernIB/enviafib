@@ -70,7 +70,7 @@ public class EnviaFIBMaxUploadSizeExceededExceptionHandler implements
           currentSize = String.valueOf(slee.getActualSize());
           msgCode = "tamanyfitxerpujatsuperat";
       } else if(ex instanceof MultipartException) {
-          MultipartException mpe = (MultipartException) ex;
+          //MultipartException mpe = (MultipartException) ex;
 
           maxUploadSize = "-1";
           currentSize = "-1";

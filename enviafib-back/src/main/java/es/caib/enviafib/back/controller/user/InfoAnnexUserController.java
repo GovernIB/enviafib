@@ -1,22 +1,14 @@
 package es.caib.enviafib.back.controller.user;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 
-import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.query.ITableManager;
-import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
-import org.fundaciobit.genapp.common.web.form.BaseFilterForm;
-import org.fundaciobit.genapp.common.web.form.FilterFormData;
-import org.fundaciobit.genapp.common.web.form.LogicForBaseFilterForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +22,6 @@ import es.caib.enviafib.back.controller.admin.InfoAnnexAdminController;
 import es.caib.enviafib.back.controller.webdb.InfoAnexController;
 import es.caib.enviafib.back.form.webdb.InfoAnexFilterForm;
 import es.caib.enviafib.back.form.webdb.InfoAnexForm;
-import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoAnex;
 import es.caib.enviafib.persistence.InfoAnexJPA;

@@ -4,14 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import es.caib.enviafib.back.utils.EnviaFIBSessionLocaleResolver;
 import es.caib.enviafib.model.entity.Usuari;
 
 

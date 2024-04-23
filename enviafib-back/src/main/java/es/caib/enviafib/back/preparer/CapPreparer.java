@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.security.RunAs;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -46,10 +45,9 @@ public class CapPreparer extends MenuPreparer {
     @Override
     public void execute(Request tilesRequest, AttributeContext attributeContext) throws PreparerException {
 
-        log.info("HOLA ESTAMOS AQUI:: CapPreparer");
+        log.debug("HOLA ESTAMOS AQUI:: CapPreparer");
         Map<String, Object> request = tilesRequest.getContext("request");
-
-        Object pipella = attributeContext.getAttribute("pipella");
+        //Object pipella = attributeContext.getAttribute("pipella");
         //        super.execute(tilesRequest, attributeContext);
         request.put("url_sortida", Configuracio.getSortirURL());
         request.put("menus", getMenuUser());

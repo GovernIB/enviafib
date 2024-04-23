@@ -4,18 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,7 +27,7 @@ import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
-import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
+
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.form.Section;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
@@ -51,7 +47,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfReader;
 
 import es.caib.enviafib.back.controller.AbstractPeticioUserController;
@@ -59,7 +54,6 @@ import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.form.webdb.PeticioMultipleForm;
 import es.caib.enviafib.back.security.LoginInfo;
-import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
@@ -78,10 +72,6 @@ import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoAnexJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
-import es.caib.portafib.apiinterna.client.api.RevisorsApi;
-import es.caib.portafib.apiinterna.client.model.BasicUserInfo;
-import es.caib.portafib.apiinterna.client.model.BasicUserInfoList;
-import es.caib.portafib.apiinterna.client.services.ApiClient;
 
 /**
  * Codi comú per formulari dels diferents tipus de peticions.
@@ -89,7 +79,6 @@ import es.caib.portafib.apiinterna.client.services.ApiClient;
  * @author anadal
  *
  */
-
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class, PeticioMultipleForm.class })
 public abstract class AbstractFirmaUserController extends AbstractPeticioUserController {
 
@@ -578,12 +567,14 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         public CommonsMultipartFile getPeticio() {
             return peticio;
         }
+        @SuppressWarnings("unused")
         public void setPeticio(CommonsMultipartFile peticio) {
             this.peticio = peticio;
         }
         public CommonsMultipartFile getAnex() {
             return anex;
         }
+        @SuppressWarnings("unused")
         public void setAnex(CommonsMultipartFile anex) {
             this.anex = anex;
         }
@@ -674,7 +665,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
 
                 log.info("\n\nSTART CREATE POST:: AUTOFIRMA");
-                String ret = super.crearPeticioPost(peticioForm, result, request, response);
+                super.crearPeticioPost(peticioForm, result, request, response);
             }
 
         } else {
@@ -1114,7 +1105,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 		log.info("DESTINATARI_NIF: " + destinatariNIF);
 		
 		String lang = LocaleContextHolder.getLocale().getLanguage();
-		tmpList = getRevisorsDestinatari(destinatariNIF, lang);
+		tmpList =  this.peticioLogicaEjb.getRevisorsDestinatari(destinatariNIF, lang);
 		//Afegir un element en blanc per a que es pugui seleccionar amb el text "Sense revisor"
 		tmpList.add(new StringKeyValue("", I18NUtils.tradueix("peticio.revisorsdestinatari.senserevisor")));
 		
@@ -1127,42 +1118,4 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 		return tmpList;
 	}
     
-	public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException {
-
-		try {
-
-			String url = Configuracio.getPortaFIBAPIRevisorsURL();
-			String username = Configuracio.getPortaFIBAPIRevisorsUsername();
-			String password = Configuracio.getPortaFIBAPIRevisorsPassword();
-
-			ApiClient c = new ApiClient();
-
-			c.setBasePath(url);
-			c.setUsername(username);
-			c.setPassword(password);
-
-			RevisorsApi api = new RevisorsApi(c);
-			BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, lang);
-
-			List<StringKeyValue> result = new ArrayList<StringKeyValue>();
-			for (BasicUserInfo userInfo : response.getData()) {
-				String key = userInfo.getAdministrationId();
-				
-				// 45186147W - Pepito Grillo Mola (pgrillo)
-				String nifOfuscat = "******" + userInfo.getAdministrationId().substring(6);
-				
-				String value = nifOfuscat + " - " + userInfo.getName() + " "
-						+ userInfo.getSurname() + " (" + userInfo.getUsername() +")";
-				result.add(new StringKeyValue(key, value));
-			}
-
-			return result;
-
-		} catch (Throwable e) {
-			String msg = "Error consultant API de Revisors per username: " + e.getMessage();
-			log.error(msg, e);
-			throw new I18NException("genapp.comodi", msg);
-		}
-
-	}
 }
