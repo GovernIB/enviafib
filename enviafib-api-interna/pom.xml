@@ -8,12 +8,10 @@
     </parent>
     <artifactId>enviafib-api-interna</artifactId>
     <packaging>war</packaging>
-    <name>enviafib - API Rest - Interna</name>
+    <name>EnviaFIB - API Rest - Interna Server</name>
     <properties>
         <auth.method>BASIC</auth.method>
         <client.default.package>es.caib.enviafib.apiinterna.client</client.default.package>
-        <!-- La darrera versió disponible: https://github.com/swagger-api/swagger-ui/releases -->
-        <swagger-ui.version>3.35.1</swagger-ui.version>
     </properties>
     <dependencies>
         <!-- Especificacions i llibreries proporcionades per JBoss -->
@@ -88,12 +86,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Dependències de test -->
+        
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.webjars</groupId>
+            <artifactId>swager-ui-configurable</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -105,6 +104,11 @@
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
                 <version>2.2.0</version>
+                <configuration>
+                    <outputFormat>JSON</outputFormat>
+                    <prettyPrint>TRUE</prettyPrint>
+                    <outputPath>${project.basedir}/openapi/</outputPath>                   
+                </configuration>
                 <executions>
                     <execution>
                         <id>openapi1</id>
@@ -113,15 +117,12 @@
                             <goal>resolve</goal>
                         </goals>
                         <configuration>
-                            <contextId>openapi1</contextId>
-                            <outputFileName>openapi</outputFileName>
-                            <outputPath>${project.basedir}/openapi/</outputPath>
-                            <outputFormat>JSON</outputFormat>
+                            <contextId>Dades Obertes</contextId>
+                            <outputFileName>openapi_dadesobertes</outputFileName>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
                                 <package>es.caib.enviafib.api.interna.secure</package>
                             </resourcePackages>
-                            <prettyPrint>TRUE</prettyPrint>
                         </configuration>
                     </execution>
                     <execution>
@@ -131,105 +132,57 @@
                             <goal>resolve</goal>
                         </goals>
                         <configuration>
-                            <contextId>openapi2</contextId>
-                            <outputFileName>openapicallback</outputFileName>
-                            <outputPath>${project.basedir}/openapi/</outputPath>
-                            <outputFormat>JSON</outputFormat>
+                            <contextId>PortaFIB Callback</contextId>
+                            <outputFileName>openapi_portafibcallback</outputFileName>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
-                                <package>es.caib.enviafib.api.interna.permitall</package>
+                                <package>es.caib.enviafib.api.interna.all</package>
                             </resourcePackages>
-                            <prettyPrint>TRUE</prettyPrint>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!-- Genera el Client Rest per Java a partir del fitxer openapi.json -->
+
+
+            <!--  NOTA: No generam client ja que la primera API és el CallBack de PortaFIB -->
+            <!--  i l'altra API és DadesObertes (Que no necessita client java ja que accedeixen directament) -->
+
+
             <plugin>
-                <!-- https://openapi-generator.tech/docs/generators/java/ -->
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>6.6.0</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>install</phase>
-                        <configuration>
-                            <inputSpec>${project.basedir}/openapi/openapi.json</inputSpec>
-                            <generatorName>java</generatorName>
-                            <skipValidateSpec>true</skipValidateSpec>
-                            <library>resteasy</library>
-                            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
-                            <!-- <configHelp>true</configHelp> -->
-                            <addCompileSourceRoot>false</addCompileSourceRoot>
-                            <output>${project.basedir}/../enviafib-api-interna-client</output>
-                            <apiPackage>${client.default.package}.api</apiPackage>
-                            <modelPackage>${client.default.package}.model</modelPackage>
-                            <invokerPackage>${client.default.package}.services</invokerPackage>
-                            <variableNamingConvention>camelCase</variableNamingConvention>
-                            <fullJavaUtil>true</fullJavaUtil>
-                            <configOptions>
-                                <groupId>es.caib.enviafib</groupId>
-                                <artifactId>enviafib-api-interna-client</artifactId>
-                                <artifactVersion>1.0</artifactVersion>
-                                <artifactDescription>EnviaFIB - API Rest - Interna Client</artifactDescription>
-                                <dateLibrary>java8</dateLibrary>
-                                <useTags>true</useTags>
-                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
-                                <java11>true</java11>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Inclou swagger-ui dins el mòdul -->
-            <!-- Davalla la versió de swagger-ui (Web UI que parseja openapi.json. 
-                Veure index.html) -->
-            <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>swagger-ui</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <skipCache>false</skipCache>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/v${swagger-ui.version}.tar.gz</url>
-                            <unpack>true</unpack>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Canvia l'adreça de la configuració d'exemple per la real, 
-                ./openapi.json -->
-            <plugin>
-                <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>replacer</artifactId>
-                <executions>
-                    <execution>
-                        <id>index</id>
                         <phase>prepare-package</phase>
                         <goals>
-                            <goal>replace</goal>
+                            <goal>java</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <file>${project.build.directory}/swagger-ui-${swagger-ui.version}/dist/index.html</file>
-                    <replacements>
-                        <replacement>
-                            <token>url: "https://petstore.swagger.io/v2/swagger.json"</token>
-                            <value>urls: [{url: "./openapi.json", name: "api1"},{url: "./openapicallback.json", name: "api2"}]</value>
-                        </replacement>
-                    </replacements>
+                    <includeProjectDependencies>false</includeProjectDependencies>
+                    <includePluginDependencies>true</includePluginDependencies>
+                    <executableDependency>
+                        <artifactId>pluginsib-utils-rest</artifactId>
+                        <groupId>org.fundaciobit.pluginsib.utils</groupId>
+                    </executableDependency>
+                    <mainClass>
+                        org.fundaciobit.pluginsib.utils.rest.pomadaptertojboss72.AdaptApiClientPomToJboss72</mainClass>
+                    <arguments>
+                        <argument>${project.basedir}</argument>
+                    </arguments>
+
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <artifactId>pluginsib-utils-rest</artifactId>
+                        <groupId>org.fundaciobit.pluginsib.utils</groupId>
+                        <version>2.0.0-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
             </plugin>
+
             <!-- Inclou el openapi.json i el swagger-ui dins el war -->
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
@@ -237,88 +190,13 @@
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                     <webResources>
                         <resource>
-                            <directory>${project.build.directory}/swagger-ui-${swagger-ui.version}/dist</directory>
-                        </resource>
-                        <resource>
                             <directory>${project.basedir}/openapi</directory>
                         </resource>
                     </webResources>
                 </configuration>
             </plugin>
-            <!--   Llevar el .gitignore del codi generat -->
-            <plugin>
-                <groupId>com.coderplus.maven.plugins</groupId>
-                <artifactId>copy-rename-maven-plugin</artifactId>
-                <version>1.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-file</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>rename</goal>
-                        </goals>
-                        <configuration>
-                            <sourceFile>${basedir}/../enviafib-api-interna-client/.gitignore</sourceFile>
-                            <destinationFile>${project.build.directory}/client_gitignore_renamed.txt</destinationFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <!--This plugin's configuration is used to store Eclipse 
-                    m2e settings only. It has no influence on the Maven build itself. -->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>
-                                            org.apache.geronimo
-                                        </groupId>
-                                        <artifactId>
-                                            geronimo-openapi-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [1.0.12,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>openapi.json</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore/>
-                                    </action>
-                                </pluginExecution>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>
-											io.swagger.core.v3
-										</groupId>
-                                        <artifactId>
-											swagger-maven-plugin
-										</artifactId>
-                                        <versionRange>
-											[2.2.0,)
-										</versionRange>
-                                        <goals>
-                                            <goal>resolve</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore/>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        
     </build>
 </project>

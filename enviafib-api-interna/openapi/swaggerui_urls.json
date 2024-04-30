@@ -1,0 +1,11 @@
+[
+    {
+        "url": "./openapi_dadesobertes.json",
+        "name": "Dades Obertes"
+    }
+,
+    {
+        "url": "./openapi_portafibcallback.json",
+        "name": "PortaFIB Callback"
+    }
+]

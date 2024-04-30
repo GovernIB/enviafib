@@ -1,4 +1,4 @@
-package es.caib.enviafib.api.interna.permitall.portafibcallback;
+package es.caib.enviafib.api.interna.all.portafibcallback;
 
 import java.util.Locale;
 
@@ -18,8 +18,12 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -34,11 +38,25 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @author ptrias
  * 
  */
+@OpenAPIDefinition(
+        info = @Info(
+                title = "API REST INTERNA de EnviaFIB - PortaFIB Callback",
+                description = "Servei per rebre les notificacions de PortaFIB i realitzar les accions corresponents.",
+                version = "1.0-SNAPSHOT",
+                license = @License(
+                        name = "European Union Public Licence (EUPL v1.2)",
+                        url = "https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_es.pdf"),
+                contact = @Contact(
+                        name = "Departament de Govern Digital a la Fundació Bit",
+                        email = "governdigital.enviafib@fundaciobit.org",
+                        url = "https://governdigital.fundaciobit.org")),
+        externalDocs = @ExternalDocumentation(
+                description = "Java Client (GovernIB Github)",
+                url = "https://github.com/GovernIB/enviafib/tree/enviafib-2.0/enviafib-api-interna"),
+        tags = @Tag(name = "Callback", description = "Callback de PortaFIB"))
 @Path("/public/cbrest/v1")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-
-@OpenAPIDefinition(tags = @Tag(name = "Callback", description = "Callback de PortaFIB"))
 public class PortaFIBCallbackRestService {
 
     protected static final Logger log = Logger.getLogger(PortaFIBCallbackRestService.class);
@@ -46,21 +64,50 @@ public class PortaFIBCallbackRestService {
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
-    @Operation(tags = "Callback", operationId = "versio", summary = "Informa de la versió de l'API de CallBack Implementada")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "500", description = "Error intern", content = @Content(mediaType = MediaType.APPLICATION_JSON)),
-            @ApiResponse(responseCode = "200", description = "Retorna Versió", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = String.class))) })
+    @Operation(
+            tags = "Callback",
+            operationId = "versio",
+            summary = "Informa de la versió de l'API de CallBack Implementada")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Error intern",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON)),
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Retorna Versió",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON,
+                                    schema = @Schema(implementation = String.class))) })
     @GET
     @Path("/versio")
     public String getVersio() {
         return "1";
     }
 
-    @Operation(tags = "Callback", operationId = "event", summary = "Reb events de firmes de PortaFIB i realitza les accions corresponents")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "500", description = "Error intern. Retorna l'error", content = @Content(mediaType = MediaType.TEXT_PLAIN, schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "404", description = "Paràmetres incorrectes. Retorna l'error.", content = @Content(mediaType = MediaType.APPLICATION_JSON)),
-            @ApiResponse(responseCode = "200", description = "Retorna un simple String 'OK' si s'ha rocessat correctament l'event.", content = @Content(mediaType = MediaType.TEXT_PLAIN, schema = @Schema(implementation = String.class))) })
+    @Operation(
+            tags = "Callback",
+            operationId = "event",
+            summary = "Reb events de firmes de PortaFIB i realitza les accions corresponents")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Error intern. Retorna l'error",
+                            content = @Content(
+                                    mediaType = MediaType.TEXT_PLAIN,
+                                    schema = @Schema(implementation = String.class))),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Paràmetres incorrectes. Retorna l'error.",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON)),
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Retorna un simple String 'OK' si s'ha rocessat correctament l'event.",
+                            content = @Content(
+                                    mediaType = MediaType.TEXT_PLAIN,
+                                    schema = @Schema(implementation = String.class))) })
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -98,10 +145,10 @@ public class PortaFIBCallbackRestService {
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_FIRMA_PARCIAL: {
                     log.info("NOTIFICACIOAVIS_FIRMA_PARCIAL = " + eventID);
-                    
+
                     Long portafibID = event.getSigningRequest().getID();
                     peticioLogicaEjb.cosesAFerPeticioFirmaParcial(portafibID);
-                    
+
                 }
                 break;
 

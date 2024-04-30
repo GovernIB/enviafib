@@ -51,9 +51,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
 /**
@@ -64,8 +67,19 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 @Path(DadesObertesService.PATH)
 @OpenAPIDefinition(
         info = @Info(
-                title = "Dades Obertes de EnviaFIB",
-                description = "Conjunt de Serveis REST de EnviaFIB que ofereixen Dades Obertes"),
+                title = "API REST INTERNA de EnviaFIB - Dades Obertes",
+                description = "Conjunt de Serveis REST de EnviaFIB que ofereixen Dades Obertes",
+                version = "1.0-SNAPSHOT",
+                license = @License(
+                        name = "European Union Public Licence (EUPL v1.2)",
+                        url = "https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_es.pdf"),
+                contact = @Contact(
+                        name = "Departament de Govern Digital a la Fundació Bit",
+                        email = "governdigital.enviafib@fundaciobit.org",
+                        url = "https://governdigital.fundaciobit.org")),
+        externalDocs = @ExternalDocumentation(
+                description = "Java Client (GovernIB Github)",
+                url = "https://github.com/GovernIB/enviafib/tree/enviafib-2.0/enviafib-api-interna"),
         tags = { @Tag(
                 name = DadesObertesService.TAG_NAME,
                 description = "Conjunt de mètodes que es poden consultar per obtenir dades obertes") })

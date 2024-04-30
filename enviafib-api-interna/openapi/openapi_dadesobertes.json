@@ -1,12 +1,22 @@
 {
   "openapi" : "3.0.1",
   "info" : {
-    "title" : "Dades Obertes de EnviaFIB",
-    "description" : "Conjunt de Serveis REST de EnviaFIB que ofereixen Dades Obertes"
+    "title" : "API REST INTERNA de EnviaFIB - Dades Obertes",
+    "description" : "Conjunt de Serveis REST de EnviaFIB que ofereixen Dades Obertes",
+    "contact" : {
+      "name" : "Departament de Govern Digital a la Fundació Bit",
+      "url" : "https://governdigital.fundaciobit.org",
+      "email" : "governdigital.enviafib@fundaciobit.org"
+    },
+    "license" : {
+      "name" : "European Union Public Licence (EUPL v1.2)",
+      "url" : "https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_es.pdf"
+    },
+    "version" : "1.0-SNAPSHOT"
   },
   "externalDocs" : {
     "description" : "Java Client (GovernIB Github)",
-    "url" : "https://github.com/GovernIB/enviafib/tree/enviafib-1.0/enviafib-api-interna-client"
+    "url" : "https://github.com/GovernIB/enviafib/tree/enviafib-2.0/enviafib-api-interna"
   },
   "servers" : [ {
     "url" : "/enviafibapi/interna",

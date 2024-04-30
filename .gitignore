@@ -182,3 +182,13 @@ installCerts.bat
 /test.bat
 /.settings/org.eclipse.core.resources.prefs
 /.settings/org.eclipse.m2e.core.prefs
+/scripts/sqlgenerator/.classpath
+/scripts/sqlgenerator/.project
+/scripts/sqlgenerator/.settings/org.eclipse.core.resources.prefs
+/scripts/sqlgenerator/.settings/org.eclipse.jdt.core.prefs
+/scripts/sqlgenerator/.settings/org.eclipse.m2e.core.prefs
+/scripts/sqlgenerator/target/classes/META-INF/MANIFEST.MF
+/scripts/sqlgenerator/target/classes/META-INF/maven/es.caib.enviafib/enviafib-sqlgenerator/pom.properties
+/scripts/sqlgenerator/target/classes/META-INF/maven/es.caib.enviafib/enviafib-sqlgenerator/pom.xml
+/scripts/.settings/org.eclipse.core.resources.prefs
+/scripts/.settings/org.eclipse.m2e.core.prefs

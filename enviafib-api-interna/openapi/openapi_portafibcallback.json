@@ -1,22 +1,22 @@
 {
   "openapi" : "3.0.1",
   "info" : {
-    "title" : "API REST INTERNA de EnviaFIB",
-    "description" : "Conjunt de Serveis REST de EnviaFIB per ser accedits des de l'interior",
+    "title" : "API REST INTERNA de EnviaFIB - PortaFIB Callback",
+    "description" : "Servei per rebre les notificacions de PortaFIB i realitzar les accions corresponents.",
     "contact" : {
       "name" : "Departament de Govern Digital a la Fundació Bit",
-      "url" : "http://governdigital.fundaciobit.org",
+      "url" : "https://governdigital.fundaciobit.org",
       "email" : "governdigital.enviafib@fundaciobit.org"
     },
     "license" : {
-      "name" : "License Apache 2.0",
-      "url" : "http://www.apache.org/licenses/LICENSE-2.0"
+      "name" : "European Union Public Licence (EUPL v1.2)",
+      "url" : "https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_es.pdf"
     },
-    "version" : "1.0"
+    "version" : "1.0-SNAPSHOT"
   },
   "externalDocs" : {
     "description" : "Java Client (GovernIB Github)",
-    "url" : "https://github.com/GovernIB/enviafib/tree/enviafib-1.0/enviafib-api-interna-client"
+    "url" : "https://github.com/GovernIB/enviafib/tree/enviafib-2.0/enviafib-api-interna"
   },
   "servers" : [ {
     "url" : "/enviafibapi/interna",
