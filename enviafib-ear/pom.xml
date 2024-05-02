@@ -359,7 +359,8 @@
 
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
                         <skinnyWars>true</skinnyWars>
-                        <packagingExcludes>lib/resteasy-*.jar,lib/jackson-*.jar</packagingExcludes>
+                        <!-- ,lib/jackson-*.jar -->
+                        <packagingExcludes>lib/resteasy-*.jar</packagingExcludes>
 
                         <modules>
 
