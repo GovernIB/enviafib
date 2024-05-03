@@ -2,6 +2,7 @@ package es.caib.enviafib.logic;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -64,6 +65,8 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.utils.FileUtils;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 import org.jboss.ejb3.annotation.TransactionTimeout;
+
+import com.itextpdf.text.pdf.PdfReader;
 
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
@@ -1623,6 +1626,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     }
 
-
-    
+    public boolean esFitxerPDF(File file) {
+		if (file == null) {
+			return false;
+		}
+        try {
+            log.info("Provant si fitxer es PDF:" + file.getAbsolutePath());
+            
+            PdfReader reader = new PdfReader(new FileInputStream(file));
+            int pages = reader.getNumberOfPages();
+            reader.close();
+            log.info("El fitxer " + file.getAbsolutePath() + " es un PDF de " + pages + " pagines");
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 }

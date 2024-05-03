@@ -1,5 +1,6 @@
 package es.caib.enviafib.logic;
 
+import java.io.File;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -72,4 +73,6 @@ public interface PeticioLogicaService extends PeticioService {
     
     public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException;
     
+    public boolean esFitxerPDF(File file);
+
 }

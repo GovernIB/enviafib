@@ -47,8 +47,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.itextpdf.text.pdf.PdfReader;
-
 import es.caib.enviafib.back.controller.AbstractPeticioUserController;
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
@@ -710,37 +708,24 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 Set<InfoAnexJPA> anexes = new HashSet<InfoAnexJPA>();
                 
                 for (AnexInfo anexInfo : infoAnexes) {
-                    if (anexInfo.getPeticio().equals(file)) {
-                        CommonsMultipartFile anex = anexInfo.getAnex();
-                        String nomAnnex = anex.getOriginalFilename();
-//                        try {
-//                            log.info("Provant si anex es PDF:" + nomAnnex);
-//
-//                            PdfReader reader = new PdfReader(anex.getInputStream());
-//                            int pages = reader.getNumberOfPages();
-//                            reader.close();
-//                            log.info("El fitxer " + nomAnnex + " es un PDF de " + pages + " pagines");
+					if (anexInfo.getPeticio().equals(file)) {
+						CommonsMultipartFile anex = anexInfo.getAnex();
+						String nomAnnex = anex.getOriginalFilename();
+						FitxerJPA fitxer = new FitxerJPA();
+						fitxer.setNom(anex.getOriginalFilename());
+						fitxer.setMime(anex.getContentType());
+						final byte[] data = anex.getBytes();
+						fitxer.setTamany(data.length);
 
-                            FitxerJPA fitxer = new FitxerJPA();
-                            fitxer.setNom(anex.getOriginalFilename());
-                            fitxer.setMime(anex.getContentType());
-                            final byte[] data = anex.getBytes();
-                            fitxer.setTamany(data.length);
+						Fitxer f = fitxerEjb.create(fitxer);
+						FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
 
-                            Fitxer f = fitxerEjb.create(fitxer);
-                            FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
+						InfoAnexJPA ia = new InfoAnexJPA();
+						ia.setAnexID(fitxer.getFitxerID());
 
-                            InfoAnexJPA ia = new InfoAnexJPA();
-                            ia.setAnexID(fitxer.getFitxerID());
-
-                            anexes.add(ia);
-                            log.info("Afegirem anex " + nomAnnex + " a la peticio " + file.getOriginalFilename());
-//                        } catch (IOException e) {
-//                            String msg = "L'annex '" + nomAnnex + "' del document no es PDF";
-//                            log.error(msg);
-//                            HtmlUtils.saveMessageWarning(request, msg);
-//                        }
-                    }
+						anexes.add(ia);
+						log.info("Afegirem anex " + nomAnnex + " a la peticio " + file.getOriginalFilename());
+					}
                 }
                 peticioForm.getPeticio().setInfoAnexs(anexes);
                 
@@ -1076,23 +1061,16 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         
         
         // Validació de que el document es un PDF
-        {
-            Long fileID = peticioForm.getPeticio().getFitxerID();
-            File file = FileSystemManager.getFile(fileID);
-            try {
-                log.info("Provant si fitxer es PDF:" + file.getAbsolutePath());
-                
-                PdfReader reader = new PdfReader(new FileInputStream(file));
-                int pages = reader.getNumberOfPages();
-                reader.close();
-                log.info("El fitxer " + file.getAbsolutePath() + " es un PDF de " + pages + " pagines");
-
-            } catch (IOException e) {
-                String msg = "El fitxer " + file.getAbsolutePath() + " del document no es PDF";
-                log.error(msg);
-                result.rejectValue(get(FITXERID), "error.unknown", new String[] { msg }, null);
-            }
-        }
+		{
+			Long fileID = peticioForm.getPeticio().getFitxerID();
+			File file = FileSystemManager.getFile(fileID);
+			String fileName = peticioForm.getPeticio().getFitxer().getNom();
+			if (!peticioLogicaEjb.esFitxerPDF(file)) {
+				result.rejectValue(get(FITXERID), "error.format.pdf", new String[] { fileName}, null);
+			}else {
+				log.info("Fitxer PDF correcte: " + fileName);
+			}
+		}
     }
     
     @Override
