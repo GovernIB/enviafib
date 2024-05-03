@@ -9,7 +9,7 @@ import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitz
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.google.gson.Gson;
+import es.caib.enviafib.logic.utils.LogicUtils;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class FirmaPerFluxFirmaJsonUserController extends AbstractFirmaUserContro
 
         try {
             final FirmaAsyncSimpleSignatureBlock[] blocs;
-            blocs = new Gson().fromJson(fluxJson, FirmaAsyncSimpleSignatureBlock[].class);
+            blocs = LogicUtils.deserialize(fluxJson, FirmaAsyncSimpleSignatureBlock[].class);
             return blocs;
         } catch (Exception e) {
             // XYZ ZZZ TRA

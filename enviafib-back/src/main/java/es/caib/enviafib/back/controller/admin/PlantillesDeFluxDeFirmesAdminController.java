@@ -24,14 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController;
 import es.caib.enviafib.back.controller.user.PlantillesDeFluxDeFirmesUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Usuari;
 
 /**
@@ -87,13 +85,10 @@ public class PlantillesDeFluxDeFirmesAdminController extends PlantillesDeFluxDeF
             flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowID);
 
             FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
-
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             
             FirmaAsyncSimpleSignatureBlock[] blocks = peticioLogicaEjb.convertFluxToSignatureBlocks(flux);
+            String json = LogicUtils.serialize(blocks);
 
-            String json = gson.toJson(blocks);
-            
             StringBuilder jsonStr = new StringBuilder();
             
             long lines = 0;

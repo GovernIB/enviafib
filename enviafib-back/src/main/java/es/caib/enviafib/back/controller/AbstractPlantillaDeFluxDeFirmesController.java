@@ -205,6 +205,11 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
             List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
 
+			if (plantilles == null) {
+	            log.info("Llistat de plantilles:: null");
+				return new ArrayList<Usuari>();
+			}
+			
             log.info("Llistat de plantilles:: PLANTILLES OBTINGUDES: " + plantilles.size());
 
             List<Usuari> usuaris = new ArrayList<Usuari>();

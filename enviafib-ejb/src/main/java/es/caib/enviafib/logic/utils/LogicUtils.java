@@ -10,6 +10,9 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.StaticVersion;
 
@@ -69,6 +72,15 @@ public class LogicUtils {
         }
         
     }
-    
 
+	public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+	public static String serialize(Object obj) {
+		return gson.toJson(obj);
+	}
+
+	public static <T> T deserialize(String json, Class<T> classOfT) {
+		return gson.fromJson(json, classOfT);
+	}
+	
 }

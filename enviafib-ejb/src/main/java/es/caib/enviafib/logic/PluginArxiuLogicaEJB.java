@@ -10,9 +10,6 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.utils.Metadata;
 import org.fundaciobit.pluginsib.core.utils.MetadataConstants;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
@@ -249,8 +246,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // ContingutArxiu expedientCreat = plugin.expedientCrear(expedient);
             ContingutArxiu expedientCreat;
 
-            Gson gs = new GsonBuilder().setPrettyPrinting().create();
-            log.info("INFORMACIO DEL EXPEDIENT: \n" + gs.toJson(expedient));
+            String json = LogicUtils.serialize(expedient);
+            log.info("INFORMACIO DEL EXPEDIENT: \n" + json);
 
             try {
                 expedientCreat = plugin.expedientCrear(expedient);
