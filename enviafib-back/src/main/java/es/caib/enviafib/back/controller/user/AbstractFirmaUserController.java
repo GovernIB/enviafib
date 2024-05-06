@@ -383,6 +383,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR) {
             String msg = "La seva petició (" + peticioID + ") no s'ha enviat a portafib: " + peticio.getErrorMsg();
             log.error(msg);
+            HtmlUtils.saveMessageError(request, msg);
             return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
         } else {
             String msg = I18NUtils.tradueix("procesdefirma.status.creat.enviat", peticioID);

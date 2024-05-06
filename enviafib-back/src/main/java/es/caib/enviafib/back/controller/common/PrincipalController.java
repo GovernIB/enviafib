@@ -83,7 +83,9 @@ public class PrincipalController {
 				return new ModelAndView("desenvolupament");
 			}
 
-			log.error("S'ha accedit a canviarPipella amb un paràmetre desconegut: " + pipella);
+			String missatge = "S'ha accedit a canviarPipella amb un paràmetre desconegut: " + pipella;
+			log.error(missatge);
+			HtmlUtils.saveMessageError(request, missatge);
 		}
 
 		return new ModelAndView(new RedirectView("/common/home", true));

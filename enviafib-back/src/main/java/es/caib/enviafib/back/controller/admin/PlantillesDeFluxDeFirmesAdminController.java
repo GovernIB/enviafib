@@ -129,9 +129,7 @@ public class PlantillesDeFluxDeFirmesAdminController extends PlantillesDeFluxDeF
             }
 
             log.error(msg, e);
-
             HtmlUtils.saveMessageError(request, msg);
-
         }
 
         return "redirect:" + getContextWeb() + "/list";

@@ -216,13 +216,13 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
             
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);
-            HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
 
         } catch (Exception e) {
             String msg = e.getMessage();
-            HtmlUtils.saveMessageError(request, msg);
             log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
         }
 
         return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
