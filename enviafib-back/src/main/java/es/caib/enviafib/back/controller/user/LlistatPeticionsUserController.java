@@ -38,6 +38,7 @@ import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 
+
 /**
  * 
  * @author fbosch
