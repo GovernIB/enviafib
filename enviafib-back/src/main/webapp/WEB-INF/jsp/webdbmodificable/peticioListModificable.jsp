@@ -310,12 +310,16 @@ function reintentarArxivarTotes() {
 
 <style>
 #FilterDiv {
-    padding: 0.5rem !important;
+	padding: 0.5rem !important;
 	margin-bottom: 1.25rem !important;
-	background-image:
-        url(<c:url value="/img/background-pattern.png"></c:url>);
+	/*background-image: url("/img/background-pattern.png");
+	         url(<c:url value="/img/background-pattern.png"></c:url>);
 		!important;
-    min-width: 41rem;
+ */
+	min-width: 41rem;
+	background-image: linear-gradient(45deg, #999 25%, transparent 25%, transparent 50%, #999
+		50%, #999 75%, transparent 75%, #fff);
+	background-size: 3px 3px;
 }
 
 #page-header {

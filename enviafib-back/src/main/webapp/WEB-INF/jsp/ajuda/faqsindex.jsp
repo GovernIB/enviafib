@@ -43,11 +43,11 @@
 #thumbnailmenu {
 	padding-left: 4px;
 	
-	position: static;
-	top: 0;
 	max-width: 320px;
 	z-index: 100;
-	top: 0;
+	
+	position: fixed;
+	top: 8rem;
 	width: 100%
 }
 </style>
@@ -60,7 +60,7 @@
             
             var menu = $('#thumbnailmenu');
             var topMenu = menu.position().top;
-            
+            /* 
             $(window).scroll(function (e) {
 	           	var isPositionFixed = (menu.css('position') == 'fixed');
 	           	
@@ -80,7 +80,7 @@
 	           	        'top': '0px'
 	           	     });
            	    }
-	         });
+	         }); */
 
 
             function gotofaq(faqid) {

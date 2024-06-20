@@ -45,7 +45,7 @@ function reassignAction() {
             %>
 		</c:if>
 
-		<div id="infoNumRegistres">
+		<div id="infoNumRegistres" style="margin-bottom: 5px;">
 			<c:if test="${itemsPerPagina == -1}">
                 <fmt:message key="show.results.all" var="showNResults">
                     <fmt:param> ${totalItems} </fmt:param>

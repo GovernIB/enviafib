@@ -353,13 +353,17 @@
 	width: 100%;
 }
 
+.droparea img {
+	filter: invert(36%) saturate(1700%) hue-rotate(180deg) contrast(87%);
+}
+
 .draging {
 	background-color: rgba(0, 195, 255, 0.1);
 	border: 3.5px solid black;
 }
 
 .dragdrop_text {
-	color: orange;
+	color: #246EB9;
 	font-size: 1.5rem;
 }
 
@@ -404,9 +408,11 @@ td label {
 .afegirAnex:hover {
 	background-color: #b96f24 !important
 }
+
 .eliminarFitxer:hover {
 	background-color: #c82333 !important
 }
+
 .eliminarAnex:hover {
 	background-color: #e04958 !important;
 }

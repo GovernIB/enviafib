@@ -33,9 +33,9 @@
 
 
     <!--  PIPELLES -->
-    <div class="row-fluid container main" style="max-width: none;">
+    <div id="menu_i_contingut" class="container main" style="max-width: none;">
 
-<c:if test = "${!(efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN'))}">
+<%-- <c:if test = "${!(efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN'))}">
         <ul class="nav nav-tabs custom-submenu" style="padding: 0 0 0 1rem !important;">
 			
 			
@@ -84,10 +84,9 @@
             </c:if>
 
         </ul>
-</c:if>
+</c:if> --%>
 
         <%-- INICI MENU + CONTINGUT --%>
-        <div class="well well-white" >
             <tiles:insertAttribute name="menu_i_contingut">
                 <tiles:putAttribute name="menu"
                     value="${menu_tile}" />
@@ -95,15 +94,14 @@
                     value="${contingut_tile}" />
             </tiles:insertAttribute>
             <%-- FINAL MENU + CONTINGUT --%>
+<!--         <div class="well well-white" >
         </div>
-
+ -->
         <%-- FINAL DIV PIPELLES --%>
     </div>
 
-    <div style="margin: 0px 5rem;">
-        <tiles:insertAttribute name="peu">
-        </tiles:insertAttribute>
-    </div>
+	<tiles:insertAttribute name="peu">
+	</tiles:insertAttribute>
 
 </body>
 </html>

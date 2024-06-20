@@ -14,7 +14,7 @@
 
 <header>
     <!-- Header -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-aplicacio">
+    <nav id="nav-cap" class="navbar navbar-expand-md navbar-dark">
 
         <button class="navbar-toggler botoMobil" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,53 +22,184 @@
         </button>
 
         <!-- Logo i nom aplicació -->
-<!--         <div class="navbar-brand menuGovern"> -->
-            <div id="logoGovernContainer" class="logoGovern">
-                <a href="http://www.caib.es/"> 
-                    <img src="<c:url value="/img/logo-caib.png"/>" style="height: 60px;" alt="Govern de les Illes Balears" />
-                </a>
-            </div>
-
-            <div id="logoEnviafibContainer" class="logoGovern">
-                <img src="<c:url value="/img/app-logo.png"/>"  style="height: 55px;" alt="EnviaFIB" title="EnviaFIB" />
-            </div>
-
-            <div>
-                <p id="nomApp""><%=es.caib.enviafib.commons.utils.StaticVersion.PROJECT_NAME%></p>
-            </div>
-
-
-		<div id="userInfoContainer"
-			style="position: absolute; right: 88px; top: 11px;">
-			<strong class="llevarMobil"><fmt:message key="usuari" />: </strong>
-			<span class="subtitolMay"> 
-			<%=
-			   LoginInfo.getInstance().getUsuari().getNom() + " " 
-		       + LoginInfo.getInstance().getUsuari().getLlinatge1() + " ("
-			   + request.getRemoteUser() + ")"
-		    %>
-			</span>
+		<div id="logoGovernContainer" class="logoGovern">
+			<a href="http://www.caib.es/"> <img
+				src="<c:url value="/img/logo-caib.png"/>" style="height: 60px;"
+				alt="Govern de les Illes Balears" />
+			</a>
 		</div>
 
+		<div id="logoEnviafibContainer" class="logoGovern">
+			<img src="<c:url value="/img/app-logo.png"/>" style="height: 55px;"
+				alt="EnviaFIB" title="EnviaFIB" />
+		</div>
+
+		<div>
+			<p id="nomApp""><%=es.caib.enviafib.commons.utils.StaticVersion.PROJECT_NAME%></p>
+		</div>
+
+
+
+        <div id="menuCapContainer" >
+        	<ul class="navbar-nav mobil">
+
+				<%-- ENTITAT DE L'USUARI --%>
+				<li id="entitatInfoContainer" class="menuCapItem dropdown">
+					<i class="fas fa-university"></i>
+					<span class="dropdown-toggle" type="button"
+					id="dropdownMenuEntitat" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Govern de les
+						Illes Balears 
+					</span>
+					<div class="dropdown-menu dropdown-menu-right"
+						aria-labelledby="dropdownMenuEntitat">
+						<a class="dropdown-item" href="http://www.caib.es"> Govern de les Illes Balears</a> 
+						<a class="dropdown-item" href="https://www.fundaciobit.org/es/inicio/"> Fundacio BIT</a>
+					</div>
+				</li>
+				
+				<%--  PIPELLES SEGONS EL ROL DE L'USUARI --%>
+        		<c:if test = "${efi:hasRole('ROLE_ADMIN')}">
+					<li id="rolInfoContainer" class="menuCapItem dropdown">
+						<i class="fas fa-address-card"></i>
+
+						<span class="dropdown-toggle" type="button"
+							id="dropdownMenuRol" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">
+							
+							<c:if test="${not empty pipella}">
+						    	<fmt:message key="${pipella}" />
+							</c:if>
+							<c:if test="${empty pipella}">
+						    	<fmt:message key="inici" />
+							</c:if>
+						</span>
+						<div class="dropdown-menu dropdown-menu-right"
+							aria-labelledby="dropdownMenuRol">
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<c:if test="${not empty pipella}">
+								<a class="dropdown-item" href="<c:url value="/canviarPipella/"/>"><fmt:message
+										key="inici" /></a>
+								</c:if>
+								
+								
+							</sec:authorize>
+	
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<c:if test="${pipella ne 'user'}">
+									<a class="dropdown-item"
+										href="<c:url value="/canviarPipella/user"/>">Usuari</a>
+								</c:if>
+							</sec:authorize>
+	
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<c:if test="${pipella ne 'admin'}">
+									<a class="dropdown-item"
+										href="<c:url value="/canviarPipella/admin"/>">Administrador</a>
+								</c:if>
+							</sec:authorize>
+	
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<c:if test="${pipella ne 'webdb'}">
+									<a class="dropdown-item"
+										href="<c:url value="/canviarPipella/webdb"/>">WebDatabase</a>
+								</c:if>
+							</sec:authorize>
+	
+							<sec:authorize access="hasRole('ROLE_USER')">
+								<c:if test="${pipella ne 'ajuda'}">
+									<a class="dropdown-item"
+										href="<c:url value="/canviarPipella/ajuda"/>">Pipella Ajuda</a>
+								</c:if>
+							</sec:authorize>
+	
+							<c:if test="${prefixLowercase}:isDesenvolupament()}">
+								<c:if test="${pipella ne 'desenvolupament'}">
+									<a class="dropdown-item"
+										href="<c:url value="/canviarPipella/desenvolupament"/>"><fmt:message
+											key="desenvolupament" /></a>
+								</c:if>
+							</c:if>
+						</div>
+					</li>
+				</c:if>
+				
+				<%--  CONFIGURACIÓ DE L'USUARI AMB MENU D'IDIOMES  --%>
+				<li id="userInfoContainer" class="menuCapItem dropdown">
+					<i class="fa fa-user"></i>
+					<span class="dropdown-toggle" type="button"
+						id="dropdownMenuUser" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">
+						<%=
+						   LoginInfo.getInstance().getUsuari().getNom() + " " 
+					       + LoginInfo.getInstance().getUsuari().getLlinatge1() + " ("
+						   + request.getRemoteUser() + ")"
+					    %>
+					</span>
+	            	
+	            	<div class="dropdown-menu  dropdown-menu-right"
+						aria-labelledby="dropdownMenuUser">
+
+						<c:if test="${empty loginInfo}">
+							<a class="dropdown-item"
+								href="<c:url value="/common/principal.html"></c:url>"> <i
+								class="fas fa-sign-in-alt"></i> Login
+							</a>
+						</c:if>
+						
+						<c:if test="${not empty loginInfo}">
+							<c:set var="userNoAdmin"
+								value="${efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN')}"></c:set>
+							<c:if test="${userNoAdmin}">
+								<c:set var="edicioUsuariUrl"
+									value="/user/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
+							</c:if>
+							<c:if test="${!userNoAdmin}">
+								<c:set var="edicioUsuariUrl"
+									value="/common/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
+							</c:if>
+							
+							<a class="dropdown-item"
+								href="<c:url value="${edicioUsuariUrl}"></c:url>"> <fmt:message
+									key="inici.menu.editar.usuari" />
+							</a>
+
+							<hr style="margin: 6px 6px;" />
+
+							<div id="titol-idiomes" class="dropdown-item">
+								<!-- <i class="fas fa-language fa-lg"></i> -->
+								<fmt:message key="idiomes" />
+							</div>
+
+							<c:forEach var="idioma" items="${idiomes}" varStatus="status">
+								<c:set var="idiomaID" value="${idioma.idiomaID}" />
+								<a class="dropdown-item" href="?lang=${idiomaID}"> <img
+									src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>"
+									alt="${idiomaID}" style="margin-right: 0.5rem;" width="17"
+									height="14" border="0" />${idioma.nom}
+								</a>
+							</c:forEach>
+
+							<c:if test="${not empty url_sortida}">
+								<a class="dropdown-item"
+									href="<c:url value="${url_sortida}"></c:url>"> <i
+									class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
+								</a>
+							</c:if>
+						</c:if>
+						
+					</div>
+				</li>
+			</ul>
+		</div>
 		<!-- FI Logo i nom aplicació -->
 
         <!-- Botons -->
-        <div id="menuCapContainer" class="collapse navbar-collapse" id="navbarCollapse">
+        <div id="botoneraCapContainer" class="collapse navbar-collapse" id="navbarCollapse">
 
             <ul class="navbar-nav mobil">
-
-                <%--  AQUI VAN ELS MENUS   --%>
-
-
-
                 <%--  MENÚ d'Usuari SI NOMES TE ROL EFI_USER --%>
-                <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER) && pipella eq 'user'}">
-
-					<%
-/* 					List<Menu> menus = MenuPreparer.getMenuUser();
-					request.getSession().setAttribute("menus", menus);
- */					%>
-
+                <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER)}">
 					<li class="dropdown">
 
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1"
@@ -77,7 +208,7 @@
                             <fmt:message key="ferfirma" />
                         </button>
                         
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                             <c:if test="${empty menus}">
                                 <a class="dropdown-item" href="#">
                                     <b style="color: red"> <fmt:message key="menu.error.buit" /></b>
@@ -114,127 +245,19 @@
                         </div>
 
                     </li>
-                    <%-- Final Boto desplegable Opcions de Menu User --%>
                 </c:if>
 
 
-                <%--  MENU D'IDIOMES, ELS AGAFA DE LA BASE DE DADES--%>
+                <%--   FAQs  --%>
                 <li class="dropdown">
 					<button class="btn btn-secondary" type="button"
 						id="dropdownMenu2" onclick="location.href='<c:url value="/ajuda/faq/list/1"></c:url>'">
 						<i class="fas fa-question"></i> FAQs
 					</button>
                 </li>
-				
-
-				
-                <%--   OPCIONS  --%>
-				<li class="dropdown">
-
-					<button class="btn btn-secondary dropdown-toggle" type="button"
-						id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">
-						<i class="fas fa-cog"></i>
-						<fmt:message key="configuracio" />
-					</button>
-					<div class="dropdown-menu  dropdown-menu-right"
-						aria-labelledby="dropdownMenu3">
-
-
-
-						<c:if test="${ empty loginInfo  }">
-							<a class="dropdown-item"
-								href="<c:url value="/common/principal.html"></c:url>"> <i
-								class="fas fa-sign-in-alt"></i> Login
-							</a>
-						</c:if>
-						<c:if test="${ not empty loginInfo  }">
-							<c:set var="userNoAdmin"
-								value="${efi:hasRole('ROLE_USER') && !efi:hasRole('ROLE_ADMIN')}"></c:set>
-							<c:if test="${userNoAdmin}">
-								<c:set var="edicioUsuariUrl"
-									value="/user/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
-							</c:if>
-							<c:if test="${!userNoAdmin}">
-								<c:set var="edicioUsuariUrl"
-									value="/common/usuari/${loginInfo.usuari.usuariID}/edit"></c:set>
-							</c:if>
-							<a class="dropdown-item"
-								href="<c:url value="${edicioUsuariUrl}"></c:url>"> <i
-								class="fas fa-user"></i> <fmt:message
-									key="inici.menu.editar.usuari" />
-							</a>
-
-							<hr style="margin: 6px 6px;" />
-
-							<div id="titol-idiomes" class="dropdown-item">
-								<!-- <i class="fas fa-language fa-lg"></i> -->
-								<fmt:message key="idiomes" />
-							</div>
-
-							<c:forEach var="idioma" items="${idiomes}" varStatus="status">
-								<c:set var="idiomaID" value="${idioma.idiomaID}" />
-								<a class="dropdown-item" href="?lang=${idiomaID}"> <img
-									src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>"
-									alt="${idiomaID}" style="margin-right: 0.5rem;" width="17"
-									height="14" border="0" />${idioma.nom}
-								</a>
-							</c:forEach>
-
-							<c:if test="${not empty url_sortida}">
-								<a class="dropdown-item"
-									href="<c:url value="${url_sortida}"></c:url>"> <i
-									class="fas fa-sign-out-alt"></i> <fmt:message key="sortir" />
-								</a>
-							</c:if>
-						</c:if>
-					</div>
-				</li>
 			</ul>
-
-<!--         </div> -->
         <!-- FI Botons -->
     </nav>
-
-    <!-- FI Header -->
-	<script type="text/javascript">
-		var xrknpass = 0;
-		$(function() {
-			$(window)
-					.keydown(
-							function(e) {
-								var ev = e || window.event;
-								var key = ev.which || ev.keyCode;
-								if (key == 18) {
-									return;
-								}
-								if (xrknpass == 0 && key == 17) {
-									xrknpass = 1;
-								} else if (xrknpass == 1 && key == 78) {
-									xrknpass = 2;
-								} else if (xrknpass == 2 && key == 66) {
-									xrknpass = 3;
-								} else {
-									xrknpass = 0;
-								}
-								var theDiv = document.getElementById('xrkn');
-								if (xrknpass === 3) {
-									var url = unescape("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0074\u0069\u006e\u0079\u002e\u0063\u0063\u002f\u0070\u006f\u0072\u0074\u0061\u0066\u0069\u0062");
-									theDiv.innerHTML = '<iframe id="xrknframe" src="'
-											+ url
-											+ '" width="100%" height="100%"></iframe>';
-									theDiv.style.visibility = 'visible';
-									xrknpass = 0;
-								} else {
-									theDiv.innerHTML = '';
-									theDiv.style.visibility = 'none';
-								}
-							})
-		});
-	</script>
-	<div id="xrkn"
-        style="position: absolute; width: 500px; height: 530px; top: 150px; left: 300px; z-index: 1000; visibility: hidden;">
-    </div>
 </header>
 
 
@@ -247,36 +270,67 @@
 </script>
 
 <style>
-nav.bg-aplicacio {
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 5rem;
+	height: 7rem;
+	z-index: 10;
+	background-color: #fff;
+}
+
+#nav-cap {
+	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+	padding: 0 5rem;
 	height: 6rem;
-	padding: 0px 5rem;
-	padding-left: 0px;
-	padding-right: 0px;
 }
 
 .subtitolMay {
 	font-size: 1rem;
 }
 
-.main {
-	padding-top: 1rem;
+#menu_i_contingut {
+	padding: 0rem 8rem;
+	padding-top: 8rem;
 }
 
 #logoGovernContainer {
-	border-right: 1px solid white;
+	border-right: 1px solid black;
 }
 
-#menuCapContainer {
-	margin-top: 2rem;
+#botoneraCapContainer {
+	margin-top: 2.5rem;
 	/*   margin-bottom: 1rem; */
 }
 
-#menuCapContainer button {
-	padding: 0.25rem 0.75rem;
+#botoneraCapContainer button {
+	padding: 0.2rem 0.65rem;
 }
 
-#userInfoContainer {
-	font-size: large;
+#menuCapContainer {
+	position: absolute;
+	top: 11px;
+	right: 88px;
+	display: flex;
+	color: black;
+}
+
+.menuCapItem span {
+	color: black;
+	text-transform: uppercase;
+	margin-left: 4px;
+}
+
+#menuCapContainer li {
+  padding: 0 1rem;
+  border-right: 1px solid black;
+}
+
+#menuCapContainer li:last-child {
+  border: none;
+  padding-right: 0px;
 }
 
 @font-face {
@@ -309,12 +363,12 @@ h1 {
 }
 
 #titol-idiomes {
-    color: #314b87;
-  font-weight: bold;
+	color: #314b87;
+	font-weight: bold;
 }
 
-#titol-idiomes:hover{
-  background-color: transparent;
+#titol-idiomes:hover {
+	background-color: transparent;
 }
 
 #nomApp {
@@ -322,5 +376,6 @@ h1 {
 	font-size: 2rem;
 	margin: 0;
 	font-family: 'Montserrat', serif;
+	color: black;
 }
 </style>

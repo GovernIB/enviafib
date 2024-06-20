@@ -279,12 +279,11 @@ a:hover{
 .menuGovern span, strong{
 	font-size: 1em;
 }
-.logoGovern{
+.logoGovern {
 	float: left;
-	margin-right: 10px;
-	margin-left: 5px;
+	padding: 0 1rem;
 }
-.imatgeGovern{
+.imatgeGovern {
 	width: 50px;
 }
 .iconoCapsalera{

@@ -169,7 +169,7 @@
 
 <style>
 body {
-    background-image: url(< c : url value = "/img/background-pattern.png" ></ c : url >);
+    background-image: url("/img/background-pattern.png");
 }
 
 .well.well-white {

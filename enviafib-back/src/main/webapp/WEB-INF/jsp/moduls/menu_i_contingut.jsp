@@ -39,8 +39,6 @@
 
 		<!-- FINAL DIV CONTINGUT -->
 	</div>
-
-	<div class="clearfix"></div>
 </div>
 
 <script>
@@ -127,14 +125,6 @@
 <script type="text/javascript">
 $("#GroupDiv").after($("#infoNumRegistres"));
 </script>
-
-<style>
-    #infoNumRegistres{
-        margin-bottom: 5px;
-    }
-</style>
-
-
 
 <c:if test="${pipella eq 'user'}">
     <script type="text/javascript">

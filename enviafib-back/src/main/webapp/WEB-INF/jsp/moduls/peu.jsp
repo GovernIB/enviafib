@@ -5,10 +5,8 @@
 
 <footer id="footer" >
 
-	<div class="row peuResponsive">
-
 		<!-- Esquerra -->
-		<div class="col-4 pt-2 elementPeuResponsive">
+		<div id="peu-esquerra">
 			<strong class="font-weight-bold h6"> ${versio.projectName}
 				v${versio.version}<%=Configuracio.isCAIB() ? "-caib" : ""%>
 
@@ -22,48 +20,26 @@
 			</small>
 		</div>
 
-		<!-- Centre esquerra -->
-		<div
-			class="col-4 text-center pt-2 text-decoration-none bg-transparent text-uppercase p-2 opcionsPeu elementPeuResponsive">
-
-			<!--  <a styleClass="text-dark linkPeu" href="/mapaweb"> <fmt:message
-					key="labels.mapaweb" />
-			</a><br /> <a styleClass="text-dark linkPeu" href="/accessibilitat">
-				<fmt:message key="labels.accessibilitat" />
-			</a><br /> <a styleClass="text-dark linkPeu" href="/protecciodades">
-				<fmt:message key="labels.protecciodades" />
-			</a><br /> <a styleClass="text-dark linkPeu" href="/avislegal"> <fmt:message
-					key="labels.avislegal" />
-			</a> -->
-
-		</div>
-
 		<!-- Dreta -->
-		<div class="col-4 text-right" style="padding-top: 10px">
-
+		<div id="peu-dreta">
 			<a href="http://www.caib.es/"> <img
-				src="<c:url value="/img/logo-caib.png"/>"
-				style="height: 45px; filter: grayscale(100%);"
+				src="<c:url value="/img/logo-caib-bn.png"/>"
+				style="height: 45px;"
 				alt="Govern de les Illes Balears" />
 			</a>
 
-			<!-- 		<a href="http://otaeweb.ibit.org/" target="_blank"> <img
-				src="<c:url value="/img/fundaciobit-logo-peu.png"/>"
-				alt="Fundacio Bit" />
-			</a>-->
 			 <br /> 
+			 
 			<!-- Button to trigger modal -->
 			<small><a href="#modalAjuda" role="button"
-				data-toggle="modal"><fmt:message key="ajuda.necessitau" /></a></small>
+				data-toggle="modal" style="color: #999"><fmt:message key="ajuda.necessitau" /></a></small>
 		</div>
-
-	</div>
 
 
 	<!-- Modal -->
 	<div id="modalAjuda" class="modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="padding: 0 1rem;">
 				<div class="modal-header">
 					<div class="modal-title h5">
 						<fmt:message key="ajuda.titol" />
@@ -103,3 +79,25 @@
 		</div>
 	</div>
 </footer>
+
+<style>
+#footer {
+	padding: 10px 6rem 16px;
+	background-color: #4d4d4d;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#peu-dreta {
+	display: flex;
+	flex-direction: column;
+	text-align: right;
+	gap: 3px;
+}
+
+#modalAjuda {
+	color: black;
+}
+</style>
