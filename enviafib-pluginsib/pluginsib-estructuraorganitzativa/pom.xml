@@ -3,79 +3,68 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>pluginsib-estructuraorganitzativa</artifactId>
 	<groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
-	<version>2.0.0</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>PluginsIB - Estructura Organitzativa</name>
-    <!--
-    <parent>
-		<groupId>es.caib.enviafib</groupId>
-		<artifactId>enviafib-pluginsib</artifactId>
-		<version>1.0.9</version>
-	</parent>
-    -->
-
+	
+	<parent>
+        <artifactId>
+            caib-artifacts-github-governib-distribution-with-jdk11-jboss72</artifactId>
+        <groupId>es.caib.maven</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+	
 	<modules>
 		<module>api</module>
 		<module>mock</module>
 		<module>database</module>
         <module>ldapcaib</module>
 	</modules>
-	<properties>
-		<!-- Propietats que afecten els plugins -->
-		<maven.compiler.release>11</maven.compiler.release>
-		<maven.compiler.target>11</maven.compiler.target>
-		<maven.compiler.source>11</maven.compiler.source>
-        <junit.version>4.13.1</junit.version>
-	</properties>
+
+    <developers>
+        <developer>
+            <id>anadal-fundaciobit</id>
+            <name>Antoni Nadal</name>
+        </developer>
+        <developer>
+            <id>ptrias-fundaciobit</id>
+            <name>Pau Trias</name>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>Fundació Bit - Govern Digital</name>
+        <url>https://governdigital.fundaciobit.org</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>European Union Public Licence (EUPL v1.2)</name>
+            <url>
+                https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_es.pdf</url>
+        </license>
+    </licenses>
+    
+    <properties>
+        <pluginsib.core.version>3.0.0-SNAPSHOT</pluginsib.core.version>
+        <pluginsib.utils.version>3.0.0-SNAPSHOT</pluginsib.utils.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>github_governib_maven</id>
+            <name>GitHub GovernIB Maven Repository</name>
+            <url>https://governib.github.io/maven/maven/</url>
+        </repository>
+    </repositories>
+	
 	<dependencies>
 		<dependency>
-			<groupId>org.fundaciobit.pluginsib.core</groupId>
+			<groupId>org.fundaciobit.pluginsib.core.v3</groupId>
 			<artifactId>pluginsib-core</artifactId>
-			<version>2.0.2</version>
-		</dependency>
-        <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-			<scope>provided</scope>
-		</dependency>
-        <dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<version>${pluginsib.core.version}</version>
 		</dependency>
 	</dependencies>
-    <build>
-    <plugins>
-    <!-- Gestió de requisits del build -->
-			<!-- Veure: https://maven.apache.org/enforcer/enforcer-rules/index.html -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>3.0.0-M3</version>
-				<configuration>
-					<rules>
-						<!-- Fixam mínim Maven 3.6 i Java 11 -->
-						<requireMavenVersion>
-							<version>3.6.1</version>
-						</requireMavenVersion>
-						<requireJavaVersion>
-							<version>11</version>
-						</requireJavaVersion>
-						<!-- Per detectar problemes de dependències -->
-						<banDuplicatePomDependencyVersions/>
-						<dependencyConvergence/>
-						<!-- <reactorModuleConvergence/> -->
-					</rules>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-    </plugins>
-    </build>
+
+
 </project>

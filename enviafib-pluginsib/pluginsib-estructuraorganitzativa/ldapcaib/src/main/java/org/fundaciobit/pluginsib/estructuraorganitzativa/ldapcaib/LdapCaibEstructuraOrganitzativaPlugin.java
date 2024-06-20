@@ -1,8 +1,6 @@
 package org.fundaciobit.pluginsib.estructuraorganitzativa.ldapcaib;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -18,12 +16,12 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
 
-import org.apache.log4j.Logger;
-import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.v3.utils.AbstractPluginProperties;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.fundaciobit.pluginsib.utils.ldap.LDAPConstants;
 import org.fundaciobit.pluginsib.utils.ldap.LDAPUser;
 import org.fundaciobit.pluginsib.utils.ldap.LDAPUserManager;
+import org.jboss.logging.Logger;
 
 /**
  * @author anadal

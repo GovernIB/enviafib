@@ -4,8 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Properties;
 
-import org.apache.log4j.BasicConfigurator;
-import org.fundaciobit.pluginsib.core.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.ldapcaib.LdapCaibEstructuraOrganitzativaPlugin;
 import org.junit.Test;
@@ -30,7 +29,7 @@ public class TestLdapCaibPlugin {
 
         try {
 
-            BasicConfigurator.configure();
+            
 
             Properties testProperties = new Properties();
             {

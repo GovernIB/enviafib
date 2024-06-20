@@ -13,14 +13,14 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
-import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
-import org.fundaciobit.pluginsib.core.utils.FileUtils;
-import org.fundaciobit.pluginsib.core.utils.PluginsManager;
+import org.fundaciobit.pluginsib.core.v3.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.v3.utils.PluginsManager;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
 import org.fundaciobit.pluginsib.userinformation.UserInfo;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
+import org.jboss.logging.Logger;
 
 /**
  * @author anadal

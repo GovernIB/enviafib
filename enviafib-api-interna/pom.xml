@@ -77,22 +77,10 @@
         <dependency>
             <artifactId>pluginsib-utils-rest</artifactId>
             <groupId>org.fundaciobit.pluginsib.utils</groupId>
-            <version>2.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <!-- Esta en LIB de l'EAR -->
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${pluginsib.utils.version}</version>
         </dependency>
         
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>swager-ui-configurable</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        
+       
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -103,7 +91,7 @@
             <plugin>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
-                <version>2.2.0</version>
+                <version>2.2.15</version>
                 <configuration>
                     <outputFormat>JSON</outputFormat>
                     <prettyPrint>TRUE</prettyPrint>
@@ -121,7 +109,7 @@
                             <outputFileName>openapi_dadesobertes</outputFileName>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
-                                <package>es.caib.enviafib.api.interna.secure</package>
+                                <package>es.caib.enviafib.api.interna.secure.dadesobertes</package>
                             </resourcePackages>
                         </configuration>
                     </execution>
@@ -136,7 +124,7 @@
                             <outputFileName>openapi_portafibcallback</outputFileName>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
-                                <package>es.caib.enviafib.api.interna.all</package>
+                                <package>es.caib.enviafib.api.interna.all.portfibcallback</package>
                             </resourcePackages>
                         </configuration>
                     </execution>
@@ -178,7 +166,7 @@
                     <dependency>
                         <artifactId>pluginsib-utils-rest</artifactId>
                         <groupId>org.fundaciobit.pluginsib.utils</groupId>
-                        <version>2.0.0-SNAPSHOT</version>
+                        <version>${pluginsib.utils.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

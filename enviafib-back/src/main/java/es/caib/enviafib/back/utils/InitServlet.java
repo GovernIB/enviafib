@@ -18,7 +18,7 @@ import org.fundaciobit.genapp.common.crypt.FileIDEncrypter;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.web.exportdata.DataExporterManager;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
-import org.fundaciobit.pluginsib.core.utils.PluginsManager;
+import org.fundaciobit.pluginsib.core.v3.utils.PluginsManager;
 import org.fundaciobit.pluginsib.exportdata.IExportDataPlugin;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -115,9 +115,9 @@ public class InitServlet extends HttpServlet {
         try {
             Set<Class<? extends IExportDataPlugin>> plugins;
 
-            String[] classes = new String[] { "org.fundaciobit.plugins.exportdata.cvs.CSVPlugin",
-                    "org.fundaciobit.plugins.exportdata.ods.ODSPlugin",
-                    "org.fundaciobit.plugins.exportdata.excel.ExcelPlugin" };
+            String[] classes = new String[] { "org.fundaciobit.pluginsib.exportdata.cvs.CSVPlugin",
+                    "org.fundaciobit.pluginsib.exportdata.ods.ODSPlugin",
+                    "org.fundaciobit.pluginsib.exportdata.excel.ExcelPlugin" };
             plugins = new HashSet<Class<? extends IExportDataPlugin>>();
             
             for (String str : classes) {

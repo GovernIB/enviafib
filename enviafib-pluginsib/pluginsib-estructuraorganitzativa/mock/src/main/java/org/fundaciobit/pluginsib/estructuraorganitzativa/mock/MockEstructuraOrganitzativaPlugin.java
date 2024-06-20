@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import org.fundaciobit.pluginsib.core.utils.AbstractPluginProperties;
+import org.fundaciobit.pluginsib.core.v3.utils.AbstractPluginProperties;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 

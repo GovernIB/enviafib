@@ -40,23 +40,21 @@ import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.UsuariJPA;
-import es.caib.plugins.arxiu.api.Document;
-import es.caib.plugins.arxiu.api.DocumentContingut;
-import es.caib.plugins.arxiu.api.IArxiuPlugin;
+import es.caib.pluginsib.arxiu.api.Document;
+import es.caib.pluginsib.arxiu.api.DocumentContingut;
+import es.caib.pluginsib.arxiu.api.IArxiuPlugin;
 
 /**
  * 
  * @author ptrias
  *
  */
-
 public abstract class AbstractLlistatPeticionsController extends AbstractPeticioUserController {
 
     public static final int COLUMN_ESTAT_IMG = 1;
 
     public abstract boolean isAdmin();
-    
-    
+
     @Override
     public boolean isActiveList() {
         return true;
@@ -90,7 +88,6 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             request.getSession().setAttribute("myContext", getContextWeb());
 
-            
             peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
 
             Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
@@ -117,7 +114,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             newFilterBy.add(NOM);
             newFilterBy.add(DATACREACIO);
             newFilterBy.add(DATAFINAL);
-//            newFilterBy.add(ESTAT);
+            //            newFilterBy.add(ESTAT);
             peticioFilterForm.setFilterByFields(newFilterBy);
 
             List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
@@ -164,22 +161,22 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 case Constants.ESTAT_PETICIO_FIRMADA:
                     color = "green";
                     iconList.add("fas fa-file-signature");
-                    break;
-                    
+                break;
+
                 case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                     if (isAdmin()) {
                         iconList.add("fas fa-unlock");
-                        if (estat ==Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT ) {
+                        if (estat == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                             color = "red";
-                        }else {
+                        } else {
                             color = "orange";
                         }
                     } else {
                         color = "green";
                         iconList.add("fas fa-file-signature");
                     }
-                    
+
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
@@ -200,12 +197,11 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                         iconList.add("fas fa-archive");
                     }
                 break;
-                
+
                 case Constants.ESTAT_PETICIO_REBUTJADA:
                     color = "red";
                     iconList.add("fas fa-times-circle");
-                    break;
-
+                break;
 
                 default:
                     color = "#f128";
@@ -224,43 +220,42 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             mapRemitent.put(peticioID, "<center>" + iconsStr.toString() + "</center>");
 
-
             //Gestió annexos
             {
                 Long annexes = infoAnexEjb.count(PETICIOID.equal(peticioID));
                 if (annexes > 0) {
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-folder-open",
-                            "user.veureannexes", "/" + (isAdmin()? "admin": "user") + "/infoAnnex/mostrarAnnexes/" + peticioID + "/toList", "btn-info"));
+                            "user.veureannexes",
+                            "/" + (isAdmin() ? "admin" : "user") + "/infoAnnex/mostrarAnnexes/" + peticioID + "/toList",
+                            "btn-info"));
                 }
             }
 
-            
             switch (estat) {
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-                    
-                    filterForm.addAdditionalButtonByPK(peticioID,
-                            new AdditionalButton("fas fa-user-friends", "flux.info",
-                                    "javascript:openModalFluxInfo(" + peticioID + ");",
-                                    "btn-info"));
+
+                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-user-friends",
+                            "flux.info", "javascript:openModalFluxInfo(" + peticioID + ");", "btn-info"));
 
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
                             "arxiu.reintentar", "javascript:reintentarArxivat(" + peticioID + ")", "btn-warning"));
                 break;
-                
+
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                 case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
                 case Constants.ESTAT_PETICIO_FIRMADA:
-                    
+
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",
                             "peticio.btn.sendmail", "javascript:cridaEmail(" + peticioID + ")", "btn-success"));
 
                     String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                             InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fas fa-print",
-                            "download.arxivat.imprimible", getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
+                                    getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
                             "download.arxivat.firmat", getContextWeb() + "/descarregarfirmat/" + csv, "btn-info"));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
@@ -293,8 +288,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         try {
             // Decodificam la URL que arriba en base64
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
-            
-            peticioLogicaEjb.tancarExpedientPeticio(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
+
+            peticioLogicaEjb.tancarExpedientPeticio(peticioId,
+                    Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
 
             HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.tancarexpedient.success"));
 
@@ -345,7 +341,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         return "redirect:" + getContextWeb() + "/list";
 
     }
-    
+
     @RequestMapping(value = "/reintentartancamentexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String reintentarTancamentExpedient(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
@@ -354,7 +350,8 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             // Decodificam la URL que arriba en base64
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
-            peticioLogicaEjb.reintentarTancarExpedient(peticioId, Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
+            peticioLogicaEjb.reintentarTancarExpedient(peticioId,
+                    Configuracio.getUrlBase(decodedUrl, request.getContextPath()));
 
             HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.tancarexpedient.reintent.success"));
 
@@ -387,19 +384,20 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             // Recuperacio del fitxer firmat a partir del ID de peticio
             Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
-            
+
             // Si a petició s'ha arxivat correctament, s'ha de passar el link amb CSV:
-            if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA && peticio.getEstat() != Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
+            if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA
+                    && peticio.getEstat() != Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
                 throw new I18NException("genapp.comodi", "No e spot enviar email de peticio no finalitzada");
             }
 
             InfoArxiuJPA ia = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
             String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
-            
+
             UsuariJPA user = usuariEjb.findByPrimaryKey((Long) peticio.getSolicitantID());
             String nomSolicitant = user.getNom() + " " + user.getLlinatge1()
                     + (user.getLlinatge2() == null ? "" : " " + user.getLlinatge2());
-            
+
             Map<String, Object> map = new HashMap<String, Object>();
 
             map.put("nomFitxer", peticio.getFitxer().getNom());
@@ -413,7 +411,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
-            
+
             EmailUtil.postMail(subject, message, isHTML, Configuracio.getAppEmail(), decodedEmail);
             String successMsg = "S'ha enviat el email correctament";
             HtmlUtils.saveMessageSuccess(request, successMsg);

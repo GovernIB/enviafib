@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Properties;
 
-import org.fundaciobit.pluginsib.core.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 
 /**

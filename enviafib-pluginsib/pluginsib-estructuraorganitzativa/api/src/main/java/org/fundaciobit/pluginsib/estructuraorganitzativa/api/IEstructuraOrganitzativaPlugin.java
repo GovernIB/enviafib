@@ -1,13 +1,14 @@
 package org.fundaciobit.pluginsib.estructuraorganitzativa.api;
 
-import org.fundaciobit.pluginsib.core.IPlugin;
+
+import org.fundaciobit.pluginsib.core.v3.IPluginIB;
 
 /**
  * 
  * 
  * @author anadal
  */
-public interface IEstructuraOrganitzativaPlugin extends IPlugin {
+public interface IEstructuraOrganitzativaPlugin extends IPluginIB {
 
     public static final String ESTRUCTURAORGANITZATIVA_PROPERTY_BASE = IPLUGINSIB_BASE_PROPERTIES
             + "estructuraorganitzativa.";

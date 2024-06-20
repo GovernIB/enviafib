@@ -76,18 +76,14 @@
         <dependency>
             <artifactId>pluginsib-userinformation-api</artifactId>
             <groupId>org.fundaciobit.pluginsib.userinformation</groupId>
-            <version>${pluginsib.userinformation.api.version}</version>
+            <version>${pluginsib.userinformation.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.fundaciobit.pluginsib.userinformation</groupId>
             <artifactId>pluginsib-userinformation-keycloak</artifactId>
-            <version>${pluginsib.userinformation.impl.version}</version>
+            <version>${pluginsib.userinformation.version}</version>
             <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>org.jboss.resteasy</groupId>
                     <artifactId>resteasy-client</artifactId>
@@ -125,28 +121,12 @@
         <dependency>
             <groupId>org.fundaciobit.pluginsib.userinformation</groupId>
             <artifactId>pluginsib-userinformation-database</artifactId>
-            <version>${pluginsib.userinformation.impl.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${pluginsib.userinformation.version}</version>
         </dependency>
         <dependency>
             <groupId>org.fundaciobit.pluginsib.userinformation</groupId>
             <artifactId>pluginsib-userinformation-ldap</artifactId>
-            <version>${pluginsib.userinformation.impl.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.utils</groupId>
-                    <artifactId>pluginsib-utils-ldap</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${pluginsib.userinformation.version}</version>
         </dependency>
 
         <!-- ============================================ -->
@@ -156,25 +136,13 @@
         <dependency>
             <groupId>org.fundaciobit.pluginsib.exportdata</groupId>
             <artifactId>pluginsib-exportdata-api</artifactId>
-            <version>2.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${pluginsib.exportdata.version}</version>
         </dependency>
         <!-- Excel Plugin -->
         <dependency>
             <groupId>org.fundaciobit.pluginsib.exportdata</groupId>
             <artifactId>pluginsib-exportdata-excel</artifactId>
-            <version>2.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${pluginsib.exportdata.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -185,13 +153,7 @@
         <dependency>
             <groupId>org.fundaciobit.pluginsib.exportdata</groupId>
             <artifactId>pluginsib-exportdata-ods</artifactId>
-            <version>2.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${pluginsib.exportdata.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jopendocument</groupId>
@@ -202,13 +164,7 @@
         <dependency>
             <groupId>org.fundaciobit.pluginsib.exportdata</groupId>
             <artifactId>pluginsib-exportdata-csv</artifactId>
-            <version>2.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${pluginsib.exportdata.version}</version>
         </dependency>
         <!-- Commons Dependencies -->
         <dependency>
@@ -234,27 +190,23 @@
             <artifactId>commons-lang</artifactId>
             <version>2.0</version>
         </dependency>
-        <!-- <dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-		</dependency> -->
-        <!-- <dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-			<version>2.0</version>
-		</dependency> -->
 
-        <!-- DEPENDENCIES DE ARXIU-->
+
+        <!-- ============================================ -->
+        <!-- ====    PLUGINS DE ARXIU    === -->
+        <!-- ============================================ -->
+        
+        <dependency>
+            <groupId>org.fundaciobit.pluginsib.arxiu</groupId>
+            <artifactId>pluginsib-arxiu-api</artifactId>
+            <version>${pluginsib.arxiu.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.fundaciobit.pluginsib.arxiu</groupId>
             <artifactId>pluginsib-arxiu-caib</artifactId>
             <version>${pluginsib.arxiu.version}</version>
             <exclusions>
-                <exclusion>
-                    <groupId>org.fundaciobit.pluginsib.core</groupId>
-                    <artifactId>pluginsib-core</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>com.sun.jersey</groupId>
                     <artifactId>jersey-client</artifactId>
@@ -282,25 +234,25 @@
         <dependency>
             <groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
             <artifactId>pluginsib-estructuraorganitzativa-api</artifactId>
-            <version>${pluginsib.estructuraorganitzativa.api.version}</version>
+            <version>${pluginsib.estructuraorganitzativa.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
             <artifactId>pluginsib-estructuraorganitzativa-mock</artifactId>
-            <version>${pluginsib.estructuraorganitzativa.impl.version}</version>
+            <version>${pluginsib.estructuraorganitzativa.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
             <artifactId>pluginsib-estructuraorganitzativa-database</artifactId>
-            <version>${pluginsib.estructuraorganitzativa.impl.version}</version>
+            <version>${pluginsib.estructuraorganitzativa.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.fundaciobit.pluginsib.estructuraorganitzativa</groupId>
             <artifactId>pluginsib-estructuraorganitzativa-ldapcaib</artifactId>
-            <version>${pluginsib.estructuraorganitzativa.impl.version}</version>
+            <version>${pluginsib.estructuraorganitzativa.version}</version>
         </dependency>
 
     </dependencies>

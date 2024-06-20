@@ -14,7 +14,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import javax.sql.DataSource;
 
-import org.fundaciobit.pluginsib.core.utils.FileUtils;
+import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.database.DatabaseEstructuraOrganitzativaPlugin;
 import org.hibernate.Session;

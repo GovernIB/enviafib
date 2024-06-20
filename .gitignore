@@ -192,3 +192,7 @@ installCerts.bat
 /scripts/sqlgenerator/target/classes/META-INF/maven/es.caib.enviafib/enviafib-sqlgenerator/pom.xml
 /scripts/.settings/org.eclipse.core.resources.prefs
 /scripts/.settings/org.eclipse.m2e.core.prefs
+/.project
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/.project
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/.settings/org.eclipse.core.resources.prefs
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/.settings/org.eclipse.m2e.core.prefs

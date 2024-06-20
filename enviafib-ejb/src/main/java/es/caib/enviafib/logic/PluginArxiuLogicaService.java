@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
-import es.caib.plugins.arxiu.api.IArxiuPlugin;
+import es.caib.pluginsib.arxiu.api.IArxiuPlugin;
 
 /**
  * 
