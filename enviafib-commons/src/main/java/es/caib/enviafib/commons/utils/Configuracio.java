@@ -1,11 +1,12 @@
 package es.caib.enviafib.commons.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.FileReader;
+import java.io.Reader;
 import java.net.URL;
 import java.util.Properties;
+
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -14,105 +15,179 @@ import java.util.Properties;
  */
 public class Configuracio implements Constants {
 
-    private static final Properties fileProperties = new Properties();
+    protected static Logger log = Logger.getLogger(Configuracio.class);
 
-    private static final Properties fileAndSystemProperties = new Properties();
+    private static Properties appProperties;
+
+    private static Properties appSystemProperties;
+
+    public static Properties getAppProperties() {
+        if (appProperties == null) {
+            appProperties = loadPropertiesFromKey(Constants.ENVIAFIB_PROPERTY_BASE + "properties");
+        }
+        return appProperties;
+    }
+
+    public static Properties getAppSystemProperties() {
+        if (appSystemProperties == null) {
+            appSystemProperties = loadPropertiesFromKey(Constants.ENVIAFIB_PROPERTY_BASE + "system.properties");
+        }
+        return appSystemProperties;
+    }
+
+    private static Properties loadPropertiesFromKey(String key) {
+        String propertyFileName = System.getProperty(key);
+
+        if (propertyFileName == null) {
+            String msg = "No existeix la propietat: " + key
+                    + " al fitxer standalone. S'hauria d'incloure aquesta propietat a l'etiqueta <system-properties> del fitxer standalone.";
+            throw new RuntimeException(msg);
+        }
+
+        if (propertyFileName.trim().length() == 0) {
+            String msg = "La propietat: " + key
+                    + " del fitxer standalone no té valor. Se li ha de posar el fitxer corresponent a la propietat al fitxer standalone";
+            throw new RuntimeException(msg);
+        }
+
+        File file = new File(propertyFileName);
+
+        if (!file.exists()) {
+            throw new RuntimeException("La propietat: " + key
+                    + " del fitxer standalone apunta a un fitxer que no existeix (" + propertyFileName + ")");
+        }
+
+        try (Reader reader = new FileReader(file)) {
+            Properties prop = new Properties();
+            prop.load(reader);
+            return prop;
+        } catch (Exception e) {
+            throw new RuntimeException("La propietat: " + key + " del fitxer standalone apunta a un fitxer("
+                    + propertyFileName + ") que no es pot llegir:" + e.getMessage(), e);
+        }
+    }
 
     /*
-     * Agafa els fitxers de propietats definits a l'standalone
-     *
-     * Seguim els estandars de la CAIB
-     */
-    public static Properties getFilesProperties() {
+    private static Long getLongAppProperty(String key) {
+        String value = getAppProperties().getProperty(key);
+        Long valueLong = null;
+        if (value != null) {
+            try {
+                valueLong = Long.parseLong(value);
+            } catch (Exception e) {
+                log.error("Error parsing long value for key " + key, e);
+            }
+        }
 
+        return valueLong;
+
+    }
+    */
+
+    public static Properties getSystemAndFileProperties() {
+        Properties properties = new Properties();
+        properties.putAll(System.getProperties());
+        properties.putAll(getAppSystemProperties());
+        properties.putAll(getAppProperties());
+        return properties;
+    }
+
+    /*
+    private static final Properties fileProperties = new Properties();
+    
+    private static final Properties fileAndSystemProperties = new Properties();
+    
+    
+    public static Properties getFilesProperties() {
+    
         if (fileProperties.isEmpty()) {
             // matches the property name as defined in the system-properties element in
             // WildFly
             String property = Constants.ENVIAFIB_PROPERTY_BASE + "properties";
             loadPropertyFile(property);
-
+    
             String propertySystem = Constants.ENVIAFIB_PROPERTY_BASE + "system.properties";
             loadPropertyFile(propertySystem);
         }
-
+    
         return fileProperties;
-
+    
     }
-
+    
     public static void loadPropertyFile(String property) {
-
+    
         String propertyFile = System.getProperty(property);
-
+    
         if (propertyFile == null) {
             throw new RuntimeException("No existeix la propietat: " + property
                     + " al fitxer standalone.xml. S'hauria d'incloure aquesta propietat a l'etiqueta <system-properties> del fitxer standalone");
         }
-
+    
         if (propertyFile.trim().length() == 0) {
             throw new RuntimeException("La propietat: " + property
                     + " del fitxer standalone.xml no te valor. Se li ha de posar el fitxer corresponent a la propietat al fitxer standalone");
         }
-
+    
         File File = new File(propertyFile);
         //		if (!File.exists()) {
         //			throw new RuntimeException("La propietat "File.getAbsolutePath());
         //		}
-
+    
         try {
             fileProperties.load(new FileInputStream(File));
-
+    
         } catch (FileNotFoundException e) {
             throw new RuntimeException("La propietat: " + property
                     + " del fitxer standalone apunta a un fitxer que no existeix (" + propertyFile + ")");
-
+    
         } catch (IOException e) {
             throw new RuntimeException("La propietat: " + property + " del fitxer standalone apunta a un fitxer("
                     + propertyFile + ") que no es pot llegir:" + e.getMessage(), e);
         }
     }
-
+    
     public static Properties getSystemAndFileProperties() {
-
+    
         if (fileAndSystemProperties.isEmpty()) {
             fileAndSystemProperties.putAll(getFilesProperties());
             fileAndSystemProperties.putAll(System.getProperties());
         }
         return fileAndSystemProperties;
     }
-
+    
     public static String getProperty(String key) {
-
+    
         return getFilesProperties().getProperty(key);
-
+    
     }
-
+    
     public static String getProperty(String key, String def) {
         return getFilesProperties().getProperty(key, def);
     }
+    */
 
     public static boolean isDesenvolupament() {
-
-        return Boolean.parseBoolean(getProperty(ENVIAFIB_PROPERTY_BASE + "development"));
+        return Boolean.parseBoolean(getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "development"));
     }
 
     public static boolean isCAIB() {
-        return Boolean.parseBoolean(getProperty(ENVIAFIB_PROPERTY_BASE + "iscaib"));
+        return Boolean.parseBoolean(getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "iscaib"));
     }
 
     public static String getAppEmail() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "email.from");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "email.from");
     }
 
     public static String getAppName() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "name", "EnviaFIB");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "name", "EnviaFIB");
     }
 
     public static String getDefaultLanguage() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "defaultlanguage", "ca");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "defaultlanguage", "ca");
     }
 
     public static byte[] getEncryptKey() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "encryptkey", "0123456789123456").getBytes();
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "encryptkey", "0123456789123456").getBytes();
     }
 
     public static Long getMaxUploadSizeInBytes() {
@@ -124,7 +199,7 @@ public class Configuracio implements Constants {
     }
 
     public static File getFilesDirectory() {
-        String path = getProperty(ENVIAFIB_PROPERTY_BASE + "filesdirectory");
+        String path = getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "filesdirectory");
         if (path == null) {
             throw new RuntimeException("No existeix la propietat '" + ENVIAFIB_PROPERTY_BASE + "filesdirectory'"
                     + " al fitxer " + System.getProperty(ENVIAFIB_PROPERTY_BASE + "system.properties")
@@ -169,81 +244,83 @@ public class Configuracio implements Constants {
     }
 
     public static String getFileSystemManager() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "filesystemmanagerclass");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "filesystemmanagerclass");
     }
 
     public static String getPortafibGatewayV2() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url");
     }
 
     public static String getPortafibUsername() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.username");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.username");
     }
 
     public static String getPortafibPassword() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.password");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.password");
     }
 
     public static String getPortafibProfile() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.profile.pades");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.profile.pades");
     }
 
     public static String getPortaFIBApiFirmaWebUrl() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.url");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.url");
     }
 
     public static String getPortaFIBApiFirmaWebUsername() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.username");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.username");
     }
 
     public static String getPortaFIBApiFirmaWebPassword() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.password");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaweb.password");
     }
 
     public static String getPortaFIBApiFlowUrl() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.url");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.url");
     }
 
     public static String getPortaFIBApiFlowUsername() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.username");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.username");
     }
 
     public static String getPortaFIBApiFlowPassword() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.password");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apiflow.password");
     }
 
     public static String getTelefonAjuda() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.telefon");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.telefon");
     }
 
     public static String getWebAjuda() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.web");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.web");
     }
 
     public static String getEmailAjuda() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
     }
 
     public static String getPortaFIBAPIRevisorsURL() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.host");
-    }
-    public static String getPortaFIBAPIRevisorsUsername() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.username");
-    }
-    public static String getPortaFIBAPIRevisorsPassword() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.password");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.host");
     }
 
-//    public static String getHoraTancamentExpedientsScheduler() {
-//        return getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancar.expedient.hora");
-//        
-////        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
-//    }
+    public static String getPortaFIBAPIRevisorsUsername() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.username");
+    }
+
+    public static String getPortaFIBAPIRevisorsPassword() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "portafib.apirevisors.password");
+    }
+
+    //    public static String getHoraTancamentExpedientsScheduler() {
+    //        return getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancar.expedient.hora");
+    //        
+    ////        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
+    //    }
 
     public static String getHoraTancamentExpedientsScheduler() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancarexpedient.scheduler.hora");
-//        es.caib.enviafib.=4:30
-//        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancarexpedient.scheduler.hora");
+        //        es.caib.enviafib.=4:30
+        //        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
     }
 
     /**
@@ -251,7 +328,7 @@ public class Configuracio implements Constants {
      * 
      */
     public static String getUrlBase() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "url");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "url");
     }
 
     public static String getUrlBase(String fullUrl, String contextPath) throws Exception {
@@ -264,11 +341,7 @@ public class Configuracio implements Constants {
     }
 
     public static String getSortirURL() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "url_sortida");
-    }
-
-    public static String getPluginArxiuClass() {
-        return getProperty(ENVIAFIB_PROPERTY_BASE + "plugin.arxiu.class");
+        return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "url_sortida");
     }
 
     /**  Propietat que indica si volem les opcions de menú per gestionar la
@@ -276,7 +349,8 @@ public class Configuracio implements Constants {
      *  Plugin d'Estructura Organitzativa de DATABASE.
      */
     public static boolean showMenuEstructuraOrganitzativa() {
-        return "true".equals(getProperty(ENVIAFIB_PROPERTY_BASE + "showmenuestructuraorganitzativa"));
+        return "true"
+                .equals(getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "showmenuestructuraorganitzativa"));
     }
 
 }

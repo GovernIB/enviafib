@@ -1,7 +1,7 @@
 
 -- Afegir Revisor a petició
 ALTER TABLE efi_peticio
-   ADD COLUMN revisor character varying(255);
+   ADD COLUMN revisor varchar2(255);
    
    
 --###########################################################################
