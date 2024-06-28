@@ -30,16 +30,10 @@
 		</div>
 
 		<div id="logoEnviafibContainer" class="logoGovern">
-			<img src="<c:url value="/img/app-logo.png"/>" style="height: 55px;"
+			<img src="<c:url value="/img/app-logo.png"/>" style="height: 4rem;"
 				alt="EnviaFIB" title="EnviaFIB" />
 		</div>
-
-		<div>
-			<p id="nomApp""><%=es.caib.enviafib.commons.utils.StaticVersion.PROJECT_NAME%></p>
-		</div>
-
-
-
+		
         <div id="menuCapContainer" >
         	<ul class="navbar-nav mobil">
 

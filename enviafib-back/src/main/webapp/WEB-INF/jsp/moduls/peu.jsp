@@ -20,11 +20,17 @@
 			</small>
 		</div>
 
+	<%-- 	<!-- Centre -->
+		<div id="peu-centre">
+			<img src="<c:url value="/img/app-logo-bn.png"/>" style="height: 6rem;"
+				alt="EnviaFIB" title="EnviaFIB" />
+		</div>
+ --%>
 		<!-- Dreta -->
 		<div id="peu-dreta">
 			<a href="http://www.caib.es/"> <img
-				src="<c:url value="/img/logo-caib-bn.png"/>"
-				style="height: 45px;"
+				src="<c:url value="/img/app-logo-bn.png"/>"
+				style="height: 35px;"
 				alt="Govern de les Illes Balears" />
 			</a>
 
@@ -95,6 +101,11 @@
 	flex-direction: column;
 	text-align: right;
 	gap: 3px;
+	width: 25rem;
+}
+
+#peu-esquerra {
+	width: 25rem;
 }
 
 #modalAjuda {
