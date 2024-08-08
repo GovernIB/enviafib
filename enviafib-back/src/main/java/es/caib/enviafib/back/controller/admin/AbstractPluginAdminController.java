@@ -14,6 +14,7 @@ import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,13 +67,13 @@ public abstract class AbstractPluginAdminController extends PluginController {
 
             pluginFilterForm.getDefaultGroupByFields().remove(TIPUS);
 
-//            pluginFilterForm.addHiddenField(PluginFields.PLUGINID);
-//            pluginFilterForm.addHiddenField(PluginFields.NOMID);
-//            pluginFilterForm.addHiddenField(PluginFields.DESCRIPCIO);
-//            pluginFilterForm.addHiddenField(PluginFields.CLASSE);
+            //            pluginFilterForm.addHiddenField(PluginFields.PLUGINID);
+            //            pluginFilterForm.addHiddenField(PluginFields.NOMID);
+            //            pluginFilterForm.addHiddenField(PluginFields.DESCRIPCIO);
+            //            pluginFilterForm.addHiddenField(PluginFields.CLASSE);
             pluginFilterForm.addHiddenField(PluginFields.PROPERTIES);
-//            pluginFilterForm.addHiddenField(PluginFields.TIPUS);
-//            pluginFilterForm.addHiddenField(PluginFields.ACTIU);
+            //            pluginFilterForm.addHiddenField(PluginFields.TIPUS);
+            //            pluginFilterForm.addHiddenField(PluginFields.ACTIU);
 
             pluginFilterForm.setOrderBy(NOM.javaName);
             pluginFilterForm.setOrderAsc(true);
@@ -93,8 +94,10 @@ public abstract class AbstractPluginAdminController extends PluginController {
         for (Plugin p : list) {
             long pluginID = p.getPluginID();
             if (!p.isActiu()) {
-                filterForm.addAdditionalButtonByPK(pluginID, new AdditionalButton("far fa-check-circle icon-white",
-                        "plugin.activar", getContextWebPlugin() + "/activarplugin/" + p.getPluginID(), "btn-success"));
+                filterForm.addAdditionalButtonByPK(pluginID,
+                        new AdditionalButton("far fa-check-circle icon-white", "plugin.activar",
+                                getContextWebPlugin() + "/activarplugin/" + p.getPluginID(),
+                                AdditionalButtonStyle.SUCCESS));
             }
 
         }
@@ -125,15 +128,14 @@ public abstract class AbstractPluginAdminController extends PluginController {
             throws I18NException {
 
         PluginJPA p = pluginLogicaEjb.findByPrimaryKey(pluginid);
-        
+
         p.setActiu(true);
         pluginLogicaEjb.update(p);
 
         Where wTipus = TIPUS.equal(p.getTipus());
-        Where wNotId= PLUGINID.notEqual(pluginid);
+        Where wNotId = PLUGINID.notEqual(pluginid);
         pluginLogicaEjb.update(ACTIU, false, Where.AND(wTipus, wNotId));
-                
-        
+
         String msg = I18NUtils.tradueix("success.activarplugin", String.valueOf(p.getPluginID()));
         HtmlUtils.saveMessageSuccess(request, msg);
 

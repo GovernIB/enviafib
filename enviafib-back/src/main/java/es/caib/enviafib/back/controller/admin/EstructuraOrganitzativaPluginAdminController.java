@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.springframework.stereotype.Controller;
@@ -88,7 +89,7 @@ public class EstructuraOrganitzativaPluginAdminController extends AbstractPlugin
                     "estructuraorganitzativaplugin.button", "javascript: provarPlugin({0})",
 
                     // getContextWeb() + "/provar/{0}",
-                    "btn-primary"));
+                    AdditionalButtonStyle.PRIMARY));
 
             pluginFilterForm.setFooterListVisible(false);
             

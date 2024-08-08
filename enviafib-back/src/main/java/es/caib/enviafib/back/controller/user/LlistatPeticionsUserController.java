@@ -15,6 +15,7 @@ import org.fundaciobit.genapp.common.query.ITableManager;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.form.BaseFilterForm;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
@@ -38,7 +39,6 @@ import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 
-
 /**
  * 
  * @author fbosch
@@ -56,11 +56,10 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
     public static final int COLUMN_URL_ARXIU_ORIGINAL_POS = 2;
     public static final int COLUMN_URL_ARXIU_IMPRIMIBLE_POS = 3;
 
-    
     public enum TipusFile {
         FIRMAT, ENI_DOC, VERSIO_IMPRIMIBLE
     }
-    
+
     @Override
     public String getTileList() {
         return "peticioListUser";
@@ -78,8 +77,6 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
         return PeticioFields.SOLICITANTID.equal(userId);
     }
 
-
-
     @Override
     public PeticioFilterForm getPeticioFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
             throws I18NException {
@@ -94,13 +91,14 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
-        
+
         filterForm.getAdditionalButtonsByPK().clear();
 
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
 
-            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view", getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, "btn-info"));
+            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view",
+                    getContextWebByTipus(peticio.getTipus()) + "/view/" + peticioID, AdditionalButtonStyle.INFO));
         }
 
         super.postList(request, mav, filterForm, list);
@@ -147,7 +145,7 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
         List<Integer> estatsSelect = peticioFilterForm.getEstatSelect();
 
         if (estatsSelect != null) {
-            
+
             List<Integer> nouEstatSelect = new ArrayList<Integer>(estatsSelect);
             for (Integer estat : estatsSelect) {
                 if (estat != null) {
@@ -190,82 +188,82 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
         return llistat;
     }
 
-    
-    
-    
-	// Afegir dos camps al excel de l'exportacio. URL doc original i URL imprimible
-	@Override
-	public void exportList(@PathVariable("dataExporterID") String dataExporterID, HttpServletRequest request,
-			HttpServletResponse response, PeticioFilterForm filterForm) throws Exception, I18NException {
-		try {
-			{
-				AdditionalField<Long, String> additionalField = new AdditionalField<Long, String>();
-				additionalField.setCodeName("download.arxivat.original");
-				additionalField.setPosition(COLUMN_URL_ARXIU_ORIGINAL_POS);
-				additionalField.setEscapeXml(false);
+    // Afegir dos camps al excel de l'exportacio. URL doc original i URL imprimible
+    @Override
+    public void exportList(@PathVariable("dataExporterID") String dataExporterID, HttpServletRequest request,
+            HttpServletResponse response, PeticioFilterForm filterForm) throws Exception, I18NException {
+        try {
+            {
+                AdditionalField<Long, String> additionalField = new AdditionalField<Long, String>();
+                additionalField.setCodeName("download.arxivat.original");
+                additionalField.setPosition(COLUMN_URL_ARXIU_ORIGINAL_POS);
+                additionalField.setEscapeXml(false);
 
-				additionalField.setValueMap(new HashMap<Long, String>());
+                additionalField.setValueMap(new HashMap<Long, String>());
 
-				filterForm.addAdditionalField(additionalField);
-			}
-			{
-				AdditionalField<Long, String> additionalField = new AdditionalField<Long, String>();
-				additionalField.setCodeName("download.arxivat.imprimible");
-				additionalField.setPosition(COLUMN_URL_ARXIU_IMPRIMIBLE_POS);
-				additionalField.setEscapeXml(false);
+                filterForm.addAdditionalField(additionalField);
+            }
+            {
+                AdditionalField<Long, String> additionalField = new AdditionalField<Long, String>();
+                additionalField.setCodeName("download.arxivat.imprimible");
+                additionalField.setPosition(COLUMN_URL_ARXIU_IMPRIMIBLE_POS);
+                additionalField.setEscapeXml(false);
 
-				additionalField.setValueMap(new HashMap<Long, String>());
+                additionalField.setValueMap(new HashMap<Long, String>());
 
-				filterForm.addAdditionalField(additionalField);
-			}
+                filterForm.addAdditionalField(additionalField);
+            }
 
-			ModelAndView mav = new ModelAndView(getTileList());
-			List<Peticio> list = llistat(mav, request, filterForm);
+            ModelAndView mav = new ModelAndView(getTileList());
+            List<Peticio> list = llistat(mav, request, filterForm);
 
-			Map<Long, String> mapEstat = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_ESTAT_IMG).getValueMap();
-			mapEstat.clear();
-			Map<Long, String> mapUrl1 = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_URL_ARXIU_ORIGINAL_POS).getValueMap();
-			mapUrl1.clear();
-			Map<Long, String> mapUrl2 = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_URL_ARXIU_IMPRIMIBLE_POS).getValueMap();
-			mapUrl2.clear();
-			
-			for (Peticio peticio : list) {
-				long peticioID = peticio.getPeticioID();
-				String title = I18NUtils.tradueix("estat." + peticio.getEstat());
-				mapEstat.put(peticioID, title);
+            Map<Long, String> mapEstat = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_ESTAT_IMG)
+                    .getValueMap();
+            mapEstat.clear();
+            Map<Long, String> mapUrl1 = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_URL_ARXIU_ORIGINAL_POS)
+                    .getValueMap();
+            mapUrl1.clear();
+            Map<Long, String> mapUrl2 = (Map<Long, String>) filterForm
+                    .getAdditionalField(COLUMN_URL_ARXIU_IMPRIMIBLE_POS).getValueMap();
+            mapUrl2.clear();
 
-				String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
-						InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+            for (Peticio peticio : list) {
+                long peticioID = peticio.getPeticioID();
+                String title = I18NUtils.tradueix("estat." + peticio.getEstat());
+                mapEstat.put(peticioID, title);
 
-				if (csv != null) {
-					mapUrl1.put(peticioID, Configuracio.getUrlBase() + getContextWeb() + "/descarregarfirmat/" + csv);
-					mapUrl2.put(peticioID,
-							Configuracio.getUrlBase() + getContextWeb() + "/descarregarimprimible/" + csv);
-				} else {
-					mapUrl1.put(peticioID, "");
-					mapUrl2.put(peticioID, "");
-				}
-			}
+                String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
+                        InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
-			Field<?>[] allFields = ALL_PETICIO_FIELDS;
+                if (csv != null) {
+                    mapUrl1.put(peticioID, Configuracio.getUrlBase() + getContextWeb() + "/descarregarfirmat/" + csv);
+                    mapUrl2.put(peticioID,
+                            Configuracio.getUrlBase() + getContextWeb() + "/descarregarimprimible/" + csv);
+                } else {
+                    mapUrl1.put(peticioID, "");
+                    mapUrl2.put(peticioID, "");
+                }
+            }
 
-			java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
-			__mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
-			__mapping.put(SOLICITANTID, filterForm.getMapOfUsuariForSolicitantID());
-			__mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
-			__mapping.put(ESTAT, filterForm.getMapOfValuesForEstat());
-			__mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusDocumental());
-			__mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomaDoc());
-			__mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfoSignaturaID());
-			__mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
-			__mapping.put(ARXIUREQPARAMDOCESTATELABORA, filterForm.getMapOfValuesForArxiuReqParamDocEstatElabora());
-			__mapping.put(ARXIUREQPARAMORIGEN, filterForm.getMapOfValuesForArxiuReqParamOrigen());
-			__mapping.put(INFOARXIUID, filterForm.getMapOfInfoArxiuForInfoArxiuID());
-			exportData(request, response, dataExporterID, filterForm, list, allFields, __mapping, PRIMARYKEY_FIELDS);
-		} finally {
-			// Eliminar els camps afegits
-			filterForm.getAdditionalFields().remove(COLUMN_URL_ARXIU_ORIGINAL_POS);
-			filterForm.getAdditionalFields().remove(COLUMN_URL_ARXIU_IMPRIMIBLE_POS);
-		}
-	}
+            Field<?>[] allFields = ALL_PETICIO_FIELDS;
+
+            java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
+            __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
+            __mapping.put(SOLICITANTID, filterForm.getMapOfUsuariForSolicitantID());
+            __mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
+            __mapping.put(ESTAT, filterForm.getMapOfValuesForEstat());
+            __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusDocumental());
+            __mapping.put(IDIOMADOC, filterForm.getMapOfValuesForIdiomaDoc());
+            __mapping.put(INFOSIGNATURAID, filterForm.getMapOfInfoSignaturaForInfoSignaturaID());
+            __mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
+            __mapping.put(ARXIUREQPARAMDOCESTATELABORA, filterForm.getMapOfValuesForArxiuReqParamDocEstatElabora());
+            __mapping.put(ARXIUREQPARAMORIGEN, filterForm.getMapOfValuesForArxiuReqParamOrigen());
+            __mapping.put(INFOARXIUID, filterForm.getMapOfInfoArxiuForInfoArxiuID());
+            exportData(request, response, dataExporterID, filterForm, list, allFields, __mapping, PRIMARYKEY_FIELDS);
+        } finally {
+            // Eliminar els camps afegits
+            filterForm.getAdditionalFields().remove(COLUMN_URL_ARXIU_ORIGINAL_POS);
+            filterForm.getAdditionalFields().remove(COLUMN_URL_ARXIU_IMPRIMIBLE_POS);
+        }
+    }
 }

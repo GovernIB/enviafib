@@ -15,6 +15,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.html.IconUtils;
 import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
 import org.fundaciobit.pluginsib.core.v3.utils.PluginsManager;
@@ -108,18 +109,18 @@ public class EstructuraOrganitzativaAdminController extends OrganitzacioControll
 
             // REGENERAR
             organitzacioFilterForm.addAdditionalButton(new AdditionalButton("fas fa-cogs icon-white",
-                    "info.organitzacio.regenerar", "javascript:regenerar()", "btn-warning"));
+                    "info.organitzacio.regenerar", "javascript:regenerar()", AdditionalButtonStyle.WARNING));
 
             // ESBORRAR TOT
             organitzacioFilterForm.addAdditionalButton(new AdditionalButton(
                     IconUtils.getWhite(IconUtils.ICON_TRASH), "info.organitzacio.esborrartot", "javascript:openModal('"
                             + request.getContextPath() + this.getContextWeb() + "/esborrartot','show');",
-                    "btn-danger"));
+                    AdditionalButtonStyle.DANGER));
 
             // AFEGIR
             organitzacioFilterForm
                     .addAdditionalButton(new AdditionalButton(IconUtils.getWhite(IconUtils.ICON_PLUS_SIGN),
-                            "info.organitzacio.afegir", getContextWeb() + "/new", "btn-warning"));
+                            "info.organitzacio.afegir", getContextWeb() + "/new", AdditionalButtonStyle.WARNING));
 
             organitzacioFilterForm.setDeleteSelectedButtonVisible(false);
             organitzacioFilterForm.setVisibleMultipleSelection(false);

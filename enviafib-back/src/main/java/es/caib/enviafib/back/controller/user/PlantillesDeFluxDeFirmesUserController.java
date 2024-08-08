@@ -20,6 +20,7 @@ import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -52,7 +53,6 @@ import es.caib.enviafib.model.entity.Usuari;
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })
 public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeFluxDeFirmesController {
 
-    
     @Override
     public String getEntityNameCode() {
         return "plantillesfluxfirmes";
@@ -85,11 +85,11 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         if (usuariFilterForm.isNou()) {
             // BOTO PER CREAR
             usuariFilterForm.addAdditionalButton(new AdditionalButton("fas fa-plus-circle", "nouflux",
-                    getContextWeb() + "/crearflux", "btn-success"));
-            
+                    getContextWeb() + "/crearflux", AdditionalButtonStyle.SUCCESS));
+
             usuariFilterForm.addAdditionalButton(new AdditionalButton("fas fa-list", "back.to.list",
-                    LlistatPeticionsUserController.CONTEXT_WEB + "/list", "btn-primary"));
-            
+                    LlistatPeticionsUserController.CONTEXT_WEB + "/list", AdditionalButtonStyle.PRIMARY));
+
             usuariFilterForm.setAttachedAdditionalJspCode(true);
         }
 
@@ -105,20 +105,21 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         for (Usuari usuari : list) {
             // BOTO PER EDITAR
             final String fluxID = usuari.getNif();
-            filterForm.addAdditionalButtonByPK((long) usuari.getNif().hashCode(), new AdditionalButton("fas fa-edit",
-                    "genapp.edit", "javascript:editarFlux('" + request.getContextPath() + getContextWeb() + "/editarflux/" + fluxID +"')", "btn-warning"));
+            filterForm.addAdditionalButtonByPK((long) usuari.getNif().hashCode(),
+                    new AdditionalButton("fas fa-edit", "genapp.edit", "javascript:editarFlux('"
+                            + request.getContextPath() + getContextWeb() + "/editarflux/" + fluxID + "')",
+                            AdditionalButtonStyle.WARNING));
         }
     }
 
     @RequestMapping(value = "/editarflux/{fluxID}/{windowUrl}")
-    public ModelAndView editarFlux(@PathVariable("fluxID") java.lang.String fluxID, 
-            @PathVariable("windowUrl") String windowUrl, HttpServletRequest request,
-            HttpServletResponse response) {
+    public ModelAndView editarFlux(@PathVariable("fluxID") java.lang.String fluxID,
+            @PathVariable("windowUrl") String windowUrl, HttpServletRequest request, HttpServletResponse response) {
 
         ApiFlowTemplateSimple api = null;
         try {
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
-            
+
             // Decodificam la URL que arriba en base64
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
@@ -138,7 +139,8 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
                 log.error("El flux NO es de la nostra propietat");
             }
 
-            final String callBackUrl = Configuracio.getUrlBase(decodedUrl, request.getContextPath()) + getContextWeb() + "/finalEdicio";
+            final String callBackUrl = Configuracio.getUrlBase(decodedUrl, request.getContextPath()) + getContextWeb()
+                    + "/finalEdicio";
 
             FlowTemplateSimpleEditFlowTemplateRequest transactionRequest;
             transactionRequest = new FlowTemplateSimpleEditFlowTemplateRequest(languageUI, fluxID, callBackUrl);
@@ -181,7 +183,8 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             api = FirmaFluxUserController.getApiFlowTemplateSimple();
 
             // Crear Flux
-            final String name = "ENVIAFIB_Plantilla_Flux_Firma_" + FirmaFluxUserController.SDF.format(new Date()) + "_" +getOwner();
+            final String name = "ENVIAFIB_Plantilla_Flux_Firma_" + FirmaFluxUserController.SDF.format(new Date()) + "_"
+                    + getOwner();
             String descr = FirmaFluxUserController.generateDescription(getOwner(), true);
 
             final boolean saveOnServer = true;
@@ -199,7 +202,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             log.info("TransactionID = |" + transactionID + "|");
 
             final String callBackUrl = request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR)
-                     + getContextWeb() + "/callbackflux/" + transactionID;
+                    + getContextWeb() + "/callbackflux/" + transactionID;
 
             // Per ara només suportam FULLVIEW
             FlowTemplateSimpleStartTransactionRequest startTransactionInfo;

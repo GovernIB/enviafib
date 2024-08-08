@@ -20,6 +20,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
@@ -227,7 +228,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-folder-open",
                             "user.veureannexes",
                             "/" + (isAdmin() ? "admin" : "user") + "/infoAnnex/mostrarAnnexes/" + peticioID + "/toList",
-                            "btn-info"));
+                            AdditionalButtonStyle.INFO));
                 }
             }
 
@@ -236,12 +237,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 case Constants.ESTAT_PETICIO_EN_PROCES:
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-user-friends",
-                            "flux.info", "javascript:openModalFluxInfo(" + peticioID + ");", "btn-info"));
+                            "flux.info", "javascript:openModalFluxInfo(" + peticioID + ");", AdditionalButtonStyle.INFO));
 
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
-                            "arxiu.reintentar", "javascript:reintentarArxivat(" + peticioID + ")", "btn-warning"));
+                            "arxiu.reintentar", "javascript:reintentarArxivat(" + peticioID + ")", AdditionalButtonStyle.WARNING));
                 break;
 
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
@@ -249,17 +250,17 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 case Constants.ESTAT_PETICIO_FIRMADA:
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",
-                            "peticio.btn.sendmail", "javascript:cridaEmail(" + peticioID + ")", "btn-success"));
+                            "peticio.btn.sendmail", "javascript:cridaEmail(" + peticioID + ")", AdditionalButtonStyle.SUCCESS));
 
                     String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                             InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
-                                    getContextWeb() + "/descarregarimprimible/" + csv, "btn-info"));
+                                    getContextWeb() + "/descarregarimprimible/" + csv, AdditionalButtonStyle.INFO));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
-                            "download.arxivat.firmat", getContextWeb() + "/descarregarfirmat/" + csv, "btn-info"));
+                            "download.arxivat.firmat", getContextWeb() + "/descarregarfirmat/" + csv, AdditionalButtonStyle.INFO));
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
-                            "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, "btn-info"));
+                            "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, AdditionalButtonStyle.INFO));
                 break;
                 default:
                 break;
@@ -275,7 +276,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fa-trash ", "peticio.btn.delete", "javascript: openModal('"
                                     + request.getContextPath() + getContextWeb() + "/" + peticioID + "/delete','show')",
-                                    "btn-danger"));
+                                    AdditionalButtonStyle.DANGER));
                 }
             }
         }

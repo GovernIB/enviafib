@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -127,7 +128,7 @@ public class InfoAnnexUserController extends InfoAnexController {
             infoAnexFilterForm.addHiddenField(PETICIOID);
             infoAnexFilterForm.addLabel(ANEXID, "infoAnex.infoAnex.plural");
             
-            infoAnexFilterForm.addAdditionalButton(new AdditionalButton("fas fa-arrow-left", "tornar", returnUrl, "btn-secondary"));
+            infoAnexFilterForm.addAdditionalButton(new AdditionalButton("fas fa-arrow-left", "tornar", returnUrl, AdditionalButtonStyle.SECONDARY));
             
             infoAnexFilterForm.setAttachedAdditionalJspCode(true);
         }else {
@@ -203,7 +204,7 @@ public class InfoAnnexUserController extends InfoAnexController {
             
             filterForm.addAdditionalButtonByPK(infoAnex.getInfoanexid(), 
                     new AdditionalButton("fas fa-eye", "showannex", "javascript:mostrarDiv('" + i + "')",
-                            "btn-primary"));
+                            AdditionalButtonStyle.PRIMARY));
         }
         
         mav.addObject("annexes", annexes);

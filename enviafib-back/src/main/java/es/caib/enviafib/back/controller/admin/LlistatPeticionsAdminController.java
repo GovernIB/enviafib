@@ -14,6 +14,7 @@ import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -131,19 +132,19 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             Long annexes = infoAnexEjb.count(PETICIOID.equal(peticioID));
             if (annexes > 0) {
                 peticioForm.addAdditionalButton(new AdditionalButton("fas fa-folder-open", "user.veureannexes",
-                        "/admin/infoAnnex/mostrarAnnexes/" + peticioID + "/toForm", "btn-info"));
+                        "/admin/infoAnnex/mostrarAnnexes/" + peticioID + "/toForm", AdditionalButtonStyle.INFO));
                 request.getSession().setAttribute("myContext", getContextWebByTipus(peticioForm.getPeticio().getTipus()) );
 
             }
             Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
             if (infosignaturaID != null) {
                 peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
-                        "/admin/infoSignatura/view/" + infosignaturaID, "btn-info"));
+                        "/admin/infoSignatura/view/" + infosignaturaID, AdditionalButtonStyle.INFO));
             }
             Long infoArxiuID = peticioForm.getPeticio().getInfoArxiuID();
             if (infoArxiuID != null) {
                 peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "user.infoarxiu",
-                        "/admin/infoArxiu/view/" + infoArxiuID, "btn-info"));
+                        "/admin/infoArxiu/view/" + infoArxiuID, AdditionalButtonStyle.INFO));
             }
 
         }
@@ -173,7 +174,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
             
-            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view", getContextWeb() + "/veurePeticioFull/" + peticioID, "btn-info"));
+            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view", getContextWeb() + "/veurePeticioFull/" + peticioID, AdditionalButtonStyle.INFO));
             
             
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
@@ -183,16 +184,16 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
                         new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
-                                "javascript:reintentarTancamentExpedient(" + peticioID + ")", "btn-warning"));
+                                "javascript:reintentarTancamentExpedient(" + peticioID + ")", AdditionalButtonStyle.WARNING));
             }
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
-                        "arxiu.tancar.expedient", "javascript:tancarExpedient(" + peticioID + ")", "btn-warning"));
+                        "arxiu.tancar.expedient", "javascript:tancarExpedient(" + peticioID + ")", AdditionalButtonStyle.WARNING));
             }            
             
             
             if (peticio.getErrorMsg() != null) {
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-exclamation-circle", "peticio.btn.show.error", getContextWeb() + "/veurePeticioError/" + peticioID, "btn-danger"));
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-exclamation-circle", "peticio.btn.show.error", getContextWeb() + "/veurePeticioError/" + peticioID, AdditionalButtonStyle.DANGER));
             }
         }
         
@@ -206,7 +207,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             request.getSession().setAttribute("PETICIONS_REINTENTAR_ARXIU", list);
             filterForm.addAdditionalButton(new AdditionalButton("fas fa-cogs icon-white", "peticio.arxiu.reintentar.tots",
                     "javascript: reintentarArxivarTotes()",
-                    "btn-warning"));
+                    AdditionalButtonStyle.WARNING));
         }
         super.postList(request, mav, filterForm, list);
     }

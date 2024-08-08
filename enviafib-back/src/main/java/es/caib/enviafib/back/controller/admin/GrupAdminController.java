@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -83,7 +84,7 @@ public class GrupAdminController extends GrupController {
         if (grupFilterForm.isNou()) {
             grupFilterForm.addHiddenField(GrupFields.GRUPID);
             grupFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("fas fa-user-plus", "grup.afegir.usuari",
-                    GrupUsuariAdminController.CONTEXT_WEB + "/afegirUsuariGrup/{0}", "btn-primary"));
+                    GrupUsuariAdminController.CONTEXT_WEB + "/afegirUsuariGrup/{0}", AdditionalButtonStyle.PRIMARY));
         }
         return grupFilterForm;
     }

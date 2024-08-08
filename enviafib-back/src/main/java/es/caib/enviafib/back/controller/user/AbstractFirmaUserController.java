@@ -27,6 +27,7 @@ import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.form.Section;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
@@ -195,7 +196,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             Long annexes = infoAnexEjb.count(PETICIOID.equal(peticioID));
             if (annexes > 0) {
                 peticioForm.addAdditionalButton(new AdditionalButton("fas fa-folder-open",
-                        "user.veureannexes", "/user/infoAnnex/mostrarAnnexes/" + peticioID + "/toForm", "btn-info"));
+                        "user.veureannexes", "/user/infoAnnex/mostrarAnnexes/" + peticioID + "/toForm", AdditionalButtonStyle.INFO));
                 
                 request.getSession().setAttribute("myContext", getContextWebByTipus(peticioForm.getPeticio().getTipus()) );
             }
@@ -227,11 +228,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                     Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info", "user.infosignatura",
-                            "/user/infoSignatura/view/" + infosignaturaID, "btn-info"));
+                            "/user/infoSignatura/view/" + infosignaturaID, AdditionalButtonStyle.INFO));
                     
                     Long infoArxiuID = peticioForm.getPeticio().getInfoArxiuID();
                     peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "user.infoarxiu",
-                            "/user/infoArxiu/view/" + infoArxiuID, "btn-info"));
+                            "/user/infoArxiu/view/" + infoArxiuID, AdditionalButtonStyle.INFO));
 
                     //Si tenim el fitxer arxivat, ocultar el camp FitxerFirmatID, i afegir un botó per veure el fitxer arxivat d'arxiu
                     if (infoArxiuID != null) {
@@ -240,9 +241,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     	
 						hiddens.add(FITXERFIRMATID);
 						peticioForm.addAdditionalButton(new AdditionalButton("fas fas fa-print",
-	                            "download.arxivat.imprimible", LlistatPeticionsUserController.CONTEXT_WEB + "/descarregarimprimible/" + csv, "btn-success"));
+	                            "download.arxivat.imprimible", LlistatPeticionsUserController.CONTEXT_WEB + "/descarregarimprimible/" + csv, AdditionalButtonStyle.SUCCESS));
 						peticioForm.addAdditionalButton(new AdditionalButton("fas fa-file-pdf",
-	                            "download.arxivat.firmat",  LlistatPeticionsUserController.CONTEXT_WEB + "/descarregarfirmat/" + csv, "btn-success"));
+	                            "download.arxivat.firmat",  LlistatPeticionsUserController.CONTEXT_WEB + "/descarregarfirmat/" + csv, AdditionalButtonStyle.SUCCESS));
 					}
                     
                 break;
@@ -320,14 +321,14 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticioForm.setSaveButtonVisible(false);
             peticioForm.addAdditionalButton(new AdditionalButton("", getSubmitLabel(),
                     "javascript:enviar();",
-                    "btn-secondary"));
+                    AdditionalButtonStyle.SECONDARY));
 
             peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "advanced.show",
-                    "javascript:mostrarOcultarCampsAvanzats(this)", "btn-warning"));
+                    "javascript:mostrarOcultarCampsAvanzats(this)", AdditionalButtonStyle.WARNING));
 
             peticioForm.setCancelButtonVisible(false);
             peticioForm.addAdditionalButton(
-                    new AdditionalButton("", "genapp.cancel", getContextWeb() + "/0/cancel", "btn-secondary"));
+                    new AdditionalButton("", "genapp.cancel", getContextWeb() + "/0/cancel", AdditionalButtonStyle.SECONDARY));
 
         }
         return peticioForm;

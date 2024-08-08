@@ -16,6 +16,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleF
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
+import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -145,7 +146,7 @@ public class PlantillesDeFluxDeFirmesAdminController extends PlantillesDeFluxDeF
         for (Usuari usuari : list) {
             // BOTO PER MOSTRAR FLUX JSON
             filterForm.addAdditionalButtonByPK(usuari.getUsuariID(), new AdditionalButton("fas fa-code",
-                    "json", getContextWeb() + "/mostrarjson/" + usuari.getNif(), "btn-success"));
+                    "json", getContextWeb() + "/mostrarjson/" + usuari.getNif(), AdditionalButtonStyle.SUCCESS));
         }
 
     }
