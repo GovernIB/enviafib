@@ -8,9 +8,7 @@
         <dependencies>
             <module name="org.hibernate" />
 
-            <module name="com.fasterxml.jackson.core-jackson-annotations" optional="TRUE" />
-            <module name="com.fasterxml.jackson.core-jackson-core" optional="TRUE" />
-            <module name="com.fasterxml.jackson.core-jackson-databind" optional="TRUE" />
+
 
             <module name="org.keycloak.keycloak-core" optional="TRUE" />
             <module name="org.keycloak.keycloak-adapter-spi" optional="TRUE" />
@@ -22,6 +20,47 @@
             <module name="org.keycloak.keycloak-wildfly-adapter" optional="TRUE" />
             <module name="org.keycloak.keycloak-wildfly-elytron-oidc-adapter" optional="TRUE" />
             <module name="org.keycloak.keycloak-wildfly-subsystem" optional="TRUE" />
+            
+            
+            
+            <module name="com.fasterxml.jackson.core-jackson-core" optional="TRUE" />
+            <module name="com.fasterxml.jackson.core-jackson-databind" optional="TRUE" />
+            <module name="com.fasterxml.jackson.core.jackson-annotations" export="TRUE"/>
+            <module name="com.fasterxml.jackson.datatype.jackson-datatype-jsr310" export="TRUE"/>
+            <module name="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider" export="TRUE"/>
+            <module name="com.fasterxml.jackson.core.jackson-databind" export="TRUE"/>
+            <module name="com.fasterxml.jackson.core.jackson-core" export="TRUE"/>
+            
+            
+            <module name="com.google.code.gson" export="TRUE"/>
+            <module name="javax.json.bind.api" export="TRUE"/>
+            <module name="com.sun.xml.bind" export="TRUE"/>
+            <module name="org.apache.httpcomponents.core" export="TRUE"/>
+            <module name="javax.ws.rs.api" export="TRUE"/>
+            <module name="org.codehaus.jettison" export="TRUE"/>
+            <module name="com.github.fge.json-patch" export="TRUE"/>
+            <module name="org.apache.commons.codec" export="TRUE"/>
+            <module name="com.google.guava" export="TRUE"/>
+            <module name="javax.validation.api" export="TRUE"/>
+            <module name="org.apache.james.mime4j" export="TRUE"/>
+            <module name="javax.annotation.api" export="TRUE"/>
+            <module name="org.apache.commons.io" export="TRUE"/>
+            <module name="com.sun.istack" export="TRUE"/>
+            <module name="org.bouncycastle" export="TRUE"/>
+            <module name="net.jcip" export="TRUE"/>
+            <module name="com.sun.xml.fastinfoset" export="TRUE"/>
+            <module name="org.codehaus.jackson.jackson-core-asl" export="TRUE"/>
+            <module name="org.codehaus.jackson.jackson-jaxrs" export="TRUE"/>
+            <module name="org.codehaus.jackson.jackson-xc" export="TRUE"/>
+            <module name="org.codehaus.jackson.jackson-mapper-asl" export="TRUE"/>
+            <module name="com.sun.xml.txw2" export="TRUE"/>
+            <module name="com.github.fge.jackson-coreutils" export="TRUE"/>
+            <module name="org.jboss.ejb3" export="TRUE"/>
+            <module name="javax.xml.bind.api" export="TRUE"/>
+            <module name="org.reactivestreams" export="TRUE"/>
+            <module name="javax.activation.api" export="TRUE"/>
+            
+            
         </dependencies>
     </deployment>
 </jboss-deployment-structure>
