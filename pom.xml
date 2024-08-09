@@ -70,6 +70,7 @@
                 <updatePolicy>never</updatePolicy>
             </releases>
         </repository>
+        -->
         <repository>
             <id>github_governib_maven</id>
             <name>GitHub GovernIB Maven Repository</name>
@@ -83,7 +84,7 @@
                 <updatePolicy>never</updatePolicy>
             </releases>
         </repository>
-        -->
+
     </repositories>
     <dependencies>
         <dependency>
