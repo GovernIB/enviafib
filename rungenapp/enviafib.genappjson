@@ -13,6 +13,527 @@
   "schema": "public",
   "tables": [
     {
+      "name": "efi_entitat",
+      "nameJava": "Entitat",
+      "shortName": "entitat",
+      "labels": {
+        "ca": "Entitat",
+        "es": "Entidad"
+      },
+      "labelsPlural": {
+        "ca": "Entitats",
+        "es": "Entidades"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_entitat_pk",
+          "index": "efi_entitat_pk_i",
+          "isAutoIncrement": false,
+          "sqlName": "entitatid",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "entitatid",
+            "es": "entitatid"
+          },
+          "javaName": "entitatid",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Entitat",
+            "es": "Entidad"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Descripció",
+            "es": "Descripción"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "NULL::character varying",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "adrezahtml",
+          "sqlType": 12,
+          "size": 2000,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Adreça HTML",
+            "es": "Dirección HTML"
+          },
+          "javaName": "adrezahtml",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 8
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "activa",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Activa",
+            "es": "Activa"
+          },
+          "javaName": "activa",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "true",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "suporttelefon",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Telefon Suport",
+            "es": "Telefono Soporte"
+          },
+          "javaName": "suporttelefon",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "suportweb",
+          "sqlType": 12,
+          "size": 250,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Web Suport",
+            "es": "Web Soporte"
+          },
+          "javaName": "suportweb",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "suportemail",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Correu Suport",
+            "es": "Correo Soporte"
+          },
+          "javaName": "suportemail",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_entitat_faviconid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "faviconid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Favicon",
+            "es": "Favicon"
+          },
+          "javaName": "faviconID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_entitat_fitxer_icon_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_entitat_fitxer_icon_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_entitat_logowebid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "logowebid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Logo Web",
+            "es": "Logo Web"
+          },
+          "javaName": "logowebID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_entitat_fitxer_loca_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_entitat_fitxer_loca_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_entitat_logowebpeuid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "logowebpeuid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Logo Peu",
+            "es": "Logo Pie"
+          },
+          "javaName": "logowebpeuID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_entitat_fitxer_lope_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_entitat_fitxer_lope_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_entitat_logosegellid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "logosegellid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Logo Segell",
+            "es": "Logo Sello"
+          },
+          "javaName": "logosegellID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_entitat_fitxer_lose_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_entitat_fitxer_lose_fk",
+              "table": "efi_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "web",
+          "sqlType": 12,
+          "size": 250,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Web",
+            "es": "Web"
+          },
+          "javaName": "web",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_entitat_motiudele_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "motiudelegacioid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Motiu delegació",
+            "es": "Motivo delegación"
+          },
+          "javaName": "motiudelegacioID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_entitat_traduccio_moti_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_entitat_traduccio_moti_fk",
+              "table": "efi_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "segelldetempsviaweb",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "segelldetempsviaweb",
+            "es": "segelldetempsviaweb"
+          },
+          "javaName": "segelldetempsviaweb",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "0",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "checkcanviatdocfirmat",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "checkcanviatdocfirmat",
+            "es": "checkcanviatdocfirmat"
+          },
+          "javaName": "checkcanviatdocfirmat",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "true",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "propietatstaulafirmes",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "propietatstaulafirmes",
+            "es": "propietatstaulafirmes"
+          },
+          "javaName": "propietatstaulafirmes",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
       "name": "efi_faq",
       "nameJava": "Faq",
       "shortName": "faq",
@@ -353,6 +874,30 @@
             "webtype": 0
           },
           "foreignKeys": [
+            {
+              "name": "efi_entitat_fitxer_icon_fk",
+              "table": "efi_entitat",
+              "field": "faviconid",
+              "type": 0
+            },
+            {
+              "name": "efi_entitat_fitxer_loca_fk",
+              "table": "efi_entitat",
+              "field": "logowebid",
+              "type": 0
+            },
+            {
+              "name": "efi_entitat_fitxer_lope_fk",
+              "table": "efi_entitat",
+              "field": "logowebpeuid",
+              "type": 0
+            },
+            {
+              "name": "efi_entitat_fitxer_lose_fk",
+              "table": "efi_entitat",
+              "field": "logosegellid",
+              "type": 0
+            },
             {
               "name": "efi_faq_fitxer_fitxer1id_fk",
               "table": "efi_faq",
@@ -3639,6 +4184,12 @@
             ]
           },
           "foreignKeys": [
+            {
+              "name": "efi_entitat_traduccio_moti_fk",
+              "table": "efi_entitat",
+              "field": "motiudelegacioid",
+              "type": 0
+            },
             {
               "name": "efi_menu_traduccio_ajuda_fk",
               "table": "efi_menu",

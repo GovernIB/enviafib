@@ -7,6 +7,13 @@
  <%-- ==== GENAPP MARK START --%>
 
 
+    <%-- Entitat --%>
+       <fmt:message var="entityname" key="entitat.entitat.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/entitat/list/1"/>" ><span style="${(fn:contains(url, 'entitat/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
+
     <%-- Faq --%>
        <fmt:message var="entityname" key="faq.faq.plural"/>
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/faq/list/1"/>" ><span style="${(fn:contains(url, 'faq/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >

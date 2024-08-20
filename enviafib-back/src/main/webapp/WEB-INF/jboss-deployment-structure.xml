@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="org.apache.commons.beanutils" export="TRUE" />
+            <module name="org.apache.commons.collections" export="TRUE" />
+            <module name="javax.xml.bind.api" export="TRUE"/>  
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

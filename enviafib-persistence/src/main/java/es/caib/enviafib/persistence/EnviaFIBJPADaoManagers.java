@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
+   private final EntitatJPAManager efi_entitat;
    private final FaqJPAManager efi_faq;
    private final FitxerJPAManager efi_fitxer;
    private final GrupJPAManager efi_grup;
@@ -23,6 +24,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
    private final UsuariJPAManager efi_usuari;
 
   public  EnviaFIBJPADaoManagers(EntityManager __em) {
+    this.efi_entitat = new EntitatJPAManager(__em);
     this.efi_faq = new FaqJPAManager(__em);
     this.efi_fitxer = new FitxerJPAManager(__em);
     this.efi_grup = new GrupJPAManager(__em);
@@ -39,6 +41,10 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
     this.efi_traduccio = new TraduccioJPAManager(__em);
     this.efi_usuari = new UsuariJPAManager(__em);
   }
+
+    public IEntitatManager getEntitatManager() {
+        return this.efi_entitat;
+    };
 
     public IFaqManager getFaqManager() {
         return this.efi_faq;

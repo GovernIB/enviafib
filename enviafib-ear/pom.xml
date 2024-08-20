@@ -143,21 +143,11 @@
             <artifactId>pluginsib-exportdata-excel</artifactId>
             <version>${pluginsib.exportdata.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.9</version>
-        </dependency>
         <!-- ODS Plugin -->
         <dependency>
             <groupId>org.fundaciobit.pluginsib.exportdata</groupId>
             <artifactId>pluginsib-exportdata-ods</artifactId>
             <version>${pluginsib.exportdata.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jopendocument</groupId>
-            <artifactId>jOpenDocument</artifactId>
-            <version>1.3b1</version>
         </dependency>
         <!-- CSV Plugin -->
         <dependency>
@@ -282,7 +272,6 @@
                         <!-- Nom mòduls d'acord amb punt 4.2 de l'Estàndard CAIB -->
                         <outputFileNameMapping>
                             @{artifactId}@-@{version}@.@{extension}@</outputFileNameMapping>
-                        <version>8</version>
 
                         <archive>
                             <manifest>

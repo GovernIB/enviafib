@@ -73,6 +73,19 @@ public class TraduccioJPA implements Traduccio {
     return __result;
   }
 
+// EXP  Field:motiudelegacioid | Table: efi_entitat | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "motiudelegacioID")
+    private Set<EntitatJPA> entitats = new HashSet<EntitatJPA>(0);
+    public  Set<EntitatJPA> getEntitats() {
+    return this.entitats;
+  }
+
+    public void setEntitats(Set<EntitatJPA> entitats) {
+      this.entitats = entitats;
+    }
+
+
 // EXP  Field:ajudamenuid | Table: efi_menu | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ajudaMenuID")
@@ -167,6 +180,10 @@ public class TraduccioJPA implements Traduccio {
     if(!"MenuJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.menu_titolmenuids) || org.hibernate.Hibernate.isInitialized(__jpa.getMenu_titolmenuids())) ) {
       __tmp.setMenu_titolmenuids(MenuJPA.copyJPA(__jpa.getMenu_titolmenuids(), __alreadyCopied,"TraduccioJPA"));
+    }
+    if(!"EntitatJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.entitats) || org.hibernate.Hibernate.isInitialized(__jpa.getEntitats())) ) {
+      __tmp.setEntitats(EntitatJPA.copyJPA(__jpa.getEntitats(), __alreadyCopied,"TraduccioJPA"));
     }
     if(!"MenuJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.menu_ajudamenuids) || org.hibernate.Hibernate.isInitialized(__jpa.getMenu_ajudamenuids())) ) {

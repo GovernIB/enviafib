@@ -343,6 +343,16 @@
 <!-- ==== GENAPP MARK START -->
 
 
+    <definition name="entitatFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="entitat.entitat" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/entitatForm.jsp" />
+    </definition>
+    
+    <definition name="entitatListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/entitatList.jsp" />
+    </definition>
+
+
     <definition name="faqFormWebDB" extends="webdb">
         <put-attribute name="titol" value="faq.faq" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/faqForm.jsp" />

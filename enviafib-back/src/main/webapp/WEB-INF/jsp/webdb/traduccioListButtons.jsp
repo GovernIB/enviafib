@@ -30,7 +30,7 @@
                   <c:url var="thehref" value="${thelink}"/>
                   <c:url var="thelink" value=""/>
                   </c:if>
-                  <a class="btn ${button.type}" href="${thehref}" role="button"  onclick="${thelink}" title="<fmt:message key="${button.codeText}"/>">
+                  <a class="btn <c:out value="${button.style}" />" href="${thehref}" role="button"  onclick="${thelink}" title="<fmt:message key="${button.codeText}"/>">
                      <c:if test="${fn:startsWith(button.icon, '/')}">
                      <img src="<c:url value="${button.icon}"/>"/>
                      </c:if>                     <c:if test="${!fn:startsWith(button.icon, '/')}">
@@ -48,7 +48,7 @@
                   <c:url var="thehref" value="${thelink}"/>
                   <c:url var="thelink" value=""/>
                   </c:if>
-                  <a class="btn ${button.type}" href="${thehref}" role="button"  onclick="${thelink}" title="<fmt:message key="${button.codeText}"/>">
+                  <a class="btn <c:out value="${button.style}" />" href="${thehref}" role="button"  onclick="${thelink}" title="<fmt:message key="${button.codeText}"/>">
                      <c:if test="${fn:startsWith(button.icon, '/')}">
                      <img src="<c:url value="${button.icon}"/>"/>
                      </c:if>                     <c:if test="${!fn:startsWith(button.icon, '/')}">
@@ -101,7 +101,7 @@
                   <c:url var="thelink" value=""/>
                   </c:if>
                   <li>
-                  <a class="btn ${button.type} btn-sm a_item" style="margin-bottom:5px;${(empty button.type)? '' : 'color: white;'};" href="${thehref}" onclick="${thelink}">
+                  <a class="btn <c:out value="${button.style}" /> btn-sm a_item" style="margin-bottom:5px;color: white;" href="${thehref}" onclick="${thelink}">
                   <c:if test="${fn:startsWith(button.icon, '/')}">
                   <img src="<c:url value="${button.icon}"/>"/>
                   </c:if>                  <c:if test="${!fn:startsWith(button.icon, '/')}">
@@ -122,7 +122,7 @@
                   <c:url var="thelink" value=""/>
                   </c:if>
                   <li>
-                  <a class="btn ${button.type} btn-sm a_item" style="margin-bottom:5px;${(empty button.type)? '' : 'color: white;'};" href="${thehref}" onclick="${thelink}">
+                  <a class="btn <c:out value="${button.style}" /> btn-sm a_item" style="margin-bottom:5px;color: white;" href="${thehref}" onclick="${thelink}">
                   <c:if test="${fn:startsWith(button.icon, '/')}">
                   <img src="<c:url value="${button.icon}"/>"/>
                   </c:if>                  <c:if test="${!fn:startsWith(button.icon, '/')}">

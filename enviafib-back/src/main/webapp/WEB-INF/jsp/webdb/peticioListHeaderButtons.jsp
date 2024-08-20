@@ -57,7 +57,7 @@
         <c:url var="thehref" value="${thelink}"/>
         <c:url var="thelink" value=""/>
       </c:if>
-<a class="btn btn-sm ${button.type} float-right botoselecciolist" style=""  href="${thehref}" onclick="${thelink}" title="<fmt:message key="${button.codeText}"/>">
+<a class="btn btn-sm <c:out value="${button.style}" /> float-right botoselecciolist" style=""  href="${thehref}" onclick="${thelink}" title="<fmt:message key="${button.codeText}"/>">
          <i class="${button.icon}"></i>
          <fmt:message key="${button.codeText}"/>
       </a>

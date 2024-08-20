@@ -80,6 +80,12 @@
             <version>${pluginsib.utils.version}</version>
         </dependency>
         
+        <!-- Swagger UI Configurable-->
+        <dependency>
+            <groupId>org.fundaciobit.pluginsib.utils</groupId>
+            <artifactId>pluginsib-utils-swagger-ui-configurable-webjar</artifactId>
+            <version>${pluginsib.utils.version}</version>
+        </dependency>
        
     </dependencies>
     <build>

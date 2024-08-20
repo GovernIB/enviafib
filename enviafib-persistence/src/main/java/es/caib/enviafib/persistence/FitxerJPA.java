@@ -122,6 +122,58 @@ public class FitxerJPA implements Fitxer {
     return __result;
   }
 
+// EXP  Field:faviconid | Table: efi_entitat | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "faviconID")
+    private Set<EntitatJPA> entitat_faviconids = new HashSet<EntitatJPA>(0);
+    public  Set<EntitatJPA> getEntitat_faviconids() {
+    return this.entitat_faviconids;
+  }
+
+    public void setEntitat_faviconids(Set<EntitatJPA> entitat_faviconids) {
+      this.entitat_faviconids = entitat_faviconids;
+    }
+
+
+// EXP  Field:logowebid | Table: efi_entitat | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "logowebID")
+    private Set<EntitatJPA> entitat_logowebids = new HashSet<EntitatJPA>(0);
+    public  Set<EntitatJPA> getEntitat_logowebids() {
+    return this.entitat_logowebids;
+  }
+
+    public void setEntitat_logowebids(Set<EntitatJPA> entitat_logowebids) {
+      this.entitat_logowebids = entitat_logowebids;
+    }
+
+
+// EXP  Field:logowebpeuid | Table: efi_entitat | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "logowebpeuID")
+    private Set<EntitatJPA> entitat_logowebpeuids = new HashSet<EntitatJPA>(0);
+    public  Set<EntitatJPA> getEntitat_logowebpeuids() {
+    return this.entitat_logowebpeuids;
+  }
+
+    public void setEntitat_logowebpeuids(Set<EntitatJPA> entitat_logowebpeuids) {
+      this.entitat_logowebpeuids = entitat_logowebpeuids;
+    }
+
+
+// EXP  Field:logosegellid | Table: efi_entitat | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "logosegellID")
+    private Set<EntitatJPA> entitat_logosegellids = new HashSet<EntitatJPA>(0);
+    public  Set<EntitatJPA> getEntitat_logosegellids() {
+    return this.entitat_logosegellids;
+  }
+
+    public void setEntitat_logosegellids(Set<EntitatJPA> entitat_logosegellids) {
+      this.entitat_logosegellids = entitat_logosegellids;
+    }
+
+
 // EXP  Field:fitxer1id | Table: efi_faq | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "fitxer1ID")
@@ -297,9 +349,17 @@ public class FitxerJPA implements Fitxer {
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticio_fitxer_firmatids) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticio_fitxer_firmatids())) ) {
       __tmp.setPeticio_fitxer_firmatids(PeticioJPA.copyJPA(__jpa.getPeticio_fitxer_firmatids(), __alreadyCopied,"FitxerJPA"));
     }
+    if(!"EntitatJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.entitat_logosegellids) || org.hibernate.Hibernate.isInitialized(__jpa.getEntitat_logosegellids())) ) {
+      __tmp.setEntitat_logosegellids(EntitatJPA.copyJPA(__jpa.getEntitat_logosegellids(), __alreadyCopied,"FitxerJPA"));
+    }
     if(!"InfoAnexJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.infoAnexs) || org.hibernate.Hibernate.isInitialized(__jpa.getInfoAnexs())) ) {
       __tmp.setInfoAnexs(InfoAnexJPA.copyJPA(__jpa.getInfoAnexs(), __alreadyCopied,"FitxerJPA"));
+    }
+    if(!"EntitatJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.entitat_logowebpeuids) || org.hibernate.Hibernate.isInitialized(__jpa.getEntitat_logowebpeuids())) ) {
+      __tmp.setEntitat_logowebpeuids(EntitatJPA.copyJPA(__jpa.getEntitat_logowebpeuids(), __alreadyCopied,"FitxerJPA"));
     }
     if(!"FaqJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.faq_fitxer3ids) || org.hibernate.Hibernate.isInitialized(__jpa.getFaq_fitxer3ids())) ) {
@@ -308,6 +368,14 @@ public class FitxerJPA implements Fitxer {
     if(!"FaqJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.faq_fitxer1ids) || org.hibernate.Hibernate.isInitialized(__jpa.getFaq_fitxer1ids())) ) {
       __tmp.setFaq_fitxer1ids(FaqJPA.copyJPA(__jpa.getFaq_fitxer1ids(), __alreadyCopied,"FitxerJPA"));
+    }
+    if(!"EntitatJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.entitat_faviconids) || org.hibernate.Hibernate.isInitialized(__jpa.getEntitat_faviconids())) ) {
+      __tmp.setEntitat_faviconids(EntitatJPA.copyJPA(__jpa.getEntitat_faviconids(), __alreadyCopied,"FitxerJPA"));
+    }
+    if(!"EntitatJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.entitat_logowebids) || org.hibernate.Hibernate.isInitialized(__jpa.getEntitat_logowebids())) ) {
+      __tmp.setEntitat_logowebids(EntitatJPA.copyJPA(__jpa.getEntitat_logowebids(), __alreadyCopied,"FitxerJPA"));
     }
     // Copia de beans complexes (IMP)
 
