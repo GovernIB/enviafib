@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -18,7 +19,9 @@ import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.model.entity.Entitat;
+import es.caib.enviafib.model.fields.EntitatFields;
 import es.caib.enviafib.model.fields.IdiomaFields;
+import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
@@ -88,6 +91,9 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
             }
             userForm.setAttachedAdditionalJspCode(true);
         }
+        
+        userForm.addReadOnlyField(UsuariFields.ENTITATID);
+        
         return userForm;
     }
 
@@ -123,6 +129,19 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
             throws I18NException {
         Where w = Where.AND(where, IdiomaFields.SUPORTAT.equal(true));
         return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, w);
+    }
+    
+    @Override
+    public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request, ModelAndView mav, Where where)
+    		throws I18NException {
+
+    	List<Entitat> entitats = entitatEjb.select(where);
+    	List<StringKeyValue> list = new ArrayList<StringKeyValue>();
+    	for (Entitat entitat : entitats) {
+    		list.add(new StringKeyValue(entitat.getEntitatid(), entitat.getDescripcio()));
+    	}
+    	
+		return list;
     }
     
     @Override
