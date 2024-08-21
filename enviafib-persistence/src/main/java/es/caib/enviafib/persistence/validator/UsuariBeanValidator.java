@@ -17,6 +17,8 @@ public class UsuariBeanValidator
 
 
   // EJB's
+  protected final es.caib.enviafib.model.dao.IEntitatManager __entitatManager;
+
   protected final es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager;
 
   protected final es.caib.enviafib.model.dao.IUsuariManager __usuariManager;
@@ -25,16 +27,20 @@ public class UsuariBeanValidator
   public final UsuariValidator<UsuariJPA> _validator;
 
 
-  public UsuariBeanValidator(es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager,
+  public UsuariBeanValidator(es.caib.enviafib.model.dao.IEntitatManager __entitatManager,
+     es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager,
      es.caib.enviafib.model.dao.IUsuariManager __usuariManager) { 
+    this.__entitatManager = __entitatManager;
     this.__idiomaManager = __idiomaManager;
     this.__usuariManager = __usuariManager;
     _validator = new UsuariValidator<UsuariJPA>();
   }
 
   public UsuariBeanValidator(UsuariValidator<UsuariJPA> _validator,
+     es.caib.enviafib.model.dao.IEntitatManager __entitatManager,
      es.caib.enviafib.model.dao.IIdiomaManager __idiomaManager,
      es.caib.enviafib.model.dao.IUsuariManager __usuariManager) {
+    this.__entitatManager = __entitatManager;
     this.__idiomaManager = __idiomaManager;
     this.__usuariManager = __usuariManager;
     this._validator = _validator;
@@ -43,7 +49,7 @@ public class UsuariBeanValidator
   @Override
   public List<I18NFieldError> validate(UsuariJPA target, boolean isNou) throws I18NException {
     BeanValidatorResult<UsuariJPA> _bvr_ = new BeanValidatorResult<UsuariJPA>();
-    _validator.validate(_bvr_, target, isNou, __idiomaManager, __usuariManager);
+    _validator.validate(_bvr_, target, isNou, __entitatManager, __idiomaManager, __usuariManager);
     return _bvr_.getErrors();
   }
 }

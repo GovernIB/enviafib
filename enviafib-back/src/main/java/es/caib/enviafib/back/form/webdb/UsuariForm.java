@@ -20,6 +20,7 @@ public class UsuariForm extends EnviaFIBBaseForm {
     super(__toClone);
       this.usuari = __toClone.usuari;
     this.listOfIdiomaForIdiomaID = __toClone.listOfIdiomaForIdiomaID;
+    this.listOfEntitatForEntitatID = __toClone.listOfEntitatForEntitatID;
   }
   
   public UsuariForm(UsuariJPA usuari, boolean nou) {
@@ -43,6 +44,18 @@ public class UsuariForm extends EnviaFIBBaseForm {
 
   public void setListOfIdiomaForIdiomaID(List<StringKeyValue> listOfIdiomaForIdiomaID) {
     this.listOfIdiomaForIdiomaID = listOfIdiomaForIdiomaID;
+  }
+
+
+
+  private List<StringKeyValue> listOfEntitatForEntitatID;
+
+  public List<StringKeyValue> getListOfEntitatForEntitatID() {
+    return this.listOfEntitatForEntitatID;
+  }
+
+  public void setListOfEntitatForEntitatID(List<StringKeyValue> listOfEntitatForEntitatID) {
+    this.listOfEntitatForEntitatID = listOfEntitatForEntitatID;
   }
 
 

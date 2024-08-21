@@ -22,14 +22,15 @@
         </button>
 
         <!-- Logo i nom aplicació -->
-		<div id="logoGovernContainer" class="logoGovern">
-			<a href="http://www.caib.es/"> <img
-				src="<c:url value="/img/logo-caib.png"/>" style="height: 60px;"
-				alt="Govern de les Illes Balears" />
+		<div id="logoEntitatContainer" class="logoEntitat">
+
+			<a href="${loginInfo.entitat.web}"> <img
+				src="<c:url value="${efi:fileUrl(loginInfo.entitat.logoweb)}"/>"
+				style="height: 55px;" alt="${loginInfo.entitat.descripcio}" />
 			</a>
 		</div>
 
-		<div id="logoEnviafibContainer" class="logoGovern">
+		<div id="logoEnviafibContainer" class="logoEntitat">
 			<img src="<c:url value="/img/app-logo.png"/>" style="height: 4rem;"
 				alt="EnviaFIB" title="EnviaFIB" />
 		</div>
@@ -40,16 +41,18 @@
 				<%-- ENTITAT DE L'USUARI --%>
 				<li id="entitatInfoContainer" class="menuCapItem dropdown">
 					<i class="fas fa-university"></i>
-					<span class="dropdown-toggle" type="button"
+						<span onclick="location.href = '${loginInfo.entitat.web}';"> ${loginInfo.entitat.descripcio} </span>
+				
+				
+				<!-- <span class="dropdown-toggle" type="button"
 					id="dropdownMenuEntitat" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> Govern de les
-						Illes Balears 
+					aria-haspopup="true" aria-expanded="false"> 
 					</span>
-					<div class="dropdown-menu dropdown-menu-right"
+					 <div class="dropdown-menu dropdown-menu-right"
 						aria-labelledby="dropdownMenuEntitat">
 						<a class="dropdown-item" href="http://www.caib.es"> Govern de les Illes Balears</a> 
 						<a class="dropdown-item" href="https://www.fundaciobit.org/es/inicio/"> Fundacio BIT</a>
-					</div>
+					</div> -->
 				</li>
 				
 				<%--  PIPELLES SEGONS EL ROL DE L'USUARI --%>
@@ -290,7 +293,7 @@ header {
 	padding-top: 8rem;
 }
 
-#logoGovernContainer {
+#logoEntitatContainer {
 	border-right: 1px solid black;
 }
 
@@ -320,6 +323,7 @@ header {
 #menuCapContainer li {
   padding: 0 1rem;
   border-right: 1px solid black;
+  cursor: pointer;
 }
 
 #menuCapContainer li:last-child {

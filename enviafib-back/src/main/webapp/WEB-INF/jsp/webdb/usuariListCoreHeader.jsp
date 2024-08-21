@@ -36,6 +36,9 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariFields.IDIOMAID)}">
         <th>${efi:getSortIcons(__theFilterForm,UsuariFields.IDIOMAID)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariFields.ENTITATID)}">
+        <th>${efi:getSortIcons(__theFilterForm,UsuariFields.ENTITATID)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

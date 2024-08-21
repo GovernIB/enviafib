@@ -16,6 +16,7 @@ public class UsuariBean implements Usuari {
 	java.lang.String nif;
 	java.lang.String email;
 	java.lang.String idiomaID;
+	java.lang.String entitatID;
 
 
   /** Constructor Buit */
@@ -23,7 +24,7 @@ public class UsuariBean implements Usuari {
   }
 
   /** Constructor amb tots els camps  */
-  public UsuariBean(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
+  public UsuariBean(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID , java.lang.String entitatID) {
     this.usuariID=usuariID;
     this.username=username;
     this.nom=nom;
@@ -32,13 +33,25 @@ public class UsuariBean implements Usuari {
     this.nif=nif;
     this.email=email;
     this.idiomaID=idiomaID;
+    this.entitatID=entitatID;
 }
   /** Constructor sense valors autoincrementals */
-  public UsuariBean(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
+  public UsuariBean(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID , java.lang.String entitatID) {
     this.username=username;
     this.nom=nom;
     this.llinatge1=llinatge1;
     this.llinatge2=llinatge2;
+    this.nif=nif;
+    this.email=email;
+    this.idiomaID=idiomaID;
+    this.entitatID=entitatID;
+}
+  /** Constructor dels valors Not Null */
+  public UsuariBean(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
+    this.usuariID=usuariID;
+    this.username=username;
+    this.nom=nom;
+    this.llinatge1=llinatge1;
     this.nif=nif;
     this.email=email;
     this.idiomaID=idiomaID;
@@ -52,6 +65,7 @@ public class UsuariBean implements Usuari {
     this.setNif(__bean.getNif());
     this.setEmail(__bean.getEmail());
     this.setIdiomaID(__bean.getIdiomaID());
+    this.setEntitatID(__bean.getEntitatID());
 	}
 
 	public long getUsuariID() {
@@ -110,6 +124,13 @@ public class UsuariBean implements Usuari {
 		this.idiomaID = _idiomaID_;
 	};
 
+	public java.lang.String getEntitatID() {
+		return(entitatID);
+	};
+	public void setEntitatID(java.lang.String _entitatID_) {
+		this.entitatID = _entitatID_;
+	};
+
 
 
   // ======================================
@@ -125,6 +146,7 @@ public class UsuariBean implements Usuari {
     __tmp.setNif(__bean.getNif());
     __tmp.setEmail(__bean.getEmail());
     __tmp.setIdiomaID(__bean.getIdiomaID());
+    __tmp.setEntitatID(__bean.getEntitatID());
 		return __tmp;
 	}
 

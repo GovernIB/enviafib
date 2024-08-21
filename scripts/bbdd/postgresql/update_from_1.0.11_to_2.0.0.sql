@@ -96,18 +96,9 @@ CREATE INDEX efi_entitat_pk_i ON efi_entitat USING btree (entitatid COLLATE pg_c
 
 
 
--- ==== ERRORS EN TAULA ]efi_entitat[:
+--###########################################################################
+-- Afegir entitatid a usuari, per poder fer la relació amb la taula entitat #412 20-08-2024
 
--- El camp shortname de la taula efi_entitat ha de tenir longitud de 10 o menys caracters (efi_entitat)
--- La taula efi_entitat no té definida l'etiqueta per l'idioma  [ca]
--- La taula efi_entitat no té definida l'etiqueta per l'idioma  [es]
--- La taula efi_entitat_plural no té definida l'etiqueta per l'idioma  [ca]
--- La taula efi_entitat_plural no té definida l'etiqueta per l'idioma  [es]
-
--- No es faran comprobacions de Longitud de camps ni de constraints
---      (PrimaryKeys, ForeignKeys, Indexs i UNIQUEs) mentre no es
---      solventin els problemes anteriors.
-
-
-
- --- Les següents seqüències no estan assignades a cap taula: [efi_infocustody_seq]
+ALTER TABLE efi_usuari ADD COLUMN entitatid character varying(50);
+ALTER TABLE efi_usuari ADD CONSTRAINT efi_usuari_entitat_fk FOREIGN KEY (entitatid) REFERENCES efi_entitat (entitatid) ON DELETE NO ACTION ON UPDATE NO ACTION;
+create index efi_usuari_entitatid_fk_i on efi_usuari (entitatid);

@@ -20,10 +20,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.ejb.IdiomaService;
 import es.caib.enviafib.ejb.UsuariService;
 import es.caib.enviafib.logic.utils.EjbManager;
 import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
+import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
@@ -230,13 +232,22 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
         }
 
         {
-            log.info("LoginInfo:\n" + "\tuser: " + user + "\n" + "\tusuariPersona: " + usuariPersona + "\n"
-                    + "\tnecesitaConfigurar: " + necesitaConfigurar + "\tusuariID: " + usuariPersona.getUsuariID());
+			log.info("LoginInfo:\n" + "\tuser: " + user + "\n" + "\tusuariPersona: " + usuariPersona + "\n"
+					+ "\tnecesitaConfigurar: " + necesitaConfigurar + "\tusuariID: " + usuariPersona.getUsuariID());
 
-            String language = usuariPersona.getIdiomaID();
+			String language = usuariPersona.getIdiomaID();
 
-            LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona,
-                    new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);
+			Entitat entitat = null;
+			try {
+				EntitatService entitatEjb = EjbManager.getEntitatEJB();
+				entitat = entitatEjb.findByPrimaryKey(usuariPersona.getEntitatID());
+			} catch (Throwable e) {
+				String msg = I18NUtils.tradueix("error.authentication.manager", username, e.getMessage());
+				throw new LoginException(msg, e);
+			}
+
+			LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona, entitat,
+					new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);
 
             // and set the authentication of the current Session context
             SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());

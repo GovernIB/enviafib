@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.persistence.UsuariJPA;
 
@@ -81,7 +82,10 @@ public class EditarUsuariNouCommonController extends AbstractEditarUsuariCommonC
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, UsuariForm usuariForm) {
         Usuari usuari = usuariForm.getUsuari();
+        Entitat entitat = entitatEjb.findByPrimaryKey(usuari.getEntitatID());
+        
         LoginInfo.getInstance().setUsuari(usuari);
+        LoginInfo.getInstance().setEntitat(entitat);
         
         Long userid = LoginInfo.getInstance().getUsuari().getUsuariID();
         

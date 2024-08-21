@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 
+import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.ejb.IdiomaService;
 import es.caib.enviafib.ejb.UsuariService;
 
@@ -57,6 +58,20 @@ public final class EjbManager {
         return idiomaEjb;
     }
 
+
+	protected static EntitatService entitatEjb;
+
+    public static EntitatService getEntitatEJB() throws I18NException {
+
+        if (entitatEjb == null) {
+            try {
+            	entitatEjb = (EntitatService) new InitialContext().lookup(EntitatService.JNDI_NAME);
+            } catch (Throwable e) {
+                throwNewI18NException(e, "EntitatService");
+            }
+        }
+        return entitatEjb;
+    }
     
     public static Map<Class<?>, Object> servicesCache = new HashMap<Class<?>, Object>();
     

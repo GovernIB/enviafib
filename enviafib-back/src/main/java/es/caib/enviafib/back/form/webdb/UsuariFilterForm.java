@@ -120,6 +120,17 @@ public class UsuariFilterForm extends EnviaFIBBaseFilterForm implements UsuariFi
   }
 
 
+  private java.lang.String entitatID;
+
+  public java.lang.String getEntitatID() {
+    return this.entitatID;
+  }
+
+  public void setEntitatID(java.lang.String entitatID) {
+    this.entitatID = entitatID;
+  }
+
+
   public UsuariFilterForm() {
   }
   
@@ -134,7 +145,9 @@ public class UsuariFilterForm extends EnviaFIBBaseFilterForm implements UsuariFi
     this.nif = __toClone.nif;
     this.email = __toClone.email;
     this.idiomaID = __toClone.idiomaID;
+    this.entitatID = __toClone.entitatID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
+    this.mapOfEntitatForEntitatID = __toClone.mapOfEntitatForEntitatID;
   }
   
   /* ========= UTILS ========== */
@@ -177,6 +190,18 @@ public class UsuariFilterForm extends EnviaFIBBaseFilterForm implements UsuariFi
 
   public void setMapOfIdiomaForIdiomaID(Map<String, String> mapOfIdiomaForIdiomaID) {
     this.mapOfIdiomaForIdiomaID = mapOfIdiomaForIdiomaID;
+  }
+
+
+
+  private Map<String, String> mapOfEntitatForEntitatID;
+
+  public Map<String, String> getMapOfEntitatForEntitatID() {
+    return this.mapOfEntitatForEntitatID;
+  }
+
+  public void setMapOfEntitatForEntitatID(Map<String, String> mapOfEntitatForEntitatID) {
+    this.mapOfEntitatForEntitatID = mapOfEntitatForEntitatID;
   }
 
 

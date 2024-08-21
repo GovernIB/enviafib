@@ -141,3 +141,43 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.ENTITATID)}">
+        <tr id="usuari_entitatID_rowid">
+          <td id="usuari_entitatID_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[UsuariFields.ENTITATID])?'usuari.entitatID':__theForm.labels[UsuariFields.ENTITATID]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[UsuariFields.ENTITATID]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariFields.ENTITATID]}" ></i>
+              </c:if>
+            </td>
+          <td id="usuari_entitatID_columnvalueid">
+          <form:errors path="usuari.entitatID" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariFields.ENTITATID)}" >
+          <form:hidden path="usuari.entitatID"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuari.entitatID,__theForm.listOfEntitatForEntitatID)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariFields.ENTITATID)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="usuari_entitatID"  onchange="if(typeof onChangeEntitatID == 'function') {  onChangeEntitatID(this); };"  cssClass="form-control col-md-9-optional" path="usuari.entitatID">
+            <c:forEach items="${__theForm.listOfEntitatForEntitatID}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.usuari.entitatID }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.usuari.entitatID }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        

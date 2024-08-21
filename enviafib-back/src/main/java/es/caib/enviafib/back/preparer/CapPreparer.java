@@ -21,8 +21,10 @@ import es.caib.enviafib.back.security.LoginException;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.logic.MenuLogicaService;
 import es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService;
+import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Menu;
 
 /**
@@ -39,6 +41,8 @@ public class CapPreparer extends MenuPreparer {
     //	@EJB(mappedName = es.caib.enviafib.logic.MenuLogicaService.JNDI_NAME)
     protected MenuLogicaService menuLogicaEjb;
 
+    protected EntitatService entitatEjb;
+
     //	@EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
@@ -51,9 +55,28 @@ public class CapPreparer extends MenuPreparer {
         //        super.execute(tilesRequest, attributeContext);
         request.put("url_sortida", Configuracio.getSortirURL());
         request.put("menus", getMenuUser());
+//        request.put("entitat", getDadesEntitat());
     }
 
-    public List<Menu> getMenuUser() {
+//	public Entitat getDadesEntitat() {
+//		Entitat entitat;
+//		try {
+//			log.info("entitatEjb => " + entitatEjb);
+//			if (entitatEjb == null) {
+//				entitatEjb = (EntitatService) new InitialContext().lookup(EntitatService.JNDI_NAME);
+//			}
+//
+//			String entitatID = LoginInfo.getInstance().getUsuari().getEntitatID();
+//			entitat = entitatEjb.findByPrimaryKey(entitatID);
+//			return entitat;
+//
+//		} catch (Throwable e) {
+//			log.error(e.getMessage(), e);
+//		}
+//		return null;
+//	}
+
+	public List<Menu> getMenuUser() {
         List<Menu> menus;
         try {
 

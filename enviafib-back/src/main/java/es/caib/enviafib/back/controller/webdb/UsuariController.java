@@ -62,6 +62,10 @@ public class UsuariController
   @Autowired
   protected IdiomaRefList idiomaRefList;
 
+  // References 
+  @Autowired
+  protected EntitatRefList entitatRefList;
+
   /**
    * Llistat de totes Usuari
    */
@@ -192,6 +196,16 @@ public class UsuariController
       };
     }
 
+    // Field entitatID
+    {
+      _listSKV = getReferenceListForEntitatID(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfEntitatForEntitatID(_tmp);
+      if (filterForm.getGroupByFields().contains(ENTITATID)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, ENTITATID, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -208,6 +222,7 @@ public class UsuariController
     java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
     __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
     __mapping.put(IDIOMAID, filterForm.getMapOfIdiomaForIdiomaID());
+    __mapping.put(ENTITATID, filterForm.getMapOfEntitatForEntitatID());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -263,6 +278,15 @@ public class UsuariController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       usuariForm.setListOfIdiomaForIdiomaID(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariForm.getListOfEntitatForEntitatID() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForEntitatID(request, mav, usuariForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariForm.setListOfEntitatForEntitatID(_listSKV);
     }
     
   }
@@ -603,6 +627,46 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForIdiomaID(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, where );
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request,
+       ModelAndView mav, UsuariForm usuariForm, Where where)  throws I18NException {
+    if (usuariForm.isHiddenField(ENTITATID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _where = null;
+    if (usuariForm.isReadOnlyField(ENTITATID)) {
+      _where = EntitatFields.ENTITATID.equal(usuariForm.getUsuari().getEntitatID());
+    }
+    return getReferenceListForEntitatID(request, mav, Where.AND(where, _where));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request,
+       ModelAndView mav, UsuariFilterForm usuariFilterForm,
+       List<Usuari> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariFilterForm.isHiddenField(ENTITATID)
+       && !usuariFilterForm.isGroupByField(ENTITATID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    if (!_groupByItemsMap.containsKey(ENTITATID)) {
+      // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
+      java.util.Set<java.lang.String> _pkList = new java.util.HashSet<java.lang.String>();
+      for (Usuari _item : list) {
+        if(_item.getEntitatID() == null) { continue; };
+        _pkList.add(_item.getEntitatID());
+        }
+        _w = EntitatFields.ENTITATID.in(_pkList);
+      }
+    return getReferenceListForEntitatID(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    return entitatRefList.getReferenceList(EntitatFields.ENTITATID, where );
   }
 
 

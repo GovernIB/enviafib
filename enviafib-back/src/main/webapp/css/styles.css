@@ -165,7 +165,7 @@ a:hover{
 	body {
 		padding-top: 4rem !important;
 	}
-	.logoGovern {
+	.logoEntitat {
 		margin-right: 10px !important;
 		margin-left: 10px !important;
 	}
@@ -198,7 +198,7 @@ a:hover{
 	body {
 		padding-top: 4rem !important;
 	}
-	.logoGovern {
+	.logoEntitat {
 		margin-right: 5px !important;
 		margin-left: 5px !important;
 	}
@@ -279,7 +279,7 @@ a:hover{
 .menuGovern span, strong{
 	font-size: 1em;
 }
-.logoGovern {
+.logoEntitat {
 	float: left;
 	padding: 0 1rem;
 }

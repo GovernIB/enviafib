@@ -32,6 +32,9 @@ public class UsuariWebValidator extends AbstractWebValidator<UsuariForm, Usuari>
   protected UsuariValidator<Usuari> validator = new UsuariValidator<Usuari>();
 
   // EJB's
+  @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.EntitatService.JNDI_NAME)
+  protected es.caib.enviafib.ejb.EntitatService entitatEjb;
+
   @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.IdiomaService.JNDI_NAME)
   protected es.caib.enviafib.ejb.IdiomaService idiomaEjb;
 
@@ -80,7 +83,7 @@ public class UsuariWebValidator extends AbstractWebValidator<UsuariForm, Usuari>
 
     BeanValidatorResult<Usuari> __vr = new BeanValidatorResult<Usuari>();
     validator.validate(__vr, __bean,
-      isNou, idiomaEjb, usuariEjb);
+      isNou, entitatEjb, idiomaEjb, usuariEjb);
 
     if (__vr.hasErrors()) {
         List<I18NFieldError> vrErrors = __vr.getErrors();

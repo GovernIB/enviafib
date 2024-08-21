@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
+import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Usuari;
 
 
@@ -37,6 +38,8 @@ public class LoginInfo {
 	final String language;
 	
 	protected boolean necesitaConfigurar;
+	
+	protected Entitat entitat;
 
 	// Add your fields HERE
 
@@ -45,10 +48,11 @@ public class LoginInfo {
 	 * @param entitatActual
 	 * @param roles
 	 */
-	public LoginInfo(User springSecurityUser, String username, Usuari usuari, Set<GrantedAuthority> grantedAuthorities,
+	public LoginInfo(User springSecurityUser, String username, Usuari usuari, Entitat entitat,  Set<GrantedAuthority> grantedAuthorities,
 			String language, boolean necesitaConfigurar) {
 		this.springSecurityUser = springSecurityUser;
 		this.username = username;
+		this.entitat = entitat;
 		this.language = language;
 		this.usuari = usuari;
 		this.necesitaConfigurar = necesitaConfigurar;
@@ -139,6 +143,14 @@ public class LoginInfo {
 
 	public void setNecesitaConfigurar(boolean necesitaConfigurar) {
 		this.necesitaConfigurar = necesitaConfigurar;
+	}
+
+	public Entitat getEntitat() {
+		return entitat;
+	}
+
+	public void setEntitat(Entitat entitat) {
+		this.entitat = entitat;
 	}
 
 }

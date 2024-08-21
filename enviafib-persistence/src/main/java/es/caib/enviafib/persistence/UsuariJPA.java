@@ -21,7 +21,8 @@ import javax.persistence.Id;
 @Entity(name = "UsuariJPA")
 @Table(name = "efi_usuari" , indexes = { 
         @Index(name="efi_usuari_pk_i", columnList = "usuariid"),
-        @Index(name="efi_usuari_idiomaid_fk_i", columnList = "idiomaid")})
+        @Index(name="efi_usuari_idiomaid_fk_i", columnList = "idiomaid"),
+        @Index(name="efi_usuari_entitatid_fk_i", columnList = "entitatid")})
 @SequenceGenerator(name="USUARI_SEQ", sequenceName="efi_usuari_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class UsuariJPA implements Usuari {
@@ -53,6 +54,9 @@ public class UsuariJPA implements Usuari {
     @Column(name="idiomaid",nullable = false,length = 5)
     java.lang.String idiomaID = "ca";
 
+    @Column(name="entitatid",length = 50)
+    java.lang.String entitatID;
+
 
 
   /** Constructor Buit */
@@ -60,7 +64,7 @@ public class UsuariJPA implements Usuari {
   }
 
   /** Constructor amb tots els camps  */
-  public UsuariJPA(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
+  public UsuariJPA(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID , java.lang.String entitatID) {
     this.usuariID=usuariID;
     this.username=username;
     this.nom=nom;
@@ -69,13 +73,25 @@ public class UsuariJPA implements Usuari {
     this.nif=nif;
     this.email=email;
     this.idiomaID=idiomaID;
+    this.entitatID=entitatID;
 }
   /** Constructor sense valors autoincrementals */
-  public UsuariJPA(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
+  public UsuariJPA(java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String llinatge2 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID , java.lang.String entitatID) {
     this.username=username;
     this.nom=nom;
     this.llinatge1=llinatge1;
     this.llinatge2=llinatge2;
+    this.nif=nif;
+    this.email=email;
+    this.idiomaID=idiomaID;
+    this.entitatID=entitatID;
+}
+  /** Constructor dels valors Not Null */
+  public UsuariJPA(long usuariID , java.lang.String username , java.lang.String nom , java.lang.String llinatge1 , java.lang.String nif , java.lang.String email , java.lang.String idiomaID) {
+    this.usuariID=usuariID;
+    this.username=username;
+    this.nom=nom;
+    this.llinatge1=llinatge1;
     this.nif=nif;
     this.email=email;
     this.idiomaID=idiomaID;
@@ -89,6 +105,7 @@ public class UsuariJPA implements Usuari {
     this.setNif(__bean.getNif());
     this.setEmail(__bean.getEmail());
     this.setIdiomaID(__bean.getIdiomaID());
+    this.setEntitatID(__bean.getEntitatID());
 	}
 
 	public long getUsuariID() {
@@ -147,6 +164,13 @@ public class UsuariJPA implements Usuari {
 		this.idiomaID = _idiomaID_;
 	};
 
+	public java.lang.String getEntitatID() {
+		return(entitatID);
+	};
+	public void setEntitatID(java.lang.String _entitatID_) {
+		this.entitatID = _entitatID_;
+	};
+
 
 
   @Override
@@ -202,6 +226,20 @@ public class UsuariJPA implements Usuari {
     this.idioma = idioma;
   }
 
+// IMP Field:entitatid | Table: efi_entitat | Type: 1  
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "entitatid", referencedColumnName ="entitatid", nullable = true, insertable=false, updatable=false, foreignKey=@ForeignKey(name="efi_usuari_entitat_fk"))
+    private EntitatJPA entitat;
+
+    public EntitatJPA getEntitat() {
+    return this.entitat;
+  }
+
+    public  void setEntitat(EntitatJPA entitat) {
+    this.entitat = entitat;
+  }
+
 
  // ---------------  STATIC METHODS ------------------
   public static UsuariJPA toJPA(Usuari __bean) {
@@ -215,6 +253,7 @@ public class UsuariJPA implements Usuari {
     __tmp.setNif(__bean.getNif());
     __tmp.setEmail(__bean.getEmail());
     __tmp.setIdiomaID(__bean.getIdiomaID());
+    __tmp.setEntitatID(__bean.getEntitatID());
 		return __tmp;
 	}
 
@@ -256,6 +295,10 @@ public class UsuariJPA implements Usuari {
     if(!"IdiomaJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.idioma) || org.hibernate.Hibernate.isInitialized(__jpa.getIdioma()) ) ) {
       __tmp.setIdioma(IdiomaJPA.copyJPA(__jpa.getIdioma(), __alreadyCopied,"UsuariJPA"));
+    }
+    if(!"EntitatJPA".equals(origenJPA) && 
+       (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.entitat) || org.hibernate.Hibernate.isInitialized(__jpa.getEntitat()) ) ) {
+      __tmp.setEntitat(EntitatJPA.copyJPA(__jpa.getEntitat(), __alreadyCopied,"UsuariJPA"));
     }
 
     return __tmp;

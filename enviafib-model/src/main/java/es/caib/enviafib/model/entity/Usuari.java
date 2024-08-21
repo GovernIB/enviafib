@@ -26,6 +26,9 @@ public interface Usuari extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.String getIdiomaID();
 	public void setIdiomaID(java.lang.String _idiomaID_);
 
+	public java.lang.String getEntitatID();
+	public void setEntitatID(java.lang.String _entitatID_);
+
 
 
   // ======================================

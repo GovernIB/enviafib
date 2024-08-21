@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
@@ -14,6 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.ejb.EntitatService;
+import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.persistence.UsuariJPA;
 
@@ -53,6 +57,9 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
         return false;
     }
 
+    @EJB(mappedName = es.caib.enviafib.ejb.EntitatService.JNDI_NAME)
+    protected EntitatService entitatEjb;
+    
     @Override
     public UsuariForm getUsuariForm(UsuariJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
             throws I18NException {
@@ -116,6 +123,20 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
             throws I18NException {
         Where w = Where.AND(where, IdiomaFields.SUPORTAT.equal(true));
         return idiomaRefList.getReferenceList(IdiomaFields.IDIOMAID, w);
+    }
+    
+    @Override
+    public UsuariJPA update(HttpServletRequest request, UsuariJPA usuari)
+    		throws I18NException, I18NValidationException {
+    	
+    	// Actualitzam l'entitat de l'usuari a LoginInfo
+    	UsuariJPA u = super.update(request, usuari);
+    	
+    	String entitatID = u.getEntitatID();
+    	Entitat entitat = entitatEjb.findByPrimaryKey(entitatID);
+    	
+    	LoginInfo.getInstance().setEntitat(entitat);
+    	return u;
     }
 
 }

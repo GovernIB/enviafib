@@ -6,12 +6,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.Index;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
-import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import java.util.Set;
 import org.hibernate.annotations.Type;
+import java.util.HashSet;
+import javax.persistence.Index;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 
 
@@ -289,6 +292,19 @@ public class EntitatJPA implements Entitat {
     return __result;
   }
 
+// EXP  Field:entitatid | Table: efi_usuari | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entitat")
+    private Set<UsuariJPA> usuaris = new HashSet<UsuariJPA>(0);
+    public  Set<UsuariJPA> getUsuaris() {
+    return this.usuaris;
+  }
+
+    public void setUsuaris(Set<UsuariJPA> usuaris) {
+      this.usuaris = usuaris;
+    }
+
+
 // IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -428,6 +444,10 @@ public class EntitatJPA implements Entitat {
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
+    if(!"UsuariJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.usuaris) || org.hibernate.Hibernate.isInitialized(__jpa.getUsuaris())) ) {
+      __tmp.setUsuaris(UsuariJPA.copyJPA(__jpa.getUsuaris(), __alreadyCopied,"EntitatJPA"));
+    }
     // Copia de beans complexes (IMP)
     if(!"TraduccioJPA".equals(origenJPA) && 
        (!org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.motiudelegacio) || org.hibernate.Hibernate.isInitialized(__jpa.getMotiudelegacio()) ) ) {
