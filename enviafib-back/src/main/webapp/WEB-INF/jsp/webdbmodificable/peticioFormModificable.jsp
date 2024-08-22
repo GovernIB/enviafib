@@ -719,15 +719,22 @@ function enviar(){
 <%--===== POSAR BOTONS DE DESCARREGAR DOCUMENT D'ARXIU A DALT DEL FORMULARI ============--%>
 
 <script type="text/javascript">
-	var btns = $(".btn-success")
-	$(".lead").append(btns);
+
+	var btns2 = $(".btn-primary");
+	$(btns2).addClass("top-buttons");
+	$(".lead").append(btns2);
+
+	var btns1 = $(".btn-success");
+	$(btns1).addClass("top-buttons");
+	$(".lead").append(btns1);
+	
 	$(".lead").css("margin-bottom","1rem");
 </script>
 
 <style>
-.btn-success {
-  float: right;
-  margin: 0 6px;
+.top-buttons {
+	float: right;
+	margin: 0 6px;
 }
 </style>
 
