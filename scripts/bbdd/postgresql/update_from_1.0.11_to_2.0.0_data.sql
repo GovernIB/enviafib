@@ -1,5 +1,5 @@
 
-INSERT INTO public.efi_fitxer VALUES (30, NULL, 'image/x-icon', 'fundaciobit.ico', 1150);
+INSERT INTO public.efi_fitxer VALUES (30, NULL, 'image/x-icon', 'governib.ico', 1150);
 INSERT INTO public.efi_fitxer VALUES (31, NULL, 'image/png', 'logo-160.png', 32837);
 INSERT INTO public.efi_fitxer VALUES (32, NULL, 'image/png', 'app-logo-bn.png', 25008);
 INSERT INTO public.efi_fitxer VALUES (33, NULL, 'image/jpeg', 'logotaulafirmesfundaciobit.jpg', 2410);
