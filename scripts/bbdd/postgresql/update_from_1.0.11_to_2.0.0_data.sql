@@ -4,7 +4,7 @@ INSERT INTO public.efi_fitxer VALUES (31, NULL, 'image/png', 'logo-160.png', 328
 INSERT INTO public.efi_fitxer VALUES (32, NULL, 'image/png', 'app-logo-bn.png', 25008);
 INSERT INTO public.efi_fitxer VALUES (33, NULL, 'image/jpeg', 'logotaulafirmesfundaciobit.jpg', 2410);
 
-INSERT INTO public.efi_traduccio VALUES (100)
+INSERT INTO public.efi_traduccio VALUES (100);
 
 INSERT INTO public.efi_traducciomap VALUES (100, 'ca', 'Motiu');
 INSERT INTO public.efi_traducciomap VALUES (100, 'es', 'Motivo');
