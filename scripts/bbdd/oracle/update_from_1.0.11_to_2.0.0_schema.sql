@@ -54,14 +54,12 @@ CREATE INDEX efi_entitat_logosegellid_fk_i ON efi_entitat (logosegellid);
 CREATE INDEX efi_entitat_logowebid_fk_i ON efi_entitat (logowebid);
 CREATE INDEX efi_entitat_logowebpeuid_fk_i ON efi_entitat (logowebpeuid);
 CREATE INDEX efi_entitat_motiudele_fk_i ON efi_entitat (motiudelegacioid);
-CREATE INDEX efi_entitat_pk_i ON efi_entitat (entitatid COLLATE pg_catalog."default");
 
 -- Afegir entitatid a usuari, per poder fer la relació amb la taula entitat #412 20-08-2024
-ALTER TABLE efi_usuari 
-ADD entitatid VARCHAR2(50);
+ALTER TABLE efi_usuari ADD entitatid VARCHAR2(50);
 
-ALTER TABLE efi_usuari 
-ADD CONSTRAINT efi_usuari_entitat_fk FOREIGN KEY (entitatid) 
-REFERENCES efi_entitat (entitatid) ON DELETE NO ACTION;
+ALTER TABLE efi_usuari ADD CONSTRAINT efi_usuari_entitat_fk FOREIGN KEY (entitatid) REFERENCES efi_entitat (entitatid);
 
 create index efi_usuari_entitatid_fk_i on efi_usuari (entitatid);
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON efi_entitat TO www_enviafib;
