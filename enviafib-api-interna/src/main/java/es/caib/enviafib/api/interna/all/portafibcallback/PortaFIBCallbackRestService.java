@@ -38,6 +38,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @author ptrias
  * 
  */
+@Path("/public/cbrest/v1")
 @OpenAPIDefinition(
         info = @Info(
                 title = "API REST INTERNA de EnviaFIB - PortaFIB Callback",
@@ -54,7 +55,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
                 description = "Java Client (GovernIB Github)",
                 url = "https://github.com/GovernIB/enviafib/tree/enviafib-2.0/enviafib-api-interna"),
         tags = @Tag(name = "Callback", description = "Callback de PortaFIB"))
-@Path("/public/cbrest/v1")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PortaFIBCallbackRestService {

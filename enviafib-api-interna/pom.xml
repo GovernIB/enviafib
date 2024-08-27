@@ -130,7 +130,7 @@
                             <outputFileName>openapi_portafibcallback</outputFileName>
                             <resourcePackages>
                                 <package>es.caib.enviafib.api.interna.config</package>
-                                <package>es.caib.enviafib.api.interna.all.portfibcallback</package>
+                                <package>es.caib.enviafib.api.interna.all.portafibcallback</package>
                             </resourcePackages>
                         </configuration>
                     </execution>
