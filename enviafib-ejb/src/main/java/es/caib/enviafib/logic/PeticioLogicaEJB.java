@@ -56,6 +56,7 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleF
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleReviser;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleSignature;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleSigner;
+import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.apisib.core.exceptions.ApisIBServerException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
@@ -129,94 +130,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
 
-    
-    protected static final Map<String, String> MAP_TIPUS_DOCUMENTAL_ES = new HashMap<String, String>();
-    protected static final Map<String, String> MAP_TIPUS_DOCUMENTAL_CA= new HashMap<String, String>();
-
-    static {
-        MAP_TIPUS_DOCUMENTAL_CA.put("1", "Resolució");
-        MAP_TIPUS_DOCUMENTAL_CA.put("2", "Acord");
-        MAP_TIPUS_DOCUMENTAL_CA.put("3", "Contracte");
-        MAP_TIPUS_DOCUMENTAL_CA.put("4", "Conveni");
-        MAP_TIPUS_DOCUMENTAL_CA.put("5", "Declaració");
-        MAP_TIPUS_DOCUMENTAL_CA.put("6", "Comunicació");
-        MAP_TIPUS_DOCUMENTAL_CA.put("7", "Notificació");
-        MAP_TIPUS_DOCUMENTAL_CA.put("8", "Publicació");
-        MAP_TIPUS_DOCUMENTAL_CA.put("9", "Justificant de recepció");
-        MAP_TIPUS_DOCUMENTAL_CA.put("10", "Acta");
-        MAP_TIPUS_DOCUMENTAL_CA.put("11", "Certificat");
-        MAP_TIPUS_DOCUMENTAL_CA.put("12", "Diligència");
-        MAP_TIPUS_DOCUMENTAL_CA.put("13", "Informe");
-        MAP_TIPUS_DOCUMENTAL_CA.put("14", "Sol·licitud");
-        MAP_TIPUS_DOCUMENTAL_CA.put("15", "Denúncia");
-        MAP_TIPUS_DOCUMENTAL_CA.put("16", "Al·legació");
-        MAP_TIPUS_DOCUMENTAL_CA.put("17", "Recursos");
-        MAP_TIPUS_DOCUMENTAL_CA.put("18", "Comunicació ciutadà");
-        MAP_TIPUS_DOCUMENTAL_CA.put("19", "Factura");
-        MAP_TIPUS_DOCUMENTAL_CA.put("20", "Altre documentació aportada");
-        MAP_TIPUS_DOCUMENTAL_CA.put("51", "Llei");
-        MAP_TIPUS_DOCUMENTAL_CA.put("52", "Moció");
-        MAP_TIPUS_DOCUMENTAL_CA.put("53", "Instrucció");
-        MAP_TIPUS_DOCUMENTAL_CA.put("54", "Convocatòria");
-        MAP_TIPUS_DOCUMENTAL_CA.put("55", "Ordre del dia");
-        MAP_TIPUS_DOCUMENTAL_CA.put("56", "Informe de Ponència");
-        MAP_TIPUS_DOCUMENTAL_CA.put("57", "Dictamen de Comissió");
-        MAP_TIPUS_DOCUMENTAL_CA.put("58", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL_CA.put("59", "Pregunta");
-        MAP_TIPUS_DOCUMENTAL_CA.put("60", "Interpel·lació");
-        MAP_TIPUS_DOCUMENTAL_CA.put("61", "Resposta");
-        MAP_TIPUS_DOCUMENTAL_CA.put("62", "Proposició no de llei");
-        MAP_TIPUS_DOCUMENTAL_CA.put("63", "Esmena");
-        MAP_TIPUS_DOCUMENTAL_CA.put("64", "Proposada de resolució");
-        MAP_TIPUS_DOCUMENTAL_CA.put("65", "Compareixença");
-        MAP_TIPUS_DOCUMENTAL_CA.put("66", "Sol·licitud d'informació");
-        MAP_TIPUS_DOCUMENTAL_CA.put("67", "Escrit");
-        MAP_TIPUS_DOCUMENTAL_CA.put("68", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL_CA.put("69", "Petició");
-        MAP_TIPUS_DOCUMENTAL_CA.put("99", "Altres tipus de documents");
-
-        MAP_TIPUS_DOCUMENTAL_ES.put("1", "Resolución");
-        MAP_TIPUS_DOCUMENTAL_ES.put("2", "Acuerdo");
-        MAP_TIPUS_DOCUMENTAL_ES.put("3", "Contrato");
-        MAP_TIPUS_DOCUMENTAL_ES.put("4", "Convenio");
-        MAP_TIPUS_DOCUMENTAL_ES.put("5", "Declaración");
-        MAP_TIPUS_DOCUMENTAL_ES.put("6", "Comunicación");
-        MAP_TIPUS_DOCUMENTAL_ES.put("7", "Notificación");
-        MAP_TIPUS_DOCUMENTAL_ES.put("8", "Publicación");
-        MAP_TIPUS_DOCUMENTAL_ES.put("9", "Justificante de recepción");
-        MAP_TIPUS_DOCUMENTAL_ES.put("10", "Acta");
-        MAP_TIPUS_DOCUMENTAL_ES.put("11", "Certificado");
-        MAP_TIPUS_DOCUMENTAL_ES.put("12", "Diligencia");
-        MAP_TIPUS_DOCUMENTAL_ES.put("13", "Informe");
-        MAP_TIPUS_DOCUMENTAL_ES.put("14", "Solicitud");
-        MAP_TIPUS_DOCUMENTAL_ES.put("15", "Denuncia");
-        MAP_TIPUS_DOCUMENTAL_ES.put("16", "Alegación");
-        MAP_TIPUS_DOCUMENTAL_ES.put("17", "Recursos");
-        MAP_TIPUS_DOCUMENTAL_ES.put("18", "Comunicación ciudadano");
-        MAP_TIPUS_DOCUMENTAL_ES.put("19", "Factura");
-        MAP_TIPUS_DOCUMENTAL_ES.put("20", "Otra documentación aportada");
-        MAP_TIPUS_DOCUMENTAL_ES.put("51", "Ley");
-        MAP_TIPUS_DOCUMENTAL_ES.put("52", "Moción");
-        MAP_TIPUS_DOCUMENTAL_ES.put("53", "Instrucción");
-        MAP_TIPUS_DOCUMENTAL_ES.put("54", "Convocatoria");
-        MAP_TIPUS_DOCUMENTAL_ES.put("55", "Orden del día");
-        MAP_TIPUS_DOCUMENTAL_ES.put("56", "Informe de Ponencia");
-        MAP_TIPUS_DOCUMENTAL_ES.put("57", "Dictamen de Comisión");
-        MAP_TIPUS_DOCUMENTAL_ES.put("58", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL_ES.put("59", "Pregunta");
-        MAP_TIPUS_DOCUMENTAL_ES.put("60", "Interpelación");
-        MAP_TIPUS_DOCUMENTAL_ES.put("61", "Respuesta");
-        MAP_TIPUS_DOCUMENTAL_ES.put("62", "Proposición no de ley");
-        MAP_TIPUS_DOCUMENTAL_ES.put("63", "Enmienda");
-        MAP_TIPUS_DOCUMENTAL_ES.put("64", "Propuesta de resolución");
-        MAP_TIPUS_DOCUMENTAL_ES.put("65", "Comparecencia");
-        MAP_TIPUS_DOCUMENTAL_ES.put("66", "Solicitud de información");
-        MAP_TIPUS_DOCUMENTAL_ES.put("67", "Escrito");
-        MAP_TIPUS_DOCUMENTAL_ES.put("68", "Iniciativa legislativa");
-        MAP_TIPUS_DOCUMENTAL_ES.put("69", "Petición");
-        MAP_TIPUS_DOCUMENTAL_ES.put("99", "Otros tipos de documentos");
-    }
-    
     @Override
     public PeticioJPA arrancarPeticio(long peticioID, String languageUI, Usuari solicitant) throws I18NException {
 
@@ -1019,28 +932,36 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     @Override
-    public List<StringKeyValue> getTipusDocumentals(String lang, boolean obtenerTodos) throws I18NException {
+    public List<StringKeyValue> getTipusDocumentals(String lang, boolean conSerieDocumental) throws I18NException {
+        ApiFirmaAsyncSimple api = null;
+
         List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-
-        Map<String, String> tipusDocs;
-
-        if (lang.equals("es")) {
-            tipusDocs = MAP_TIPUS_DOCUMENTAL_ES;
-        } else {
-            tipusDocs = MAP_TIPUS_DOCUMENTAL_CA;
-        }
-
-        for (Map.Entry<String, String> tipusDoc : tipusDocs.entrySet()) {
-            String key = tipusDoc.getKey();
-            String val = tipusDoc.getValue();
-
-            Long taulaSeriesOk = serieDocEjb.count(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(key));
-
-            if (obtenerTodos || taulaSeriesOk == 1) {
-                StringKeyValue skv = new StringKeyValue(key, val);
-                __tmp.add(skv);
-            }
-        }
+        try {
+        	api = getApiFirmaAsyncSimple();
+			List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI= api.getAvailableTypesOfDocuments(lang);
+			
+			for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
+				Long key = tipusDocPFI.getDocumentType();
+				String name = tipusDocPFI.getName();
+				Long base = tipusDocPFI.getDocumentTypeBase();
+				
+				if(key == base) {
+					Long taulaSeriesOk = serieDocEjb.count(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(key.toString()));
+					
+		            if (conSerieDocumental && taulaSeriesOk == 1) {
+		                StringKeyValue skv = new StringKeyValue(key.toString(), name);
+		                __tmp.add(skv);
+		            }else if (!conSerieDocumental && taulaSeriesOk == 0) {
+		                StringKeyValue skv = new StringKeyValue(key.toString(), name);
+		                __tmp.add(skv);
+		            }
+				}
+			}
+			
+		} catch (AbstractApisIBException e) {
+			log.error("Error obtenint tipus documental de PortaFIB: " + e.getMessage(), e);
+		}
+        log.info("getTipusDocumentals()::Retornem " + __tmp.size() + " tipus documentals");
         return __tmp;
     }
 

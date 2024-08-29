@@ -80,13 +80,13 @@ public class CapPreparer extends MenuPreparer {
         List<Menu> menus;
         try {
 
-            log.info("menuLogicaEjb => " + menuLogicaEjb);
+//            log.info("menuLogicaEjb => " + menuLogicaEjb);
 
             if (menuLogicaEjb == null) {
                 menuLogicaEjb = (MenuLogicaService) new InitialContext().lookup(MenuLogicaService.JNDI_NAME);
             }
 
-            log.info("pluginEstructuraOrganitzativaEjb => " + pluginEstructuraOrganitzativaEjb);
+//            log.info("pluginEstructuraOrganitzativaEjb => " + pluginEstructuraOrganitzativaEjb);
             if (pluginEstructuraOrganitzativaEjb == null) {
                 pluginEstructuraOrganitzativaEjb = (PluginEstructuraOrganitzativaLogicaService) new InitialContext()
                         .lookup(PluginEstructuraOrganitzativaLogicaService.JNDI_NAME);
@@ -117,7 +117,6 @@ public class CapPreparer extends MenuPreparer {
 
     public String getCodiDIR3(String username) {
 
-        log.info("Aquest mètode es per cercar el dir3");
         try {
             IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstance();
 

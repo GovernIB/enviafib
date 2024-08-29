@@ -126,15 +126,15 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         List<StringKeyValue> tmpList;
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
-        boolean obtenerTodos = false;
+        boolean conSerieDocumental = true;
         
-        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, obtenerTodos);
+        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, conSerieDocumental);
         if (tmpList.isEmpty()) {
             HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
         }else {
             tmpList.add(new StringKeyValue("", I18NUtils.tradueix("tipusdocumental.seleccionar")));
 //            tmpList.add(new StringKeyValue("", ""));
-       //     java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);
+//            java.util.Collections.sort(tmpList, STRINGKEYVALUE_COMPARATOR);					
         }
         return tmpList;
     }

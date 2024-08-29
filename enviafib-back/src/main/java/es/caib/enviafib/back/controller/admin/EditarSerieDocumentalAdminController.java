@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.SerieDocumentalController;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalFilterForm;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalForm;
+import es.caib.enviafib.model.fields.SerieDocumentalFields;
+import es.caib.enviafib.persistence.SerieDocumentalJPA;
 
 /**
  * 
@@ -49,27 +51,55 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
         return "SerieDocumentalAdmin_FilterForm";
     }
 
-    @Override
-    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
-            Where where) throws I18NException {
+	@Override
+	public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
+			SerieDocumentalForm serieDocumentalForm, Where where) throws I18NException {
 
-        // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
-        // de PortaFIB per obtenir els tipus de documents que gestiona:
-        List<StringKeyValue> tmpList = null;
+        boolean isNou = serieDocumentalForm.isNou();
+        log.info("isNou : " + isNou);
 
-        String lang = LocaleContextHolder.getLocale().getLanguage();
-        boolean obtenerTodos = true;
+        //Si es nou, conSerieDocumental = false
+        // Resta de casos, conSerieDocumental = true
         
-        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, obtenerTodos);
-        if (tmpList.isEmpty()) {
-            HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
-        }else {
-            tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
-        }
-
-        return tmpList;
+        //Guardar el valor al where
+		if (isNou) {
+			where = SerieDocumentalFields.SERIEDOCUMENTALID.isNull();
+		}
+        
+        return getReferenceListForTipusDocumental(request, mav, where);
     }
-    
+   
+	@Override
+	public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
+			Where where) throws I18NException {
+		// S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
+		// de PortaFIB per obtenir els tipus de documents que gestiona:
+
+		List<StringKeyValue> tmpList = null;
+
+		boolean conSerieDocumental = true;
+		if (where != null) {
+			conSerieDocumental = false;
+		}
+		
+		String lang = LocaleContextHolder.getLocale().getLanguage();
+		tmpList = peticioLogicaEjb.getTipusDocumentals(lang, conSerieDocumental);
+		if (tmpList.isEmpty()) {
+			HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
+		} else {
+			tmpList.add(new StringKeyValue("", I18NUtils.tradueix("seriedocumental.qualsevol")));
+		}
+
+		return tmpList;
+	}
+
+	@Override
+	public SerieDocumentalForm getSerieDocumentalForm(SerieDocumentalJPA _jpa, boolean __isView,
+			HttpServletRequest request, ModelAndView mav) throws I18NException {
+		// TODO Auto-generated method stub
+		return super.getSerieDocumentalForm(_jpa, __isView, request, mav);
+	}
+	
     @Override
     public void postValidate(HttpServletRequest request, SerieDocumentalForm serieDocumentalForm, BindingResult result)
             throws I18NException {
@@ -80,8 +110,5 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
             result.rejectValue(get(TIPUSDOCUMENTAL), "genapp.validation.required",
                     new String[] { I18NUtils.tradueix(TIPUSDOCUMENTAL.fullName) }, null);
         }
-
-        
-        
     }
 }

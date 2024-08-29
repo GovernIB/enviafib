@@ -108,7 +108,6 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
 
     public String getCodiDIR3(HttpServletRequest request, String username) {
 
-        log.info("Aquest mètode es per cercar el dir3");
         try {
             IEstructuraOrganitzativaPlugin instance = pluginEstructuraOrganitzativaEjb.getInstance();
 
