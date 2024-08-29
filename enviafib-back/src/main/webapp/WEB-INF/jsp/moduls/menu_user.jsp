@@ -127,10 +127,3 @@
 
 
 </div>
-
-<script>
-    function cridarOpcioMenu(menuID, tipus) {
-        window.location = '<c:url value="/user/menu/show/"/>' + menuID + '/' + tipus + '/' + btoa(window.location);
-    }
-</script>
-
