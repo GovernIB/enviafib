@@ -88,12 +88,14 @@
 
 <style>
 #footer {
-	padding: 10px 6rem 16px;
+	padding: 6px 6rem 6px;
 	background-color: #4d4d4d;
 	color: white;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	
+	margin-top: auto;
 }
 
 #peu-dreta {

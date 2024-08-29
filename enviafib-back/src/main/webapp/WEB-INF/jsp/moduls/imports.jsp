@@ -169,38 +169,41 @@
 
 <style>
 body {
-    background-image: url("/img/background-pattern.png");
+	background-image: url("/img/background-pattern.png");
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 .well.well-white {
-    padding: 20px 0.75rem;
-    margin: 0rem 4rem;
+	padding: 20px 0.75rem;
+	margin: 0rem 4rem;
 }
 
 .btn-primary, .btn-warning, .btn-secondary {
-    background-color: #246EB9;
-    border-color: #246EB9;
-    color: #FDFFFC;
+	background-color: #246EB9;
+	border-color: #246EB9;
+	color: #FDFFFC;
 }
 
 .btn-primary:hover, .btn-warning:hover, .btn-secondary:hover {
-    background-color: #00B2FF;
-    border-color: #00B2FF;
+	background-color: #00B2FF;
+	border-color: #00B2FF;
 }
 
 ul {
-    padding: 5px !important;
+	padding: 5px !important;
 }
 
 form {
-    padding: 0.75rem;
-    padding-top: 0px;
+	padding: 0.75rem;
+	padding-top: 0px;
 }
 
-.lead label{
-    font-weight: 500 !important;
-    margin: 0px;
-    font-size: 1.35rem !important;
+.lead label {
+	font-weight: 500 !important;
+	margin: 0px;
+	font-size: 1.35rem !important;
 }
 </style>
 

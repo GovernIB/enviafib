@@ -57,8 +57,9 @@
 				
 				<%--  PIPELLES SEGONS EL ROL DE L'USUARI --%>
         		<c:if test = "${efi:hasRole('ROLE_ADMIN')}">
-					<li id="rolInfoContainer" class="menuCapItem dropdown">
+					<li id="rolInfoContainer" class="menuCapItem dropdown" onclick="location='<c:url value="/canviarPipella/${pipella}"/>'">
 						<i class="fas fa-address-card"></i>
+
 
 						<span class="dropdown-toggle" type="button"
 							id="dropdownMenuRol" data-toggle="dropdown" aria-haspopup="true"
@@ -268,14 +269,15 @@
 
 <style>
 header {
-	position: fixed;
+/* 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 5rem;
-	height: 7rem;
+	height: 7rem; */
 	z-index: 10;
 	background-color: #fff;
+	margin-bottom: 2rem;
 }
 
 #nav-cap {
@@ -290,7 +292,7 @@ header {
 
 #menu_i_contingut {
 	padding: 0rem 8rem;
-	padding-top: 8rem;
+/* 	padding-top: 8rem; */
 }
 
 #logoEntitatContainer {
