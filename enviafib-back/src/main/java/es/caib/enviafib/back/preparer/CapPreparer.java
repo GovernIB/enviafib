@@ -24,7 +24,6 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.logic.MenuLogicaService;
 import es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService;
-import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Menu;
 
 /**

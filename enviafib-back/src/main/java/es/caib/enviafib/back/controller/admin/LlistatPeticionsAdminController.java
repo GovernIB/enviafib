@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller.admin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashSet;
@@ -159,6 +160,12 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
 
         if (peticioFilterForm.isNou()) {
+        	
+        	//Afegir groupBy solicitant.
+            List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
+            newGroupBy.add(PeticioFields.SOLICITANTID);
+            peticioFilterForm.setGroupByFields(newGroupBy);
+        	
         }
         return peticioFilterForm;
     }

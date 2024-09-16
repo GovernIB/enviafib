@@ -19,7 +19,6 @@ import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.model.entity.Entitat;
-import es.caib.enviafib.model.fields.EntitatFields;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;

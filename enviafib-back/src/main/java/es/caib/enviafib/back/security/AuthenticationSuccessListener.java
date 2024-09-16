@@ -173,6 +173,18 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
                     persona.setNif(info.getAdministrationID());
                     persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
 
+                    
+					EntitatService entitatEjb;
+					try {
+						entitatEjb = EjbManager.getEntitatEJB();
+						String entitatID = entitatEjb.select().get(0).getEntitatid();
+						persona.setEntitatID(entitatID); // Per defecte la primera
+
+					} catch (Throwable e) {
+						String msg = I18NUtils.tradueix("comodi","Error intentant obtenir l'entitat per defecte: " + e.getMessage());
+						throw new LoginException(msg, e);
+					}
+
                     try {
                         usuariPersona = usuariEjb.create(persona);
                         log.info("\n S'ha creat l'usuari " + username + " la BBDD \n");
