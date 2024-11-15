@@ -372,24 +372,44 @@ public class LdapCaibEstructuraOrganitzativaPlugin extends AbstractPluginPropert
         return ldapUserManager;
     }
 
-    protected LDAPUser getEncarregatAssociatAlRol(String username, String rol) throws Exception {
+	protected LDAPUser getEncarregatAssociatAlRol(String username, String rol) throws Exception {
 
-        LDAPUser user = null;
+		LDAPUser user = null;
 
-        String codiDep = getCodeDepartamentDireccioGeneral(username);
+		// TOD XYZ ZZZ Falta CAche
+		List<LDAPUser> users = getLDAPUserManager().getUsersByRol(rol);
 
-        // TOD XYZ ZZZ Falta CAche
-        List<LDAPUser> users = getLDAPUserManager().getUsersByRol(rol);
+		String codiDep = getCodeDepartamentDireccioGeneral(username);
+		if (codiDep != null) {
 
-        for (LDAPUser ldapUser : users) {
-            if (codiDep.equals(ldapUser.getDepartment())) {
-                user = ldapUser;
-                break;
-            }
-        }
+			for (LDAPUser ldapUser : users) {
+				if (codiDep.equals(ldapUser.getDepartment())) {
+					user = ldapUser;
+					break;
+				}
+			}
+		}
 
-        return user;
-    }
+		// Si user es null, feim la mateixa cerca pero amb DIR3
+		if (user == null) {
+			Departament dep = getDepartamentInfoByCode(codiDep);
+
+			if (dep != null) {
+				String dir3User = dep.getDir3();
+				if (dir3User != null) {
+					for (LDAPUser ldapUser : users) {
+						String dir3Rol = getDir3DepartamentDireccioGeneral(ldapUser.getUserName());
+						if (dir3User.equals(dir3Rol)) {
+							user = ldapUser;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		return user;
+	}
 
 
     protected LDAPUser getSecretariViaDIR3Pare(String username, String rol) throws Exception {
