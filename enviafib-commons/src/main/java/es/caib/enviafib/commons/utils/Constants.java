@@ -21,7 +21,7 @@ public interface Constants {
     // VIRTUAL SECURITY ROLES
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER = "ROLE_USER";
-     
+    public static final String ROLE_ADEN = "ROLE_ADEN";
 
     // EJB HIGH LEVEL ROLES
     public static final String ROLE_EJB_FULL_ACCESS = EFI_ADMIN;

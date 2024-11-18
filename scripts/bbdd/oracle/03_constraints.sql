@@ -1,5 +1,7 @@
 
  -- INICI PKs
+    alter table efi_entitat add constraint efi_entitat_pk primary key (entitatid);
+
     alter table efi_faq add constraint efi_faq_pk primary key (faqid);
 
     alter table efi_fitxer add constraint efi_fitxer_pk primary key (fitxerid);
@@ -9,6 +11,8 @@
     alter table efi_grupusuari add constraint efi_grupusuari_pk primary key (grupusuariid);
 
     alter table efi_idioma add constraint efi_idioma_pk primary key (idiomaid);
+
+    alter table efi_infoanex add constraint efi_infoanex_pk primary key (infoanexid);
 
     alter table efi_infoarxiu add constraint efi_infoarxiu_pk primary key (infoarxiuid);
 
@@ -35,6 +39,31 @@
 
  -- INICI FKs
 
+    alter table efi_entitat 
+       add constraint efi_entitat_fitxer_icon_fk 
+       foreign key (faviconid) 
+       references efi_fitxer;
+
+    alter table efi_entitat 
+       add constraint efi_entitat_fitxer_lose_fk 
+       foreign key (logosegellid) 
+       references efi_fitxer;
+
+    alter table efi_entitat 
+       add constraint efi_entitat_fitxer_loca_fk 
+       foreign key (logowebid) 
+       references efi_fitxer;
+
+    alter table efi_entitat 
+       add constraint efi_entitat_fitxer_lope_fk 
+       foreign key (logowebpeuid) 
+       references efi_fitxer;
+
+    alter table efi_entitat 
+       add constraint efi_entitat_traduccio_moti_fk 
+       foreign key (motiudelegacioid) 
+       references efi_traduccio;
+
     alter table efi_faq 
        add constraint efi_faq_fitxer_fitxer1id_fk 
        foreign key (fitxer1id) 
@@ -59,6 +88,16 @@
        add constraint efi_grupusuari_usuari_usuar_fk 
        foreign key (usuariid) 
        references efi_usuari;
+
+    alter table efi_infoanex 
+       add constraint efi_infoanex_fitxer_fk 
+       foreign key (anexid) 
+       references efi_fitxer;
+
+    alter table efi_infoanex 
+       add constraint efi_infoanex_peticio_fk 
+       foreign key (peticioid) 
+       references efi_peticio;
 
     alter table efi_menu 
        add constraint efi_menu_traduccio_ajuda_fk 
@@ -109,6 +148,11 @@
        add constraint efi_traducmap_traduccio_fk 
        foreign key (traducciomapid) 
        references efi_traduccio;
+
+    alter table efi_usuari 
+       add constraint efi_usuari_entitat_fk 
+       foreign key (entitatid) 
+       references efi_entitat;
 
     alter table efi_usuari 
        add constraint efi_usuari_idioma_fk 

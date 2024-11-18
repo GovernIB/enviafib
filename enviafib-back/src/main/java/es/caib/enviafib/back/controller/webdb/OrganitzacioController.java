@@ -531,6 +531,14 @@ public java.lang.Long stringToPK(String value) {
      return getRedirectWhenCancel(request, organitzacioID);
   }
 
+  /**
+   * Entra aqui al pitjar el boto cancel en el la creació de Organitzacio
+   */
+  @RequestMapping(value = "/cancel")
+  public String cancelOrganitzacio(HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, null);
+  }
+
   @Override
   public String getTableModelName() {
     return _TABLE_MODEL;

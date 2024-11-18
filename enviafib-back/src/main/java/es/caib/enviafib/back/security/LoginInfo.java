@@ -1,6 +1,8 @@
 package es.caib.enviafib.back.security;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -39,24 +41,24 @@ public class LoginInfo {
 	
 	protected boolean necesitaConfigurar;
 	
-	protected Entitat entitat;
+		// Add your fields HERE
 
-	// Add your fields HERE
+	protected Map<String, EntitatRoles> mapEntitatsAdmin;
+	
+	protected EntitatRoles entitatRolsActual;
 
 	/**
 	 * @param usuari
 	 * @param entitatActual
 	 * @param roles
 	 */
-	public LoginInfo(User springSecurityUser, String username, Usuari usuari, Entitat entitat,  Set<GrantedAuthority> grantedAuthorities,
+	public LoginInfo(User springSecurityUser, String username, Usuari usuari, Map<String, EntitatRoles> mapEntitatsAdmin,  Set<GrantedAuthority> grantedAuthorities,
 			String language, boolean necesitaConfigurar) {
 		this.springSecurityUser = springSecurityUser;
 		this.username = username;
-		this.entitat = entitat;
 		this.language = language;
 		this.usuari = usuari;
 		this.necesitaConfigurar = necesitaConfigurar;
-
 		this.grantedAuthorities = grantedAuthorities;
 		this.roles = new HashSet<String>();
 
@@ -64,6 +66,28 @@ public class LoginInfo {
 			this.roles.add(grantedAuthority.getAuthority());
 		}
 
+		// Omplir el map d'entitatsAdmin amb totes les entitats, i posar false la de
+		// l'usuari, i true a les de la llista entitatsAdmin
+		this.mapEntitatsAdmin = mapEntitatsAdmin;
+		
+//		this.mapEntitatsAdmin.put(entitatUser, false);
+//		boolean isAdminActual = false;
+//
+//		for (Entitat entitat : entitatsAdmin) {
+//			
+//			if (entitat.getEntitatid().equals(entitatUser.getEntitatid())) {
+//				//Si l'usuari pertany a una entitat, que també administra, es posa a true.
+//				mapEntitatsAdmin.put(entitatUser, true);
+//				
+//				log.info("L'usuari " + username + " es admin de la seva entitat: " + entitat.getEntitatid());
+//				isAdminActual = true;
+//			}else {
+//				mapEntitatsAdmin.put(entitat, true);
+//			}
+//		}
+
+		this.entitatRolsActual = mapEntitatsAdmin.get(usuari.getEntitatID());
+		
 	}
 
 	public Set<String> getRoles() {
@@ -137,6 +161,17 @@ public class LoginInfo {
 	    }
 	  }
 	
+	
+	public void actualitzaEntitat(String entitatID) {
+		EntitatRoles novaEntitat = mapEntitatsAdmin.get(entitatID);
+		if (novaEntitat == null) {
+            log.error("No s'ha trobat l'entitat amb id: " + entitatID);
+            return;
+		}
+		this.entitatRolsActual = novaEntitat;
+	}
+	
+
 	public boolean isNecesitaConfigurar() {
 		return necesitaConfigurar;
 	}
@@ -145,12 +180,20 @@ public class LoginInfo {
 		this.necesitaConfigurar = necesitaConfigurar;
 	}
 
-	public Entitat getEntitat() {
-		return entitat;
+	public Map<String, EntitatRoles> getMapEntitatsAdmin() {
+		return mapEntitatsAdmin;
 	}
 
-	public void setEntitat(Entitat entitat) {
-		this.entitat = entitat;
+	public void setMapEntitatsAdmin(Map<String, EntitatRoles> mapEntitatsAdmin) {
+		this.mapEntitatsAdmin = mapEntitatsAdmin;
+	}
+
+	public EntitatRoles getEntitatRolsActual() {
+		return entitatRolsActual;
+	}
+
+	public void setEntitatRolsActual(EntitatRoles entitatRolsActual) {
+		this.entitatRolsActual = entitatRolsActual;
 	}
 
 }

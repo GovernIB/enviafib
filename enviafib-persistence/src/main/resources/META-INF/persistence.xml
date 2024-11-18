@@ -27,6 +27,7 @@
 		<class>es.caib.enviafib.persistence.TraduccioJPA</class>
 		<class>es.caib.enviafib.persistence.TraduccioMapJPA</class>
 		<class>es.caib.enviafib.persistence.UsuariJPA</class>
+		<class>es.caib.enviafib.persistence.UsuariEntitatJPA</class>
 
         <!-- Activar cache només per aquelles entitats on volguem expressament -->
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>

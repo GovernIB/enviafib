@@ -12,7 +12,9 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.ejb.IdiomaService;
+import es.caib.enviafib.ejb.UsuariEntitatService;
 import es.caib.enviafib.ejb.UsuariService;
+import es.caib.enviafib.logic.UsuariLogicaService;
 
 /**
  * 
@@ -23,23 +25,23 @@ public final class EjbManager {
 
 	protected static final Logger log = Logger.getLogger(EjbManager.class);
 
-	protected static UsuariService usuariEjb;
+	protected static UsuariLogicaService usuariLogicaEjb;
 
 	private static void throwNewI18NException(Throwable e, String name) throws I18NException {
 		throw new I18NException(e, "error.unknown",
 				new I18NArgumentString("No puc instanciar " + name + ": " + e.getMessage()));
 	}
 
-	public static UsuariService getUsuariEJB() throws I18NException {
+	public static UsuariLogicaService getUsuariEJB() throws I18NException {
 
-		if (usuariEjb == null) {
+		if (usuariLogicaEjb == null) {
 			try {
-				usuariEjb = (UsuariService) new InitialContext().lookup(UsuariService.JNDI_NAME);
+				usuariLogicaEjb = (UsuariLogicaService) new InitialContext().lookup(UsuariLogicaService.JNDI_NAME);
 			} catch (Throwable e) {
-				throwNewI18NException(e, "UsuariPersonaService");
+				throwNewI18NException(e, "UsuariLogicaService");
 			}
 		}
-		return usuariEjb;
+		return usuariLogicaEjb;
 	}
 	
 	
@@ -72,6 +74,23 @@ public final class EjbManager {
         }
         return entitatEjb;
     }
+    
+    
+	protected static UsuariEntitatService usuariEntitatEjb;
+
+    public static UsuariEntitatService getUsuariEntitatEJB() throws I18NException {
+
+        if (usuariEntitatEjb == null) {
+            try {
+            	usuariEntitatEjb = (UsuariEntitatService) new InitialContext().lookup(UsuariEntitatService.JNDI_NAME);
+            } catch (Throwable e) {
+                throwNewI18NException(e, "UsuariEntitatService");
+            }
+        }
+        return usuariEntitatEjb;
+    }
+    
+    
     
     public static Map<Class<?>, Object> servicesCache = new HashMap<Class<?>, Object>();
     

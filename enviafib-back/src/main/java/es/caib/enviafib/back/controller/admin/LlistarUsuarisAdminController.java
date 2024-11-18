@@ -4,6 +4,7 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.logic.UsuariLogicaEJB;
+import es.caib.enviafib.logic.UsuariLogicaService;
+import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
  * 
@@ -23,8 +27,8 @@ import es.caib.enviafib.back.form.webdb.UsuariForm;
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })
 public class LlistarUsuarisAdminController extends UsuariController {
 
-	@EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
-	protected es.caib.enviafib.ejb.UsuariService usuariEjb;
+	@EJB(mappedName = UsuariLogicaService.JNDI_NAME)
+	protected UsuariLogicaService usuariLogicaEjb;
 
 	@Override
 	public String getTileForm() {
@@ -49,4 +53,16 @@ public class LlistarUsuarisAdminController extends UsuariController {
 		usuariFilterForm.addHiddenField(EMAIL);
 		return usuariFilterForm;
 	}
+
+	@Override
+	public UsuariJPA update(HttpServletRequest request, UsuariJPA usuari)
+			throws I18NException, I18NValidationException {
+		return (UsuariJPA) usuariLogicaEjb.update(usuari);
+	}
+
+	@Override
+	public UsuariJPA findByPrimaryKey(HttpServletRequest request, Long usuariID) throws I18NException {
+		return (UsuariJPA) usuariLogicaEjb.findByPrimaryKeyPublic(usuariID);
+	}
+
 }

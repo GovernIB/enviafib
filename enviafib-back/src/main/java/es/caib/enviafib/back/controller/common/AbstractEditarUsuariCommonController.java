@@ -12,12 +12,15 @@ import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.back.security.EntitatRoles;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.ejb.EntitatService;
+import es.caib.enviafib.logic.EntitatLogicaService;
 import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -33,7 +36,10 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
 
     @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
-
+    
+    @EJB(mappedName = EntitatLogicaService.JNDI_NAME)
+    protected EntitatLogicaService entitatLogicaEjb;
+    
     @Override
     public boolean isActiveList() {
         return false;
@@ -59,8 +65,7 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
         return false;
     }
 
-    @EJB(mappedName = es.caib.enviafib.ejb.EntitatService.JNDI_NAME)
-    protected EntitatService entitatEjb;
+
     
     @Override
     public UsuariForm getUsuariForm(UsuariJPA _jpa, boolean __isView, HttpServletRequest request, ModelAndView mav)
@@ -133,7 +138,7 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
     public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request, ModelAndView mav, Where where)
     		throws I18NException {
 
-    	List<Entitat> entitats = entitatEjb.select(where);
+    	List<Entitat> entitats = entitatLogicaEjb.select(where);
     	List<StringKeyValue> list = new ArrayList<StringKeyValue>();
     	for (Entitat entitat : entitats) {
     		list.add(new StringKeyValue(entitat.getEntitatid(), entitat.getDescripcio()));
@@ -150,9 +155,24 @@ public abstract class AbstractEditarUsuariCommonController extends UsuariControl
     	UsuariJPA u = super.update(request, usuari);
     	
     	String entitatID = u.getEntitatID();
-    	Entitat entitat = entitatEjb.findByPrimaryKey(entitatID);
+//    	Entitat entitat = entitatLogicaEjb.findByPrimaryKeyPublic(entitatID);
+//    	
+//    	LoginInfo.getInstance().setEntitatActual(entitat);
     	
-    	LoginInfo.getInstance().setEntitat(entitat);
+
+		LoginInfo loginInfo = LoginInfo.getInstance();
+		
+		EntitatRoles entitatRols = loginInfo.getMapEntitatsAdmin().get(entitatID);
+		if (entitatRols == null) {
+	    	Entitat entitat = entitatLogicaEjb.findByPrimaryKeyPublic(entitatID);
+
+			entitatRols = new EntitatRoles(entitat);
+			entitatRols.addRole("ROLE_USER");
+			loginInfo.getMapEntitatsAdmin().put(entitatID, entitatRols);
+		}
+
+		loginInfo.setEntitatRolsActual(entitatRols);
+		SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());
     	return u;
     }
 

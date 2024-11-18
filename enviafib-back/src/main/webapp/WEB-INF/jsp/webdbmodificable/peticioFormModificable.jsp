@@ -188,7 +188,7 @@
                 let file = ALL_FILES[i];
                 list.items.add(file);
                 
-                //Tambï¿½ l'afegim al llistat total de fitxers, per enviar-los tots
+                //També l'afegim al llistat total de fitxers, per enviar-los tots
                 fullList.items.add(file);
 
                 let myFileList = list.files;
@@ -196,7 +196,7 @@
                 
                 li_input.appendChild(div_file);
                 
-                //Cuando hemos aï¿½adido el fichero, comprovamos si el siguiente es su anexo...
+                //Cuando hemos añadido el fichero, comprovamos si el siguiente es su anexo...
                 
                 var div_attached = document.createElement("div");
                 div_attached.setAttribute("id", "div_attached" + i );
@@ -207,7 +207,7 @@
                 ul_attached.setAttribute("class", "ul_attached" );
                 
                 i++;
-                //Si el siguiente es anexo, aï¿½adelo. Si no, aï¿½adimos otro fichero
+                //Si el siguiente es anexo, añadelo. Si no, añadimos otro fichero
                 while (FLAG.charAt(i) === "A"){
                 	console.log("fichero: " + i);
                 	
@@ -241,7 +241,7 @@
                     let file = ALL_FILES[i];
                     list.items.add(file);
                     
-                    //Tambï¿½ l'afegim al llistat total de fitxers, per enviar-los tots
+                    //També l'afegim al llistat total de fitxers, per enviar-los tots
                     fullList.items.add(file);
 
                     let myFileList = list.files;
@@ -251,7 +251,7 @@
                 }
                 div_attached.appendChild(ul_attached);
                 
-                //Cuando hemos rellenado el div con el ul con anexos. Lo aï¿½adimos al li. Puede estar vacio      
+                //Cuando hemos rellenado el div con el ul con anexos. Lo añadimos al li. Puede estar vacio      
                 li_input.appendChild(div_attached);
                 ul_files.appendChild(li_input);
                 
@@ -506,7 +506,7 @@ td label {
 </c:if>
 
 
-<%-- ===================== MOSTRAR CAMPS AVANï¿½ATS ===========================  --%>
+<%-- ===================== MOSTRAR CAMPS AVANÇATS ===========================  --%>
 
 <script type="text/javascript"> 
 
@@ -541,7 +541,7 @@ mostrarOcultarCampsAvanzats();
 
 </script>
 
-<%-- ==== FER QUE L'OPCIï¿½ NULL DE TIPUS DOCUMENTALS PAREXQUI UN PLACEHOLDER ==========  --%>
+<%-- ==== FER QUE L'OPCIÓ NULL DE TIPUS DOCUMENTALS PAREXQUI UN PLACEHOLDER ==========  --%>
 <script type="text/javascript"> 
     var select = document.getElementById("peticio_tipusDocumental");
 	var options = select.childNodes;
@@ -607,7 +607,7 @@ mostrarOcultarCampsAvanzats();
 var peticionsTotals = -1;
 
 function validacioFormulario() {
-	//<span id="peticio.dataCreacio.errors" class="errorField alert alert-danger">El camp Creada ï¿½s obligatori.</span>
+	//<span id="peticio.dataCreacio.errors" class="errorField alert alert-danger">El camp Creada és obligatori.</span>
 	var validacio = true;
 	$(".errorField").remove();
 	
@@ -626,7 +626,7 @@ function validacioFormulario() {
         var span = document.createElement("span");
         span.id = "peticio.nom.errors";
         span.classList = "errorField alert alert-danger";
-        span.innerHTML = "El camp Titol ï¿½s obligatori.";
+        span.innerHTML = "El camp Titol es obligatori.";
         titol.parentElement.prepend(span);
         validacio &= false;
     }
@@ -639,7 +639,7 @@ function validacioFormulario() {
 			var span = document.createElement("span");
 		    span.id = "peticio.destinatariNif.errors";
 		    span.classList = "errorField alert alert-danger";
-		    span.innerHTML = "El camp NIF no tï¿½ el format correcte.";
+		    span.innerHTML = "El camp NIF no té el format correcte.";
 		    nif.parentElement.prepend(span);
 		    validacio &= false;
 		}
@@ -650,13 +650,30 @@ function validacioFormulario() {
         var span = document.createElement("span");
         span.id = "peticio_tipusDocumental.errors";
         span.classList = "errorField alert alert-danger";
-        span.innerHTML = "El Tipus documental ï¿½s obligatori.";
+        span.innerHTML = "El Tipus documental és obligatori.";
         tipusDoc.parentElement.prepend(span);
         validacio &= false;
     }
+    
+    if (isAutofirma()) {
+	    var reason = document.getElementById("peticio.reason");
+	    if (reason.value === "") {
+	        var span = document.createElement("span");
+	        span.id = "peticio.reason.errors";
+	        span.classList = "errorField alert alert-danger";
+	        span.innerHTML = "El Motiu de firma és obligatori a AutoFirma.";
+	        reason.parentElement.prepend(span);
+	        validacio &= false;
+	    }
+    }
+    
     return validacio;
 }
 
+function isAutofirma(){
+    var tipus = document.getElementById("peticio.tipus").value;
+    return tipus == 1;
+}
 
 function enviar(){
 

@@ -17,6 +17,7 @@ public interface SerieDocumentalFields extends java.io.Serializable {
 	 public static final StringField TIPUSDOCUMENTAL = new StringField(_TABLE_MODEL, "tipusDocumental", "tipusdocumental");
 	 public static final StringField PROCEDIMENTNOM = new StringField(_TABLE_MODEL, "procedimentNom", "procedimentnom");
 	 public static final StringField PROCEDIMENTCODI = new StringField(_TABLE_MODEL, "procedimentCodi", "procedimentcodi");
+	 public static final StringField ENTITATID = new StringField(_TABLE_MODEL, "entitatID", "entitatid");
 
 
   public static final Field<?>[] ALL_SERIEDOCUMENTAL_FIELDS = {
@@ -24,7 +25,8 @@ public interface SerieDocumentalFields extends java.io.Serializable {
     NOM,
     TIPUSDOCUMENTAL,
     PROCEDIMENTNOM,
-    PROCEDIMENTCODI
+    PROCEDIMENTCODI,
+    ENTITATID
   };
 
 

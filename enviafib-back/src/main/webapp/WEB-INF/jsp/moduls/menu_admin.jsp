@@ -9,8 +9,15 @@
 
         <li style="list-style-type: disc; list-style-position: inside;"><a
             href="<c:url value="/admin/usuari/list"/>"> <span
-                style="${(fn:contains(url, 'admin/usuari'))? "font-weight:bold;" : ""}"> <fmt:message
+                style="${(fn:contains(url, 'admin/usuari/'))? "font-weight:bold;" : ""}"> <fmt:message
                         key="admin.menu.usuaris" />
+            </span>
+        </a></li>
+
+        <li style="list-style-type: disc; list-style-position: inside;"><a
+            href="<c:url value="/admin/entitat/list"/>"> <span
+                style="${(fn:contains(url, 'admin/entitat'))? "font-weight:bold;" : ""}"> <fmt:message
+                        key="admin.menu.entitats" />
             </span>
         </a></li>
 

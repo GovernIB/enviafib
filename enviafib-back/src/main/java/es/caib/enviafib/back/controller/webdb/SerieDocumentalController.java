@@ -58,6 +58,10 @@ public class SerieDocumentalController
   @Autowired
   protected SerieDocumentalRefList serieDocumentalRefList;
 
+  // References 
+  @Autowired
+  protected EntitatRefList entitatRefList;
+
   /**
    * Llistat de totes SerieDocumental
    */
@@ -188,6 +192,16 @@ public class SerieDocumentalController
       };
     }
 
+    // Field entitatID
+    {
+      _listSKV = getReferenceListForEntitatID(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfEntitatForEntitatID(_tmp);
+      if (filterForm.getGroupByFields().contains(ENTITATID)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, ENTITATID, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -204,6 +218,7 @@ public class SerieDocumentalController
     java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
     __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
     __mapping.put(TIPUSDOCUMENTAL, filterForm.getMapOfValuesForTipusDocumental());
+    __mapping.put(ENTITATID, filterForm.getMapOfEntitatForEntitatID());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -259,6 +274,15 @@ public class SerieDocumentalController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       serieDocumentalForm.setListOfValuesForTipusDocumental(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (serieDocumentalForm.getListOfEntitatForEntitatID() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForEntitatID(request, mav, serieDocumentalForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      serieDocumentalForm.setListOfEntitatForEntitatID(_listSKV);
     }
     
   }
@@ -531,6 +555,14 @@ public java.lang.Long stringToPK(String value) {
      return getRedirectWhenCancel(request, serieDocumentalID);
   }
 
+  /**
+   * Entra aqui al pitjar el boto cancel en el la creació de SerieDocumental
+   */
+  @RequestMapping(value = "/cancel")
+  public String cancelSerieDocumental(HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, null);
+  }
+
   @Override
   public String getTableModelName() {
     return _TABLE_MODEL;
@@ -593,6 +625,46 @@ public java.lang.Long stringToPK(String value) {
     __tmp.add(new StringKeyValue("3" , "3"));
     __tmp.add(new StringKeyValue("4" , "4"));
     return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request,
+       ModelAndView mav, SerieDocumentalForm serieDocumentalForm, Where where)  throws I18NException {
+    if (serieDocumentalForm.isHiddenField(ENTITATID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _where = null;
+    if (serieDocumentalForm.isReadOnlyField(ENTITATID)) {
+      _where = EntitatFields.ENTITATID.equal(serieDocumentalForm.getSerieDocumental().getEntitatID());
+    }
+    return getReferenceListForEntitatID(request, mav, Where.AND(where, _where));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request,
+       ModelAndView mav, SerieDocumentalFilterForm serieDocumentalFilterForm,
+       List<SerieDocumental> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (serieDocumentalFilterForm.isHiddenField(ENTITATID)
+       && !serieDocumentalFilterForm.isGroupByField(ENTITATID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    if (!_groupByItemsMap.containsKey(ENTITATID)) {
+      // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
+      java.util.Set<java.lang.String> _pkList = new java.util.HashSet<java.lang.String>();
+      for (SerieDocumental _item : list) {
+        if(_item.getEntitatID() == null) { continue; };
+        _pkList.add(_item.getEntitatID());
+        }
+        _w = EntitatFields.ENTITATID.in(_pkList);
+      }
+    return getReferenceListForEntitatID(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntitatID(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    return entitatRefList.getReferenceList(EntitatFields.ENTITATID, where );
   }
 
 

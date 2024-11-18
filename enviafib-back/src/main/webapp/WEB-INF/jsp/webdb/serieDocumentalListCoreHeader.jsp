@@ -27,6 +27,9 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTCODI)}">
         <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.PROCEDIMENTCODI)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.ENTITATID)}">
+        <th>${efi:getSortIcons(__theFilterForm,SerieDocumentalFields.ENTITATID)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

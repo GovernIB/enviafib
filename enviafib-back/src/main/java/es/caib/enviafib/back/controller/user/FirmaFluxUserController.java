@@ -97,7 +97,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
         long solicitantID = peticioForm.getPeticio().getSolicitantID();
-        String solicitantNif = usuariEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
+        String solicitantNif = usuariLogicaEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
         peticioForm.getPeticio().setDestinatariNif(solicitantNif);
 
         String titol_flux = (String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO);

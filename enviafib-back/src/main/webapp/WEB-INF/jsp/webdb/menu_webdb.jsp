@@ -118,6 +118,13 @@ ${entityname}
 ${entityname}
         </span></a>
         </li>
+
+    <%-- UsuariEntitat --%>
+       <fmt:message var="entityname" key="usuariEntitat.usuariEntitat.plural"/>
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/webdb/usuariEntitat/list/1"/>" ><span style="${(fn:contains(url, 'usuariEntitat/') && fn:contains(url, '/list'))? "font-weight: bold;" : ""}" >
+${entityname}
+        </span></a>
+        </li>
 <%-- ==== GENAPP MARK END --%>
  </ul>
  </div>

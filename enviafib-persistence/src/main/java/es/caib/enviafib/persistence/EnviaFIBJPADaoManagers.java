@@ -22,6 +22,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
    private final SerieDocumentalJPAManager efi_seriedocumental;
    private final TraduccioJPAManager efi_traduccio;
    private final UsuariJPAManager efi_usuari;
+   private final UsuariEntitatJPAManager efi_usuarientitat;
 
   public  EnviaFIBJPADaoManagers(EntityManager __em) {
     this.efi_entitat = new EntitatJPAManager(__em);
@@ -40,6 +41,7 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
     this.efi_seriedocumental = new SerieDocumentalJPAManager(__em);
     this.efi_traduccio = new TraduccioJPAManager(__em);
     this.efi_usuari = new UsuariJPAManager(__em);
+    this.efi_usuarientitat = new UsuariEntitatJPAManager(__em);
   }
 
     public IEntitatManager getEntitatManager() {
@@ -104,6 +106,10 @@ public final class EnviaFIBJPADaoManagers implements IEnviaFIBDaoManagers{
 
     public IUsuariManager getUsuariManager() {
         return this.efi_usuari;
+    };
+
+    public IUsuariEntitatManager getUsuariEntitatManager() {
+        return this.efi_usuarientitat;
     };
 
 

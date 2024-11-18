@@ -75,6 +75,7 @@ import es.caib.enviafib.ejb.FitxerService;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.logic.utils.LogicUtils;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
@@ -231,8 +232,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
         
         
-        ApiFirmaAsyncSimple api = null;
-        api = getApiFirmaAsyncSimple();
+        ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
         
         Long idPortafib;
 
@@ -623,7 +623,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, languageUI);
 
-            ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+            ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
             
 //            rinfo.getSignatureRequestID()
             
@@ -890,7 +890,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
         rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, languageUI);
 
-        ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+        ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
 
         FirmaAsyncSimpleSignedFile fitxerSignat = null;
         try {
@@ -902,68 +902,40 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return fitxerSignat;
     }
 
-    protected ApiFirmaAsyncSimple getApiFirmaAsyncSimple() throws I18NException {
-
-        String host = Configuracio.getPortafibGatewayV2();
-        String username = Configuracio.getPortafibUsername();
-        String password = Configuracio.getPortafibPassword();
-
-        ApiFirmaAsyncSimpleJersey api;
-
-        try {
-            new URL(host);
-            api = new ApiFirmaAsyncSimpleJersey(host, username, password);
-
-        } catch (MalformedURLException urle) {
-            String errorMsg = "Error a la URL de conexió amb PortaFIB. Revisar la URL de la propietat "
-                    + Constants.ENVIAFIB_PROPERTY_BASE + "portafib.apifirmaasync.url" + " de l'arxiu: "
-                    + Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.";
-
-            throw new I18NException(errorMsg + "   -   " + urle.getMessage());
-        } catch (Exception e) {
-            throw new I18NException("error.portafib.conexio.api",
-                    Constants.ENVIAFIB_PROPERTY_BASE + "system.properties.", e.getMessage());
-        }
-
-        // api.setConnectionTimeoutMs(20000); // 20 segons
-        // api.setReadTimeoutMs(20000); // 20 segons
-
-        return api;
-    }
-
     @Override
-    public List<StringKeyValue> getTipusDocumentals(String lang, boolean conSerieDocumental) throws I18NException {
-        ApiFirmaAsyncSimple api = null;
+	public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID) throws I18NException {
 
-        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-        try {
-        	api = getApiFirmaAsyncSimple();
-			List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI= api.getAvailableTypesOfDocuments(lang);
-			
-			for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
-				Long key = tipusDocPFI.getDocumentType();
-				String name = tipusDocPFI.getName();
-				Long base = tipusDocPFI.getDocumentTypeBase();
-				
-				if(key == base) {
-					Long taulaSeriesOk = serieDocEjb.count(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(key.toString()));
-					
-		            if (conSerieDocumental && taulaSeriesOk == 1) {
-		                StringKeyValue skv = new StringKeyValue(key.toString(), name);
-		                __tmp.add(skv);
-		            }else if (!conSerieDocumental && taulaSeriesOk == 0) {
-		                StringKeyValue skv = new StringKeyValue(key.toString(), name);
-		                __tmp.add(skv);
-		            }
-				}
+		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
+
+		final Where wEntitat = SerieDocumentalFields.ENTITATID.equal(entitatID);
+
+		for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
+			Long key = tipusDocPFI.getDocumentType();
+			String name = tipusDocPFI.getName();
+			Long base = tipusDocPFI.getDocumentTypeBase();
+
+			log.info("getTipusDocumentals()::Tipus Documental: " + key + " - " + name + " - " + base);
+
+			// Agafa tots els tipus documentals, que tenen la serie pare amb una serie
+			// documental a la seva entitat.
+
+			Where wTipusDoc = SerieDocumentalFields.TIPUSDOCUMENTAL.equal(base.toString());
+			Long taulaSeriesOk = serieDocEjb.count(Where.AND(wTipusDoc, wEntitat));
+
+			if (taulaSeriesOk == 1) {
+				StringKeyValue skv = new StringKeyValue(key.toString(), name);
+				__tmp.add(skv);
+			}else {
+				//Afegir tipus documental null per desconegut.
+				__tmp.add(new StringKeyValue(key.toString(), "Tipus documental desconegut"));
 			}
-			
-		} catch (AbstractApisIBException e) {
-			log.error("Error obtenint tipus documental de PortaFIB: " + e.getMessage(), e);
 		}
-        log.info("getTipusDocumentals()::Retornem " + __tmp.size() + " tipus documentals");
-        return __tmp;
-    }
+		
+		
+		log.info("getTipusDocumentals()::Retornem " + __tmp.size() + " tipus documentals");
+		return __tmp;
+	}
 
     @Override
     public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
@@ -1479,7 +1451,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException {
 
         try {
-            ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+            ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
 //            log.info("peticioPortaFIB: " + peticioPortaFIB);
 //            log.info("languageUI: " + languageUI);

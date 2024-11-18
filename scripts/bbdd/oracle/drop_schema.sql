@@ -1,4 +1,6 @@
 
+    drop table efi_entitat cascade constraints;
+
     drop table efi_faq cascade constraints;
 
     drop table efi_fitxer cascade constraints;
@@ -8,6 +10,8 @@
     drop table efi_grupusuari cascade constraints;
 
     drop table efi_idioma cascade constraints;
+
+    drop table efi_infoanex cascade constraints;
 
     drop table efi_infoarxiu cascade constraints;
 
@@ -36,6 +40,8 @@
     drop sequence efi_grup_seq;
 
     drop sequence efi_grupusuari_seq;
+
+    drop sequence efi_infoanex_seq;
 
     drop sequence efi_infoarxiu_seq;
 

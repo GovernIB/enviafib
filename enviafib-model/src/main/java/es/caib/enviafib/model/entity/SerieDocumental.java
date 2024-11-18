@@ -17,6 +17,9 @@ public interface SerieDocumental extends org.fundaciobit.genapp.common.IGenAppEn
 	public java.lang.String getProcedimentCodi();
 	public void setProcedimentCodi(java.lang.String _procedimentCodi_);
 
+	public java.lang.String getEntitatID();
+	public void setEntitatID(java.lang.String _entitatID_);
+
 
 
   // ======================================

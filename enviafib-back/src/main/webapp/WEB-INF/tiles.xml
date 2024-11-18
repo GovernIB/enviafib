@@ -189,6 +189,26 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
     </definition>
     
+    <definition name="entitatFormAdmin" extends="admin">
+        <put-attribute name="titol" value="entitat.entitat" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/entitatForm.jsp" />
+    </definition>
+    
+    <definition name="entitatListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/entitatList.jsp" />
+    </definition>
+
+    <definition name="usuariEntitatFormAdmin" extends="admin">
+        <put-attribute name="titol" value="usuariEntitat.usuariEntitat" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariEntitatForm.jsp" />
+    </definition>
+    
+    <definition name="usuariEntitatListAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariEntitatList.jsp" />
+    </definition>
+    
+    
+    
     
     <definition name="peticioListAdmin" extends="admin">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioList.jsp" />
@@ -306,6 +326,50 @@
 
 
 
+    <!--  ===========  ADMIN ENTITAT ================== -->
+    
+    <definition name="aden" extends="base.definition">
+        <put-attribute name="pipella" value="aden" />
+        <put-attribute name="menu" value="/WEB-INF/jsp/moduls/menu_aden.jsp" />
+    </definition>
+    
+    <definition name="entitatFormAden" extends="aden">
+        <put-attribute name="titol" value="entitat.entitat" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/entitatForm.jsp" />
+    </definition>
+    
+    <definition name="entitatListAden" extends="aden">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/entitatList.jsp" />
+    </definition>
+
+	<definition name="usuariFormAden" extends="aden">
+		<put-attribute name="titol" value="usuari.usuari" />
+		<put-attribute name="contingut"	value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
+	</definition>
+
+	<definition name="usuariListAden" extends="aden">
+		<put-attribute name="contingut"	value="/WEB-INF/jsp/webdb/usuariList.jsp" />
+	</definition>
+    
+	<definition name="serieDocumentalFormAden" extends="aden">
+        <put-attribute name="titol" value="serieDocumental.serieDocumental" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalForm.jsp" />
+    </definition>
+    
+    <definition name="serieDocumentalListAden" extends="aden">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalList.jsp" />
+    </definition>
+    
+        
+    <definition name="peticioListAden" extends="aden">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioList.jsp" />
+    </definition>
+    
+    <definition name="peticioFormAden" extends="aden">
+        <put-attribute name="titol" value="peticio.peticio" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/peticioForm.jsp" />
+    </definition>
+    
     
     
     <!--  ===========  DESENVOLUPAMENT ================== -->
@@ -500,6 +564,16 @@
     
     <definition name="usuariListWebDB" extends="webdb">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
+    </definition>
+
+
+    <definition name="usuariEntitatFormWebDB" extends="webdb">
+        <put-attribute name="titol" value="usuariEntitat.usuariEntitat" />
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariEntitatForm.jsp" />
+    </definition>
+    
+    <definition name="usuariEntitatListWebDB" extends="webdb">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariEntitatList.jsp" />
     </definition>
 
 <!-- ==== GENAPP MARK END -->

@@ -52,6 +52,14 @@
           ${serieDocumental.procedimentCodi}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,SerieDocumentalFields.ENTITATID)}">
+          <td>
+          <c:set var="tmp">${serieDocumental.entitatID}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfEntitatForEntitatID[tmp]}
+          </c:if>
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

@@ -283,7 +283,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticio.setErrorMsg(LogicUtils.split255(I18NUtils.tradueix("error.peticio.desconegut")));
 
             String userName = request.getRemoteUser();
-            Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
+            Long userId = usuariLogicaEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
             peticio.setSolicitantID(userId);
 
             peticio.setTipus(getTipusPeticio());

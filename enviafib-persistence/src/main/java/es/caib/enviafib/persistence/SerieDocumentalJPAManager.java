@@ -55,8 +55,8 @@ public class SerieDocumentalJPAManager
         return list.toArray(new SerieDocumental[list.size()]);
     };
 
-    public SerieDocumental create( java.lang.String _nom_, java.lang.String _tipusDocumental_, java.lang.String _procedimentNom_, java.lang.String _procedimentCodi_) throws I18NException {
-        SerieDocumentalJPA __bean =  new SerieDocumentalJPA(_nom_,_tipusDocumental_,_procedimentNom_,_procedimentCodi_);
+    public SerieDocumental create( java.lang.String _nom_, java.lang.String _tipusDocumental_, java.lang.String _procedimentNom_, java.lang.String _procedimentCodi_, java.lang.String _entitatID_) throws I18NException {
+        SerieDocumentalJPA __bean =  new SerieDocumentalJPA(_nom_,_tipusDocumental_,_procedimentNom_,_procedimentCodi_,_entitatID_);
         return create(__bean);
     }
 

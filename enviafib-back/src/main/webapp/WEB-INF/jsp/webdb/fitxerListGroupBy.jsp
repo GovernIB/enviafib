@@ -71,7 +71,8 @@
                         </fmt:message>
                         </c:if>
                         <c:if test="${fn:startsWith(code,'=')}" >
-                        <c:set var="thetext" value="${fn:substringAfter(code, '=')}" />
+                            <c:set var="thetext" value="${fn:substringAfter(code, '=')}" />
+                            <c:set var="thetext" value="${fn:replace(thetext,'\"','\\\'')}" />
                         </c:if>
                     
                     <c:set var="ParentID" value="${groupby_item.value}_${counterParent}" />
@@ -82,7 +83,7 @@
                     </c:if>
                     ,{
                         "id": '${ParentID}',
-                        "text": "<span style='${groupby_item.selected? "font-weight: bold;" : ""}'><c:out value="${thetext}"/></span>",
+                        "text": "<span style='${groupby_item.selected? "font-weight: bold;" : ""}'><c:out value="${thetext}" escapeXml="false"/></span>",
                         "field": '<c:out value="${groupby_item.value}"/>',
                         "hasChildren": true,
                         "children": [

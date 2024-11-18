@@ -13,6 +13,7 @@ public class SerieDocumentalBean implements SerieDocumental {
 	java.lang.String tipusDocumental;
 	java.lang.String procedimentNom;
 	java.lang.String procedimentCodi;
+	java.lang.String entitatID;
 
 
   /** Constructor Buit */
@@ -20,19 +21,27 @@ public class SerieDocumentalBean implements SerieDocumental {
   }
 
   /** Constructor amb tots els camps  */
-  public SerieDocumentalBean(long serieDocumentalID , java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi) {
+  public SerieDocumentalBean(long serieDocumentalID , java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi , java.lang.String entitatID) {
     this.serieDocumentalID=serieDocumentalID;
     this.nom=nom;
     this.tipusDocumental=tipusDocumental;
     this.procedimentNom=procedimentNom;
     this.procedimentCodi=procedimentCodi;
+    this.entitatID=entitatID;
 }
   /** Constructor sense valors autoincrementals */
-  public SerieDocumentalBean(java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi) {
+  public SerieDocumentalBean(java.lang.String nom , java.lang.String tipusDocumental , java.lang.String procedimentNom , java.lang.String procedimentCodi , java.lang.String entitatID) {
     this.nom=nom;
     this.tipusDocumental=tipusDocumental;
     this.procedimentNom=procedimentNom;
     this.procedimentCodi=procedimentCodi;
+    this.entitatID=entitatID;
+}
+  /** Constructor dels valors Not Null */
+  public SerieDocumentalBean(long serieDocumentalID , java.lang.String nom , java.lang.String procedimentNom) {
+    this.serieDocumentalID=serieDocumentalID;
+    this.nom=nom;
+    this.procedimentNom=procedimentNom;
 }
   public SerieDocumentalBean(SerieDocumental __bean) {
     this.setSerieDocumentalID(__bean.getSerieDocumentalID());
@@ -40,6 +49,7 @@ public class SerieDocumentalBean implements SerieDocumental {
     this.setTipusDocumental(__bean.getTipusDocumental());
     this.setProcedimentNom(__bean.getProcedimentNom());
     this.setProcedimentCodi(__bean.getProcedimentCodi());
+    this.setEntitatID(__bean.getEntitatID());
 	}
 
 	public long getSerieDocumentalID() {
@@ -77,6 +87,13 @@ public class SerieDocumentalBean implements SerieDocumental {
 		this.procedimentCodi = _procedimentCodi_;
 	};
 
+	public java.lang.String getEntitatID() {
+		return(entitatID);
+	};
+	public void setEntitatID(java.lang.String _entitatID_) {
+		this.entitatID = _entitatID_;
+	};
+
 
 
   // ======================================
@@ -89,6 +106,7 @@ public class SerieDocumentalBean implements SerieDocumental {
     __tmp.setTipusDocumental(__bean.getTipusDocumental());
     __tmp.setProcedimentNom(__bean.getProcedimentNom());
     __tmp.setProcedimentCodi(__bean.getProcedimentCodi());
+    __tmp.setEntitatID(__bean.getEntitatID());
 		return __tmp;
 	}
 

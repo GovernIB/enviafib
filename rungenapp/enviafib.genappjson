@@ -57,8 +57,20 @@
           },
           "foreignKeys": [
             {
+              "name": "efi_seriedocu_entitat_entit_fk",
+              "table": "efi_seriedocumental",
+              "field": "entitatid",
+              "type": 0
+            },
+            {
               "name": "efi_usuari_entitat_fk",
               "table": "efi_usuari",
+              "field": "entitatid",
+              "type": 0
+            },
+            {
+              "name": "efi_usrent_entitat_entitati_fk",
+              "table": "efi_usuarientitat",
               "field": "entitatid",
               "type": 0
             }
@@ -4040,8 +4052,8 @@
           "digits": 0,
           "isNotNullable": true,
           "labels": {
-            "es": "Nombre",
-            "ca": "Nom"
+            "es": "Serie",
+            "ca": "Sèrie"
           },
           "javaName": "nom",
           "javaType": "java.lang.String",
@@ -4058,7 +4070,6 @@
           "foreignKeys": []
         },
         {
-          "unique": "efi_seriedocu_tipusdocu_uk",
           "isAutoIncrement": false,
           "sqlName": "tipusdocumental",
           "sqlType": 12,
@@ -4092,8 +4103,8 @@
           "digits": 0,
           "isNotNullable": true,
           "labels": {
-            "ca": "Nom del procediment",
-            "es": "Nombre del procedimiento"
+            "ca": "Nom",
+            "es": "Nombre"
           },
           "javaName": "procedimentNom",
           "javaType": "java.lang.String",
@@ -4115,10 +4126,10 @@
           "sqlType": 12,
           "size": 2147483647,
           "digits": 0,
-          "isNotNullable": true,
+          "isNotNullable": false,
           "labels": {
-            "ca": "Codi del procediment",
-            "es": "Codigo del procedimiento"
+            "ca": "Codi",
+            "es": "Código"
           },
           "javaName": "procedimentCodi",
           "javaType": "java.lang.String",
@@ -4133,6 +4144,54 @@
             "webtype": 1
           },
           "foreignKeys": []
+        },
+        {
+          "index": "efi_seriedocu_entitatid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "entitatid",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Entitat",
+            "es": "Entidad"
+          },
+          "javaName": "entitatID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": true,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_seriedocu_entitat_entitatid_fk",
+              "table": "efi_entitat",
+              "field": "entitatid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_seriedocu_entitat_entit_fk",
+              "table": "efi_entitat",
+              "field": "entitatid",
+              "type": 1
+            }
+          ]
+        }
+      ],
+      "multipleUniques": [
+        {
+          "name": "efi_seriedocu_td_ent_uk",
+          "sqlColumns": [
+            "tipusdocumental",
+            "entitatid"
+          ]
         }
       ]
     },
@@ -4402,6 +4461,12 @@
               "table": "efi_peticio",
               "field": "solicitantid",
               "type": 0
+            },
+            {
+              "name": "efi_usrent_usuari_usuariid_fk",
+              "table": "efi_usuarientitat",
+              "field": "usuariid",
+              "type": 0
             }
           ]
         },
@@ -4631,6 +4696,132 @@
           "foreignKeys": [
             {
               "name": "efi_usuari_entitat_fk",
+              "table": "efi_entitat",
+              "field": "entitatid",
+              "type": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "efi_usuarientitat",
+      "nameJava": "UsuariEntitat",
+      "shortName": "usrent",
+      "labels": {
+        "ca": "Administrador Entitat",
+        "es": "Administrador Entidad"
+      },
+      "labelsPlural": {
+        "ca": "Administradors Entitat",
+        "es": "Administradores Entidad"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_usuarientitat_pk",
+          "index": "efi_usuarientitat_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "usuarientitatid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "usuarientitatid",
+            "es": "usuarientitatid"
+          },
+          "javaName": "usuarientitatid",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_usuarientitat_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "efi_usuarientitat_usuari_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usuariid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Usuari",
+            "es": "Usuario"
+          },
+          "javaName": "usuariid",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_usuarientitat_usuari_fk",
+              "table": "efi_usuari",
+              "field": "usuariid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_usrent_usuari_usuariid_fk",
+              "table": "efi_usuari",
+              "field": "usuariid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "efi_usuarientitat_entitat_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "entitatid",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Entitat",
+            "es": "Entidad"
+          },
+          "javaName": "entitatid",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "efi_usuarientitat_entitat_fk",
+              "table": "efi_entitat",
+              "field": "entitatid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "efi_usrent_entitat_entitati_fk",
               "table": "efi_entitat",
               "field": "entitatid",
               "type": 1

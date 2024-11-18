@@ -19,5 +19,6 @@ public interface IEnviaFIBDaoManagers {
 	public ISerieDocumentalManager getSerieDocumentalManager();
 	public ITraduccioManager getTraduccioManager();
 	public IUsuariManager getUsuariManager();
+	public IUsuariEntitatManager getUsuariEntitatManager();
 
 }

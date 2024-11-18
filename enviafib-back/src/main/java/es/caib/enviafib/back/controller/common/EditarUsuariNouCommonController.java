@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.back.security.EntitatRoles;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Usuari;
@@ -91,14 +93,22 @@ public class EditarUsuariNouCommonController extends AbstractEditarUsuariCommonC
     @Override
     public String getRedirectWhenCreated(HttpServletRequest request, UsuariForm usuariForm) {
         Usuari usuari = usuariForm.getUsuari();
-        Entitat entitat = entitatEjb.findByPrimaryKey(usuari.getEntitatID());
-        
-        LoginInfo.getInstance().setUsuari(usuari);
-        LoginInfo.getInstance().setEntitat(entitat);
-        
-        Long userid = LoginInfo.getInstance().getUsuari().getUsuariID();
-        
-        log.info("userid: " + userid );
+    	String entitatID = usuari.getEntitatID();
+
+		LoginInfo loginInfo = LoginInfo.getInstance();
+		
+		EntitatRoles entitatRols = loginInfo.getMapEntitatsAdmin().get(entitatID);
+		if (entitatRols == null) {
+	    	Entitat entitat = entitatLogicaEjb.findByPrimaryKeyPublic(entitatID);
+
+			entitatRols = new EntitatRoles(entitat);
+			entitatRols.addRole("ROLE_USER");
+			loginInfo.getMapEntitatsAdmin().put(entitatID, entitatRols);
+		}
+
+		loginInfo.setEntitatRolsActual(entitatRols);
+		SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());
+		
         return "redirect:/";
     }
 

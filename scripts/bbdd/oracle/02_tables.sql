@@ -1,4 +1,24 @@
 
+    create table efi_entitat (
+       entitatid varchar2(50 char) not null,
+        activa number(1,0) not null,
+        adrezahtml varchar2(2000 char) not null,
+        checkcanviatdocfirmat number(1,0) not null,
+        descripcio varchar2(255 char),
+        faviconid number(19,0) not null,
+        logosegellid number(19,0) not null,
+        logowebid number(19,0) not null,
+        logowebpeuid number(19,0) not null,
+        motiudelegacioid number(19,0),
+        nom varchar2(50 char) not null,
+        propietatstaulafirmes clob,
+        segelldetempsviaweb number(10,0) default 0 not null,
+        suportemail varchar2(100 char),
+        suporttelefon varchar2(50 char),
+        suportweb varchar2(250 char),
+        web varchar2(250 char) not null
+    );
+
     create table efi_faq (
        faqid number(19,0) not null,
         enunciat_ca varchar2(255 char),
@@ -36,6 +56,12 @@
         nom varchar2(50 char) not null,
         ordre number(10,0) default 0 not null,
         suportat number(1,0) not null
+    );
+
+    create table efi_infoanex (
+       infoanexid number(19,0) not null,
+        anexid number(19,0),
+        peticioid number(19,0)
     );
 
     create table efi_infoarxiu (
@@ -124,6 +150,7 @@
         nom varchar2(255 char),
         peticioportafirmes varchar2(255 char),
         reason varchar2(255 char),
+        revisor varchar2(255 char),
         solicitantid number(19,0) not null,
         tipus number(10,0) default 0 not null,
         tipusdocumental varchar2(100 char) not null
@@ -160,6 +187,7 @@
     create table efi_usuari (
        usuariid number(19,0) not null,
         email varchar2(256 char) not null,
+        entitatid varchar2(50 char),
         idiomaid varchar2(5 char) default 'ca' not null,
         llinatge1 varchar2(256 char) not null,
         llinatge2 varchar2(256 char),
@@ -167,7 +195,5 @@
         nom varchar2(256 char) not null,
         username varchar2(100 char) not null
     );
-
-
 
 

@@ -6,7 +6,7 @@
     <input type="submit" class="btn btn-primary" value="<fmt:message key="genapp.save"/>">
     </c:if>
     <c:if test="${__theForm.cancelButtonVisible}">
-    <input type="button" class="btn btn-secondary" onclick="goTo('<c:url value="${contexte}/${__theForm.idioma.idiomaID}/cancel"/>')" value="<fmt:message key="genapp.cancel"/>">
+    <input type="button" class="btn btn-secondary" onclick="goTo('<c:url value="${contexte}${__theForm.nou?'':'/'.concat(__theForm.idioma.idiomaID)}/cancel"/>')" value="<fmt:message key="genapp.cancel"/>">
     </c:if>
     <c:if test="${!__theForm.nou && __theForm.deleteButtonVisible}">
     <button type="button" class="btn btn-danger" onclick="openModal('<c:url value="${contexte}/${__theForm.idioma.idiomaID}/delete"/>','show');"><fmt:message key="genapp.delete"/></button>

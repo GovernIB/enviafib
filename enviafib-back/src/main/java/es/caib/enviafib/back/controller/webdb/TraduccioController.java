@@ -506,6 +506,14 @@ public java.lang.Long stringToPK(String value) {
      return getRedirectWhenCancel(request, traduccioID);
   }
 
+  /**
+   * Entra aqui al pitjar el boto cancel en el la creació de Traduccio
+   */
+  @RequestMapping(value = "/cancel")
+  public String cancelTraduccio(HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, null);
+  }
+
   @Override
   public String getTableModelName() {
     return _TABLE_MODEL;

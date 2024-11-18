@@ -14,6 +14,9 @@
 
 <header>
     <!-- Header -->
+	<!-- set entitat actual.  -->
+	<c:set var="entitatActual" value="${loginInfo.entitatRolsActual.entitat}" />
+ 
     <nav id="nav-cap" class="navbar navbar-expand-md navbar-dark">
 
         <button class="navbar-toggler botoMobil" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -24,9 +27,9 @@
         <!-- Logo i nom aplicació -->
 		<div id="logoEntitatContainer" class="logoEntitat">
 
-			<a href="${loginInfo.entitat.web}"> <img
-				src="<c:url value="${efi:fileUrl(loginInfo.entitat.logoweb)}"/>"
-				style="height: 55px;" alt="${loginInfo.entitat.descripcio}" />
+			<a href="${entitatActual.web}"> <img
+				src="<c:url value="${efi:fileUrl(entitatActual.logoweb)}"/>"
+				style="height: 55px;" alt="${entitatActual.descripcio}" />
 			</a>
 		</div>
 
@@ -39,22 +42,32 @@
         	<ul class="navbar-nav mobil">
 
 				<%-- ENTITAT DE L'USUARI --%>
-				<li id="entitatInfoContainer" class="menuCapItem dropdown">
-					<i class="fas fa-university"></i>
-						<span onclick="location.href = '${loginInfo.entitat.web}';"> ${loginInfo.entitat.descripcio} </span>
 				
-				
-				<!-- <span class="dropdown-toggle" type="button"
-					id="dropdownMenuEntitat" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> 
-					</span>
-					 <div class="dropdown-menu dropdown-menu-right"
-						aria-labelledby="dropdownMenuEntitat">
-						<a class="dropdown-item" href="http://www.caib.es"> Govern de les Illes Balears</a> 
-						<a class="dropdown-item" href="https://www.fundaciobit.org/es/inicio/"> Fundacio BIT</a>
-					</div> -->
+				<li id="entitatInfoContainer" class="menuCapItem dropdown"><i
+					class="fas fa-university"></i>
+					<span id="entitat-descripcio"> ${entitatActual.descripcio} </span>
+
+					<!-- Si solo hay una entidad, no mostrar desplegable -->
+					<c:if test="${loginInfo.mapEntitatsAdmin.size() > 1}">
+						<span class="dropdown-toggle" type="button"
+						id="dropdownMenuEntitat" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> </span>
+						
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuEntitat">
+							<c:forEach var="entry" items="${loginInfo.mapEntitatsAdmin}">
+							
+								<!--  Si entidad es actual, no añadir al listado -->
+								<c:if test="${entry.key ne entitatActual.entitatid}"> 
+									<a class="dropdown-item" href="<c:url value="/canviarEntitat/${entry.key}"/>"> ${entry.value.entitat.descripcio} - Roles: ${entry.value.roles}</a> 
+								</c:if>
+							</c:forEach>
+	
+						<!-- <a class="dropdown-item" href="http://www.caib.es"> Govern de les Illes Balears</a> 
+						 	 <a class="dropdown-item" href="https://www.fundaciobit.org/es/inicio/"> Fundacio BIT</a> -->
+						</div>
+					</c:if>
 				</li>
-				
+
 				<%--  PIPELLES SEGONS EL ROL DE L'USUARI --%>
         		<c:if test = "${efi:hasRole('ROLE_ADMIN')}">
 					<li id="rolInfoContainer" class="menuCapItem dropdown" onclick="location='<c:url value="/canviarPipella/${pipella}"/>'">
@@ -84,9 +97,12 @@
 							</sec:authorize>
 	
 							<sec:authorize access="hasRole('ROLE_USER')">
-								<c:if test="${pipella ne 'user'}">
-									<a class="dropdown-item"
-										href="<c:url value="/canviarPipella/user"/>">Usuari</a>
+							<!-- Si entitat actual es la mateixa entitat que l'usuari, mostrar pipella user -->
+								<c:if test="${entitatActual.entitatid eq loginInfo.usuari.entitatID}">
+									<c:if test="${pipella ne 'user'}">
+										<a class="dropdown-item"
+											href="<c:url value="/canviarPipella/user"/>">Usuari</a>
+									</c:if>
 								</c:if>
 							</sec:authorize>
 	
@@ -110,6 +126,25 @@
 										href="<c:url value="/canviarPipella/ajuda"/>">Pipella Ajuda</a>
 								</c:if>
 							</sec:authorize>
+
+							<sec:authorize access="hasRole('ROLE_USER')">
+							
+								<c:set var="isAden" value="false" />
+								<c:forEach var="rol" items="${loginInfo.entitatRolsActual.roles}">
+								  <c:if test="${rol eq 'ROLE_ADEN'}">
+								    <c:set var="isAden" value="true" />
+								  </c:if>
+								</c:forEach>
+							
+								<c:if test="${isAden}">
+	                                <c:if test="${pipella ne 'aden'}">
+										<a class="dropdown-item"
+											href="<c:url value="/canviarPipella/aden"/>">Admin Entitat</a>
+									</c:if>
+								</c:if>
+							</sec:authorize>
+
+
 	
 							<c:if test="${prefixLowercase}:isDesenvolupament()}">
 								<c:if test="${pipella ne 'desenvolupament'}">

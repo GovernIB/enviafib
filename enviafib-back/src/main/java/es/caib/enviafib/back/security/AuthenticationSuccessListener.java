@@ -3,6 +3,9 @@ package es.caib.enviafib.back.security;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
@@ -22,11 +25,15 @@ import org.springframework.stereotype.Component;
 
 import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.ejb.IdiomaService;
+import es.caib.enviafib.ejb.UsuariEntitatService;
 import es.caib.enviafib.ejb.UsuariService;
+import es.caib.enviafib.logic.UsuariLogicaService;
 import es.caib.enviafib.logic.utils.EjbManager;
 import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Usuari;
+import es.caib.enviafib.model.entity.UsuariEntitat;
+import es.caib.enviafib.model.fields.UsuariEntitatFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
 import es.caib.enviafib.back.utils.EnviaFIBSessionLocaleResolver;
@@ -96,31 +103,18 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
         final boolean isDebug = log.isDebugEnabled();
 
-        UsuariService usuariEjb;
+        UsuariLogicaService usuariLogicaEjb;
         try {
-            usuariEjb = EjbManager.getUsuariEJB();
+        	usuariLogicaEjb = EjbManager.getUsuariEJB();
         } catch (Throwable e) {
             String msg = I18NUtils.tradueix("error.authentication.manager", username, e.getMessage());
             throw new LoginException(msg, e);
         }
 
-        List<Usuari> listUsuariPersona;
-        try {
-            // Cerca de l'usuari que es conecta
-            listUsuariPersona = usuariEjb.select(UsuariFields.USERNAME.equal(username));
-            log.info("Llista d'usuaris amb usuariEjb: " + listUsuariPersona.size());
-
-        } catch (I18NException e1) {
-            listUsuariPersona = null;
-            log.error("Error llegint usuari " + username + " : " + e1.getMessage(), e1);
-        }
+        Usuari usuariPersona = usuariLogicaEjb.getUserByUsername(username);
+        
         boolean necesitaConfigurar = false;
-        Usuari usuariPersona = null;
-
-        if (listUsuariPersona != null && !listUsuariPersona.isEmpty()) {
-            usuariPersona = (Usuari) listUsuariPersona.get(0);
-        }
-
+        
         // Check if Usuari trobat a BBDD
         if (usuariPersona == null) {
             // Revisar si és un Administrador que entra per primera vegada
@@ -186,7 +180,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 					}
 
                     try {
-                        usuariPersona = usuariEjb.create(persona);
+                        usuariPersona = usuariLogicaEjb.create(persona);
                         log.info("\n S'ha creat l'usuari " + username + " la BBDD \n");
                     } catch (Throwable e) {
                         usuariPersona = new UsuariJPA(persona);
@@ -249,17 +243,48 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
 			String language = usuariPersona.getIdiomaID();
 
-			Entitat entitat = null;
+			
+			
+			Map<String, EntitatRoles> mapEntitats = new java.util.HashMap<String, EntitatRoles>();
+			
 			try {
 				EntitatService entitatEjb = EjbManager.getEntitatEJB();
-				entitat = entitatEjb.findByPrimaryKey(usuariPersona.getEntitatID());
+
+				// Entitat de l'usuari
+				{
+					String entitatID = usuariPersona.getEntitatID();
+					Entitat entitatUser = entitatEjb.findByPrimaryKey(entitatID);
+
+					mapEntitats.put(entitatID, new EntitatRoles(entitatUser));
+					mapEntitats.get(entitatID).addRole(Constants.ROLE_USER);
+				}
+
+				// Entitaits administrades per l'usuari
+				{
+					UsuariEntitatService usuariEntitatEjb = EjbManager.getUsuariEntitatEJB();
+					List<UsuariEntitat> llistat = usuariEntitatEjb
+							.select(UsuariEntitatFields.USUARIID.equal(usuariPersona.getUsuariID()));
+
+					for (UsuariEntitat usuariEntitat : llistat) {
+						String entitatID = usuariEntitat.getEntitatid();
+						Entitat entitatAden = entitatEjb.findByPrimaryKey(entitatID);
+
+						if (mapEntitats.get(entitatID) == null) {
+							mapEntitats.put(entitatID, new EntitatRoles(entitatAden));
+						}
+						mapEntitats.get(entitatID).addRole(Constants.ROLE_ADEN);
+					}
+				}
+
 			} catch (Throwable e) {
 				String msg = I18NUtils.tradueix("error.authentication.manager", username, e.getMessage());
 				throw new LoginException(msg, e);
 			}
 
-			LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona, entitat,
-					new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);
+//			LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona, entitat,
+//					new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);
+			
+			LoginInfo loginInfo = new LoginInfo(user, username, usuariPersona, mapEntitats, new HashSet<GrantedAuthority>(realAuthorities), language, necesitaConfigurar);
 
             // and set the authentication of the current Session context
             SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());

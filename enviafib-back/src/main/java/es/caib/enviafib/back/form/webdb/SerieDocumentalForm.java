@@ -20,6 +20,7 @@ public class SerieDocumentalForm extends EnviaFIBBaseForm {
     super(__toClone);
       this.serieDocumental = __toClone.serieDocumental;
     this.listOfValuesForTipusDocumental = __toClone.listOfValuesForTipusDocumental;
+    this.listOfEntitatForEntitatID = __toClone.listOfEntitatForEntitatID;
   }
   
   public SerieDocumentalForm(SerieDocumentalJPA serieDocumental, boolean nou) {
@@ -43,6 +44,18 @@ public class SerieDocumentalForm extends EnviaFIBBaseForm {
 
   public void setListOfValuesForTipusDocumental(List<StringKeyValue> listOfValuesForTipusDocumental) {
     this.listOfValuesForTipusDocumental = listOfValuesForTipusDocumental;
+  }
+
+
+
+  private List<StringKeyValue> listOfEntitatForEntitatID;
+
+  public List<StringKeyValue> getListOfEntitatForEntitatID() {
+    return this.listOfEntitatForEntitatID;
+  }
+
+  public void setListOfEntitatForEntitatID(List<StringKeyValue> listOfEntitatForEntitatID) {
+    this.listOfEntitatForEntitatID = listOfEntitatForEntitatID;
   }
 
 

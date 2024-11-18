@@ -82,7 +82,7 @@
         <tr id="serieDocumental_procedimentCodi_rowid">
           <td id="serieDocumental_procedimentCodi_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI])?'serieDocumental.procedimentCodi':__theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI])?'serieDocumental.procedimentCodi':__theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI]}" />
              </label>
               <c:if test="${not empty __theForm.help[SerieDocumentalFields.PROCEDIMENTCODI]}">
               <i class="fas fa-info-circle" title="${__theForm.help[SerieDocumentalFields.PROCEDIMENTCODI]}" ></i>
@@ -92,6 +92,46 @@
             <form:errors path="serieDocumental.procedimentCodi" cssClass="errorField alert alert-danger" />
             <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.PROCEDIMENTCODI)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.PROCEDIMENTCODI)? ' uneditable-input' : ''}"  style="" maxlength="2147483647" path="serieDocumental.procedimentCodi"   />
 
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.ENTITATID)}">
+        <tr id="serieDocumental_entitatID_rowid">
+          <td id="serieDocumental_entitatID_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.ENTITATID])?'serieDocumental.entitatID':__theForm.labels[SerieDocumentalFields.ENTITATID]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[SerieDocumentalFields.ENTITATID]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[SerieDocumentalFields.ENTITATID]}" ></i>
+              </c:if>
+            </td>
+          <td id="serieDocumental_entitatID_columnvalueid">
+          <form:errors path="serieDocumental.entitatID" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.ENTITATID)}" >
+          <form:hidden path="serieDocumental.entitatID"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.serieDocumental.entitatID,__theForm.listOfEntitatForEntitatID)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.ENTITATID)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="serieDocumental_entitatID"  onchange="if(typeof onChangeEntitatID == 'function') {  onChangeEntitatID(this); };"  cssClass="form-control col-md-9-optional" path="serieDocumental.entitatID">
+            <c:forEach items="${__theForm.listOfEntitatForEntitatID}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+            <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
+            <c:if test="${not containEmptyValue}">
+              <c:if test="${empty __theForm.serieDocumental.entitatID }">
+                  <form:option value="" selected="true" ></form:option>
+              </c:if>
+              <c:if test="${not empty __theForm.serieDocumental.entitatID }">
+                  <form:option value="" ></form:option>
+              </c:if>
+            </c:if>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>

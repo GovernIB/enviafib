@@ -73,7 +73,7 @@ public class LlistatPeticionsUserController extends AbstractLlistatPeticionsCont
     @Override
     public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
         String userName = request.getRemoteUser();
-        Long userId = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
+        Long userId = usuariLogicaEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(userName));
         return PeticioFields.SOLICITANTID.equal(userId);
     }
 

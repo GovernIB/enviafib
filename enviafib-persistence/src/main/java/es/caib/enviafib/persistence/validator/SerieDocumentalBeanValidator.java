@@ -17,19 +17,25 @@ public class SerieDocumentalBeanValidator
 
 
   // EJB's
+  protected final es.caib.enviafib.model.dao.IEntitatManager __entitatManager;
+
   protected final es.caib.enviafib.model.dao.ISerieDocumentalManager __serieDocumentalManager;
 
 
   public final SerieDocumentalValidator<SerieDocumentalJPA> _validator;
 
 
-  public SerieDocumentalBeanValidator(es.caib.enviafib.model.dao.ISerieDocumentalManager __serieDocumentalManager) { 
+  public SerieDocumentalBeanValidator(es.caib.enviafib.model.dao.IEntitatManager __entitatManager,
+     es.caib.enviafib.model.dao.ISerieDocumentalManager __serieDocumentalManager) { 
+    this.__entitatManager = __entitatManager;
     this.__serieDocumentalManager = __serieDocumentalManager;
     _validator = new SerieDocumentalValidator<SerieDocumentalJPA>();
   }
 
   public SerieDocumentalBeanValidator(SerieDocumentalValidator<SerieDocumentalJPA> _validator,
+     es.caib.enviafib.model.dao.IEntitatManager __entitatManager,
      es.caib.enviafib.model.dao.ISerieDocumentalManager __serieDocumentalManager) {
+    this.__entitatManager = __entitatManager;
     this.__serieDocumentalManager = __serieDocumentalManager;
     this._validator = _validator;
   }
@@ -37,7 +43,7 @@ public class SerieDocumentalBeanValidator
   @Override
   public List<I18NFieldError> validate(SerieDocumentalJPA target, boolean isNou) throws I18NException {
     BeanValidatorResult<SerieDocumentalJPA> _bvr_ = new BeanValidatorResult<SerieDocumentalJPA>();
-    _validator.validate(_bvr_, target, isNou, __serieDocumentalManager);
+    _validator.validate(_bvr_, target, isNou, __entitatManager, __serieDocumentalManager);
     return _bvr_.getErrors();
   }
 }

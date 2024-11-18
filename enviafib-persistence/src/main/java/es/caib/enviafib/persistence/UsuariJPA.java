@@ -212,6 +212,19 @@ public class UsuariJPA implements Usuari {
     }
 
 
+// EXP  Field:usuariid | Table: efi_usuarientitat | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuari")
+    private Set<UsuariEntitatJPA> usuariEntitats = new HashSet<UsuariEntitatJPA>(0);
+    public  Set<UsuariEntitatJPA> getUsuariEntitats() {
+    return this.usuariEntitats;
+  }
+
+    public void setUsuariEntitats(Set<UsuariEntitatJPA> usuariEntitats) {
+      this.usuariEntitats = usuariEntitats;
+    }
+
+
 // IMP Field:idiomaid | Table: efi_idioma | Type: 1  
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -286,6 +299,10 @@ public class UsuariJPA implements Usuari {
     if(!"GrupUsuariJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.grupUsuaris) || org.hibernate.Hibernate.isInitialized(__jpa.getGrupUsuaris())) ) {
       __tmp.setGrupUsuaris(GrupUsuariJPA.copyJPA(__jpa.getGrupUsuaris(), __alreadyCopied,"UsuariJPA"));
+    }
+    if(!"UsuariEntitatJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.usuariEntitats) || org.hibernate.Hibernate.isInitialized(__jpa.getUsuariEntitats())) ) {
+      __tmp.setUsuariEntitats(UsuariEntitatJPA.copyJPA(__jpa.getUsuariEntitats(), __alreadyCopied,"UsuariJPA"));
     }
     if(!"PeticioJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.peticios) || org.hibernate.Hibernate.isInitialized(__jpa.getPeticios())) ) {

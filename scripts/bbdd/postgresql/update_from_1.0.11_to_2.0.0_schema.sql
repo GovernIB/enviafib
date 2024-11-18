@@ -59,3 +59,6 @@ CREATE INDEX efi_entitat_pk_i ON efi_entitat USING btree (entitatid COLLATE pg_c
 ALTER TABLE efi_usuari ADD COLUMN entitatid character varying(50);
 ALTER TABLE efi_usuari ADD CONSTRAINT efi_usuari_entitat_fk FOREIGN KEY (entitatid) REFERENCES efi_entitat (entitatid) ON DELETE NO ACTION ON UPDATE NO ACTION;
 create index efi_usuari_entitatid_fk_i on efi_usuari (entitatid);
+
+
+

@@ -24,6 +24,7 @@
 		<class>es.caib.enviafib.persistence.TraduccioJPA</class>
 		<class>es.caib.enviafib.persistence.TraduccioMapJPA</class>
 		<class>es.caib.enviafib.persistence.UsuariJPA</class>
+		<class>es.caib.enviafib.persistence.UsuariEntitatJPA</class>
 
         <!-- Desactivar cache -->
         <shared-cache-mode>NONE</shared-cache-mode>

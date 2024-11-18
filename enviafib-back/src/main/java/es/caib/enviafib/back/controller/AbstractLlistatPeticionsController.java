@@ -395,7 +395,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             InfoArxiuJPA ia = infoArxiuEjb.findByPrimaryKey(peticio.getInfoArxiuID());
             String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
 
-            UsuariJPA user = usuariEjb.findByPrimaryKey((Long) peticio.getSolicitantID());
+            UsuariJPA user = usuariLogicaEjb.findByPrimaryKeyPublic((Long) peticio.getSolicitantID());
             String nomSolicitant = user.getNom() + " " + user.getLlinatge1()
                     + (user.getLlinatge2() == null ? "" : " " + user.getLlinatge2());
 

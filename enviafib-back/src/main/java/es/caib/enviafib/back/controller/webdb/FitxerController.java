@@ -506,6 +506,14 @@ public java.lang.Long stringToPK(String value) {
      return getRedirectWhenCancel(request, fitxerID);
   }
 
+  /**
+   * Entra aqui al pitjar el boto cancel en el la creació de Fitxer
+   */
+  @RequestMapping(value = "/cancel")
+  public String cancelFitxer(HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, null);
+  }
+
   @Override
   public String getTableModelName() {
     return _TABLE_MODEL;

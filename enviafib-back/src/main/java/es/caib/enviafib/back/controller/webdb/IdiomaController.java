@@ -509,6 +509,14 @@ public java.lang.String stringToPK(String value) {
      return getRedirectWhenCancel(request, idiomaID);
   }
 
+  /**
+   * Entra aqui al pitjar el boto cancel en el la creació de Idioma
+   */
+  @RequestMapping(value = "/cancel")
+  public String cancelIdioma(HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, null);
+  }
+
   @Override
   public String getTableModelName() {
     return _TABLE_MODEL;

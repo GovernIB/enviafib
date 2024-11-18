@@ -292,6 +292,19 @@ public class EntitatJPA implements Entitat {
     return __result;
   }
 
+// EXP  Field:entitatid | Table: efi_seriedocumental | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entitat")
+    private Set<SerieDocumentalJPA> serieDocumentals = new HashSet<SerieDocumentalJPA>(0);
+    public  Set<SerieDocumentalJPA> getSerieDocumentals() {
+    return this.serieDocumentals;
+  }
+
+    public void setSerieDocumentals(Set<SerieDocumentalJPA> serieDocumentals) {
+      this.serieDocumentals = serieDocumentals;
+    }
+
+
 // EXP  Field:entitatid | Table: efi_usuari | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "entitat")
@@ -302,6 +315,19 @@ public class EntitatJPA implements Entitat {
 
     public void setUsuaris(Set<UsuariJPA> usuaris) {
       this.usuaris = usuaris;
+    }
+
+
+// EXP  Field:entitatid | Table: efi_usuarientitat | Type: 0  
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "entitat")
+    private Set<UsuariEntitatJPA> usuariEntitats = new HashSet<UsuariEntitatJPA>(0);
+    public  Set<UsuariEntitatJPA> getUsuariEntitats() {
+    return this.usuariEntitats;
+  }
+
+    public void setUsuariEntitats(Set<UsuariEntitatJPA> usuariEntitats) {
+      this.usuariEntitats = usuariEntitats;
     }
 
 
@@ -444,6 +470,14 @@ public class EntitatJPA implements Entitat {
     __tmp = toJPA(__jpa);
     __alreadyCopied.put(__jpa, __tmp);
     // Copia de beans complexes (EXP)
+    if(!"SerieDocumentalJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.serieDocumentals) || org.hibernate.Hibernate.isInitialized(__jpa.getSerieDocumentals())) ) {
+      __tmp.setSerieDocumentals(SerieDocumentalJPA.copyJPA(__jpa.getSerieDocumentals(), __alreadyCopied,"EntitatJPA"));
+    }
+    if(!"UsuariEntitatJPA".equals(origenJPA) 
+       && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.usuariEntitats) || org.hibernate.Hibernate.isInitialized(__jpa.getUsuariEntitats())) ) {
+      __tmp.setUsuariEntitats(UsuariEntitatJPA.copyJPA(__jpa.getUsuariEntitats(), __alreadyCopied,"EntitatJPA"));
+    }
     if(!"UsuariJPA".equals(origenJPA) 
        && ( !org.fundaciobit.genapp.common.utils.Utils.isEmpty(__jpa.usuaris) || org.hibernate.Hibernate.isInitialized(__jpa.getUsuaris())) ) {
       __tmp.setUsuaris(UsuariJPA.copyJPA(__jpa.getUsuaris(), __alreadyCopied,"EntitatJPA"));

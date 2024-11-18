@@ -31,8 +31,9 @@ import es.caib.enviafib.back.controller.user.FirmaPerNifUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxUserController;
 import es.caib.enviafib.back.controller.webdb.PeticioController;
-
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.UsuariLogicaService;
 import es.caib.enviafib.model.fields.IdiomaFields;
 
 /**
@@ -43,8 +44,8 @@ import es.caib.enviafib.model.fields.IdiomaFields;
  */
 public abstract class AbstractPeticioUserController extends PeticioController implements Constants {
 
-    @EJB(mappedName = es.caib.enviafib.ejb.UsuariService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.UsuariService usuariEjb;
+    @EJB(mappedName = UsuariLogicaService.JNDI_NAME)
+    protected UsuariLogicaService usuariLogicaEjb;
 
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
@@ -126,9 +127,9 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         List<StringKeyValue> tmpList;
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
-        boolean conSerieDocumental = true;
+        String entitatID = LoginInfo.getInstance().getUsuari().getEntitatID();
         
-        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, conSerieDocumental);
+        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, entitatID);
         if (tmpList.isEmpty()) {
             HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
         }else {

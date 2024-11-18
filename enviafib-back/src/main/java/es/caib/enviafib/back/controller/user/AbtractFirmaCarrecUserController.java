@@ -191,10 +191,10 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 + carrecUsername);
 
         // Provam a BBDD a veure si està el NIF
-        Long usuariID = usuariEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(carrecUsername));
+        Long usuariID = usuariLogicaEjb.executeQueryOne(UsuariFields.USUARIID, UsuariFields.USERNAME.equal(carrecUsername));
 
         if (usuariID != null) {
-            UsuariJPA usuariBD = usuariEjb.findByPrimaryKey(usuariID);
+            UsuariJPA usuariBD = usuariLogicaEjb.findByPrimaryKey(usuariID);
 
             carrecNIF = usuariBD.getNif();
             if (carrecFullName == null) {

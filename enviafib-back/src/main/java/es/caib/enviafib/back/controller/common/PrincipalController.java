@@ -1,9 +1,15 @@
 package es.caib.enviafib.back.controller.common;
 
+import es.caib.enviafib.back.security.EntitatRoles;
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.EntitatLogicaService;
+import es.caib.enviafib.model.entity.Entitat;
 
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +33,9 @@ public class PrincipalController {
 
 	protected final Logger log = Logger.getLogger(getClass());
 
+    @EJB(mappedName = EntitatLogicaService.JNDI_NAME)
+    protected EntitatLogicaService entitatLogicaEjb;
+    
 	@RequestMapping(value = "/common/principal.html")
 	public ModelAndView principal(HttpSession session, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -78,6 +88,11 @@ public class PrincipalController {
 	         if ("ajuda".equals(pipella)) {
 	                return new ModelAndView(new RedirectView("/ajuda/faq/list/1", true));
             }
+	         
+			if ("aden".equals(pipella)) {
+				return new ModelAndView(new RedirectView("/aden/usuari/list/1", true));
+			}
+			
 
 			if (Configuracio.isDesenvolupament() && "desenvolupament".equals(pipella)) {
 				return new ModelAndView("desenvolupament");
@@ -97,6 +112,30 @@ public class PrincipalController {
             throws Exception {
         ModelAndView mav = new ModelAndView("homeuser");
         return mav;
-
     }
+    
+    
+	@RequestMapping(value = "/canviarEntitat/{entitatID}", method = RequestMethod.GET)
+	public ModelAndView canviarEntitat(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String entitatID) throws Exception {
+
+		LoginInfo loginInfo = LoginInfo.getInstance();
+		
+		EntitatRoles entitatRols = loginInfo.getMapEntitatsAdmin().get(entitatID);
+
+		
+		loginInfo.setEntitatRolsActual(entitatRols);
+		SecurityContextHolder.getContext().setAuthentication(loginInfo.generateToken());
+		
+		if (entitatRols.getRoles().contains(Constants.ROLE_USER)) {
+			return new ModelAndView(new RedirectView("/user/peticio/list/1", true));
+		}
+		
+		if (entitatRols.getRoles().contains(Constants.ROLE_ADEN)) {
+            return new ModelAndView(new RedirectView("/aden/usuari/list/1", true));
+		}
+		
+		return new ModelAndView(new RedirectView("/common/home", true));
+	}
+
 }

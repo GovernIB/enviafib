@@ -93,10 +93,38 @@ public class EntitatQueryPath extends org.fundaciobit.genapp.common.query.QueryP
 
  // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
 
+  public SerieDocumentalQueryPath SERIEDOCUMENTALS() {
+    return new SerieDocumentalQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return EntitatQueryPath.this.getQueryPath() + "serieDocumentals" + ".";
+      }
+    });
+  }
+*/
+
+/* L'ús d'aquest camp (OneToMany) llança una exception:
+ [Illegal attempt to dereference a collection]
+
+ // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
+
   public UsuariQueryPath USUARIS() {
     return new UsuariQueryPath(new QueryPath() {
       public String getQueryPath() {
           return EntitatQueryPath.this.getQueryPath() + "usuaris" + ".";
+      }
+    });
+  }
+*/
+
+/* L'ús d'aquest camp (OneToMany) llança una exception:
+ [Illegal attempt to dereference a collection]
+
+ // TODO Solució dins el mètode testOneByOneDirect de la classe TestJPA 
+
+  public UsuariEntitatQueryPath USUARIENTITATS() {
+    return new UsuariEntitatQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return EntitatQueryPath.this.getQueryPath() + "usuariEntitats" + ".";
       }
     });
   }

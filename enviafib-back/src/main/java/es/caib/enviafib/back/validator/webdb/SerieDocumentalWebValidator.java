@@ -32,6 +32,9 @@ public class SerieDocumentalWebValidator extends AbstractWebValidator<SerieDocum
   protected SerieDocumentalValidator<SerieDocumental> validator = new SerieDocumentalValidator<SerieDocumental>();
 
   // EJB's
+  @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.EntitatService.JNDI_NAME)
+  protected es.caib.enviafib.ejb.EntitatService entitatEjb;
+
   @javax.ejb.EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
   protected es.caib.enviafib.ejb.SerieDocumentalService serieDocumentalEjb;
 
@@ -77,7 +80,7 @@ public class SerieDocumentalWebValidator extends AbstractWebValidator<SerieDocum
 
     BeanValidatorResult<SerieDocumental> __vr = new BeanValidatorResult<SerieDocumental>();
     validator.validate(__vr, __bean,
-      isNou, serieDocumentalEjb);
+      isNou, entitatEjb, serieDocumentalEjb);
 
     if (__vr.hasErrors()) {
         List<I18NFieldError> vrErrors = __vr.getErrors();

@@ -31,6 +31,10 @@ public class SerieDocumentalQueryPath extends org.fundaciobit.genapp.common.quer
     return new StringField(getQueryPath(), SerieDocumentalFields.PROCEDIMENTCODI);
   }
 
+  public StringField ENTITATID() {
+    return new StringField(getQueryPath(), SerieDocumentalFields.ENTITATID);
+  }
+
 
 
   @Override
@@ -39,5 +43,13 @@ public class SerieDocumentalQueryPath extends org.fundaciobit.genapp.common.quer
         : this.parentQueryPath.getQueryPath());
   }
 
+
+  public EntitatQueryPath ENTITAT() {
+    return new EntitatQueryPath(new QueryPath() {
+      public String getQueryPath() {
+          return SerieDocumentalQueryPath.this.getQueryPath() + "entitat" + ".";
+      }
+    });
+  }
 
 }

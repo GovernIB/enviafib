@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.SerieDocumentalController;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalFilterForm;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalForm;
+import es.caib.enviafib.logic.SerieDocumentalLogicaService;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.persistence.SerieDocumentalJPA;
 
@@ -33,8 +34,8 @@ import es.caib.enviafib.persistence.SerieDocumentalJPA;
 @SessionAttributes(types = { SerieDocumentalForm.class, SerieDocumentalFilterForm.class })
 public class EditarSerieDocumentalAdminController extends SerieDocumentalController {
 
-    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
-    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+	@EJB(mappedName = SerieDocumentalLogicaService.JNDI_NAME)
+	protected SerieDocumentalLogicaService serieDocumentalLogicaEJB;
 
     @Override
     public String getTileForm() {
@@ -83,7 +84,10 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
 		}
 		
 		String lang = LocaleContextHolder.getLocale().getLanguage();
-		tmpList = peticioLogicaEjb.getTipusDocumentals(lang, conSerieDocumental);
+		
+		String entitatID = null;
+
+		tmpList = serieDocumentalLogicaEJB.getTipusDocumentals(lang);
 		if (tmpList.isEmpty()) {
 			HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
 		} else {

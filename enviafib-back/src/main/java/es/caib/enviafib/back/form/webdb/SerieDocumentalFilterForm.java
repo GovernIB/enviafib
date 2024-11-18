@@ -87,6 +87,17 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
   }
 
 
+  private java.lang.String entitatID;
+
+  public java.lang.String getEntitatID() {
+    return this.entitatID;
+  }
+
+  public void setEntitatID(java.lang.String entitatID) {
+    this.entitatID = entitatID;
+  }
+
+
   public SerieDocumentalFilterForm() {
   }
   
@@ -98,7 +109,9 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
     this.tipusDocumental = __toClone.tipusDocumental;
     this.procedimentNom = __toClone.procedimentNom;
     this.procedimentCodi = __toClone.procedimentCodi;
+    this.entitatID = __toClone.entitatID;
     this.mapOfValuesForTipusDocumental = __toClone.mapOfValuesForTipusDocumental;
+    this.mapOfEntitatForEntitatID = __toClone.mapOfEntitatForEntitatID;
   }
   
   /* ========= UTILS ========== */
@@ -110,7 +123,7 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
 
   @Override
   public List<Field<?>> getDefaultGroupByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] {  }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { ENTITATID }));
   }
 
 
@@ -141,6 +154,18 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
 
   public void setMapOfValuesForTipusDocumental(Map<String, String> mapOfValuesForTipusDocumental) {
     this.mapOfValuesForTipusDocumental = mapOfValuesForTipusDocumental;
+  }
+
+
+
+  private Map<String, String> mapOfEntitatForEntitatID;
+
+  public Map<String, String> getMapOfEntitatForEntitatID() {
+    return this.mapOfEntitatForEntitatID;
+  }
+
+  public void setMapOfEntitatForEntitatID(Map<String, String> mapOfEntitatForEntitatID) {
+    this.mapOfEntitatForEntitatID = mapOfEntitatForEntitatID;
   }
 
 

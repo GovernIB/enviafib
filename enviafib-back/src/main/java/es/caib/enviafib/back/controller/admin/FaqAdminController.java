@@ -29,7 +29,7 @@ import es.caib.enviafib.persistence.FaqJPA;
 
 @Controller
 @RequestMapping(value = FaqAdminController.CONTEXTWEB)
-@SessionAttributes(types = { FaqForm.class, FaqForm.class })
+@SessionAttributes(types = { FaqFilterForm.class, FaqForm.class })
 public class FaqAdminController extends FaqController {
 
     public static final String CONTEXTWEB = "/admin/faq";
