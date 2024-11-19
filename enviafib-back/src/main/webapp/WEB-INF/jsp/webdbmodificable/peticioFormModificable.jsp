@@ -133,6 +133,11 @@
             li_input.setAttribute("class", "li_file" );
 
             if (FLAG.charAt(i) === "F") {
+            	
+            	var div_arriba = document.createElement("div");
+            	div_arriba.setAttribute("id", "div_arriba" + i );
+            	div_arriba.setAttribute("class", "div_arriba" );
+            	
                 var div_file = document.createElement("div");
                 div_file.setAttribute("id", "div_file" + i );
                 div_file.setAttribute("class", "div_file" );
@@ -167,10 +172,10 @@
                 var btn_afegir_anex = document.createElement("label");
                 btn_afegir_anex.setAttribute("id", "afegirAnex" + i );
                 btn_afegir_anex.setAttribute("for", "anex_aux" + i );
-                btn_afegir_anex.setAttribute("class", "afegirAnex bg-aplicacio");
-                btn_afegir_anex.innerHTML = '<span class="label label-success"><b><i class="fas fa-plus"></i></b></span>';
+                btn_afegir_anex.setAttribute("class", "afegirAnex");
+                btn_afegir_anex.innerHTML = '<i class="fas fa-arrow-circle-up"></i>';
 
-                div_botonera.appendChild(btn_afegir_anex);
+//                div_botonera.appendChild(btn_afegir_anex);
                 div_botonera.appendChild(btn_delete);
                 
                 var titolFitxer = document.createElement("span");
@@ -194,7 +199,9 @@
                 let myFileList = list.files;
                 input.files = myFileList;
                 
-                li_input.appendChild(div_file);
+                div_arriba.appendChild(div_file);
+                div_arriba.appendChild(btn_afegir_anex);
+                li_input.appendChild(div_arriba);
                 
                 //Cuando hemos añadido el fichero, comprovamos si el siguiente es su anexo...
                 
@@ -406,7 +413,8 @@ td label {
 }
 
 .afegirAnex:hover {
-	background-color: #b96f24 !important
+	/* 	background-color: #b96f24 !important; */
+	background-color: rgba(255, 149, 35) !important;
 }
 
 .eliminarFitxer:hover {
@@ -419,13 +427,25 @@ td label {
 
 .afegirAnex {
 	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	margin: 0;
+	background-color: rgba(255, 149, 35, 0.85);
+}
+
+.div_arriba {
+	display: flex;
+	align-items: center;
 }
 
 .div_file {
 	background-color: rgba(255, 149, 35, 0.5);
 	border-radius: 5px;
-	padding: 3px 8px;
-	margin: 5px 10px;
+	padding: 4px 8px;
+	margin: 5px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -433,6 +453,7 @@ td label {
 
 .li_file {
 	float: left;
+	margin-right: 4rem;
 }
 
 #ul_files {
