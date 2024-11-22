@@ -510,3 +510,21 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.DIR3)}">
+        <tr id="entitat_dir3_rowid">
+          <td id="entitat_dir3_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[EntitatFields.DIR3])?'entitat.dir3':__theForm.labels[EntitatFields.DIR3]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[EntitatFields.DIR3]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[EntitatFields.DIR3]}" ></i>
+              </c:if>
+            </td>
+          <td id="entitat_dir3_columnvalueid">
+            <form:errors path="entitat.dir3" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EntitatFields.DIR3)? 'true' : 'false'}" cssClass="w-75 form-control  ${gen:contains(__theForm.readOnlyFields ,EntitatFields.DIR3)? ' uneditable-input' : ''}"  style="" maxlength="50" path="entitat.dir3"   />
+
+           </td>
+        </tr>
+        </c:if>
+        

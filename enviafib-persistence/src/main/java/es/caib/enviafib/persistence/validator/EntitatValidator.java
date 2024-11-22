@@ -133,6 +133,14 @@ public class EntitatValidator<I extends Entitat>
       }
     }
 
+    if (__vr.getFieldErrorCount(DIR3) == 0) {
+      java.lang.String __dir3 = __target__.getDir3();
+      if (__dir3!= null && __dir3.length() > 50) {
+        __vr.rejectValue(DIR3, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(DIR3)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(50)));
+      }
+    }
+
     if (__isNou__) { // Creació
       // ================ CREATION
       // Fitxers 

@@ -79,6 +79,10 @@ public class EntitatQueryPath extends org.fundaciobit.genapp.common.query.QueryP
     return new StringField(getQueryPath(), EntitatFields.PROPIETATSTAULAFIRMES);
   }
 
+  public StringField DIR3() {
+    return new StringField(getQueryPath(), EntitatFields.DIR3);
+  }
+
 
 
   @Override

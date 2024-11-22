@@ -25,6 +25,7 @@ public class EntitatBean implements Entitat {
 	int segelldetempsviaweb;
 	boolean checkcanviatdocfirmat;
 	java.lang.String propietatstaulafirmes;
+	java.lang.String dir3;
 
 
   /** Constructor Buit */
@@ -32,7 +33,7 @@ public class EntitatBean implements Entitat {
   }
 
   /** Constructor amb tots els camps  */
-  public EntitatBean(java.lang.String entitatid , java.lang.String nom , java.lang.String descripcio , java.lang.String adrezahtml , boolean activa , java.lang.String suporttelefon , java.lang.String suportweb , java.lang.String suportemail , long faviconID , long logowebID , long logowebpeuID , long logosegellID , java.lang.String web , java.lang.Long motiudelegacioID , int segelldetempsviaweb , boolean checkcanviatdocfirmat , java.lang.String propietatstaulafirmes) {
+  public EntitatBean(java.lang.String entitatid , java.lang.String nom , java.lang.String descripcio , java.lang.String adrezahtml , boolean activa , java.lang.String suporttelefon , java.lang.String suportweb , java.lang.String suportemail , long faviconID , long logowebID , long logowebpeuID , long logosegellID , java.lang.String web , java.lang.Long motiudelegacioID , int segelldetempsviaweb , boolean checkcanviatdocfirmat , java.lang.String propietatstaulafirmes , java.lang.String dir3) {
     this.entitatid=entitatid;
     this.nom=nom;
     this.descripcio=descripcio;
@@ -50,6 +51,7 @@ public class EntitatBean implements Entitat {
     this.segelldetempsviaweb=segelldetempsviaweb;
     this.checkcanviatdocfirmat=checkcanviatdocfirmat;
     this.propietatstaulafirmes=propietatstaulafirmes;
+    this.dir3=dir3;
 }
   /** Constructor dels valors Not Null */
   public EntitatBean(java.lang.String entitatid , java.lang.String nom , java.lang.String adrezahtml , boolean activa , long faviconID , long logowebID , long logowebpeuID , long logosegellID , java.lang.String web , int segelldetempsviaweb , boolean checkcanviatdocfirmat) {
@@ -83,6 +85,7 @@ public class EntitatBean implements Entitat {
     this.setSegelldetempsviaweb(__bean.getSegelldetempsviaweb());
     this.setCheckcanviatdocfirmat(__bean.isCheckcanviatdocfirmat());
     this.setPropietatstaulafirmes(__bean.getPropietatstaulafirmes());
+    this.setDir3(__bean.getDir3());
     // Fitxer
     this.setFavicon(FitxerBean.toBean(__bean.getFavicon()));
     // Fitxer
@@ -212,6 +215,13 @@ public class EntitatBean implements Entitat {
 		this.propietatstaulafirmes = _propietatstaulafirmes_;
 	};
 
+	public java.lang.String getDir3() {
+		return(dir3);
+	};
+	public void setDir3(java.lang.String _dir3_) {
+		this.dir3 = _dir3_;
+	};
+
 
 
   // ======================================
@@ -236,6 +246,7 @@ public class EntitatBean implements Entitat {
     __tmp.setSegelldetempsviaweb(__bean.getSegelldetempsviaweb());
     __tmp.setCheckcanviatdocfirmat(__bean.isCheckcanviatdocfirmat());
     __tmp.setPropietatstaulafirmes(__bean.getPropietatstaulafirmes());
+    __tmp.setDir3(__bean.getDir3());
     // Fitxer
     __tmp.setFavicon(FitxerBean.toBean(__bean.getFavicon()));
     // Fitxer

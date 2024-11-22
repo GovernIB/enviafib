@@ -239,6 +239,19 @@
 
 
         </c:if>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,EntitatFields.DIR3)}">
+            <%-- FILTRE STRING --%>
+            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+              <fmt:message key="entitat.dir3" var="dir3" />
+              <fmt:message key="genapp.form.searchby" var="cercaperdir3" >                
+                 <fmt:param value="${dir3}"/>
+              </fmt:message>
+              <span class="add-on"><c:out value="${dir3}" />:</span>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperdir3}" path="dir3" />
+            </div>
+
+
+        </c:if>
 
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key >= 0 && not empty __entry.value.searchBy }">

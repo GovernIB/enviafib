@@ -53,6 +53,9 @@ public interface Entitat extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.String getPropietatstaulafirmes();
 	public void setPropietatstaulafirmes(java.lang.String _propietatstaulafirmes_);
 
+	public java.lang.String getDir3();
+	public void setDir3(java.lang.String _dir3_);
+
   // Fitxer
   public <F extends Fitxer> F getFavicon();
   // Fitxer

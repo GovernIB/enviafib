@@ -120,6 +120,11 @@
           ${entitat.propietatstaulafirmes}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EntitatFields.DIR3)}">
+          <td>
+          ${entitat.dir3}
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

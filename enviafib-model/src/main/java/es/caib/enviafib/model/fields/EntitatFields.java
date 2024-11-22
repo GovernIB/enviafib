@@ -29,6 +29,7 @@ public interface EntitatFields extends java.io.Serializable {
 	 public static final IntegerField SEGELLDETEMPSVIAWEB = new IntegerField(_TABLE_MODEL, "segelldetempsviaweb", "segelldetempsviaweb");
 	 public static final BooleanField CHECKCANVIATDOCFIRMAT = new BooleanField(_TABLE_MODEL, "checkcanviatdocfirmat", "checkcanviatdocfirmat");
 	 public static final StringField PROPIETATSTAULAFIRMES = new StringField(_TABLE_MODEL, "propietatstaulafirmes", "propietatstaulafirmes");
+	 public static final StringField DIR3 = new StringField(_TABLE_MODEL, "dir3", "dir3");
 
 
   public static final Field<?>[] ALL_ENTITAT_FIELDS = {
@@ -48,7 +49,8 @@ public interface EntitatFields extends java.io.Serializable {
     MOTIUDELEGACIOID,
     SEGELLDETEMPSVIAWEB,
     CHECKCANVIATDOCFIRMAT,
-    PROPIETATSTAULAFIRMES
+    PROPIETATSTAULAFIRMES,
+    DIR3
   };
 
 

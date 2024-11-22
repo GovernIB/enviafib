@@ -55,8 +55,8 @@ public class EntitatJPAManager
         return list.toArray(new Entitat[list.size()]);
     };
 
-    public Entitat create( java.lang.String _entitatid_, java.lang.String _nom_, java.lang.String _descripcio_, java.lang.String _adrezahtml_, boolean _activa_, java.lang.String _suporttelefon_, java.lang.String _suportweb_, java.lang.String _suportemail_, long _faviconID_, long _logowebID_, long _logowebpeuID_, long _logosegellID_, java.lang.String _web_, java.lang.Long _motiudelegacioID_, int _segelldetempsviaweb_, boolean _checkcanviatdocfirmat_, java.lang.String _propietatstaulafirmes_) throws I18NException {
-        EntitatJPA __bean =  new EntitatJPA(_entitatid_,_nom_,_descripcio_,_adrezahtml_,_activa_,_suporttelefon_,_suportweb_,_suportemail_,_faviconID_,_logowebID_,_logowebpeuID_,_logosegellID_,_web_,_motiudelegacioID_,_segelldetempsviaweb_,_checkcanviatdocfirmat_,_propietatstaulafirmes_);
+    public Entitat create( java.lang.String _entitatid_, java.lang.String _nom_, java.lang.String _descripcio_, java.lang.String _adrezahtml_, boolean _activa_, java.lang.String _suporttelefon_, java.lang.String _suportweb_, java.lang.String _suportemail_, long _faviconID_, long _logowebID_, long _logowebpeuID_, long _logosegellID_, java.lang.String _web_, java.lang.Long _motiudelegacioID_, int _segelldetempsviaweb_, boolean _checkcanviatdocfirmat_, java.lang.String _propietatstaulafirmes_, java.lang.String _dir3_) throws I18NException {
+        EntitatJPA __bean =  new EntitatJPA(_entitatid_,_nom_,_descripcio_,_adrezahtml_,_activa_,_suporttelefon_,_suportweb_,_suportemail_,_faviconID_,_logowebID_,_logowebpeuID_,_logosegellID_,_web_,_motiudelegacioID_,_segelldetempsviaweb_,_checkcanviatdocfirmat_,_propietatstaulafirmes_,_dir3_);
         return create(__bean);
     }
 

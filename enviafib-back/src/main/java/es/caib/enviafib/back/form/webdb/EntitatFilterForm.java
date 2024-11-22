@@ -164,6 +164,17 @@ public class EntitatFilterForm extends EnviaFIBBaseFilterForm implements Entitat
   }
 
 
+  private java.lang.String dir3;
+
+  public java.lang.String getDir3() {
+    return this.dir3;
+  }
+
+  public void setDir3(java.lang.String dir3) {
+    this.dir3 = dir3;
+  }
+
+
   public EntitatFilterForm() {
   }
   
@@ -182,6 +193,7 @@ public class EntitatFilterForm extends EnviaFIBBaseFilterForm implements Entitat
     this.segelldetempsviawebDesde = __toClone.segelldetempsviawebDesde;
     this.segelldetempsviawebFins = __toClone.segelldetempsviawebFins;
     this.propietatstaulafirmes = __toClone.propietatstaulafirmes;
+    this.dir3 = __toClone.dir3;
     this.mapOfTraduccioForMotiudelegacioID = __toClone.mapOfTraduccioForMotiudelegacioID;
   }
   
