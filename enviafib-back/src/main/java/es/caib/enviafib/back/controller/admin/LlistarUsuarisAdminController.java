@@ -13,8 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.ejb.UsuariEntitatService;
 import es.caib.enviafib.logic.UsuariLogicaEJB;
 import es.caib.enviafib.logic.UsuariLogicaService;
+import es.caib.enviafib.model.entity.Usuari;
+import es.caib.enviafib.model.fields.UsuariEntitatFields;
 import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
@@ -65,4 +68,10 @@ public class LlistarUsuarisAdminController extends UsuariController {
 		return (UsuariJPA) usuariLogicaEjb.findByPrimaryKeyPublic(usuariID);
 	}
 
+	@Override
+	public void delete(HttpServletRequest request, Usuari usuari) throws I18NException {
+		usuariLogicaEjb.delete(usuari);
+	}	
+	
+	
 }

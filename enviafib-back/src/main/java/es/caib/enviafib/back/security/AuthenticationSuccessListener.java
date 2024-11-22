@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
 import org.fundaciobit.pluginsib.userinformation.UserInfo;
 
@@ -33,6 +34,7 @@ import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
 import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.entity.UsuariEntitat;
+import es.caib.enviafib.model.fields.EntitatFields;
 import es.caib.enviafib.model.fields.UsuariEntitatFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
@@ -171,8 +173,21 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 					EntitatService entitatEjb;
 					try {
 						entitatEjb = EjbManager.getEntitatEJB();
-						String entitatID = entitatEjb.select().get(0).getEntitatid();
-						persona.setEntitatID(entitatID); // Per defecte la primera
+						
+						//Si no troba el dir, torna el de govern.
+						String dir3 = obtenirDIR3DePlugin(username);
+						log.info("El dir3 de l'usuari es: " + dir3);
+						//Si troba el dir3 de l'usuari, pero no està a la taula d'entitats, assignam l'usuari a l'entitat per defecte, que es govern
+						String entitatID = entitatEjb.executeQueryOne(EntitatFields.ENTITATID,
+								EntitatFields.DIR3.equal(dir3));						
+
+						log.info("EntitatID: " + entitatID);
+						if (entitatID == null) {
+							log.info("No s'ha trobat l'entitat per defecte, assignam l'usuari a govern");
+                            entitatID = "govern";
+						}
+						
+						persona.setEntitatID(entitatID);
 
 					} catch (Throwable e) {
 						String msg = I18NUtils.tradueix("comodi","Error intentant obtenir l'entitat per defecte: " + e.getMessage());
@@ -319,4 +334,25 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
         return nom;
     }
 
+	private String obtenirDIR3DePlugin(String username) {
+		String codiDIR3;
+		try {
+
+			IEstructuraOrganitzativaPlugin plugin = EjbManager.getPluginEstructuraOrganitzativa().getInstance();
+
+			codiDIR3 = plugin.getDir3DepartamentDireccioGeneral(username);
+			if (codiDIR3 != null && codiDIR3.trim().length() > 0) {
+				log.info("El meu codiDIR3 es: " + codiDIR3);
+			} else {
+				log.error("El codi DIR3 de l'usuari " + username + " es null o buit ]" + codiDIR3 + "[");
+				// Si no troba el dir3, retornam per defecte el de govern:
+				codiDIR3 = "A04003003";
+			}
+		} catch (Throwable e) {
+			log.error("Error obtenint el dir3:  " + e.getMessage(), e);
+			codiDIR3 = "A04003003";
+		}
+		return codiDIR3;
+	}
+    
 }

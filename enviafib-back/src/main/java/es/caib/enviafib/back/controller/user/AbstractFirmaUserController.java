@@ -55,6 +55,7 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.commons.utils.NifUtils.NifInfo;
+import es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoAnex;
@@ -87,8 +88,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
     @EJB(mappedName = es.caib.enviafib.ejb.InfoAnexService.JNDI_NAME)
     protected es.caib.enviafib.ejb.InfoAnexService infoAnexEjb;   
     
-    @EJB(mappedName = es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
-    protected es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
+    @EJB(mappedName = PluginEstructuraOrganitzativaLogicaService.JNDI_NAME)
+    protected PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaEjb;
 
     @Override
     public boolean isActiveList() {

@@ -14,6 +14,7 @@ import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.ejb.IdiomaService;
 import es.caib.enviafib.ejb.UsuariEntitatService;
 import es.caib.enviafib.ejb.UsuariService;
+import es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService;
 import es.caib.enviafib.logic.UsuariLogicaService;
 
 /**
@@ -90,6 +91,35 @@ public final class EjbManager {
         return usuariEntitatEjb;
     }
     
+	protected static PluginEstructuraOrganitzativaLogicaService pluginEstructuraOrganitzativaLogicaService;
+
+	public static PluginEstructuraOrganitzativaLogicaService getPluginEstructuraOrganitzativa() {
+
+		if (pluginEstructuraOrganitzativaLogicaService == null) {
+			try {
+				pluginEstructuraOrganitzativaLogicaService = (PluginEstructuraOrganitzativaLogicaService) new InitialContext()
+						.lookup(PluginEstructuraOrganitzativaLogicaService.JNDI_NAME);
+			} catch (Throwable e) {
+				log.error(e.getMessage(), e);
+			}
+		}
+		return pluginEstructuraOrganitzativaLogicaService;
+	}
+
+	protected static UsuariService usuariService;
+
+	public static UsuariService getUsuariService() throws I18NException {
+
+		if (usuariService == null) {
+			try {
+				usuariService = (UsuariService) new InitialContext().lookup(UsuariService.JNDI_NAME);
+			} catch (Throwable e) {
+				throwNewI18NException(e, "UsuariService");
+			}
+		}
+		return usuariService;
+
+	}
     
     
     public static Map<Class<?>, Object> servicesCache = new HashMap<Class<?>, Object>();
@@ -114,6 +144,4 @@ public final class EjbManager {
         }
         return ejb;
     }
-    
-    
 }

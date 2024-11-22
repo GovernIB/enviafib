@@ -4,14 +4,21 @@ package es.caib.enviafib.logic;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.hibernate.Hibernate;
 
 import es.caib.enviafib.ejb.UsuariEJB;
+import es.caib.enviafib.ejb.UsuariEntitatService;
+import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
+import es.caib.enviafib.model.entity.UsuariEntitat;
+import es.caib.enviafib.model.fields.PeticioFields;
+import es.caib.enviafib.model.fields.UsuariEntitatFields;
 import es.caib.enviafib.model.fields.UsuariFields;
+import es.caib.enviafib.persistence.UsuariEntitatJPA;
 import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
@@ -21,7 +28,14 @@ import es.caib.enviafib.persistence.UsuariJPA;
  */
 @Stateless
 public class UsuariLogicaEJB extends UsuariEJB implements UsuariLogicaService {
+	
+	@EJB(mappedName = PeticioLogicaService.JNDI_NAME)
+	protected PeticioLogicaService peticioLogicaEjb;
 
+	
+	@EJB(mappedName = UsuariEntitatLogicaService.JNDI_NAME)
+	protected UsuariEntitatService usuariEntitatLogicaEjb;
+	
 	@Override
 	@PermitAll
 	public Usuari createPublic(Usuari instance) throws I18NException {
@@ -65,6 +79,38 @@ public class UsuariLogicaEJB extends UsuariEJB implements UsuariLogicaService {
 		}
 
 		return usuariPersona;
+	}
+	
+	
+	@Override
+	public void delete(Usuari instance) {
+		// Cuando se borra un usuario, borrar todas sus peticiones y sus registros en la
+		// tabla usuari_entitat
+		Long usuariID = instance.getUsuariID();
+		try {
+			List<UsuariEntitat> usuariEntitats = usuariEntitatLogicaEjb
+					.select(UsuariEntitatFields.USUARIID.equal(usuariID));
+
+			for (UsuariEntitat usuariEntitat : usuariEntitats) {
+				usuariEntitatLogicaEjb.delete(usuariEntitat);
+			}
+
+		} catch (I18NException e) {
+			log.error("Error al borrar en la tabla usuariEntitat" + usuariID + " : " + e.getMessage(), e);
+		}
+
+		try {
+			List<Peticio> peticions = peticioLogicaEjb.select(PeticioFields.SOLICITANTID.equal(usuariID));
+
+			for (Peticio peticio : peticions) {
+				peticioLogicaEjb.delete(peticio);
+			}
+
+		} catch (I18NException e) {
+			log.error("Error al borrar en la tabla peticio" + usuariID + " : " + e.getMessage(), e);
+		}
+
+		super.delete(instance);
 	}
 
 }
