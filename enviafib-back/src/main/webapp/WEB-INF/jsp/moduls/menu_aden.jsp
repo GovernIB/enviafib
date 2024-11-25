@@ -52,10 +52,12 @@
 				style="${(fn:contains(url, '/aden/peticio'))? "font-weight:bold;" : ""}"><fmt:message
 						key="aden.menus.peticions" /></span>
 		</a></li>
-		<hr style="margin-top: 6px; margin-bottom: 6px;" />
+		
 
 
 
+
+<%-- <hr style="margin-top: 6px; margin-bottom: 6px;" />
 
 
 		<!-- GRUPS -->
@@ -73,7 +75,7 @@
 				style="${(fn:contains(url, '/aden/menu'))? "font-weight:bold;" : ""}"><fmt:message
 						key="menus.gestio" /></span>
 		</a></li>
-
+ --%>
 
 	</ul>
 </div>
