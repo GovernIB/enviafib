@@ -57,7 +57,28 @@ public class SerieDocumentalLogicaEJB extends SerieDocumentalEJB implements Seri
 	}
 
 	@Override
-	public List<StringKeyValue> getTipusDocumentals(String lang) throws I18NException {
+	public List<StringKeyValue> getAllTipusDocumentals(String lang) throws I18NException {
+		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+
+		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
+
+		for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
+			Long key = tipusDocPFI.getDocumentType();
+			String name = tipusDocPFI.getName();
+
+			StringKeyValue skv = new StringKeyValue(key.toString(), name);
+			__tmp.add(skv);
+
+		}
+		log.info("getAllTipusDocumentals()::Retornem " + __tmp.size() + " tipus documentals");
+		return __tmp;
+
+	}
+	
+	
+	
+	@Override
+	public List<StringKeyValue> getTipusDocumentalsBase(String lang) throws I18NException {
 
 		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
 
@@ -76,8 +97,44 @@ public class SerieDocumentalLogicaEJB extends SerieDocumentalEJB implements Seri
 			}
 
 		}
-		log.info("getTipusDocumentals()::Retornem " + __tmp.size() + " tipus documentals");
+		log.info("getTipusDocumentalsBase()::Retornem " + __tmp.size() + " tipus documentals");
 		return __tmp;
+	}
+	
+	
+	@Override
+	public SerieDocumental getSerieDocFromTipusDoc(String lang, String tipusDocumental, String entitatID) throws I18NException {
+		//Cercar el tipusDocumental, obtenir el seu base, i cercar a la lista de series de l'entitat, la serie documental amb td la base
+		
+		
+		//Obtenir el base del tipusDocumental
+		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
+		
+		Long tipusDoc = Long.parseLong(tipusDocumental);
+		Long base = null;
+		for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
+			if (tipusDocPFI.getDocumentType() == tipusDoc) {
+				base = tipusDocPFI.getDocumentTypeBase();
+				break;
+			}
+		}
+
+		if (base == null) {
+			throw new I18NException("error.portafib.tipusdocumental",
+					"No s'ha trobat el tipus documental base de " + tipusDocumental);
+		}
+		
+		SerieDocumental serieDocumental = null;
+		
+		Where wEntitat = SerieDocumentalFields.ENTITATID.equal(entitatID);
+		Where wTipusDoc = SerieDocumentalFields.TIPUSDOCUMENTAL.equal(String.valueOf(base));
+		
+		List<SerieDocumental> series = this.select(Where.AND(wEntitat, wTipusDoc));
+		if (series.size() == 1) {
+			serieDocumental = series.get(0);
+		}
+
+		return serieDocumental;
 	}
 
 }

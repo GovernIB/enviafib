@@ -1,4 +1,4 @@
-package es.caib.enviafib.back.controller.admin;
+package es.caib.enviafib.back.controller.aden;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.caib.enviafib.back.controller.admin.PlantillesDeFluxDeFirmesAdminController;
 import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController;
 import es.caib.enviafib.back.controller.user.PlantillesDeFluxDeFirmesUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Usuari;
 
@@ -40,39 +42,40 @@ import es.caib.enviafib.model.entity.Usuari;
  *
  */
 @Controller
-@RequestMapping(value = "/admin/plantillesfluxfirmes")
+@RequestMapping(value = "/aden/plantillesfluxfirmes")
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })
-public class PlantillesDeFluxDeFirmesAdminController extends PlantillesDeFluxDeFirmesUserController {
+public class PlantillesDeFluxDeFirmesAdenController extends PlantillesDeFluxDeFirmesUserController {
     
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
     @Override
     public String getEntityNameCode() {
-        return "plantillesfluxfirmes.admin";
+        return "plantillesfluxfirmes.aden";
     }
 
     @Override
     public String getEntityNameCodePlural() {
-        return "plantillesfluxfirmes.admin.plural";
+        return "plantillesfluxfirmes.aden.plural";
     }
 
     @Override
     public String getTileForm() {
-        return "plantillesfluxfirmesFormAdmin";
+        return "plantillesfluxfirmesFormAden";
     }
 
     @Override
     public String getTileList() {
-        return "plantillesfluxfirmesListAdmin";
+        return "plantillesfluxfirmesListAden";
     }
 
-    @Override
-    public String getOwner() {
-        return "+*enviafib*+";
-    }
-
-    @RequestMapping(value = "/mostrarjson/{flowID}")
+	@Override
+	public String getOwner() {
+		return LoginInfo.getInstance().getEntitatRolsActual().getEntitat().getEntitatid();
+	}
+	
+	
+	@RequestMapping(value = "/mostrarjson/{flowID}")
     public String mostrarJson(@PathVariable("flowID")
     String flowID, HttpServletRequest request, HttpServletResponse response) {
 

@@ -87,7 +87,7 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
 		
 		String entitatID = null;
 
-		tmpList = serieDocumentalLogicaEJB.getTipusDocumentals(lang);
+		tmpList = serieDocumentalLogicaEJB.getAllTipusDocumentals(lang);
 		if (tmpList.isEmpty()) {
 			HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
 		} else {

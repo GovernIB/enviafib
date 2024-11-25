@@ -35,6 +35,17 @@
 		</a></li>
 		<hr style="margin-top: 6px; margin-bottom: 6px;" />
 
+
+        <!-- PLANTILLES FLUXOS FIRMES -->
+		<li style="list-style-type: disc; list-style-position: inside;"><a
+			href="<c:url value="/aden/plantillesfluxfirmes/list"/>"> <span
+				style="${(fn:contains(url, '/aden/plantillesfluxfirmes'))? "font-weight:bold;" : ""}"><fmt:message
+						key="aden.menus.plantilles.entitat" /></span>
+		</a></li>
+
+		<hr style="margin-top: 6px; margin-bottom: 6px;" />
+
+
 		<!-- PETICIONS -->
 		<li style="list-style-type: disc; list-style-position: inside;"><a
 			href="<c:url value="/aden/peticio/list"/>"> <span
@@ -54,21 +65,6 @@
 						key="admin.menu.grup" /></span>
 		</a></li>
 
-		<hr style="margin-top: 6px; margin-bottom: 6px;" />
-
-
-        <!-- PLANTILLES FLUXOS FIRMES -->
-		<li style="list-style-type: disc; list-style-position: inside;"><a
-			href="<c:url value="/aden/plantillesfluxfirmes/list"/>"> <span
-				style="${(fn:contains(url, '/aden/plantillesfluxfirmes'))? "font-weight:bold;" : ""}"><fmt:message
-						key="plantillesfluxfirmes.admin.plural" /></span>
-		</a></li>
-
-		<li style="list-style-type: disc; list-style-position: inside;"><a
-			href="<c:url value="/aden/netejarplantilles/list"/>"> <span
-				style="${(fn:contains(url, '/aden/netejarplantilles'))? "font-weight:bold;" : ""}"><fmt:message
-						key="plantillesfluxfirmes.obsolet.plural" /></span>
-		</a></li>
 		<hr style="margin-top: 6px; margin-bottom: 6px;" />
 
 	    <!-- MENUS -->

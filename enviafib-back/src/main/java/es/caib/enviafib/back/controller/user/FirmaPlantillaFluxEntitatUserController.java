@@ -2,6 +2,8 @@ package es.caib.enviafib.back.controller.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
 
 /**
@@ -14,7 +16,7 @@ import es.caib.enviafib.commons.utils.Constants;
 
 public class FirmaPlantillaFluxEntitatUserController extends FirmaPlantillaFluxUserController {
 
-    public static final String OWNER_PLANTILLES_DE_LA_ENTITAT = "+*enviafib*+";
+//    public static final String OWNER_PLANTILLES_DE_LA_ENTITAT = "+*enviafib*+";
 
     public static final String CONTEXT_WEB = "/user/firmaplantillafluxentitat";
 
@@ -25,6 +27,8 @@ public class FirmaPlantillaFluxEntitatUserController extends FirmaPlantillaFluxU
 
     @Override
     public String getOwner() {
-        return OWNER_PLANTILLES_DE_LA_ENTITAT;
+    	String entitatActualID = LoginInfo.getInstance().getEntitatRolsActual().getEntitat().getEntitatid();
+    	return entitatActualID;
+     //   return OWNER_PLANTILLES_DE_LA_ENTITAT;
     }
 }

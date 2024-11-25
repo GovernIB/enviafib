@@ -139,7 +139,7 @@ public class SerieDocumentalAdenController extends SerieDocumentalController {
 		String lang = LocaleContextHolder.getLocale().getLanguage();
 		String entitatID = LoginInfo.getInstance().getEntitatRolsActual().getEntitat().getEntitatid();
 
-		tmpList = serieDocumentalLogicaEJB.getTipusDocumentals(lang);
+		tmpList = serieDocumentalLogicaEJB.getTipusDocumentalsBase(lang);
 		if (tmpList.isEmpty()) {
 			HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
 		} else {

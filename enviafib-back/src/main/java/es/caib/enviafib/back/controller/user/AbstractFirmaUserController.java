@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -23,6 +24,7 @@ import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
+import org.fundaciobit.genapp.common.query.GroupByItem;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 
@@ -56,6 +58,7 @@ import es.caib.enviafib.commons.utils.NifUtils;
 import es.caib.enviafib.commons.utils.NifUtils.CheckNifResult;
 import es.caib.enviafib.commons.utils.NifUtils.NifInfo;
 import es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService;
+import es.caib.enviafib.logic.SerieDocumentalLogicaService;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoAnex;
@@ -82,8 +85,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
 	public static final String DESTINATARI_NIF = "destinatariNIF";
 	
-    @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.SerieDocumentalService serieDocumentalEjb;
+    @EJB(mappedName = SerieDocumentalLogicaService.JNDI_NAME)
+    protected SerieDocumentalLogicaService serieDocumentalLogicaEjb;
 
     @EJB(mappedName = es.caib.enviafib.ejb.InfoAnexService.JNDI_NAME)
     protected es.caib.enviafib.ejb.InfoAnexService infoAnexEjb;   
@@ -1021,30 +1024,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         // Validacio de serie documental
         {
             Peticio peticio = peticioForm.getPeticio();
-
+ 
+            String lang = "ca";
             String tipusDocumental = peticio.getTipusDocumental();
-
+            String entitatID = LoginInfo.getInstance().getUsuari().getEntitatID();
+            
             log.info("tipusDocumental: " + tipusDocumental);
-            // Mapeig de Series Documentals
-            List<SerieDocumental> list = serieDocumentalEjb
-                    .select(SerieDocumentalFields.TIPUSDOCUMENTAL.equal(tipusDocumental));
-
-            // Valida que pel tipus de document hi ha seria documental
-            if (list == null || list.isEmpty()) {
-                list = serieDocumentalEjb.select(SerieDocumentalFields.TIPUSDOCUMENTAL.isNull());
-                if (list == null || list.isEmpty()) {
-
-                    result.rejectValue(get(PeticioFields.ARXIUOPTPARAMSERIEDOCUMENTAL), "error.tipusdocumental",
-                            new String[] { tipusDocumental }, null);
-                }
-            }
-
-            SerieDocumental serieDocumental = list.get(0);
+            
+            SerieDocumental serieDocumental = serieDocumentalLogicaEjb.getSerieDocFromTipusDoc(lang, tipusDocumental, entitatID);
 
             log.info("getNom: " + serieDocumental.getNom());
             log.info("getProcedimentCodi: " + serieDocumental.getProcedimentCodi());
             log.info("getProcedimentNom: " + serieDocumental.getProcedimentNom());
-            
             
             peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
             peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());

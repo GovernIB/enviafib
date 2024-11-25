@@ -903,7 +903,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     @Override
-	public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID) throws I18NException {
+	public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID, boolean incloureDesconeguts) throws I18NException {
 
 		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
 		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
@@ -927,8 +927,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 				StringKeyValue skv = new StringKeyValue(key.toString(), name);
 				__tmp.add(skv);
 			}else {
-				//Afegir tipus documental null per desconegut.
-				__tmp.add(new StringKeyValue(key.toString(), "Tipus documental desconegut"));
+				if (incloureDesconeguts) {
+					// Afegir tipus documental null per desconegut.
+					__tmp.add(new StringKeyValue(key.toString(), "Tipus documental desconegut"));
+				}
 			}
 		}
 		

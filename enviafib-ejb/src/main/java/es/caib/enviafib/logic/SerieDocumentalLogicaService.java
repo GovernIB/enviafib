@@ -26,6 +26,11 @@ public interface SerieDocumentalLogicaService extends SerieDocumentalService {
 
 	public SerieDocumentalJPA findByPrimaryKeyPublic(Long _ID_);
 	
-    public List<StringKeyValue> getTipusDocumentals(String lang) throws I18NException;
+    public List<StringKeyValue> getTipusDocumentalsBase(String lang) throws I18NException;
+
+    public SerieDocumental getSerieDocFromTipusDoc(String lang, String tipusDocumental, String entitatID) throws I18NException;
+
+    public List<StringKeyValue> getAllTipusDocumentals(String lang) throws I18NException;
+	
 
 }

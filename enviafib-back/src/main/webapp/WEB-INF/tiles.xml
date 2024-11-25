@@ -359,6 +359,15 @@
     <definition name="serieDocumentalListAden" extends="aden">
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/serieDocumentalList.jsp" />
     </definition>
+
+	<definition name="plantillesfluxfirmesFormAden"	extends="aden">
+		<put-attribute name="titol" value="usuari.usuari" />
+		<put-attribute name="contingut"	value="/WEB-INF/jsp/webdb/usuariForm.jsp" />
+	</definition>
+
+	<definition name="plantillesfluxfirmesListAden"	extends="aden">
+		<put-attribute name="contingut"	value="/WEB-INF/jsp/webdb/usuariList.jsp" />
+	</definition>
     
         
     <definition name="peticioListAden" extends="aden">

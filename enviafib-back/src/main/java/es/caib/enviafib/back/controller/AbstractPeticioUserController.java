@@ -31,10 +31,12 @@ import es.caib.enviafib.back.controller.user.FirmaPerNifUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxEntitatUserController;
 import es.caib.enviafib.back.controller.user.FirmaPlantillaFluxUserController;
 import es.caib.enviafib.back.controller.webdb.PeticioController;
+import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.UsuariLogicaService;
 import es.caib.enviafib.model.fields.IdiomaFields;
+import es.caib.enviafib.model.fields.SerieDocumentalFields;
 
 /**
  * Codi comú per llistat i per edició/vista/creació de Peticions.
@@ -119,9 +121,28 @@ public abstract class AbstractPeticioUserController extends PeticioController im
                 Where.AND(where, Where.OR(IdiomaFields.IDIOMAID.equal("es"), IdiomaFields.IDIOMAID.equal("ca"))));
     }
 
+    
+    @Override
+    public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
+    		PeticioForm peticioForm, Where where) throws I18NException {
+
+
+        boolean isNou = peticioForm.isNou();
+        log.info("isNou : " + isNou);
+
+        //Guardar el valor al where
+		if (isNou) {
+			where = SerieDocumentalFields.SERIEDOCUMENTALID.isNotNull();
+		}
+
+        return getReferenceListForTipusDocumental(request, mav, where);
+    }
+    
+    
     @Override
     public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
             Where where) throws I18NException {
+    	
         // S'ha de cridar a: ApiFirmaAsyncSimple.getAvailableTypesOfDocuments
         // de PortaFIB per obtenir els tipus de documents que gestiona:
         List<StringKeyValue> tmpList;
@@ -129,7 +150,19 @@ public abstract class AbstractPeticioUserController extends PeticioController im
         String lang = LocaleContextHolder.getLocale().getLanguage();
         String entitatID = LoginInfo.getInstance().getUsuari().getEntitatID();
         
-        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, entitatID);
+        
+        //log del where:
+        log.info("where: " + where);
+       
+		boolean incloureDesconeguts = true;
+
+		if (where != null) {
+			log.info("where.toSQL(): " + where.toSQL());
+			incloureDesconeguts = false;
+		}
+        
+        
+        tmpList = peticioLogicaEjb.getTipusDocumentals(lang, entitatID, incloureDesconeguts);
         if (tmpList.isEmpty()) {
             HtmlUtils.saveMessageError(request, "No hi ha tipus documentals");
         }else {

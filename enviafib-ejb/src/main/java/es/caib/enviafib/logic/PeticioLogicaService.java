@@ -67,7 +67,7 @@ public interface PeticioLogicaService extends PeticioService {
 
     public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String languageUI, String urlBase) throws I18NException;
 
-    public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID) throws I18NException;
+    public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID, boolean incloureDesconeguts) throws I18NException;
 
     public void initScheduler();
     
