@@ -56,9 +56,9 @@
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuEntitat">
 							<c:forEach var="entry" items="${loginInfo.mapEntitatsAdmin}">
 							
-								<!--  Si entidad es actual, no añadir al listado -->
+								<!--  Si entidad es actual, no añadir al listado  - Roles: ${entry.value.roles}-->
 								<c:if test="${entry.key ne entitatActual.entitatid}"> 
-									<a class="dropdown-item" href="<c:url value="/canviarEntitat/${entry.key}"/>"> ${entry.value.entitat.descripcio} - Roles: ${entry.value.roles}</a> 
+									<a class="dropdown-item" href="<c:url value="/canviarEntitat/${entry.key}"/>"> ${entry.value.entitat.descripcio}</a> 
 								</c:if>
 							</c:forEach>
 	
