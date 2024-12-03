@@ -60,7 +60,7 @@ public class SerieDocumentalLogicaEJB extends SerieDocumentalEJB implements Seri
 	public List<StringKeyValue> getAllTipusDocumentals(String lang) throws I18NException {
 		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
 
-		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
+		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsBase(lang);
 
 		for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
 			Long key = tipusDocPFI.getDocumentType();
@@ -82,7 +82,7 @@ public class SerieDocumentalLogicaEJB extends SerieDocumentalEJB implements Seri
 
 		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
 
-		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
+		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsBase(lang);
 
 		for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
 			Long key = tipusDocPFI.getDocumentType();
@@ -91,10 +91,8 @@ public class SerieDocumentalLogicaEJB extends SerieDocumentalEJB implements Seri
 
 			log.info("Tipus documental: " + key + " - " + name + " - " + base);
 
-			if (key == base) {
-				StringKeyValue skv = new StringKeyValue(key.toString(), name);
-				__tmp.add(skv);
-			}
+			StringKeyValue skv = new StringKeyValue(key.toString(), name);
+			__tmp.add(skv);
 
 		}
 		log.info("getTipusDocumentalsBase()::Retornem " + __tmp.size() + " tipus documentals");

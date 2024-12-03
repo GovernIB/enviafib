@@ -27,7 +27,22 @@ public class PortafibUtils {
 		} catch (AbstractApisIBException e) {
 			throw new I18NException("error.portafib.tipusdocumental", e.getMessage());
 		}
+	}
+	
+	
+	public static List<FirmaAsyncSimpleDocumentTypeInformation> getTipusDocumentalsBase(String lang)
+			throws I18NException {
 
+		List<FirmaAsyncSimpleDocumentTypeInformation> allTipusDoc = getTipusDocumentalsAll(lang);
+		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsBase = new java.util.ArrayList<FirmaAsyncSimpleDocumentTypeInformation>();
+
+		for (FirmaAsyncSimpleDocumentTypeInformation tipusDoc : allTipusDoc) {
+			if (tipusDoc.getDocumentType() == tipusDoc.getDocumentTypeBase()) {
+				tipusDocsBase.add(tipusDoc);
+			}
+		}
+
+		return tipusDocsBase;
 	}
 
 	// XYZ XXX Pasar mètode a classe PortafibUtils
