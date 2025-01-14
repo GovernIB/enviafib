@@ -1,5 +1,6 @@
 package es.caib.enviafib.back.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
@@ -11,11 +12,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
@@ -25,6 +29,7 @@ import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,9 +41,11 @@ import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Peticio;
+import es.caib.enviafib.model.fields.FitxerFields;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
+import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.UsuariJPA;
 import es.caib.pluginsib.arxiu.api.Document;
@@ -136,7 +143,10 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 peticioFilterForm.addAdditionalField(additionalField);
             }
 
+            peticioFilterForm.addAdditionalButton(new AdditionalButton("fas fa-download", "descarregar.seleccionats",
+                    "javascript:submitTo('peticio','/enviafibback/user/peticio/downloadSelectedFiles')", AdditionalButtonStyle.PRIMARY));
         }
+        
         peticioFilterForm.setVisibleExportList(true);
 
         return peticioFilterForm;
@@ -562,5 +572,77 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         response.getWriter().write(url);
         response.getWriter().flush();
         response.getWriter().close();
+    }
+    
+    
+	// Funcionalitat per descarrega de fitxers seleccionats.
+    @RequestMapping(value = "/downloadSelectedFiles", method = RequestMethod.POST)
+    public void downloadSelectedFiles(HttpServletRequest request, HttpServletResponse response,
+            @ModelAttribute PeticioFilterForm filterForm) throws I18NException, IOException {
+
+        IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
+        String[] seleccionats = filterForm.getSelectedItems();
+
+        if (seleccionats == null || seleccionats.length == 0) {
+            return;
+        }
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); ZipOutputStream zos = new ZipOutputStream(baos)) {
+            processSelectedFiles(seleccionats, zos, plugin);
+            sendZipResponse(response, baos);
+            log.info("Fitxers seleccionats descarregats correctament.");
+        } catch (IOException e) {
+            log.error("Error al crear el archivo ZIP: " + e.getMessage(), e);
+        }
+    }
+
+    private void processSelectedFiles(String[] seleccionats, ZipOutputStream zos, IArxiuPlugin plugin) {
+        for (String seleccionat : seleccionats) {
+            try {
+                Long peticioID = stringToPK(seleccionat);
+                Peticio peticio = peticioEjb.findByPrimaryKey(peticioID);
+
+                if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
+                    log.info("La peticio " + peticioID + " no esta firmada.");
+                    continue;
+                }
+
+                addPeticioToZip(peticio, zos, plugin);
+            } catch (Exception e) {
+                log.error("Error processant la peticio: " + seleccionat, e);
+            }
+        }
+    }
+
+    private void addPeticioToZip(Peticio peticio, ZipOutputStream zos, IArxiuPlugin plugin) throws IOException, I18NException {
+        String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
+                InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+
+        String nomFitxer = fitxerEjb.executeQueryOne(FitxerFields.NOM,
+                FitxerFields.FITXERID.equal(peticio.getFitxerFirmatID()));
+
+        log.info("Descarregarem el fitxer de la PeticioID: " + peticio.getPeticioID() + " amb el docID: " + docID);
+
+        DocumentContingut imprimible = plugin.documentImprimible(docID);
+        byte[] data = imprimible.getContingut();
+
+        ZipEntry entry = new ZipEntry(peticio.getPeticioID() + "_" + nomFitxer);
+        zos.putNextEntry(entry);
+        zos.write(data);
+        zos.closeEntry();
+
+        log.info("Fitxer de la peticioID: " + peticio.getPeticioID() + " descarregat correctament. bytes: " + data.length);
+    }
+
+    private void sendZipResponse(HttpServletResponse response, ByteArrayOutputStream baos) throws IOException {
+        byte[] zipData = baos.toByteArray();
+
+        response.setHeader("Content-disposition", "attachment; filename=fitxers_seleccionats.zip");
+        response.setContentLength(zipData.length);
+
+        try (OutputStream out = response.getOutputStream()) {
+            out.write(zipData);
+            out.flush();
+        }
     }
 }
