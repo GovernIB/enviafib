@@ -499,31 +499,115 @@ td label {
 <%-- ===================== MOSTRAR PLANTILLES DE FLUX ===========================  --%>
 
 <c:if test="${not empty plantillaflux}">
+
+<div class="modal fade" style="display: none" id="fluxInfoModal"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <fmt:message key="peticio.portafib.flux.info" />
+                </h5>
+                <button type="button" class="close" aria-label="Close" onclick="$('#fluxInfoModal').modal('hide')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body" style="text-align: center;">
+				<iframe id="iFramefluxInfo"></iframe>
+			</div>
+		</div>
+    </div>
+</div>
+
     <script type="text/javascript">
 
-        var reasonDIV = "<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.REASON.getJavaName()%>";
-        var reasonIDLabel = "<%=PeticioFields.REASON.getCodeLabel()%>";
+    function mostrarPlantillesFlux() {
+        var reasonDivID = "<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.REASON.getJavaName()%>";
+        var reasonDivValue = document.getElementById(reasonDivID + "_columnvalueid");
 
-        $("#peticio_nom_rowid").after($("#" + reasonDIV + "_rowid"));
-        
-        var html = "";     
-        html += '<select '; 
-        html += 'id= "' + reasonIDLabel  + '" '; 
-        html += 'name= "' + reasonIDLabel  + '" '; 
-        html += 'class="form-control col-md-9-optional"> ';
-        
-        
-        <c:forEach var="item" items="${plantillesUsuari}">
-            html += '<option value="<c:out value="${item.nif}"/>"><c:out value="${item.nom}"/></option>';
-        </c:forEach>
-        
-        // Si no hi ha plantilles, tornar a llistat amb un missatge warn
-        
-        html += '</select>';
-        
-        document.getElementById(reasonDIV + "_columnvalueid").innerHTML = html;
+        // Construye el contenido como un string completo
+        var contenidoHTML = `
+            <select id="peticio.reason" name="peticio.reason" class="form-control col-md-9-optional">
+                <c:forEach var="item" items="${plantillesUsuari}">
+                    <option value="<c:out value='${item.nif}'/>"><c:out value='${item.nom}'/></option>
+                </c:forEach>
+            </select>
+            <div id="fluxInfoBtn" onclick="previewSelectedFlux()"><i class="fas fa-network-wired"></i></div>
+        `;
+
+        // Asigna el contenido al contenedor
+        reasonDivValue.innerHTML = contenidoHTML;
+        reasonDivValue.style.display = "-webkit-box";
+        reasonDivValue.style.padding = "8px 0px";
+    }
+
+    // Define la función para el botón fuera del HTML
+    function previewSelectedFlux() {
+        var select = document.getElementById("peticio.reason");
+        var flowTemplateID = select.options[select.selectedIndex].value;
+        console.log("Opción seleccionada: " + flowTemplateID);
+        openModalFluxInfo(flowTemplateID);
+    }
+
+    function openModalFluxInfo(flowTemplateID) {
+    	var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        	console.log("1-status: " + this.status);
+             if (this.readyState == 4 && this.status == 200) {
+                 console.log("2-status: " + this.status);
+            	    var urlFluxInfo = this.responseText;
+                    console.log("1: " + urlFluxInfo);
+                    console.log("3-status: " + this.status);
+            	    $('#fluxInfoModal').on('shown.bs.modal',function(){
+                        console.log("URL: " + urlFluxInfo);
+                        var iframe = $(this).find('iframe');
+                        iframe. attr('src',urlFluxInfo);
+            	    });
+            	        
+            	    $("#fluxInfoModal").modal('show');
+             }
+        };
+
+        var urlEnviaFIB = '<%=request.getContextPath()%>${contexte}/geturlflowtemplate/' + flowTemplateID;
+        xhttp.open("GET", urlEnviaFIB, true);
+
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send('');
+    }
+    
+    // Llama a la función para inicializar el contenido
+    mostrarPlantillesFlux();
+
  
     </script>
+    
+    <style>
+#fluxInfoBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #0056b3;
+	color: white;
+	padding: 0.5rem;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 8px;
+}
+
+#fluxInfoBtn:hover {
+	background-color: #007bff;
+}
+
+.modal-dialog {
+	max-width: fit-content;
+}
+
+#iFramefluxInfo {
+	width: 800px;
+	height: 400px;
+}
+</style>
 </c:if>
 
 

@@ -1,9 +1,11 @@
 package es.caib.enviafib.back.controller.user;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFilterGetAllByFilter;
@@ -11,18 +13,23 @@ import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleF
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateList;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleKeyValue;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleViewFlowTemplateRequest;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.PeticioJPA;
@@ -183,4 +190,28 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 			throw new I18NException("genapp.comodi", msg);
 		}
 	}
+	
+    @RequestMapping(value = "/geturlflowtemplate/{flowTemplateID}", method = RequestMethod.GET)
+    public void getURLtoFluxInfo(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("flowTemplateID") String flowTemplateID) throws I18NException, IOException {
+
+		String url = null;
+		try {
+			String lang = LocaleContextHolder.getLocale().getLanguage();
+
+			ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+
+			FlowTemplateSimpleViewFlowTemplateRequest flowTemplateSimpleFlowTemplateRequest = new FlowTemplateSimpleViewFlowTemplateRequest(
+					lang, flowTemplateID);
+			url = api.getUrlToViewFlowTemplate(flowTemplateSimpleFlowTemplateRequest);
+
+		} catch (AbstractApisIBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		response.getWriter().write(url);
+		response.getWriter().flush();
+		response.getWriter().close();
+	}
+    
 }

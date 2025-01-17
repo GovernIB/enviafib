@@ -491,7 +491,6 @@ function openModalFluxInfo(peticioID) {
          }
     };
 
-    
     var urlEnviaFIB = '<%=request.getContextPath()%>${contexte}/geturlflow/' + peticioID;
     xhttp.open("GET", urlEnviaFIB, true);
 

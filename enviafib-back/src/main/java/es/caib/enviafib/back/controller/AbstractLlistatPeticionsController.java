@@ -575,6 +575,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
     }
     
     
+    
 	// Funcionalitat per descarrega de fitxers seleccionats.
     @RequestMapping(value = "/downloadSelectedFiles", method = RequestMethod.POST)
     public void downloadSelectedFiles(HttpServletRequest request, HttpServletResponse response,
