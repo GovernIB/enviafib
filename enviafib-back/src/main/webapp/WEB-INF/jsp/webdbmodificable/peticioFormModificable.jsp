@@ -860,3 +860,35 @@ function enviar(){
 }
 </style>
 
+
+<%--===== MILLORAR ESTÈTICA DEL CAMP TIPUS DOCUMENTAL ============--%>
+
+<script type="text/javascript">
+<%-- 
+	var tipusDocId = "<%=PeticioFields._TABLE_MODEL%>_<%=PeticioFields.TIPUSDOCUMENTAL.getJavaName()%>";
+	var td = document.getElementById(tipusDocId + "columnvalueid");
+
+
+    var select = document.getElementById("peticio_tipusDocumental");
+    select.classList.add("form-control");
+     --%>
+</script>
+
+<style>
+
+.select2-container--default .select2-selection--single{
+  height: 2.5rem;
+  border-color: #ced4da;
+ }
+
+#select2-peticio_tipusDocumental-container{
+height: 2.5rem;
+  padding: 6px;
+  color: #495057;
+}
+
+.select2-selection__arrow{
+  height: 100%;
+}
+
+</style>

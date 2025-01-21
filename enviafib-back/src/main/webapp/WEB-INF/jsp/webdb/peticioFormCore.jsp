@@ -336,6 +336,11 @@
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
             </c:forEach>
+          <script>
+              $(document).ready(function() {
+                  $('#peticio_tipusDocumental').select2();
+              });
+          </script>
           </form:select>
           </c:if>
            </td>

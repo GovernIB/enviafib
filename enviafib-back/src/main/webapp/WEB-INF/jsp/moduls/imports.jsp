@@ -51,8 +51,9 @@
 <script src="<c:url value="/js/tiny_mce/tiny_mce.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/js/tinymce.js"/>" type="text/javascript"></script>
 
-<%-- Select Multiple --%>
+<%-- Select Multiple i Select amb cerca --%>
 <script src="<c:url value="/js/select2.min.js"/>"></script>
+<script src="<c:url value="/js/select2_i18n/${lang}.js"/>"></script>
 
 <script type="text/javascript">
     function clear_form_elements(ele) {

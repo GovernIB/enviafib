@@ -3204,6 +3204,7 @@
           "showInReferenceList": false,
           "transientField": false,
           "minAllowedValue": "1,2,3,4",
+          "maxAllowedValue": "search",
           "filter": false,
           "orderBy": 0,
           "groupBy": true,
