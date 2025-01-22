@@ -1,6 +1,6 @@
 package es.caib.enviafib.back.controller;
 
-import es.caib.enviafib.ejb.FitxerService;
+import es.caib.enviafib.logic.FitxerLogicaService;
 import es.caib.enviafib.model.entity.Fitxer;
 
 import org.fundaciobit.genapp.common.IGenAppEntity;
@@ -25,8 +25,8 @@ import javax.ejb.EJB;
 public abstract class EnviaFIBFilesBaseController<I extends IGenAppEntity,PK extends Object,F extends BaseForm> extends CommonFilesBaseController<I,PK,F,Fitxer>{
 
 
-	@EJB(mappedName=FitxerService.JNDI_NAME)
-	protected FitxerService fitxerEjb;
+	@EJB(mappedName=FitxerLogicaService.JNDI_NAME)
+	protected FitxerLogicaService fitxerLogicEjb;
 
 
 	/**
@@ -36,7 +36,7 @@ public abstract class EnviaFIBFilesBaseController<I extends IGenAppEntity,PK ext
 	protected FilesFormManager<Fitxer>
 
 	getFilesFormManager() {
-    return new EnviaFIBFilesFormManager(fitxerEjb);
+    return new EnviaFIBFilesFormManager(fitxerLogicEjb);
   }
 
 	/**
@@ -48,9 +48,9 @@ public abstract class EnviaFIBFilesBaseController<I extends IGenAppEntity,PK ext
     if (fileID != null) {
       Fitxer file = null;
       try {
-        file = fitxerEjb.findByPrimaryKey(fileID);
+        file = fitxerLogicEjb.findByPrimaryKey(fileID);
         if (file != null) {
-          fitxerEjb.delete(file);
+        	fitxerLogicEjb.delete(file);
         }
       } catch (I18NException e) {
             log.error("Error esborrant arxiu fisic amb id=" + fileID +

@@ -107,8 +107,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     protected static final long TRANSACTION_EXIT_IN_MILI = (TRANSACTION_TIMEOUT_IN_SEC * 2 / 3) * 1000;
 
-    @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.FitxerLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.FitxerLogicaService fitxerLogicEjb;
 
     @EJB(mappedName = es.caib.enviafib.ejb.InfoAnexService.JNDI_NAME)
     protected es.caib.enviafib.ejb.InfoAnexService infoAnexEjb;
@@ -226,7 +226,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         
         List <FirmaAsyncSimpleFile> fitxersAAnexar = new ArrayList<FirmaAsyncSimpleFile>();
         for (Long anexID : anexes) {
-            FitxerJPA file = fitxerEjb.findByPrimaryKey(anexID);
+            FitxerJPA file = fitxerLogicEjb.findByPrimaryKey(anexID);
             fitxersAAnexar.add(getFitxer(file));
             log.info("Afegit annex per enviar: " + anexID);
         }
@@ -388,7 +388,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String urlBase = Configuracio.getUrlBase();
     
         log.info("cosesAFerPeticioFirmada():: Guardam dins arxiu de forma asyncrona .... ");
-        Peticio peticio = findByPrimaryKey(peticioID);
+        Peticio peticio = findByPrimaryKeyPublic(peticioID);
 
         guardarPeticioArxiu(peticio, languageUI, infoSignatura, urlBase);
     
@@ -474,7 +474,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throws I18NException {
 
         InfoSignatura infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaID);
+        
+		if (infoSignatura == null) {
+			String msg = "No s'ha trobat la infoSignatura amb ID=" + infoSignaturaID;
+			log.error(msg);
+			return msg;
+		}
+        
         Peticio peticio = findByPrimaryKey(peticioID);
+		if (peticio == null) {
+//			return "No s'ha trobat la petició amb ID=" + peticioID;
+			String msg = "No s'ha trobat la petició amb ID=" + peticioID;
+			log.error(msg);
+			return msg;
+		}
 
         guardarPeticioArxiu(peticio, languageUI, infoSignatura, urlBase);
 
@@ -730,7 +743,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String mime = firma.getSignedFile().getMime();
         byte[] data = firma.getSignedFile().getData();
 
-        Fitxer fdb = fitxerEjb.create(nom, mime, data.length, null);
+        Fitxer fdb = fitxerLogicEjb.create(nom, mime, data.length, null);
 
         Long fitxerID = fdb.getFitxerID();
 
@@ -818,7 +831,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void deleteFull(Peticio instance) throws I18NException {
         log.info("Borrarem peticio: " + instance.getPeticioID());
 
-        this.deleteIncludingFiles(instance, fitxerEjb);
+        this.deleteIncludingFiles(instance, fitxerLogicEjb);
         
         if (instance.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
             String portaFIBID = instance.getPeticioPortafirmes();
@@ -855,7 +868,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         for (Long annexID : anexes) {
             if (annexID != null) {
                 infoAnexEjb.delete(InfoAnexFields.ANEXID.equal(annexID));
-                fitxerEjb.delete(annexID);
+                fitxerLogicEjb.delete(annexID);
                 annexesEsborrar.add(annexID);
             }
         }
@@ -915,7 +928,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 			String name = tipusDocPFI.getName();
 			Long base = tipusDocPFI.getDocumentTypeBase();
 
-			log.info("getTipusDocumentals()::Tipus Documental: " + key + " - " + name + " - " + base);
+//			log.info("getTipusDocumentals()::Tipus Documental: " + key + " - " + name + " - " + base);
 
 			// Agafa tots els tipus documentals, que tenen la serie pare amb una serie
 			// documental a la seva entitat.
@@ -1049,7 +1062,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         final byte[] data = fsf.getData();
         fitxer.setTamany(data.length);
 
-        fitxer = fitxerEjb.create(fitxer);
+        fitxer = fitxerLogicEjb.create(fitxer);
 
         FileSystemManager.crearFitxer(new ByteArrayInputStream(data), fitxer.getFitxerID());
 
@@ -1290,7 +1303,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     this.update(PeticioFields.FITXERFIRMATID, null, PeticioFields.FITXERFIRMATID.equal(fitxerFirmatID));
 
                     log.info("Esborrant fitxer " + fitxerFirmatID + " a BBDD");
-                    fitxerEjb.delete(fitxerFirmatID);
+                    fitxerLogicEjb.delete(fitxerFirmatID);
                     fitxersEsborrar.add(fitxerFirmatID);
 
                     //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.

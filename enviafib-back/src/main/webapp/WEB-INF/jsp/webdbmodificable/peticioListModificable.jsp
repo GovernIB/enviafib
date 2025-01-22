@@ -53,6 +53,22 @@ function reintentarArxivarTotes() {
     window.location = base + btoa(window.location);
 }
 
+function reintentarArxivarSeleccionats(role) {
+    $('#spinnerModal').modal(
+            {
+                backdrop : "static",
+                keyboard: false
+            });
+    
+    var url = "<%=request.getContextPath()%>${contexte}/reintentarArxivarSeleccionats";
+    console.log(url);
+    
+    submitTo("peticio", url);
+    
+<%--     var base = '<%=request.getContextPath()%>${contexte}/reintentarArxivarSeleccionats/';
+    window.location = base + btoa(window.location); --%>
+}
+
 
 
 

@@ -39,6 +39,7 @@ import es.caib.enviafib.back.controller.user.LlistatPeticionsUserController.Tipu
 import es.caib.enviafib.back.form.webdb.PeticioFilterForm;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.PeticioLogicaService;
 import es.caib.enviafib.logic.utils.EmailUtil;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.FitxerFields;
@@ -318,41 +319,57 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         return "redirect:" + getContextWeb() + "/list";
     }
 
-    @RequestMapping(value = "/reintentararxivat/{peticioId}/{windowUrl}", method = RequestMethod.GET)
-    public String reintentarArxivat(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioID, @PathVariable("windowUrl") String windowUrl) {
+	@RequestMapping(value = "/reintentararxivat/{peticioId}/{windowUrl}", method = RequestMethod.GET)
+	public String reintentarArxivat(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("peticioId") Long peticioID, @PathVariable("windowUrl") String windowUrl) {
 
-        try {
-            // Decodificam la URL que arriba en base64
-            String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+		// URL de redirección por defecto en caso de error
+		String returnUrl = "redirect:" + getContextWeb() + "/list";
 
-            String languageUI = LocaleContextHolder.getLocale().getLanguage();
-            String url = Configuracio.getUrlBase(decodedUrl, request.getContextPath());
+		try {
+			// Decodificar la URL que llega codificada en base64
+			String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+			log.info("Decoded URL: " + decodedUrl);
 
-            Long infoSignaturaID = peticioLogicaEjb.executeQueryOne(PeticioFields.INFOSIGNATURAID,
-                    PeticioFields.PETICIOID.equal(peticioID));
+			// Obtener el idioma de la interfaz de usuario
+			String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
-            String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
+			// Obtener la URL base para la petición
+			String url = Configuracio.getUrlBase(decodedUrl, request.getContextPath());
+			log.info("Base URL: " + url);
 
-            if (msg == null) {
-                HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
-            } else {
-                HtmlUtils.saveMessageError(request, msg);
-            }
-        } catch (I18NException e) {
-            String msg = I18NUtils.getMessage(e);
-            log.error(msg, e);
-            HtmlUtils.saveMessageError(request, msg);
-        } catch (Exception e) {
-            String msg = e.getMessage();
-            log.error(msg, e);
-            HtmlUtils.saveMessageError(request, msg);
-        }
+			// Obtener el ID de la firma asociada a la petición
+			Long infoSignaturaID = peticioLogicaEjb.executeQueryOne(PeticioFields.INFOSIGNATURAID,
+					PeticioFields.PETICIOID.equal(peticioID));
 
-        return "redirect:" + getContextWeb() + "/list";
+			if (infoSignaturaID == null) {
+				String errorMsg = "Error: infoSignaturaID is null";
+				log.error(errorMsg);
+				HtmlUtils.saveMessageError(request, errorMsg);
+				return returnUrl; // Retornar en caso de error
+			}
 
-    }
+			// Intentar guardar la petición de archivo
+			String saveResult = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI,
+					url);
+			if (saveResult == null) {
+				// Mensaje de éxito
+				HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
+			} else {
+				// Mensaje de error al guardar
+				HtmlUtils.saveMessageError(request, saveResult);
+				return returnUrl; // Retornar en caso de error
+			}
 
+		} catch (Exception e) {
+			log.error("Error: " + e.getMessage(), e);
+			String msg = e instanceof I18NException ? I18NUtils.getMessage((I18NException) e) : e.getMessage();
+			HtmlUtils.saveMessageError(request, msg);
+		}
+
+		return returnUrl;
+	}
+	
     @RequestMapping(value = "/reintentartancamentexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String reintentarTancamentExpedient(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
@@ -394,7 +411,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         try {
 
             // Recuperacio del fitxer firmat a partir del ID de peticio
-            Peticio peticio = peticioEjb.findByPrimaryKey(peticioId);
+            Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioId);
 
             // Si a petició s'ha arxivat correctament, s'ha de passar el link amb CSV:
             if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA
@@ -457,7 +474,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         final String docName = "_firmat";
         TipusFile tipusFile = TipusFile.FIRMAT;
 
-        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioEjb, log);
+        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioLogicaEjb, log);
     }
 
     @RequestMapping(value = "/descarregarenidoc/{csv}", method = RequestMethod.GET)
@@ -468,7 +485,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         final String docName = "_eni";
         TipusFile tipusFile = TipusFile.ENI_DOC;
 
-        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioEjb, log);
+        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioLogicaEjb, log);
     }
 
     @RequestMapping(value = "/descarregarimprimible/{csv}", method = RequestMethod.GET)
@@ -478,13 +495,13 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
         final String docName = "_imprimible";
 
-        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioEjb, log);
+        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioLogicaEjb, log);
     }
 
     public static void internalDownload(String csv, HttpServletResponse response, final String format,
             final String docName, TipusFile tipusFile, es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb,
             es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb,
-            es.caib.enviafib.ejb.PeticioService peticioEjb, Logger log) throws I18NException, IOException {
+            PeticioLogicaService peticioLogicaEjb, Logger log) throws I18NException, IOException {
 
         if (csv == null) {
             return;
@@ -515,14 +532,14 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             break;
         }
 
-        prepareAndDownload(data, response, docName, format, csv, peticioEjb);
+        prepareAndDownload(data, response, docName, format, csv, peticioLogicaEjb);
     }
 
     private static void prepareAndDownload(byte[] data, HttpServletResponse response, final String docName,
-            final String format, String csv, es.caib.enviafib.ejb.PeticioService peticioEjb) throws I18NException {
+            final String format, String csv, PeticioLogicaService peticioLogicaEjb) throws I18NException {
 
         // new PeticioJPA().getInfoArxiu().getCsv();
-        String fileName = peticioEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
+        String fileName = peticioLogicaEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
                 new PeticioQueryPath().INFOARXIU().CSV().equal(csv));
 
         fileName = fileName.replace(" ", "_");
@@ -563,7 +580,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
     public void getURLtoFluxInfo(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("peticioID") Long peticioID) throws I18NException, IOException {
 
-        Peticio peticio = this.peticioLogicaEjb.findByPrimaryKey(peticioID);
+        Peticio peticio = this.peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
         long portafibID = Long.parseLong(peticio.getPeticioPortafirmes()); // XYZ ZZZ
 
         String lang = LocaleContextHolder.getLocale().getLanguage();
@@ -601,7 +618,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         for (String seleccionat : seleccionats) {
             try {
                 Long peticioID = stringToPK(seleccionat);
-                Peticio peticio = peticioEjb.findByPrimaryKey(peticioID);
+                Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
 
                 if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
                     log.info("La peticio " + peticioID + " no esta firmada.");
@@ -619,7 +636,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
                 InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
-        String nomFitxer = fitxerEjb.executeQueryOne(FitxerFields.NOM,
+        String nomFitxer = fitxerLogicEjb.executeQueryOne(FitxerFields.NOM,
                 FitxerFields.FITXERID.equal(peticio.getFitxerFirmatID()));
 
         log.info("Descarregarem el fitxer de la PeticioID: " + peticio.getPeticioID() + " amb el docID: " + docID);

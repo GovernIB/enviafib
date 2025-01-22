@@ -273,7 +273,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         // ANAR A LLISTAT DE PETICIONS
         HtmlUtils.saveMessageError(request, errorMsg);
 
-        Peticio pet = peticioLogicaEjb.findByPrimaryKey(peticioID);
+        Peticio pet = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
 
         if (pet == null) {
             log.error("Error en el procés de creació de Petició Firma. "

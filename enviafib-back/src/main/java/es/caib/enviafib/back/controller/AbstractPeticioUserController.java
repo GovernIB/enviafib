@@ -37,6 +37,7 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.UsuariLogicaService;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
+import es.caib.enviafib.persistence.PeticioJPA;
 
 /**
  * Codi comú per llistat i per edició/vista/creació de Peticions.
@@ -52,8 +53,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
-    @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.FitxerLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.FitxerLogicaService fitxerLogicEjb;
 
     @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.InfoSignaturaLogicaService infoSignaturaLogicEjb;
@@ -210,4 +211,10 @@ public abstract class AbstractPeticioUserController extends PeticioController im
     public boolean isActiveDelete() {
         return false;
     }
+    
+    @Override
+    public PeticioJPA findByPrimaryKey(HttpServletRequest request, Long peticioID) throws I18NException {
+    	return peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+    }
+    
 }

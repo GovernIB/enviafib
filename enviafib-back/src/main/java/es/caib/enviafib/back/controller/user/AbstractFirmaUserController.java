@@ -667,7 +667,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 final byte[] data = file.getBytes();
                 fitxer.setTamany(data.length);
 
-                Fitxer f = fitxerEjb.create(fitxer);
+                Fitxer f = fitxerLogicEjb.create(fitxer);
                 FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
 
                 log.info("\n\nSTART CREATE POST:: AUTOFIRMA");
@@ -725,7 +725,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 						final byte[] data = anex.getBytes();
 						fitxer.setTamany(data.length);
 
-						Fitxer f = fitxerEjb.create(fitxer);
+						Fitxer f = fitxerLogicEjb.create(fitxer);
 						FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
 
 						InfoAnexJPA ia = new InfoAnexJPA();
@@ -799,8 +799,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                                 } else if (i == 1) {
                                     Peticio secondPet = new PeticioJPA(petFor);
                                     if (hasSameError(firstPet, secondPet)) {
-                                        peticioLogicaEjb.deleteIncludingFiles(firstPet, fitxerEjb);
-                                        peticioLogicaEjb.deleteIncludingFiles(secondPet, fitxerEjb);
+                                        peticioLogicaEjb.deleteIncludingFiles(firstPet, fitxerLogicEjb);
+                                        peticioLogicaEjb.deleteIncludingFiles(secondPet, fitxerLogicEjb);
 
                                         HtmlUtils.deleteMessages(request);
                                         String msg = "No s'ha pogut crear cap de les " + nFitxers + " peticions: "

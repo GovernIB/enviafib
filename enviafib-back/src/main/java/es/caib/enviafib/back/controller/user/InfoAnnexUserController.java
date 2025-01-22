@@ -111,7 +111,7 @@ public class InfoAnnexUserController extends InfoAnexController {
             
             String peticioIDStr = (String) request.getSession().getAttribute("peticioID");
             Long peticioID = Long.parseLong(peticioIDStr);
-            PeticioJPA peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
+            PeticioJPA peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
             
             infoAnexFilterForm.setTitleCode("llistat.annexos");
             infoAnexFilterForm.setTitleParam("<b><i> '" + peticio.getNom()  + "' (" + peticioIDStr + ") </b></i> ");
@@ -163,7 +163,7 @@ public class InfoAnnexUserController extends InfoAnexController {
         if (returnTo.equals("toList")) {
             returnUrl = "/" + (isAdmin()? "admin" : "user") + "/peticio/list/1";
         }else if (returnTo.equals("toForm")){
-            PeticioJPA peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
+            PeticioJPA peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
             String  contextWeb = AbstractPeticioUserController.firmaPathByTipus.get(peticio.getTipus());
             returnUrl = (isAdmin()? "/admin/peticio" : contextWeb) +  "/view/" + peticioID;
         }else {
@@ -193,7 +193,7 @@ public class InfoAnnexUserController extends InfoAnexController {
         for (int i = 0; i< list.size(); i ++) {
             InfoAnex infoAnex = list.get(i);
             Long fitxerID = infoAnex.getAnexID();
-            Fitxer fitxer = fitxerEjb.findByPrimaryKey(fitxerID);
+            Fitxer fitxer = fitxerLogicEjb.findByPrimaryKey(fitxerID);
             annexes.add(fitxer);
             String urlFitxer = "/enviafibback" + FileDownloadController.fileUrl(fitxer);
             fitxer.setDescripcio(urlFitxer);

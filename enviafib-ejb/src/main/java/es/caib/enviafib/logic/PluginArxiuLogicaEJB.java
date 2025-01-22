@@ -64,8 +64,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
     @EJB(mappedName = PeticioLogicaService.JNDI_NAME)
     protected PeticioLogicaService peticioLogicaEjb;
 
-    @EJB(mappedName = es.caib.enviafib.ejb.FitxerService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.FitxerService fitxerEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.FitxerLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.FitxerLogicaService fitxerLogicEjb;
 
     @Override
     protected int getTipusDePlugin() {
@@ -391,9 +391,15 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             }
 
             // FITXER SIGNAT
-            long fitxerFirmatID = peticio.getFitxerFirmatID();
+            Long fitxerFirmatID = peticio.getFitxerFirmatID();
+            
+            if (fitxerFirmatID == null) {
+            	log.error("La petició no te cap fitxer firmat");
+            	throw new I18NException("fitxerfirmat.notfound", commonError);
+            }
+            
 
-            Fitxer fitxerFirmat = fitxerEjb.findByPrimaryKey(fitxerFirmatID);
+            Fitxer fitxerFirmat = fitxerLogicEjb.findByPrimaryKey(fitxerFirmatID);
 
             byte[] signedData = FileSystemManager.getFileContent(fitxerFirmat.getFitxerID());
 

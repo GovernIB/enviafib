@@ -36,8 +36,8 @@ public class DescarregarImprimiblePublicController {
     @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
     protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
 
-    @EJB(mappedName = es.caib.enviafib.ejb.PeticioService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.PeticioService peticioEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
     protected static final Logger log = Logger.getLogger(DescarregarImprimiblePublicController.class);
 
@@ -49,7 +49,7 @@ public class DescarregarImprimiblePublicController {
         final String docName = "_imprimible";
 
         AbstractLlistatPeticionsController.internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb,
-                pluginArxiuEjb, peticioEjb, log);
+                pluginArxiuEjb, peticioLogicaEjb, log);
     }
 
 }
