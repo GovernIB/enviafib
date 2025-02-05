@@ -277,9 +277,11 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 break;
             }
 
+            //Si està a Arxiu, no es pot esborrar.
             if (peticio.getInfoArxiuID() == null) {
                 String reason = peticio.getReason();
 
+                // Si la petició està en procés i ja té una firma, no es pot esborrar. Al camp reason es guarda si hi ha alguna firma
                 if (estat == Constants.ESTAT_PETICIO_EN_PROCES && reason != null
                         && reason.equals(Constants.FIRMADA_PARCIAL)) {
                     log.info("La peticio " + peticio.getPeticioID() + " ja te una firma i no es pot esborrar");
@@ -463,6 +465,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
     @Override
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
+    	//Comprovar l'estat abans d'esborrar.
+    	
+    	if (peticio.getInfoArxiuID() == null) {
+    		throw new I18NException("genapp.comodi", "No es pot esborrar una petició guardad a Arxiu");
+		}
+    
         peticioLogicaEjb.deleteFull(peticio);
     }
 

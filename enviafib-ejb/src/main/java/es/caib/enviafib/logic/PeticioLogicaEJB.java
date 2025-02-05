@@ -131,6 +131,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     private static HashMap<Long, String> tipusDocumentals = null;
     private static long lastRefresh = 0;
 
+    final String prefixeEsborrat = "ESBORRADA%";
+
     @Override
     public PeticioJPA arrancarPeticio(long peticioID, String languageUI, Usuari solicitant) throws I18NException {
 
@@ -630,10 +632,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 PeticioFields.PETICIOPORTAFIRMES.equal(String.valueOf(portafibID)));
     }
 
-    protected boolean esborrarPeticioPortafib(long portafibID, String languageUI) {
+    protected boolean esborrarPeticioPortafib(String peticioPortafirmes, String languageUI) {
 
         try {
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+            long portafibID = Long.parseLong(peticioPortafirmes);
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, languageUI);
 
             ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
@@ -643,11 +646,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             api.deleteSignatureRequest(rinfo);
             return true;
         } catch (ApisIBServerException e) {
-            log.error("Error esborrant petició portafib amb ID " + portafibID + " : Missatge: " + e.getMessage()
+            log.error("Error esborrant petició portafib amb ID " + peticioPortafirmes + " : Missatge: " + e.getMessage()
                     + " : Descripcio:" + e.getDescription(), e);
             return true;
         } catch (Throwable t) {
-            log.error("Error esborrant petició portafib amb ID " + portafibID + " : " + t.getMessage(), t);
+            log.error("Error esborrant petició portafib amb ID " + peticioPortafirmes + " : " + t.getMessage(), t);
             return false;
         }
     }
@@ -834,15 +837,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         this.deleteIncludingFiles(instance, fitxerLogicEjb);
         
         if (instance.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
-            String portaFIBID = instance.getPeticioPortafirmes();
+            String portafibID = instance.getPeticioPortafirmes();
 
-            long portafibID = Long.parseLong(portaFIBID);
-            final String languageUI = "ca";
+            //Per esborrar una peticio de portafib, cal que tingui un portafibID, i no tenir el prefix "ESBORRADA%"
+            
+            if (portafibID == null || portafibID.trim().length() == 0 || portafibID.startsWith(prefixeEsborrat) ) {
+                log.error("La petició " + instance.getPeticioID() + " no te portafibID");
+            }else {
+                final String languageUI = "ca";
 
-            if (esborrarPeticioPortafib(portafibID, languageUI)) {
-                log.info("Peticio " + portafibID + "esborrada de PORTAFIB correctament");
-            } else {
-                log.error("No s'ha pogut esborrar la petició amb portafibID=" + portaFIBID);
+                if (esborrarPeticioPortafib(portafibID, languageUI)) {
+                    log.info("Peticio " + portafibID + "esborrada de PORTAFIB correctament");
+                } else {
+                    log.error("No s'ha pogut esborrar la petició amb portafibID=" + portafibID);
+                }
             }
         } else {
             log.info("La petició " + instance.getPeticioID() + " es AutoFirma i no te res PortaFIB");
@@ -1214,52 +1222,46 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         final long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
-        final String prefixeEsborrat = "ESBORRADA%";
+
         try {
-            Where w1 = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
+            Where wNotAutofirma = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
 
             Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR , Constants.ESTAT_PETICIO_REBUTJADA};
-            Where w2 = PeticioFields.ESTAT.in(estats);
+            Where wEstatEsborrable = PeticioFields.ESTAT.in(estats);
 
-            Where w3 = PeticioFields.PETICIOPORTAFIRMES.notLike(prefixeEsborrat);
+            Where wNoEsborrada = PeticioFields.PETICIOPORTAFIRMES.notLike(prefixeEsborrat);
+            Where wNoNula = PeticioFields.PETICIOPORTAFIRMES.isNotNull();
 
-            List<String> listPortaFIBIds = this.executeQuery(PeticioFields.PETICIOPORTAFIRMES, Where.AND(w1, w2, w3));
+            List<String> listPortaFIBIds = this.executeQuery(PeticioFields.PETICIOPORTAFIRMES, Where.AND(wNotAutofirma, wEstatEsborrable, wNoEsborrada, wNoNula));
 
-            for (String portaFIBID : listPortaFIBIds) {
-                try {
-                    log.info("Esborram Peticio amb PortaFIB ID: " + portaFIBID);
+			for (String portafibID : listPortaFIBIds) {
+				try {
+					log.info("Esborram Peticio amb PortaFIB ID: " + portafibID);
 
-                    long portafibID = Long.parseLong(portaFIBID);
+					if (esborrarPeticioPortafib(portafibID, languageUI)) {
+						//Afegim el prefix ESBORRADA% per saber que s'ha esborrat la peticio a PortaFIB
+						log.info("Peticio " + portafibID + " esborrada de PORTAFIB correctament");
+						this.update(PeticioFields.PETICIOPORTAFIRMES, prefixeEsborrat + portafibID,
+								PeticioFields.PETICIOPORTAFIRMES.equal(portafibID));
+					} else {
+						final String msg = "Error al mètode esborrarPeticioPortafib() amb portafibID=" + portafibID
+								+ " durant el cron nocturn.";
+						log.error(msg);
+					}
 
-                    if (esborrarPeticioPortafib(portafibID, languageUI)) {
-                        //                        Query query = getEntityManager().createQuery("update " + PeticioJPA.class.getSimpleName()
-                        //                                + " set " + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?0" + " where "
-                        //                                + PeticioFields.PETICIOPORTAFIRMES.javaName + " = ?1");
-                        //                        query.setParameter(0, prefixeEsborrat + portaFIBID);
-                        //                        query.setParameter(1, portaFIBID);
-                        //                        query.executeUpdate();
+					// El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i
+					// acaba la funció.
+					if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
+						log.warn("Timeout.");
+						break;
+					}
 
-                        this.update(PeticioFields.PETICIOPORTAFIRMES, prefixeEsborrat + portaFIBID,
-                                PeticioFields.PETICIOPORTAFIRMES.equal(portaFIBID));
-
-                    } else {
-                        final String msg = "Error al mètode esborrarPeticioPortafib() amb portafibID=" + portaFIBID
-                                + " durant el cron nocturn.";
-                        log.error(msg);
-                    }
-
-                    //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
-                    if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-                        log.warn("Timeout.");
-                        break;
-                    }
-
-                } catch (Throwable e) {
-                    final String msg = "Error pasant portafibID=" + portaFIBID
-                            + "  a ESBORRADA% durant el cron nocturn: " + e.getMessage();
-                    log.error(msg, e);
-                }
-            }
+				} catch (Throwable e) {
+					final String msg = "Error pasant portafibID=" + portafibID
+							+ "  a ESBORRADA% durant el cron nocturn: " + e.getMessage();
+					log.error(msg, e);
+				}
+			}
 
         } catch (I18NException e) {
             final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
