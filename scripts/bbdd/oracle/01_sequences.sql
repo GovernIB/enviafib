@@ -12,3 +12,4 @@ create sequence efi_plugin_seq start with 1000 increment by  1;
 create sequence efi_seriedocumental_seq start with 1000 increment by  1;
 create sequence efi_traduccio_seq start with 1000 increment by  1;
 create sequence efi_usuari_seq start with 1000 increment by  1;
+create sequence efi_usuarientitat_seq start with 1000 increment by  1;

@@ -34,6 +34,8 @@
 
     alter table efi_usuari add constraint efi_usuari_pk primary key (usuariid);
 
+    alter table efi_usuarientitat add constraint efi_usuarientitat_pk primary key (usuarientitatid);
+
  -- FINAL PKs
 
 
@@ -144,6 +146,11 @@
        foreign key (solicitantid) 
        references efi_usuari;
 
+    alter table efi_seriedocumental 
+       add constraint efi_seriedocu_entitat_entit_fk 
+       foreign key (entitatid) 
+       references efi_entitat;
+
     alter table efi_traducciomap 
        add constraint efi_traducmap_traduccio_fk 
        foreign key (traducciomapid) 
@@ -158,6 +165,16 @@
        add constraint efi_usuari_idioma_fk 
        foreign key (idiomaid) 
        references efi_idioma;
+
+    alter table efi_usuarientitat 
+       add constraint efi_usrent_entitat_entitati_fk 
+       foreign key (entitatid) 
+       references efi_entitat;
+
+    alter table efi_usuarientitat 
+       add constraint efi_usrent_usuari_usuariid_fk 
+       foreign key (usuariid) 
+       references efi_usuari;
  -- FINAL FKs
 
 
@@ -167,7 +184,7 @@
        add constraint efi_grupusuari_usuari_grup_uk unique (usuariid, grupid);
 
     alter table efi_seriedocumental 
-       add constraint UK_ox1aosn2t9fscv2lv01lr10tg unique (tipusdocumental);
+       add constraint efi_seriedocu_td_ent_uk unique (tipusdocumental, entitatid);
 
     alter table efi_usuari 
        add constraint UK_rhi053fw7q637iv8ohhiasjad unique (nif);

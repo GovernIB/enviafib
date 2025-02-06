@@ -18,3 +18,4 @@ create index efi_peticio_infoarxiuid_fk_i on efi_peticio (infoarxiuid);
 -- create index efi_seriedocumental_pk_i on efi_seriedocumental (seriedocumentalid);
 -- create index efi_usuari_pk_i on efi_usuari (usuariid);
 create index efi_usuari_entitatid_fk_i on efi_usuari (entitatid);
+create index efi_usuarientitat_usuari_fk_i on efi_usuarientitat (usuariid);

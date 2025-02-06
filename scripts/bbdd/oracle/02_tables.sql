@@ -5,6 +5,7 @@
         adrezahtml varchar2(2000 char) not null,
         checkcanviatdocfirmat number(1,0) not null,
         descripcio varchar2(255 char),
+        dir3 varchar2(50 char),
         faviconid number(19,0) not null,
         logosegellid number(19,0) not null,
         logowebid number(19,0) not null,
@@ -168,8 +169,9 @@
 
     create table efi_seriedocumental (
        seriedocumentalid number(19,0) not null,
+        entitatid varchar2(50 char),
         nom varchar2(256 char) not null,
-        procedimentcodi clob not null,
+        procedimentcodi clob,
         procedimentnom clob not null,
         tipusdocumental varchar2(256 char)
     );
@@ -195,5 +197,13 @@
         nom varchar2(256 char) not null,
         username varchar2(100 char) not null
     );
+
+    create table efi_usuarientitat (
+       usuarientitatid number(19,0) not null,
+        entitatid varchar2(50 char) not null,
+        usuariid number(19,0) not null
+    );
+
+
 
 

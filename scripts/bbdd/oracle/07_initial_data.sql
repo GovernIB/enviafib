@@ -416,3 +416,6 @@ VALUES
 UPDATE efi_usuari SET entitatid = 'govern';
 
 ALTER TABLE efi_usuari MODIFY (entitatid NOT NULL);
+
+UPDATE efi_entitat SET dir3 = 'A04003003' WHERE entitatid = 'govern';
+UPDATE efi_entitat SET dir3 = 'A04027005' WHERE entitatid = 'fundaciobit';

@@ -12,6 +12,7 @@ create sequence efi_plugin_seq start with 1000 increment by  1;
 create sequence efi_seriedocumental_seq start with 1000 increment by  1;
 create sequence efi_traduccio_seq start with 1000 increment by  1;
 create sequence efi_usuari_seq start with 1000 increment by  1;
+create sequence efi_usuarientitat_seq start with 1000 increment by  1;
 
     create table efi_entitat (
        entitatid varchar2(50 char) not null,
@@ -19,6 +20,7 @@ create sequence efi_usuari_seq start with 1000 increment by  1;
         adrezahtml varchar2(2000 char) not null,
         checkcanviatdocfirmat number(1,0) not null,
         descripcio varchar2(255 char),
+        dir3 varchar2(50 char),
         faviconid number(19,0) not null,
         logosegellid number(19,0) not null,
         logowebid number(19,0) not null,
@@ -195,8 +197,9 @@ create sequence efi_usuari_seq start with 1000 increment by  1;
 
     create table efi_seriedocumental (
        seriedocumentalid number(19,0) not null,
+        entitatid varchar2(50 char),
         nom varchar2(256 char) not null,
-        procedimentcodi long not null,
+        procedimentcodi long,
         procedimentnom long not null,
         tipusdocumental varchar2(256 char),
         primary key (seriedocumentalid)
@@ -225,6 +228,13 @@ create sequence efi_usuari_seq start with 1000 increment by  1;
         nom varchar2(256 char) not null,
         username varchar2(100 char) not null,
         primary key (usuariid)
+    );
+
+    create table efi_usuarientitat (
+       usuarientitatid number(19,0) not null,
+        entitatid varchar2(50 char) not null,
+        usuariid number(19,0) not null,
+        primary key (usuarientitatid)
     );
 create index efi_entitat_pk_i on efi_entitat (entitatid);
 create index efi_entitat_faviconid_fk_i on efi_entitat (faviconid);
@@ -264,9 +274,10 @@ create index efi_peticio_infosignid_fk_i on efi_peticio (infosignaturaid);
 create index efi_peticio_infoarxiuid_fk_i on efi_peticio (infoarxiuid);
 create index efi_plugin_pk_i on efi_plugin (pluginid);
 create index efi_seriedocumental_pk_i on efi_seriedocumental (seriedocumentalid);
+create index efi_seriedocu_entitatid_fk_i on efi_seriedocumental (entitatid);
 
     alter table efi_seriedocumental 
-       add constraint UK_ox1aosn2t9fscv2lv01lr10tg unique (tipusdocumental);
+       add constraint efi_seriedocu_td_ent_uk unique (tipusdocumental, entitatid);
 create index efi_traduccio_pk_i on efi_traduccio (traduccioid);
 create index efi_usuari_pk_i on efi_usuari (usuariid);
 create index efi_usuari_idiomaid_fk_i on efi_usuari (idiomaid);
@@ -274,6 +285,9 @@ create index efi_usuari_entitatid_fk_i on efi_usuari (entitatid);
 
     alter table efi_usuari 
        add constraint UK_rhi053fw7q637iv8ohhiasjad unique (nif);
+create index efi_usuarientitat_pk_i on efi_usuarientitat (usuarientitatid);
+create index efi_usuarientitat_usuari_fk_i on efi_usuarientitat (usuariid);
+create index efi_usuarientitat_entitat_fk_i on efi_usuarientitat (entitatid);
 
     alter table efi_entitat 
        add constraint efi_entitat_fitxer_icon_fk 
@@ -380,6 +394,11 @@ create index efi_usuari_entitatid_fk_i on efi_usuari (entitatid);
        foreign key (solicitantid) 
        references efi_usuari;
 
+    alter table efi_seriedocumental 
+       add constraint efi_seriedocu_entitat_entit_fk 
+       foreign key (entitatid) 
+       references efi_entitat;
+
     alter table efi_traducciomap 
        add constraint efi_traducmap_traduccio_fk 
        foreign key (traducciomapid) 
@@ -394,3 +413,13 @@ create index efi_usuari_entitatid_fk_i on efi_usuari (entitatid);
        add constraint efi_usuari_idioma_fk 
        foreign key (idiomaid) 
        references efi_idioma;
+
+    alter table efi_usuarientitat 
+       add constraint efi_usrent_entitat_entitati_fk 
+       foreign key (entitatid) 
+       references efi_entitat;
+
+    alter table efi_usuarientitat 
+       add constraint efi_usrent_usuari_usuariid_fk 
+       foreign key (usuariid) 
+       references efi_usuari;

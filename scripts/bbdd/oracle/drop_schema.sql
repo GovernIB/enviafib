@@ -33,6 +33,8 @@
 
     drop table efi_usuari cascade constraints;
 
+    drop table efi_usuarientitat cascade constraints;
+
     drop sequence efi_faq_seq;
 
     drop sequence efi_fitxer_seq;
@@ -60,3 +62,5 @@
     drop sequence efi_traduccio_seq;
 
     drop sequence efi_usuari_seq;
+
+    drop sequence efi_usuarientitat_seq;
