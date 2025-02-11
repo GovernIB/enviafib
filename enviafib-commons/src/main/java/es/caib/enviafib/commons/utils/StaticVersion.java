@@ -4,7 +4,7 @@ package es.caib.enviafib.commons.utils;
 */
 public interface StaticVersion {
 
-    public static final String VERSION="2.0.2";
+    public static final String VERSION="2.0.3";
 
     public static final String PROJECT_NAME="enviafib";
 
