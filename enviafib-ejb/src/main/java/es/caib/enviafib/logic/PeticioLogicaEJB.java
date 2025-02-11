@@ -74,6 +74,7 @@ import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.FitxerService;
 import es.caib.enviafib.ejb.PeticioEJB;
 import es.caib.enviafib.logic.utils.EmailUtil;
+import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
 import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Fitxer;
@@ -81,6 +82,7 @@ import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.InfoAnexFields;
+import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.PeticioQueryPath;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
@@ -89,6 +91,7 @@ import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.persistence.PeticioJPA;
+import es.caib.pluginsib.arxiu.api.IArxiuPlugin;
 import es.caib.portafib.apiinterna.client.revisors.v1.api.RevisorsV1Api;
 import es.caib.portafib.apiinterna.client.revisors.v1.model.BasicUserInfo;
 import es.caib.portafib.apiinterna.client.revisors.v1.model.BasicUserInfoList;
@@ -543,8 +546,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
                 PETICIOID.equal(peticioID));
+        
+        IArxiuPlugin plugin = pluginArxiuLogicaEjb.getInstance();
 
-        boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, expedientID);
+        boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, plugin, expedientID);
         this.update(peticio);
         
         if (tancatExpedient) {
@@ -1346,14 +1351,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Acaba eliminarFitxersSignatsDeLocal()");
     }
 
-    
-    final String HORA_TANCAR_EXPEDIENTS = Configuracio.getHoraTancamentExpedientsScheduler();
-    
     /**
      * Funció que s'executa cada vespre a les 12:00 i tanca tots els expedients oberts.
      */
-    
-    
     @Resource
     private TimerService ejbTimerService;
 
@@ -1361,39 +1361,47 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void initScheduler() {
         ScheduleExpression schedule = new ScheduleExpression();
 
-        String hora, h, m;
-        try {
-            Collection<Timer> allTimers = ejbTimerService.getAllTimers();
+//		String hora, h, m;
+		log.info("Timers inicials");
 
-            if (allTimers.size() == 1) {
-                log.info("initScheduler:: Schedule per tancament d'expedients JA ESTAVA CREAT: "
-                        + allTimers.iterator().next().toString());
-                return;
-            } else {
-                log.info("initScheduler:: havia " + allTimers.size() + " timers");
-                
-                for (Timer timer : allTimers) {
-                    timer.cancel();
-                }
-            }
+		Collection<Timer> allTimers = ejbTimerService.getAllTimers();
 
-            hora = Configuracio.getHoraTancamentExpedientsScheduler();
-//            hora = "13:33";
-            h = hora.split(":")[0];
-            m = hora.split(":")[1];
+		if (allTimers.size() == 1) {
+			log.info("initScheduler:: Schedule per tancament d'expedients JA ESTAVA CREAT: "
+					+ allTimers.iterator().next().toString());
+			return;
+		} else {
+			log.info("initScheduler:: havia " + allTimers.size() + " timers");
 
-            if (h == null || h.trim().length() == 0) {
-                h = "4";
-            }
-            if (m == null || m.trim().length() == 0) {
-                m = "30";
-            }
-        } catch (Throwable t) {
-            h = "4";
-            m = "30";
-        }
-        schedule.hour(h);
-        schedule.minute(m);
+			for (Timer timer : allTimers) {
+				timer.cancel();
+			}
+		}
+
+		String horaStr = Configuracio.getHoraTancamentExpedientsScheduler(); //14
+//		String nHores = Configuracio.getNhoresTancamentExpedientsScheduler(); //2
+		String nHoresStr = "1";
+		horaStr = "12";
+		
+		int nHores = Integer.parseInt(nHoresStr);
+		if (nHores > 1) {
+			int hores = Integer.parseInt(horaStr);
+			horaStr += "-" + (hores + nHores - 1);
+		}
+		
+//		try {
+//			h = hora.split(":")[0];
+//
+//			if (h == null || h.trim().length() == 0) {
+//				h = "4";
+//			}
+//		} catch (Throwable t) {
+//			h = "4";
+//		}
+
+		schedule.hour(horaStr);
+		schedule.minute("*/5");
+        
         Timer newTimer = ejbTimerService.createCalendarTimer(schedule);
 
         log.info("initScheduler:: CREAT Schedule per tancar expedients:" + newTimer.toString());
@@ -1401,7 +1409,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         for (Timer timer : ejbTimerService.getAllTimers()) {
             log.info("initScheduler:: timer: " + timer.toString());
         }
-
     }
 
     @Timeout
@@ -1411,24 +1418,35 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         long startTime = System.currentTimeMillis();
         final String languageUI = "ca";
         
-        Integer[] estatsPendents = { Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT,
-                Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT };
+        //Agafam els que están pendents, perque els que donen error, canvien l'estat al vespre, i al dia següent, tornam a intentar tancar-los.
+        Integer[] estatsPendents = { 
+        		Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT,
+//                Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT
+                };
 
+        //El timeout de EJB son 5 minuts, li direm que als 4 minuts surti.
+        
+        long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 4 minuts
+        
         try {
             //Llistat de peticions pendents de tancar expedient: 
             List<Peticio> peticions = this.select(PeticioFields.ESTAT.in(estatsPendents));
 
             log.info("Expedients que s'han de tancar: " + peticions.size());
             
+            IArxiuPlugin plugin = pluginArxiuLogicaEjb.getInstance();
+            
             int i = 1;
             for (Peticio peticio : peticions) {
                 Long peticioID = peticio.getPeticioID();
 
-                String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
-                        PETICIOID.equal(peticioID));
+//                String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
+//                        PETICIOID.equal(peticioID));
+				String expedientID = infoArxiuLogicEjb.executeQueryOne(InfoArxiuFields.ARXIUEXPEDIENTID,
+						InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
                 log.info("Tancarem expedient " + i + " de " + peticions.size());
 
-                boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, expedientID);
+                boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, plugin, expedientID);
                 this.update(peticio);
 
                 if (tancatExpedient) {
@@ -1437,8 +1455,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     log.error("Error tancant expedient de la petició " + peticioID + ": " + peticio.getErrorMsg());
 
                 }
+                
+                try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+				}
 
-                //El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i acaba la funció.
+                //El Timeout son 5 minuts. Si el CRON s'executa durant 4 min, surt del for i acaba la funció.
                 if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
                     log.warn("Timeout. Hem processat " + i + " expedients");
                     break;

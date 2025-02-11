@@ -38,6 +38,6 @@ public interface PluginArxiuLogicaService extends AbstractPluginLogicaService<IA
      * @param expedientId
      * @return
      */
-    public boolean tancarExpedient(Peticio peticio, String expedientID);
+    public boolean tancarExpedient(Peticio peticio, IArxiuPlugin plugin, String expedientID);
 
 }

@@ -319,14 +319,16 @@ public class Configuracio implements Constants {
 
     public static String getHoraTancamentExpedientsScheduler() {
         return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancarexpedient.scheduler.hora");
-        //        es.caib.enviafib.=4:30
-        //        return getProperty(ENVIAFIB_PROPERTY_BASE + "ajuda.email");
     }
 
+    public static String getNhoresTancamentExpedientsScheduler() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancarexpedient.scheduler.nhores");
+    }
     /**
      * 
      * 
      */
+    
     public static String getUrlBase() {
         return getAppProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "url");
     }

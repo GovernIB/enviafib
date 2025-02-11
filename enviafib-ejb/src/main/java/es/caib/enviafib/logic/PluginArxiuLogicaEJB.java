@@ -525,34 +525,36 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         return infoCust;
     }
 
-    @Override
-    public boolean tancarExpedient(Peticio peticio, String expedientID) {
-
-        IArxiuPlugin plugin;
-
-        try {
-            plugin = getInstance();
-        } catch (I18NException e1) {
-
-            // XYZ ZZZ
-            Locale locale = new Locale("ca");
-            final String msg = "XYZ ZZZ Error Instanciant Plugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
-
-            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
-            peticio.setErrorMsg(LogicUtils.split255(msg));
-            peticio.setErrorException(LogicUtils.stackTrace2String(e1));
-
-            return false;
-        }
-
-        return tancarExpedient(peticio, plugin, expedientID);
-
-    }
-
+//    @Override
+//    public boolean tancarExpedient(Peticio peticio, String expedientID) {
+//
+//        IArxiuPlugin plugin;
+//
+//        try {
+//            plugin = getInstance();
+//        } catch (I18NException e1) {
+//
+//            // XYZ ZZZ
+//            Locale locale = new Locale("ca");
+//            final String msg = "XYZ ZZZ Error Instanciant Plugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
+//
+//            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+//            peticio.setErrorMsg(LogicUtils.split255(msg));
+//            peticio.setErrorException(LogicUtils.stackTrace2String(e1));
+//
+//            return false;
+//        }
+//
+//        return tancarExpedient(peticio, plugin, expedientID);
+//
+//    }
+//
+//    
     
-    protected boolean tancarExpedient(Peticio peticio, IArxiuPlugin plugin, String expedientId) {
+    @Override
+    public boolean tancarExpedient(Peticio peticio, IArxiuPlugin plugin, String expedientId) {
         boolean tancatExpedient;
-        log.info("XYZ ZZZ  Tancant Expedient ... ");
+//        log.info("XYZ ZZZ  Tancant Expedient ... ");
         // S'utilitza per gestionar quan l'expedient no s'ha pogut tancar.
 
         try {
@@ -561,7 +563,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // }
 
             plugin.expedientTancar(expedientId);
-            log.info("XYZ ZZZ  Tancat Expedient ... ");
+//            log.info("XYZ ZZZ  Expedient Tancat");
 
             tancatExpedient = true;
             peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
@@ -573,7 +575,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         } catch (Throwable th) {
 
             final String msg = "Error Tancant Expedient " + expedientId + ": " + th.getMessage();
-            log.error(msg, th);
+//            log.error(msg, th);
 
             peticio.setErrorException(LogicUtils.stackTrace2String(th));
             peticio.setErrorMsg(LogicUtils.split255(msg));
