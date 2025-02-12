@@ -84,18 +84,23 @@ public class GrupUsuariJPA implements GrupUsuari {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof GrupUsuari) {
-      GrupUsuari __instance = (GrupUsuari)__obj;
-      __result = true;
-      __result = __result && (this.getGrupUsuariID() == __instance.getGrupUsuariID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof GrupUsuari) {
+            GrupUsuari __instance = (GrupUsuari)__obj;
+            __result = true;
+            __result = __result && (this.getGrupUsuariID() == __instance.getGrupUsuariID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getGrupUsuariID())).hashCode();
+    }
 
 // IMP Field:grupid | Table: efi_grup | Type: 1  
 

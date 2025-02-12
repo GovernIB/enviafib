@@ -200,18 +200,23 @@ public class MenuJPA implements Menu {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Menu) {
-      Menu __instance = (Menu)__obj;
-      __result = true;
-      __result = __result && (this.getMenuID() == __instance.getMenuID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Menu) {
+            Menu __instance = (Menu)__obj;
+            __result = true;
+            __result = __result && (this.getMenuID() == __instance.getMenuID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getMenuID())).hashCode();
+    }
 
 // IMP Field:traduccioid | Table: efi_traduccio | Type: 1  
 

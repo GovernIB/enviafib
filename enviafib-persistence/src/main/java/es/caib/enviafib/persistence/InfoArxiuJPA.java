@@ -174,18 +174,23 @@ public class InfoArxiuJPA implements InfoArxiu {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof InfoArxiu) {
-      InfoArxiu __instance = (InfoArxiu)__obj;
-      __result = true;
-      __result = __result && (this.getInfoArxiuID() == __instance.getInfoArxiuID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof InfoArxiu) {
+            InfoArxiu __instance = (InfoArxiu)__obj;
+            __result = true;
+            __result = __result && (this.getInfoArxiuID() == __instance.getInfoArxiuID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getInfoArxiuID())).hashCode();
+    }
 
 // EXP  Field:infoarxiuid | Table: efi_peticio | Type: 0  
 

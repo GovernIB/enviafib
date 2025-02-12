@@ -34,6 +34,7 @@ import es.caib.enviafib.back.validator.webdb.IdiomaWebValidator;
 import es.caib.enviafib.persistence.IdiomaJPA;
 import es.caib.enviafib.model.entity.Idioma;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Idioma
@@ -41,6 +42,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="idioma.idioma.plural", order=50, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/idioma")
 @SessionAttributes(types = { IdiomaForm.class, IdiomaFilterForm.class })
@@ -305,7 +307,6 @@ public class IdiomaController
 
     if (idioma == null) {
       createMessageWarning(request, "error.notfound", idiomaID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, idiomaID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

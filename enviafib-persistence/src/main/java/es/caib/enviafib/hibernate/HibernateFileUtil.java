@@ -8,7 +8,7 @@ public class HibernateFileUtil {
 
     static {
       try {
-        encrypter = new FileIDEncrypter("keyValuekeyValue".getBytes(),
+        encrypter = new FileIDEncrypter(new String("keyValuekeyValue").getBytes("UTF-8"),
             FileIDEncrypter.ALGORITHM_AES);
       } catch (Exception e) {
         System.err.println("Error instanciant File Encrypter: " + e.getMessage());

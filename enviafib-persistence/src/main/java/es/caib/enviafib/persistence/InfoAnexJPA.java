@@ -87,18 +87,23 @@ public class InfoAnexJPA implements InfoAnex {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof InfoAnex) {
-      InfoAnex __instance = (InfoAnex)__obj;
-      __result = true;
-      __result = __result && (this.getInfoanexid() == __instance.getInfoanexid()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof InfoAnex) {
+            InfoAnex __instance = (InfoAnex)__obj;
+            __result = true;
+            __result = __result && (this.getInfoanexid() == __instance.getInfoanexid()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getInfoanexid())).hashCode();
+    }
 
 // IMP Field:peticioid | Table: efi_peticio | Type: 1  
 

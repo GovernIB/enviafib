@@ -34,6 +34,7 @@ import es.caib.enviafib.back.validator.webdb.TraduccioWebValidator;
 import es.caib.enviafib.persistence.TraduccioJPA;
 import es.caib.enviafib.model.entity.Traduccio;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Traduccio
@@ -41,6 +42,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="traduccio.traduccio.plural", order=140, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/traduccio")
 @SessionAttributes(types = { TraduccioForm.class, TraduccioFilterForm.class })
@@ -302,7 +304,6 @@ public class TraduccioController
 
     if (traduccio == null) {
       createMessageWarning(request, "error.notfound", traduccioID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, traduccioID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

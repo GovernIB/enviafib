@@ -176,18 +176,23 @@ public class FaqJPA implements Faq {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Faq) {
-      Faq __instance = (Faq)__obj;
-      __result = true;
-      __result = __result && (this.getFaqID() == __instance.getFaqID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Faq) {
+            Faq __instance = (Faq)__obj;
+            __result = true;
+            __result = __result && (this.getFaqID() == __instance.getFaqID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getFaqID())).hashCode();
+    }
 
 // IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
 

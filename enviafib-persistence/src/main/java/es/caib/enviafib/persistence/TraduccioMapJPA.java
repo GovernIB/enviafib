@@ -36,18 +36,23 @@ public class TraduccioMapJPA implements TraduccioMap {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof TraduccioMap) {
-      TraduccioMap __instance = (TraduccioMap)__obj;
-      __result = true;
-      __result = super.equals(__instance);
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof TraduccioMap) {
+            TraduccioMap __instance = (TraduccioMap)__obj;
+            __result = true;
+            __result = super.equals(__instance);
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
 
 

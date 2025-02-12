@@ -36,6 +36,7 @@ import es.caib.enviafib.back.validator.webdb.GrupUsuariWebValidator;
 import es.caib.enviafib.persistence.GrupUsuariJPA;
 import es.caib.enviafib.model.entity.GrupUsuari;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un GrupUsuari
@@ -43,6 +44,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="grupUsuari.grupUsuari.plural", order=40, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/grupUsuari")
 @SessionAttributes(types = { GrupUsuariForm.class, GrupUsuariFilterForm.class })
@@ -355,7 +357,6 @@ public class GrupUsuariController
 
     if (grupUsuari == null) {
       createMessageWarning(request, "error.notfound", grupUsuariID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, grupUsuariID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

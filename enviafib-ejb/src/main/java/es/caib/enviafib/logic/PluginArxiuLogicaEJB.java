@@ -10,6 +10,7 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.v3.utils.Metadata;
 import org.fundaciobit.pluginsib.core.v3.utils.MetadataConstants;
 
+import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;
@@ -481,6 +482,14 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             peticio.setInfoArxiuID(infoCust.getInfoArxiuID());
             log.info("XYZ ZZZ  Guardada Informació Document Arxivat ... ");
 
+            log.info("XYZ ZZZ  Tancarem l'expedient de la peticio " + peticio.getPeticioID() + " ...");
+            boolean tancatExpedient = tancarExpedient(peticio, plugin, expedientId);
+
+            if (!tancatExpedient) {
+    			log.error("Error tancant expedient de la peticio " + peticio.getPeticioID());
+            }
+
+            log.info("\n FINAL \n");
         } catch (Throwable e) {
             final String msg;
 
@@ -508,20 +517,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             return null; // Indicam un error
         }
-//        boolean tancatExpedient;
-//
-//        tancatExpedient = tancarExpedient(peticio, plugin, expedientId);
-//
-//        if (!tancatExpedient) {
-//            return null;
-//        }
-//
-//        // XYZ Cridades de Plugin: No esta implementat?
-//        // peticioLogicaEjb.postCridadaOK(monitor, "expedientID=" + expedientId +
-//        // "\nDocumentID=" + uuidDoc);
-
-        log.info("\n FINAL \n");
-
+        
+        
         return infoCust;
     }
 
@@ -554,7 +551,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
     @Override
     public boolean tancarExpedient(Peticio peticio, IArxiuPlugin plugin, String expedientId) {
         boolean tancatExpedient;
-//        log.info("XYZ ZZZ  Tancant Expedient ... ");
+        log.info("XYZ ZZZ  Tancant Expedient ... ");
         // S'utilitza per gestionar quan l'expedient no s'ha pogut tancar.
 
         try {
@@ -563,11 +560,10 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // }
 
             plugin.expedientTancar(expedientId);
-//            log.info("XYZ ZZZ  Expedient Tancat");
+            log.info("XYZ ZZZ Expedient Tancat");
 
             tancatExpedient = true;
             peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-            peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
 
@@ -579,10 +575,26 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             peticio.setErrorException(LogicUtils.stackTrace2String(th));
             peticio.setErrorMsg(LogicUtils.split255(msg));
-            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+            
+            //Control de l'estat segons els reintents.
+            Long reintents = peticio.getReintentsArxiu();
+            reintents++;
+            peticio.setReintentsArxiu(reintents);
+            peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
+            
+//    		Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+//
+//			if (reintents < max_reintents) {
+//				peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
+//			} else {
+//				peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+//			}
+//            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
             tancatExpedient = false; // Indicam un error
         }
         
+        //Guardam la data del darrer reintent, per a que durant el vespre no torni a intentar tancar l'expedeint. Perque els ordenam per data.
+        peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
         return tancatExpedient;
     }
 

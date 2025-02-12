@@ -36,6 +36,7 @@ import es.caib.enviafib.back.validator.webdb.SerieDocumentalWebValidator;
 import es.caib.enviafib.persistence.SerieDocumentalJPA;
 import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un SerieDocumental
@@ -43,6 +44,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="serieDocumental.serieDocumental.plural", order=130, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/serieDocumental")
 @SessionAttributes(types = { SerieDocumentalForm.class, SerieDocumentalFilterForm.class })
@@ -351,7 +353,6 @@ public class SerieDocumentalController
 
     if (serieDocumental == null) {
       createMessageWarning(request, "error.notfound", serieDocumentalID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, serieDocumentalID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

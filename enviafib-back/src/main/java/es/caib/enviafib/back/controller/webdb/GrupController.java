@@ -34,6 +34,7 @@ import es.caib.enviafib.back.validator.webdb.GrupWebValidator;
 import es.caib.enviafib.persistence.GrupJPA;
 import es.caib.enviafib.model.entity.Grup;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Grup
@@ -41,6 +42,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="grup.grup.plural", order=30, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/grup")
 @SessionAttributes(types = { GrupForm.class, GrupFilterForm.class })
@@ -302,7 +304,6 @@ public class GrupController
 
     if (grup == null) {
       createMessageWarning(request, "error.notfound", grupID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, grupID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

@@ -79,18 +79,23 @@ public class GrupJPA implements Grup {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Grup) {
-      Grup __instance = (Grup)__obj;
-      __result = true;
-      __result = __result && (this.getGrupID() == __instance.getGrupID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Grup) {
+            Grup __instance = (Grup)__obj;
+            __result = true;
+            __result = __result && (this.getGrupID() == __instance.getGrupID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getGrupID())).hashCode();
+    }
 
 // EXP  Field:grupid | Table: efi_grupusuari | Type: 0  
 

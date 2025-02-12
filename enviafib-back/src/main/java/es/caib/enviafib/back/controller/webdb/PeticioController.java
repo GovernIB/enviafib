@@ -39,6 +39,7 @@ import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import es.caib.enviafib.persistence.PeticioJPA;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Peticio
@@ -46,6 +47,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="peticio.peticio.plural", order=110, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/peticio")
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
@@ -552,7 +554,6 @@ public class PeticioController
 
     if (peticio == null) {
       createMessageWarning(request, "error.notfound", peticioID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, peticioID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

@@ -939,3 +939,21 @@
         </tr>
         </c:if>
         
+        <c:if test="${!gen:contains(__theForm.hiddenFields,PeticioFields.REINTENTSARXIU)}">
+        <tr id="peticio_reintentsArxiu_rowid">
+          <td id="peticio_reintentsArxiu_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[PeticioFields.REINTENTSARXIU])?'peticio.reintentsArxiu':__theForm.labels[PeticioFields.REINTENTSARXIU]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[PeticioFields.REINTENTSARXIU]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[PeticioFields.REINTENTSARXIU]}" ></i>
+              </c:if>
+            </td>
+          <td id="peticio_reintentsArxiu_columnvalueid">
+            <form:errors path="peticio.reintentsArxiu" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PeticioFields.REINTENTSARXIU)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,PeticioFields.REINTENTSARXIU)? ' uneditable-input' : ''}"  style=""  path="peticio.reintentsArxiu"   />
+
+           </td>
+        </tr>
+        </c:if>
+        

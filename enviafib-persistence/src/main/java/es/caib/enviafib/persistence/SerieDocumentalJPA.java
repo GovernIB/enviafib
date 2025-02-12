@@ -134,18 +134,23 @@ public class SerieDocumentalJPA implements SerieDocumental {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof SerieDocumental) {
-      SerieDocumental __instance = (SerieDocumental)__obj;
-      __result = true;
-      __result = __result && (this.getSerieDocumentalID() == __instance.getSerieDocumentalID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof SerieDocumental) {
+            SerieDocumental __instance = (SerieDocumental)__obj;
+            __result = true;
+            __result = __result && (this.getSerieDocumentalID() == __instance.getSerieDocumentalID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getSerieDocumentalID())).hashCode();
+    }
 
 // IMP Field:entitatid | Table: efi_entitat | Type: 1  
 

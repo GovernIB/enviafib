@@ -62,6 +62,7 @@ import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.pluginsib.core.v3.utils.FileUtils;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
@@ -397,12 +398,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         guardarPeticioArxiu(peticio, languageUI, infoSignatura, urlBase);
     
-
-        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
-            log.info("S'ha arxivar correctament");
-        } else {
-            log.error("Error arxivant: " + peticio.getErrorMsg());
-        }
+		String msg = "Peticio " + peticioID + ". ";
+		if (peticio.getInfoArxiuID() != null) {
+			msg += "Arxivat correctament. ";
+			if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+				msg += "Expedient tancat correctament";
+			}
+			log.info(msg);
+		} else {
+			msg += "Error arxivant: " + peticio.getErrorMsg();
+			log.error(msg);
+		}
 
         log.info("cosesAFerPeticioFirmada()::  SORTIM !!!!! ");
     }
@@ -593,7 +599,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         if (ia != null) {
             peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
-            peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
+//            peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
 
@@ -1217,6 +1223,252 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return signatureBlocks;
     }
 
+    @Override
+    public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException {
+
+        try {
+            ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
+            FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
+//            log.info("peticioPortaFIB: " + peticioPortaFIB);
+//            log.info("languageUI: " + languageUI);
+            rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortaFIB, languageUI);
+            String url = api.getUrlToViewFlow(rinfo);
+            return url;
+
+        } catch (I18NException e) {
+            log.error("error obtenint getUrlToViewFlow: " + e);
+            throw e;
+        } catch (Exception e) {
+            // XYZ ZZZ TRA
+            String msg = "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "  + e.getMessage();
+            log.error(msg, e);
+            throw new I18NException("genapp.comodi", msg);
+        }
+    }
+
+    @Override
+    public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException {
+
+        try {
+
+            String url = Configuracio.getPortaFIBAPIRevisorsURL();
+            String username = Configuracio.getPortaFIBAPIRevisorsUsername();
+            String password = Configuracio.getPortaFIBAPIRevisorsPassword();
+
+            ApiClient c = new ApiClient();
+
+            c.setBasePath(url);
+            c.setUsername(username);
+            c.setPassword(password);
+
+            RevisorsV1Api api = new RevisorsV1Api(c);
+            BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, lang);
+
+            List<StringKeyValue> result = new ArrayList<StringKeyValue>();
+            for (BasicUserInfo userInfo : response.getData()) {
+                String key = userInfo.getAdministrationId();
+                
+                // Pepito Grillo Mola (pgrillo)
+                String nifOfuscat = "******" + userInfo.getAdministrationId().substring(6);
+                
+                String value = nifOfuscat + " - " + userInfo.getName() + " "
+                        + userInfo.getSurname() + " (" + userInfo.getUsername() +")";
+                result.add(new StringKeyValue(key, value));
+            }
+
+            return result;
+
+        } catch (Throwable e) {
+            String msg = "Error consultant API de Revisors per username: " + e.getMessage();
+            log.error(msg, e);
+            throw new I18NException("genapp.comodi", msg);
+        }
+
+    }
+
+    public boolean esFitxerPDF(File file) {
+		if (file == null) {
+			return false;
+		}
+        try {
+            log.info("Provant si fitxer es PDF:" + file.getAbsolutePath());
+            
+            PdfReader reader = new PdfReader(new FileInputStream(file));
+            int pages = reader.getNumberOfPages();
+            reader.close();
+            log.info("El fitxer " + file.getAbsolutePath() + " es un PDF de " + pages + " pagines");
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    //Funció per controlar els reintents de tancament d'expedient. Si du mes de X reintents, no canviar estat a pendent.
+    /**
+     * Funció que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
+     */
+    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
+    @Schedule(hour = "23", persistent = false)
+	protected void controlarReintentsArxiu() {
+		log.info("Comença controlarReintentsArxiu()");
+
+		long startTime = System.currentTimeMillis();
+
+		Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+		
+		//Agafa les peticions amb error tancant expedient, que no han superat el màxim de reintents, i les deixa pendents de tancar expedient.
+		try {
+			Where wReintentsMenysDe = PeticioFields.REINTENTSARXIU.lessThan(max_reintents);
+			this.update(PeticioFields.ESTAT, Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT, wReintentsMenysDe);
+		} catch (I18NException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Lo mateix amb les que ha donar error arxivant.
+		
+		
+		
+		
+		long endTime = System.currentTimeMillis();
+		log.info("Total time: " + (endTime - startTime));
+		log.info("Acaba controlarReintentsArxiu()");
+	}
+        
+
+    /**
+     * Funció que s'executa cada vespre a les 12:00 i tanca tots els expedients oberts.
+     */
+    @Resource
+    private TimerService ejbTimerService;
+
+    @Override
+    public void initScheduler() {
+        ScheduleExpression schedule = new ScheduleExpression();
+
+//		String hora, h, m;
+		log.info("Timers inicials");
+
+		Collection<Timer> allTimers = ejbTimerService.getAllTimers();
+
+		if (allTimers.size() == 1) {
+			log.info("initScheduler:: Schedule per tancament d'expedients JA ESTAVA CREAT: "
+					+ allTimers.iterator().next().toString());
+			return;
+		} else {
+			log.info("initScheduler:: havia " + allTimers.size() + " timers");
+
+			for (Timer timer : allTimers) {
+				timer.cancel();
+			}
+		}
+
+		String horaStr = Configuracio.getHoraTancamentExpedientsScheduler(); //14
+		String nHoresStr = Configuracio.getNhoresTancamentExpedientsScheduler(); //2
+		
+		int nHores = Integer.parseInt(nHoresStr);
+		if (nHores > 1) {
+			int hores = Integer.parseInt(horaStr);
+			horaStr += "-" + (hores + nHores - 1);
+		}
+		
+//		try {
+//			h = hora.split(":")[0];
+//
+//			if (h == null || h.trim().length() == 0) {
+//				h = "4";
+//			}
+//		} catch (Throwable t) {
+//			h = "4";
+//		}
+
+		log.info("initScheduler:: Tancar expedients a les " + horaStr + " hores");
+		schedule.hour(horaStr);
+		schedule.minute("*/5");
+        
+        Timer newTimer = ejbTimerService.createCalendarTimer(schedule);
+
+        log.info("initScheduler:: CREAT Schedule per tancar expedients:" + newTimer.toString());
+        log.info("Timers finals");
+        for (Timer timer : ejbTimerService.getAllTimers()) {
+            log.info("initScheduler:: timer: " + timer.toString());
+        }
+    }
+
+    @Timeout
+    public void onTimeout(Timer timer) {
+        log.info("Comença tancarTotsElsExpedients()");
+
+        long startTime = System.currentTimeMillis();
+        final String languageUI = "ca";
+        
+        //El timeout de EJB son 5 minuts, li direm que als 4 minuts surti.
+        long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 4 minuts
+        
+        try {
+        	
+        	//Llistat de peticions amb error tancant expedient, que no han superat el màxim de reintents.
+			Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+
+			Where wReintentsMenysDe = PeticioFields.REINTENTSARXIU.lessThan(max_reintents);
+			Where wPendentTancar = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
+			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
+    			
+			List<Peticio> peticions = this.select(Where.AND(wPendentTancar, wReintentsMenysDe), orderBy);
+
+            log.info("Expedients que s'han de tancar: " + peticions.size());
+            
+            IArxiuPlugin plugin = pluginArxiuLogicaEjb.getInstance();
+            
+            int i = 1;
+            for (Peticio peticio : peticions) {
+                Long peticioID = peticio.getPeticioID();
+                log.info("Tancarem expedient " + i + " de " + peticions.size() + ". PeticioID: " + peticioID + " DataFi: " + peticio.getDataFinal());
+
+				String expedientID = infoArxiuLogicEjb.executeQueryOne(InfoArxiuFields.ARXIUEXPEDIENTID,
+						InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
+
+                boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, plugin, expedientID);
+                this.update(peticio);
+
+                if (tancatExpedient) {
+                    log.info("Expedient de la petició " + peticioID + " tancat correctament. ExpedientID: " + expedientID);
+                } else {
+                    log.error("Error tancant expedient de la petició " + peticioID + ": " + peticio.getErrorMsg());
+
+                }
+                
+                try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+				}
+
+                //El Timeout son 5 minuts. Si el CRON s'executa durant 4 min, surt del for i acaba la funció.
+                if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
+                    log.warn("Timeout. Hem processat " + i + " expedients");
+                    break;
+                }
+                i++;
+            }
+        } catch (I18NException e) {
+
+            final String msg = "Error obtenint llistat de fitxersFirmatsID durant el cron nocturn: "
+                    + I18NCommonUtils.getMessage(e, new Locale(languageUI));
+            log.error(msg, e);
+        }
+
+        long endTime = System.currentTimeMillis();
+        log.info("Total time: " + (endTime - startTime));
+        log.info("Acaba tancarTotsElsExpedients()");
+    }
+    
+
     /**
      * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
      */
@@ -1351,228 +1603,4 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Acaba eliminarFitxersSignatsDeLocal()");
     }
 
-    /**
-     * Funció que s'executa cada vespre a les 12:00 i tanca tots els expedients oberts.
-     */
-    @Resource
-    private TimerService ejbTimerService;
-
-    @Override
-    public void initScheduler() {
-        ScheduleExpression schedule = new ScheduleExpression();
-
-//		String hora, h, m;
-		log.info("Timers inicials");
-
-		Collection<Timer> allTimers = ejbTimerService.getAllTimers();
-
-		if (allTimers.size() == 1) {
-			log.info("initScheduler:: Schedule per tancament d'expedients JA ESTAVA CREAT: "
-					+ allTimers.iterator().next().toString());
-			return;
-		} else {
-			log.info("initScheduler:: havia " + allTimers.size() + " timers");
-
-			for (Timer timer : allTimers) {
-				timer.cancel();
-			}
-		}
-
-		String horaStr = Configuracio.getHoraTancamentExpedientsScheduler(); //14
-//		String nHores = Configuracio.getNhoresTancamentExpedientsScheduler(); //2
-		String nHoresStr = "1";
-		horaStr = "12";
-		
-		int nHores = Integer.parseInt(nHoresStr);
-		if (nHores > 1) {
-			int hores = Integer.parseInt(horaStr);
-			horaStr += "-" + (hores + nHores - 1);
-		}
-		
-//		try {
-//			h = hora.split(":")[0];
-//
-//			if (h == null || h.trim().length() == 0) {
-//				h = "4";
-//			}
-//		} catch (Throwable t) {
-//			h = "4";
-//		}
-
-		schedule.hour(horaStr);
-		schedule.minute("*/5");
-        
-        Timer newTimer = ejbTimerService.createCalendarTimer(schedule);
-
-        log.info("initScheduler:: CREAT Schedule per tancar expedients:" + newTimer.toString());
-        log.info("Timers finals");
-        for (Timer timer : ejbTimerService.getAllTimers()) {
-            log.info("initScheduler:: timer: " + timer.toString());
-        }
-    }
-
-    @Timeout
-    public void onTimeout(Timer timer) {
-        log.info("Comença tancarTotsElsExpedients()");
-
-        long startTime = System.currentTimeMillis();
-        final String languageUI = "ca";
-        
-        //Agafam els que están pendents, perque els que donen error, canvien l'estat al vespre, i al dia següent, tornam a intentar tancar-los.
-        Integer[] estatsPendents = { 
-        		Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT,
-//                Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT
-                };
-
-        //El timeout de EJB son 5 minuts, li direm que als 4 minuts surti.
-        
-        long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 4 minuts
-        
-        try {
-            //Llistat de peticions pendents de tancar expedient: 
-            List<Peticio> peticions = this.select(PeticioFields.ESTAT.in(estatsPendents));
-
-            log.info("Expedients que s'han de tancar: " + peticions.size());
-            
-            IArxiuPlugin plugin = pluginArxiuLogicaEjb.getInstance();
-            
-            int i = 1;
-            for (Peticio peticio : peticions) {
-                Long peticioID = peticio.getPeticioID();
-
-//                String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
-//                        PETICIOID.equal(peticioID));
-				String expedientID = infoArxiuLogicEjb.executeQueryOne(InfoArxiuFields.ARXIUEXPEDIENTID,
-						InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-                log.info("Tancarem expedient " + i + " de " + peticions.size());
-
-                boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, plugin, expedientID);
-                this.update(peticio);
-
-                if (tancatExpedient) {
-                    log.info("Expedient de la petició " + peticioID + " tancat correctament. ExpedientID: " + expedientID);
-                } else {
-                    log.error("Error tancant expedient de la petició " + peticioID + ": " + peticio.getErrorMsg());
-
-                }
-                
-                try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-				}
-
-                //El Timeout son 5 minuts. Si el CRON s'executa durant 4 min, surt del for i acaba la funció.
-                if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-                    log.warn("Timeout. Hem processat " + i + " expedients");
-                    break;
-                }
-                i++;
-            }
-        } catch (I18NException e) {
-
-            final String msg = "Error obtenint llistat de fitxersFirmatsID durant el cron nocturn: "
-                    + I18NCommonUtils.getMessage(e, new Locale(languageUI));
-            log.error(msg, e);
-        }
-
-        long endTime = System.currentTimeMillis();
-        log.info("Total time: " + (endTime - startTime));
-        log.info("Acaba tancarTotsElsExpedients()");
-    }
-    
-    /**
-     * 
-     * @param peticioPortaFIB
-     * @param languageUI
-     * @return
-     * @throws I18NException
-     */
-    @Override
-    public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException {
-
-        try {
-            ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
-            FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-//            log.info("peticioPortaFIB: " + peticioPortaFIB);
-//            log.info("languageUI: " + languageUI);
-            rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortaFIB, languageUI);
-            String url = api.getUrlToViewFlow(rinfo);
-            return url;
-
-        } catch (I18NException e) {
-            log.error("error obtenint getUrlToViewFlow: " + e);
-            throw e;
-        } catch (Exception e) {
-            // XYZ ZZZ TRA
-            String msg = "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "  + e.getMessage();
-            log.error(msg, e);
-            throw new I18NException("genapp.comodi", msg);
-        }
-    }
-
-
-
-    /**
-     * 
-     * @param administrationID
-     * @param lang
-     * @return
-     * @throws I18NException
-     */
-    @Override
-    public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException {
-
-        try {
-
-            String url = Configuracio.getPortaFIBAPIRevisorsURL();
-            String username = Configuracio.getPortaFIBAPIRevisorsUsername();
-            String password = Configuracio.getPortaFIBAPIRevisorsPassword();
-
-            ApiClient c = new ApiClient();
-
-            c.setBasePath(url);
-            c.setUsername(username);
-            c.setPassword(password);
-
-            RevisorsV1Api api = new RevisorsV1Api(c);
-            BasicUserInfoList response = api.revisorsByDestinatariNIF(administrationID, lang);
-
-            List<StringKeyValue> result = new ArrayList<StringKeyValue>();
-            for (BasicUserInfo userInfo : response.getData()) {
-                String key = userInfo.getAdministrationId();
-                
-                // Pepito Grillo Mola (pgrillo)
-                String nifOfuscat = "******" + userInfo.getAdministrationId().substring(6);
-                
-                String value = nifOfuscat + " - " + userInfo.getName() + " "
-                        + userInfo.getSurname() + " (" + userInfo.getUsername() +")";
-                result.add(new StringKeyValue(key, value));
-            }
-
-            return result;
-
-        } catch (Throwable e) {
-            String msg = "Error consultant API de Revisors per username: " + e.getMessage();
-            log.error(msg, e);
-            throw new I18NException("genapp.comodi", msg);
-        }
-
-    }
-
-    public boolean esFitxerPDF(File file) {
-		if (file == null) {
-			return false;
-		}
-        try {
-            log.info("Provant si fitxer es PDF:" + file.getAbsolutePath());
-            
-            PdfReader reader = new PdfReader(new FileInputStream(file));
-            int pages = reader.getNumberOfPages();
-            reader.close();
-            log.info("El fitxer " + file.getAbsolutePath() + " es un PDF de " + pages + " pagines");
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-}
+  }

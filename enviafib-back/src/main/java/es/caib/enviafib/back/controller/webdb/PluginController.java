@@ -36,6 +36,7 @@ import es.caib.enviafib.back.validator.webdb.PluginWebValidator;
 import es.caib.enviafib.persistence.PluginJPA;
 import es.caib.enviafib.model.entity.Plugin;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Plugin
@@ -43,6 +44,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="plugin.plugin.plural", order=120, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/plugin")
 @SessionAttributes(types = { PluginForm.class, PluginFilterForm.class })
@@ -330,7 +332,6 @@ public class PluginController
 
     if (plugin == null) {
       createMessageWarning(request, "error.notfound", pluginID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, pluginID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

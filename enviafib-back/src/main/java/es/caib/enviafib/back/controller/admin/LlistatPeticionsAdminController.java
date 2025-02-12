@@ -129,6 +129,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
 
                 hiddens.remove(PeticioFields.ERRORMSG);
                 hiddens.remove(PeticioFields.ERROREXCEPTION);
+                hiddens.remove(PeticioFields.REINTENTSARXIU);
                 
             }
             peticioForm.setHiddenFields(hiddens);

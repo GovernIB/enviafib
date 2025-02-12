@@ -218,15 +218,17 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     }
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                     hiddens.remove(ERRORMSG);
                     if (peticioForm.getPeticio().getErrorException() != null) {
                         hiddens.remove(ERROREXCEPTION);
                     }
+                	hiddens.remove(REINTENTSARXIU);
                     hiddens.remove(FITXERFIRMATID);
                 break;
-                case Constants.ESTAT_PETICIO_FIRMADA:
                 case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
+                case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
+                	hiddens.remove(REINTENTSARXIU);
+                case Constants.ESTAT_PETICIO_FIRMADA:
                     hiddens.remove(FITXERFIRMATID);
                     hiddens.remove(DATAFINAL);
 
@@ -297,6 +299,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             // Idioma per defecte per els documents, catala.
             peticio.setIdiomaDoc("ca");
+            peticio.setReintentsArxiu(0L);
 
             LoginInfo li = LoginInfo.getInstance();
             peticio.setArxiuFuncionariUsername(li.getUsername());

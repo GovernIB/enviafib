@@ -39,6 +39,7 @@ import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import es.caib.enviafib.persistence.InfoAnexJPA;
 import es.caib.enviafib.model.entity.InfoAnex;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un InfoAnex
@@ -46,6 +47,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="infoAnex.infoAnex.plural", order=60, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/infoAnex")
 @SessionAttributes(types = { InfoAnexForm.class, InfoAnexFilterForm.class })
@@ -340,7 +342,6 @@ public class InfoAnexController
 
     if (infoAnex == null) {
       createMessageWarning(request, "error.notfound", infoanexid);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, infoanexid), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

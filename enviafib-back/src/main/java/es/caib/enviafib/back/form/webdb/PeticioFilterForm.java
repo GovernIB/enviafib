@@ -439,6 +439,28 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.Long reintentsArxiuDesde;
+
+  public java.lang.Long getReintentsArxiuDesde() {
+    return this.reintentsArxiuDesde;
+  }
+
+  public void setReintentsArxiuDesde(java.lang.Long reintentsArxiuDesde) {
+    this.reintentsArxiuDesde = reintentsArxiuDesde;
+  }
+
+
+  private java.lang.Long reintentsArxiuFins;
+
+  public java.lang.Long getReintentsArxiuFins() {
+    return this.reintentsArxiuFins;
+  }
+
+  public void setReintentsArxiuFins(java.lang.Long reintentsArxiuFins) {
+    this.reintentsArxiuFins = reintentsArxiuFins;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -482,6 +504,8 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.infoArxiuIDDesde = __toClone.infoArxiuIDDesde;
     this.infoArxiuIDFins = __toClone.infoArxiuIDFins;
     this.revisor = __toClone.revisor;
+    this.reintentsArxiuDesde = __toClone.reintentsArxiuDesde;
+    this.reintentsArxiuFins = __toClone.reintentsArxiuFins;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;

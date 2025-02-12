@@ -143,6 +143,9 @@ public class PeticioJPA implements Peticio {
     @Column(name="revisor",length = 255)
     java.lang.String revisor;
 
+    @Column(name="reintentsarxiu",length = 19)
+    java.lang.Long reintentsArxiu;
+
 
 
   /** Constructor Buit */
@@ -150,7 +153,7 @@ public class PeticioJPA implements Peticio {
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioJPA(long peticioID , java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor) {
+  public PeticioJPA(long peticioID , java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor , java.lang.Long reintentsArxiu) {
     this.peticioID=peticioID;
     this.nom=nom;
     this.dataCreacio=dataCreacio;
@@ -185,9 +188,10 @@ public class PeticioJPA implements Peticio {
     this.arxiuReqParamOrigen=arxiuReqParamOrigen;
     this.infoArxiuID=infoArxiuID;
     this.revisor=revisor;
+    this.reintentsArxiu=reintentsArxiu;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor) {
+  public PeticioJPA(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor , java.lang.Long reintentsArxiu) {
     this.nom=nom;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
@@ -221,6 +225,7 @@ public class PeticioJPA implements Peticio {
     this.arxiuReqParamOrigen=arxiuReqParamOrigen;
     this.infoArxiuID=infoArxiuID;
     this.revisor=revisor;
+    this.reintentsArxiu=reintentsArxiu;
 }
   /** Constructor dels valors Not Null */
   public PeticioJPA(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , int estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
@@ -269,6 +274,7 @@ public class PeticioJPA implements Peticio {
     this.setArxiuReqParamOrigen(__bean.getArxiuReqParamOrigen());
     this.setInfoArxiuID(__bean.getInfoArxiuID());
     this.setRevisor(__bean.getRevisor());
+    this.setReintentsArxiu(__bean.getReintentsArxiu());
     // Fitxer
     this.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer
@@ -513,20 +519,32 @@ public class PeticioJPA implements Peticio {
 		this.revisor = _revisor_;
 	};
 
+	public java.lang.Long getReintentsArxiu() {
+		return(reintentsArxiu);
+	};
+	public void setReintentsArxiu(java.lang.Long _reintentsArxiu_) {
+		this.reintentsArxiu = _reintentsArxiu_;
+	};
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Peticio) {
-      Peticio __instance = (Peticio)__obj;
-      __result = true;
-      __result = __result && (this.getPeticioID() == __instance.getPeticioID()) ;
-    } else {
-      __result = false;
+
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Peticio) {
+            Peticio __instance = (Peticio)__obj;
+            __result = true;
+            __result = __result && (this.getPeticioID() == __instance.getPeticioID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getPeticioID())).hashCode();
+    }
 
 // EXP  Field:peticioid | Table: efi_infoanex | Type: 0  
 
@@ -664,6 +682,7 @@ public class PeticioJPA implements Peticio {
     __tmp.setArxiuReqParamOrigen(__bean.getArxiuReqParamOrigen());
     __tmp.setInfoArxiuID(__bean.getInfoArxiuID());
     __tmp.setRevisor(__bean.getRevisor());
+    __tmp.setReintentsArxiu(__bean.getReintentsArxiu());
     // Fitxer
     __tmp.setFitxer(FitxerJPA.toJPA(__bean.getFitxer()));
     // Fitxer

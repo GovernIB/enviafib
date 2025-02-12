@@ -173,18 +173,23 @@ public class UsuariJPA implements Usuari {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Usuari) {
-      Usuari __instance = (Usuari)__obj;
-      __result = true;
-      __result = __result && (this.getUsuariID() == __instance.getUsuariID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Usuari) {
+            Usuari __instance = (Usuari)__obj;
+            __result = true;
+            __result = __result && (this.getUsuariID() == __instance.getUsuariID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getUsuariID())).hashCode();
+    }
 
 // EXP  Field:usuariid | Table: efi_grupusuari | Type: 0  
 

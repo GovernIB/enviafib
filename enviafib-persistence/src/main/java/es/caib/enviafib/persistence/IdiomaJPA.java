@@ -84,23 +84,28 @@ public class IdiomaJPA implements Idioma {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Idioma) {
-      Idioma __instance = (Idioma)__obj;
-      __result = true;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Idioma) {
+            Idioma __instance = (Idioma)__obj;
+            __result = true;
       if (this.getIdiomaID() == null) {
         __result = __result && (__instance.getIdiomaID() == null);
       } else {
         __result = __result && this.getIdiomaID().equals(__instance.getIdiomaID()) ;
       }
 
-    } else {
-      __result = false;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getIdiomaID())).hashCode();
+    }
 
 // EXP  Field:idiomaid | Table: efi_peticio | Type: 0  
 

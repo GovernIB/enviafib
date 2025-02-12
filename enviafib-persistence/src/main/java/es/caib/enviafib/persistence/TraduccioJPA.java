@@ -60,18 +60,23 @@ public class TraduccioJPA implements Traduccio {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Traduccio) {
-      Traduccio __instance = (Traduccio)__obj;
-      __result = true;
-      __result = __result && (this.getTraduccioID() == __instance.getTraduccioID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Traduccio) {
+            Traduccio __instance = (Traduccio)__obj;
+            __result = true;
+            __result = __result && (this.getTraduccioID() == __instance.getTraduccioID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getTraduccioID())).hashCode();
+    }
 
 // EXP  Field:motiudelegacioid | Table: efi_entitat | Type: 0  
 

@@ -36,6 +36,7 @@ import es.caib.enviafib.back.validator.webdb.OrganitzacioWebValidator;
 import es.caib.enviafib.persistence.OrganitzacioJPA;
 import es.caib.enviafib.model.entity.Organitzacio;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Organitzacio
@@ -43,6 +44,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="organitzacio.organitzacio.plural", order=100, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/organitzacio")
 @SessionAttributes(types = { OrganitzacioForm.class, OrganitzacioFilterForm.class })
@@ -327,7 +329,6 @@ public class OrganitzacioController
 
     if (organitzacio == null) {
       createMessageWarning(request, "error.notfound", organitzacioID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, organitzacioID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

@@ -34,6 +34,7 @@ import es.caib.enviafib.back.validator.webdb.FitxerWebValidator;
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Fitxer
@@ -41,6 +42,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="fitxer.fitxer.plural", order=20, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/fitxer")
 @SessionAttributes(types = { FitxerForm.class, FitxerFilterForm.class })
@@ -302,7 +304,6 @@ public class FitxerController
 
     if (fitxer == null) {
       createMessageWarning(request, "error.notfound", fitxerID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, fitxerID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

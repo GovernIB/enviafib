@@ -36,6 +36,7 @@ import es.caib.enviafib.back.validator.webdb.InfoSignaturaWebValidator;
 import es.caib.enviafib.persistence.InfoSignaturaJPA;
 import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un InfoSignatura
@@ -43,6 +44,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="infoSignatura.infoSignatura.plural", order=80, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/infoSignatura")
 @SessionAttributes(types = { InfoSignaturaForm.class, InfoSignaturaFilterForm.class })
@@ -382,7 +384,6 @@ public class InfoSignaturaController
 
     if (infoSignatura == null) {
       createMessageWarning(request, "error.notfound", infoSignaturaID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, infoSignaturaID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

@@ -95,7 +95,7 @@ public class TestPersistenceJPA {
 
             tx.commit();
             log.info("<<<<<<<<<<<  Good Bye!");
-
+            System.exit(0);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

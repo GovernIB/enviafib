@@ -36,6 +36,7 @@ import es.caib.enviafib.back.validator.webdb.UsuariEntitatWebValidator;
 import es.caib.enviafib.persistence.UsuariEntitatJPA;
 import es.caib.enviafib.model.entity.UsuariEntitat;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un UsuariEntitat
@@ -43,6 +44,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="usuariEntitat.usuariEntitat.plural", order=170, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/usuariEntitat")
 @SessionAttributes(types = { UsuariEntitatForm.class, UsuariEntitatFilterForm.class })
@@ -355,7 +357,6 @@ public class UsuariEntitatController
 
     if (usuariEntitat == null) {
       createMessageWarning(request, "error.notfound", usuarientitatid);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, usuarientitatid), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

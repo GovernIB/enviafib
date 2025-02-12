@@ -36,6 +36,7 @@ import es.caib.enviafib.back.validator.webdb.MenuWebValidator;
 import es.caib.enviafib.persistence.MenuJPA;
 import es.caib.enviafib.model.entity.Menu;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Menu
@@ -43,6 +44,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="menu.menu.plural", order=90, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/menu")
 @SessionAttributes(types = { MenuForm.class, MenuFilterForm.class })
@@ -429,7 +431,6 @@ public class MenuController
 
     if (menu == null) {
       createMessageWarning(request, "error.notfound", menuID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, menuID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

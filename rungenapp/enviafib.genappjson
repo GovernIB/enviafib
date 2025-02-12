@@ -3822,6 +3822,31 @@
             "webtype": 16
           },
           "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "reintentsarxiu",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Reintents Arxiu",
+            "es": "Reintentos Arxiu"
+          },
+          "javaName": "reintentsArxiu",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
         }
       ]
     },

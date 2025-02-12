@@ -34,6 +34,7 @@ import es.caib.enviafib.back.validator.webdb.InfoArxiuWebValidator;
 import es.caib.enviafib.persistence.InfoArxiuJPA;
 import es.caib.enviafib.model.entity.InfoArxiu;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un InfoArxiu
@@ -41,6 +42,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="infoArxiu.infoArxiu.plural", order=70, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/infoArxiu")
 @SessionAttributes(types = { InfoArxiuForm.class, InfoArxiuFilterForm.class })
@@ -302,7 +304,6 @@ public class InfoArxiuController
 
     if (infoArxiu == null) {
       createMessageWarning(request, "error.notfound", infoArxiuID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, infoArxiuID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

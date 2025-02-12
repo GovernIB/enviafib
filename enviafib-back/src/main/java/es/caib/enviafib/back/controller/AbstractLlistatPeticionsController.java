@@ -467,7 +467,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
     	//Comprovar l'estat abans d'esborrar.
     	
-    	if (peticio.getInfoArxiuID() == null) {
+    	if (peticio.getInfoArxiuID() != null) {
     		throw new I18NException("genapp.comodi", "No es pot esborrar una petició guardad a Arxiu");
 		}
     

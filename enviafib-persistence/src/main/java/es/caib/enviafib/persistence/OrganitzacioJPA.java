@@ -105,18 +105,23 @@ public class OrganitzacioJPA implements Organitzacio {
 
 
 
-  @Override
-  public boolean equals(Object __obj) {
-  boolean __result;
-    if (__obj != null && __obj instanceof Organitzacio) {
-      Organitzacio __instance = (Organitzacio)__obj;
-      __result = true;
-      __result = __result && (this.getOrganitzacioID() == __instance.getOrganitzacioID()) ;
-    } else {
-      __result = false;
+    @Override
+    public boolean equals(Object __obj) {
+        boolean __result;
+        if (__obj != null && __obj instanceof Organitzacio) {
+            Organitzacio __instance = (Organitzacio)__obj;
+            __result = true;
+            __result = __result && (this.getOrganitzacioID() == __instance.getOrganitzacioID()) ;
+        } else {
+            __result = false;
+        }
+        return __result;
     }
-    return __result;
-  }
+
+    @Override
+    public int hashCode() {
+        return (String.valueOf(this.getOrganitzacioID())).hashCode();
+    }
 
 
  // ---------------  STATIC METHODS ------------------

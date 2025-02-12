@@ -37,6 +37,7 @@ import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import es.caib.enviafib.persistence.FaqJPA;
 import es.caib.enviafib.model.entity.Faq;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Faq
@@ -44,6 +45,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="faq.faq.plural", order=10, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/faq")
 @SessionAttributes(types = { FaqForm.class, FaqFilterForm.class })
@@ -311,7 +313,6 @@ public class FaqController
 
     if (faq == null) {
       createMessageWarning(request, "error.notfound", faqID);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, faqID), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());

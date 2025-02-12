@@ -39,6 +39,7 @@ import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
 import es.caib.enviafib.persistence.EntitatJPA;
 import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 
 /**
  * Controller per gestionar un Entitat
@@ -46,6 +47,7 @@ import es.caib.enviafib.model.fields.*;
  * 
  * @author GenApp
  */
+@MenuOption(labelCode="entitat.entitat.plural", order=0, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/entitat")
 @SessionAttributes(types = { EntitatForm.class, EntitatFilterForm.class })
@@ -357,7 +359,6 @@ public class EntitatController
 
     if (entitat == null) {
       createMessageWarning(request, "error.notfound", entitatid);
-      new ModelAndView(new RedirectView(getRedirectWhenCancel(request, entitatid), true));
       return llistatPaginat(request, response, 1);
     } else {
       ModelAndView mav = new ModelAndView(getTileForm());
