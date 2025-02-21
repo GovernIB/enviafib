@@ -35,6 +35,7 @@ import es.caib.pluginsib.arxiu.api.DocumentFormat;
 import es.caib.pluginsib.arxiu.api.DocumentMetadades;
 import es.caib.pluginsib.arxiu.api.DocumentTipus;
 import es.caib.pluginsib.arxiu.api.Expedient;
+import es.caib.pluginsib.arxiu.api.ExpedientEstat;
 import es.caib.pluginsib.arxiu.api.ExpedientMetadades;
 import es.caib.pluginsib.arxiu.api.Firma;
 import es.caib.pluginsib.arxiu.api.FirmaPerfil;
@@ -559,14 +560,31 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // throw new Exception("Error desconegut tancant Expedient !!!!!");
             // }
 
-            plugin.expedientTancar(expedientId);
-            log.info("XYZ ZZZ Expedient Tancat");
+        	Expedient detalls = plugin.expedientDetalls(expedientId, null);
+        	ExpedientEstat estat = detalls.getExpedientMetadades().getEstat();
 
-            tancatExpedient = true;
-            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-            peticio.setErrorMsg(null);
-            peticio.setErrorException(null);
+			switch (estat) {
+			case OBERT:
+        		log.info("XYZ ZZZ  Expedient obert, el tancarem");
+                plugin.expedientTancar(expedientId);
+                log.info("XYZ ZZZ Expedient Tancat");
+				
+			case TANCAT:
+				if (estat==ExpedientEstat.TANCAT) {
+					log.info("XYZ ZZZ  Expedient ja estava tancat");
+				}
+	            tancatExpedient = true;
+	            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+	            peticio.setErrorMsg(null);
+	            peticio.setErrorException(null);
+				break;
 
+			default:
+				log.info("XYZ ZZZ  Expedient index remissio. No el tancarem");
+				tancatExpedient = false;
+				break;
+			}
+        	
 
         } catch (Throwable th) {
 
@@ -576,21 +594,13 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             peticio.setErrorException(LogicUtils.stackTrace2String(th));
             peticio.setErrorMsg(LogicUtils.split255(msg));
             
-            //Control de l'estat segons els reintents.
+            //Si ha anat malament, augmentam un reintent
             Long reintents = peticio.getReintentsArxiu();
             reintents++;
             peticio.setReintentsArxiu(reintents);
             peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
-            
-//    		Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
-//
-//			if (reintents < max_reintents) {
-//				peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
-//			} else {
-//				peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
-//			}
-//            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
-            tancatExpedient = false; // Indicam un error
+
+            tancatExpedient = false;
         }
         
         //Guardam la data del darrer reintent, per a que durant el vespre no torni a intentar tancar l'expedeint. Perque els ordenam per data.

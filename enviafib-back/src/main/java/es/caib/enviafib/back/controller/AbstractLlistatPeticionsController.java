@@ -29,8 +29,11 @@ import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.utils.templateengine.TemplateEngine;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -145,7 +148,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             }
 
             peticioFilterForm.addAdditionalButton(new AdditionalButton("fas fa-download", "descarregar.seleccionats",
-                    "javascript:submitTo('peticio','/enviafibback/user/peticio/downloadSelectedFiles')", AdditionalButtonStyle.PRIMARY));
+                    "javascript:downloadSelectedFiles()", AdditionalButtonStyle.PRIMARY));
         }
         
         peticioFilterForm.setVisibleExportList(true);
@@ -599,47 +602,198 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         response.getWriter().close();
     }
     
+	final protected static HashMap<String, EstatTransaction> mapFitxersDescarrega = new HashMap<String, EstatTransaction>();
+    //Last clean:
+	private static long LAST_CLEAN = 0;
+	private static final long CLEAN_INTERVAL = 1000 * 60 * 5; // 5 minuts
+	
+	protected static class EstatTransaction {
+		private int estat;
+		private String missatge;
+		private final Long startTime;
+		
+//		public static final int ESTAT_OK = 0;
+		public static final int ESTAT_ERROR = 1;
+		public static final int ESTAT_PROCESSANT = 2;
+		public static final int ESTAT_FINALITZAT = 3;
+		
+		
+		public EstatTransaction() {
+			this.estat = ESTAT_PROCESSANT;
+			this.startTime = System.currentTimeMillis();
+		}
+		
+		public int getEstat() {
+			return estat;
+		}
+
+		public void setEstat(int estat) {
+			this.estat = estat;
+		}
+		
+		//get i set missatge
+		public String getMissatge() {
+			return missatge;
+		}
+		
+		public void setMissatge(String missatge) {
+			this.missatge = missatge;
+		}
+
+		public Long getStartTime() {
+			return startTime;
+		}
+		
+		
+	}
     
+    @GetMapping("/estatTransaction/{transactionID}")
+	public void estatTransaction(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("transactionID") String transactionID) throws IOException {
+
+    	// Retorn un status HTTP segons l'estat de EstatTransaction
+		EstatTransaction et = mapFitxersDescarrega.get(transactionID);
+		switch (et.getEstat()) {
+
+		case EstatTransaction.ESTAT_ERROR:
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().write(et.getMissatge());
+			break;
+			
+		case EstatTransaction.ESTAT_PROCESSANT:
+			// Si la darrera neteja fa més de 5 minuts, netejar.
+			if (System.currentTimeMillis() - LAST_CLEAN > CLEAN_INTERVAL) {
+				netejarTransaccionsCaducades();
+			}
+			
+			response.setStatus(HttpServletResponse.SC_ACCEPTED);
+			break;
+
+		case EstatTransaction.ESTAT_FINALITZAT:
+			response.setStatus(HttpServletResponse.SC_OK);
+			break;
+
+		default:
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			break;
+		}
+
+	}
     
-	// Funcionalitat per descarrega de fitxers seleccionats.
-    @RequestMapping(value = "/downloadSelectedFiles", method = RequestMethod.POST)
-    public void downloadSelectedFiles(HttpServletRequest request, HttpServletResponse response,
-            @ModelAttribute PeticioFilterForm filterForm) throws I18NException, IOException {
+	private void netejarTransaccionsCaducades() {
+		//La neteja consisteix en eliminar les transaccions que no estan en proces de fa mes de 5 minuts.
+		
+		log.info("Netejan transaccions caducades. Transactions actuals: " + mapFitxersDescarrega.size());
+		List<String> keysToRemove = new ArrayList<>();
+		
+		for (Map.Entry<String, EstatTransaction> entry : mapFitxersDescarrega.entrySet()) {
+			EstatTransaction et = entry.getValue();
+			if (et.getEstat() != EstatTransaction.ESTAT_PROCESSANT) {
+				keysToRemove.add(entry.getKey());
+			} else if (System.currentTimeMillis() - et.getStartTime() > CLEAN_INTERVAL) {
+				keysToRemove.add(entry.getKey());
+			}
+		}
+		
+		log.info("Transaccions a eliminar: " + keysToRemove.size());
+		for (String key : keysToRemove) {
+			mapFitxersDescarrega.remove(key);
+		}
+		
+		LAST_CLEAN = System.currentTimeMillis();
 
-        IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
-        String[] seleccionats = filterForm.getSelectedItems();
+		log.info("Neteja finalitzada. Transactions actuals: " + mapFitxersDescarrega.size());
+	}
+    
+    @GetMapping("/downloadSelectedFiles/{transactionID}")
+	public void downloadSelectedFiles(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("transactionID") String transactionID) {
 
-        if (seleccionats == null || seleccionats.length == 0) {
-            return;
-        }
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ZipOutputStream zos = new ZipOutputStream(baos)) {
 
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); ZipOutputStream zos = new ZipOutputStream(baos)) {
-            processSelectedFiles(seleccionats, zos, plugin);
-            sendZipResponse(response, baos);
-            log.info("Fitxers seleccionats descarregats correctament.");
-        } catch (IOException e) {
-            log.error("Error al crear el archivo ZIP: " + e.getMessage(), e);
-        }
+			mapFitxersDescarrega.put(transactionID, new EstatTransaction());
+
+			String seleccionats = request.getParameter("selectedItems");
+			log.info(seleccionats);
+
+			if (seleccionats == null || seleccionats.isEmpty()) {
+				String msg = "No hi ha fitxers seleccionats.";
+				procesarError(transactionID, msg);
+				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+				return;
+			}
+
+			IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
+
+//            processSelectedFiles(seleccionatsArray, zos, plugin);
+
+			List<Peticio> perDescarregar = new ArrayList<>();
+
+			for (String seleccionat : seleccionats.split(",")) {
+				Long peticioID = stringToPK(seleccionat);
+				Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+
+				// Controlar si la peticio es de l'usuari loguejat.
+
+				if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
+					log.info("La peticio " + peticioID + " no esta firmada.");
+					continue;
+				}
+
+				perDescarregar.add(peticio);
+			}
+
+			if (perDescarregar.size() == 0) {
+				String msg = "Els fitxers selecionats no estan firmats. No es poden descarregar.";
+				procesarError(transactionID, msg);
+				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+				return;
+			}
+
+			for (Peticio peticio : perDescarregar) {
+				try {
+					addPeticioToZip(peticio, zos, plugin);
+				} catch (Exception e) {
+					log.error("Error processant la peticio: " + peticio.getPeticioID(), e);
+				}
+			}
+
+			zos.close();
+
+			response.setHeader("Content-disposition", "attachment; filename=fitxers_seleccionats.zip");
+
+			final byte[] zipData = baos.toByteArray();
+
+			response.setContentLength(zipData.length);
+			response.getOutputStream().write(zipData);
+
+			log.info("Fitxers seleccionats descarregats correctament.");
+
+			mapFitxersDescarrega.get(transactionID).setEstat(EstatTransaction.ESTAT_FINALITZAT);
+
+		} catch (Exception e) {
+
+			String msg;
+
+			if (e instanceof I18NException) {
+				msg = "Error al descarregar fitxers seleccionats: " + I18NUtils.getMessage((I18NException) e);
+			} else {
+				msg = "Error al crear el archivo ZIP: " + e.getMessage();
+			}
+
+			procesarError(transactionID, msg);
+			log.error(msg, e);
+		}
+	}
+    
+    private void procesarError(String transactionID, String msg) {
+		log.info(msg);
+		EstatTransaction et = mapFitxersDescarrega.get(transactionID);
+		et.setMissatge(msg);
+		et.setEstat(EstatTransaction.ESTAT_ERROR);
     }
-
-    private void processSelectedFiles(String[] seleccionats, ZipOutputStream zos, IArxiuPlugin plugin) {
-        for (String seleccionat : seleccionats) {
-            try {
-                Long peticioID = stringToPK(seleccionat);
-                Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-
-                if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
-                    log.info("La peticio " + peticioID + " no esta firmada.");
-                    continue;
-                }
-
-                addPeticioToZip(peticio, zos, plugin);
-            } catch (Exception e) {
-                log.error("Error processant la peticio: " + seleccionat, e);
-            }
-        }
-    }
-
+    
     private void addPeticioToZip(Peticio peticio, ZipOutputStream zos, IArxiuPlugin plugin) throws IOException, I18NException {
         String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
                 InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
@@ -658,17 +812,5 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         zos.closeEntry();
 
         log.info("Fitxer de la peticioID: " + peticio.getPeticioID() + " descarregat correctament. bytes: " + data.length);
-    }
-
-    private void sendZipResponse(HttpServletResponse response, ByteArrayOutputStream baos) throws IOException {
-        byte[] zipData = baos.toByteArray();
-
-        response.setHeader("Content-disposition", "attachment; filename=fitxers_seleccionats.zip");
-        response.setContentLength(zipData.length);
-
-        try (OutputStream out = response.getOutputStream()) {
-            out.write(zipData);
-            out.flush();
-        }
     }
 }

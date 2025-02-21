@@ -69,7 +69,135 @@ function reintentarArxivarSeleccionats(role) {
     window.location = base + btoa(window.location); --%>
 }
 
+function downloadSelectedFiles(){
+    var url = "<%=request.getContextPath()%>${contexte}/downloadSelectedFiles";
 
+    //Generar transactionID:
+	var transactionID = Date.now().toString() + Math.floor(Math.random() * 10000).toString();
+    
+    // Obtener los checkboxes seleccionados
+    var selectedItems = Array.from(document.querySelectorAll("input[name='selectedItems']:checked"))
+        .map(checkbox => checkbox.value);
+
+    if (selectedItems.length === 0) {
+        alert("No hi ha fitxers seleccionats.");
+        return;
+    }
+
+    url +=  "/" + transactionID;
+    
+    var items = selectedItems.join(",");
+    url +=  "?selectedItems=" + items;
+    
+    console.log("Enviando petición para descargar los siguientes ficheros:", selectedItems);
+    console.log("Items:", items);
+    console.log("URL:", url);
+    
+	location.href = url;
+
+	$('#downloadingModal').modal({
+    	backdrop : "static"
+     });
+
+	window.focus();
+    
+    //Set interval para ir comprobando el estado:
+    var interval = setInterval(function(){
+    	
+    	var xhttp = new XMLHttpRequest();
+    	xhttp.onreadystatechange = function() {
+    		
+    		if (this.readyState == 4) {
+//    			console.log("Status: " + this.status);
+    			switch(this.status){
+	   			case 200:
+	   				console.log("OK");
+    				clearInterval(interval);
+    				$('#downloadingModal').modal('hide');
+    				console.log("Descarga completada");
+
+    				break;
+	   			case 500:
+	   				console.log("Error");
+
+	   				clearInterval(interval);
+    				$('#downloadingModal').modal('hide');
+    				alert("Error en la descarga: " + this.responseText);
+	   				
+    				break;
+	   			case 202:
+	   				//Accepted
+	   				console.log("En proces...");
+    				break;
+   				default:
+   					console.log("Status: " + this.status);
+    				
+    			}
+    		}
+    	};
+    	xhttp.open("GET", "<%=request.getContextPath()%>${contexte}/estatTransaction/" + transactionID, true);
+        xhttp.send();
+    }, 500);
+
+/*     $('#downloadingModal').modal({
+    	backdrop : "static"
+     });
+ */    
+
+//    window.open(url, '_blank')   
+}
+
+function downloadSelectedFilesOld(){
+    var url = "<%=request.getContextPath()%>${contexte}/downloadSelectedFiles";
+
+    // Obtener los checkboxes seleccionados
+    var selectedItems = Array.from(document.querySelectorAll("input[name='selectedItems']:checked"))
+        .map(checkbox => checkbox.value);
+
+    if (selectedItems.length === 0) {
+        alert("No hi ha fitxers seleccionats.");
+        return;
+    }
+
+    console.log("Enviando petición para descargar los siguientes ficheros:", selectedItems);
+    
+    $('#downloadingModal').modal({
+    	backdrop : "static"
+     });
+    
+    
+    // Enviar los datos en el cuerpo de la petición
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ selectedItems: selectedItems })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.blob();
+        } else {
+            return response.json().then(data => {
+                alert(data.error || "Error en la descarga");
+            });
+        }
+    })
+    .then(blob => {
+        if (blob) {
+        	console.log(blob);
+            var a = document.createElement("a");
+            a.href = window.URL.createObjectURL(blob);
+            a.download = "fitxers_seleccionats.zip";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            $('#downloadingModal').modal('hide');
+            console.log("Descarga completada");
+        }
+    })
+    .catch(error => console.error('Error en la petición:', error));
+}
 
 
 </script>
@@ -95,6 +223,25 @@ function reintentarArxivarSeleccionats(role) {
 	</div>
 </div>
 
+<div class="modal fade" style="display: none" id="downloadingModal"
+	tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					<fmt:message key="descarregant.seleccionats" />
+				</h5>
+				<button type="button" class="close" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<span class="fa fa-circle-notch fa-spin fa-3x"></span>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 

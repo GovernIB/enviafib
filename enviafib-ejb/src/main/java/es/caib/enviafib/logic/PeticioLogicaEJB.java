@@ -938,7 +938,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 	public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID, boolean incloureDesconeguts) throws I18NException {
 
 		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsBase(lang);
+		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
 
 		final Where wEntitat = SerieDocumentalFields.ENTITATID.equal(entitatID);
 
