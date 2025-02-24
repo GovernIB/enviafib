@@ -44,7 +44,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="plugin.plugin.plural", order=120, group="WEBDB")
+@MenuOption(labelCode="plugin.plugin.plural", order=130, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/plugin")
 @SessionAttributes(types = { PluginForm.class, PluginFilterForm.class })

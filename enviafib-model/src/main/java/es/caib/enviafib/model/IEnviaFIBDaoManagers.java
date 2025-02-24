@@ -3,6 +3,7 @@ package es.caib.enviafib.model;
 import es.caib.enviafib.model.dao.*;
 
 public interface IEnviaFIBDaoManagers {
+	public IAvisManager getAvisManager();
 	public IEntitatManager getEntitatManager();
 	public IFaqManager getFaqManager();
 	public IFitxerManager getFitxerManager();

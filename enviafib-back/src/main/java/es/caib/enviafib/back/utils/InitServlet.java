@@ -18,6 +18,8 @@ import org.fundaciobit.genapp.common.crypt.FileIDEncrypter;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.web.exportdata.DataExporterManager;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.genapp.common.web.menuoptions.DiscoverMenuOptionAnnotations;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOptionManager;
 import org.fundaciobit.pluginsib.core.v3.utils.PluginsManager;
 import org.fundaciobit.pluginsib.exportdata.IExportDataPlugin;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -155,6 +157,20 @@ public class InitServlet extends HttpServlet {
             log.info("EnviaFIB Version: " + ver);
         }
 
+        
+		// Inicialitzar sistema de menus
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					MenuOptionManager.setDiscoverMenuOptionAnnotations(
+							new DiscoverMenuOptionAnnotations(Constants.ENVIAFIB_PROPERTY_BASE + "back.controller"));
+				} catch (Throwable th) {
+					log.error("Error inicialitzant sistema de menus: " + th.getMessage(), th);
+				}
+			}
+		}).start();
+        
     }
 
 }

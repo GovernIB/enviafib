@@ -118,7 +118,7 @@ public class SerieDocumentalFilterForm extends EnviaFIBBaseFilterForm implements
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] {  }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { NOM ,TIPUSDOCUMENTAL }));
   }
 
   @Override

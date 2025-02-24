@@ -44,7 +44,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="serieDocumental.serieDocumental.plural", order=130, group="WEBDB")
+@MenuOption(labelCode="serieDocumental.serieDocumental.plural", order=140, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/serieDocumental")
 @SessionAttributes(types = { SerieDocumentalForm.class, SerieDocumentalFilterForm.class })

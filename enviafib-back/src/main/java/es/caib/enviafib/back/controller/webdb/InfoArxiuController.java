@@ -42,7 +42,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="infoArxiu.infoArxiu.plural", order=70, group="WEBDB")
+@MenuOption(labelCode="infoArxiu.infoArxiu.plural", order=80, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/infoArxiu")
 @SessionAttributes(types = { InfoArxiuForm.class, InfoArxiuFilterForm.class })

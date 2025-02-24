@@ -44,7 +44,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="infoSignatura.infoSignatura.plural", order=80, group="WEBDB")
+@MenuOption(labelCode="infoSignatura.infoSignatura.plural", order=90, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/infoSignatura")
 @SessionAttributes(types = { InfoSignaturaForm.class, InfoSignaturaFilterForm.class })

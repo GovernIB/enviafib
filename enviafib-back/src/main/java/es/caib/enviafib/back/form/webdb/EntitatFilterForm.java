@@ -201,7 +201,7 @@ public class EntitatFilterForm extends EnviaFIBBaseFilterForm implements Entitat
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] {  }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { ENTITATID ,NOM ,DESCRIPCIO }));
   }
 
   @Override

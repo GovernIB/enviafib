@@ -13,6 +13,181 @@
   "schema": "public",
   "tables": [
     {
+      "name": "efi_avis",
+      "nameJava": "Avis",
+      "shortName": "avis",
+      "labels": {
+        "ca": "Avís",
+        "es": "Aviso"
+      },
+      "labelsPlural": {
+        "ca": "Avisos",
+        "es": "Avisos"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "efi_avis_pk",
+          "index": "efi_avis_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "avisid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "avisid",
+            "es": "avisid"
+          },
+          "javaName": "avisID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027efi_avis_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "missatge",
+          "sqlType": 12,
+          "size": 500,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Missatge",
+            "es": "Mensaje"
+          },
+          "javaName": "missatge",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "datainici",
+          "sqlType": 93,
+          "size": 29,
+          "digits": 6,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Inici",
+            "es": "Inicio"
+          },
+          "javaName": "datainici",
+          "javaType": "java.sql.Timestamp",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 7
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "datafi",
+          "sqlType": 93,
+          "size": 29,
+          "digits": 6,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Fí",
+            "es": "Final"
+          },
+          "javaName": "datafi",
+          "javaType": "java.sql.Timestamp",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 7
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "actiu",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Actiu",
+            "es": "Activo"
+          },
+          "javaName": "actiu",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "true",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipus",
+          "sqlType": 12,
+          "size": 30,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus",
+            "es": "Tipo"
+          },
+          "javaName": "tipus",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "info, warn, error, succes",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
       "name": "efi_entitat",
       "nameJava": "Entitat",
       "shortName": "entitat",
@@ -49,7 +224,7 @@
           "showInWebList": true,
           "showInReferenceList": true,
           "transientField": false,
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -93,7 +268,7 @@
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -119,7 +294,7 @@
           "showInReferenceList": false,
           "transientField": false,
           "defaultValue": "NULL::character varying",
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4112,7 +4287,7 @@
           "showInWebList": true,
           "showInReferenceList": true,
           "transientField": false,
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4138,7 +4313,7 @@
           "showInReferenceList": false,
           "transientField": false,
           "minAllowedValue": "1,2,3,4",
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4538,7 +4713,7 @@
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4563,7 +4738,7 @@
           "showInWebList": true,
           "showInReferenceList": true,
           "transientField": false,
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4588,7 +4763,7 @@
           "showInWebList": true,
           "showInReferenceList": true,
           "transientField": false,
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4613,7 +4788,7 @@
           "showInWebList": true,
           "showInReferenceList": true,
           "transientField": false,
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4640,7 +4815,7 @@
           "showInReferenceList": true,
           "transientField": false,
           "minAllowedValue": "([XYZ][0-9]{7}[A-Z])|([0-9]{8}[A-Z])",
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
@@ -4734,7 +4909,7 @@
           "transientField": false,
           "filter": false,
           "orderBy": 0,
-          "groupBy": false,
+          "groupBy": true,
           "webFieldInfo": {
             "webtype": 3,
             "foreignKey": {

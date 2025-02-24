@@ -23,6 +23,13 @@
 
         <hr style="margin-top: 6px; margin-bottom: 6px;" />
 
+        <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/admin/avis/list"/>">
+                <span style="${(fn:contains(url, '/admin/avis'))? "font-weight:bold;" : ""}"><fmt:message
+                        key="admin.menu.avisos" /></span>
+        </a></li>
+
+        <hr style="margin-top: 6px; margin-bottom: 6px;" />
+
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/admin/grup/list"/>">
                 <span style="${(fn:contains(url, '/admin/grup'))? "font-weight:bold;" : ""}"><fmt:message
                         key="admin.menu.grup" /></span>

@@ -47,7 +47,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="entitat.entitat.plural", order=0, group="WEBDB")
+@MenuOption(labelCode="entitat.entitat.plural", order=10, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/entitat")
 @SessionAttributes(types = { EntitatForm.class, EntitatFilterForm.class })

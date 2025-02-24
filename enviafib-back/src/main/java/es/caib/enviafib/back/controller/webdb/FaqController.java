@@ -45,7 +45,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="faq.faq.plural", order=10, group="WEBDB")
+@MenuOption(labelCode="faq.faq.plural", order=20, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/faq")
 @SessionAttributes(types = { FaqForm.class, FaqFilterForm.class })

@@ -44,7 +44,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="menu.menu.plural", order=90, group="WEBDB")
+@MenuOption(labelCode="menu.menu.plural", order=100, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/menu")
 @SessionAttributes(types = { MenuForm.class, MenuFilterForm.class })

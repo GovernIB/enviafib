@@ -154,12 +154,12 @@ public class UsuariFilterForm extends EnviaFIBBaseFilterForm implements UsuariFi
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] {  }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { USERNAME ,NOM ,LLINATGE1 ,LLINATGE2 ,NIF }));
   }
 
   @Override
   public List<Field<?>> getDefaultGroupByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] {  }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { ENTITATID }));
   }
 
 

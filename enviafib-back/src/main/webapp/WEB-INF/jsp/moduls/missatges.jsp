@@ -4,6 +4,20 @@
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
 
+<c:if test="${not empty avisos}">
+  
+  <c:forEach items="${avisos}" var="tipusList" varStatus="status">
+    
+      <c:forEach items="${tipusList.value}" var="msg" >
+      <div class="alert alert-${tipusList.key}">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      ${msg}
+      </div>
+      </c:forEach>
+    
+  </c:forEach>
+</c:if>
+
 <c:if test="${not empty missatges}">
   
   <c:forEach items="${missatges}" var="tipusList" varStatus="status">
@@ -17,6 +31,10 @@
     
   </c:forEach>
 </c:if>
+<c:remove var="avisos" scope="session" />
 <c:remove var="missatges" scope="session" />
+
+
+
 
 <div class="spacer"></div>

@@ -47,7 +47,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="peticio.peticio.plural", order=110, group="WEBDB")
+@MenuOption(labelCode="peticio.peticio.plural", order=120, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/peticio")
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })

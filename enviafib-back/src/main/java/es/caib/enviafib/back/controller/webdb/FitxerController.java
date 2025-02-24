@@ -42,7 +42,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="fitxer.fitxer.plural", order=20, group="WEBDB")
+@MenuOption(labelCode="fitxer.fitxer.plural", order=30, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/fitxer")
 @SessionAttributes(types = { FitxerForm.class, FitxerFilterForm.class })

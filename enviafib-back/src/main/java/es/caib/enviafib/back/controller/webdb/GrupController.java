@@ -42,7 +42,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="grup.grup.plural", order=30, group="WEBDB")
+@MenuOption(labelCode="grup.grup.plural", order=40, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/grup")
 @SessionAttributes(types = { GrupForm.class, GrupFilterForm.class })

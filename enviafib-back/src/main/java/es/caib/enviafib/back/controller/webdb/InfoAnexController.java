@@ -47,7 +47,7 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="infoAnex.infoAnex.plural", order=60, group="WEBDB")
+@MenuOption(labelCode="infoAnex.infoAnex.plural", order=70, group="WEBDB")
 @Controller
 @RequestMapping(value = "/webdb/infoAnex")
 @SessionAttributes(types = { InfoAnexForm.class, InfoAnexFilterForm.class })
