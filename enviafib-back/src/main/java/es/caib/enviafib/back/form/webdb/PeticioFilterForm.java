@@ -523,7 +523,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { NOM ,ESTAT }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { PETICIOID ,NOM ,ESTAT }));
   }
 
   @Override

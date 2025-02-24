@@ -3061,7 +3061,7 @@
           "showInReferenceList": true,
           "transientField": false,
           "defaultValue": "nextval(\u0027efi_peticio_seq\u0027::regclass)",
-          "filter": false,
+          "filter": true,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {

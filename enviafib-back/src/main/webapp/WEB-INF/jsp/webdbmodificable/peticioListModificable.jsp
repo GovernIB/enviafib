@@ -339,7 +339,7 @@ function downloadSelectedFilesOld(){
 	    <div class="filtre-div input-group">
 	        <%-- FILTRE NUMERO SELECT MULTIPLE --%>
 	        
-	        <div class="input-group-prepend" id="div_label_estat" style="width: 10%;align-items: center;">
+	        <div class="input-group-prepend" id="div_label_estat">
 	            <span class="add-on" style="margin: auto;color: #6C757D;"><fmt:message key="peticio.estat" />:</span>
 	        </div>
 	        
