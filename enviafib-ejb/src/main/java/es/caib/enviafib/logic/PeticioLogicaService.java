@@ -69,10 +69,15 @@ public interface PeticioLogicaService extends PeticioService {
 
     public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID, boolean incloureDesconeguts) throws I18NException;
 
-    public void initScheduler();
+//    public void initScheduler();
     
     public List<StringKeyValue> getRevisorsDestinatari(String administrationID, String lang) throws I18NException;
     
     public boolean esFitxerPDF(File file);
+
+	/**
+	 * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
+	 */
+	public void eliminarPeticionsPortaFIB();
 
 }

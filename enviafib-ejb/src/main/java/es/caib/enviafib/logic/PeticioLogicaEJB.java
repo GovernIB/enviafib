@@ -267,8 +267,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         List<FirmaAsyncSimpleAnnex> annexs = new ArrayList<FirmaAsyncSimpleAnnex>();
         for (FirmaAsyncSimpleFile fileAnnex: fitxersAAnexar) {            
             if (fileAnnex != null) {
-                boolean attach = true;
-                boolean sign = true;
+                boolean attach = false;
+                boolean sign = false;
                 FirmaAsyncSimpleAnnex annex = new FirmaAsyncSimpleAnnex(fileAnnex, attach, sign);
                 annexs.add(annex);
                 log.info("PORTAFIB: Afegit Annex");
@@ -602,12 +602,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 //            peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
+            peticio.setReintentsArxiu(0L);
 
             try {
                 enviarMailSolicitant(peticio, urlBase);
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
+        }else {
+            long reintents = peticio.getReintentsArxiu() == null ? 0 : peticio.getReintentsArxiu();
+            reintents++;
+            peticio.setReintentsArxiu(reintents);
         }
 
         this.update(peticio);
@@ -720,9 +725,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                             code = "email.peticio.body.rebutjada";
                         break;
                         case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                        case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT: {
                             code = "email.peticio.body.error.arxivant";
-                        }
                         break;
                     }
 
@@ -1306,175 +1309,65 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     
     
     
-    
-    
-    
     //Funció per controlar els reintents de tancament d'expedient. Si du mes de X reintents, no canviar estat a pendent.
     /**
-     * Funció que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
+     * Funció que s'executa cada migdiaa les 15:00 i Gestiona reintents.
      */
     @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
     @Schedule(hour = "23", persistent = false)
-	protected void controlarReintentsArxiu() {
+	protected void reintentarArxivat() {
 		log.info("Comença controlarReintentsArxiu()");
 
 		long startTime = System.currentTimeMillis();
+		final String languageUI = "ca";
 
-		Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
-		
-		//Agafa les peticions amb error tancant expedient, que no han superat el màxim de reintents, i les deixa pendents de tancar expedient.
 		try {
-			Where wReintentsMenysDe = PeticioFields.REINTENTSARXIU.lessThan(max_reintents);
-			this.update(PeticioFields.ESTAT, Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT, wReintentsMenysDe);
+
+			Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+
+			// Obtenir totes les peticions amb errors arxivant, i arxivarles.
+			Where wReintentsMesDe = Where.OR(PeticioFields.REINTENTSARXIU.greaterThan(max_reintents), PeticioFields.REINTENTSARXIU.isNull());
+			Where wErrorArxivant = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+
+			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
+
+			List<Peticio> peticions = this.select(Where.AND(wErrorArxivant, wReintentsMesDe), orderBy);
+
+			log.info("Peticions que s'han d'arxivar: " + peticions.size());
+
+			String urlBase = Configuracio.getUrlBase();
+
+			for (Peticio peticio : peticions) {
+
+				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
+				guardarPeticioArxiu(peticio, languageUI, is, urlBase);
+
+				// El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i
+				// acaba la funció.
+				if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
+					log.warn("Timeout.");
+					break;
+				}
+			}
+
 		} catch (I18NException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
+					+ I18NCommonUtils.getMessage(e, new Locale(languageUI));
+			log.error(msg, e);
 		}
-		
-		//Lo mateix amb les que ha donar error arxivant.
-		
-		
-		
-		
+
 		long endTime = System.currentTimeMillis();
 		log.info("Total time: " + (endTime - startTime));
 		log.info("Acaba controlarReintentsArxiu()");
 	}
-        
-
-    /**
-     * Funció que s'executa cada vespre a les 12:00 i tanca tots els expedients oberts.
-     */
-    @Resource
-    private TimerService ejbTimerService;
-
-    @Override
-    public void initScheduler() {
-        ScheduleExpression schedule = new ScheduleExpression();
-
-//		String hora, h, m;
-		log.info("Timers inicials");
-
-		Collection<Timer> allTimers = ejbTimerService.getAllTimers();
-
-		if (allTimers.size() == 1) {
-			log.info("initScheduler:: Schedule per tancament d'expedients JA ESTAVA CREAT: "
-					+ allTimers.iterator().next().toString());
-			return;
-		} else {
-			log.info("initScheduler:: havia " + allTimers.size() + " timers");
-
-			for (Timer timer : allTimers) {
-				timer.cancel();
-			}
-		}
-
-		String horaStr = Configuracio.getHoraTancamentExpedientsScheduler(); //14
-		String nHoresStr = Configuracio.getNhoresTancamentExpedientsScheduler(); //2
-		
-		int nHores = Integer.parseInt(nHoresStr);
-		if (nHores > 1) {
-			int hores = Integer.parseInt(horaStr);
-			horaStr += "-" + (hores + nHores - 1);
-		}
-		
-//		try {
-//			h = hora.split(":")[0];
-//
-//			if (h == null || h.trim().length() == 0) {
-//				h = "4";
-//			}
-//		} catch (Throwable t) {
-//			h = "4";
-//		}
-
-		log.info("initScheduler:: Tancar expedients a les " + horaStr + " hores");
-		schedule.hour(horaStr);
-		schedule.minute("*/5");
-        
-        Timer newTimer = ejbTimerService.createCalendarTimer(schedule);
-
-        log.info("initScheduler:: CREAT Schedule per tancar expedients:" + newTimer.toString());
-        log.info("Timers finals");
-        for (Timer timer : ejbTimerService.getAllTimers()) {
-            log.info("initScheduler:: timer: " + timer.toString());
-        }
-    }
-
-    @Timeout
-    public void onTimeout(Timer timer) {
-        log.info("Comença tancarTotsElsExpedients()");
-
-        long startTime = System.currentTimeMillis();
-        final String languageUI = "ca";
-        
-        //El timeout de EJB son 5 minuts, li direm que als 4 minuts surti.
-        long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 4 minuts
-        
-        try {
-        	
-        	//Llistat de peticions amb error tancant expedient, que no han superat el màxim de reintents.
-			Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
-
-			Where wReintentsMenysDe = PeticioFields.REINTENTSARXIU.lessThan(max_reintents);
-			Where wPendentTancar = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
-			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
-    			
-			List<Peticio> peticions = this.select(Where.AND(wPendentTancar, wReintentsMenysDe), orderBy);
-
-            log.info("Expedients que s'han de tancar: " + peticions.size());
-            
-            IArxiuPlugin plugin = pluginArxiuLogicaEjb.getInstance();
-            
-            int i = 1;
-            for (Peticio peticio : peticions) {
-                Long peticioID = peticio.getPeticioID();
-                log.info("Tancarem expedient " + i + " de " + peticions.size() + ". PeticioID: " + peticioID + " DataFi: " + peticio.getDataFinal());
-
-				String expedientID = infoArxiuLogicEjb.executeQueryOne(InfoArxiuFields.ARXIUEXPEDIENTID,
-						InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
-
-                boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, plugin, expedientID);
-                this.update(peticio);
-
-                if (tancatExpedient) {
-                    log.info("Expedient de la petició " + peticioID + " tancat correctament. ExpedientID: " + expedientID);
-                } else {
-                    log.error("Error tancant expedient de la petició " + peticioID + ": " + peticio.getErrorMsg());
-
-                }
-                
-                try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-				}
-
-                //El Timeout son 5 minuts. Si el CRON s'executa durant 4 min, surt del for i acaba la funció.
-                if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-                    log.warn("Timeout. Hem processat " + i + " expedients");
-                    break;
-                }
-                i++;
-            }
-        } catch (I18NException e) {
-
-            final String msg = "Error obtenint llistat de fitxersFirmatsID durant el cron nocturn: "
-                    + I18NCommonUtils.getMessage(e, new Locale(languageUI));
-            log.error(msg, e);
-        }
-
-        long endTime = System.currentTimeMillis();
-        log.info("Total time: " + (endTime - startTime));
-        log.info("Acaba tancarTotsElsExpedients()");
-    }
-    
 
     /**
      * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
      */
     @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
     @Schedule(hour = "4", persistent = false)
-    protected void eliminarPeticionsPortaFIB() {
+    @Override
+    public void eliminarPeticionsPortaFIB() {
         log.info("Comença eliminarPeticionsPortaFIB()");
 
         final long startTime = System.currentTimeMillis();

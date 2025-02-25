@@ -97,7 +97,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
             peticio.setErrorMsg(LogicUtils.split255(msg));
             peticio.setErrorException(LogicUtils.stackTrace2String(e1));
-
+            
             return null;
         }
 
