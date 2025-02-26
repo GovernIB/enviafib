@@ -27,29 +27,29 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 @Controller
 @SessionAttributes(types = { PeticioForm.class, PeticioFilterForm.class })
 public class DescarregarImprimiblePublicController {
-
-    public static final String CONTEXT_WEB = "/public/emailfile";
-
-    @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
-    protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb;
-
-    @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
-    protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
-
-    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
-    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
-
-    protected static final Logger log = Logger.getLogger(DescarregarImprimiblePublicController.class);
-
-    @RequestMapping(value = CONTEXT_WEB + "/{csv}", method = RequestMethod.GET)
-    public void descarregarFitxerArxiu(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("csv") String csv) throws I18NException, IOException {
-        final String format = "PDF";
-        TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
-        final String docName = "_imprimible";
-
-        AbstractLlistatPeticionsController.internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb,
-                pluginArxiuEjb, peticioLogicaEjb, log);
-    }
+//
+//    public static final String CONTEXT_WEB = "/public/emailfile";
+//
+//    @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
+//    protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb;
+//
+//    @EJB(mappedName = es.caib.enviafib.ejb.InfoArxiuService.JNDI_NAME)
+//    protected es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb;
+//
+//    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
+//    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+//
+//    protected static final Logger log = Logger.getLogger(DescarregarImprimiblePublicController.class);
+//
+//    @RequestMapping(value = CONTEXT_WEB + "/{csv}", method = RequestMethod.GET)
+//    public void descarregarFitxerArxiu(HttpServletRequest request, HttpServletResponse response,
+//            @PathVariable("csv") String csv) throws I18NException, IOException {
+//        final String format = "PDF";
+//        TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
+//        final String docName = "_imprimible";
+//
+//        AbstractLlistatPeticionsController.internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb,
+//                pluginArxiuEjb, peticioLogicaEjb, log);
+//    }
 
 }

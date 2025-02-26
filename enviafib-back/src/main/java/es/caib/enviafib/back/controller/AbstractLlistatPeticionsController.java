@@ -477,42 +477,44 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         peticioLogicaEjb.deleteFull(peticio);
     }
 
+    final static String PDF = "PDF";
+    final static String XML = "XML";
+    final static String ENI = "ENI";
+    
     @RequestMapping(value = "/descarregarfirmat/{csv}", method = RequestMethod.GET)
     public void descarregarFirmat(@PathVariable("csv") String csv, HttpServletRequest request,
             HttpServletResponse response) throws I18NException, IOException {
 
-        final String format = "PDF";
+        final String format = PDF;
         final String docName = "_firmat";
         TipusFile tipusFile = TipusFile.FIRMAT;
 
-        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioLogicaEjb, log);
+        prepareAndDownload(csv, response, format, docName, tipusFile);
     }
 
     @RequestMapping(value = "/descarregarenidoc/{csv}", method = RequestMethod.GET)
     public void descarregarEnidoc(@PathVariable("csv") String csv, HttpServletRequest request,
             HttpServletResponse response) throws I18NException, IOException {
 
-        final String format = "ENI";
+        final String format = ENI;
         final String docName = "_eni";
         TipusFile tipusFile = TipusFile.ENI_DOC;
 
-        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioLogicaEjb, log);
+        prepareAndDownload(csv, response, format, docName, tipusFile);
     }
 
     @RequestMapping(value = "/descarregarimprimible/{csv}", method = RequestMethod.GET)
     public void descarregarFitxerArxiu(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("csv") String csv) throws I18NException, IOException {
-        final String format = "PDF";
+        final String format = PDF;
         TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
         final String docName = "_imprimible";
 
-        internalDownload(csv, response, format, docName, tipusFile, infoArxiuEjb, pluginArxiuEjb, peticioLogicaEjb, log);
+        prepareAndDownload(csv, response, format, docName, tipusFile);
     }
 
-    public static void internalDownload(String csv, HttpServletResponse response, final String format,
-            final String docName, TipusFile tipusFile, es.caib.enviafib.ejb.InfoArxiuService infoArxiuEjb,
-            es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuEjb,
-            PeticioLogicaService peticioLogicaEjb, Logger log) throws I18NException, IOException {
+	public void prepareAndDownload(String csv, HttpServletResponse response, final String format, final String docName,
+			TipusFile tipusFile) throws I18NException, IOException {
 
         if (csv == null) {
             return;
@@ -521,7 +523,6 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID, InfoArxiuFields.CSV.equal(csv));
         log.info("internalDownload(): -> docID: " + docID);
 
-        //        Long pluginID = 1001L;
         IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
 
         byte[] data = null;
@@ -543,38 +544,54 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             break;
         }
 
-        prepareAndDownload(data, response, docName, format, csv, peticioLogicaEjb);
+        String fileName = generateFileName(csv, format, docName);
+        
+        downloadDocument(response, data, fileName, format);
     }
 
-    private static void prepareAndDownload(byte[] data, HttpServletResponse response, final String docName,
-            final String format, String csv, PeticioLogicaService peticioLogicaEjb) throws I18NException {
-
-        // new PeticioJPA().getInfoArxiu().getCsv();
-        String fileName = peticioLogicaEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
+    
+    private String generateFileName(String csv, String format, String docName) throws I18NException {
+    	
+    	String fileName = peticioLogicaEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
                 new PeticioQueryPath().INFOARXIU().CSV().equal(csv));
 
-        fileName = fileName.replace(" ", "_");
-
         if (fileName != null) {
-            if (fileName.toLowerCase().endsWith(".pdf")) {
-                fileName = fileName.substring(0, fileName.lastIndexOf(".pdf"));
+        	
+        	fileName = fileName.replace(" ", "_");
+        	String loweCase = fileName.toLowerCase();
+        	
+            if (loweCase.endsWith(".pdf")) {
+                fileName = fileName.substring(0, loweCase.lastIndexOf(".pdf"));
             }
-            if (fileName.toLowerCase().endsWith(".xml")) {
-                fileName = fileName.substring(0, fileName.lastIndexOf(".xml"));
+            if (loweCase.endsWith(".xml")) {
+                fileName = fileName.substring(0, loweCase.lastIndexOf(".xml"));
             }
 
-            if (format.equals("PDF")) {
-                response.setContentType("application/pdf");
+            if (format.equals(PDF)) {
                 fileName += docName + ".pdf";
-
-            } else if (format.equals("ENI")) {
-                response.setContentType("text/xml");
+            } else if (format.equals(ENI)) {
                 fileName += docName + ".xml";
             }
+            
+        }else {
+			fileName = "fitxer" + docName + "." + format.toLowerCase();
         }
+        
+        return fileName;
+    }
+    
+    private void downloadDocument(HttpServletResponse response, byte[] data,  final String fileName, final String format) throws I18NException {
+
         response.setHeader("Content-disposition", "attachment; filename=" + fileName);
         response.setContentLength(data.length);
 
+        if (format.equals(PDF)) {
+            response.setContentType("application/pdf");
+
+        } else if (format.equals(ENI)) {
+            response.setContentType("text/xml");
+        }
+        
         OutputStream out;
 
         try {
