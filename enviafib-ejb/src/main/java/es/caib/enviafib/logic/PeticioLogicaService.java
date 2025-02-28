@@ -75,9 +75,4 @@ public interface PeticioLogicaService extends PeticioService {
     
     public boolean esFitxerPDF(File file);
 
-	/**
-	 * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
-	 */
-	public void eliminarPeticionsPortaFIB();
-
 }

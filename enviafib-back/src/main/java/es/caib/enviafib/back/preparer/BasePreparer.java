@@ -14,7 +14,12 @@ import org.apache.tiles.AttributeContext;
 import org.apache.tiles.preparer.PreparerException;
 import org.apache.tiles.preparer.ViewPreparer;
 import org.apache.tiles.request.Request;
+import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleDocumentTypeInformation;
+import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.web.HtmlUtils;
+
 import es.caib.enviafib.ejb.IdiomaService;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Idioma;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -114,6 +119,20 @@ public class BasePreparer implements ViewPreparer, Constants {
 
 		request.put("contingut_tile", attributeContext.getAttribute("contingut").toString());
 
+		
+		//Tipus Documentals.
+//		
+//		try {
+//			List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocs =  PortafibUtils.getTipusDocumentalsAll(loc.getLanguage());
+//			if (tipusDocs == null) {
+//				throw new I18NException("error.tipusdocumental.null");
+//			}
+//			log.info("BASE PREPARER:: Tipus documentals: " + tipusDocs.size());
+//		} catch (I18NException e) {
+//			String msg = "Error obtenint tipus documentals: " + e.getMessage();
+//			HtmlUtils.saveMessageError(httpRequest, msg);
+//		}
+//		
 	}
 
 }

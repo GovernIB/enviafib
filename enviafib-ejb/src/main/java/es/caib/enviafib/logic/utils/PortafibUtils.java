@@ -2,8 +2,11 @@ package es.caib.enviafib.logic.utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleDocumentTypeInformation;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.jersey.ApiFirmaAsyncSimpleJersey;
@@ -15,23 +18,37 @@ import es.caib.enviafib.commons.utils.Constants;
 
 public class PortafibUtils {
 
-	public static List<FirmaAsyncSimpleDocumentTypeInformation> getTipusDocumentalsAll(String lang)
-			throws I18NException {
+    private static List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocumentals = new ArrayList<FirmaAsyncSimpleDocumentTypeInformation>();
+    private static long lastRefresh = 0;
 
-		ApiFirmaAsyncSimple api = null;
+    private static final long MITJA_HORA = 30 * 60 * 1000;
+	protected static final Logger log = Logger.getLogger(PortafibUtils.class);
 
-		try {
-			api = getApiFirmaAsyncSimple();
-			List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = api.getAvailableTypesOfDocuments(lang);
-			return tipusDocsPFI;
-		} catch (AbstractApisIBException e) {
-			throw new I18NException("error.portafib.tipusdocumental", e.getMessage());
+	public static synchronized List<FirmaAsyncSimpleDocumentTypeInformation> getTipusDocumentalsAll(String lang) {
+		//Obtenir els tipus documentals de PortaFIB. Si ja s'han obtingut en els últims 30 minuts, es retorna la cache.
+		
+		if ((lastRefresh + MITJA_HORA) < System.currentTimeMillis()) {
+
+			try {
+				ApiFirmaAsyncSimple api = getApiFirmaAsyncSimple();
+
+				tipusDocumentals = api.getAvailableTypesOfDocuments(lang);
+				lastRefresh = System.currentTimeMillis();
+
+				log.info("Obtenint tipus documentals de PortaFIB. " + tipusDocumentals.size() + " elements.");
+			} catch (Throwable e) {
+				log.error("Error obtenint tipus documentals de PortaFIB: " + e.getMessage(), e);
+//			throw new I18NException("error.portafib.tipusdocumental", e.getMessage());
+			}
+		} else {
+			log.info("Utilitzant cache de tipus documentals. " + tipusDocumentals.size() + " elements.");
 		}
+
+		return tipusDocumentals;
 	}
 	
-	
 	public static List<FirmaAsyncSimpleDocumentTypeInformation> getTipusDocumentalsBase(String lang)
-			throws I18NException {
+			 {
 
 		List<FirmaAsyncSimpleDocumentTypeInformation> allTipusDoc = getTipusDocumentalsAll(lang);
 		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsBase = new java.util.ArrayList<FirmaAsyncSimpleDocumentTypeInformation>();

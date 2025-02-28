@@ -132,9 +132,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocEjb;
 
-    private static HashMap<Long, String> tipusDocumentals = null;
-    private static long lastRefresh = 0;
-
     final String prefixeEsborrat = "ESBORRADA%";
 
     @Override
@@ -291,33 +288,22 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         FirmaAsyncSimpleFile originalDetachedSignature = null;
 
         Long tipusDocumentalID = null;
-
         try {
             tipusDocumentalID = Long.valueOf(tipusDocumental);
-        } catch (NumberFormatException t) {
-            throw new I18NException("error.peticio.tipusdocumental.parselong", tipusDocumental);
+        } catch (NumberFormatException e) {
+        	throw new I18NException("error.peticio.tipusdocumental.parselong", tipusDocumental);
         }
+            
+    	List<FirmaAsyncSimpleDocumentTypeInformation> tipus = PortafibUtils.getTipusDocumentalsAll(languageUI);
 
-        String desc = null;
-        long hora = 60 * 60 * 1000;
-
-        try {
-            if (tipusDocumentals == null || (lastRefresh + hora) < System.currentTimeMillis()) {
-                tipusDocumentals = new HashMap<Long, String>();
-                List<FirmaAsyncSimpleDocumentTypeInformation> tipus = api.getAvailableTypesOfDocuments(languageUI);
-
-                for (FirmaAsyncSimpleDocumentTypeInformation f : tipus) {
-                    tipusDocumentals.put(f.getDocumentType(), f.getName());
-                }
-
-                lastRefresh = System.currentTimeMillis();
-            }
-
-            desc = tipusDocumentals.get(tipusDocumentalID);
-
-        } catch (Throwable t) {
-            log.error("Error amb API per obtenir tipus documental ]" + tipusDocumental + "[: " + t.getMessage(), t);
+    	String desc = null;
+    	for (FirmaAsyncSimpleDocumentTypeInformation f : tipus) {
+    		if (f.getDocumentType() == tipusDocumentalID) {
+    			desc = f.getName();
+    			break;
+    		}
         }
+        	
 
         String languageDoc = idiomaDocumental;
 
@@ -1360,69 +1346,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 		log.info("Total time: " + (endTime - startTime));
 		log.info("Acaba controlarReintentsArxiu()");
 	}
-
-    /**
-     * Funció que s'executa cada vespre a les 4:00 i elimina peticions acabades de PortaFIB.
-     */
-    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
-    @Schedule(hour = "4", persistent = false)
-    @Override
-    public void eliminarPeticionsPortaFIB() {
-        log.info("Comença eliminarPeticionsPortaFIB()");
-
-        final long startTime = System.currentTimeMillis();
-        final String languageUI = "ca";
-
-        try {
-            Where wNotAutofirma = PeticioFields.TIPUS.notEqual(Constants.TIPUS_PETICIO_AUTOFIRMA);
-
-            Integer[] estats = { Constants.ESTAT_PETICIO_FIRMADA, Constants.ESTAT_PETICIO_ERROR , Constants.ESTAT_PETICIO_REBUTJADA};
-            Where wEstatEsborrable = PeticioFields.ESTAT.in(estats);
-
-            Where wNoEsborrada = PeticioFields.PETICIOPORTAFIRMES.notLike(prefixeEsborrat);
-            Where wNoNula = PeticioFields.PETICIOPORTAFIRMES.isNotNull();
-
-            List<String> listPortaFIBIds = this.executeQuery(PeticioFields.PETICIOPORTAFIRMES, Where.AND(wNotAutofirma, wEstatEsborrable, wNoEsborrada, wNoNula));
-
-			for (String portafibID : listPortaFIBIds) {
-				try {
-					log.info("Esborram Peticio amb PortaFIB ID: " + portafibID);
-
-					if (esborrarPeticioPortafib(portafibID, languageUI)) {
-						//Afegim el prefix ESBORRADA% per saber que s'ha esborrat la peticio a PortaFIB
-						log.info("Peticio " + portafibID + " esborrada de PORTAFIB correctament");
-						this.update(PeticioFields.PETICIOPORTAFIRMES, prefixeEsborrat + portafibID,
-								PeticioFields.PETICIOPORTAFIRMES.equal(portafibID));
-					} else {
-						final String msg = "Error al mètode esborrarPeticioPortafib() amb portafibID=" + portafibID
-								+ " durant el cron nocturn.";
-						log.error(msg);
-					}
-
-					// El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i
-					// acaba la funció.
-					if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-						log.warn("Timeout.");
-						break;
-					}
-
-				} catch (Throwable e) {
-					final String msg = "Error pasant portafibID=" + portafibID
-							+ "  a ESBORRADA% durant el cron nocturn: " + e.getMessage();
-					log.error(msg, e);
-				}
-			}
-
-        } catch (I18NException e) {
-            final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
-                    + I18NCommonUtils.getMessage(e, new Locale(languageUI));
-            log.error(msg, e);
-        }
-
-        long endTime = System.currentTimeMillis();
-        log.info("Total time: " + (endTime - startTime));
-        log.info("Acaba eliminarPeticionsPortaFIB()");
-    }
 
     /**
      * Funció que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
