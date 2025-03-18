@@ -596,6 +596,9 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             
             //Si ha anat malament, augmentam un reintent
             Long reintents = peticio.getReintentsArxiu();
+            if (reintents == null) {
+				reintents = 0L;
+			}
             reintents++;
             peticio.setReintentsArxiu(reintents);
             peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);

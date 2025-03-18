@@ -89,12 +89,15 @@ public class SchedulerTancarExpedients {
 			// de reintents.
 
 			Where wReintentsMenysDe = PeticioFields.REINTENTSARXIU.lessThan(MAX_REINTENTS);
+			Where wReintentsNull = PeticioFields.REINTENTSARXIU.isNull();
+			Where wReintents = Where.OR(wReintentsMenysDe, wReintentsNull);
+			
 			Where wPendentTancar = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
 			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
 
-			List<Peticio> peticions = peticioLogicaEjb.select(Where.AND(wPendentTancar, wReintentsMenysDe), orderBy);
+			List<Peticio> peticions = peticioLogicaEjb.select(Where.AND(wPendentTancar, wReintents), orderBy);
 
-			log.info("Expedients que s'han de tancar: " + peticions.size());
+			log.info("Expedients que s'han de tancar: " + peticions.size() + ". maxReintents: " + MAX_REINTENTS);
 
 			IArxiuPlugin plugin = pluginArxiuLogicaEjb.getInstance();
 
@@ -108,7 +111,7 @@ public class SchedulerTancarExpedients {
 						InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
 				boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, plugin, expedientID);
-				peticioLogicaEjb.update(peticio);
+				peticioLogicaEjb.updatePublic(peticio);
 
 				if (tancatExpedient) {
 					log.info("Expedient de la petició " + peticioID + " tancat correctament. ExpedientID: "
