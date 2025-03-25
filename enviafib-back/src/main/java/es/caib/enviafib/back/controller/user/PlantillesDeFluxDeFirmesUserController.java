@@ -37,6 +37,7 @@ import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Usuari;
 
 /**
@@ -73,8 +74,9 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         return "plantillesfluxfirmesListUser";
     }
 
+
     public String getOwner() {
-        return LoginInfo.getInstance().getUsername();
+        return String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
     }
 
     @Override
@@ -123,7 +125,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             // Decodificam la URL que arriba en base64
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
-            api = FirmaFluxUserController.getApiFlowTemplateSimple();
+			api = PortafibUtils.getApiFlowTemplateSimple();
 
             // Comprova que és de la nostra propietat
             FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
@@ -180,7 +182,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
-            api = FirmaFluxUserController.getApiFlowTemplateSimple();
+			api = PortafibUtils.getApiFlowTemplateSimple();
 
             // Crear Flux
             final String name = "ENVIAFIB_Plantilla_Flux_Firma_" + FirmaFluxUserController.SDF.format(new Date()) + "_"
@@ -225,10 +227,15 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             final String intermediateID = null;
             FirmaFluxUserController.cleanFlux(api, transactionID, intermediateID, log);
 
-            return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
+            return new ModelAndView(getRedirectToList());
+//            return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
         }
     }
 
+    public static String getRedirectToList() {
+        return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
+    }
+    
     @RequestMapping(value = "/callbackflux/{transactionID}")
     public ModelAndView finalProcesDeFlux(HttpServletRequest request, HttpServletResponse response,
             @PathVariable("transactionID") String transactionID) {
@@ -241,7 +248,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         String error = null;
         try {
 
-            api = FirmaFluxUserController.getApiFlowTemplateSimple();
+			api = PortafibUtils.getApiFlowTemplateSimple();
 
             FlowTemplateSimpleGetFlowResultResponse fullResult = api.getFlowTemplateResult(transactionID);
 

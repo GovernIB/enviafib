@@ -60,6 +60,7 @@ import es.caib.enviafib.commons.utils.NifUtils.NifInfo;
 import es.caib.enviafib.logic.PluginEstructuraOrganitzativaLogicaService;
 import es.caib.enviafib.logic.SerieDocumentalLogicaService;
 import es.caib.enviafib.logic.utils.LogicUtils;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.entity.InfoAnex;
 import es.caib.enviafib.model.entity.InfoSignatura;
@@ -526,7 +527,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                     case Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI:
                     case Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT:
 
-                        ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+                		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
                         String flowTemplateId = peticio.getReason();
 

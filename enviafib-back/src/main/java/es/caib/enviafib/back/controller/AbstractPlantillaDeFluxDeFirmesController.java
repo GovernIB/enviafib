@@ -41,6 +41,7 @@ import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -158,7 +159,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
         // Comprovam que és de la nostra propietat
         try {
 
-            ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
             FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
             flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
@@ -167,7 +168,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
             String description = flux.getDescription();
 
-            String owner = LoginInfo.getInstance().getUsername();
+            Long owner = LoginInfo.getInstance().getUsuari().getUsuariID();
             if (description.indexOf("{owner=" + owner + "}") != -1) {
                 FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
                 if (api.deleteFlowTemplate(r)) {
@@ -195,7 +196,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,
             final Integer itemsPerPage, final int inici) throws I18NException {
 
-        ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
         final String languageUI = "ca";
 

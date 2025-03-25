@@ -31,6 +31,7 @@ import es.caib.enviafib.back.controller.user.PlantillesDeFluxDeFirmesUserControl
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.logic.utils.LogicUtils;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Usuari;
 
 /**
@@ -81,7 +82,7 @@ public class PlantillesDeFluxDeFirmesAdminController extends PlantillesDeFluxDeF
 
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
-            api = FirmaFluxUserController.getApiFlowTemplateSimple();
+            api = PortafibUtils.getApiFlowTemplateSimple();
             FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
             flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowID);
 

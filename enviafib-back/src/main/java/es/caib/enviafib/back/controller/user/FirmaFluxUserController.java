@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -131,14 +132,14 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
-            api = getApiFlowTemplateSimple();
+            api = PortafibUtils.getApiFlowTemplateSimple();
 
             // Crear Flux
             String name = "Flux de Firma  - " + System.currentTimeMillis();
 
-            final String username = LoginInfo.getInstance().getUsername();
-
-            String descr = generateDescription(username, false);
+//            final String username = LoginInfo.getInstance().getUsername();
+            final String usuariID = String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
+            String descr = generateDescription(usuariID, false);
 
             final boolean saveOnServer = true;
             final boolean visibleDescription = false;
@@ -187,12 +188,12 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         }
     }
 
-    public static String generateDescription(final String username, final boolean isTemplate) {
+    public static String generateDescription(final String usuariID, final boolean isTemplate) {
         final long current = System.currentTimeMillis();
         final String currentStr = SDF.format(new Date(current));
 
         String descr = (isTemplate ? "{template=true}" : "{temporal=true}\n") + "{creation=" + current + "}\n"
-                + "{creationStr=" + currentStr + "}\n" + getFluxFilterByUserName(username);
+                + "{creationStr=" + currentStr + "}\n" + getFluxFilterByUserName(usuariID);
         return descr;
     }
 
@@ -201,10 +202,10 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
      * @param username
      * @return
      */
-    public static String getFluxFilterByUserName(String username) {
+    public static String getFluxFilterByUserName(final String usuariID) {
         final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
         // Filtre de Flux de Firmes no filtra bé per descripció (https://github.com/GovernIB/portafib/issues/752)
-        return "{usrapp=" + usrapp + "}" + (username == null ? "" : "{owner=" + username + "}");
+        return "{usrapp=" + usrapp + "}" + (usuariID == null ? "" : "{owner=" + usuariID + "}");
     }
 
     @Override
@@ -213,7 +214,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
         ModelAndView mav = super.crearPeticioGet(request, response);
 
-        ApiFlowTemplateSimple api = getApiFlowTemplateSimple();
+		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
         String transactionID = request.getParameter("transactionID");
 
         String intermediateID = request.getParameter("intermediateID");
@@ -266,8 +267,8 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         String error = null;
         try {
 
-            api = getApiFlowTemplateSimple();
-
+        	api = PortafibUtils.getApiFlowTemplateSimple();
+        	
             FlowTemplateSimpleGetFlowResultResponse fullResult = api.getFlowTemplateResult(transactionID);
 
             FlowTemplateSimpleStatus transactionStatus = fullResult.getStatus();
@@ -354,7 +355,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
         try {
 
-            api = getApiFlowTemplateSimple();
+    		api = PortafibUtils.getApiFlowTemplateSimple();
 
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
@@ -531,15 +532,4 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
      * @return
      * @throws Exception
      */
-    public static ApiFlowTemplateSimple getApiFlowTemplateSimple() {
-
-        String url = Configuracio.getPortaFIBApiFlowUrl();
-        String username = Configuracio.getPortaFIBApiFlowUsername();
-        String password = Configuracio.getPortaFIBApiFlowPassword();
-        //log.info(" Connectant amb " + url + " emprant l'usuari " + username);
-
-        return new ApiFlowTemplateSimpleJersey(url, username, password);
-
-    }
-
 }

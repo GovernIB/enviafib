@@ -1,8 +1,11 @@
 package es.caib.enviafib.back.controller.admin;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,12 +29,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.caib.enviafib.back.controller.AbstractPlantillaDeFluxDeFirmesController;
 import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.back.security.LoginInfo;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Usuari;
 
 @Controller
@@ -39,6 +44,9 @@ import es.caib.enviafib.model.entity.Usuari;
 @SessionAttributes(types = { UsuariForm.class, UsuariFilterForm.class })
 public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeFluxDeFirmesController {
 
+	@EJB(mappedName = es.caib.enviafib.logic.UsuariLogicaService.JNDI_NAME)
+	protected es.caib.enviafib.logic.UsuariLogicaService usuariLogicaEjb;
+	
     @Override
     public String getEntityNameCode() {
         return "plantillesfluxfirmes.obsolet";
@@ -77,6 +85,8 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
 			usuariFilterForm.addAdditionalButton(new AdditionalButton("fas fa-cogs", "netejar",
 					"javascript: openModal('" + request.getContextPath() + getContextWeb() + "/esborrarTotes','show')",
 					AdditionalButtonStyle.WARNING));       
+			
+			usuariFilterForm.addAdditionalButton(new AdditionalButton("fas fa-user", "actualitzar.usernames.plantilles", getContextWeb() + "/actualitzarUsuarisPlantilles", AdditionalButtonStyle.INFO));
 
         }
         return usuariFilterForm;
@@ -122,7 +132,7 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
         try {
         	Long currentTime = System.currentTimeMillis();
 
-            ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
             final String languageUI = "ca";
 
             FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
@@ -168,4 +178,34 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
         return getRedirectWhenCancel(request, 0L);
     }
     
+    
+	@RequestMapping(value = "/actualitzarUsuarisPlantilles")
+	public ModelAndView actualitzarUsuarisPlantilles(HttpServletRequest request, HttpServletResponse response) {
+		
+		log.info("Actualitzant els usernames de les plantilles de flux");
+
+		List<String> script = usuariLogicaEjb.actualitzarUsernamesPlantillesFlux();
+
+		if (script != null && !script.isEmpty()) {
+		    // Convertimos la lista a un String con saltos de línea
+		    String scriptContent = String.join("\n", script);
+		    byte[] data = scriptContent.getBytes(); 
+
+		    // Configuración de la respuesta HTTP para la descarga
+		    response.setHeader("Content-Disposition", "attachment; filename=updateUsernamesPortaFIB.sql");
+		    response.setContentType("application/octet-stream");
+		    response.setContentLength(data.length);
+
+		    try (OutputStream out = response.getOutputStream()) {
+		        out.write(data);
+		        out.flush();
+	            return null; // Evita que se ejecute la redirección
+		    } catch (IOException e) {
+		        log.error("Error al generar el archivo SQL", e);
+		    }
+		}
+
+		log.info("Actualització finalitzada");
+        return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
+	}
 }

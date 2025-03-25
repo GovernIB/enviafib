@@ -29,6 +29,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
@@ -93,7 +94,7 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
     public List<Usuari> getPlantillesFluxFirma() throws I18NException {
 
-        ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
         final String languageUI = "ca";
         FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
@@ -158,7 +159,7 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
     }
 
     public String getOwner() {
-        return LoginInfo.getInstance().getUsername();
+        return String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
     }
 
     public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
@@ -171,7 +172,8 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 	public String getNomPlantillaFlux(String plantillaFluxID) throws I18NException {
 
 		final String languageUI = "ca";
-		ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+
 		try {
 			
 			FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplates(languageUI);
@@ -199,7 +201,7 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 		try {
 			String lang = LocaleContextHolder.getLocale().getLanguage();
 
-			ApiFlowTemplateSimple api = FirmaFluxUserController.getApiFlowTemplateSimple();
+			ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
 			FlowTemplateSimpleViewFlowTemplateRequest flowTemplateSimpleFlowTemplateRequest = new FlowTemplateSimpleViewFlowTemplateRequest(
 					lang, flowTemplateID);
