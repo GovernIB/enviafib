@@ -816,7 +816,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
         String nomFitxer = fitxerLogicEjb.executeQueryOne(FitxerFields.NOM,
-                FitxerFields.FITXERID.equal(peticio.getFitxerFirmatID()));
+                FitxerFields.FITXERID.equal(peticio.getFitxerID()));
 
         log.info("Descarregarem el fitxer de la PeticioID: " + peticio.getPeticioID() + " amb el docID: " + docID);
 
