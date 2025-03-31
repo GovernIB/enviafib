@@ -360,7 +360,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         InfoSignaturaJPA infoSignatura;
 
         if (peticioID == null) {
-            log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ", new Exception());
+            log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ");
             infoSignatura = null;
         } else {
             infoSignatura = guardarFitxerInfoFirma(peticioID, portafibID, languageUI);
@@ -430,8 +430,13 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     public void cosesAFerPeticioFirmaParcial(long portafibID) throws I18NException {
 
         Long peticioID = getPeticioIdFromPortafibId(portafibID);
+
+        if (peticioID == null) {
+        	log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ");
+        	return ;
+        }
     
-        log.info("cosesAFerPeticioFirmaParcial():: Informam al camp REASON de la petició .... ");
+        log.info("cosesAFerPeticioFirmaParcial():: Informam al camp REASON de la petició " + peticioID);
         Peticio peticio = findByPrimaryKey(peticioID);
         
         String reason = peticio.getReason();

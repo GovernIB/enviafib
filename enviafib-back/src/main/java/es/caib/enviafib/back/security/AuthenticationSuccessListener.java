@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NException;
@@ -13,7 +12,6 @@ import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.fundaciobit.pluginsib.userinformation.IUserInformationPlugin;
 import org.fundaciobit.pluginsib.userinformation.UserInfo;
-
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
@@ -24,10 +22,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import es.caib.enviafib.back.utils.EnviaFIBSessionLocaleResolver;
+import es.caib.enviafib.commons.utils.Configuracio;
+import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.ejb.IdiomaService;
 import es.caib.enviafib.ejb.UsuariEntitatService;
-import es.caib.enviafib.ejb.UsuariService;
 import es.caib.enviafib.logic.UsuariLogicaService;
 import es.caib.enviafib.logic.utils.EjbManager;
 import es.caib.enviafib.logic.utils.EnviaFIBPluginsManager;
@@ -36,11 +36,7 @@ import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.entity.UsuariEntitat;
 import es.caib.enviafib.model.fields.EntitatFields;
 import es.caib.enviafib.model.fields.UsuariEntitatFields;
-import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
-import es.caib.enviafib.back.utils.EnviaFIBSessionLocaleResolver;
-import es.caib.enviafib.commons.utils.Configuracio;
-import es.caib.enviafib.commons.utils.Constants;
 
 /**
  * 

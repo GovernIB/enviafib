@@ -530,6 +530,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
                         String flowTemplateId = peticio.getReason();
+                        log.info("flowTemplateId: " + flowTemplateId);
 
                         FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
                         flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
