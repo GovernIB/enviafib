@@ -36,6 +36,7 @@ import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.entity.UsuariEntitat;
 import es.caib.enviafib.model.fields.EntitatFields;
 import es.caib.enviafib.model.fields.UsuariEntitatFields;
+import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
@@ -67,6 +68,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
         User user = (User) authentication.getPrincipal();
 
         String username = user.getUsername();
+
         log.info(" =================================================================");
         log.info(" ============ Login Usuari: " + username);
 
@@ -117,6 +119,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
         if (usuariPersona == null) {
             // Revisar si és un Administrador que entra per primera vegada
             log.info("\n No s'ha trobat l'usuari " + username + " a la BBDD \n");
+            
             try {
                 IUserInformationPlugin plugin = EnviaFIBPluginsManager.getUserInformationPluginInstance();
                 UserInfo info = plugin.getUserInfoByUserName(username);
@@ -128,91 +131,104 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
                     necesitaConfigurar = true;
 
                     // Check if DNI ja existeix al sistema
-                    UsuariJPA persona = new UsuariJPA();
-                    persona.setEmail(info.getEmail());
-                    String lang = LocaleContextHolder.getLocale().getLanguage();
-                    
-                    log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma '" + lang + "' \n");
-                    if (lang == null) {
-                        lang = Configuracio.getDefaultLanguage();
-                        if (lang == null) {
-                            lang = "ca";
-                        }
-                    }
-                    log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma POST getDefaultLanguage() '" + lang + "' \n");
-                    
-                    
-                    IdiomaService idiomaEjb;
-                    try {
-                       idiomaEjb = EjbManager.getIdiomaEJB();
-                       lang = EnviaFIBSessionLocaleResolver.checkLanguage(idiomaEjb, lang);
-                       log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma POST checkLanguage() '" + lang + "' \n");
-                    } catch (Throwable e) {
-                        String msg = I18NUtils.tradueix("comodi", "Error intentant validar l'idioma per defecte: " + e.getMessage());
-                        throw new LoginException(msg, e);
-                    }
-                    
-                    persona.setIdiomaID(lang);
-
-                    // Omplir nom i llinatges segons info de userinfo
-                    final String nom = calculateUsername(username, info);
-
-                    persona.setNom(nom);
-                    persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
-                    persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
-
-                    persona.setUsername(username);
-                    persona.setNif(info.getAdministrationID());
-                    persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
-
-                    
-					EntitatService entitatEjb;
-					try {
-						entitatEjb = EjbManager.getEntitatEJB();
+                    List<Usuari> usuariList = usuariLogicaEjb.select(UsuariFields.NIF.equal(info.getAdministrationID()));
+                    if (usuariList.size() > 0) {
+						log.info("No ha trobat l'username a BBDD perque es un usuari amb username canviat. NIF:"  + info.getAdministrationID()  + " - " + info.getFullName());
+						usuariPersona = usuariList.get(0);
 						
-						//Si no troba el dir, torna el de govern.
-						String dir3 = obtenirDIR3DePlugin(username);
-						log.info("El dir3 de l'usuari es: " + dir3);
-						//Si troba el dir3 de l'usuari, pero no està a la taula d'entitats, assignam l'usuari a l'entitat per defecte, que es govern
-						String entitatID = entitatEjb.executeQueryOne(EntitatFields.ENTITATID,
-								EntitatFields.DIR3.equal(dir3));						
-
-						log.info("EntitatID: " + entitatID);
-						if (entitatID == null) {
-							log.info("No s'ha trobat l'entitat per defecte, assignam l'usuari a govern");
-                            entitatID = "govern";
+						//Lo único por lo que no se podria camiar el username es por los flujos de firma. Pero si se lanza el scrpt de PortaFIB, no habría problema, porque irán con userID.
+						usuariPersona.setUsername(username);
+						usuariLogicaEjb.update(usuariPersona);
+					}else {
+	                    
+	                    UsuariJPA persona = new UsuariJPA();
+	                    persona.setEmail(info.getEmail());
+	                    String lang = LocaleContextHolder.getLocale().getLanguage();
+	                    
+	                    log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma '" + lang + "' \n");
+	                    if (lang == null) {
+	                        lang = Configuracio.getDefaultLanguage();
+	                        if (lang == null) {
+	                            lang = "ca";
+	                        }
+	                    }
+	                    log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma POST getDefaultLanguage() '" + lang + "' \n");
+	                    
+	                    
+	                    IdiomaService idiomaEjb;
+	                    try {
+	                       idiomaEjb = EjbManager.getIdiomaEJB();
+	                       lang = EnviaFIBSessionLocaleResolver.checkLanguage(idiomaEjb, lang);
+	                       log.info("\n XXXXX Entra a AuthenticationSuccessListener NEW Idioma POST checkLanguage() '" + lang + "' \n");
+	                    } catch (Throwable e) {
+	                        String msg = I18NUtils.tradueix("comodi", "Error intentant validar l'idioma per defecte: " + e.getMessage());
+	                        throw new LoginException(msg, e);
+	                    }
+	                    
+	                    persona.setIdiomaID(lang);
+	
+	                    // Omplir nom i llinatges segons info de userinfo
+	                    final String nom = calculateUsername(username, info);
+	
+	                    persona.setNom(nom);
+	                    persona.setLlinatge1((info.getSurname1() == null ? "" : info.getSurname1()));
+	                    persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
+	
+	                    persona.setUsername(username);
+	                    persona.setNif(info.getAdministrationID());
+	                    persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
+	
+	                    
+						EntitatService entitatEjb;
+						try {
+							entitatEjb = EjbManager.getEntitatEJB();
+							
+							//Si no troba el dir, torna el de govern.
+							String dir3 = obtenirDIR3DePlugin(username);
+							log.info("El dir3 de l'usuari es: " + dir3);
+							//Si troba el dir3 de l'usuari, pero no està a la taula d'entitats, assignam l'usuari a l'entitat per defecte, que es govern
+							String entitatID = entitatEjb.executeQueryOne(EntitatFields.ENTITATID,
+									EntitatFields.DIR3.equal(dir3));						
+							
+							// 
+	
+							log.info("EntitatID: " + entitatID);
+							if (entitatID == null) {
+								log.info("No s'ha trobat l'entitat per defecte, assignam l'usuari a govern");
+	                            entitatID = "govern";
+							}
+							
+							persona.setEntitatID(entitatID);
+	
+						} catch (Throwable e) {
+							String msg = I18NUtils.tradueix("comodi","Error intentant obtenir l'entitat per defecte: " + e.getMessage());
+							throw new LoginException(msg, e);
 						}
-						
-						persona.setEntitatID(entitatID);
-
-					} catch (Throwable e) {
-						String msg = I18NUtils.tradueix("comodi","Error intentant obtenir l'entitat per defecte: " + e.getMessage());
-						throw new LoginException(msg, e);
+	
+	                    try {
+	                        usuariPersona = usuariLogicaEjb.create(persona);
+	                        log.info("\n S'ha creat l'usuari " + username + " la BBDD \n");
+	                    } catch (Throwable e) {
+	                        usuariPersona = new UsuariJPA(persona);
+	                        usuariPersona.setUsuariID(0);
+	                        necesitaConfigurar = true;
+	                    }
+	
+	                    /*
+	                     * persona.setNif(!info.getAttributes().containsKey("nif") ||
+	                     * info.getAttributes().get("nif") == null ||
+	                     * info.getAttributes().get("nif").isEmpty() ? "" :
+	                     * info.getAttributes().get("nif").toUpperCase());
+	                     * persona.setNif(info.getAttributes().get("nif") == null ? "" :
+	                     * info.getAttributes().get("nif").toUpperCase());
+	                     */
+	
+	                    // Controlar excepció i redirigir a pantalla de creació d'usuari.
+	
+	                    if (isDebug) {
+	                        log.debug("necesitaConfigurarUsuari = " + necesitaConfigurar);
+	                    }
 					}
-
-                    try {
-                        usuariPersona = usuariLogicaEjb.create(persona);
-                        log.info("\n S'ha creat l'usuari " + username + " la BBDD \n");
-                    } catch (Throwable e) {
-                        usuariPersona = new UsuariJPA(persona);
-                        usuariPersona.setUsuariID(0);
-                        necesitaConfigurar = true;
-                    }
-
-                    /*
-                     * persona.setNif(!info.getAttributes().containsKey("nif") ||
-                     * info.getAttributes().get("nif") == null ||
-                     * info.getAttributes().get("nif").isEmpty() ? "" :
-                     * info.getAttributes().get("nif").toUpperCase());
-                     * persona.setNif(info.getAttributes().get("nif") == null ? "" :
-                     * info.getAttributes().get("nif").toUpperCase());
-                     */
-
-                    // Controlar excepció i redirigir a pantalla de creació d'usuari.
-
-                    if (isDebug) {
-                        log.debug("necesitaConfigurarUsuari = " + necesitaConfigurar);
-                    }
 
                 } else {
                     log.info("\n No s'ha trobat l'usuari " + username + " a UserInformation \n");
