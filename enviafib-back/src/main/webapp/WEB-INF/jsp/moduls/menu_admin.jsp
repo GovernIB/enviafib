@@ -21,6 +21,13 @@
             </span>
         </a></li>
 
+        <li style="list-style-type: disc; list-style-position: inside;"><a
+            href="<c:url value="/admin/usuarisduplicats/list"/>"> <span
+                style="${(fn:contains(url, 'admin/usuarisduplicats'))? "font-weight:bold;" : ""}"> <fmt:message
+                        key="admin.menu.usuarisduplicats" />
+            </span>
+        </a></li>
+        
         <hr style="margin-top: 6px; margin-bottom: 6px;" />
 
         <li style="list-style-type: disc; list-style-position: inside;"><a href="<c:url value="/admin/avis/list"/>">
