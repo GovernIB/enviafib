@@ -189,6 +189,13 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/usuariList.jsp" />
     </definition>
     
+    
+    
+    <definition name="canvisUsernamesFormAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/fitxerForm.jsp" />
+    </definition>
+    
+    
     <definition name="entitatFormAdmin" extends="admin">
         <put-attribute name="titol" value="entitat.entitat" />
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/entitatForm.jsp" />

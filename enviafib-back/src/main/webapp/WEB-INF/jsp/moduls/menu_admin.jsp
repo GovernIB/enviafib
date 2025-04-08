@@ -27,6 +27,13 @@
                         key="admin.menu.usuarisduplicats" />
             </span>
         </a></li>
+
+        <li style="list-style-type: disc; list-style-position: inside;"><a
+            href="<c:url value="/admin/canviarusernames/new"/>"> <span
+                style="${(fn:contains(url, 'admin/canviarusernames'))? "font-weight:bold;" : ""}"> <fmt:message
+                        key="admin.menu.canviarusernames" />
+            </span>
+        </a></li>
         
         <hr style="margin-top: 6px; margin-bottom: 6px;" />
 
