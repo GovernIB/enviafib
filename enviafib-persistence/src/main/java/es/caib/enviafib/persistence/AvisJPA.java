@@ -134,11 +134,6 @@ public class AvisJPA implements Avis {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getAvisID())).hashCode();
-    }
-
 
  // ---------------  STATIC METHODS ------------------
   public static AvisJPA toJPA(Avis __bean) {

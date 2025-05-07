@@ -541,11 +541,6 @@ public class PeticioJPA implements Peticio {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getPeticioID())).hashCode();
-    }
-
 // EXP  Field:peticioid | Table: efi_infoanex | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "peticio")

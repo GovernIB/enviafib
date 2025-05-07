@@ -102,11 +102,6 @@ public class IdiomaJPA implements Idioma {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getIdiomaID())).hashCode();
-    }
-
 // EXP  Field:idiomaid | Table: efi_peticio | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idioma")

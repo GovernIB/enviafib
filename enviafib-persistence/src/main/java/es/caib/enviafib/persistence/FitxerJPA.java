@@ -122,11 +122,6 @@ public class FitxerJPA implements Fitxer {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getFitxerID())).hashCode();
-    }
-
 // EXP  Field:faviconid | Table: efi_entitat | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "faviconID")

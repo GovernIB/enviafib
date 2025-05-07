@@ -213,11 +213,6 @@ public class MenuJPA implements Menu {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getMenuID())).hashCode();
-    }
-
 // IMP Field:traduccioid | Table: efi_traduccio | Type: 1  
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=javax.persistence.CascadeType.ALL)

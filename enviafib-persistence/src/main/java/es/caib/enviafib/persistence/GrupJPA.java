@@ -92,11 +92,6 @@ public class GrupJPA implements Grup {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getGrupID())).hashCode();
-    }
-
 // EXP  Field:grupid | Table: efi_grupusuari | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "grup")

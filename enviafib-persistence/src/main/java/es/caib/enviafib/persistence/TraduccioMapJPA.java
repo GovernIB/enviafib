@@ -49,11 +49,6 @@ public class TraduccioMapJPA implements TraduccioMap {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
 
 
 }

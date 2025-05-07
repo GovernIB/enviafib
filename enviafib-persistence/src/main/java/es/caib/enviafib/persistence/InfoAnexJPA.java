@@ -100,11 +100,6 @@ public class InfoAnexJPA implements InfoAnex {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getInfoanexid())).hashCode();
-    }
-
 // IMP Field:peticioid | Table: efi_peticio | Type: 1  
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -73,11 +73,6 @@ public class TraduccioJPA implements Traduccio {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getTraduccioID())).hashCode();
-    }
-
 // EXP  Field:motiudelegacioid | Table: efi_entitat | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "motiudelegacioID")

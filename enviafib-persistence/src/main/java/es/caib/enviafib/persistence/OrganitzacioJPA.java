@@ -118,11 +118,6 @@ public class OrganitzacioJPA implements Organitzacio {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getOrganitzacioID())).hashCode();
-    }
-
 
  // ---------------  STATIC METHODS ------------------
   public static OrganitzacioJPA toJPA(Organitzacio __bean) {

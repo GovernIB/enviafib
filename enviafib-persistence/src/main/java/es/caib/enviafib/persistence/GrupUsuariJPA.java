@@ -97,11 +97,6 @@ public class GrupUsuariJPA implements GrupUsuari {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getGrupUsuariID())).hashCode();
-    }
-
 // IMP Field:grupid | Table: efi_grup | Type: 1  
 
     @ManyToOne(fetch = FetchType.LAZY)

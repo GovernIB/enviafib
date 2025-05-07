@@ -94,11 +94,6 @@ public class UsuariEntitatJPA implements UsuariEntitat {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getUsuarientitatid())).hashCode();
-    }
-
 // IMP Field:usuariid | Table: efi_usuari | Type: 1  
 
     @ManyToOne(fetch = FetchType.LAZY)

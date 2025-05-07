@@ -16,7 +16,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 
 import es.caib.enviafib.back.form.webdb.*;
 import es.caib.enviafib.back.form.webdb.FitxerForm;
@@ -35,6 +35,10 @@ import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.model.entity.Fitxer;
 import es.caib.enviafib.model.fields.*;
 import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
+import org.fundaciobit.genapp.common.web.tiles.Tile;
+import org.fundaciobit.genapp.common.web.tiles.TileAttribute;
+import org.fundaciobit.genapp.common.web.tiles.TileType;
+import es.caib.enviafib.back.utils.Tab;
 
 /**
  * Controller per gestionar un Fitxer
@@ -42,10 +46,14 @@ import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="fitxer.fitxer.plural", order=30, group="WEBDB")
+@MenuOption(labelCode="fitxer.fitxer.plural", order=30, group=Tab.MENU_WEBDB)
 @Controller
 @RequestMapping(value = "/webdb/fitxer")
 @SessionAttributes(types = { FitxerForm.class, FitxerFilterForm.class })
+@Tile(name="fitxerFormWebDB", contentJsp="/WEB-INF/jsp/webdb/fitxerForm.jsp", extendsTile=Tab.MENU_WEBDB,
+      type=TileType.WEBDB_FORM , attributes={ @TileAttribute(name="titol", value="fitxer.fitxer")})
+@Tile(name="fitxerListWebDB", contentJsp="/WEB-INF/jsp/webdb/fitxerList.jsp", extendsTile=Tab.MENU_WEBDB,
+       type=TileType.WEBDB_LIST, attributes={ @TileAttribute(name="titol", value="fitxer.fitxer") })
 public class FitxerController
     extends es.caib.enviafib.back.controller.EnviaFIBBaseController<Fitxer, java.lang.Long> implements FitxerFields {
 
@@ -587,12 +595,46 @@ public java.lang.Long stringToPK(String value) {
   }
 
   public String getTileForm() {
+        try {
+            Set<Tile> rm;
+            rm=AnnotationUtils.getDeclaredRepeatableAnnotations(this.getClass(), Tile.class);
+            if (rm != null && !rm.isEmpty()) {
+                String trobada = null;
+                for (Tile tile : rm) {
+                    if (tile.type() == TileType.WEBDB_FORM) {
+                        trobada = tile.name();
+                    }
+                }
+                if (trobada != null) {
+                    return trobada;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error en el getTileForm: " + e.getMessage(), e);
+        }
     return "fitxerFormWebDB";
   }
 
-  public String getTileList() {
-    return "fitxerListWebDB";
-  }
+    public String getTileList() {
+        try {
+            Set<Tile> rm;
+            rm=AnnotationUtils.getDeclaredRepeatableAnnotations(this.getClass(), Tile.class);
+            if (rm != null && !rm.isEmpty()) {
+                String trobada = null;
+                for (Tile tile : rm) {
+                    if (tile.type() == TileType.WEBDB_LIST) {
+                        trobada = tile.name();
+                    }
+                }
+                if (trobada != null) {
+                    return trobada;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error en el getTileList: " + e.getMessage(), e);
+        }
+        return "fitxerListWebDB";
+    }
 
   public String getSessionAttributeFilterForm() {
     return "Fitxer_FilterForm_" + this.getClass().getName();

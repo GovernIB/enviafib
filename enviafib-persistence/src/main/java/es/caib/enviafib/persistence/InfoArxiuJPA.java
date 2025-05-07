@@ -187,11 +187,6 @@ public class InfoArxiuJPA implements InfoArxiu {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getInfoArxiuID())).hashCode();
-    }
-
 // EXP  Field:infoarxiuid | Table: efi_peticio | Type: 0  
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "infoArxiu")

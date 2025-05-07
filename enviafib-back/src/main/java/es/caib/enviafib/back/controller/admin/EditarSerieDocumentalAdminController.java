@@ -61,15 +61,15 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
 
         //Si es nou, conSerieDocumental = false
         // Resta de casos, conSerieDocumental = true
-        
+
         //Guardar el valor al where
 		if (isNou) {
 			where = SerieDocumentalFields.SERIEDOCUMENTALID.isNull();
 		}
-        
+
         return getReferenceListForTipusDocumental(request, mav, where);
     }
-   
+
 	@Override
 	public List<StringKeyValue> getReferenceListForTipusDocumental(HttpServletRequest request, ModelAndView mav,
 			Where where) throws I18NException {
@@ -78,14 +78,16 @@ public class EditarSerieDocumentalAdminController extends SerieDocumentalControl
 
 		List<StringKeyValue> tmpList = null;
 
+		/*
 		boolean conSerieDocumental = true;
 		if (where != null) {
 			conSerieDocumental = false;
 		}
+		*/
 		
 		String lang = LocaleContextHolder.getLocale().getLanguage();
 		
-		String entitatID = null;
+		//String entitatID = null;
 
 		tmpList = serieDocumentalLogicaEJB.getAllTipusDocumentals(lang);
 		if (tmpList.isEmpty()) {

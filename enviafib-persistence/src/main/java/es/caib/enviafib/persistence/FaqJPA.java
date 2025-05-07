@@ -189,11 +189,6 @@ public class FaqJPA implements Faq {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getFaqID())).hashCode();
-    }
-
 // IMP Field:fitxerid | Table: efi_fitxer | Type: 1  
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -152,11 +152,6 @@ public class PluginJPA implements Plugin {
         return __result;
     }
 
-    @Override
-    public int hashCode() {
-        return (String.valueOf(this.getPluginID())).hashCode();
-    }
-
 
  // ---------------  STATIC METHODS ------------------
   public static PluginJPA toJPA(Plugin __bean) {
