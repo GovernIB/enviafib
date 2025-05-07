@@ -14,12 +14,8 @@ import org.apache.tiles.AttributeContext;
 import org.apache.tiles.preparer.PreparerException;
 import org.apache.tiles.preparer.ViewPreparer;
 import org.apache.tiles.request.Request;
-import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleDocumentTypeInformation;
-import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
 
 import es.caib.enviafib.ejb.IdiomaService;
-import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Idioma;
 import es.caib.enviafib.model.fields.IdiomaFields;
 import org.springframework.context.i18n.LocaleContextHolder;

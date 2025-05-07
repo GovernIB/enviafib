@@ -3,7 +3,6 @@ package es.caib.enviafib.logic.utils;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -12,7 +11,7 @@ import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleDocum
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.jersey.ApiFirmaAsyncSimpleJersey;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.jersey.ApiFlowTemplateSimpleJersey;
-import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
+
 import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.commons.utils.Configuracio;

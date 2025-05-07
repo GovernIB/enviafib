@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.EntitatController;
-import es.caib.enviafib.back.controller.webdb.UsuariEntitatController;
 import es.caib.enviafib.back.form.webdb.EntitatFilterForm;
 import es.caib.enviafib.back.form.webdb.EntitatForm;
 import es.caib.enviafib.back.security.LoginInfo;

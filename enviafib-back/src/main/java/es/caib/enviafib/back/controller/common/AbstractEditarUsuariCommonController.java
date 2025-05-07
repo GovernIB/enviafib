@@ -19,7 +19,6 @@ import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.back.security.EntitatRoles;
 import es.caib.enviafib.back.security.LoginInfo;
-import es.caib.enviafib.ejb.EntitatService;
 import es.caib.enviafib.logic.EntitatLogicaService;
 import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.fields.IdiomaFields;

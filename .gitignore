@@ -204,3 +204,7 @@ installCerts.bat
 /scripts/bbdd/postgresql/lastChanges.sql
 /enviafib-api-interna/*.versionsBackup
 /doc/QuadernDeCarrega/enviafib_2.0.2/SW250207 ENVIAFIB.odt
+/enviafib-ejb/dev.csv
+/enviafib-ejb/dev.sql
+/enviafib-ejb/pre.csv
+/enviafib-ejb/pre.sql
