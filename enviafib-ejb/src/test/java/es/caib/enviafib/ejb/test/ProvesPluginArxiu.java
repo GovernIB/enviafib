@@ -3,11 +3,11 @@ package es.caib.enviafib.ejb.test;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import org.fundaciobit.pluginsib.core.utils.PluginsManager;
+import org.fundaciobit.pluginsib.core.v3.utils.PluginsManager;
 
 import es.caib.enviafib.commons.utils.Constants;
-import es.caib.plugins.arxiu.api.Document;
-import es.caib.plugins.arxiu.api.IArxiuPlugin;
+import es.caib.pluginsib.arxiu.api.Document;
+import es.caib.pluginsib.arxiu.api.IArxiuPlugin;
 
 /**
  * 

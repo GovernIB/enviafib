@@ -2,12 +2,13 @@ package es.caib.enviafib.ejb.test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/*
 import fun.mike.dmp.Diff;
 import fun.mike.dmp.DiffMatchPatch;
+*/
 
 public class ProvesStrinfs {
 
@@ -31,7 +32,7 @@ public class ProvesStrinfs {
 
         System.out.println(error1.length());
         System.out.println(error2.length());
-
+/*
         DiffMatchPatch dmp = new DiffMatchPatch();
         LinkedList<Diff> diffs = dmp.diff_main(error1, error2);
         System.out.println(diffs);
@@ -58,7 +59,7 @@ public class ProvesStrinfs {
         System.out.println(contadorEqu);
         System.out.println(contadorDel);
         System.out.println(contadorIns);
-
+*/
         //        List<String[]> diferents = new ArrayList<String[]>();
         //        compararPalabras2(error1, error2, diferents);
         //
