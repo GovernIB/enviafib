@@ -75,4 +75,6 @@ public interface PeticioLogicaService extends PeticioService {
     
     public boolean esFitxerPDF(File file);
 
+	void enviarMailSolicitant(Peticio peticio, String baseUrl);
+
 }

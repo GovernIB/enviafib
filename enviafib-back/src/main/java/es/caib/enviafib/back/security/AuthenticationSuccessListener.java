@@ -132,7 +132,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 
                     // Check if DNI ja existeix al sistema
                     List<Usuari> usuariList = usuariLogicaEjb.select(UsuariFields.NIF.equal(info.getAdministrationID()));
-                    if (usuariList.size() > 0) {
+                    if(false) {
+//                    if (usuariList.size() > 0) {
 						log.info("No ha trobat l'username a BBDD perque es un usuari amb username canviat. NIF:"  + info.getAdministrationID()  + " - " + info.getFullName());
 						usuariPersona = usuariList.get(0);
 						
@@ -175,7 +176,10 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 	                    persona.setLlinatge2((info.getSurname2() == null ? "" : info.getSurname2()));
 	
 	                    persona.setUsername(username);
+	                    
+	                    log.info("AdministrationID: " + info.getAdministrationID());
 	                    persona.setNif(info.getAdministrationID());
+	                    
 	                    persona.setEmail(info.getEmail() == null ? "" : info.getEmail());
 	
 	                    
