@@ -223,3 +223,14 @@ installCerts.bat
 /enviafib-ejb/pre.csv
 /enviafib-ejb/pre.sql
 >>>>>>> 01c6aabe7446df7753328b4da12ae4215c44b052
+/scripts/bbdd/Peticions amb anexes.sql
+/enviafib-back/*.versionsBackup
+/enviafib-commons/*.versionsBackup
+/enviafib-ear/*.versionsBackup
+/enviafib-ejb/*.versionsBackup
+/enviafib-front/*.versionsBackup
+/enviafib-model/*.versionsBackup
+/enviafib-persistence/*.versionsBackup
+/enviafib-pluginsib/*.versionsBackup
+/*.versionsBackup
+/scripts/*.versionsBackup
