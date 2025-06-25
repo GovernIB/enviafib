@@ -662,7 +662,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    protected void enviarMailSolicitant(Peticio peticio, String baseUrl) {
+    @Override
+    public void enviarMailSolicitant(Peticio peticio, String baseUrl) {
 
         if (peticio.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
 

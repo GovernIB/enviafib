@@ -186,7 +186,7 @@ public class UsuariLogicaEJB extends UsuariEJB implements UsuariLogicaService {
 		
 		String updateStr = "UPDATE pfi_plantillafluxdefirmes SET " + "descripcio = REPLACE(descripcio, '{owner="
 				+ username + "}','{owner=" + usuariID + "}') " + "WHERE usuariaplicacioid='"
-				+ Configuracio.getPortaFIBApiFlowUsername() + "' " + "AND descripcio LIKE '%{owner=" + username + "}%'" + "\n";
+				+ Configuracio.getPortaFIBApiFlowUsername() + "' " + "AND descripcio LIKE '%{owner=" + username + "}%'" + ";\n";
 		script.add(updateStr);
 		
 //		UPDATE pfi_plantillafluxdefirmes SET descripcio = REPLACE(descripcio, '{owner=ptrias}','{owner=1}') WHERE usuariaplicacioid='enviafib2' AND descripcio LIKE '%{owner=ptrias}%'

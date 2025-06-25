@@ -76,7 +76,7 @@ public class SchedulerTancarExpedients {
 	
 	@Timeout
 	public void onTimeout(Timer timer) {
-		log.info("Comença tancarTotsElsExpedients()");
+		log.info("Inici tancarTotsElsExpedients()");
 
 		long startTime = System.currentTimeMillis();
 		final String languageUI = "ca";

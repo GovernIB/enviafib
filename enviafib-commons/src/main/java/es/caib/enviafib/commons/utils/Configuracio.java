@@ -325,7 +325,15 @@ public class Configuracio implements Constants {
         return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancarexpedient.scheduler.nhores");
     }
     
-	public static String getMaximReintentsArxiu() {
+    public static String getHoraReintentArxivatScheduler() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.reintentarxivat.scheduler.hora");
+    }
+
+    public static String getNhoresReintentArxivatScheduler() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.reintentarxivat.scheduler.nhores");
+    }
+
+    public static String getMaximReintentsArxiu() {
 		return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.maximreintents");
 	}
     /**
