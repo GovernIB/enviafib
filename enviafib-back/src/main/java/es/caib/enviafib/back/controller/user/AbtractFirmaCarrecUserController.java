@@ -209,7 +209,7 @@ public abstract class AbtractFirmaCarrecUserController extends AbstractFirmaUser
                 infoCarrec = pluginUserInfo.getUserInfoByUserName(carrecUsername);
                 log.info("infoCarrec: ]" + infoCarrec + "[");
                 if (infoCarrec == null) {
-                    throw new Exception(I18NUtils.tradueix("userinfoisnull"));
+                    throw new Exception(I18NUtils.tradueix("userinfoisnull", carrecUsername));
                 }
 
                 carrecNIF = infoCarrec.getAdministrationID();

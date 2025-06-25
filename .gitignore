@@ -204,6 +204,7 @@ installCerts.bat
 /scripts/bbdd/postgresql/lastChanges.sql
 /enviafib-api-interna/*.versionsBackup
 /doc/QuadernDeCarrega/enviafib_2.0.2/SW250207 ENVIAFIB.odt
+<<<<<<< HEAD
 /doc/QuadernDeCarrega/enviafib_1.0/enviafib_1.0.4/IN221122ENVIAFIBDEV.odt
 /doc/QuadernDeCarrega/enviafib_1.0/enviafib_1.0.5/IN221212ENVIAFIBDEV.odt
 /doc/QuadernDeCarrega/enviafib_1.0/enviafib_1.0.6/IN230515ENVIAFIBDEV.odt
@@ -216,3 +217,9 @@ installCerts.bat
 /doc/QuadernDeCarrega/enviafib_2.0/enviafib_2.0.3/SW250228 ENVIAFIB.odt
 /doc/QuadernDeCarrega/enviafib_2.0/enviafib_2.0.3/SW250318 ENVIAFIB.odt
 /doc/QuadernDeCarrega/enviafib_2.0/enviafib_2.0.4/SW250430 ENVIAFIB.odt
+=======
+/enviafib-ejb/dev.csv
+/enviafib-ejb/dev.sql
+/enviafib-ejb/pre.csv
+/enviafib-ejb/pre.sql
+>>>>>>> 01c6aabe7446df7753328b4da12ae4215c44b052

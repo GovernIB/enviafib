@@ -1,7 +1,6 @@
 package es.caib.enviafib.back.security;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +11,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import es.caib.enviafib.model.entity.Entitat;
 import es.caib.enviafib.model.entity.Usuari;
 
 

@@ -20,12 +20,9 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.ITableManager;
 import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
-import org.fundaciobit.genapp.common.web.HtmlUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
-import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +32,6 @@ import es.caib.enviafib.back.controller.AbstractPlantillaDeFluxDeFirmesControlle
 import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
-import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.Usuari;
 

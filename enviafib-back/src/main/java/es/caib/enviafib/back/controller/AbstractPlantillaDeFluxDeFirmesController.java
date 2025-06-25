@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.controller.webdb.UsuariController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.security.LoginInfo;

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -24,7 +23,6 @@ import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
-import org.fundaciobit.genapp.common.query.GroupByItem;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
 
@@ -69,7 +67,6 @@ import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.InfoArxiuFields;
 import es.caib.enviafib.model.fields.PeticioFields;
-import es.caib.enviafib.model.fields.SerieDocumentalFields;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.FitxerJPA;
 import es.caib.enviafib.persistence.InfoAnexJPA;

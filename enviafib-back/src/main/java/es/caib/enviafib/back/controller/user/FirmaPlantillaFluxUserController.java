@@ -30,7 +30,6 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.PortafibUtils;
-import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.PeticioJPA;

@@ -10,7 +10,6 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.core.v3.utils.Metadata;
 import org.fundaciobit.pluginsib.core.v3.utils.MetadataConstants;
 
-import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.I18NLogicUtils;
 import es.caib.enviafib.logic.utils.LogicUtils;

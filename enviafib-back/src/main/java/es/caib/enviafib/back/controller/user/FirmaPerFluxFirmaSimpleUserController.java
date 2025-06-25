@@ -3,11 +3,13 @@ package es.caib.enviafib.back.controller.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleReviser;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignature;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSignatureBlock;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleSigner;
 import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.pluginsib.estructuraorganitzativa.api.IEstructuraOrganitzativaPlugin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +56,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = FirmaPerFluxFirmaSimpleUserController.CONTEXT_WEB)
 public class FirmaPerFluxFirmaSimpleUserController extends AbstractFirmaUserController {
+    
+    private static final Logger staticlog = Logger.getLogger(FirmaPerFluxFirmaSimpleUserController.class);
 
     public static final String AJUDA = "# Es definirà el flux simple emprant les següents normes:\n"
             + "#    (0) Comentaris començaran per '#'\n" + "#    (1) Cada Fila representa un bloc de firmes.\n"
@@ -191,11 +195,10 @@ public class FirmaPerFluxFirmaSimpleUserController extends AbstractFirmaUserCont
                 if (usr.startsWith("$")) {
                     try {
                         usr = getUsernameOfCarrec(plugin, loginUsername, usr);
-                    } catch (Exception e) {
+                    } catch (I18NException e) {
                         // XYZ ZZZ TRA
-                        String msg = "Error intentant esbrinar càrrec a partir de ]" + usr + "[: " + e.getMessage();
-                        System.err.println(msg);
-                        e.printStackTrace(System.err);
+                        String msg = "Error intentant esbrinar càrrec a partir de l´expressió ]" + usr + "[: " + I18NUtils.getMessage(e);
+                        staticlog.error(msg, e);
                         // XYZ ZZZ TRA
                         throw new I18NException("genapp.comodi", msg);
                     }
@@ -278,7 +281,7 @@ public class FirmaPerFluxFirmaSimpleUserController extends AbstractFirmaUserCont
             String msg = "Error desconegut llançat des del plugin "
                     + "d'Estructura organitzativa consultant el càrrec amb nom ]" + dollarCarrec
                     + "[:" + e.getMessage();
-//            log.error(msg, e);
+            staticlog.error(msg, e);
             throw new I18NException("genapp.comodi",msg);
             
         }

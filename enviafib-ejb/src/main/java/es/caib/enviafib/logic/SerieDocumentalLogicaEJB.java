@@ -1,23 +1,15 @@
-
 package es.caib.enviafib.logic;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 
-import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleDocumentTypeInformation;
-import org.fundaciobit.apisib.apifirmaasyncsimple.v2.jersey.ApiFirmaAsyncSimpleJersey;
-import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.Where;
 
-import es.caib.enviafib.commons.utils.Configuracio;
-import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.ejb.SerieDocumentalEJB;
 import es.caib.enviafib.logic.utils.PortafibUtils;
 import es.caib.enviafib.model.entity.SerieDocumental;

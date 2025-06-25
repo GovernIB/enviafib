@@ -21,7 +21,6 @@ import es.caib.enviafib.back.controller.webdb.SerieDocumentalController;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalFilterForm;
 import es.caib.enviafib.back.form.webdb.SerieDocumentalForm;
 import es.caib.enviafib.back.security.LoginInfo;
-import es.caib.enviafib.logic.PeticioLogicaService;
 import es.caib.enviafib.logic.SerieDocumentalLogicaService;
 import es.caib.enviafib.model.entity.SerieDocumental;
 import es.caib.enviafib.model.fields.SerieDocumentalFields;
@@ -128,16 +127,16 @@ public class SerieDocumentalAdenController extends SerieDocumentalController {
 
 		List<StringKeyValue> tmpList = null;
 
-		boolean conSerieDocumental = true;
+		//boolean conSerieDocumental = true;
 		log.info("where: " + where);
 		if (where != null) {
 			log.info("where: " + where.toSQL());
 			log.info("where: " + where.toString());
-			conSerieDocumental = false;
+			//conSerieDocumental = false;
 		}
 
 		String lang = LocaleContextHolder.getLocale().getLanguage();
-		String entitatID = LoginInfo.getInstance().getEntitatRolsActual().getEntitat().getEntitatid();
+		//String entitatID = LoginInfo.getInstance().getEntitatRolsActual().getEntitat().getEntitatid();
 
 		tmpList = serieDocumentalLogicaEJB.getTipusDocumentalsBase(lang);
 		if (tmpList.isEmpty()) {

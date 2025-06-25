@@ -1,18 +1,12 @@
 package es.caib.enviafib.back.controller.admin;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.query.Field;
-import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.enviafib.back.controller.webdb.AvisController;
-import es.caib.enviafib.back.form.webdb.AvisFilterForm;
-import es.caib.enviafib.back.form.webdb.AvisForm;
 import es.caib.enviafib.back.form.webdb.AvisFilterForm;
 import es.caib.enviafib.back.form.webdb.AvisForm;
 import es.caib.enviafib.model.fields.AvisFields;
