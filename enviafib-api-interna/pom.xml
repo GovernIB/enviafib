@@ -182,6 +182,10 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    
+                    <packagingExcludes>**/commons-lang3*redhat*.jar</packagingExcludes>
+                    
+                    
                     <webResources>
                         <resource>
                             <directory>${project.basedir}/openapi</directory>

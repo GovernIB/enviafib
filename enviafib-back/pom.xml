@@ -285,6 +285,17 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <packagingExcludes>
+                       **/commons-beanutils*redhat*.jar,
+                       **/commons-collections*redhat*.jar,
+                    </packagingExcludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

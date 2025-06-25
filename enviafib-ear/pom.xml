@@ -302,6 +302,7 @@
                              **/jackson-xc*redhat*.jar,
                             <!-- Requereix afegir mòdul 'javax.ws.rs.api' a jboss-deployment-structure.xml -->
                              **/jboss-jaxrs-api_2.1_spec*redhat*.jar,
+                             **/jsr311-api-1.1.1.jar,
                             <!-- Requereix afegir mòdul 'org.jboss.resteasy.resteasy-jackson2-provider' a jboss-deployment-structure.xml -->
                              **/resteasy-jackson2-provider*redhat*.jar,
                             <!-- Requereix afegir mòdul 'org.apache.commons.codec' a jboss-deployment-structure.xml -->
@@ -342,8 +343,7 @@
                              **/bcpkix-jdk15on*redhat*.jar,
                             <!-- Requereix afegir mòdul 'org.jboss.ejb3' a jboss-deployment-structure.xml -->
                              **/jboss-ejb3-ext-api*redhat*.jar,
-                            <!-- Requereix afegir mòdul 'javax.xml.bind.api' a jboss-deployment-structure.xml -->
-                             **/jboss-jaxb-api_2.3_spec*redhat*.jar,
+
                             <!-- Requereix afegir mòdul 'net.jcip' a jboss-deployment-structure.xml -->
                              **/jcip-annotations*redhat*.jar,
                             <!-- Requereix afegir mòdul 'org.jboss.resteasy.resteasy-jaxrs' a jboss-deployment-structure.xml -->
@@ -354,6 +354,10 @@
                              **/jackson-annotations*redhat*.jar,
                             <!-- Requereix afegir mòdul 'org.codehaus.jackson.jackson-core-asl' a jboss-deployment-structure.xml -->
                              **/jackson-core-asl*redhat*.jar,
+
+                             <!-- Requereix afegir mòdul 'javax.xml.bind.api' a jboss-deployment-structure.xml -->
+                             **/jboss-jaxb-api_2.3_spec*redhat*.jar,
+                             **/jaxb-api-2.3.1.jar,                             
                             <!-- Requereix afegir mòdul 'com.sun.xml.bind' a jboss-deployment-structure.xml -->
                              **/jaxb-runtime*redhat*.jar,
                              **/jaxb-xjc*redhat*.jar,
@@ -375,8 +379,14 @@
     
                             <!-- Requereix afegir mòdul 'javax.activation.api' a jboss-deployment-structure.xml -->
                             **/activation*redhat*.jar,
-                                
-                            
+
+                            **/javax.mail*redhat*.jar,
+
+                            **/commons-logging-jboss-logging*redhat*.jar,
+
+                            <!-- Requereix afegir mòdul 'org.slf4j' a jboss-deployment-structure.xml -->
+                            **/slf4j-api*redhat*.jar,
+
                         </packagingExcludes>
 
                         <modules>

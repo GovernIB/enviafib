@@ -60,7 +60,31 @@
             <module name="org.reactivestreams" export="TRUE"/>
             <module name="javax.activation.api" export="TRUE"/>
             
+            <module name="org.slf4j" export="TRUE"/>
+            
             
         </dependencies>
+        <exclusions>
+            <!-- Per evitar problemes amb els Bindings de les APIs RestEasy -->
+            <!-- Així suporten tipus especials com byte[], timestamp, ...   -->
+            <module name="org.jboss.resteasy.resteasy-json-binding-provider" />
+        </exclusions>
     </deployment>
+    
+    
+    <sub-deployment name="enviafib-back.war">
+        <exclusions>
+            <!-- Per evitar problemes amb els Bindings de les APIs RestEasy -->
+            <!-- Així suporten tipus especials com byte[], timestamp, ...   -->
+            <module name="org.jboss.resteasy.resteasy-json-binding-provider"/>
+        </exclusions>
+    </sub-deployment>
+
+    <sub-deployment name="envifab-api-interna.war">
+        <exclusions>
+            <!-- Per evitar problemes amb els Bindings de les APIs RestEasy -->
+            <!-- Així suporten tipus especials com byte[], timestamp, ...   -->
+            <module name="org.jboss.resteasy.resteasy-json-binding-provider"/>
+        </exclusions>
+    </sub-deployment>
 </jboss-deployment-structure>
