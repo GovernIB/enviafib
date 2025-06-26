@@ -34,7 +34,10 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
 
         <!-- Externas -->
         <dependency>
@@ -291,7 +294,9 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <packagingExcludes>
+                       <!-- Requereix afegir mòdul "org.apache.commons.beanutils" a jboss-deployment-structure.xml de ear -->
                        **/commons-beanutils*redhat*.jar,
+                       <!-- Requereix afegir mòdul "org.apache.commons.collections" a jboss-deployment-structure.xml de ear -->
                        **/commons-collections*redhat*.jar,
                     </packagingExcludes>
                 </configuration>

@@ -36,7 +36,6 @@ import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.entity.UsuariEntitat;
 import es.caib.enviafib.model.fields.EntitatFields;
 import es.caib.enviafib.model.fields.UsuariEntitatFields;
-import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.UsuariJPA;
 
 /**
@@ -131,7 +130,9 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
                     necesitaConfigurar = true;
 
                     // Check if DNI ja existeix al sistema
+                    /*
                     List<Usuari> usuariList = usuariLogicaEjb.select(UsuariFields.NIF.equal(info.getAdministrationID()));
+                   
                     if(false) {
 //                    if (usuariList.size() > 0) {
 						log.info("No ha trobat l'username a BBDD perque es un usuari amb username canviat. NIF:"  + info.getAdministrationID()  + " - " + info.getFullName());
@@ -140,7 +141,9 @@ public class AuthenticationSuccessListener implements ApplicationListener<Intera
 						//Lo único por lo que no se podria camiar el username es por los flujos de firma. Pero si se lanza el scrpt de PortaFIB, no habría problema, porque irán con userID.
 						usuariPersona.setUsername(username);
 						usuariLogicaEjb.update(usuariPersona);
-					}else {
+					}else
+					    */
+					{
 	                    
 	                    UsuariJPA persona = new UsuariJPA();
 	                    persona.setEmail(info.getEmail());

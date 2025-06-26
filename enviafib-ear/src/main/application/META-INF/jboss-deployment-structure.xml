@@ -62,6 +62,8 @@
             
             <module name="org.slf4j" export="TRUE"/>
             
+            <module name="org.apache.commons.beanutils" export="TRUE"/>
+            <module name="org.apache.commons.collections" export="TRUE"/>
             
         </dependencies>
         <exclusions>
@@ -80,7 +82,7 @@
         </exclusions>
     </sub-deployment>
 
-    <sub-deployment name="envifab-api-interna.war">
+    <sub-deployment name="enviafib-api-interna.war">
         <exclusions>
             <!-- Per evitar problemes amb els Bindings de les APIs RestEasy -->
             <!-- Així suporten tipus especials com byte[], timestamp, ...   -->
