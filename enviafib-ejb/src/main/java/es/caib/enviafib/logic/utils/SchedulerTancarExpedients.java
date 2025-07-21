@@ -27,7 +27,7 @@ public class SchedulerTancarExpedients {
 	public final Logger log = Logger.getLogger(this.getClass());
 
 	final long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 4 minuts
-	final long MAX_REINTENTS = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+	final long MAX_REINTENTS = Long.valueOf(Configuracio.getMaxIntentsTancamentExpedients());
 
 	@Resource
 	private TimerService timerService;

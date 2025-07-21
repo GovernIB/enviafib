@@ -333,9 +333,19 @@ public class Configuracio implements Constants {
         return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.reintentarxivat.scheduler.nhores");
     }
 
-    public static String getMaximReintentsArxiu() {
-		return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.maximreintents");
+//    public static String getMaximReintentsArxiu() {
+//		return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.maximreintents");
+//	}
+//    
+    
+    public static String getMaxIntentsTancamentExpedients() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.tancarexpedient.scheduler.maxreintents");
+
 	}
+    public static String getMaxIntentsArxivatScheduler() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.reintentarxivat.scheduler.maxreintents");
+	}
+    
     /**
      * 
      * 

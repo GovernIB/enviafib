@@ -29,8 +29,8 @@ public class SchedulerReintentarArxivat {
 
 	public final Logger log = Logger.getLogger(this.getClass());
 
-	final long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 40 segons
-	final long MAX_REINTENTS = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+	final long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 4 minuts
+	final long MAX_REINTENTS = Long.valueOf(Configuracio.getMaxIntentsArxivatScheduler());
 	final String NOM_SCHEDULER = "reintentarArxivarTotes";
 
 	@Resource
@@ -108,21 +108,20 @@ public class SchedulerReintentarArxivat {
 			long unaHora = 1000 * 60 * 60;
 			
 			for (Peticio peticio : peticions) {
-				
 				Long peticioID = peticio.getPeticioID();
 
 				log.info("Reintentant arxivat " + i + " de " + peticions.size() + ". PeticioID: " + peticioID
 						+ " Reintents: " + peticio.getReintentsArxiu() + " DataFi: " + peticio.getDataFinal());
 
 				if (peticio.getDataFinal() != null
-						&& (System.currentTimeMillis() - peticio.getDataFinal().getTime()) > unaHora) {
+						&& (System.currentTimeMillis() - peticio.getDataFinal().getTime()) < unaHora) {
 
 					log.info("Ja hem intentat fa menys d'una hora.");
+					i++;
 					continue;
 				}
 				
 				peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-
 
 				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
 				peticio = guardarFitxerArxiuSync(peticio, languageUI, is, urlBase);

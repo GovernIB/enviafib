@@ -1293,53 +1293,53 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     /**
      * Funció que s'executa cada migdiaa les 15:00 i Gestiona reintents.
      */
-    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
-    @Schedule(hour = "23", persistent = false)
-	protected void reintentarArxivat() {
-		log.info("Comença controlarReintentsArxiu()");
-
-		long startTime = System.currentTimeMillis();
-		final String languageUI = "ca";
-
-		try {
-
-			Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
-
-			// Obtenir totes les peticions amb errors arxivant, i arxivarles.
-			Where wReintentsMesDe = Where.OR(PeticioFields.REINTENTSARXIU.greaterThan(max_reintents), PeticioFields.REINTENTSARXIU.isNull());
-			Where wErrorArxivant = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-
-			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
-
-			List<Peticio> peticions = this.select(Where.AND(wErrorArxivant, wReintentsMesDe), orderBy);
-
-			log.info("Peticions que s'han d'arxivar: " + peticions.size());
-
-			String urlBase = Configuracio.getUrlBase();
-
-			for (Peticio peticio : peticions) {
-
-				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
-				guardarPeticioArxiu(peticio, languageUI, is, urlBase);
-
-				// El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i
-				// acaba la funció.
-				if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-					log.warn("Timeout.");
-					break;
-				}
-			}
-
-		} catch (I18NException e) {
-			final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
-					+ I18NCommonUtils.getMessage(e, new Locale(languageUI));
-			log.error(msg, e);
-		}
-
-		long endTime = System.currentTimeMillis();
-		log.info("Total time: " + (endTime - startTime));
-		log.info("Acaba controlarReintentsArxiu()");
-	}
+//    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
+//    @Schedule(hour = "23", persistent = false)
+//	protected void reintentarArxivat() {
+//		log.info("Comença controlarReintentsArxiu()");
+//
+//		long startTime = System.currentTimeMillis();
+//		final String languageUI = "ca";
+//
+//		try {
+//
+//			Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+//
+//			// Obtenir totes les peticions amb errors arxivant, i arxivarles.
+//			Where wReintentsMesDe = Where.OR(PeticioFields.REINTENTSARXIU.greaterThan(max_reintents), PeticioFields.REINTENTSARXIU.isNull());
+//			Where wErrorArxivant = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+//
+//			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
+//
+//			List<Peticio> peticions = this.select(Where.AND(wErrorArxivant, wReintentsMesDe), orderBy);
+//
+//			log.info("Peticions que s'han d'arxivar: " + peticions.size());
+//
+//			String urlBase = Configuracio.getUrlBase();
+//
+//			for (Peticio peticio : peticions) {
+//
+//				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
+//				guardarPeticioArxiu(peticio, languageUI, is, urlBase);
+//
+//				// El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i
+//				// acaba la funció.
+//				if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
+//					log.warn("Timeout.");
+//					break;
+//				}
+//			}
+//
+//		} catch (I18NException e) {
+//			final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
+//					+ I18NCommonUtils.getMessage(e, new Locale(languageUI));
+//			log.error(msg, e);
+//		}
+//
+//		long endTime = System.currentTimeMillis();
+//		log.info("Total time: " + (endTime - startTime));
+//		log.info("Acaba controlarReintentsArxiu()");
+//	}
 
     /**
      * Funció que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
