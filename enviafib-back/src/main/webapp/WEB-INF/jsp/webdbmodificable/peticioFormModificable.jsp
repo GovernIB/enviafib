@@ -100,8 +100,8 @@
     
     function refreshFileList(ALL_FILES){
     	
-        var autofirma = 1;
         var tipus = document.getElementById("peticio.tipus").value;
+/*         var autofirma = 1;
 
         if(tipus == autofirma){
         	if (ALL_FILES.length > 1) {
@@ -109,7 +109,7 @@
 			}
         	var removed = ALL_FILES.splice(1); //, ALL_FILES.length);
         }
-        
+ */        
         let fullList = new DataTransfer();
 
     	var hiddenInput = document.getElementById("myHiddenInput");

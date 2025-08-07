@@ -47,7 +47,7 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void deleteFull(Peticio instance) throws I18NException;
 
-    public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException;
+    public InfoSignatura guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException;
 
     public void cosesAFerPeticioRebutjada(long portafibID, String languageUI, String motiuRebuig) throws I18NException;
 

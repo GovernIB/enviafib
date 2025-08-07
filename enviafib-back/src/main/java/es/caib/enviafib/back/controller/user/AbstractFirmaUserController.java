@@ -656,11 +656,15 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             log.info("crearPeticioPost AutoFirma");
 
-            int i;
-            for (i = 0; i < nFitxers; i++) {
-
+            List<PeticioJPA> peticions = new ArrayList<PeticioJPA>();
+            List<Fitxer> fitxers = new ArrayList<Fitxer>();
+            
+            PeticioJPA peticio = peticioForm.getPeticio();
+            setParametresArxiu(peticio);
+            
+			int i;
+			for (i = 0; i < nFitxers; i++) {
                 CommonsMultipartFile file = files.get(i);
-
                 
                 FitxerJPA fitxer = new FitxerJPA();
 
@@ -671,10 +675,39 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
                 Fitxer f = fitxerLogicEjb.create(fitxer);
                 FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
+                fitxers.add(f);
+                
+                peticio.setFitxerID(f.getFitxerID());
+                peticio.setFitxer(fitxer);
+                
+                peticio.setNom(originalName + "-" + file.getOriginalFilename());
 
-                log.info("\n\nSTART CREATE POST:: AUTOFIRMA");
-                super.crearPeticioPost(peticioForm, result, request, response);
-            }
+                log.info("\n\nSTART CREATE :: AUTOFIRMA");
+                PeticioJPA p;
+				if (i == 0) {
+					p = super.create(request, peticio);
+				} else {
+					PeticioJPA peticioCopia = PeticioJPA.copyJPA(peticio);
+					peticioCopia.setPeticioID(0);
+					p = super.create(request, peticioCopia );
+				}
+                peticions.add(p);
+			}
+            
+			String absoluteControllerBase = request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR) + getContextWeb();
+            
+			String[] info = AutoFirmaUserController.autofirma2(peticions, absoluteControllerBase, log);
+
+            String transactionID = info[0];
+            String redirectUrl = info[1];
+
+            for (PeticioJPA pet : peticions) {
+            	log.info("Afegint transactionID[" + transactionID + "] => " + pet.getPeticioID() + "    dins mapping");
+            	pet.setPeticioPortafirmes(transactionID);
+                this.peticioLogicaEjb.update(pet);
+			}
+            
+            request.getSession().setAttribute("redirectUrl", redirectUrl);
 
         } else {
             log.info("crearPeticioPost No-AutoFirma");
@@ -1026,25 +1059,8 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         // Validacio de serie documental
         {
             Peticio peticio = peticioForm.getPeticio();
- 
-            String lang = "ca";
-            String tipusDocumental = peticio.getTipusDocumental();
-            String entitatID = LoginInfo.getInstance().getUsuari().getEntitatID();
-            
-            log.info("tipusDocumental: " + tipusDocumental);
-            
-            SerieDocumental serieDocumental = serieDocumentalLogicaEjb.getSerieDocFromTipusDoc(lang, tipusDocumental, entitatID);
-
-            log.info("getNom: " + serieDocumental.getNom());
-            log.info("getProcedimentCodi: " + serieDocumental.getProcedimentCodi());
-            log.info("getProcedimentNom: " + serieDocumental.getProcedimentNom());
-            
-            peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
-            peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
-            peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
-//            peticio.setArxiuOptParamSerieDocumental("S0001");
-//            peticio.setArxiuOptParamProcedimentCodi("organo1_PRO_123456789");
-//            peticio.setArxiuOptParamProcedimentNom("Subvenciones empleo");
+            setParametresArxiu(peticio);
+           
         }
         
         //Validació de que el titol no es buit
@@ -1070,6 +1086,31 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 			}
 		}
     }
+    
+    public void setParametresArxiu(Peticio peticio) throws I18NException {
+    	
+    	 String lang = "ca";
+         String tipusDocumental = peticio.getTipusDocumental();
+         String entitatID = LoginInfo.getInstance().getUsuari().getEntitatID();
+         
+         log.info("tipusDocumental: " + tipusDocumental);
+         
+         SerieDocumental serieDocumental = serieDocumentalLogicaEjb.getSerieDocFromTipusDoc(lang, tipusDocumental, entitatID);
+
+         log.info("getNom: " + serieDocumental.getNom());
+         log.info("getProcedimentCodi: " + serieDocumental.getProcedimentCodi());
+         log.info("getProcedimentNom: " + serieDocumental.getProcedimentNom());
+         
+         peticio.setArxiuOptParamSerieDocumental(serieDocumental.getNom());
+         peticio.setArxiuOptParamProcedimentCodi(serieDocumental.getProcedimentCodi());
+         peticio.setArxiuOptParamProcedimentNom(serieDocumental.getProcedimentNom());
+         
+//         peticio.setArxiuOptParamSerieDocumental("S0001");
+//         peticio.setArxiuOptParamProcedimentCodi("organo1_PRO_123456789");
+//         peticio.setArxiuOptParamProcedimentNom("Subvenciones empleo");
+         
+    }
+    
     
     @Override
 	public List<StringKeyValue> getReferenceListForRevisor(HttpServletRequest request, ModelAndView mav, Where where)

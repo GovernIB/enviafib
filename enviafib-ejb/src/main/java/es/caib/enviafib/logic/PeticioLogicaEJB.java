@@ -450,7 +450,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         long peticioID = peticio.getPeticioID();
         try {
             log.info("Guardant Peticio " + peticioID + " dins d'Arxiu.");
+            
+//            Thread.sleep(20000);
             peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
+            log.info("Peticio Arxivada: " + peticioID);
         } catch (Exception e) {
             // XYZ ZZZ TMP
             log.error("Future.get() ha llança un error: " + e.getMessage(), e);
@@ -955,7 +958,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 	}
 
     @Override
-    public void guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
+    public InfoSignatura guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
 
         log.info("Autofirma Recuperada Informació de firma: \n"
                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
@@ -977,17 +980,20 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         pet.setInfoSignaturaID(infoSignatura.getInfoSignaturaID());
         this.update(pet);
 
+        return infoSignatura;
         //guardarFitxerArxiu(peticioID, pet.getIdiomaID(), infoSignatura);
+        
+        
+//        Peticio peticio = findByPrimaryKey(peticioID);
+//        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+//        this.update(peticio);
 
-        Peticio peticio = findByPrimaryKey(peticioID);
-        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-        this.update(peticio);
-
-        log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
-
-        guardarFitxerArxiuSync(peticioID, peticio.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
-
-        log.info("guardarResultatAutofirma()::Autofirma => sortim");
+//        log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
+//
+//        guardarPeticioArxiu(pet, pet.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
+//        //guardarFitxerArxiuSync(peticioID, peticio.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
+//
+//        log.info("guardarResultatAutofirma()::Autofirma => sortim");
 
         // pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
         // pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);

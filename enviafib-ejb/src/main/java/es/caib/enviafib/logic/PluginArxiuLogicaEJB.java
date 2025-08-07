@@ -182,7 +182,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             }
 
             String serieDocumental = peticio.getArxiuOptParamSerieDocumental(); // "S0001";
-
+            log.info("serieDocumental : " + serieDocumental);
             // XYZ ZZZ TRA - ISSUE
             // TODO: Fer un tiquet per posar-ho en una propietat del PLugin ????
 
@@ -257,7 +257,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             } catch (Throwable th) {
 
                 log.error(
-                        " Error Creant Expedient: " + th.getMessage() + ".Consultam si l'expedient ja està creat ...");
+                        "Error Creant Expedient: " + th.getMessage() + ". Consultam si l'expedient ja està creat ...");
 
                 // Comprovar si l'expedient ja existeix
                 ConsultaResultat resultat;
