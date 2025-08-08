@@ -192,7 +192,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             
             
 
-            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP";
+            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP_" + peticio.getReintentsArxiu();
 
             ExpedientMetadades expedientMetadades = new ExpedientMetadades();
             expedientMetadades.setClassificacio(procedimentCodi);
@@ -251,6 +251,9 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             log.info("INFORMACIO DEL EXPEDIENT: \n" + json);
 
             try {
+            	
+//            	plugin.expedientDetalls(nomExpedient, json)
+            	
                 expedientCreat = plugin.expedientCrear(expedient);
                 expedientId = expedientCreat.getIdentificador();
                 log.info("XYZ ZZZ TMP Creat expedient amd ID = " + expedientId);
@@ -435,13 +438,47 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             log.info("XYZ ZZZ TMP expedientId=" + expedientId);
             log.info("XYZ ZZZ TMP documentPerCrear=" + documentPerCrear);
 
-            ContingutArxiu documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
+            ContingutArxiu documentCreat = null;
+            String uuidDoc = null; 
+            try {
+            	
+            	documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
+            	uuidDoc = documentCreat.getIdentificador();
+            	log.info("XYZ ZZZ TMP Creat document ... ");
+            	
+            } catch (Throwable th) {
+            	
+            	
 
-            log.info("XYZ ZZZ TMP Creat document ... ");
+                log.error(
+                        "Error Creant Document: " + th.getMessage() + ". Consultam si el document ja està creat ...");
+
+                // Comprovar si l'expedient ja existeix
+                ConsultaResultat resultat;
+                resultat = plugin.expedientConsulta(getLlistaFiltresDocumentMetadatos(nomDocument),0, 111);
+                
+
+                if (resultat.getResultats() != null && resultat.getResultats().size() != 0) {
+
+                    for (ContingutArxiu ca : resultat.getResultats()) {
+
+                        if (nomExpedient.equals(ca.getNom())) {
+                        	uuidDoc = ca.getIdentificador();
+                            log.info("XYZ ZZZ TMP Document ja existia (ID = " + uuidDoc + ")");
+                        }
+                    }
+                }
+
+                //Si expedientID val null, vol dir que ni l'ha pogut crear, i que tampo existia ja a arxiu (no està duplicat)
+                if (uuidDoc == null) {
+                    log.error("No hem trobat document amb nom " +  nomDocument + ". Llançan excepció original.");
+                    throw th;
+                }
+            }
+
 
             log.info("XYZ ZZZ TMP Tancar Expedient ... ");
 
-            final String uuidDoc = documentCreat.getIdentificador();
 
             infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
@@ -893,6 +930,33 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
         return listaFiltros;
     }
 
+    private static List<ConsultaFiltre> getLlistaFiltresDocumentMetadatos(String documentNom) {
+        List<ConsultaFiltre> listaFiltros = new ArrayList<>();
+        ConsultaFiltre filtro = null;
+
+        /*
+         * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:organo");
+         * filtro.setOperacio(ConsultaOperacio.IGUAL);
+         * filtro.setValorOperacio1("A04019281"); listaFiltros.add(filtro);
+         */
+
+        filtro = new ConsultaFiltre();
+        filtro.setMetadada("name");
+        filtro.setOperacio(ConsultaOperacio.IGUAL);
+        filtro.setValorOperacio1(documentNom);
+        listaFiltros.add(filtro);
+
+        /*
+         * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:fecha_inicio");
+         * filtro.setOperacio(ConsultaOperacio.ENTRE);
+         * filtro.setValorOperacio1(getStringDatetoStringISO8601("01/10/2021"));
+         * filtro.setValorOperacio2(getStringDatetoStringISO8601("30/11/2021"));
+         * listaFiltros.add(filtro);
+         */
+        return listaFiltros;
+    }
+
+    
     /*
      * public void crearExpedient() {
      * 
