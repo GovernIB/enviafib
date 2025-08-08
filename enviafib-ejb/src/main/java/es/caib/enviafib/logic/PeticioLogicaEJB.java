@@ -370,7 +370,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("cosesAFerPeticioFirmada():: Guardam dins arxiu de forma asyncrona .... ");
         Peticio peticio = findByPrimaryKeyPublic(peticioID);
 
-        guardarPeticioArxiu(peticio, languageUI, infoSignatura, urlBase);
+        guardarPeticioArxiuAsync(peticio, languageUI, infoSignatura, urlBase);
     
 		String msg = "Peticio " + peticioID + ". ";
 		if (peticio.getInfoArxiuID() != null) {
@@ -441,17 +441,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     @PermitAll
     @Asynchronous
-    public void guardarPeticioArxiu(Peticio peticio, String languageUI, InfoSignatura infoSignatura, String urlBase)
+    public void guardarPeticioArxiuAsync(Peticio peticio, String languageUI, InfoSignatura infoSignatura, String urlBase)
             throws I18NException {
 
-        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-        this.update(peticio);
-        
         long peticioID = peticio.getPeticioID();
         try {
+            log.info("Start guardar Peticio " + peticioID + " dins d'Arxiu.");
+
+//            Thread.sleep(40000);
             log.info("Guardant Peticio " + peticioID + " dins d'Arxiu.");
+ //           Thread.sleep(40000);
             
-//            Thread.sleep(20000);
             peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
             log.info("Peticio Arxivada: " + peticioID);
         } catch (Exception e) {
@@ -482,7 +482,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 			return msg;
 		}
 
-        guardarPeticioArxiu(peticio, languageUI, infoSignatura, urlBase);
+        guardarPeticioArxiuAsync(peticio, languageUI, infoSignatura, urlBase);
 
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
             return null;
