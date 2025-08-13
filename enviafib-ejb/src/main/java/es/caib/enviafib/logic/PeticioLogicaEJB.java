@@ -463,6 +463,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     
     @Override
+    @PermitAll
+//    @Asynchronous
     public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String languageUI, String urlBase)
             throws I18NException {
 
@@ -482,7 +484,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 			return msg;
 		}
 
-        guardarPeticioArxiuAsync(peticio, languageUI, infoSignatura, urlBase);
+       // guardarPeticioArxiuAsync(peticio, languageUI, infoSignatura, urlBase);
+        peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
 
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
             return null;

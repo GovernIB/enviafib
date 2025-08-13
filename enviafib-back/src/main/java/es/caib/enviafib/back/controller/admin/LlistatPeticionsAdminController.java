@@ -33,6 +33,7 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.form.webdb.PeticioMultipleForm;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.commons.utils.Constants;
+import es.caib.enviafib.model.entity.InfoSignatura;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.PeticioJPA;
@@ -252,8 +253,8 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             long start = System.currentTimeMillis();
             long end = System.currentTimeMillis();
 
-            Integer peticionsArxivadesOk = 0;
-            Integer peticionsPendents = list.size();
+//            Integer peticionsArxivadesOk = 0;
+//            Integer peticionsPendents = list.size();
             
             for (int i = 0; end - start < timeout && i < list.size(); i++) {
                 Peticio peticio = list.get(i);
@@ -262,29 +263,33 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
                 long infoSignaturaID = peticio.getInfoSignaturaID();
 
                 log.info("Intentarem arxivar la peticio amb ID=" + peticioID);
-                String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
-                peticionsPendents--;
-
-                end = System.currentTimeMillis();
-                long seg = (end - start) / 1000;
-                if (msg == null) {
-                    log.info("PeticioLogicaEJB:: FINAL: PeticioID " + peticioID + " arxivada al segon " + seg + "\n");
-                    peticionsArxivadesOk++;
-                } else {
-                    log.info("PeticioLogicaEJB:: FINAL: Error arxivant PeticioID " + peticioID + " al segon " + seg + "\n");
-                    HtmlUtils.saveMessageError(request, msg);
-                }
+				InfoSignatura infoSign = infoSignaturaLogicEjb.findByPrimaryKey(infoSignaturaID);
+                
+                peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+                peticioLogicaEjb.update(peticio);
+                
+                peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, languageUI, infoSign, url);
+                
+//                end = System.currentTimeMillis();
+//                long seg = (end - start) / 1000;
+//                if (msg == null) {
+//                    log.info("PeticioLogicaEJB:: FINAL: PeticioID " + peticioID + " arxivada al segon " + seg + "\n");
+//                    peticionsArxivadesOk++;
+//                } else {
+//                    log.info("PeticioLogicaEJB:: FINAL: Error arxivant PeticioID " + peticioID + " al segon " + seg + "\n");
+//                    HtmlUtils.saveMessageError(request, msg);
+//                }
             }
 
-            if (peticionsArxivadesOk > 0) {
-                HtmlUtils.saveMessageSuccess(request,
-                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.success", peticionsArxivadesOk.toString()));
-            }
-            
-            if (peticionsPendents > 0 ) {
-                HtmlUtils.saveMessageWarning(request,
-                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.incomplet", peticionsPendents.toString()));
-            }
+//            if (peticionsArxivadesOk > 0) {
+//                HtmlUtils.saveMessageSuccess(request,
+//                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.success", peticionsArxivadesOk.toString()));
+//            }
+//            
+//            if (peticionsPendents > 0 ) {
+//                HtmlUtils.saveMessageWarning(request,
+//                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.incomplet", peticionsPendents.toString()));
+//            }
             
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);
@@ -334,23 +339,32 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
 					continue;
 				}
                 
+				
+				InfoSignatura infoSign = infoSignaturaLogicEjb.findByPrimaryKey(infoSignaturaID);
+				
                 log.info("Intentarem arxivar la peticio amb ID=" + peticioID + ". " + idx + " de " + pendents + "\n" );
-                String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
-
-                if (msg == null) {
-                	idx++;
-                    log.info("reintentarArxivarSeleccionats:: FINAL: PeticioID " + peticioID + "\n");
-                } else {
-                    log.info("reintentarArxivarSeleccionats:: FINAL: Error arxivant PeticioID " + peticioID + "\n");
-                    HtmlUtils.saveMessageError(request, msg);
-                }
+                
+                peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+                peticioLogicaEjb.update(peticio);
+                
+                peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, languageUI, infoSign, url);
+                
+//                String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
+//
+//                if (msg == null) {
+//                	idx++;
+//                    log.info("reintentarArxivarSeleccionats:: FINAL: PeticioID " + peticioID + "\n");
+//                } else {
+//                    log.info("reintentarArxivarSeleccionats:: FINAL: Error arxivant PeticioID " + peticioID + "\n");
+//                    HtmlUtils.saveMessageError(request, msg);
+//                }
                 
 			} catch (Exception e) {
 				log.error("Error processant la peticio: " + seleccionat, e);
 			}
 		}
 		
-		HtmlUtils.saveMessageSuccess(request, "Peticions arxivades " + idx + " de " + pendents );
+		HtmlUtils.saveMessageSuccess(request, "Arxivant " + pendents + " peticions" );
 		return "redirect:" + getContextWeb() + "/list/";
 		
 	}

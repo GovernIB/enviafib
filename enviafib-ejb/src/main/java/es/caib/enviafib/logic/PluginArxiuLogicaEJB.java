@@ -32,6 +32,7 @@ import es.caib.pluginsib.arxiu.api.DocumentEstatElaboracio;
 import es.caib.pluginsib.arxiu.api.DocumentExtensio;
 import es.caib.pluginsib.arxiu.api.DocumentFormat;
 import es.caib.pluginsib.arxiu.api.DocumentMetadades;
+import es.caib.pluginsib.arxiu.api.DocumentRepositori;
 import es.caib.pluginsib.arxiu.api.DocumentTipus;
 import es.caib.pluginsib.arxiu.api.Expedient;
 import es.caib.pluginsib.arxiu.api.ExpedientEstat;
@@ -192,7 +193,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             
             
 
-            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP_" + peticio.getReintentsArxiu();
+            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP";
+//            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP_" + peticio.getReintentsArxiu();
 
             ExpedientMetadades expedientMetadades = new ExpedientMetadades();
             expedientMetadades.setClassificacio(procedimentCodi);
@@ -451,23 +453,42 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             	
 
                 log.error(
-                        "Error Creant Document: " + th.getMessage() + ". Consultam si el document ja està creat ...");
-
-                // Comprovar si l'expedient ja existeix
-                ConsultaResultat resultat;
-                resultat = plugin.expedientConsulta(getLlistaFiltresDocumentMetadatos(nomDocument),0, 111);
+                        "Error Creant Document: " + th.getMessage() + ". Consultam si el document ja està dins l'expedient...");
                 
-
-                if (resultat.getResultats() != null && resultat.getResultats().size() != 0) {
-
-                    for (ContingutArxiu ca : resultat.getResultats()) {
-
-                        if (nomExpedient.equals(ca.getNom())) {
-                        	uuidDoc = ca.getIdentificador();
-                            log.info("XYZ ZZZ TMP Document ja existia (ID = " + uuidDoc + ")");
-                        }
+            	Expedient expedientActual  = plugin.expedientDetalls(expedientId, null);
+            	
+//            	List<ContingutArxiu> continguts = expedientActual.getContinguts();
+            	for (ContingutArxiu ca : expedientActual.getContinguts()) {
+            		if (nomDocument.equals(ca.getNom())) {
+                    	uuidDoc = ca.getIdentificador();
+                        log.info("XYZ ZZZ TMP Document ja existia (ID = " + uuidDoc + ")");
                     }
-                }
+				}
+            	
+
+
+                
+                
+                
+               
+//                // Comprovar si l'expedient ja existeix
+//                ConsultaResultat resultat;
+//               // resultat = plugin.expedientConsulta(getLlistaFiltresDocumentMetadatos(nomDocument),0, 111);
+//                
+//                List<ConsultaFiltre> filtres = getLlistaFiltresDocumentMetadatos(nomDocument); 
+//                
+//				resultat = plugin.documentConsulta(filtres, 0, 111, DocumentRepositori.ENI_DOCUMENTO);
+//
+//                if (resultat.getResultats() != null && resultat.getResultats().size() != 0) {
+//
+//                    for (ContingutArxiu ca : resultat.getResultats()) {
+//
+//                        if (nomExpedient.equals(ca.getNom())) {
+//                        	uuidDoc = ca.getIdentificador();
+//                            log.info("XYZ ZZZ TMP Document ja existia (ID = " + uuidDoc + ")");
+//                        }
+//                    }
+//                }
 
                 //Si expedientID val null, vol dir que ni l'ha pogut crear, i que tampo existia ja a arxiu (no està duplicat)
                 if (uuidDoc == null) {
@@ -476,9 +497,14 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
                 }
             }
 
+            log.info("XYZ ZZZ TMP Guardam informació del document arxivat ...");
 
-            log.info("XYZ ZZZ TMP Tancar Expedient ... ");
-
+            boolean ambContingut = true;
+            Document document = plugin.documentDetalls(uuidDoc, null, ambContingut );
+//            String jsonContArx = LogicUtils.serialize(document);
+//			log.info("documentArxiu: \n\n" + jsonContArx);
+            
+            
 
             infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
@@ -486,18 +512,18 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             int i = 0;
             do {
                 try {
-                    final String originalFileUrl = plugin.getOriginalFileUrl(documentCreat);
-                    final String printableFileUrl = plugin.getPrintableFileUrl(documentCreat);
-                    final String eniFileUrl = plugin.getEniFileUrl(documentCreat);
+                    final String originalFileUrl = plugin.getOriginalFileUrl(document);
+                    final String printableFileUrl = plugin.getPrintableFileUrl(document);
+                    final String eniFileUrl = plugin.getEniFileUrl(document);
 
                     // String csv = plugin.getCsv(uuidDoc);
-                    final String csv = documentCreat.getDocumentMetadades().getCsv();
+                    final String csv = document.getDocumentMetadades().getCsv();
 
-                    final String csvValidationWeb = plugin.getCsvValidationWeb(documentCreat);
+                    final String csvValidationWeb = plugin.getCsvValidationWeb(document);
 
-                    final String validationFileUrl = plugin.getValidationFileUrl(documentCreat);
+                    final String validationFileUrl = plugin.getValidationFileUrl(document);
 
-                    csvGenerationDefinition = plugin.getCsvGenerationDefinition(documentCreat.getIdentificador());
+                    csvGenerationDefinition = plugin.getCsvGenerationDefinition(document.getIdentificador());
 
                     infoCust = new InfoArxiuJPA(originalFileUrl, csv, csvGenerationDefinition, csvValidationWeb,
                             expedientId, uuidDoc, printableFileUrl, eniFileUrl, validationFileUrl);
@@ -518,6 +544,8 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             peticio.setInfoArxiuID(infoCust.getInfoArxiuID());
             log.info("XYZ ZZZ  Guardada Informació Document Arxivat ... ");
+
+            log.info("XYZ ZZZ TMP Tancar Expedient ... ");
 
             log.info("XYZ ZZZ  Tancarem l'expedient de la peticio " + peticio.getPeticioID() + " ...");
             boolean tancatExpedient = tancarExpedient(peticio, plugin, expedientId);
@@ -931,20 +959,20 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
     }
 
     private static List<ConsultaFiltre> getLlistaFiltresDocumentMetadatos(String documentNom) {
-        List<ConsultaFiltre> listaFiltros = new ArrayList<>();
-        ConsultaFiltre filtro = null;
-
-        /*
-         * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:organo");
-         * filtro.setOperacio(ConsultaOperacio.IGUAL);
-         * filtro.setValorOperacio1("A04019281"); listaFiltros.add(filtro);
-         */
-
-        filtro = new ConsultaFiltre();
-        filtro.setMetadada("name");
-        filtro.setOperacio(ConsultaOperacio.IGUAL);
-        filtro.setValorOperacio1(documentNom);
-        listaFiltros.add(filtro);
+//        List<ConsultaFiltre> listaFiltros = new ArrayList<>();
+//        ConsultaFiltre filtro = null;
+//
+//        /*
+//         * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:organo");
+//         * filtro.setOperacio(ConsultaOperacio.IGUAL);
+//         * filtro.setValorOperacio1("A04019281"); listaFiltros.add(filtro);
+//         */
+//
+//        filtro = new ConsultaFiltre();
+//        filtro.setMetadada("name");
+//        filtro.setOperacio(ConsultaOperacio.IGUAL);
+//        filtro.setValorOperacio1(documentNom);
+//        listaFiltros.add(filtro);
 
         /*
          * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:fecha_inicio");
@@ -953,7 +981,17 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
          * filtro.setValorOperacio2(getStringDatetoStringISO8601("30/11/2021"));
          * listaFiltros.add(filtro);
          */
-        return listaFiltros;
+        
+
+		List<ConsultaFiltre> filtres = new ArrayList<ConsultaFiltre>();
+		ConsultaFiltre filtreTitol = new ConsultaFiltre();
+		filtreTitol.setMetadada("name");
+		filtreTitol.setOperacio(ConsultaOperacio.IGUAL);
+		filtreTitol.setValorOperacio1(documentNom);
+		filtres.add(filtreTitol);
+        
+        
+        return filtres;
     }
 
     
