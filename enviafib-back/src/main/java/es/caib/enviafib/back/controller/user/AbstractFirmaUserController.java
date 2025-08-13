@@ -331,11 +331,11 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "advanced.show",
                     "javascript:mostrarOcultarCampsAvanzats(this)", AdditionalButtonStyle.WARNING));
 
-            peticioForm.setCancelButtonVisible(false);
-            peticioForm.addAdditionalButton(
-                    new AdditionalButton("", "genapp.cancel", getContextWeb() + "/0/cancel", AdditionalButtonStyle.SECONDARY));
 
         }
+        peticioForm.setCancelButtonVisible(false);
+        peticioForm.addAdditionalButton(
+        		new AdditionalButton("", "back.to.list", getContextWeb() + "/0/cancel", AdditionalButtonStyle.SECONDARY));
         
         peticioForm.addAdditionalButton(new AdditionalButton("fas fa-list", "back.to.list",
                 LlistatPeticionsUserController.CONTEXT_WEB + "/list", AdditionalButtonStyle.PRIMARY));
