@@ -9,7 +9,7 @@ ul.nav-wizard {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
-  *zoom: 1;
+  z-index: 0;
   position: relative;
   overflow: hidden;
 }
