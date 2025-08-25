@@ -719,6 +719,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
                 }
 
+                
+                log.info(subject);
+                log.info(message);
+                
+                
+                
                 EmailUtil.postMail(subject, message, isHTML, from, emailDestinatari);
                 log.info("Enviat email a " + emailDestinatari + ": " + subject);
                 
