@@ -746,8 +746,8 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
 				// Controlar si la peticio es de l'usuari loguejat.
 
-				if (peticio.getEstat() != Constants.ESTAT_PETICIO_FIRMADA) {
-					log.info("La peticio " + peticioID + " no esta firmada.");
+				if (peticio.getInfoArxiuID() == null) {
+					log.info("La peticio " + peticioID + " no esta a l'Arxiu.");
 					continue;
 				}
 

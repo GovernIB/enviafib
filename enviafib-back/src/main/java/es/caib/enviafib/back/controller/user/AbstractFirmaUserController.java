@@ -634,9 +634,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 log.info("Afegim anex");
                 infoAnexes.add(new AnexInfo(actual, allHiddenFiles[idx]));
             } else if(flag.charAt(idx) == 'F'){
-                log.info("Afegim fitxerPeticio");
+            	actual = allHiddenFiles[idx];
+                log.info("Afegim fitxerPeticio: " + actual.getOriginalFilename());
                 contadorPeticio++;
-                actual = allHiddenFiles[idx];
                 files.add(actual);
             }
             idx++;
@@ -659,12 +659,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             List<PeticioJPA> peticions = new ArrayList<PeticioJPA>();
             List<Fitxer> fitxers = new ArrayList<Fitxer>();
             
-            PeticioJPA peticio = peticioForm.getPeticio();
-            setParametresArxiu(peticio);
+            PeticioJPA petForm = peticioForm.getPeticio();
+            setParametresArxiu(petForm);
             
-			int i;
-			for (i = 0; i < nFitxers; i++) {
-                CommonsMultipartFile file = files.get(i);
+//			int i;
+			for (CommonsMultipartFile file: files) {
+//                CommonsMultipartFile file = files.get(i);
                 
                 FitxerJPA fitxer = new FitxerJPA();
 
@@ -677,20 +677,23 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
                 FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
                 fitxers.add(f);
                 
-                peticio.setFitxerID(f.getFitxerID());
-                peticio.setFitxer(fitxer);
-                
-                peticio.setNom(originalName + "-" + file.getOriginalFilename());
+				PeticioJPA peticioAux = PeticioJPA.copyJPA(petForm);
 
-                log.info("\n\nSTART CREATE :: AUTOFIRMA");
-                PeticioJPA p;
-				if (i == 0) {
-					p = super.create(request, peticio);
-				} else {
-					PeticioJPA peticioCopia = PeticioJPA.copyJPA(peticio);
-					peticioCopia.setPeticioID(0);
-					p = super.create(request, peticioCopia );
-				}
+                
+				peticioAux.setFitxerID(f.getFitxerID());
+				peticioAux.setFitxer((FitxerJPA) f);
+				peticioAux.setNom(originalName + "-" + file.getOriginalFilename());
+
+				log.info("\n\nSTART CREATE :: AUTOFIRMA");
+                PeticioJPA p = super.create(request, peticioAux);
+                
+//				if (i == 0) {
+//					p = super.create(request, peticio);
+//				} else {
+//					PeticioJPA peticioCopia = PeticioJPA.copyJPA(peticio);
+//					peticioCopia.setPeticioID(0);
+//					p = super.create(request, peticioCopia );
+//				}
                 peticions.add(p);
 			}
             
