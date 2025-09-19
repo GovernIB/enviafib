@@ -33,6 +33,7 @@ import es.caib.enviafib.back.controller.user.FirmaFluxUserController;
 import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.form.webdb.UsuariForm;
 import es.caib.enviafib.logic.utils.PortafibUtils;
+import es.caib.enviafib.logic.utils.PortafibUtils.FluxInfo;
 import es.caib.enviafib.model.entity.Usuari;
 
 @Controller
@@ -59,15 +60,21 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
     }
 
     @Override
-    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
-
-        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
-        filter.setLanguageUI(languageUI);
-        // Cercam per usuari aplicació i despres ja cercarem per {temporal=true}
-        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(null));
-
-        return filter;
+    public String getOwner() {
+    	// TODO Auto-generated method stub
+    	return null;
     }
+    
+//    @Override
+//    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
+//
+//        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
+//        filter.setLanguageUI(languageUI);
+//        // Cercam per usuari aplicació i despres ja cercarem per {temporal=true}
+//        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(null));
+//
+//        return filter;
+//    }
 
     @Override
     public UsuariFilterForm getUsuariFilterForm(Integer pagina, ModelAndView mav, HttpServletRequest request)
@@ -131,20 +138,24 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
     		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
             final String languageUI = "ca";
 
-            FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
+//            FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
 
-            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
+//            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
 
-            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+//            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+//            List<FlowTemplateSimpleKeyValue> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
             
-            for (FlowTemplateSimpleKeyValue flowKeyValue : plantilles) {
-                String flowTemplateId = flowKeyValue.getKey();
-
-                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
-
-                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+            List <FluxInfo> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
+            
+            for (FluxInfo flux : plantilles) {
+//                String flowTemplateId = flowKeyValue.getKey();
+//
+//                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+//                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+//
+//                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
                 String description = flux.getDescription();
+                String flowTemplateId = flux.getFluxID();
                 
                 if (description.indexOf("{temporal=true}") == -1) {
                 	log.info("El flux " + flowTemplateId + " no es temporal");
@@ -159,7 +170,7 @@ public class NetejarPlantillesDeFluxAdminController extends AbstractPlantillaDeF
                 	continue;
                 }
                 
-                if (api.deleteFlowTemplate(flowTemplateRequest)) {
+                if (PortafibUtils.esborrarFlux(flux)) {
                 	// Esborrat correct
                 	log.info("Flux " + flowTemplateId + " esborrat correctament");
                 } else {

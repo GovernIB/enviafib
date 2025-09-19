@@ -187,26 +187,17 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         }
     }
 
-    public static String generateDescription(final String usuariID, final boolean isTemplate) {
+    public static String generateDescription(final String username, final boolean isTemplate) {
         final long current = System.currentTimeMillis();
         final String currentStr = SDF.format(new Date(current));
+		final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
 
         String descr = (isTemplate ? "{template=true}" : "{temporal=true}\n") + "{creation=" + current + "}\n"
-                + "{creationStr=" + currentStr + "}\n" + getFluxFilterByUserName(usuariID);
+                + "{creationStr=" + currentStr + "}\n" + "{usrapp=" + usrapp + "}" + (username == null ? "" : "{owner=" + username + "}");;
         return descr;
     }
 
-    /**
-     * 
-     * @param username
-     * @return
-     */
-    public static String getFluxFilterByUserName(final String usuariID) {
-        final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
-        // Filtre de Flux de Firmes no filtra bé per descripció (https://github.com/GovernIB/portafib/issues/752)
-        return "{usrapp=" + usrapp + "}" + (usuariID == null ? "" : "{owner=" + usuariID + "}");
-    }
-
+ 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView crearPeticioGet(HttpServletRequest request, HttpServletResponse response) throws I18NException {

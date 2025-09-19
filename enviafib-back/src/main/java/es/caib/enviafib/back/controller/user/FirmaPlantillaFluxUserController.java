@@ -30,6 +30,7 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Constants;
 import es.caib.enviafib.logic.utils.PortafibUtils;
+import es.caib.enviafib.logic.utils.PortafibUtils.FluxInfo;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.persistence.PeticioJPA;
@@ -93,15 +94,18 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
     public List<Usuari> getPlantillesFluxFirma() throws I18NException {
 
-		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+//		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
-        final String languageUI = "ca";
-        FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
+//        final String languageUI = "ca";
+//        FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
 
-        try {
-            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
+//        try {
+//            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
 
-            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+//            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+
+//            List<FlowTemplateSimpleKeyValue> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
+            List<FluxInfo> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
 
 			if (plantilles == null) {
 	            log.info("Llistat de plantilles:: null");
@@ -112,14 +116,14 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
             List<Usuari> usuaris = new ArrayList<Usuari>();
 
-            for (FlowTemplateSimpleKeyValue flowKeyValue : plantilles) {
+            for (FluxInfo flux : plantilles) {
 
-                String flowTemplateId = flowKeyValue.getKey();
-
-                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
-
-                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+//                String flowTemplateId = flowKeyValue.getKey();
+//
+//                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+//                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+//
+//                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
                 String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
                         .replace("}{", "}<br/>{");
@@ -136,9 +140,9 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
                  */
 
                 Usuari usuari = new UsuariJPA();
-                usuari.setUsuariID((long) flowTemplateId.hashCode());
-                usuari.setNif(flowTemplateId);
-                usuari.setNom(flowKeyValue.getValue());
+                usuari.setUsuariID((long) flux.hashCode());
+                usuari.setNif(flux.getFluxID());
+                usuari.setNom(flux.getNom());
                 usuari.setLlinatge1(description);
 
                 //                usuari.setEmail(getCreationDate(description));
@@ -149,11 +153,11 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
             return usuaris;
 
-        } catch (AbstractApisIBException e) {
-            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
-            log.error(msg, e);
-            throw new I18NException("genapp.comodi", msg);
-        }
+//        } catch (AbstractApisIBException e) {
+//            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
+//            log.error(msg, e);
+//            throw new I18NException("genapp.comodi", msg);
+//        }
 
     }
 
@@ -161,12 +165,12 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         return String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
     }
 
-    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
-        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
-        filter.setLanguageUI(languageUI);
-        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
-        return filter;
-    }
+//    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
+//        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
+//        filter.setLanguageUI(languageUI);
+//        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
+//        return filter;
+//    }
     
 	public String getNomPlantillaFlux(String plantillaFluxID) throws I18NException {
 

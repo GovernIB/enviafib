@@ -4,14 +4,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.ApiFirmaAsyncSimple;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.beans.FirmaAsyncSimpleDocumentTypeInformation;
 import org.fundaciobit.apisib.apifirmaasyncsimple.v2.jersey.ApiFirmaAsyncSimpleJersey;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFilterGetAllByFilter;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateList;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
+import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleKeyValue;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.jersey.ApiFlowTemplateSimpleJersey;
-
+import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.commons.utils.Configuracio;
@@ -19,15 +25,16 @@ import es.caib.enviafib.commons.utils.Constants;
 
 public class PortafibUtils {
 
-    private static List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocumentals = new ArrayList<FirmaAsyncSimpleDocumentTypeInformation>();
-    private static long lastRefresh = 0;
+	private static List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocumentals = new ArrayList<FirmaAsyncSimpleDocumentTypeInformation>();
+	private static long lastRefresh = 0;
 
-    private static final long MITJA_HORA = 30 * 60 * 1000;
+	private static final long MITJA_HORA = 30 * 60 * 1000;
 	protected static final Logger log = Logger.getLogger(PortafibUtils.class);
 
 	public static synchronized List<FirmaAsyncSimpleDocumentTypeInformation> getTipusDocumentalsAll(String lang) {
-		//Obtenir els tipus documentals de PortaFIB. Si ja s'han obtingut en els últims 30 minuts, es retorna la cache.
-		
+		// Obtenir els tipus documentals de PortaFIB. Si ja s'han obtingut en els últims
+		// 30 minuts, es retorna la cache.
+
 		if ((lastRefresh + MITJA_HORA) < System.currentTimeMillis()) {
 
 			try {
@@ -47,9 +54,8 @@ public class PortafibUtils {
 
 		return tipusDocumentals;
 	}
-	
-	public static List<FirmaAsyncSimpleDocumentTypeInformation> getTipusDocumentalsBase(String lang)
-			 {
+
+	public static List<FirmaAsyncSimpleDocumentTypeInformation> getTipusDocumentalsBase(String lang) {
 
 		List<FirmaAsyncSimpleDocumentTypeInformation> allTipusDoc = getTipusDocumentalsAll(lang);
 		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsBase = new java.util.ArrayList<FirmaAsyncSimpleDocumentTypeInformation>();
@@ -92,7 +98,7 @@ public class PortafibUtils {
 
 		return api;
 	}
-	
+
 	public static ApiFlowTemplateSimple getApiFlowTemplateSimple() {
 
 		String url = Configuracio.getPortaFIBApiFlowUrl();
@@ -103,5 +109,140 @@ public class PortafibUtils {
 		return new ApiFlowTemplateSimpleJersey(url, username, password);
 	}
 
+	public static List<FluxInfo> getPlantillesFluxByUsername(String username) {
 
+		// Obtenir les plantilles de flux de PortaFIB per usuari
+		// Primer cercam si el tenim a la cache.
+		// Si no el tenim a la cache, cercam a PortaFIB
+
+		if (fluxosCache.containsKey(username)) {
+			log.info("Retornant plantilles de flux de PortaFIB des de la cache per usuari " + username);
+			return fluxosCache.get(username);
+		}
+
+		final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
+
+		List<FlowTemplateSimpleKeyValue> plantilles = new ArrayList<FlowTemplateSimpleKeyValue>();
+
+		List<FluxInfo> llistat = new ArrayList<FluxInfo>();
+		try {
+			ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+			final String languageUI = "ca";
+
+			FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
+			filter.setLanguageUI(languageUI);
+
+			// Cercam per usuari aplicació i despres ja cercarem per {temporal=true}
+			String descriptionFilter = "{usrapp=" + usrapp + "}" + (username == null ? "" : "{owner=" + username + "}");
+			filter.setDescriptionFilter(descriptionFilter);
+
+			log.info("Obtenint plantilles de flux de PortaFIB per usuari " + username);
+			FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
+
+			plantilles = list.getList();
+
+			for (FlowTemplateSimpleKeyValue flowKeyValue : plantilles) {
+				log.debug("Plantilla de flux trobada: " + flowKeyValue.getKey() + " - " + flowKeyValue.getValue());
+
+				FluxInfo info = crearFluxInfoFromFlowTemplate(api, flowKeyValue);
+				llistat.add(info);
+			}
+			
+			// Guardam a la cache
+			fluxosCache.put(username, llistat);
+			log.info("Retornant plantilles de flux de PortaFIB per usuari " + username + ". " + llistat.size()
+					+ " plantilles trobades.");
+
+		} catch (Throwable e) {
+			log.error("Error obtenint les plantilles de flux de PortaFIB: " + e.getMessage(), e);
+		}
+
+		return llistat;
+	}
+
+	private static FluxInfo crearFluxInfoFromFlowTemplate(ApiFlowTemplateSimple api,
+			FlowTemplateSimpleKeyValue flowKeyValue) throws AbstractApisIBException {
+
+		String flowTemplateId = flowKeyValue.getKey();
+
+		FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+		flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest("ca", flowTemplateId);
+
+		log.info("Obtenint informació de la plantilla de flux " + flowTemplateId);
+		FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+
+		// Crear un objecte FluxInfo a partir d'un FlowTemplateSimpleKeyValue
+
+		String fluxID = flowKeyValue.getKey();
+		String nom = flowKeyValue.getValue();
+		String desc = flux.getDescription();
+		long dataCad = 0;
+
+		FluxInfo info = new FluxInfo(fluxID, nom, desc, dataCad);
+
+		return info;
+	}
+	
+	public static boolean esborrarFlux(FluxInfo flux) throws AbstractApisIBException {
+        final String languageUI = "ca";
+
+		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+
+		String flowTemplateId = flux.getFluxID();
+		
+		 FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+         flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+         
+		return api.deleteFlowTemplate(flowTemplateRequest);
+		
+	}
+
+	final static Map<String, List<FluxInfo>> fluxosCache = new java.util.HashMap<String, List<FluxInfo>>();
+
+	public static class FluxInfo {
+		private long dataCaducitat;
+		private String fluxID;
+		private String nom;
+		private String desc;
+
+		public FluxInfo(String fluxID, String nom, String desc, long dataCaducitat) {
+			this.fluxID = fluxID;
+			this.nom = nom;
+			this.desc = desc;
+			this.dataCaducitat = dataCaducitat;
+		}
+
+		public long getDataCaducitat() {
+			return dataCaducitat;
+		}
+
+		public String getFluxID() {
+			return fluxID;
+		}
+
+		public String getNom() {
+			return nom;
+		}
+
+		public String getDescription() {
+			return desc;
+		}
+
+		public void setDataCaducitat(long dataCaducitat) {
+			this.dataCaducitat = dataCaducitat;
+		}
+
+		public void setFluxID(String fluxID) {
+			this.fluxID = fluxID;
+		}
+
+		public void setNom(String nom) {
+			this.nom = nom;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+	}
+	
 }

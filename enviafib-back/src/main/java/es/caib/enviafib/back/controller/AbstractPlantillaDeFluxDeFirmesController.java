@@ -41,6 +41,7 @@ import es.caib.enviafib.back.form.webdb.UsuariFilterForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.logic.utils.PortafibUtils;
+import es.caib.enviafib.logic.utils.PortafibUtils.FluxInfo;
 import es.caib.enviafib.model.entity.Usuari;
 import es.caib.enviafib.model.fields.PeticioFields;
 import es.caib.enviafib.model.fields.UsuariFields;
@@ -58,7 +59,9 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
     protected final static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    public abstract FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(final String languageUI);
+//    public abstract FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(final String languageUI);
+    
+    public abstract String getOwner();
     
     /**
      * 
@@ -195,16 +198,20 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,
             final Integer itemsPerPage, final int inici) throws I18NException {
 
-		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+//		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
-        final String languageUI = "ca";
+//        final String languageUI = "ca";
 
-        FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
+    //    FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
 
-        try {
-            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
+//        try {
+  //          FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
 
-            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+//            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+            
+//            List<FlowTemplateSimpleKeyValue> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
+            List<FluxInfo> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
+            		
 
 			if (plantilles == null) {
 	            log.info("Llistat de plantilles:: null");
@@ -215,14 +222,14 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
             List<Usuari> usuaris = new ArrayList<Usuari>();
 
-            for (FlowTemplateSimpleKeyValue flowKeyValue : plantilles) {
+            for (FluxInfo flux : plantilles) {
 
-                String flowTemplateId = flowKeyValue.getKey();
-
-                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
-
-                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+//                String flowTemplateId = flowKeyValue.getKey();
+//
+//                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+//                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+//
+//                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
                 
                 
                 String descrOriginal = flux.getDescription();
@@ -246,11 +253,12 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
                         .replace("}{", "}<br/>{");
 
                 Usuari usuari = new UsuariJPA();
-                usuari.setUsuariID((long) flowTemplateId.hashCode());
-                usuari.setNif(flowTemplateId);
-                usuari.setNom(flowKeyValue.getValue());
+                usuari.setUsuariID((long) flux.hashCode());
+                usuari.setNif(flux.getFluxID());
+                usuari.setNom(flux.getNom());
                 usuari.setLlinatge1(description);
                 usuari.setEmail(getCreationDate(description));
+                
                 usuaris.add(usuari);
             }
 
@@ -277,11 +285,11 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
             return usuaris;
 
-        } catch (AbstractApisIBException e) {
-            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
-            log.error(msg, e);
-            throw new I18NException("genapp.comodi", msg);
-        }
+//        } catch (AbstractApisIBException e) {
+//            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
+//            log.error(msg, e);
+//            throw new I18NException("genapp.comodi", msg);
+//        }
 
     }
 

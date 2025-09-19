@@ -75,6 +75,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
     }
 
 
+    @Override
     public String getOwner() {
         return String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
     }
@@ -327,13 +328,13 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
     }
 
-    @Override
-    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
-        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
-        filter.setLanguageUI(languageUI);
-        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
-        return filter;
-    }
+//    @Override
+//    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
+//        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
+//        filter.setLanguageUI(languageUI);
+//        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
+//        return filter;
+//    }
 
     @Override
     public Boolean onlyAcceptTemplates() {
