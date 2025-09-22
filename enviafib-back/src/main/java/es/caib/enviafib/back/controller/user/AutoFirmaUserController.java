@@ -254,7 +254,7 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 		                            peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
 		                            peticioLogicaEjb.update(peticio);
 		                            
-		                            peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, peticio.getIdiomaID(), is, Configuracio.getUrlBase());
+		                            peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, is, Configuracio.getUrlBase());
 
 		                            log.info("guardarResultatAutofirma()::Autofirma => sortim");
 

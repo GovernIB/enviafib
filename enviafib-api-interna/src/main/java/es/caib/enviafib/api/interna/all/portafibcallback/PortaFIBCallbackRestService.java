@@ -16,6 +16,7 @@ import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.enviafib.model.entity.InfoSignatura;
+import es.caib.enviafib.model.entity.Peticio;
 import es.caib.portafib.callback.beans.v1.PortaFIBEvent;
 import es.caib.portafib.utils.ConstantsV2;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
@@ -155,15 +156,17 @@ public class PortaFIBCallbackRestService {
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_FIRMADA: {
                     log.info("NOTIFICACIOAVIS_PETICIO_FIRMADA = " + eventID);
 
-                    String languageUI = "ca";
                     Long portafibID = event.getSigningRequest().getID();
 
-                    InfoSignatura infoSignatura;
-                    infoSignatura = peticioLogicaEjb.cosesAFerPeticioFirmadaPart1(portafibID, languageUI);
-
-                    if (infoSignatura != null) {
-                        // ASYNCHRONOUS Funcionalitat de guardar document a Arxiu amb la API
-                        peticioLogicaEjb.cosesAFerPeticioFirmadaPart2(portafibID, languageUI, infoSignatura);
+                    //Comprovam que la peticio existeix i indicam que la procesarem amb el canvi d'estat.
+                    
+                    //Basicament es trobar la petició que s'ha de processar, i donar-li el SUS per fer la part asyncrona.
+                    Peticio peticio = peticioLogicaEjb.procesarPeticioFirmadaSync(portafibID);
+                    
+                    
+                    if (peticio != null) {
+                        // ASYNCHRONOUS Funcionalitat de guardar la firma i el document, i per guradar a Arxiu
+                        peticioLogicaEjb.procesarPeticioFirmadaAsync(peticio);
                     }
                 }
                 break;

@@ -199,7 +199,14 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
                         "arxiu.tancar.expedient", "javascript:tancarExpedient(" + peticioID + ")", AdditionalButtonStyle.WARNING));
-            }            
+            }       
+            
+            if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_CALLBACK) {
+                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
+						"arxiu.tancar.expedient", getContextWeb() + "/procesarErrorCallback/" + peticioID,
+						AdditionalButtonStyle.WARNING));
+            }       
+            
             
             
             if (peticio.getErrorMsg() != null) {
@@ -246,8 +253,6 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
             String url = Configuracio.getUrlBase(decodedUrl, request.getContextPath());
 
-            String languageUI = LocaleContextHolder.getLocale().getLanguage();
-
             long timeout = (60 + 30) * 1000; //Minut i mig en ms
 
             long start = System.currentTimeMillis();
@@ -268,7 +273,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
                 peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
                 peticioLogicaEjb.update(peticio);
                 
-                peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, languageUI, infoSign, url);
+                peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, infoSign, url);
                 
 //                end = System.currentTimeMillis();
 //                long seg = (end - start) / 1000;
@@ -311,7 +316,6 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
 			@ModelAttribute PeticioFilterForm filterForm) throws Exception {
 
 		String[] seleccionats = filterForm.getSelectedItems();
-        String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
 		if (seleccionats == null || seleccionats.length == 0) {
 			return "redirect:" + getContextWeb() + "/list/";
@@ -347,7 +351,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
                 peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
                 peticioLogicaEjb.update(peticio);
                 
-                peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, languageUI, infoSign, url);
+                peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, infoSign, url);
                 
 //                String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
 //
@@ -367,6 +371,26 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
 		HtmlUtils.saveMessageSuccess(request, "Arxivant " + pendents + " peticions" );
 		return "redirect:" + getContextWeb() + "/list/";
 		
+	}
+    
+    
+    @RequestMapping(value = "/procesarErrorCallback/{peticioId}", method = RequestMethod.GET)
+	public String procesarErrorCallback(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("peticioId") Long peticioId) {
+		try {
+			log.info("VAMOS A REINTENAR PROCESO CALLBACK DE LA PETICION " + peticioId);
+
+			Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioId);
+
+			peticioLogicaEjb.procesarPeticioFirmadaAsync(peticio);
+			HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.callback.reintent", peticioId.toString()));
+		} catch (I18NException e) {
+			String msg = e.getMessage();
+			log.error(msg, e);
+			HtmlUtils.saveMessageError(request, msg);
+		}
+
+		return "redirect:" + getContextWeb() + "/list/";
 	}
 
     

@@ -188,13 +188,16 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 break;
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
+                case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
                 case Constants.ESTAT_PETICIO_ARXIVANT:
                     color = "orange";
                     if (estat == Constants.ESTAT_PETICIO_EN_PROCES) {
                         iconList.add("fas fa-user-clock");
                     } else {
                         iconList.add("fas fa-spinner");
-                        iconList.add("fas fa-archive");
+						if (estat == Constants.ESTAT_PETICIO_ARXIVANT) {
+							iconList.add("fas fa-archive");
+						}
                     }
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
@@ -242,6 +245,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             switch (estat) {
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
+				case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
 
                     filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-user-friends",
                             "flux.info", "javascript:openModalFluxInfo(" + peticioID + ");", AdditionalButtonStyle.INFO));
@@ -329,9 +333,6 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 			String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 			log.info("Decoded URL: " + decodedUrl);
 
-			// Obtener el idioma de la interfaz de usuario
-			String languageUI = LocaleContextHolder.getLocale().getLanguage();
-
 			// Obtener la URL base para la petición
 			String url = Configuracio.getUrlBase(decodedUrl, request.getContextPath());
 			log.info("Base URL: " + url);
@@ -348,8 +349,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 			}
 
 			// Intentar guardar la petición de archivo
-			String saveResult = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI,
-					url);
+			String saveResult = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, url);
 			if (saveResult == null) {
 				// Mensaje de éxito
 				HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));

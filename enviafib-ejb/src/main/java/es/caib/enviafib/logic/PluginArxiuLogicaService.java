@@ -28,7 +28,7 @@ public interface PluginArxiuLogicaService extends AbstractPluginLogicaService<IA
      * @param locale
      * @return
      */
-    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignatura infoSignatura);
+    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, InfoSignatura infoSignatura);
 
 
     /**

@@ -206,6 +206,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             switch ((int) peticioForm.getPeticio().getEstat()) {
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
+                case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
                 case Constants.ESTAT_PETICIO_REBUTJADA:

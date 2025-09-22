@@ -51,9 +51,9 @@ public interface PeticioLogicaService extends PeticioService {
 
     public void cosesAFerPeticioRebutjada(long portafibID, String languageUI, String motiuRebuig) throws I18NException;
 
-    public InfoSignaturaJPA cosesAFerPeticioFirmadaPart1(long portafibID, String languageUI) throws I18NException;
-    
-    public void cosesAFerPeticioFirmadaPart2(long portafibID, String languageUI, InfoSignatura infoSignatura) throws I18NException;
+//    public InfoSignaturaJPA cosesAFerPeticioFirmadaPart1(long portafibID, String languageUI) throws I18NException;
+//    
+//    public void cosesAFerPeticioFirmadaPart2(long portafibID, String languageUI, InfoSignatura infoSignatura) throws I18NException;
 
     public void cosesAFerPeticioFirmaParcial(long portafibID) throws I18NException;
     
@@ -63,9 +63,9 @@ public interface PeticioLogicaService extends PeticioService {
         
     public String getUrlToViewFlow(long peticioPortaFIB, String languageUI) throws I18NException;
 
-    public void guardarPeticioArxiuAsync(Peticio peticio, String languageUI, InfoSignatura infoSignatura, String urlBase) throws I18NException;
+    public void guardarPeticioArxiuAsync(Peticio peticio, InfoSignatura infoSignatura, String urlBase) throws I18NException;
 
-    public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String languageUI, String urlBase) throws I18NException;
+    public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String urlBase) throws I18NException;
 
     public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID, boolean incloureDesconeguts) throws I18NException;
 
@@ -76,5 +76,10 @@ public interface PeticioLogicaService extends PeticioService {
     public boolean esFitxerPDF(File file);
 
 	void enviarMailSolicitant(Peticio peticio, String baseUrl);
+
+	public Peticio procesarPeticioFirmadaSync(long portafibID) throws I18NException;
+
+	public void procesarPeticioFirmadaAsync(Peticio peticio) throws I18NException;
+	
 
 }

@@ -81,8 +81,10 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
     @PermitAll
     @Override
-    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, Locale locale, InfoSignatura infoSignatura) {
+    public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, InfoSignatura infoSignatura) {
 
+    	Locale locale = new Locale(peticio.getIdiomaID());
+    	 
         log.info("custodiaAmbApiArxiu:: START. \n\n================ PeticioID=" + peticio.getPeticioID() + "================ \n");
         IArxiuPlugin plugin;
 

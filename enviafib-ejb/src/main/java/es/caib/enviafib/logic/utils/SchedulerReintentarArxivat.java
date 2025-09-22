@@ -85,7 +85,6 @@ public class SchedulerReintentarArxivat {
 		log.info("Inici " + NOM_SCHEDULER + "()");
 
 		long startTime = System.currentTimeMillis();
-		final String languageUI = "ca";
 
 		// El timeout de EJB son 5 minuts, li direm que als 4 minuts surti.
 		try {
@@ -124,7 +123,7 @@ public class SchedulerReintentarArxivat {
 				peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
 
 				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
-				peticio = guardarFitxerArxiuSync(peticio, languageUI, is, urlBase);
+				peticio = guardarFitxerArxiuSync(peticio, is, urlBase);
 
 				try {
 					Thread.sleep(1000);
@@ -141,6 +140,8 @@ public class SchedulerReintentarArxivat {
 			}
 		} catch (I18NException e) {
 
+			final String languageUI = "ca";
+
 			final String msg = "Error obtenint llistat de fitxersFirmatsID durant el cron nocturn: "
 					+ I18NCommonUtils.getMessage(e, new Locale(languageUI));
 			log.error(msg, e);
@@ -153,7 +154,7 @@ public class SchedulerReintentarArxivat {
 
 	@PermitAll
 	@Asynchronous
-	public void guardarPeticioArxiuAsync(Peticio peticio, String languageUI, InfoSignatura infoSignatura, String urlBase)
+	public void guardarPeticioArxiuAsync(Peticio peticio, InfoSignatura infoSignatura, String urlBase)
 			throws I18NException {
 
 		peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
@@ -163,7 +164,7 @@ public class SchedulerReintentarArxivat {
 		try {
 			Thread.sleep(1000);
 			log.info("Guardant Peticio " + peticioID + " dins d'Arxiu.");
-			peticio = guardarFitxerArxiuSync(peticio, languageUI, infoSignatura, urlBase);
+			peticio = guardarFitxerArxiuSync(peticio, infoSignatura, urlBase);
 		} catch (Exception e) {
 			// XYZ ZZZ TMP
 			log.error("Future.get() ha llança un error: " + e.getMessage(), e);
@@ -171,7 +172,7 @@ public class SchedulerReintentarArxivat {
 		}
 	}
 
-	protected Peticio guardarFitxerArxiuSync(Peticio peticio, String languageUI, InfoSignatura infoSignatura,
+	protected Peticio guardarFitxerArxiuSync(Peticio peticio, InfoSignatura infoSignatura,
 			String urlBase) throws I18NException {
 		log.info(" guardarFitxerArxiu:: START");
 
@@ -179,7 +180,7 @@ public class SchedulerReintentarArxivat {
 
 		// No llança errors. Només torna InforArxiu null si hi ha hagut un error
 		// Ja inicialitza Petició amb l'estat com toca i guarda resultat a InfoArxiu
-		InfoArxiuJPA ia = pluginArxiuLogicaEjb.custodiaAmbApiArxiu(peticio, new Locale(languageUI), infoSignatura);
+		InfoArxiuJPA ia = pluginArxiuLogicaEjb.custodiaAmbApiArxiu(peticio, infoSignatura);
 
 		if (ia != null) {
 			peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
