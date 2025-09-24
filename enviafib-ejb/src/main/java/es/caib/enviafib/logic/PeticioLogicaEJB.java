@@ -372,13 +372,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @PermitAll
     @Asynchronous
 	public void procesarPeticioFirmadaAsync(Peticio peticio) throws I18NException {
-    	log.info("procesarPeticioFirmadaAsync()::  " +peticio.getPeticioID() +  " WAIT!!!!! ");
-    	try {
-			Thread.sleep(20000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//    	log.info("procesarPeticioFirmadaAsync()::  " +peticio.getPeticioID() +  " WAIT!!!!! ");
+    	
+//    	try {
+//			Thread.sleep(20000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
     	
     	
 		Long peticioID = peticio.getPeticioID();
@@ -433,14 +434,14 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Asynchronous
 	public void procesarPeticioFirmadaAsync2(Peticio peticio, InfoSignaturaJPA infoSignatura) throws I18NException {
 
-		log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " WAIT!!!!! ");
+//		log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " WAIT!!!!! ");
 
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		try {
 			log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " CONTINUAM !!!!! ");
