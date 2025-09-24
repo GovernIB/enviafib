@@ -203,7 +203,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_CALLBACK) {
                 filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
-						"arxiu.tancar.expedient", getContextWeb() + "/procesarErrorCallback/" + peticioID,
+						"procesar.error.callback", getContextWeb() + "/procesarErrorCallback/" + peticioID,
 						AdditionalButtonStyle.WARNING));
             }       
             
@@ -383,7 +383,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
 			Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioId);
 
 			peticioLogicaEjb.procesarPeticioFirmadaAsync(peticio);
-			HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.callback.reintent", peticioId.toString()));
+			HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.callback.reintentar", peticioId.toString()));
 		} catch (I18NException e) {
 			String msg = e.getMessage();
 			log.error(msg, e);

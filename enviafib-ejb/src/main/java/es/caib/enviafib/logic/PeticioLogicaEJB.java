@@ -120,6 +120,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @EJB(mappedName = es.caib.enviafib.ejb.SerieDocumentalService.JNDI_NAME)
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocEjb;
 
+    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb_self;    
+    
+    
     final String prefixeEsborrat = "ESBORRADA%";
 
     @Override
@@ -350,8 +354,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ");
         }else {
             peticio = this.findByPrimaryKeyPublic(peticioID);
-            peticio.setEstat(Constants.ESTAT_PETICIO_PROCESANT_CALLBACK);
-            this.updatePublic(peticio);
+            
+            if (peticio.getEstat() != Constants.ESTAT_PETICIO_EN_PROCES) {
+				log.error("Hem trobat la petició amb ID=" + peticioID + " pero no està en estat EN_PROCES. Estat actual: "
+						+ peticio.getEstat() + ". No es pot processar.");
+				peticio = null;
+			}else {
+				peticio.setEstat(Constants.ESTAT_PETICIO_PROCESANT_CALLBACK);
+				this.updatePublic(peticio);
+			}
         }
 
         return peticio;
@@ -361,18 +372,84 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @PermitAll
     @Asynchronous
 	public void procesarPeticioFirmadaAsync(Peticio peticio) throws I18NException {
-
+    	log.info("procesarPeticioFirmadaAsync()::  " +peticio.getPeticioID() +  " WAIT!!!!! ");
+    	try {
+			Thread.sleep(20000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
 		Long peticioID = peticio.getPeticioID();
 		log.info("procesarPeticioFirmadaAsync():: Iniciam proces. asyncrònic de la petició ID=" + peticioID + ". ");
 
 
 		log.info("procesarPeticioFirmadaAsync():: Guardam infoSignatura de la petició ID=" + peticioID + ". ");
-		InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(peticio);
 
-		if (infoSignatura != null) {
+//		InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(peticio);
+
+		InfoSignaturaJPA infoSignatura = null;
+
+		try {
+
+			long portafirmesID = Long.parseLong(peticio.getPeticioPortafirmes());
+
+			FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafirmesID);
+
+			Long fitxerID = guardarFitxer(firma);
+
+			log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID=" + peticio.getPeticioID()
+					+ " al FileSystemManager");
+
+			peticio.setFitxerFirmatID(fitxerID);
+
+			infoSignatura = guardarInfo(firma);
+
+			long infoSignaturaID = infoSignatura.getInfoSignaturaID();
+			log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
+			peticio.setInfoSignaturaID(infoSignaturaID);
+			
+			peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+			peticioLogicaEjb_self.procesarPeticioFirmadaAsync2(peticio, infoSignatura);
+			
+		} catch (Throwable t) {
+			String errorMsg = "No s'ha pogut obtenir la infoSignatura de la petició ID=" + peticio.getPeticioID()
+					+ ". ";
+			
+			log.error(errorMsg, t);
+			
+			peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_CALLBACK);
+			peticio.setErrorMsg(LogicUtils.split255(errorMsg + t.getMessage()));
+		}
+		
+		this.updatePublic(peticio);
+		log.info("procesarPeticioFirmadaAsync():: " +peticio.getPeticioID() +  " SORTIM !!!!! ");
+    }
+    
+    
+    @Override
+    @PermitAll
+    @Asynchronous
+	public void procesarPeticioFirmadaAsync2(Peticio peticio, InfoSignaturaJPA infoSignatura) throws I18NException {
+
+		log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " WAIT!!!!! ");
+
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " CONTINUAM !!!!! ");
+
+			Long peticioID = peticio.getPeticioID();
+
 			String urlBase = Configuracio.getUrlBase();
 
-			log.info("procesarPeticioFirmadaAsync():: Guardam dins arxiu .... ");
+			log.info("procesarPeticioFirmadaAsync2():: Guardam dins arxiu .... ");
 			peticio = guardarFitxerArxiuSync(peticio, infoSignatura, urlBase);
 
 			String msg = "Peticio " + peticioID + ". ";
@@ -386,11 +463,19 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 				msg += "Error arxivant: " + peticio.getErrorMsg();
 				log.error(msg);
 			}
+		} catch (Throwable t) {
+			String errorMsg = "No s'ha pogut obtenir la infoSignatura de la petició ID=" + peticio.getPeticioID()
+					+ ". ";
+
+			log.error(errorMsg, t);
+
+			peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_CALLBACK);
+			peticio.setErrorMsg(LogicUtils.split255(errorMsg + t.getMessage()));
 		}
-
+		
 		this.updatePublic(peticio);
-
-		log.info("procesarPeticioFirmadaAsync()::  SORTIM !!!!! ");
+		
+		log.info("procesarPeticioFirmadaAsync2()::  SORTIM !!!!! ");
 	}
 
     @Override
@@ -612,37 +697,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return peticio;
     }
 
-	protected InfoSignaturaJPA guardarFitxerInfoFirma(Peticio peticio) throws I18NException {
-
-		InfoSignaturaJPA is = null;
-		try {
-
-			long portafirmesID = Long.parseLong(peticio.getPeticioPortafirmes());
-
-			FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafirmesID);
-
-			Long fitxerID = guardarFitxer(firma);
-
-			log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID=" + peticio.getPeticioID()
-					+ " al FileSystemManager");
-
-			peticio.setFitxerFirmatID(fitxerID);
-
-			is = guardarInfo(firma);
-
-			long infoSignaturaID = is.getInfoSignaturaID();
-			log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
-			peticio.setInfoSignaturaID(infoSignaturaID);
-		} catch (Exception e) {
-			String errorMsg = "No s'ha pogut obtenir la infoSignatura de la petició ID=" + peticio.getPeticioID()
-					+ ". ";
-			peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_CALLBACK);
-			peticio.setErrorMsg(LogicUtils.split255(errorMsg + e.getMessage()));
-		}
-
-		this.update(peticio);
-		return is;
-	}
+//	protected InfoSignaturaJPA guardarFitxerInfoFirma(Peticio peticio) {
+//
+//		
+//
+//	}
 
     protected Long getPeticioIdFromPortafibId(long portafibID) throws I18NException {
         return this.executeQueryOne(PeticioFields.PETICIOID,
@@ -935,14 +994,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
         rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, lang);
 
+        log.info("Cridada API: " + portafibID);
         ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
 
         FirmaAsyncSimpleSignedFile fitxerSignat = null;
+        
+        
         try {
             fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
         } catch (Throwable t) {
             throw new I18NException("error.portafib.fitxersignat", String.valueOf(portafibID), t.getMessage());
         }
+//        throw new I18NException("error.genapp.comodi", "Simulació d'error obtenint fitxer signat de Portafib per proves");
 
         return fitxerSignat;
     }

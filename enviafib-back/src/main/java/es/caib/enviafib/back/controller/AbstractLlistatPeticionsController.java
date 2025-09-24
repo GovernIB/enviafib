@@ -184,11 +184,24 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                         color = "green";
                         iconList.add("fas fa-file-signature");
                     }
-
                 break;
+                
+                
+                case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
+                case Constants.ESTAT_PETICIO_ERROR_CALLBACK:
+                	iconList.add("fas fa-file-signature");
+                	color = "orange";
+                    if (isAdmin()) {
+                        if (estat == Constants.ESTAT_PETICIO_ERROR_CALLBACK) {
+                            color = "red";
+                        }
+                    }
+                break;
+                
+                
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-                case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
+//                case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
                 case Constants.ESTAT_PETICIO_ARXIVANT:
                     color = "orange";
                     if (estat == Constants.ESTAT_PETICIO_EN_PROCES) {
@@ -197,15 +210,20 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                         iconList.add("fas fa-spinner");
 						if (estat == Constants.ESTAT_PETICIO_ARXIVANT) {
 							iconList.add("fas fa-archive");
+						}else {
+	                        iconList.add("fas fa-file-signature");
 						}
                     }
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
+//                case Constants.ESTAT_PETICIO_ERROR_CALLBACK:
                     color = "red";
                     iconList.add("fas fa-exclamation-triangle");
                     if (estat == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                         iconList.add("fas fa-archive");
+                    }else if (estat == Constants.ESTAT_PETICIO_ERROR_CALLBACK) {
+                        iconList.add("fas fa-file-signature");
                     }
                 break;
 

@@ -80,6 +80,8 @@ public interface PeticioLogicaService extends PeticioService {
 	public Peticio procesarPeticioFirmadaSync(long portafibID) throws I18NException;
 
 	public void procesarPeticioFirmadaAsync(Peticio peticio) throws I18NException;
+
+	void procesarPeticioFirmadaAsync2(Peticio peticio,		InfoSignaturaJPA infoSignatura) throws I18NException;
 	
 
 }

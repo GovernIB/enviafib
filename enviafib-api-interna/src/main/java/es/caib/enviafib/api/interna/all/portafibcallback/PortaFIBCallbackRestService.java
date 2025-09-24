@@ -166,8 +166,11 @@ public class PortaFIBCallbackRestService {
                     
                     if (peticio != null) {
                         // ASYNCHRONOUS Funcionalitat de guardar la firma i el document, i per guradar a Arxiu
+                    	log.info("Callback: Iniciant procesament ASINCRON de la peticio ID: " + peticio.getPeticioID());
                         peticioLogicaEjb.procesarPeticioFirmadaAsync(peticio);
-                    }
+					} else {
+						log.warn("Callback: La peticio amb ID Portafib " + portafibID + " no existeix o no es pot processar.");
+					}
                 }
                 break;
                 case (int) ConstantsV2.NOTIFICACIOAVIS_PETICIO_REBUTJADA: {
