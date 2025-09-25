@@ -2,6 +2,7 @@ package es.caib.enviafib.logic.utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -109,15 +110,15 @@ public class PortafibUtils {
 		return new ApiFlowTemplateSimpleJersey(url, username, password);
 	}
 
-	public static List<FluxInfo> getPlantillesFluxByUsername(String username) {
+	public static List<FluxInfo> getPlantillesFluxByUsername(String userID) {
 
 		// Obtenir les plantilles de flux de PortaFIB per usuari
 		// Primer cercam si el tenim a la cache.
 		// Si no el tenim a la cache, cercam a PortaFIB
 
-		if (fluxosCache.containsKey(username)) {
-			log.info("Retornant plantilles de flux de PortaFIB des de la cache per usuari " + username);
-			return fluxosCache.get(username);
+		if (fluxosCache.containsKey(userID)) {
+			log.info("Retornant plantilles de flux de PortaFIB des de la cache per usuari " + userID);
+			return fluxosCache.get(userID);
 		}
 
 		final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
@@ -133,10 +134,10 @@ public class PortafibUtils {
 			filter.setLanguageUI(languageUI);
 
 			// Cercam per usuari aplicació i despres ja cercarem per {temporal=true}
-			String descriptionFilter = "{usrapp=" + usrapp + "}" + (username == null ? "" : "{owner=" + username + "}");
+			String descriptionFilter = "{usrapp=" + usrapp + "}" + (userID == null ? "" : "{owner=" + userID + "}");
 			filter.setDescriptionFilter(descriptionFilter);
 
-			log.info("Obtenint plantilles de flux de PortaFIB per usuari " + username);
+			log.info("Obtenint plantilles de flux de PortaFIB per usuari " + userID);
 			FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
 
 			plantilles = list.getList();
@@ -144,13 +145,13 @@ public class PortafibUtils {
 			for (FlowTemplateSimpleKeyValue flowKeyValue : plantilles) {
 				log.debug("Plantilla de flux trobada: " + flowKeyValue.getKey() + " - " + flowKeyValue.getValue());
 
-				FluxInfo info = crearFluxInfoFromFlowTemplate(api, flowKeyValue);
+				FluxInfo info = crearFluxInfoFromFlowTemplate(api, flowKeyValue, userID);
 				llistat.add(info);
 			}
 			
 			// Guardam a la cache
-			fluxosCache.put(username, llistat);
-			log.info("Retornant plantilles de flux de PortaFIB per usuari " + username + ". " + llistat.size()
+			fluxosCache.put(userID, llistat);
+			log.info("Retornant plantilles de flux de PortaFIB per usuari " + userID + ". " + llistat.size()
 					+ " plantilles trobades.");
 
 		} catch (Throwable e) {
@@ -161,7 +162,7 @@ public class PortafibUtils {
 	}
 
 	private static FluxInfo crearFluxInfoFromFlowTemplate(ApiFlowTemplateSimple api,
-			FlowTemplateSimpleKeyValue flowKeyValue) throws AbstractApisIBException {
+			FlowTemplateSimpleKeyValue flowKeyValue, String userID) throws AbstractApisIBException {
 
 		String flowTemplateId = flowKeyValue.getKey();
 
@@ -178,23 +179,68 @@ public class PortafibUtils {
 		String desc = flux.getDescription();
 		long dataCad = 0;
 
-		FluxInfo info = new FluxInfo(fluxID, nom, desc, dataCad);
+		FluxInfo info = new FluxInfo(fluxID, nom, desc, dataCad, userID);
 
 		return info;
 	}
 	
 	public static boolean esborrarFlux(FluxInfo flux) throws AbstractApisIBException {
-        final String languageUI = "ca";
+		final String languageUI = "ca";
 
 		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
 		String flowTemplateId = flux.getFluxID();
-		
-		 FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-         flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
-         
-		return api.deleteFlowTemplate(flowTemplateRequest);
-		
+
+		FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+		flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+
+		boolean esborrat = api.deleteFlowTemplate(flowTemplateRequest);
+
+		if (esborrat) {
+			// Si s'ha esborrat, l'eliminam de la cache
+			List<FluxInfo> llistatUsuari = fluxosCache.get(flux.getOwner());
+
+			for (FluxInfo f : llistatUsuari) {
+				if (f.getFluxID().equals(flux.getFluxID())) {
+					llistatUsuari.remove(f);
+					log.info("Eliminada plantilla de flux " + flux.getFluxID() + " de la cache d'usuari "
+							+ flux.getOwner());
+					break;
+				}
+			}
+		}
+
+		return esborrat;
+	}
+	
+	public static FluxInfo getFluxByID(String userID, String fluxID) {
+		// Cercam el flux a la cache
+		if (fluxosCache.containsKey(userID)) {
+			List<FluxInfo> llistat = fluxosCache.get(userID);
+			for (FluxInfo f : llistat) {
+				if (f.getFluxID().equals(fluxID)) {
+					return f;
+				}
+			}
+		}
+
+		return null;
+	}
+	
+	public static FluxInfo creaFluxInfo(String userID, String fluxID, String nom, String desc) {
+		FluxInfo info = new FluxInfo(fluxID, nom, desc, 0, userID);
+
+		// Afegim a la cache
+		if (fluxosCache.containsKey(userID)) {
+			List<FluxInfo> llistat = fluxosCache.get(userID);
+			llistat.add(info);
+		} else {
+			List<FluxInfo> llistat = new java.util.ArrayList<FluxInfo>();
+			llistat.add(info);
+			fluxosCache.put(userID, llistat);
+		}
+
+		return info;
 	}
 
 	final static Map<String, List<FluxInfo>> fluxosCache = new java.util.HashMap<String, List<FluxInfo>>();
@@ -204,12 +250,15 @@ public class PortafibUtils {
 		private String fluxID;
 		private String nom;
 		private String desc;
+		private String owner;
+		Timestamp dataCreacio;
 
-		public FluxInfo(String fluxID, String nom, String desc, long dataCaducitat) {
+		public FluxInfo(String fluxID, String nom, String desc, long dataCaducitat, String owner) {
 			this.fluxID = fluxID;
 			this.nom = nom;
 			this.desc = desc;
 			this.dataCaducitat = dataCaducitat;
+			this.owner = owner;
 		}
 
 		public long getDataCaducitat() {
@@ -228,6 +277,11 @@ public class PortafibUtils {
 			return desc;
 		}
 
+		public String getOwner() {
+			return owner;
+		}
+		
+		
 		public void setDataCaducitat(long dataCaducitat) {
 			this.dataCaducitat = dataCaducitat;
 		}
@@ -243,6 +297,39 @@ public class PortafibUtils {
 		public void setDesc(String desc) {
 			this.desc = desc;
 		}
+
+		public void setOwner(String owner) {
+			this.owner = owner;
+		}
+	}
+
+	public static void actualizarDadesFlux(String owner, String fluxID) {
+		
+		// Actualitzar les dades del flux a la cache
+		
+		if (fluxosCache.containsKey(owner)) {
+			List<FluxInfo> llistat = fluxosCache.get(owner);
+			for (FluxInfo f : llistat) {
+				if (f.getFluxID().equals(fluxID)) {
+					try {
+						FluxInfo info = crearFluxInfoFromFlowTemplate(getApiFlowTemplateSimple(),
+								new FlowTemplateSimpleKeyValue(fluxID, f.getNom()), owner);
+
+						llistat.remove(f);
+						llistat.add(info);
+						
+						log.info("Actualitzades dades de la plantilla de flux " + fluxID + " de la cache d'usuari "
+								+ owner);
+					} catch (AbstractApisIBException e) {
+						log.error("Error actualitzant les dades de la plantilla de flux " + fluxID
+								+ " de la cache d'usuari " + owner + ": " + e.getMessage(), e);
+					}
+					break;
+				}
+			}
+		}
+
+		
 	}
 	
 }

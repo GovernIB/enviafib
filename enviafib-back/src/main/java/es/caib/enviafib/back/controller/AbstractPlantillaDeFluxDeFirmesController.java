@@ -144,7 +144,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
         for (Usuari usuari : list) {
             // BOTO PER ESBORRAR
-            filterForm.addAdditionalButtonByPK((long) usuari.getNif().hashCode(),
+//        	log.info("Afegint boto esborrar per plantilla de flux: " + usuari.getNif());
+            filterForm.addAdditionalButtonByPK((long) usuari.getUsuariID(),
                     new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
                             + request.getContextPath() + getContextWeb() + "/" + usuari.getNif() + "/esborrar','show')",
                             AdditionalButtonStyle.DANGER));
@@ -156,24 +157,27 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     public String esborrarFlux(@PathVariable("fluxID")
     java.lang.String fluxID, HttpServletRequest request, HttpServletResponse response) {
 
-        final String languageUI = "ca";
+//        final String languageUI = "ca";
 
         // Comprovam que és de la nostra propietat
         try {
 
-    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+//    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
-            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
+//            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+//            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
 
-            FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
-
-            String description = flux.getDescription();
+//            FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
             Long owner = LoginInfo.getInstance().getUsuari().getUsuariID();
-            if (description.indexOf("{owner=" + owner + "}") != -1) {
-                FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
-                if (api.deleteFlowTemplate(r)) {
+            FluxInfo flux = PortafibUtils.getFluxByID(String.valueOf(owner), fluxID);
+            
+//            String description = flux.getDescription();
+
+            if (flux != null) {
+//                FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
+                
+                if (PortafibUtils.esborrarFlux(flux)) {
                     String msg = I18NUtils.tradueix("plantillaflux.esborrar.ok", fluxID);
                     HtmlUtils.saveMessageSuccess(request, msg);
                 } else {

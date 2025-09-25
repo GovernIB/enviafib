@@ -33,6 +33,7 @@ import es.caib.enviafib.back.form.webdb.PeticioForm;
 import es.caib.enviafib.back.security.LoginInfo;
 import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.logic.utils.PortafibUtils;
+import es.caib.enviafib.logic.utils.PortafibUtils.FluxInfo;
 import es.caib.enviafib.model.fields.UsuariFields;
 import es.caib.enviafib.persistence.PeticioJPA;
 
@@ -181,7 +182,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
             log.error(msg, aaie);
 
             final String intermediateID = null;
-            cleanFlux(api, transactionID, intermediateID, log);
+            cleanFlux(transactionID, intermediateID, log);
 
             return new ModelAndView(getRedirectToList());
         }
@@ -204,7 +205,6 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
         ModelAndView mav = super.crearPeticioGet(request, response);
 
-		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
         String transactionID = request.getParameter("transactionID");
 
         String intermediateID = request.getParameter("intermediateID");
@@ -217,24 +217,30 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         request.getSession().setAttribute(FLUX_SESSION_KEY, flux);
         fluxInfoByTransactonID.remove(transactionID);
 
-        if (api != null && transactionID != null) {
-            cleanFlux(api, transactionID, intermediateID, log);
+        if (transactionID != null) {
+            cleanFlux(transactionID, intermediateID, log);
         }
 
         return mav;
     }
 
-    public static void cleanFlux(ApiFlowTemplateSimple api, String transactionID, String intermediateID, Logger log) {
+    public static void cleanFlux(String transactionID, String intermediateID, Logger log) {
         try {
+        	
+    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
             api.closeTransaction(transactionID);
 
             if (intermediateID != null) {
 
-                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(
-                        LocaleContextHolder.getLocale().getLanguage(), intermediateID);
+                Long owner = LoginInfo.getInstance().getUsuari().getUsuariID();
+                FluxInfo flux = PortafibUtils.getFluxByID(String.valueOf(owner), transactionID);
+            	
+            	
+//                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+//                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(
+//                        LocaleContextHolder.getLocale().getLanguage(), intermediateID);
 
-                boolean esborrat = api.deleteFlowTemplate(flowTemplateRequest);
+                boolean esborrat = PortafibUtils.esborrarFlux(flux);  //api.deleteFlowTemplate(flowTemplateRequest);
                 log.error("Resultat esborrat de flux de firma: " + esborrat);
 
             }
@@ -322,7 +328,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
             error = I18NUtils.tradueix("error.error.flux.creacioflux", aaie.getMessage());
             log.error(error, aaie);
-            cleanFlux(api, transactionID, null, log);
+            cleanFlux(transactionID, null, log);
         }
 
         log.error(error);
