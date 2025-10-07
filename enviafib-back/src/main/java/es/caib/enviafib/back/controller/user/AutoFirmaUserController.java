@@ -162,184 +162,246 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
         return mav;
     }
     
-    @RequestMapping(value = "/finalWebAuth/{transactionID}")
-    public ModelAndView finalProcesDeFirmaWebAuth(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID") String transactionID) throws Exception {
-
-        log.info("Final Web  Consultant transactionID[" + transactionID + "] dins Peticions ...");
-
-        List<Long> llistatPeticioID = peticioLogicaEjb.executeQuery(PeticioFields.PETICIOID,
-                PeticioFields.PETICIOPORTAFIRMES.equal(transactionID));
+    class ErrorInfo {
+        String msg;
+        String exception;
         
-        // peticioIdByTransactionId.get(transactionID);
+		public ErrorInfo(String msg, String exception) {
+			this.msg = msg;
+			this.exception = exception;
+		}
 
-        if (llistatPeticioID.size() == 0) {
-        	Long peticioID = 0L;
-            throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
-                    new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
-        }
+		public ErrorInfo() {
+			this.msg = null;
+			this.exception = null;
+		}
+		
+		public String getMsg() {
+			return msg;
+		}
+		
+		public String getException() {
+			return exception;
+		}
 
-        log.info("Consulta transactionID]" + transactionID + "[ => " + llistatPeticioID.toArray());
-
-        String errorMsg;
-        String errorException;
-
-        ApiFirmaWebSimple api = null;
-        try {
-            api = getApiFirmaWebSimple();
-
-            FirmaSimpleGetTransactionStatusResponse fullTransactionStatus;
-            fullTransactionStatus = api.getTransactionStatus(transactionID);
-
-            FirmaSimpleStatus transactionStatus = fullTransactionStatus.getTransactionStatus();
-
-            int status = transactionStatus.getStatus();
-
-            switch (status) {
-                case FirmaSimpleStatus.STATUS_INITIALIZING: {
-                    errorException = null;
-                    errorMsg = I18NUtils.tradueix("procesdefirma.status.initializing");
-                }
-                break;
-
-                case FirmaSimpleStatus.STATUS_IN_PROGRESS: {
-                    errorException = null;
-                    errorMsg = I18NUtils.tradueix("procesdefirma.status.inprogress");
-                }
-                break;
-
-                case FirmaSimpleStatus.STATUS_FINAL_ERROR: {
-                    errorException = transactionStatus.getErrorStackTrace();
-                    errorMsg = I18NUtils.tradueix("procesdefirma.status.finalerror", transactionID,
-                            transactionStatus.getErrorMessage());
-                }
-                break;
-
-                case FirmaSimpleStatus.STATUS_CANCELLED: {
-                    errorException = null;
-                    errorMsg = I18NUtils.tradueix("procesdefirma.status.canceled", transactionID);
-                }
-                break;
-
-                case FirmaSimpleStatus.STATUS_FINAL_OK: {
-                    List<FirmaSimpleSignatureStatus> results = fullTransactionStatus.getSignaturesStatusList();
-
-                    if (log.isDebugEnabled()) {
-                        log.debug(" ===== WEB RESULTATS [" + results.size() + "] =========");
-                    }
-
-                    FirmaSimpleSignatureResult fssr = null;
-                    
-                    for (FirmaSimpleSignatureStatus result : results) {
-                    	String signID = result.getSignID();
-						
-                    	if (log.isDebugEnabled()) {
-                    		log.debug(" ------ WEB SIGNID ]" + signID + "[");
-                    	}
-					
-                    	fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
-                    	
-                    	for (Long peticioID: llistatPeticioID) {
-							if (signID.equals(SIGNID_ + peticioID)) {
-								
-								if (fssr != null && fssr.getSignedFileInfo() != null) {
-									Thread.sleep(1000);
-		                    		//Aquest mètode pot retornar un I18NException que va directe al catch i mostra l'error
-		                    		InfoSignatura is = peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
-		                    		
-		                    		log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
-		                    		
-		                    		Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
-		                    		
-		                            peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-		                            peticioLogicaEjb.update(peticio);
-		                            
-		                            peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, is, Configuracio.getUrlBase());
-
-		                            log.info("guardarResultatAutofirma()::Autofirma => sortim");
-
-		                    		
-		                    	} else {
-		                    		//Error de getSignatureResult ha anat malament;
-		                    		errorException = null;
-		                    		errorMsg = I18NUtils.tradueix("procesdefirma.status.final.error.portafib", transactionID, signID);
-		                    	}
-								
-							}
-                    		
-						}
-                    	
-//                    	
-//                    	boolean crearPeticio = signID != SIGNID_ + "0";
-//                    	//SignID == 0 es la petició creada, les seguents s'han de crear, una copia de la peticio amb un altre fitxer i fitxer firmat.
-//                    	if (fssr != null && fssr.getSignedFileInfo() != null) {
-//                    		//Aquest mètode pot retornar un I18NException que va directe al catch i mostra l'error
-//                    		peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr, crearPeticio);
-//                    		crearPeticio = true;
-//                    	} else {
-//                    		//Error de getSignatureResult ha anat malament;
-//                    		errorException = null;
-//                    		errorMsg = I18NUtils.tradueix("procesdefirma.status.final.error.portafib", transactionID, signID);
-//                    	}
-                    }
-                    return new ModelAndView(
-                    		new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
-                }
-//                break;
-
-                default:
-                    errorException = null;
-                    errorMsg = I18NUtils.tradueix("procesdefirma.status.default", String.valueOf(status));
-            }
-            // Final Switch Global
-        } catch (Exception e) {
-            errorException = ExceptionUtils.getStackTrace(e);
-            errorMsg = I18NUtils.tradueix("procesdefirma.error", e.getMessage());
-
-        } finally {
-            if (api != null && transactionID != null) {
-                try {
-                    api.closeTransaction(transactionID);
-                } catch (Throwable th) {
-                    log.error(th.getMessage(), th);
-                }
-            }
-        }
-
-        log.error(errorMsg);
-        if (errorException != null) {
-            log.error(errorException);
-        }
-
-        // ANAR A LLISTAT DE PETICIONS
-        HtmlUtils.saveMessageError(request, errorMsg);
-
-        
-        
-        
-//        Peticio pet = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-//
-//        if (pet == null) {
-//            log.error("Error en el procés de creació de Petició Firma. "
-//                    + "No s'ha trobat la nova petició. S'ha de reintentar el procés, si el problema persisteix, contacti ab el seu administrador.");
-//
-//            throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
-//                    new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
-//        }
-//        pet.setErrorMsg(LogicUtils.split255(errorMsg));
-//        pet.setErrorException(errorException);
-//        pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
-//        pet.setEstat(Constants.ESTAT_PETICIO_ERROR);
-//
-//        peticioLogicaEjb.update(pet);
-
-        return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
-
-        //        ModelAndView mav = new ModelAndView("finaliframe"); 
-        //        mav.addObject("URL_FINAL", request.getContextPath() + LlistatPeticionsUserController.CONTEXT_WEB + "/list");
-        //        return mav;
+		public void setMsg(String msg) {
+			this.msg = msg;
+		}
+		
+		public void setMsgCode(String codi, String... args) {
+			this.msg = I18NUtils.tradueix(codi, args);
+		}
+		
+		public void setException(String exception) {
+			this.exception = exception;
+		}
+		
     }
 
+	@RequestMapping(value = "/finalWebAuth/{transactionID}")
+	public ModelAndView finalProcesDeFirmaWebAuth(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("transactionID") String transactionID) throws Exception {
+
+		log.info("Final Web  Consultant transactionID[" + transactionID + "] dins Peticions ...");
+
+		List<Long> llistatPeticioID = peticioLogicaEjb.executeQuery(PeticioFields.PETICIOID,
+				PeticioFields.PETICIOPORTAFIRMES.equal(transactionID));
+
+		// peticioIdByTransactionId.get(transactionID);
+
+		if (llistatPeticioID.size() == 0) {
+			Long peticioID = 0L;
+			throw new I18NException("error.notfound", new I18NArgumentCode("peticio.peticio"),
+					new I18NArgumentCode("peticio.peticioID"), new I18NArgumentString(String.valueOf(peticioID)));
+		}
+
+		log.info("Consulta transactionID]" + transactionID + "[ => " + llistatPeticioID.toArray());
+
+		ApiFirmaWebSimple api = null;
+		ErrorInfo errorInfo = new ErrorInfo();
+
+		try {
+			api = getApiFirmaWebSimple();
+
+			FirmaSimpleGetTransactionStatusResponse fullTransactionStatus;
+			fullTransactionStatus = api.getTransactionStatus(transactionID);
+
+			FirmaSimpleStatus transactionStatus = fullTransactionStatus.getTransactionStatus();
+
+			int status = transactionStatus.getStatus();
+
+			switch (status) {
+			case FirmaSimpleStatus.STATUS_INITIALIZING:
+				errorInfo.setMsgCode("procesdefirma.status.initializing");
+				break;
+
+			case FirmaSimpleStatus.STATUS_IN_PROGRESS:
+				errorInfo.setMsgCode("procesdefirma.status.inprogress");
+				break;
+
+			case FirmaSimpleStatus.STATUS_FINAL_ERROR: {
+
+				errorInfo.setMsgCode("procesdefirma.status.finalerror", transactionID,
+						transactionStatus.getErrorMessage());
+
+				String strackTrace = transactionStatus.getErrorStackTrace();
+				errorInfo.setException(strackTrace);
+			}
+				break;
+
+			case FirmaSimpleStatus.STATUS_CANCELLED:
+				errorInfo.setMsgCode("procesdefirma.status.canceled", transactionID);
+				break;
+
+			case FirmaSimpleStatus.STATUS_FINAL_OK: {
+				List<FirmaSimpleSignatureStatus> results = fullTransactionStatus.getSignaturesStatusList();
+				return handleFinalOk(api, request, transactionID, llistatPeticioID, results, errorInfo);
+			}
+
+			default:
+				errorInfo.setMsgCode("procesdefirma.status.default", String.valueOf(status));
+			}
+
+			// Final Switch Global
+		} catch (Exception e) {
+			errorInfo.setMsgCode("procesdefirma.error", e.getMessage());
+
+			String errorException = ExceptionUtils.getStackTrace(e);
+			errorInfo.setException(errorException);
+
+		} finally {
+			if (api != null && transactionID != null) {
+				try {
+					api.closeTransaction(transactionID);
+				} catch (Throwable th) {
+					log.error(th.getMessage(), th);
+				}
+			}
+		}
+
+		assignarErrorPeticions(llistatPeticioID, errorInfo);
+		HtmlUtils.saveMessageError(request, errorInfo.getMsg());
+		return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+	}
+
+	private void assignarErrorPeticions(List<Long> llistatPeticioID, ErrorInfo errorInfo) throws I18NException {
+		String errorMsg = errorInfo.getMsg();
+		String errorException = errorInfo.getException();
+
+		log.error("errorMsg: " + errorMsg);
+		if (errorException != null) {
+			log.error("errorException: " + errorException);
+		}
+
+		for (Long peticioID : llistatPeticioID) {
+			Peticio pet = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+			log.info("Afegint error a peticioID[" + peticioID + "]");
+			if (pet != null) {
+				pet.setErrorMsg(LogicUtils.split255(errorMsg));
+				pet.setErrorException(errorException);
+				pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
+				pet.setEstat(Constants.ESTAT_PETICIO_ERROR);
+				peticioLogicaEjb.update(pet);
+			}
+		}
+	}
+
+	private ModelAndView handleFinalOk(ApiFirmaWebSimple api, HttpServletRequest request, String transactionID,
+			List<Long> llistatPeticioID, List<FirmaSimpleSignatureStatus> results, ErrorInfo errorInfo)
+			throws Exception {
+
+		if (results == null || results.isEmpty()) {
+			log.warn("No hi ha signatures associades a la transacció " + transactionID);
+			HtmlUtils.saveMessageError(request, "procesdefirma.status.finalerror");
+			return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+		}
+
+		if (log.isDebugEnabled()) {
+			log.debug(" ===== WEB RESULTATS [" + results.size() + "] =========");
+		}
+
+		for (FirmaSimpleSignatureStatus result : results) {
+			String signID = result.getSignID();
+
+			if (log.isDebugEnabled()) {
+				log.debug(" ------ WEB SIGNID ]" + signID + "[");
+			}
+
+			FirmaSimpleStatus fss = result.getStatus();
+			int statusSign = fss.getStatus();
+
+			switch (statusSign) {
+
+			case FirmaSimpleStatus.STATUS_INITIALIZING:
+				errorInfo.setMsgCode("procesdefirma.status.initializing");
+				break;
+
+			case FirmaSimpleStatus.STATUS_IN_PROGRESS:
+				errorInfo.setMsgCode("procesdefirma.status.inprogress");
+				break;
+
+			case FirmaSimpleStatus.STATUS_FINAL_ERROR: { // = -1;
+				errorInfo.setMsgCode("procesdefirma.status.finalerror", transactionID, fss.getErrorMessage());
+
+				log.error("Error en la firma: " + errorInfo.getMsg());
+
+				String errorException = fss.getErrorStackTrace();
+				errorInfo.setException(errorException);
+			}
+				break;
+
+			case FirmaSimpleStatus.STATUS_CANCELLED:
+				errorInfo.setMsgCode("procesdefirma.status.canceled", transactionID);
+				break;
+
+			case FirmaSimpleStatus.STATUS_FINAL_OK: // = 2;
+				FirmaSimpleSignatureResult fssr = null;
+				fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
+
+				processSuccessfulSign(fssr, transactionID, llistatPeticioID, signID, errorInfo);
+
+				HtmlUtils.saveMessageSuccess(request, "procesdefirma.status.finalok");
+				return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+			}
+		}
+
+		// Si arribem aquí és que tots han donat error
+		assignarErrorPeticions(llistatPeticioID, errorInfo);
+		HtmlUtils.saveMessageError(request, errorInfo.getMsg());
+		return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+	}
+
+	private void processSuccessfulSign(FirmaSimpleSignatureResult fssr, String transactionID,
+			List<Long> llistatPeticioID, String signID, ErrorInfo errorInfo) throws Exception {
+
+		for (Long peticioID : llistatPeticioID) {
+			if (signID.equals(SIGNID_ + peticioID)) {
+
+				if (fssr != null && fssr.getSignedFileInfo() != null) {
+					Thread.sleep(1000);
+					// Aquest mètode pot retornar un I18NException que va directe al catch i mostra
+					// l'error
+					InfoSignatura is = peticioLogicaEjb.guardarResultatAutofirma(peticioID, fssr);
+
+					log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
+
+					Peticio peticio = peticioLogicaEjb.findByPrimaryKey(peticioID);
+
+					peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+					peticioLogicaEjb.update(peticio);
+
+					peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, is, Configuracio.getUrlBase());
+
+					log.info("guardarResultatAutofirma()::Autofirma => sortim");
+
+				} else {
+					// Error de getSignatureResult ha anat malament;
+					errorInfo.setMsgCode("procesdefirma.status.final.error.portafib", transactionID, signID);
+				}
+			}
+		}
+	}
+    
     /**
      * 
      * @param peticio
