@@ -255,9 +255,10 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 
 			case FirmaSimpleStatus.STATUS_FINAL_OK: {
 				List<FirmaSimpleSignatureStatus> results = fullTransactionStatus.getSignaturesStatusList();
-				return handleFinalOk(api, request, transactionID, llistatPeticioID, results, errorInfo);
+				handleFinalOk(api, request, transactionID, llistatPeticioID, results, errorInfo);
 			}
-
+			    break;
+			    
 			default:
 				errorInfo.setMsgCode("procesdefirma.status.default", String.valueOf(status));
 			}
@@ -279,8 +280,12 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 			}
 		}
 
-		assignarErrorPeticions(llistatPeticioID, errorInfo);
-		HtmlUtils.saveMessageError(request, errorInfo.getMsg());
+		if (errorInfo.getMsg() == null) {
+			HtmlUtils.saveMessageSuccess(request, "procesdefirma.status.finalok");
+		} else {
+			assignarErrorPeticions(llistatPeticioID, errorInfo);
+			HtmlUtils.saveMessageError(request, errorInfo.getMsg());
+		}
 		return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
 	}
 
@@ -306,26 +311,24 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 		}
 	}
 
-	private ModelAndView handleFinalOk(ApiFirmaWebSimple api, HttpServletRequest request, String transactionID,
+	private void handleFinalOk(ApiFirmaWebSimple api, HttpServletRequest request, String transactionID,
 			List<Long> llistatPeticioID, List<FirmaSimpleSignatureStatus> results, ErrorInfo errorInfo)
 			throws Exception {
 
 		if (results == null || results.isEmpty()) {
 			log.warn("No hi ha signatures associades a la transacció " + transactionID);
 			HtmlUtils.saveMessageError(request, "procesdefirma.status.finalerror");
-			return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+			return; // new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
 		}
 
-		if (log.isDebugEnabled()) {
-			log.debug(" ===== WEB RESULTATS [" + results.size() + "] =========");
-		}
+		if (log.isDebugEnabled()) {}
+		log.info(" ===== WEB RESULTATS [" + results.size() + "] =========");
 
 		for (FirmaSimpleSignatureStatus result : results) {
 			String signID = result.getSignID();
 
-			if (log.isDebugEnabled()) {
-				log.debug(" ------ WEB SIGNID ]" + signID + "[");
-			}
+			log.info(" ------ WEB SIGNID ]" + signID + "[");
+			if (log.isDebugEnabled()) {}
 
 			FirmaSimpleStatus fss = result.getStatus();
 			int statusSign = fss.getStatus();
@@ -359,22 +362,26 @@ public class AutoFirmaUserController extends AbstractFirmaUserController {
 				fssr = api.getSignatureResult(new FirmaSimpleGetSignatureResultRequest(transactionID, signID));
 
 				processSuccessfulSign(fssr, transactionID, llistatPeticioID, signID, errorInfo);
-
-				HtmlUtils.saveMessageSuccess(request, "procesdefirma.status.finalok");
-				return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+                break;
+//				return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
 			}
 		}
 
-		// Si arribem aquí és que tots han donat error
-		assignarErrorPeticions(llistatPeticioID, errorInfo);
-		HtmlUtils.saveMessageError(request, errorInfo.getMsg());
-		return new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
+//		// Si arribem aquí és que tots han donat error
+//		assignarErrorPeticions(llistatPeticioID, errorInfo);
+//		HtmlUtils.saveMessageError(request, errorInfo.getMsg());
+//		return;  new ModelAndView(new RedirectView(LlistatPeticionsUserController.CONTEXT_WEB + "/list", true));
 	}
 
 	private void processSuccessfulSign(FirmaSimpleSignatureResult fssr, String transactionID,
 			List<Long> llistatPeticioID, String signID, ErrorInfo errorInfo) throws Exception {
+		
+		log.info("processSuccessfulSign()::Autofirma => Entram dins processSuccessfulSign ...");
+		log.info("signID: " + signID);
+		
 
 		for (Long peticioID : llistatPeticioID) {
+			log.info("Comprovant peticioID: " + peticioID + " amb signID: " + SIGNID_ + peticioID);
 			if (signID.equals(SIGNID_ + peticioID)) {
 
 				if (fssr != null && fssr.getSignedFileInfo() != null) {
