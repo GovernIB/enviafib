@@ -494,7 +494,9 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         
         final int tipus = getTipusPeticio();
         if (tipus == Constants.TIPUS_PETICIO_AUTOFIRMA) {
-            log.info("AbstractFirmaUserController:: Estam creant un AutoFirma");
+            log.info("AbstractFirmaUserController:: Estam creant un AutoFirma. Pasam a estat En Proces");
+            p.setEstat(Constants.ESTAT_PETICIO_EN_PROCES);
+            peticioLogicaEjb.update(p);
         } else {
             //Enviament de la peticio a PortaFIB després de la seva creació
             try {
@@ -569,30 +571,38 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
         return p;
     }
 
-    
-    private class AnexInfo {
-        
-        private CommonsMultipartFile peticio;
-        private CommonsMultipartFile anex;
-        public CommonsMultipartFile getPeticio() {
-            return peticio;
-        }
-        @SuppressWarnings("unused")
-        public void setPeticio(CommonsMultipartFile peticio) {
-            this.peticio = peticio;
-        }
-        public CommonsMultipartFile getAnex() {
-            return anex;
-        }
-        @SuppressWarnings("unused")
-        public void setAnex(CommonsMultipartFile anex) {
-            this.anex = anex;
-        }
-        public AnexInfo(CommonsMultipartFile peticio, CommonsMultipartFile anex) {
-            super();
-            this.peticio = peticio;
-            this.anex = anex;
-        }
+	private class InfoAnnexPeticio {
+		public CommonsMultipartFile fitxerPeticio;
+		public Set<InfoAnexJPA> anexes;
+
+		public InfoAnnexPeticio(CommonsMultipartFile fitxerPeticio) {
+			this.fitxerPeticio = fitxerPeticio;
+			this.anexes = new HashSet<>();
+		}
+		
+		public CommonsMultipartFile getFitxerPeticio() {
+			return fitxerPeticio;
+		}
+		
+		public Set<InfoAnexJPA> getAnexes() {
+			return anexes;
+		}
+		
+		public void addAnex(CommonsMultipartFile anex){
+			
+			Fitxer a = crearFitxer(anex);
+			
+			InfoAnexJPA ia = new InfoAnexJPA();
+			ia.setAnexID(a.getFitxerID());
+
+			log.info("Afegirem anex " + a.getNom() + " a la peticio " + this.fitxerPeticio.getOriginalFilename());
+			this.anexes.add(ia);
+			
+		}
+	}
+
+	private enum ModePeticio {
+        AUTO_FIRMA, NORMAL
     }
 
 	@Override
@@ -602,136 +612,61 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
 		PeticioMultipleForm peticioForm = (PeticioMultipleForm) peticioForm2;
 
-		List<CommonsMultipartFile> files = new ArrayList<CommonsMultipartFile>();
-		List<AnexInfo> infoAnexes = new ArrayList<AnexInfo>();
+		List<InfoAnnexPeticio> infoPeticions = prepareFilesAndAttacheds(peticioForm);
 
-		int nFitxers = prepararFitxersAnnexes(peticioForm, result, files, infoAnexes);
+		if (infoPeticions == null) {
+			result.rejectValue(get(FITXERID), "error.fitxers.postcreate", new String[] {}, null);
+		}
 
-		ProgresInfo pi = new ProgresInfo(nFitxers, 0);
+		ProgresInfo pi = new ProgresInfo(infoPeticions.size(), 0);
 		request.getSession().setAttribute(SESSION_PROGRES_KEY, pi);
 
 		PeticioJPA peticio = peticioForm.getPeticio();
 		String originalName = peticio.getNom();
 
-		if (isAutofirma(peticio)) {
-
-			procesarAutoFirma(request, peticio, files, originalName);
-
-		} else {
-			procesarNoAutoFirma(request, response, result, peticioForm, files, infoAnexes, originalName, pi);
-		}
+		boolean finalOk = procesarPeticionsAll(request, response, result, peticioForm, infoPeticions, pi);
 
 		request.getSession().removeAttribute(SESSION_PROGRES_KEY);
 
-		if (result.hasErrors()) {
+		if (finalOk) {
+			return getRedirectWhenCreated(request, peticioForm);
+		} else {
 			request.setAttribute("dragdrop", true);
 			peticioForm.getPeticio().setNom(originalName);
 			peticioForm.getPeticio().setFitxer(null);
 			return getTileForm();
-		} else {
-			return getRedirectWhenCreated(request, peticioForm);
 		}
 	}
 
-	private boolean isAutofirma(PeticioJPA peticio) {
-		return peticio.getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA;
-	}
+	private boolean procesarPeticionsAll(HttpServletRequest request, HttpServletResponse response,
+			BindingResult resultGlobal, PeticioMultipleForm peticioForm, List<InfoAnnexPeticio> infoPeticions, ProgresInfo pi) throws Exception {
 
-	private int prepararFitxersAnnexes(PeticioMultipleForm peticioForm, BindingResult result,
-			List<CommonsMultipartFile> files, List<AnexInfo> infoAnexes) {
+		PeticioJPA original = peticioForm.getPeticio();
+		ModePeticio mode = isAutofirma(original) ? ModePeticio.AUTO_FIRMA : ModePeticio.NORMAL;
 
-		CommonsMultipartFile[] allHiddenFiles = peticioForm.getHiddenFile();
-		String flag = peticioForm.getFileInfoFlag();
+		setParametresArxiu(original);
 
-		for (CommonsMultipartFile file : allHiddenFiles) {
-			log.info("fitxers: " + file.getOriginalFilename());
-		}
-
-		if (flag == null || allHiddenFiles == null || allHiddenFiles.length == 0) {
-			if (peticioForm.getFitxerID().isEmpty()) {
-				allHiddenFiles = new CommonsMultipartFile[0];
-				result.rejectValue(get(FITXERID), "error.fitxers.postcreate", new String[] {}, null);
-				flag = "";
-
-			} else {
-				allHiddenFiles = new CommonsMultipartFile[1];
-				allHiddenFiles[0] = peticioForm.getFitxerID();
-				flag += "F";
-			}
-		}
-
-		log.info("FLAG: " + flag);
-		int idx = 0;
-		int contadorPeticio = 0;
-		CommonsMultipartFile actual = null;
-		while (flag.length() > 0 && idx < allHiddenFiles.length) {
-			if (flag.charAt(idx) == 'A') {
-				log.info("Afegim anex");
-				infoAnexes.add(new AnexInfo(actual, allHiddenFiles[idx]));
-			} else if (flag.charAt(idx) == 'F') {
-				actual = allHiddenFiles[idx];
-				log.info("Afegim fitxerPeticio: " + actual.getOriginalFilename());
-				contadorPeticio++;
-				files.add(actual);
-			}
-			idx++;
-		}
-
-		for (AnexInfo anexInfo : infoAnexes) {
-			log.info(anexInfo.getPeticio().getOriginalFilename() + " - " + anexInfo.getAnex().getOriginalFilename());
-		}
-
-		log.info("AbstractFirmaUserController:: files: " + files);
-
-		return contadorPeticio;
-	}
-
-	private void procesarNoAutoFirma(HttpServletRequest request, HttpServletResponse response, BindingResult result,
-			PeticioMultipleForm peticioForm, List<CommonsMultipartFile> files, List<AnexInfo> infoAnexes,
-			String originalName, ProgresInfo pi) throws I18NException, Exception {
-
-		log.info("crearPeticioPost No-AutoFirma");
-
-		Peticio firstPet = null;
-
-		Peticio original = peticioForm.getPeticio();
-
-		int nFitxers = files.size();
-
-		int PETICIONS_CREADES_OK = 0;
-		List<String> missatgesErrors = new ArrayList<String>();
+		List<PeticioJPA> peticions = new ArrayList<>();
+		List<String> missatgesErrors = new ArrayList<>();
+		int peticionsOK = 0;
 
 		String flowTemplateId = original.getReason();
+		Peticio firstPet = null;
 
-		int i;
-		for (i = 0; i < nFitxers; i++) {
-			Peticio petFor;
+		int nFitxers = infoPeticions.size();
+		int procesades = 0;
+		
+		for (InfoAnnexPeticio infoPet : infoPeticions) {
+			pi.enviades = procesades;
+			CommonsMultipartFile file = infoPet.getFitxerPeticio();
 
-			pi.enviades = i;
-			CommonsMultipartFile file = files.get(i);
+			PeticioJPA peticio = prepararPeticioBase(original, nFitxers, file);
 
-			String nomPeticio = originalName;
+			String nomPeticio = generarNomPeticio(original.getNom(), file.getOriginalFilename(), nFitxers);
+			peticio.setNom(nomPeticio);
 
-			if (nFitxers > 1 && originalName != null && originalName.trim().length() > 0) {
-				nomPeticio += "-" + file.getOriginalFilename();
-			}
-
-			Set<InfoAnexJPA> anexes = getAnexesFitxer(file, infoAnexes);
-
-			peticioForm = prepararPeticio(peticioForm, file, anexes, nomPeticio, flowTemplateId);
-
-			BeanPropertyBindingResult result2 = new BeanPropertyBindingResult(peticioForm, "peticioForm");
-
-			log.info("\n\nSTART CREATE POST");
-			String ret = super.crearPeticioPost(peticioForm, result2, request, response);
-
-			petFor = peticioForm.getPeticio();
-
-			String resultat = procesarErrors(ret, result2, missatgesErrors, i, petFor, firstPet, file);
-
-			for (ObjectError objectError : result2.getAllErrors()) {
-				result.addError(objectError);
-			}
+			String resultat = procesarPeticioSimple(peticioForm, peticio, infoPet, flowTemplateId, request, response,
+					resultGlobal, missatgesErrors, procesades, firstPet);
 
 			if (resultat.startsWith("break")) {
 
@@ -745,7 +680,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 					break;
 				case "break errorFormulari":
 					msg = "POST: Errors al formulari";
-//                      HtmlUtils.saveMessageError(request, msg);
+//		                  HtmlUtils.saveMessageError(request, msg);
 					log.error(msg);
 
 					break;
@@ -757,40 +692,224 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 					break;
 
 				case "break errorRepetit":
-//					HtmlUtils.deleteMessages(request);
-					msg = "No s'ha pogut crear cap de les peticions: " + firstPet.getErrorMsg();
-					HtmlUtils.saveMessageError(request, msg);
+//						HtmlUtils.deleteMessages(request);
+					if (firstPet != null) {
+						msg = "No s'ha pogut crear cap de les peticions: " + firstPet.getErrorMsg();
+						log.error(msg);
+						HtmlUtils.saveMessageError(request, msg);
+					}
 					break;
 				}
 
 				break;
 			} else if (resultat.startsWith("continue")) {
 				if (resultat.endsWith("ok")) {
-					PETICIONS_CREADES_OK++;
+					peticionsOK++;
+					
+					if (mode == ModePeticio.AUTO_FIRMA) {
+						PeticioJPA creada = peticioForm.getPeticio();
+						log.info("Afegida petició AUTO_FIRMA amb ID=" + creada.getPeticioID() + " a la llista d'AutoFirma");
+						peticions.add(creada);
+					}
 				}
-				continue;
 			}
 
+			procesades++;
 		}
 
-		log.warn("\n\nAtributs del result final:");
-		showErrorInfo(result);
+		boolean finalOk = procesarFinal(request, resultGlobal, missatgesErrors, nFitxers, peticionsOK, procesades);
 
-		if (i == nFitxers && i > 0) {
-			HtmlUtils.deleteMessages(request);
-			if (PETICIONS_CREADES_OK > 0) {
-				String msg = "S'han creat i enviat correctament " + PETICIONS_CREADES_OK + " peticions a PortaFIB";
-				HtmlUtils.saveMessageInfo(request, msg);
+		//Si ha acabat be, i es AutoFirma, iniciar el procés d'AutoFirma.
+		if (mode == ModePeticio.AUTO_FIRMA && finalOk) {
+			pi.enviades = procesades;
+			finalOk &= procesarAutofirma(request, peticions);
+		}
+		
+		if (finalOk && peticionsOK > 0) {
+			log.info("S'han creat correctament " + peticionsOK + " peticions.");
+
+			if (mode == ModePeticio.AUTO_FIRMA) {
+				HtmlUtils.saveMessageInfo(request, "S'han creat correctament " + peticionsOK
+						+ " peticions. Ara serà redirigit a AutoFirma per signar.");
 			} else {
-				HtmlUtils.saveMessageWarning(request, "No s'ha creat ni enviat cap peticio a PortaFIB");
+
+				HtmlUtils.saveMessageInfo(request,
+						"S'han creat i enviat correctament " + peticionsOK + " peticions a PortaFIB");
 			}
-			for (String fileErrorMsg : missatgesErrors) {
-				HtmlUtils.saveMessageError(request, fileErrorMsg);
-			}
+		} else {
+			HtmlUtils.saveMessageWarning(request, "No s'ha creat ni enviat cap petició a PortaFIB");
 		}
+		
+		return finalOk;
 	}
 
-	private String procesarErrors(String ret, BindingResult result2, List<String> missatgesErrors, int idx,
+	private String procesarPeticioSimple(PeticioMultipleForm peticioForm, PeticioJPA peticio, InfoAnnexPeticio infoPet,
+			String flowTemplateId, HttpServletRequest request, HttpServletResponse response, BindingResult resultGlobal,
+			List<String> missatgesErrors, int idx, Peticio firstPet) throws Exception {
+
+		if (peticio.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI
+				|| peticio.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT) {
+			peticio.setReason(flowTemplateId);
+		}
+
+		CommonsMultipartFile file = infoPet.getFitxerPeticio();
+
+		peticio.setInfoAnexs(infoPet.getAnexes());
+		peticioForm.setPeticio(peticio);
+		peticioForm.setFitxerID(file);
+
+		BeanPropertyBindingResult resultPeticio = new BeanPropertyBindingResult(peticioForm, "peticioForm");
+		String ret = super.crearPeticioPost(peticioForm, resultPeticio, request, response);
+
+		Peticio petFor = peticioForm.getPeticio();
+
+		String resultat = procesarErrors(ret, resultPeticio, missatgesErrors, idx, petFor, firstPet, file);
+
+		resultPeticio.getAllErrors().forEach(resultGlobal::addError);
+		
+		return resultat;
+	}
+
+	private boolean procesarAutofirma(HttpServletRequest request, List<PeticioJPA> peticions) throws Exception {
+		String base = request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR) + getContextWeb();
+		String[] info = AutoFirmaUserController.autofirma2(peticions, base, log);
+
+		String transactionID = info[0];
+		String redirectUrl = info[1];
+
+		for (PeticioJPA pet : peticions) {
+
+			log.info("Afegint transactionID[" + transactionID + "] => " + pet.getPeticioID() + "    dins mapping");
+
+			pet.setPeticioPortafirmes(transactionID);
+			peticioLogicaEjb.update(pet);
+		}
+
+		request.getSession().setAttribute("redirectUrl", redirectUrl);
+		return true;
+	}
+
+	private boolean procesarFinal(HttpServletRequest request, BindingResult resultGlobal,
+			List<String> missatgesErrors, int nFitxers, int creadesOK, int procesades) {
+
+		
+		log.info("Final normal: nFitxers=" + nFitxers + " creadesOK=" + creadesOK + " procesades=" + procesades);
+		
+		showErrorInfo(resultGlobal);
+
+		if (procesades == 0 || nFitxers != procesades)
+			return false;
+
+		// Totes les peticions han estat processades
+
+		HtmlUtils.deleteMessages(request);
+		for (String msg : missatgesErrors) {
+			HtmlUtils.saveMessageError(request, msg);
+		}
+		
+		return creadesOK > 0;
+	}
+	
+	private Fitxer crearFitxer(CommonsMultipartFile file) {
+		FitxerJPA fitxer = new FitxerJPA();
+		fitxer.setNom(file.getOriginalFilename());
+		fitxer.setMime(file.getContentType());
+		byte[] data = file.getBytes();
+		fitxer.setTamany(data.length);
+		Fitxer f = null;
+		try {
+			f = fitxerLogicEjb.create(fitxer);
+			FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
+		} catch (I18NException e) {
+
+			log.error("Error creant fitxer: " + e.getMessage(), e);
+		}
+		return f;
+	}
+
+	private PeticioJPA prepararPeticioBase(PeticioJPA original, int nFitxers, CommonsMultipartFile file) {
+		
+		Fitxer fitxer = crearFitxer(file);
+		
+	    PeticioJPA copia = PeticioJPA.copyJPA(original);
+	    
+	    copia.setFitxerID(fitxer.getFitxerID());
+	    copia.setFitxer((FitxerJPA) fitxer);
+
+	    
+	    copia.setPeticioID(0);
+	    copia.setEstat(Constants.ESTAT_PETICIO_ERROR);
+	    copia.setErrorMsg(null);
+	    copia.setErrorException(null);
+	    
+	    return copia;
+	}
+
+	private String generarNomPeticio(String originalName, String nomFitxer, int totalFitxers) {
+	    if (totalFitxers > 1 && originalName != null && !originalName.trim().isEmpty()) {
+	        return originalName + "-" + nomFitxer;
+	    }
+	    return originalName;
+	}
+
+	private boolean isAutofirma(PeticioJPA peticio) {
+		return peticio.getTipus() == Constants.TIPUS_PETICIO_AUTOFIRMA;
+	}
+
+	private List<InfoAnnexPeticio> prepareFilesAndAttacheds(PeticioMultipleForm peticioForm) {
+
+		List<InfoAnnexPeticio> list = new ArrayList<>();
+		
+		
+		CommonsMultipartFile[] allHiddenFiles = peticioForm.getHiddenFile();
+		String flag = peticioForm.getFileInfoFlag();
+
+		for (CommonsMultipartFile file : allHiddenFiles) {
+			log.info("fitxers: " + file.getOriginalFilename());
+		}
+
+		if (flag == null || allHiddenFiles == null || allHiddenFiles.length == 0) {
+			if (peticioForm.getFitxerID().isEmpty()) {
+				allHiddenFiles = new CommonsMultipartFile[0];
+				flag = "";
+				return null;
+
+			} else {
+				allHiddenFiles = new CommonsMultipartFile[1];
+				allHiddenFiles[0] = peticioForm.getFitxerID();
+				flag += "F";
+			}
+		}
+		
+		log.info("FLAG: " + flag);
+		int idx = 0;
+		
+		InfoAnnexPeticio current = null;
+		while (flag.length() > 0 && idx < allHiddenFiles.length) {
+			if (flag.charAt(idx) == 'A') {
+				log.info("Afegim anex");
+					current.addAnex(allHiddenFiles[idx]);
+			} else if (flag.charAt(idx) == 'F') {
+				current = new InfoAnnexPeticio(allHiddenFiles[idx]);
+				list.add(current);
+				log.info("Afegim fitxerPeticio: " + current.getFitxerPeticio().getOriginalFilename());
+			}
+			idx++;
+		}
+
+		for (InfoAnnexPeticio iap : list) {
+			for (InfoAnexJPA infoAnexJPA : iap.getAnexes()) {
+				log.info("Peticio " + iap.getFitxerPeticio().getOriginalFilename() + " - Afegit anexID: "
+						+ infoAnexJPA.getAnexID());
+			}
+		}
+
+		log.info("AbstractFirmaUserController:: InfoAnnexPeticio: " + list.size());
+		
+		return list;
+	}
+	
+	private String procesarErrors(String ret, BindingResult resultPeticio, List<String> missatgesErrors, int idx,
 			Peticio petFor, Peticio firstPet, CommonsMultipartFile file) throws I18NException {
 
 		log.info("POST: ret=" + ret);
@@ -798,16 +917,16 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 			// Error: POST ret=null. Aturar
 			return "break noRet";
 		} else {
-			if (result2.hasErrors()) {
+			if (resultPeticio.hasErrors()) {
 
-				showErrorInfo(result2);
-				int nErrorsFields = result2.getFieldErrorCount();
-				int nErrorsFitxers = result2.getFieldErrorCount(PeticioFields.FITXERID.fullName);
+				showErrorInfo(resultPeticio);
+				int nErrorsFields = resultPeticio.getFieldErrorCount();
+				int nErrorsFitxers = resultPeticio.getFieldErrorCount(PeticioFields.FITXERID.fullName);
 
 				// Hi ha errors al formulari
 				if (nErrorsFitxers == nErrorsFields) {
 					// Només hi ha errors amb fitxers -> Avisar i continuar
-					FieldError fieldFileError = result2.getFieldErrors(PeticioFields.FITXERID.fullName).get(0);
+					FieldError fieldFileError = resultPeticio.getFieldErrors(PeticioFields.FITXERID.fullName).get(0);
 
 					Object[] array = fieldFileError.getArguments();
 					String[] arguments = Arrays.copyOf(array, array.length, String[].class);
@@ -859,130 +978,25 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 		}
 
 	}
+	
+	public static final String SESSION_PROGRES_KEY = "_SESSION_PROGRES_KEY_";
 
-	private PeticioMultipleForm prepararPeticio(PeticioMultipleForm peticioForm, CommonsMultipartFile file,
-			Set<InfoAnexJPA> anexes, String nomPeticio, String flowTemplateId) throws I18NException {
-		Peticio petFor = peticioForm.getPeticio();
+	public static class ProgresInfo {
+		public int total;
+		public int enviades;
 
-		peticioForm.setFitxerID(file);
-
-		petFor.setPeticioID(0);
-		petFor.setEstat(Constants.ESTAT_PETICIO_ERROR);
-		petFor.setErrorMsg(null);
-		petFor.setErrorException(null);
-
-		petFor.setNom(nomPeticio);
-
-		if (petFor.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI
-				|| petFor.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT) {
-			petFor.setReason(flowTemplateId);
+		public ProgresInfo(int total, int enviades) {
+			super();
+			this.total = total;
+			this.enviades = enviades;
 		}
-
-		peticioForm.getPeticio().setInfoAnexs(anexes);
-
-		return peticioForm;
+		
+		@Override
+		public String toString() {
+			return "ProgresInfo [total=" + total + ", enviades=" + enviades + "]";
+		}
 	}
-
-	private Set<InfoAnexJPA> getAnexesFitxer(CommonsMultipartFile file, List<AnexInfo> infoAnexes)
-			throws I18NException {
-		Set<InfoAnexJPA> anexes = new HashSet<InfoAnexJPA>();
-
-		for (AnexInfo anexInfo : infoAnexes) {
-			if (anexInfo.getPeticio().equals(file)) {
-				CommonsMultipartFile anex = anexInfo.getAnex();
-//				String nomAnnex = anex.getOriginalFilename();
-//				FitxerJPA fitxer = new FitxerJPA();
-//				fitxer.setNom(anex.getOriginalFilename());
-//				fitxer.setMime(anex.getContentType());
-//				final byte[] data = anex.getBytes();
-//				fitxer.setTamany(data.length);
-//
-//				Fitxer f = fitxerLogicEjb.create(fitxer);
-//				FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
-
-				Fitxer fitxer = crearFitxer(anex);
-				
-				InfoAnexJPA ia = new InfoAnexJPA();
-				ia.setAnexID(fitxer.getFitxerID());
-
-				anexes.add(ia);
-				log.info("Afegirem anex " + fitxer.getNom() + " a la peticio " + file.getOriginalFilename());
-			}
-		}
-		return anexes;
-	}
-
-	private void procesarAutoFirma(HttpServletRequest request, PeticioJPA petForm, List<CommonsMultipartFile> files,
-			String originalName) throws I18NException, I18NValidationException {
-		log.info("crearPeticioPost AutoFirma");
-
-		List<PeticioJPA> peticions = new ArrayList<PeticioJPA>();
-		List<Fitxer> fitxers = new ArrayList<Fitxer>();
-
-		setParametresArxiu(petForm);
-
-//			int i;
-		for (CommonsMultipartFile file : files) {
-
-			Fitxer f = crearFitxer(file);
-			fitxers.add(f);
-
-			PeticioJPA peticioAux = PeticioJPA.copyJPA(petForm);
-
-			peticioAux.setFitxerID(f.getFitxerID());
-			peticioAux.setFitxer((FitxerJPA) f);
-			peticioAux.setNom(originalName + "-" + file.getOriginalFilename());
-
-			log.info("\n\nSTART CREATE :: AUTOFIRMA");
-			PeticioJPA p = super.create(request, peticioAux);
-			
-			peticions.add(p);
-		}
-
-		String absoluteControllerBase = request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR)
-				+ getContextWeb();
-
-		String[] info = AutoFirmaUserController.autofirma2(peticions, absoluteControllerBase, log);
-
-		String transactionID = info[0];
-		String redirectUrl = info[1];
-
-		for (PeticioJPA pet : peticions) {
-			log.info("Afegint transactionID[" + transactionID + "] => " + pet.getPeticioID() + "    dins mapping");
-			pet.setPeticioPortafirmes(transactionID);
-			this.peticioLogicaEjb.update(pet);
-		}
-
-		request.getSession().setAttribute("redirectUrl", redirectUrl);
-	}
-
-    public static final String SESSION_PROGRES_KEY = "_SESSION_PROGRES_KEY_";
-    
-    public static class ProgresInfo{
-        public int total;
-        public int enviades;
-        public ProgresInfo(int total, int enviades) {
-            super();
-            this.total = total;
-            this.enviades = enviades;
-        }
-       
-        
-    }
-    
-    private Fitxer crearFitxer(CommonsMultipartFile file) throws I18NException {
-        FitxerJPA fitxer = new FitxerJPA();
-        fitxer.setNom(file.getOriginalFilename());
-        fitxer.setMime(file.getContentType());
-        byte[] data = file.getBytes();
-        fitxer.setTamany(data.length);
-
-        Fitxer f = fitxerLogicEjb.create(fitxer);
-        FileSystemManager.crearFitxer(new ByteArrayInputStream(data), f.getFitxerID());
-        return f;
-    }
-
-
+	
     @RequestMapping(value = "/progres", method = RequestMethod.GET)
     public void getProgresPeticionsEnviades(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
@@ -1135,12 +1149,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
             }
 
         }
-        // Validacio de serie documental
-        {
-            Peticio peticio = peticioForm.getPeticio();
-            setParametresArxiu(peticio);
-           
-        }
+//        // Validacio de serie documental
+//        {
+//            Peticio peticio = peticioForm.getPeticio();
+//            setParametresArxiu(peticio);
+//           
+//        }
         
         //Validació de que el titol no es buit
         {
@@ -1157,11 +1171,18 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 		{
 			Long fileID = peticioForm.getPeticio().getFitxerID();
 			File file = FileSystemManager.getFile(fileID);
-			String fileName = peticioForm.getPeticio().getFitxer().getNom();
-			if (!peticioLogicaEjb.esFitxerPDF(file)) {
-				result.rejectValue(get(FITXERID), "error.format.pdf", new String[] { fileName}, null);
+			Fitxer f = peticioForm.getPeticio().getFitxer();
+			if (f != null) {
+				String fileName = f.getNom();
+
+				if (!peticioLogicaEjb.esFitxerPDF(file)) {
+					result.rejectValue(get(FITXERID), "error.format.pdf", new String[] { fileName }, null);
+				} else {
+					log.info("Fitxer PDF correcte: " + fileName);
+				}
+
 			}else {
-				log.info("Fitxer PDF correcte: " + fileName);
+				result.rejectValue(get(FITXERID), "error.format.pdf", new String[] { fileID.toString() }, null);
 			}
 		}
     }
