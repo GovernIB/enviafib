@@ -663,3 +663,25 @@ function openModalFluxInfo(peticioID) {
 
 
 </script>
+
+
+
+
+<!-- MILLORES A COLUMNA ESTAT -->
+<style>
+.estatInfo {
+	width: fit-content;
+	margin: auto;
+	padding: 1px 8px;
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+}
+
+.estatText {
+	padding-left: 6px;
+	font-size: 14px;
+	font-style: italic;
+	max-width: 6rem;
+}
+</style>

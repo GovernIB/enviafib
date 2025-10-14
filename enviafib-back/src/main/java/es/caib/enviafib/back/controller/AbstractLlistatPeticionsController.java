@@ -201,7 +201,6 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-//                case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
                 case Constants.ESTAT_PETICIO_ARXIVANT:
                     color = "orange";
                     if (estat == Constants.ESTAT_PETICIO_EN_PROCES) {
@@ -217,19 +216,15 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-//                case Constants.ESTAT_PETICIO_ERROR_CALLBACK:
-                    color = "red";
-                    iconList.add("fas fa-exclamation-triangle");
-                    if (estat == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
-                        iconList.add("fas fa-archive");
-                    }else if (estat == Constants.ESTAT_PETICIO_ERROR_CALLBACK) {
-                        iconList.add("fas fa-file-signature");
-                    }
-                break;
-
                 case Constants.ESTAT_PETICIO_REBUTJADA:
                     color = "red";
-                    iconList.add("fas fa-times-circle");
+                    if (estat == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
+                        iconList.add("fas fa-archive");
+					} else if (estat == Constants.ESTAT_PETICIO_REBUTJADA) {
+						iconList.add("fas fa-times-circle");
+					} else if (estat == Constants.ESTAT_PETICIO_ERROR) {
+						iconList.add("fas fa-exclamation-triangle");
+					}
                 break;
 
                 default:
@@ -240,14 +235,34 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             StringBuffer iconsStr = new StringBuffer();
 
+            String title = I18NUtils.tradueix("estat." + estat);
             for (String i : iconList) {
-                String title = I18NUtils.tradueix("estat." + estat);
                 iconsStr.append("<i class='" + i + "' style='color:" + color + ";' title='" + title + "'></i>");
             }
 
+            String estatText = "<span class='estatText'>" + title + "</span>";
+            
             long peticioID = peticio.getPeticioID();
+            
+            String background;
+            
+            switch (color) {
+			case "red":
+				background = "#ffc0c0";
+				break;
 
-            mapRemitent.put(peticioID, "<center>" + iconsStr.toString() + "</center>");
+			case "orange":
+				background = "#fddb9b";
+				break;
+			case "green":
+				background = "#b5ffb5";
+				break;
+			default:
+				background = "#ddd";
+				break;
+			}
+            
+            mapRemitent.put(peticioID, "<center style=\"background: " + background + ";\" class='estatInfo'>" + iconsStr.toString() + estatText + "</center>");
 
             //Gestió annexos
             {
