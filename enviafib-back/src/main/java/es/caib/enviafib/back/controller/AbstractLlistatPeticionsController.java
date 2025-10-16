@@ -471,7 +471,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             subject = TemplateEngine.processExpressionLanguage(subject, map);
             message = TemplateEngine.processExpressionLanguage(message, map);
 
-            EmailUtil.postMail(subject, message, isHTML, Configuracio.getAppEmail(), decodedEmail);
+            String remitent = user.getEmail();
+            
+            EmailUtil.postMail(subject, message, isHTML, remitent, decodedEmail);
             String successMsg = "S'ha enviat el email correctament";
             HtmlUtils.saveMessageSuccess(request, successMsg);
 
