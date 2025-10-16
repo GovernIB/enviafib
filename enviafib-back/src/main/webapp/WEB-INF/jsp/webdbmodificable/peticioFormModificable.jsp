@@ -173,17 +173,24 @@
                 btn_afegir_anex.setAttribute("id", "afegirAnex" + i );
                 btn_afegir_anex.setAttribute("for", "anex_aux" + i );
                 btn_afegir_anex.setAttribute("class", "afegirAnex");
-                btn_afegir_anex.innerHTML = '<i class="fas fa-arrow-circle-up"></i>';
+//                btn_afegir_anex.innerHTML = '<i class="fas fa-arrow-circle-up"></i>';
+                btn_afegir_anex.innerHTML = '<i class="fas fa-paperclip"></i>';
 
 //                div_botonera.appendChild(btn_afegir_anex);
                 div_botonera.appendChild(btn_delete);
                 
+                var span_file= document.createElement("span");
+                span_file.setAttribute("id", "span_file" + i );
+                span_file.setAttribute("class", "span_file" );
+                span_file.innerHTML = '<i class="fas fa-file"></i>';
+
                 var titolFitxer = document.createElement("span");
                 titolFitxer.setAttribute("style", "width: fit-content");
                 titolFitxer.innerHTML = ALL_FILES[i].name;
                 
                 div_file.appendChild(input);
                 div_file.appendChild(anex_aux);
+                div_file.appendChild(span_file);
                 div_file.appendChild(titolFitxer);
                 div_file.appendChild(div_botonera);
                 
@@ -193,17 +200,18 @@
                 let file = ALL_FILES[i];
                 list.items.add(file);
                 
-                //També l'afegim al llistat total de fitxers, per enviar-los tots
+                //TambÃ© l'afegim al llistat total de fitxers, per enviar-los tots
                 fullList.items.add(file);
 
                 let myFileList = list.files;
                 input.files = myFileList;
                 
+                
                 div_arriba.appendChild(div_file);
                 div_arriba.appendChild(btn_afegir_anex);
                 li_input.appendChild(div_arriba);
                 
-                //Cuando hemos añadido el fichero, comprovamos si el siguiente es su anexo...
+                //Cuando hemos aÃ±adido el fichero, comprovamos si el siguiente es su anexo...
                 
                 var div_attached = document.createElement("div");
                 div_attached.setAttribute("id", "div_attached" + i );
@@ -214,13 +222,26 @@
                 ul_attached.setAttribute("class", "ul_attached" );
                 
                 i++;
-                //Si el siguiente es anexo, añadelo. Si no, añadimos otro fichero
+                //Si el siguiente es anexo, aÃ±adelo. Si no, aÃ±adimos otro fichero
                 while (FLAG.charAt(i) === "A"){
                 	console.log("fichero: " + i);
                 	
                     var li_anex = document.createElement("li");
                     li_anex.setAttribute("id", "li_anex" + i );
                     li_anex.setAttribute("class", "li_anex" );
+                    
+                    var div_clip = document.createElement("div");
+                    div_clip.setAttribute("id", "div_clip" + i );
+                    div_clip.setAttribute("class", "div_clip" );
+                    div_clip.innerHTML = '<i class="fas fa-paperclip"></i>';
+
+                    var div_interior = document.createElement("div");
+                    div_interior.setAttribute("id", "div_interior" + i );
+                    div_interior.setAttribute("class", "div_interior" );
+                    
+                    var titolAnnex = document.createElement("span");
+                    titolAnnex.setAttribute("style", "width: fit-content");
+                    titolAnnex.innerHTML = ALL_FILES[i].name;
                     
                     var input_anex = document.createElement("input");
                     input_anex.setAttribute("type", "file");
@@ -232,14 +253,17 @@
 
                     var btn_delete_anex = document.createElement("a");
                     btn_delete_anex.setAttribute("id", "eliminarAnex" + i );
-                    btn_delete_anex.setAttribute("class", "eliminarAnex btn-primary");
+                    btn_delete_anex.setAttribute("class", "eliminarAnex");
                     btn_delete_anex.setAttribute("style", "cursor:pointer");
                     btn_delete_anex.setAttribute("onclick", "deleteFitxer(ALL_FILES, " + i + " )");
-                    btn_delete_anex.innerHTML = '<span class="label label-success"><b><i class="fas fa-times"></i></b></span>';
+                    btn_delete_anex.innerHTML = '<i class="fas fa-times"></i>';
                     
-                    li_anex.innerHTML = ALL_FILES[i].name;
-                    li_anex.appendChild(input_anex);
-                    li_anex.appendChild(btn_delete_anex);
+                    div_interior.appendChild(titolAnnex);
+                    div_interior.appendChild(input_anex);
+                    div_interior.appendChild(btn_delete_anex);
+                    
+                    li_anex.appendChild(div_clip);
+                    li_anex.appendChild(div_interior);
                     
                     ul_attached.appendChild(li_anex);
                     
@@ -248,7 +272,7 @@
                     let file = ALL_FILES[i];
                     list.items.add(file);
                     
-                    //També l'afegim al llistat total de fitxers, per enviar-los tots
+                    //TambÃ© l'afegim al llistat total de fitxers, per enviar-los tots
                     fullList.items.add(file);
 
                     let myFileList = list.files;
@@ -258,7 +282,7 @@
                 }
                 div_attached.appendChild(ul_attached);
                 
-                //Cuando hemos rellenado el div con el ul con anexos. Lo añadimos al li. Puede estar vacio      
+                //Cuando hemos rellenado el div con el ul con anexos. Lo aÃ±adimos al li. Puede estar vacio      
                 li_input.appendChild(div_attached);
                 ul_files.appendChild(li_input);
                 
@@ -405,11 +429,13 @@ td label {
 .eliminarAnex, .afegirAnex, .eliminarFitxer {
 	border-radius: 4px;
 	padding-left: 6px;
-	margin-left: 6px;
+	margin-left: 10px;
 	margin-right: 0px;
 	padding-right: 6px;
 	cursor: pointer;
 	display: inline;
+	
+	background: #72B2F2;
 }
 
 .afegirAnex:hover {
@@ -473,22 +499,35 @@ td label {
 	cursor: pointer;
 }
 
-.li_anex {
-	background-color: rgba(36, 110, 185, 0.5);
+.div_interior {
+	background-color: rgba(130, 184, 238, 0.5);
 	border-radius: 5px;
 	padding: 2px 8px;
 	margin: 5px 10px;
 	width: fit-content;
 }
 
+.li_anex {
+	display: flex;
+	align-items: center;
+	margin: 0.2rem 0.5rem;
+}
+
 .ul_attached {
-	list-style: disclosure-closed;
+	/* 	list-style: disclosure-closed;
 	margin-left: 1rem;
+ */
+	list-style: none;
 }
 
 .botonera {
 	margin-left: 0.5rem;
 }
+
+.span_file {
+  margin-right: 0.4rem;
+}
+
 </style>
 
 </c:if>
@@ -542,11 +581,11 @@ td label {
         reasonDivValue.style.padding = "8px 0px";
     }
 
-    // Define la función para el botón fuera del HTML
+    // Define la funciÃ³n para el botÃ³n fuera del HTML
     function previewSelectedFlux() {
         var select = document.getElementById("peticio.reason");
         var flowTemplateID = select.options[select.selectedIndex].value;
-        console.log("Opción seleccionada: " + flowTemplateID);
+        console.log("OpciÃ³n seleccionada: " + flowTemplateID);
         openModalFluxInfo(flowTemplateID);
     }
 
@@ -576,7 +615,7 @@ td label {
         xhttp.send('');
     }
     
-    // Llama a la función para inicializar el contenido
+    // Llama a la funciÃ³n para inicializar el contenido
     mostrarPlantillesFlux();
 
  
@@ -611,7 +650,7 @@ td label {
 </c:if>
 
 
-<%-- ===================== MOSTRAR CAMPS AVANÇATS ===========================  --%>
+<%-- ===================== MOSTRAR CAMPS AVANÃ‡ATS ===========================  --%>
 
 <script type="text/javascript"> 
 
@@ -646,7 +685,7 @@ mostrarOcultarCampsAvanzats();
 
 </script>
 
-<%-- ==== FER QUE L'OPCIÓ NULL DE TIPUS DOCUMENTALS PAREXQUI UN PLACEHOLDER ==========  --%>
+<%-- ==== FER QUE L'OPCIÃ“ NULL DE TIPUS DOCUMENTALS PAREXQUI UN PLACEHOLDER ==========  --%>
 <script type="text/javascript"> 
     var select = document.getElementById("peticio_tipusDocumental");
 	var options = select.childNodes;
@@ -712,7 +751,7 @@ mostrarOcultarCampsAvanzats();
 var peticionsTotals = -1;
 
 function validacioFormulario() {
-	//<span id="peticio.dataCreacio.errors" class="errorField alert alert-danger">El camp Creada és obligatori.</span>
+	//<span id="peticio.dataCreacio.errors" class="errorField alert alert-danger">El camp Creada Ã©s obligatori.</span>
 	var validacio = true;
 	$(".errorField").remove();
 	
@@ -744,7 +783,7 @@ function validacioFormulario() {
 			var span = document.createElement("span");
 		    span.id = "peticio.destinatariNif.errors";
 		    span.classList = "errorField alert alert-danger";
-		    span.innerHTML = "El camp NIF no té el format correcte.";
+		    span.innerHTML = "El camp NIF no tÃ© el format correcte.";
 		    nif.parentElement.prepend(span);
 		    validacio &= false;
 		}
@@ -755,7 +794,7 @@ function validacioFormulario() {
         var span = document.createElement("span");
         span.id = "peticio_tipusDocumental.errors";
         span.classList = "errorField alert alert-danger";
-        span.innerHTML = "El Tipus documental és obligatori.";
+        span.innerHTML = "El Tipus documental Ã©s obligatori.";
         tipusDoc.parentElement.prepend(span);
         validacio &= false;
     }
@@ -766,7 +805,7 @@ function validacioFormulario() {
 	        var span = document.createElement("span");
 	        span.id = "peticio.reason.errors";
 	        span.classList = "errorField alert alert-danger";
-	        span.innerHTML = "El Motiu de firma és obligatori a AutoFirma.";
+	        span.innerHTML = "El Motiu de firma Ã©s obligatori a AutoFirma.";
 	        reason.parentElement.prepend(span);
 	        validacio &= false;
 	    }
@@ -861,7 +900,7 @@ function enviar(){
 </style>
 
 
-<%--===== MILLORAR ESTÈTICA DEL CAMP TIPUS DOCUMENTAL ============--%>
+<%--===== MILLORAR ESTÃˆTICA DEL CAMP TIPUS DOCUMENTAL ============--%>
 
 <script type="text/javascript">
 <%-- 
