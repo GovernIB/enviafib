@@ -162,8 +162,8 @@ public abstract class AbstractPeticioUserController extends PeticioController im
 			incloureDesconeguts = false;
 		}
         
-        
         tmpList = peticioLogicaEjb.getTipusDocumentals(lang, entitatID, incloureDesconeguts);
+        
         if (tmpList.isEmpty()) {
 			HtmlUtils.saveMessageError(request, "No hi ha tipus documentals. Pot haver un problema amb el servidor de PortaFIB");
         }else {
