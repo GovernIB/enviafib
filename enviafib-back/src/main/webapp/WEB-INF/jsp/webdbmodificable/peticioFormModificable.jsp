@@ -174,7 +174,7 @@
                 btn_afegir_anex.setAttribute("for", "anex_aux" + i );
                 btn_afegir_anex.setAttribute("class", "afegirAnex");
 //                btn_afegir_anex.innerHTML = '<i class="fas fa-arrow-circle-up"></i>';
-                btn_afegir_anex.innerHTML = '<i class="fas fa-paperclip"></i>';
+                btn_afegir_anex.innerHTML = '<i class="fas fa-paperclip"></i><fmt:message key="annexes"/>';
 
 //                div_botonera.appendChild(btn_afegir_anex);
                 div_botonera.appendChild(btn_delete);
@@ -434,7 +434,6 @@ td label {
 	padding-right: 6px;
 	cursor: pointer;
 	display: inline;
-	
 	background: #72B2F2;
 }
 
@@ -456,7 +455,7 @@ td label {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 2rem;
+	/* 	width: 2rem; */
 	height: 2rem;
 	margin: 0;
 	background-color: rgba(255, 149, 35, 0.85);
@@ -464,7 +463,8 @@ td label {
 
 .div_arriba {
 	display: flex;
-	align-items: center;
+	align-items: baseline;
+	flex-direction: column;
 }
 
 .div_file {
@@ -525,9 +525,8 @@ td label {
 }
 
 .span_file {
-  margin-right: 0.4rem;
+	margin-right: 0.4rem;
 }
-
 </style>
 
 </c:if>

@@ -570,7 +570,7 @@ th span {
 td:nth-child(1), td:nth-child(7) {
 	vertical-align: middle !important;
 }
-td:nth-child(3) {
+td:nth-child(3), td:nth-child(6), td:nth-child(7) {
     text-align: left;
     padding-left: 1rem;
 }
@@ -671,7 +671,7 @@ function openModalFluxInfo(peticioID) {
 <style>
 .estatInfo {
 	width: fit-content;
-	margin: auto;
+	/* margin: auto; */
 	padding: 1px 8px;
 	border-radius: 3px;
 	display: flex;
