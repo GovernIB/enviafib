@@ -262,7 +262,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 				break;
 			}
             
-            mapRemitent.put(peticioID, "<center style=\"background: " + background + ";\" class='estatInfo'>" + iconsStr.toString() + estatText + "</center>");
+            mapRemitent.put(peticioID, "<div style=\"background: " + background + ";\" class='estatInfo'>" + iconsStr.toString() + estatText + "</div>");
 
             //Gestió annexos
             {
