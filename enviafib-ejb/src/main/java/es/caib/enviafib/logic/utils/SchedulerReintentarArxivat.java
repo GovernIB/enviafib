@@ -1,12 +1,42 @@
 package es.caib.enviafib.logic.utils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
-import javax.ejb.*;
+/**
+ * ========================================================================
+ * TODO: GESTIÓ DE FITXERS ARCHIVATS - ALLIBERAR ESPAI
+ * ========================================================================
+ * 
+ * PROBLEMA:
+ * Després d'arxivar a Arxiu, FitxerID i FitxerFirmatID ocupen espai inútil.
+ * No podem esborrar-los perquè:
+ *   1. FitxerID és NOT NULL a Peticio
+ *   2. Hi ha FK Peticio → Fitxer
+ * 
+ * SOLUCIONS:
+ * 
+ * 1️⃣ BORRAT LÒGIC (RECOMANADA) ⭐
+ *    - Afegir camps a Fitxer: arxivatID, dataBorrat, borratLogic
+ *    - Marcar borratLogic=1 i esborrar arxiu físic
+ *    - Mantenir registre BD (FK intacta, auditable, reversible)
+ * 
+ * 2️⃣ PERMETRE NULL
+ *    - ALTER TABLE Peticio MODIFY FitxerID BIGINT NULL
+ *    - Posar NULL i després esborrar Fitxer de BD
+ *    - Perd trazabilitat però allibera tot
+ * 
+ * 3️⃣ TAULA HISTÒRIC
+ *    - Crear FitxerArxivatHistoric per auditoría
+ *    - Moure referències i esborrar Fitxer
+ *    - Més complex però manté historial
+ * 
+ * IMPLEMENTAR: Modificar guardarFitxerArxiuSync() segons solució triada
+ * ========================================================================
+ */
 
-import org.apache.log4j.Logger;
-import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
+import javax.annotation.security.PermitAll;
+import javax.ejb.Asynchronous;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
@@ -21,135 +51,81 @@ import es.caib.enviafib.persistence.InfoSignaturaJPA;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Locale;
 
 @Singleton
 @Startup
-public class SchedulerReintentarArxivat {
+public class SchedulerReintentarArxivat extends AbstractScheduler {
 
-	public final Logger log = Logger.getLogger(this.getClass());
+	private static final String NOM_SCHEDULER = "reintentarArxivarTotes";
+	private final long MAX_REINTENTS = Long.valueOf(Configuracio.getMaxIntentsArxivatScheduler());
 
-	final long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000; // 4 minuts
-	final long MAX_REINTENTS = Long.valueOf(Configuracio.getMaxIntentsArxivatScheduler());
-	final String NOM_SCHEDULER = "reintentarArxivarTotes";
-
-	@Resource
-	private TimerService timerService;
-
-	@EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
-
-	@EJB(mappedName = es.caib.enviafib.logic.InfoArxiuLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.InfoArxiuLogicaService infoArxiuLogicEjb;
-
-	@EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
-
-	@EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.InfoSignaturaLogicaService infoSignaturaLogicaEjb;
-
-	
-	@PostConstruct
-	public void init() {
-		// Configurar la tarea con valores dinámicos
-
-		String horaStr = Configuracio.getHoraReintentArxivatScheduler(); // 14
-		String nHoresStr = Configuracio.getNhoresReintentArxivatScheduler(); // 2
-
-		int nHores = Integer.parseInt(nHoresStr);
-		if (nHores > 1) {
-			int hores = Integer.parseInt(horaStr);
-			horaStr += "-" + (hores + nHores - 1);
-		}
-
-		log.info("initScheduler:: " + NOM_SCHEDULER +" a les " + horaStr + " hores");
-		scheduleTask(horaStr);
+	@Override
+	protected String getSchedulerName() {
+		return NOM_SCHEDULER;
 	}
 
-	public void scheduleTask(String horaStr) {
-
-		// Limpiar timers anteriores
-		for (Timer timer : timerService.getTimers()) {
-			timer.cancel();
-		}
-		ScheduleExpression schedule = new ScheduleExpression();
-		schedule.hour(horaStr);
-		schedule.minute("*/5");
-
-		Timer newTimer = timerService.createCalendarTimer(schedule);
-		System.out.println("CREAT Schedule per " + NOM_SCHEDULER + ": " + newTimer.getNextTimeout());
+	@Override
+	protected String getConfiguredHour() {
+		return Configuracio.getHoraReintentArxivatScheduler();
 	}
 
-	@Timeout
-	public void onTimeout(Timer timer) {
-		log.info("Inici " + NOM_SCHEDULER + "()");
+	@Override
+	protected String getConfiguredHours() {
+		String nHores = Configuracio.getNhoresReintentArxivatScheduler();
+		return nHores != null ? nHores : "1";
+	}
 
-		long startTime = System.currentTimeMillis();
+	@Override
+	protected void executeScheduledTask(long startTime) throws Exception {
+		// Llistat de peticions amb error tancant expedient, que no han superat el màxim
+		// de reintents.
+		Where wReintentsMenysDe = PeticioFields.REINTENTSARXIU.lessThan(MAX_REINTENTS);
+		Where wReintentsNull = PeticioFields.REINTENTSARXIU.isNull();
+		Where wReintents = Where.OR(wReintentsMenysDe, wReintentsNull);
 
-		// El timeout de EJB son 5 minuts, li direm que als 4 minuts surti.
-		try {
+		Where wEstats = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+		OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
 
-			// Llistat de peticions amb error tancant expedient, que no han superat el màxim
-			// de reintents.
-			Where wReintentsMenysDe = PeticioFields.REINTENTSARXIU.lessThan(MAX_REINTENTS);
-			Where wReintentsNull = PeticioFields.REINTENTSARXIU.isNull();
-			Where wReintents = Where.OR(wReintentsMenysDe, wReintentsNull);
+		List<Peticio> peticions = peticioLogicaEjb.select(Where.AND(wEstats, wReintents), orderBy);
+		log.info("Peticions que s'han d'arxivar: " + peticions.size() + ". maxReintents: " + MAX_REINTENTS);
 
-			Where wEstats = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
+		int i = 1;
+		String urlBase = Configuracio.getUrlBase();
 
-			List<Peticio> peticions = peticioLogicaEjb.select(Where.AND(wEstats, wReintents), orderBy);
-			log.info("Peticions que s'han d'arxivar: " + peticions.size() + ". maxReintents: " + MAX_REINTENTS);
+		long unaHora = 1000 * 60 * 60;
+		
+		for (Peticio peticio : peticions) {
+			Long peticioID = peticio.getPeticioID();
 
-			int i = 1;
-			String urlBase = Configuracio.getUrlBase();
+			log.info("Reintentant arxivat " + i + " de " + peticions.size() + ". PeticioID: " + peticioID
+					+ " Reintents: " + peticio.getReintentsArxiu() + " DataFi: " + peticio.getDataFinal());
 
-			long unaHora = 1000 * 60 * 60;
-			
-			for (Peticio peticio : peticions) {
-				Long peticioID = peticio.getPeticioID();
+			if (peticio.getDataFinal() != null
+					&& (System.currentTimeMillis() - peticio.getDataFinal().getTime()) < unaHora) {
 
-				log.info("Reintentant arxivat " + i + " de " + peticions.size() + ". PeticioID: " + peticioID
-						+ " Reintents: " + peticio.getReintentsArxiu() + " DataFi: " + peticio.getDataFinal());
-
-				if (peticio.getDataFinal() != null
-						&& (System.currentTimeMillis() - peticio.getDataFinal().getTime()) < unaHora) {
-
-					log.info("Ja hem intentat fa menys d'una hora.");
-					i++;
-					continue;
-				}
-				
-				peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-
-				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
-				peticio = guardarFitxerArxiuSync(peticio, is, urlBase);
-
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
-
-				// El Timeout son 5 minuts. Si el CRON s'executa durant 4 min, surt del for i
-				// acaba la funció.
-				if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-					log.warn("Timeout. Hem processat " + i + " expedients");
-					break;
-				}
+				log.info("Ja hem intentat fa menys d'una hora.");
 				i++;
+				continue;
 			}
-		} catch (I18NException e) {
+			
+			peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
 
-			final String languageUI = "ca";
+			InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
+			peticio = guardarFitxerArxiuSync(peticio, is, urlBase);
 
-			final String msg = "Error obtenint llistat de fitxersFirmatsID durant el cron nocturn: "
-					+ I18NCommonUtils.getMessage(e, new Locale(languageUI));
-			log.error(msg, e);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+
+			// El Timeout son 5 minuts. Si el CRON s'executa durant 4 min, surt del for i
+			// acaba la funció.
+			if (isTransactionTimeout(startTime)) {
+				log.warn("Timeout. Hem processat " + i + " expedients");
+				break;
+			}
+			i++;
 		}
-
-		long endTime = System.currentTimeMillis();
-		log.info("Total time: " + (endTime - startTime));
-		log.info("Acaba " + NOM_SCHEDULER + "()");
 	}
 
 	@PermitAll

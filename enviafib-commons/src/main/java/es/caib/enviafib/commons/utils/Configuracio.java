@@ -333,6 +333,14 @@ public class Configuracio implements Constants {
         return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.reintentarxivat.scheduler.nhores");
     }
 
+    public static String getHoraEliminarFitxersArxivatsScheduler() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.eliminarfitxers.scheduler.hora");
+    }
+
+    public static String getNhoresEliminarFitxersArxivatsScheduler() {
+        return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.eliminarfitxers.scheduler.nhores");
+    }
+
 //    public static String getMaximReintentsArxiu() {
 //		return getAppSystemProperties().getProperty(ENVIAFIB_PROPERTY_BASE + "arxiu.maximreintents");
 //	}
