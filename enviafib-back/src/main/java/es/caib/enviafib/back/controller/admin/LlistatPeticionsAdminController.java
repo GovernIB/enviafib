@@ -48,10 +48,10 @@ import es.caib.enviafib.persistence.PeticioJPA;
 public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsController {
 
     public static final String CONTEXT = "/admin/peticio";
-    
+
     public static final String VISTA_FULL_VIEW = "fullView";
     public static final String VISTA_ERROR = "error";
-    
+
     @Override
     public String getTileForm() {
         return "peticioFormAdmin";
@@ -114,10 +114,10 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
         String tipusVista = (String) request.getSession().getAttribute("tipusVista");
 
         if (__isView) {
-            
+
             if (tipusVista.equals(VISTA_FULL_VIEW)) {
                 hiddens.clear();
-            }else if(tipusVista.equals(VISTA_ERROR)){
+            } else if (tipusVista.equals(VISTA_ERROR)) {
                 hiddens.remove(NOM);
                 hiddens.remove(DATACREACIO);
                 hiddens.remove(DATAFINAL);
@@ -127,7 +127,7 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
                 hiddens.remove(PeticioFields.ERRORMSG);
                 hiddens.remove(PeticioFields.ERROREXCEPTION);
                 hiddens.remove(PeticioFields.REINTENTSARXIU);
-                
+
             }
             peticioForm.setHiddenFields(hiddens);
 
@@ -136,7 +136,8 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             if (annexes > 0) {
                 peticioForm.addAdditionalButton(new AdditionalButton("fas fa-folder-open", "user.veureannexes",
                         "/admin/infoAnnex/mostrarAnnexes/" + peticioID + "/toForm", AdditionalButtonStyle.INFO));
-                request.getSession().setAttribute("myContext", getContextWebByTipus(peticioForm.getPeticio().getTipus()) );
+                request.getSession().setAttribute("myContext",
+                        getContextWebByTipus(peticioForm.getPeticio().getTipus()));
 
             }
             Long infosignaturaID = peticioForm.getPeticio().getInfoSignaturaID();
@@ -152,7 +153,6 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
 
         }
 
-
         return peticioForm;
     }
 
@@ -162,12 +162,12 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
         PeticioFilterForm peticioFilterForm = super.getPeticioFilterForm(pagina, mav, request);
 
         if (peticioFilterForm.isNou()) {
-        	
-        	//Afegir groupBy solicitant.
+
+            //Afegir groupBy solicitant.
             List<Field<?>> newGroupBy = new ArrayList<Field<?>>(peticioFilterForm.getDefaultGroupByFields());
             newGroupBy.add(PeticioFields.SOLICITANTID);
             peticioFilterForm.setGroupByFields(newGroupBy);
-            
+
         }
         return peticioFilterForm;
     }
@@ -175,17 +175,17 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
     @Override
     public void postList(HttpServletRequest request, ModelAndView mav, PeticioFilterForm filterForm, List<Peticio> list)
             throws I18NException {
-        
+
         filterForm.getAdditionalButtonsByPK().clear();
-        
+
         int numErrorsArxivant = 0;
-        
+
         for (Peticio peticio : list) {
             long peticioID = peticio.getPeticioID();
-            
-            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view", getContextWeb() + "/veurePeticioFull/" + peticioID, AdditionalButtonStyle.INFO));
-            
-            
+
+            filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-eye", "peticio.btn.view",
+                    getContextWeb() + "/veurePeticioFull/" + peticioID, AdditionalButtonStyle.INFO));
+
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                 numErrorsArxivant++;
             }
@@ -193,56 +193,62 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT) {
                 filterForm.addAdditionalButtonByPK(peticioID,
                         new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentartancamentexpedient",
-                                "javascript:reintentarTancamentExpedient(" + peticioID + ")", AdditionalButtonStyle.WARNING));
+                                "javascript:reintentarTancamentExpedient(" + peticioID + ")",
+                                AdditionalButtonStyle.WARNING));
             }
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
-                        "arxiu.tancar.expedient", "javascript:tancarExpedient(" + peticioID + ")", AdditionalButtonStyle.WARNING));
-            }       
-            
+                filterForm.addAdditionalButtonByPK(peticioID,
+                        new AdditionalButton("fas fa-redo-alt ", "arxiu.tancar.expedient",
+                                "javascript:tancarExpedient(" + peticioID + ")", AdditionalButtonStyle.WARNING));
+            }
+
             if (peticio.getEstat() == Constants.ESTAT_PETICIO_ERROR_CALLBACK) {
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
-						"procesar.error.callback", getContextWeb() + "/procesarErrorCallback/" + peticioID,
-						AdditionalButtonStyle.WARNING));
-            }       
-            
-            
-            
+                filterForm.addAdditionalButtonByPK(peticioID,
+                        new AdditionalButton("fas fa-redo-alt ", "procesar.error.callback",
+                                getContextWeb() + "/procesarErrorCallback/" + peticioID,
+                                AdditionalButtonStyle.WARNING));
+            }
+
             if (peticio.getErrorMsg() != null) {
-                filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-exclamation-circle", "peticio.btn.show.error", getContextWeb() + "/veurePeticioError/" + peticioID, AdditionalButtonStyle.DANGER));
+                filterForm.addAdditionalButtonByPK(peticioID,
+                        new AdditionalButton("fas fa-exclamation-circle", "peticio.btn.show.error",
+                                getContextWeb() + "/veurePeticioError/" + peticioID, AdditionalButtonStyle.DANGER));
             }
         }
-        
-        filterForm.getAdditionalButtons().clear();
-		if (numErrorsArxivant > 0) {
-			log.info("numErrorsArxivant=" + numErrorsArxivant + " size()=" + list.size());
 
-			filterForm.addAdditionalButton(new AdditionalButton(
-					"fas fa-download", "peticio.arxiu.reintentar.seleccionats",
-//					"javascript:submitTo('peticio','/enviafibback/" + (isAdmin() ? "admin" : "aden") + "/peticio/reintentarArxivarSeleccionats')",
-					"javascript:reintentarArxivarSeleccionats('" + (isAdmin() ? "admin" : "aden") + "')",
-					AdditionalButtonStyle.INFO));
-		}
+        filterForm.getAdditionalButtons().clear();
+        if (numErrorsArxivant > 0) {
+            log.info("numErrorsArxivant=" + numErrorsArxivant + " size()=" + list.size());
+
+            filterForm.addAdditionalButton(
+                    new AdditionalButton("fas fa-download", "peticio.arxiu.reintentar.seleccionats",
+                            //					"javascript:submitTo('peticio','/enviafibback/" + (isAdmin() ? "admin" : "aden") + "/peticio/reintentarArxivarSeleccionats')",
+                            "javascript:reintentarArxivarSeleccionats('" + (isAdmin() ? "admin" : "aden") + "')",
+                            AdditionalButtonStyle.INFO));
+        }
         super.postList(request, mav, filterForm, list);
     }
 
     @RequestMapping(value = "/veurePeticioFull/{peticioId}", method = RequestMethod.GET)
     public String veurePeticioFull(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioId) {
+            @PathVariable("peticioId")
+            Long peticioId) {
         request.getSession().setAttribute("tipusVista", VISTA_FULL_VIEW);
         return "redirect:" + getContextWeb() + "/view/" + peticioId;
     }
 
     @RequestMapping(value = "/veurePeticioError/{peticioId}", method = RequestMethod.GET)
     public String veurePeticioError(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioId) {
+            @PathVariable("peticioId")
+            Long peticioId) {
         request.getSession().setAttribute("tipusVista", VISTA_ERROR);
         return "redirect:" + getContextWeb() + "/view/" + peticioId;
     }
 
     @RequestMapping(value = "/reintentarArxivarTotes/{windowUrl}", method = RequestMethod.GET)
     public String reintentarArxivarTotes(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("windowUrl") String windowUrl) {   
+            @PathVariable("windowUrl")
+            String windowUrl) {
         try {
             log.info("VAMOS A REINTENTAR ARXIVAR TODAS");
 
@@ -257,9 +263,9 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
             long start = System.currentTimeMillis();
             long end = System.currentTimeMillis();
 
-//            Integer peticionsArxivadesOk = 0;
-//            Integer peticionsPendents = list.size();
-            
+            //            Integer peticionsArxivadesOk = 0;
+            //            Integer peticionsPendents = list.size();
+
             for (int i = 0; end - start < timeout && i < list.size(); i++) {
                 Peticio peticio = list.get(i);
 
@@ -267,34 +273,34 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
                 long infoSignaturaID = peticio.getInfoSignaturaID();
 
                 log.info("Intentarem arxivar la peticio amb ID=" + peticioID);
-				InfoSignatura infoSign = infoSignaturaLogicEjb.findByPrimaryKey(infoSignaturaID);
-                
+                InfoSignatura infoSign = infoSignaturaLogicEjb.findByPrimaryKey(infoSignaturaID);
+
                 peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
                 peticioLogicaEjb.update(peticio);
-                
+
                 peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, infoSign, url);
-                
-//                end = System.currentTimeMillis();
-//                long seg = (end - start) / 1000;
-//                if (msg == null) {
-//                    log.info("PeticioLogicaEJB:: FINAL: PeticioID " + peticioID + " arxivada al segon " + seg + "\n");
-//                    peticionsArxivadesOk++;
-//                } else {
-//                    log.info("PeticioLogicaEJB:: FINAL: Error arxivant PeticioID " + peticioID + " al segon " + seg + "\n");
-//                    HtmlUtils.saveMessageError(request, msg);
-//                }
+
+                //                end = System.currentTimeMillis();
+                //                long seg = (end - start) / 1000;
+                //                if (msg == null) {
+                //                    log.info("PeticioLogicaEJB:: FINAL: PeticioID " + peticioID + " arxivada al segon " + seg + "\n");
+                //                    peticionsArxivadesOk++;
+                //                } else {
+                //                    log.info("PeticioLogicaEJB:: FINAL: Error arxivant PeticioID " + peticioID + " al segon " + seg + "\n");
+                //                    HtmlUtils.saveMessageError(request, msg);
+                //                }
             }
 
-//            if (peticionsArxivadesOk > 0) {
-//                HtmlUtils.saveMessageSuccess(request,
-//                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.success", peticionsArxivadesOk.toString()));
-//            }
-//            
-//            if (peticionsPendents > 0 ) {
-//                HtmlUtils.saveMessageWarning(request,
-//                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.incomplet", peticionsPendents.toString()));
-//            }
-            
+            //            if (peticionsArxivadesOk > 0) {
+            //                HtmlUtils.saveMessageSuccess(request,
+            //                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.success", peticionsArxivadesOk.toString()));
+            //            }
+            //            
+            //            if (peticionsPendents > 0 ) {
+            //                HtmlUtils.saveMessageWarning(request,
+            //                        I18NUtils.tradueix("peticio.arxiu.reintentar.tots.incomplet", peticionsPendents.toString()));
+            //            }
+
         } catch (I18NException e) {
             String msg = I18NUtils.getMessage(e);
             log.error(msg, e);
@@ -308,91 +314,90 @@ public class LlistatPeticionsAdminController extends AbstractLlistatPeticionsCon
         return "redirect:" + getContextWeb() + "/list/";
     }
 
-    
- // Funcionalitat per descarrega de fitxers seleccionats.
+    // Funcionalitat per descarrega de fitxers seleccionats.
     @RequestMapping(value = "/reintentarArxivarSeleccionats", method = RequestMethod.POST)
     public String reintentarArxivarSeleccionats(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute PeticioFilterForm filterForm) throws Exception {
+            @ModelAttribute
+            PeticioFilterForm filterForm) throws Exception {
 
-		String[] seleccionats = filterForm.getSelectedItems();
+        String[] seleccionats = filterForm.getSelectedItems();
 
-		if (seleccionats == null || seleccionats.length == 0) {
-			return "redirect:" + getContextWeb() + "/list/";
-		}
-		
-		String url = getContextWeb() + CONTEXT;
+        if (seleccionats == null || seleccionats.length == 0) {
+            return "redirect:" + getContextWeb() + "/list/";
+        }
 
-		int pendents = seleccionats.length;
-		int idx = 0;
-		
-		for (String seleccionat : seleccionats) {
-			try {
-				Long peticioID = stringToPK(seleccionat);
-				Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+        String url = getContextWeb() + CONTEXT;
 
-				if (peticio.getEstat() != Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
-					log.warn("La peticio " + peticioID + " no esta firmada.");
-					continue;
-				}
+        int pendents = seleccionats.length;
+        int idx = 0;
+
+        for (String seleccionat : seleccionats) {
+            try {
+                Long peticioID = stringToPK(seleccionat);
+                Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+
+                if (peticio.getEstat() != Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
+                    log.warn("La peticio " + peticioID + " no esta firmada.");
+                    continue;
+                }
 
                 Long infoSignaturaID = peticio.getInfoSignaturaID();
 
-				if (infoSignaturaID == null) {
-					log.error("La peticio " + peticioID + " no te infoSignaturaID");
-					continue;
-				}
-                
-				
-				InfoSignatura infoSign = infoSignaturaLogicEjb.findByPrimaryKey(infoSignaturaID);
-				
-                log.info("Intentarem arxivar la peticio amb ID=" + peticioID + ". " + idx + " de " + pendents + "\n" );
-                
+                if (infoSignaturaID == null) {
+                    log.error("La peticio " + peticioID + " no te infoSignaturaID");
+                    continue;
+                }
+
+                InfoSignatura infoSign = infoSignaturaLogicEjb.findByPrimaryKey(infoSignaturaID);
+
+                log.info("Intentarem arxivar la peticio amb ID=" + peticioID + ". " + idx + " de " + pendents + "\n");
+
                 peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
                 peticioLogicaEjb.update(peticio);
-                
+
                 peticioLogicaEjb.guardarPeticioArxiuAsync(peticio, infoSign, url);
-                
-//                String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
-//
-//                if (msg == null) {
-//                	idx++;
-//                    log.info("reintentarArxivarSeleccionats:: FINAL: PeticioID " + peticioID + "\n");
-//                } else {
-//                    log.info("reintentarArxivarSeleccionats:: FINAL: Error arxivant PeticioID " + peticioID + "\n");
-//                    HtmlUtils.saveMessageError(request, msg);
-//                }
-                
-			} catch (Exception e) {
-				log.error("Error processant la peticio: " + seleccionat, e);
-			}
-		}
-		
-		HtmlUtils.saveMessageSuccess(request, "Arxivant " + pendents + " peticions" );
-		return "redirect:" + getContextWeb() + "/list/";
-		
-	}
-    
-    
+
+                //                String msg = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, languageUI, url);
+                //
+                //                if (msg == null) {
+                //                	idx++;
+                //                    log.info("reintentarArxivarSeleccionats:: FINAL: PeticioID " + peticioID + "\n");
+                //                } else {
+                //                    log.info("reintentarArxivarSeleccionats:: FINAL: Error arxivant PeticioID " + peticioID + "\n");
+                //                    HtmlUtils.saveMessageError(request, msg);
+                //                }
+
+            } catch (Exception e) {
+                log.error("Error processant la peticio: " + seleccionat, e);
+            }
+        }
+
+        HtmlUtils.saveMessageSuccess(request, "Arxivant " + pendents + " peticions");
+        return "redirect:" + getContextWeb() + "/list/";
+
+    }
+
     @RequestMapping(value = "/procesarErrorCallback/{peticioId}", method = RequestMethod.GET)
-	public String procesarErrorCallback(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("peticioId") Long peticioId) {
-		try {
-			log.info("VAMOS A REINTENAR PROCESO CALLBACK DE LA PETICION " + peticioId);
+    public String procesarErrorCallback(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("peticioId")
+            Long peticioId) {
+        try {
+            log.info("VAMOS A REINTENAR PROCESO CALLBACK DE LA PETICION " + peticioId);
 
-			Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioId);
+            Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioId);
 
-			peticioLogicaEjb.procesarPeticioFirmadaAsync(peticio);
-			HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.callback.reintentar", peticioId.toString()));
-		} catch (I18NException e) {
-			String msg = e.getMessage();
-			log.error(msg, e);
-			HtmlUtils.saveMessageError(request, msg);
-		}
+            peticioLogicaEjb.procesarPeticioFirmadaAsync(peticio);
+            HtmlUtils.saveMessageSuccess(request,
+                    I18NUtils.tradueix("peticio.callback.reintentar", peticioId.toString()));
+        } catch (I18NException e) {
+            String msg = e.getMessage();
+            log.error(msg, e);
+            HtmlUtils.saveMessageError(request, msg);
+        }
 
-		return "redirect:" + getContextWeb() + "/list/";
-	}
+        return "redirect:" + getContextWeb() + "/list/";
+    }
 
-    
     @Override
     public boolean isAdmin() {
         return true;

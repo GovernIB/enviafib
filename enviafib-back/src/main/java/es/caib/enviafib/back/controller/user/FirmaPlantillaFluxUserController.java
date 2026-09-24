@@ -72,20 +72,19 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
         if (__isView) {
             // ERROR GREU: No utilitzar camp REASON per altres coses #513
-        	String plantillaFluxID = peticioForm.getPeticio().getFluxDeFirmes();
-        	
-        	log.info("\n\n XYZ ZZZ  LLEGINT Plantilla Flux ID : " + plantillaFluxID + "\n\n");
-        	
-        	String nomPlantilla = getNomPlantillaFlux(plantillaFluxID);
-        	
-        	
-        	log.info("\n\n XYZ ZZZ  Nom Plantilla Flux => ]" + nomPlantilla + "[\n\n");
-        	
-			if (nomPlantilla != null) {
-				peticioForm.getPeticio().setReason(nomPlantilla);
-			}
-		}
-        
+            String plantillaFluxID = peticioForm.getPeticio().getFluxDeFirmes();
+
+            log.info("\n\n XYZ ZZZ  LLEGINT Plantilla Flux ID : " + plantillaFluxID + "\n\n");
+
+            String nomPlantilla = getNomPlantillaFlux(plantillaFluxID);
+
+            log.info("\n\n XYZ ZZZ  Nom Plantilla Flux => ]" + nomPlantilla + "[\n\n");
+
+            if (nomPlantilla != null) {
+                peticioForm.getPeticio().setReason(nomPlantilla);
+            }
+        }
+
         peticioForm.setAttachedAdditionalJspCode(true);
 
         return peticioForm;
@@ -98,70 +97,70 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
 
     public List<Usuari> getPlantillesFluxFirma() throws I18NException {
 
-//		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+        //		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
-//        final String languageUI = "ca";
-//        FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
+        //        final String languageUI = "ca";
+        //        FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
 
-//        try {
-//            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
+        //        try {
+        //            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
 
-//            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
+        //            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
 
-//            List<FlowTemplateSimpleKeyValue> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
-            List<FluxInfo> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
+        //            List<FlowTemplateSimpleKeyValue> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
+        List<FluxInfo> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
 
-			if (plantilles == null) {
-	            log.info("Llistat de plantilles:: null");
-				return new ArrayList<Usuari>();
-			}
-			
-            log.info("Llistat de plantilles:: PLANTILLES OBTINGUDES: " + plantilles.size());
+        if (plantilles == null) {
+            log.info("Llistat de plantilles:: null");
+            return new ArrayList<Usuari>();
+        }
 
-            List<Usuari> usuaris = new ArrayList<Usuari>();
+        log.info("Llistat de plantilles:: PLANTILLES OBTINGUDES: " + plantilles.size());
 
-            for (FluxInfo flux : plantilles) {
+        List<Usuari> usuaris = new ArrayList<Usuari>();
 
-//                String flowTemplateId = flowKeyValue.getKey();
-//
-//                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-//                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
-//
-//                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+        for (FluxInfo flux : plantilles) {
 
-                String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
-                        .replace("}{", "}<br/>{");
+            //                String flowTemplateId = flowKeyValue.getKey();
+            //
+            //                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+            //                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+            //
+            //                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
-                if (description.indexOf("{template=true}") == -1) {
-                    continue;
-                }
+            String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
+                    .replace("}{", "}<br/>{");
 
-                /* usuariID -> flowTemplateId hashed
-                 * nif -> flowTemplateId
-                 * nom -> value
-                 * llinatge1 -> description
-                 * email -> creationDate
-                 */
-
-                Usuari usuari = new UsuariJPA();
-                usuari.setUsuariID((long) flux.hashCode());
-                usuari.setNif(flux.getFluxID());
-                usuari.setNom(flux.getNom());
-                usuari.setLlinatge1(description);
-
-                //                usuari.setEmail(getCreationDate(description));
-
-                usuaris.add(usuari);
-
+            if (description.indexOf("{template=true}") == -1) {
+                continue;
             }
 
-            return usuaris;
+            /* usuariID -> flowTemplateId hashed
+             * nif -> flowTemplateId
+             * nom -> value
+             * llinatge1 -> description
+             * email -> creationDate
+             */
 
-//        } catch (AbstractApisIBException e) {
-//            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
-//            log.error(msg, e);
-//            throw new I18NException("genapp.comodi", msg);
-//        }
+            Usuari usuari = new UsuariJPA();
+            usuari.setUsuariID((long) flux.hashCode());
+            usuari.setNif(flux.getFluxID());
+            usuari.setNom(flux.getNom());
+            usuari.setLlinatge1(description);
+
+            //                usuari.setEmail(getCreationDate(description));
+
+            usuaris.add(usuari);
+
+        }
+
+        return usuaris;
+
+        //        } catch (AbstractApisIBException e) {
+        //            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
+        //            log.error(msg, e);
+        //            throw new I18NException("genapp.comodi", msg);
+        //        }
 
     }
 
@@ -169,58 +168,59 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         return String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
     }
 
-//    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
-//        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
-//        filter.setLanguageUI(languageUI);
-//        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
-//        return filter;
-//    }
-    
-	public String getNomPlantillaFlux(String plantillaFluxID) throws I18NException {
+    //    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
+    //        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
+    //        filter.setLanguageUI(languageUI);
+    //        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
+    //        return filter;
+    //    }
 
-		final String languageUI = "ca";
-		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+    public String getNomPlantillaFlux(String plantillaFluxID) throws I18NException {
 
-		try {
-			
-			FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplates(languageUI);
+        final String languageUI = "ca";
+        ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+
+        try {
+
+            FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplates(languageUI);
             List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
-            
+
             for (FlowTemplateSimpleKeyValue flowKeyValue : plantilles) {
-            	if (flowKeyValue.getKey().equals(plantillaFluxID)) {
-            		return flowKeyValue.getValue();
-            	}
+                if (flowKeyValue.getKey().equals(plantillaFluxID)) {
+                    return flowKeyValue.getValue();
+                }
             }
-            
+
             return null;
-		} catch (AbstractApisIBException e) {
-			String msg = "Error consultant API de Plantilles de Flux: " + e.getMessage();
-			log.error(msg, e);
-			throw new I18NException("genapp.comodi", msg);
-		}
-	}
-	
+        } catch (AbstractApisIBException e) {
+            String msg = "Error consultant API de Plantilles de Flux: " + e.getMessage();
+            log.error(msg, e);
+            throw new I18NException("genapp.comodi", msg);
+        }
+    }
+
     @RequestMapping(value = "/geturlflowtemplate/{flowTemplateID}", method = RequestMethod.GET)
     public void getURLtoFluxInfo(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("flowTemplateID") String flowTemplateID) throws I18NException, IOException {
+            @PathVariable("flowTemplateID")
+            String flowTemplateID) throws I18NException, IOException {
 
-		String url = null;
-		try {
-			String lang = LocaleContextHolder.getLocale().getLanguage();
+        String url = null;
+        try {
+            String lang = LocaleContextHolder.getLocale().getLanguage();
 
-			ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+            ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
-			FlowTemplateSimpleViewFlowTemplateRequest flowTemplateSimpleFlowTemplateRequest = new FlowTemplateSimpleViewFlowTemplateRequest(
-					lang, flowTemplateID);
-			url = api.getUrlToViewFlowTemplate(flowTemplateSimpleFlowTemplateRequest);
+            FlowTemplateSimpleViewFlowTemplateRequest flowTemplateSimpleFlowTemplateRequest = new FlowTemplateSimpleViewFlowTemplateRequest(
+                    lang, flowTemplateID);
+            url = api.getUrlToViewFlowTemplate(flowTemplateSimpleFlowTemplateRequest);
 
-		} catch (AbstractApisIBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		response.getWriter().write(url);
-		response.getWriter().flush();
-		response.getWriter().close();
-	}
-    
+        } catch (AbstractApisIBException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        response.getWriter().write(url);
+        response.getWriter().flush();
+        response.getWriter().close();
+    }
+
 }

@@ -84,8 +84,9 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
     @Override
     @RequestMapping(value = "/view/{peticioID}", method = RequestMethod.GET)
-    public ModelAndView veurePeticioGet(@PathVariable("peticioID") java.lang.Long peticioID, HttpServletRequest request,
-            HttpServletResponse response) throws I18NException {
+    public ModelAndView veurePeticioGet(
+            @PathVariable("peticioID")
+            java.lang.Long peticioID, HttpServletRequest request, HttpServletResponse response) throws I18NException {
         threadLocalTileForm.set(true);
         return super.veurePeticioGet(peticioID, request, response);
     }
@@ -97,7 +98,8 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         PeticioForm peticioForm = super.getPeticioForm(_jpa, __isView, request, mav);
 
         long solicitantID = peticioForm.getPeticio().getSolicitantID();
-        String solicitantNif = usuariLogicaEjb.executeQueryOne(UsuariFields.NIF, UsuariFields.USUARIID.equal(solicitantID));
+        String solicitantNif = usuariLogicaEjb.executeQueryOne(UsuariFields.NIF,
+                UsuariFields.USUARIID.equal(solicitantID));
         peticioForm.getPeticio().setDestinatariNif(solicitantNif);
 
         String titol_flux = (String) request.getSession().getAttribute(MenuUserController.TITOL_PETICIO);
@@ -136,7 +138,7 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
             // Crear Flux
             String name = "Flux de Firma  - " + System.currentTimeMillis();
 
-//            final String username = LoginInfo.getInstance().getUsername();
+            //            final String username = LoginInfo.getInstance().getUsername();
             final String usuariID = String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
             String descr = generateDescription(usuariID, false);
 
@@ -190,14 +192,15 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
     public static String generateDescription(final String username, final boolean isTemplate) {
         final long current = System.currentTimeMillis();
         final String currentStr = SDF.format(new Date(current));
-		final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
+        final String usrapp = Configuracio.getPortaFIBApiFlowUsername();
 
         String descr = (isTemplate ? "{template=true}" : "{temporal=true}\n") + "{creation=" + current + "}\n"
-                + "{creationStr=" + currentStr + "}\n" + "{usrapp=" + usrapp + "}" + (username == null ? "" : "{owner=" + username + "}");;
+                + "{creationStr=" + currentStr + "}\n" + "{usrapp=" + usrapp + "}"
+                + (username == null ? "" : "{owner=" + username + "}");
+        ;
         return descr;
     }
 
- 
     @Override
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView crearPeticioGet(HttpServletRequest request, HttpServletResponse response) throws I18NException {
@@ -225,21 +228,20 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
     public static void cleanFlux(String transactionID, String intermediateID, Logger log) {
         try {
-        	
-    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+
+            ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
             api.closeTransaction(transactionID);
 
             if (intermediateID != null) {
 
                 Long owner = LoginInfo.getInstance().getUsuari().getUsuariID();
                 FluxInfo flux = PortafibUtils.getFluxByID(String.valueOf(owner), transactionID);
-            	
-            	
-//                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-//                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(
-//                        LocaleContextHolder.getLocale().getLanguage(), intermediateID);
 
-                boolean esborrat = PortafibUtils.esborrarFlux(flux);  //api.deleteFlowTemplate(flowTemplateRequest);
+                //                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+                //                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(
+                //                        LocaleContextHolder.getLocale().getLanguage(), intermediateID);
+
+                boolean esborrat = PortafibUtils.esborrarFlux(flux); //api.deleteFlowTemplate(flowTemplateRequest);
                 log.error("Resultat esborrat de flux de firma: " + esborrat);
 
             }
@@ -252,7 +254,8 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
     @RequestMapping(value = "/callbackflux/{transactionID}")
     public ModelAndView finalProcesDeFlux(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID") String transactionID) {
+            @PathVariable("transactionID")
+            String transactionID) {
 
         log.info("CallBackFlux transactionID[" + transactionID + "] dins mapping ...");
 
@@ -262,8 +265,8 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
         String error = null;
         try {
 
-        	api = PortafibUtils.getApiFlowTemplateSimple();
-        	
+            api = PortafibUtils.getApiFlowTemplateSimple();
+
             FlowTemplateSimpleGetFlowResultResponse fullResult = api.getFlowTemplateResult(transactionID);
 
             FlowTemplateSimpleStatus transactionStatus = fullResult.getStatus();
@@ -343,14 +346,16 @@ public class FirmaFluxUserController extends AbstractFirmaUserController {
 
     @RequestMapping(value = "/mostrarflux/{transactionID}/{intermediateID}")
     public ModelAndView mostrarflux(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID") String transactionID,
-            @PathVariable("intermediateID") String intermediateID) {
+            @PathVariable("transactionID")
+            String transactionID,
+            @PathVariable("intermediateID")
+            String intermediateID) {
 
         ApiFlowTemplateSimple api = null;
 
         try {
 
-    		api = PortafibUtils.getApiFlowTemplateSimple();
+            api = PortafibUtils.getApiFlowTemplateSimple();
 
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 

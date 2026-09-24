@@ -83,9 +83,10 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
     @Override
     public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, InfoSignatura infoSignatura) {
 
-    	Locale locale = new Locale(peticio.getIdiomaID());
-    	 
-        log.info("custodiaAmbApiArxiu:: START. \n\n================ PeticioID=" + peticio.getPeticioID() + "================ \n");
+        Locale locale = new Locale(peticio.getIdiomaID());
+
+        log.info("custodiaAmbApiArxiu:: START. \n\n================ PeticioID=" + peticio.getPeticioID()
+                + "================ \n");
         IArxiuPlugin plugin;
 
         try {
@@ -99,7 +100,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
             peticio.setErrorMsg(LogicUtils.split255(msg));
             peticio.setErrorException(LogicUtils.stackTrace2String(e1));
-            
+
             return null;
         }
 
@@ -192,11 +193,9 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // Això és per quan l'usuari pugui indicar el nom de l'expedient on vol
             // el document String custodyOrExpedientID = prop
             // .getProperty(TransaccioFields.ARXIUOPTPARAMCUSTODYOREXPEDIENTID.javaName);
-            
-            
 
             final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP";
-//            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP_" + peticio.getReintentsArxiu();
+            //            final String nomExpedient = "EnviaFIB_" + peticio.getPeticioID() + "_EXP_" + peticio.getReintentsArxiu();
 
             ExpedientMetadades expedientMetadades = new ExpedientMetadades();
             expedientMetadades.setClassificacio(procedimentCodi);
@@ -206,21 +205,20 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
                 final String interessatsStr = peticio.getArxiuReqParamInteressats();
                 log.info("INTERESSATS STR => " + interessatsStr);
                 List<String> intresessatsList = LogicUtils.stringToListString(interessatsStr);
-                
+
                 if (intresessatsList == null) {
                     //log.info("\n\n\n     INTERESSATS LIST ORIG => " + intresessatsList + "\n\n\n");
-                    intresessatsList = new ArrayList<String>();                    
+                    intresessatsList = new ArrayList<String>();
                 } else {
                     //log.info("\n\n\n     INTERESSATS LIST ORIG => " + Arrays.toString(intresessatsList.toArray()) + "\n\n\n");    
                 }
-                
+
                 if (peticio.getDestinatariNif() != null) {
                     intresessatsList.add(peticio.getDestinatariNif());
                 }
-                
+
                 //log.info("\n\n\n     INTERESSATS LIST FINAL => " + Arrays.toString(intresessatsList.toArray()) + "\n\n\n");
-                
-                
+
                 expedientMetadades.setInteressats(intresessatsList);
             }
 
@@ -235,7 +233,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             Expedient expedient = new Expedient();
             expedient.setNom(nomExpedient);
-            
+
             expedient.setMetadades(expedientMetadades);
 
             if (peticio.getArxiuOptParamExpedientId() != null) {
@@ -255,9 +253,9 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             log.info("INFORMACIO DEL EXPEDIENT: \n" + json);
 
             try {
-            	
-//            	plugin.expedientDetalls(nomExpedient, json)
-            	
+
+                //            	plugin.expedientDetalls(nomExpedient, json)
+
                 expedientCreat = plugin.expedientCrear(expedient);
                 expedientId = expedientCreat.getIdentificador();
                 log.info("XYZ ZZZ TMP Creat expedient amd ID = " + expedientId);
@@ -301,8 +299,6 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             documentMetadades.setTipusDocumental(getDocumentTipusEnum(peticio.getTipusDocumental()));
             documentMetadades.setFormat(documentFormat);
             documentMetadades.setExtensio(documentExtensio);
-            
-            
 
             final ContingutOrigen origen;
             if (elabora.equals("EE02") || elabora.equals("EE04")) {
@@ -400,12 +396,11 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             // FITXER SIGNAT
             Long fitxerFirmatID = peticio.getFitxerFirmatID();
-            
+
             if (fitxerFirmatID == null) {
-            	log.error("La petició no te cap fitxer firmat");
-            	throw new I18NException("fitxerfirmat.notfound", commonError);
+                log.error("La petició no te cap fitxer firmat");
+                throw new I18NException("fitxerfirmat.notfound", commonError);
             }
-            
 
             Fitxer fitxerFirmat = fitxerLogicEjb.findByPrimaryKey(fitxerFirmatID);
 
@@ -443,58 +438,50 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             log.info("XYZ ZZZ TMP documentPerCrear=" + documentPerCrear);
 
             ContingutArxiu documentCreat = null;
-            String uuidDoc = null; 
+            String uuidDoc = null;
             try {
-            	
-            	documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
-            	uuidDoc = documentCreat.getIdentificador();
-            	log.info("XYZ ZZZ TMP Creat document ... ");
-            	
-            } catch (Throwable th) {
-            	
-            	
 
-                log.error(
-                        "Error Creant Document: " + th.getMessage() + ". Consultam si el document ja està dins l'expedient...");
-                
-            	Expedient expedientActual  = plugin.expedientDetalls(expedientId, null);
-            	
-//            	List<ContingutArxiu> continguts = expedientActual.getContinguts();
-            	for (ContingutArxiu ca : expedientActual.getContinguts()) {
-            		if (nomDocument.equals(ca.getNom())) {
-                    	uuidDoc = ca.getIdentificador();
+                documentCreat = plugin.documentCrear(documentPerCrear, expedientId);
+                uuidDoc = documentCreat.getIdentificador();
+                log.info("XYZ ZZZ TMP Creat document ... ");
+
+            } catch (Throwable th) {
+
+                log.error("Error Creant Document: " + th.getMessage()
+                        + ". Consultam si el document ja està dins l'expedient...");
+
+                Expedient expedientActual = plugin.expedientDetalls(expedientId, null);
+
+                //            	List<ContingutArxiu> continguts = expedientActual.getContinguts();
+                for (ContingutArxiu ca : expedientActual.getContinguts()) {
+                    if (nomDocument.equals(ca.getNom())) {
+                        uuidDoc = ca.getIdentificador();
                         log.info("XYZ ZZZ TMP Document ja existia (ID = " + uuidDoc + ")");
                     }
-				}
-            	
+                }
 
-
-                
-                
-                
-               
-//                // Comprovar si l'expedient ja existeix
-//                ConsultaResultat resultat;
-//               // resultat = plugin.expedientConsulta(getLlistaFiltresDocumentMetadatos(nomDocument),0, 111);
-//                
-//                List<ConsultaFiltre> filtres = getLlistaFiltresDocumentMetadatos(nomDocument); 
-//                
-//				resultat = plugin.documentConsulta(filtres, 0, 111, DocumentRepositori.ENI_DOCUMENTO);
-//
-//                if (resultat.getResultats() != null && resultat.getResultats().size() != 0) {
-//
-//                    for (ContingutArxiu ca : resultat.getResultats()) {
-//
-//                        if (nomExpedient.equals(ca.getNom())) {
-//                        	uuidDoc = ca.getIdentificador();
-//                            log.info("XYZ ZZZ TMP Document ja existia (ID = " + uuidDoc + ")");
-//                        }
-//                    }
-//                }
+                //                // Comprovar si l'expedient ja existeix
+                //                ConsultaResultat resultat;
+                //               // resultat = plugin.expedientConsulta(getLlistaFiltresDocumentMetadatos(nomDocument),0, 111);
+                //                
+                //                List<ConsultaFiltre> filtres = getLlistaFiltresDocumentMetadatos(nomDocument); 
+                //                
+                //				resultat = plugin.documentConsulta(filtres, 0, 111, DocumentRepositori.ENI_DOCUMENTO);
+                //
+                //                if (resultat.getResultats() != null && resultat.getResultats().size() != 0) {
+                //
+                //                    for (ContingutArxiu ca : resultat.getResultats()) {
+                //
+                //                        if (nomExpedient.equals(ca.getNom())) {
+                //                        	uuidDoc = ca.getIdentificador();
+                //                            log.info("XYZ ZZZ TMP Document ja existia (ID = " + uuidDoc + ")");
+                //                        }
+                //                    }
+                //                }
 
                 //Si expedientID val null, vol dir que ni l'ha pogut crear, i que tampo existia ja a arxiu (no està duplicat)
                 if (uuidDoc == null) {
-                    log.error("No hem trobat document amb nom " +  nomDocument + ". Llançan excepció original.");
+                    log.error("No hem trobat document amb nom " + nomDocument + ". Llançan excepció original.");
                     throw th;
                 }
             }
@@ -502,11 +489,9 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             log.info("XYZ ZZZ TMP Guardam informació del document arxivat ...");
 
             boolean ambContingut = true;
-            Document document = plugin.documentDetalls(uuidDoc, null, ambContingut );
-//            String jsonContArx = LogicUtils.serialize(document);
-//			log.info("documentArxiu: \n\n" + jsonContArx);
-            
-            
+            Document document = plugin.documentDetalls(uuidDoc, null, ambContingut);
+            //            String jsonContArx = LogicUtils.serialize(document);
+            //			log.info("documentArxiu: \n\n" + jsonContArx);
 
             infoCust = null;
             // Hi ha un error "Contingut no trobat" que és "fals", per això hem de
@@ -553,7 +538,7 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             boolean tancatExpedient = tancarExpedient(peticio, plugin, expedientId);
 
             if (!tancatExpedient) {
-    			log.error("Error tancant expedient de la peticio " + peticio.getPeticioID());
+                log.error("Error tancant expedient de la peticio " + peticio.getPeticioID());
             }
 
             log.info("\n FINAL \n");
@@ -584,37 +569,36 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
 
             return null; // Indicam un error
         }
-        
-        
+
         return infoCust;
     }
 
-//    @Override
-//    public boolean tancarExpedient(Peticio peticio, String expedientID) {
-//
-//        IArxiuPlugin plugin;
-//
-//        try {
-//            plugin = getInstance();
-//        } catch (I18NException e1) {
-//
-//            // XYZ ZZZ
-//            Locale locale = new Locale("ca");
-//            final String msg = "XYZ ZZZ Error Instanciant Plugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
-//
-//            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
-//            peticio.setErrorMsg(LogicUtils.split255(msg));
-//            peticio.setErrorException(LogicUtils.stackTrace2String(e1));
-//
-//            return false;
-//        }
-//
-//        return tancarExpedient(peticio, plugin, expedientID);
-//
-//    }
-//
-//    
-    
+    //    @Override
+    //    public boolean tancarExpedient(Peticio peticio, String expedientID) {
+    //
+    //        IArxiuPlugin plugin;
+    //
+    //        try {
+    //            plugin = getInstance();
+    //        } catch (I18NException e1) {
+    //
+    //            // XYZ ZZZ
+    //            Locale locale = new Locale("ca");
+    //            final String msg = "XYZ ZZZ Error Instanciant Plugins de Arxiu: " + I18NLogicUtils.getMessage(e1, locale);
+    //
+    //            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT);
+    //            peticio.setErrorMsg(LogicUtils.split255(msg));
+    //            peticio.setErrorException(LogicUtils.stackTrace2String(e1));
+    //
+    //            return false;
+    //        }
+    //
+    //        return tancarExpedient(peticio, plugin, expedientID);
+    //
+    //    }
+    //
+    //    
+
     @Override
     public boolean tancarExpedient(Peticio peticio, IArxiuPlugin plugin, String expedientId) {
         boolean tancatExpedient;
@@ -626,52 +610,51 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
             // throw new Exception("Error desconegut tancant Expedient !!!!!");
             // }
 
-        	Expedient detalls = plugin.expedientDetalls(expedientId, null);
-        	ExpedientEstat estat = detalls.getExpedientMetadades().getEstat();
+            Expedient detalls = plugin.expedientDetalls(expedientId, null);
+            ExpedientEstat estat = detalls.getExpedientMetadades().getEstat();
 
-			switch (estat) {
-			case OBERT:
-        		log.info("XYZ ZZZ  Expedient obert, el tancarem");
-                plugin.expedientTancar(expedientId);
-                log.info("XYZ ZZZ Expedient Tancat");
-				
-			case TANCAT:
-				if (estat==ExpedientEstat.TANCAT) {
-					log.info("XYZ ZZZ  Expedient ja estava tancat");
-				}
-	            tancatExpedient = true;
-	            peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
-	            peticio.setErrorMsg(null);
-	            peticio.setErrorException(null);
-				break;
+            switch (estat) {
+                case OBERT:
+                    log.info("XYZ ZZZ  Expedient obert, el tancarem");
+                    plugin.expedientTancar(expedientId);
+                    log.info("XYZ ZZZ Expedient Tancat");
 
-			default:
-				log.info("XYZ ZZZ  Expedient index remissio. No el tancarem");
-				tancatExpedient = false;
-				break;
-			}
-        	
+                case TANCAT:
+                    if (estat == ExpedientEstat.TANCAT) {
+                        log.info("XYZ ZZZ  Expedient ja estava tancat");
+                    }
+                    tancatExpedient = true;
+                    peticio.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
+                    peticio.setErrorMsg(null);
+                    peticio.setErrorException(null);
+                break;
+
+                default:
+                    log.info("XYZ ZZZ  Expedient index remissio. No el tancarem");
+                    tancatExpedient = false;
+                break;
+            }
 
         } catch (Throwable th) {
 
             final String msg = "Error Tancant Expedient " + expedientId + ": " + th.getMessage();
-//            log.error(msg, th);
+            //            log.error(msg, th);
 
             peticio.setErrorException(LogicUtils.stackTrace2String(th));
             peticio.setErrorMsg(LogicUtils.split255(msg));
-            
+
             //Si ha anat malament, augmentam un reintent
             Long reintents = peticio.getReintentsArxiu();
             if (reintents == null) {
-				reintents = 0L;
-			}
+                reintents = 0L;
+            }
             reintents++;
             peticio.setReintentsArxiu(reintents);
             peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
 
             tancatExpedient = false;
         }
-        
+
         //Guardam la data del darrer reintent, per a que durant el vespre no torni a intentar tancar l'expedeint. Perque els ordenam per data.
         peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
         return tancatExpedient;
@@ -961,20 +944,20 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
     }
 
     private static List<ConsultaFiltre> getLlistaFiltresDocumentMetadatos(String documentNom) {
-//        List<ConsultaFiltre> listaFiltros = new ArrayList<>();
-//        ConsultaFiltre filtro = null;
-//
-//        /*
-//         * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:organo");
-//         * filtro.setOperacio(ConsultaOperacio.IGUAL);
-//         * filtro.setValorOperacio1("A04019281"); listaFiltros.add(filtro);
-//         */
-//
-//        filtro = new ConsultaFiltre();
-//        filtro.setMetadada("name");
-//        filtro.setOperacio(ConsultaOperacio.IGUAL);
-//        filtro.setValorOperacio1(documentNom);
-//        listaFiltros.add(filtro);
+        //        List<ConsultaFiltre> listaFiltros = new ArrayList<>();
+        //        ConsultaFiltre filtro = null;
+        //
+        //        /*
+        //         * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:organo");
+        //         * filtro.setOperacio(ConsultaOperacio.IGUAL);
+        //         * filtro.setValorOperacio1("A04019281"); listaFiltros.add(filtro);
+        //         */
+        //
+        //        filtro = new ConsultaFiltre();
+        //        filtro.setMetadada("name");
+        //        filtro.setOperacio(ConsultaOperacio.IGUAL);
+        //        filtro.setValorOperacio1(documentNom);
+        //        listaFiltros.add(filtro);
 
         /*
          * filtro = new ConsultaFiltre(); filtro.setMetadada("eni:fecha_inicio");
@@ -983,20 +966,17 @@ public class PluginArxiuLogicaEJB extends AbstractPluginLogicaEJB<IArxiuPlugin> 
          * filtro.setValorOperacio2(getStringDatetoStringISO8601("30/11/2021"));
          * listaFiltros.add(filtro);
          */
-        
 
-		List<ConsultaFiltre> filtres = new ArrayList<ConsultaFiltre>();
-		ConsultaFiltre filtreTitol = new ConsultaFiltre();
-		filtreTitol.setMetadada("name");
-		filtreTitol.setOperacio(ConsultaOperacio.IGUAL);
-		filtreTitol.setValorOperacio1(documentNom);
-		filtres.add(filtreTitol);
-        
-        
+        List<ConsultaFiltre> filtres = new ArrayList<ConsultaFiltre>();
+        ConsultaFiltre filtreTitol = new ConsultaFiltre();
+        filtreTitol.setMetadada("name");
+        filtreTitol.setOperacio(ConsultaOperacio.IGUAL);
+        filtreTitol.setValorOperacio1(documentNom);
+        filtres.add(filtreTitol);
+
         return filtres;
     }
 
-    
     /*
      * public void crearExpedient() {
      * 

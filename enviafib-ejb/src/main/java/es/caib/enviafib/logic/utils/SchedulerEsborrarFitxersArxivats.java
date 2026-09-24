@@ -31,20 +31,20 @@ public class SchedulerEsborrarFitxersArxivats extends AbstractScheduler {
 
     @Override
     protected String getConfiguredHour() {
-//        return Configuracio.getHoraEliminarFitxersArxivatsScheduler();
+        //        return Configuracio.getHoraEliminarFitxersArxivatsScheduler();
         return "13";
     }
 
     @Override
     protected String getScheduleMinute() {
-   
-		return "58";
-	}
-    
+
+        return "58";
+    }
+
     @Override
     protected String getConfiguredHours() {
-//        String nHores = Configuracio.getNhoresEliminarFitxersArxivatsScheduler();
-    	String nHores = null;
+        //        String nHores = Configuracio.getNhoresEliminarFitxersArxivatsScheduler();
+        String nHores = null;
         return nHores != null ? nHores : "1";
     }
 
@@ -53,8 +53,7 @@ public class SchedulerEsborrarFitxersArxivats extends AbstractScheduler {
 
         try {
             // Recollir totes les peticions arxivades
-            List<Peticio> peticions = peticioLogicaEjb.select(
-                    Where.AND(PeticioFields.INFOARXIUID.isNotNull()),
+            List<Peticio> peticions = peticioLogicaEjb.select(Where.AND(PeticioFields.INFOARXIUID.isNotNull()),
                     new OrderBy(PeticioFields.DATAFINAL));
 
             Set<Long> fitxersEsborrar = new HashSet<>();
@@ -70,13 +69,15 @@ public class SchedulerEsborrarFitxersArxivats extends AbstractScheduler {
                     // Netejar referències a BBDD per la petició
                     if (fitxerOriginalId != null) {
                         peticioLogicaEjb.update(PeticioFields.FITXERID, null, PeticioFields.PETICIOID.equal(peticioId));
-                        log.info("Esborrant fitxer original " + fitxerOriginalId + " (peticio " + peticioId + ") a BBDD");
+                        log.info("Esborrant fitxer original " + fitxerOriginalId + " (peticio " + peticioId
+                                + ") a BBDD");
                         fitxerLogicEjb.delete(fitxerOriginalId);
                         fitxersEsborrar.add(fitxerOriginalId);
                     }
 
                     if (fitxerFirmatId != null) {
-                        peticioLogicaEjb.update(PeticioFields.FITXERFIRMATID, null, PeticioFields.PETICIOID.equal(peticioId));
+                        peticioLogicaEjb.update(PeticioFields.FITXERFIRMATID, null,
+                                PeticioFields.PETICIOID.equal(peticioId));
                         log.info("Esborrant fitxer signat " + fitxerFirmatId + " (peticio " + peticioId + ") a BBDD");
                         fitxerLogicEjb.delete(fitxerFirmatId);
                         fitxersEsborrar.add(fitxerFirmatId);

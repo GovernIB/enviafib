@@ -5,7 +5,6 @@ import javax.ejb.EJBAccessException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 import org.fundaciobit.genapp.common.web.tiles.Tile;
 import org.fundaciobit.genapp.common.web.tiles.TileType;
@@ -72,8 +71,11 @@ import es.caib.enviafib.back.utils.Tab;
         group = Tab.MENU_DESENVOLUPAMENT,
         baseLink = "/desenvolupament/jspexception",
         relativeLink = "")
-@Tile(name = "errorjsp_desenvolupament", extendsTile = "desenvolupament", type = TileType.ANOTHER, 
-     contentJsp = "/WEB-INF/jsp/webdb/menu_desenvolupament.jsp")
+@Tile(
+        name = "errorjsp_desenvolupament",
+        extendsTile = "desenvolupament",
+        type = TileType.ANOTHER,
+        contentJsp = "/WEB-INF/jsp/webdb/menu_desenvolupament.jsp")
 @Controller
 public class DesenvolupamentController {
 

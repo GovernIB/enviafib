@@ -120,9 +120,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     protected es.caib.enviafib.ejb.SerieDocumentalService serieDocEjb;
 
     @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
-    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb_self;    
-    
-    
+    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb_self;
+
     final String prefixeEsborrat = "ESBORRADA%";
 
     @Override
@@ -133,15 +132,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String nifDestinatari = peticio.getDestinatariNif();
 
         FirmaAsyncSimpleSignatureBlock[] signatureBlocks = convertNifToSignatureBlocks(nifDestinatari);
-        
+
         /*
- 				// Revisors
+        		// Revisors
                 int minimumNumberOfRevisers = signOrigen.getMinimumNumberOfRevisers();
-
+        
                 List<FirmaAsyncSimpleReviser> revisersDest;
-
+        
                 List<FlowTemplateSimpleReviser> revisorsOrigen = signOrigen.getRevisers();
-
+        
                 if (revisorsOrigen == null || revisorsOrigen.size() == 0) {
                     revisersDest = null;
                 } else {
@@ -156,42 +155,40 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                         revisersDest.add(revDest);
                     }
                 }
-
+        
                 signers.add(new FirmaAsyncSimpleSignature(personToSign, required, reason, minimumNumberOfRevisers,
                         revisersDest));
          */
-        
-        
+
         if (peticio.getRevisor() != null && peticio.getRevisor().trim().length() > 0) {
-//        	FirmaAsyncSimpleReviser revisor = new FirmaAsyncSimpleReviser();
-        	List<FirmaAsyncSimpleReviser> revisorList  = new ArrayList<FirmaAsyncSimpleReviser>();
-        	
+            //        	FirmaAsyncSimpleReviser revisor = new FirmaAsyncSimpleReviser();
+            List<FirmaAsyncSimpleReviser> revisorList = new ArrayList<FirmaAsyncSimpleReviser>();
+
             FirmaAsyncSimpleReviser revisor = new FirmaAsyncSimpleReviser();
             String administrationID = peticio.getRevisor();
-            
-			revisor.setAdministrationID(administrationID);
-			revisor.setIntermediateServerUsername(null);
-			revisor.setPositionInTheCompany(null);
-			revisor.setRequired(true);
-			revisor.setUsername(null);
-			
-            
+
+            revisor.setAdministrationID(administrationID);
+            revisor.setIntermediateServerUsername(null);
+            revisor.setPositionInTheCompany(null);
+            revisor.setRequired(true);
+            revisor.setUsername(null);
+
             revisorList.add(revisor);
-        	
+
             FirmaAsyncSimpleSignature signer = signatureBlocks[0].getSigners().get(0);
-            
+
             signer.setRevisers(revisorList);
             signer.setMinimumNumberOfRevisers(revisorList.size());
-		}
-        
+        }
+
         arrancarPeticioBySignatureBlocks(peticio, languageUI, signatureBlocks, solicitant);
 
         return (PeticioJPA) peticio;
     }
 
     @Override
-    public PeticioJPA arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux, Usuari solicitant)
-            throws I18NException {
+    public PeticioJPA arrancarPeticioFlux(long peticioID, String languageUI, FlowTemplateSimpleFlowTemplate flux,
+            Usuari solicitant) throws I18NException {
 
         if (log.isDebugEnabled()) {
             log.debug(FlowTemplateSimpleFlowTemplate.toString(flux));
@@ -208,7 +205,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @Override
     public void arrancarPeticioBySignatureBlocks(Peticio peticio, String languageUI,
-            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, Usuari solicitant ) throws I18NException {
+            FirmaAsyncSimpleSignatureBlock[] signatureBlocks, Usuari solicitant) throws I18NException {
 
         String perfil = Configuracio.getPortafibProfile();
         FirmaAsyncSimpleFile fitxerAFirmar = getFitxer(peticio.getFitxer());
@@ -216,18 +213,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         String idiomaDoc = peticio.getIdiomaDoc();
         String tipusDoc = peticio.getTipusDocumental();
 
-        List<Long> anexes = infoAnexEjb.executeQuery(InfoAnexFields.ANEXID, InfoAnexFields.PETICIOID.equal(peticio.getPeticioID()));
-        
-        List <FirmaAsyncSimpleFile> fitxersAAnexar = new ArrayList<FirmaAsyncSimpleFile>();
+        List<Long> anexes = infoAnexEjb.executeQuery(InfoAnexFields.ANEXID,
+                InfoAnexFields.PETICIOID.equal(peticio.getPeticioID()));
+
+        List<FirmaAsyncSimpleFile> fitxersAAnexar = new ArrayList<FirmaAsyncSimpleFile>();
         for (Long anexID : anexes) {
             FitxerJPA file = fitxerLogicEjb.findByPrimaryKey(anexID);
             fitxersAAnexar.add(getFitxer(file));
             log.info("Afegit annex per enviar: " + anexID);
         }
-        
-        
+
         ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
-        
+
         Long idPortafib;
 
         try {
@@ -253,7 +250,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         // Annexes
         List<FirmaAsyncSimpleAnnex> annexs = new ArrayList<FirmaAsyncSimpleAnnex>();
-        for (FirmaAsyncSimpleFile fileAnnex: fitxersAAnexar) {            
+        for (FirmaAsyncSimpleFile fileAnnex : fitxersAAnexar) {
             if (fileAnnex != null) {
                 boolean attach = false;
                 boolean sign = false;
@@ -271,7 +268,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
         //sdf.format(new Date(System.currentTimeMillis()))
-        
+
         String title = titolPeticio.length() > 250 ? titolPeticio.substring(0, 250) : titolPeticio;
 
         final String description = "Firma des d´EnviaFIB. Tipus: " + tipusPeticio;
@@ -282,24 +279,23 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             tipusDocumentalID = Long.valueOf(tipusDocumental);
         } catch (NumberFormatException e) {
-        	throw new I18NException("error.peticio.tipusdocumental.parselong", tipusDocumental);
+            throw new I18NException("error.peticio.tipusdocumental.parselong", tipusDocumental);
         }
-            
-    	List<FirmaAsyncSimpleDocumentTypeInformation> tipus = PortafibUtils.getTipusDocumentalsAll(languageUI);
 
-    	String desc = null;
-    	for (FirmaAsyncSimpleDocumentTypeInformation f : tipus) {
-    		if (f.getDocumentType() == tipusDocumentalID) {
-    			desc = f.getName();
-    			break;
-    		}
+        List<FirmaAsyncSimpleDocumentTypeInformation> tipus = PortafibUtils.getTipusDocumentalsAll(languageUI);
+
+        String desc = null;
+        for (FirmaAsyncSimpleDocumentTypeInformation f : tipus) {
+            if (f.getDocumentType() == tipusDocumentalID) {
+                desc = f.getName();
+                break;
+            }
         }
-        	
 
         String languageDoc = idiomaDocumental;
 
         int priority = FirmaAsyncSimpleSignatureRequestWithSignBlockList.PRIORITY_NORMAL_NORMAL;
-        
+
         String l1 = solicitant.getLlinatge1() == null ? "" : solicitant.getLlinatge1();
         String l2 = solicitant.getLlinatge2() == null ? "" : solicitant.getLlinatge2();
         String fullName = solicitant.getNom() + " " + l1 + " " + l2;
@@ -327,18 +323,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Long peticioDeFirmaID;
 
         // Utilitzar Blocs de Firmes
-//        log.info("Petició de Firma emprant Blocs de Firmes");
+        //        log.info("Petició de Firma emprant Blocs de Firmes");
         FirmaAsyncSimpleSignatureRequestWithSignBlockList signatureRequest;
         signatureRequest = new FirmaAsyncSimpleSignatureRequestWithSignBlockList(signatureRequestBase, signatureBlocks);
         peticioDeFirmaID = api.createAndStartSignatureRequestWithSignBlockList(signatureRequest);
 
-//        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
+        //        log.info("Creada peticio amb portafibID = " + peticioDeFirmaID2);
 
         //FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
         //rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioDeFirmaID, languageUI);
 
-//        String url = api.getUrlToViewFlow(rinfo);
-//        log.info("URL to view flow: " + url);
+        //        String url = api.getUrlToViewFlow(rinfo);
+        //        log.info("URL to view flow: " + url);
         return peticioDeFirmaID;
     }
 
@@ -348,20 +344,21 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         Long peticioID = getPeticioIdFromPortafibId(portafibID);
         Peticio peticio = null;
-        
+
         if (peticioID == null) {
             log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ");
-        }else {
+        } else {
             peticio = this.findByPrimaryKeyPublic(peticioID);
-            
+
             if (peticio.getEstat() != Constants.ESTAT_PETICIO_EN_PROCES) {
-				log.error("Hem trobat la petició amb ID=" + peticioID + " pero no està en estat EN_PROCES. Estat actual: "
-						+ peticio.getEstat() + ". No es pot processar.");
-				peticio = null;
-			}else {
-				peticio.setEstat(Constants.ESTAT_PETICIO_PROCESANT_CALLBACK);
-				this.updatePublic(peticio);
-			}
+                log.error(
+                        "Hem trobat la petició amb ID=" + peticioID + " pero no està en estat EN_PROCES. Estat actual: "
+                                + peticio.getEstat() + ". No es pot processar.");
+                peticio = null;
+            } else {
+                peticio.setEstat(Constants.ESTAT_PETICIO_PROCESANT_CALLBACK);
+                this.updatePublic(peticio);
+            }
         }
 
         return peticio;
@@ -370,113 +367,110 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     @Override
     @PermitAll
     @Asynchronous
-	public void procesarPeticioFirmadaAsync(Peticio peticio) throws I18NException {
-//    	log.info("procesarPeticioFirmadaAsync()::  " +peticio.getPeticioID() +  " WAIT!!!!! ");
-    	
-//    	try {
-//			Thread.sleep(20000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-    	
-    	
-		Long peticioID = peticio.getPeticioID();
-		log.info("procesarPeticioFirmadaAsync():: Iniciam proces. asyncrònic de la petició ID=" + peticioID + ". ");
+    public void procesarPeticioFirmadaAsync(Peticio peticio) throws I18NException {
+        //    	log.info("procesarPeticioFirmadaAsync()::  " +peticio.getPeticioID() +  " WAIT!!!!! ");
 
+        //    	try {
+        //			Thread.sleep(20000);
+        //		} catch (InterruptedException e) {
+        //			// TODO Auto-generated catch block
+        //			e.printStackTrace();
+        //		}
 
-		log.info("procesarPeticioFirmadaAsync():: Guardam infoSignatura de la petició ID=" + peticioID + ". ");
+        Long peticioID = peticio.getPeticioID();
+        log.info("procesarPeticioFirmadaAsync():: Iniciam proces. asyncrònic de la petició ID=" + peticioID + ". ");
 
-//		InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(peticio);
+        log.info("procesarPeticioFirmadaAsync():: Guardam infoSignatura de la petició ID=" + peticioID + ". ");
 
-		InfoSignaturaJPA infoSignatura = null;
+        //		InfoSignaturaJPA infoSignatura = guardarFitxerInfoFirma(peticio);
 
-		try {
+        InfoSignaturaJPA infoSignatura = null;
 
-			long portafirmesID = Long.parseLong(peticio.getPeticioPortafirmes());
+        try {
 
-			FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafirmesID);
+            long portafirmesID = Long.parseLong(peticio.getPeticioPortafirmes());
 
-			Long fitxerID = guardarFitxer(firma);
+            FirmaAsyncSimpleSignedFile firma = getFitxerSignat(portafirmesID);
 
-			log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID=" + peticio.getPeticioID()
-					+ " al FileSystemManager");
+            Long fitxerID = guardarFitxer(firma);
 
-			peticio.setFitxerFirmatID(fitxerID);
+            log.info("Guardat fitxer signat (" + fitxerID + ") de la petició amb ID=" + peticio.getPeticioID()
+                    + " al FileSystemManager");
 
-			infoSignatura = guardarInfo(firma);
+            peticio.setFitxerFirmatID(fitxerID);
 
-			long infoSignaturaID = infoSignatura.getInfoSignaturaID();
-			log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
-			peticio.setInfoSignaturaID(infoSignaturaID);
-			
-			peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-			peticioLogicaEjb_self.procesarPeticioFirmadaAsync2(peticio, infoSignatura);
-			
-		} catch (Throwable t) {
-			String errorMsg = "No s'ha pogut obtenir la infoSignatura de la petició ID=" + peticio.getPeticioID()
-					+ ". ";
-			
-			log.error(errorMsg, t);
-			
-			peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_CALLBACK);
-			peticio.setErrorMsg(LogicUtils.split255(errorMsg + t.getMessage()));
-		}
-		
-		this.updatePublic(peticio);
-		log.info("procesarPeticioFirmadaAsync():: " +peticio.getPeticioID() +  " SORTIM !!!!! ");
+            infoSignatura = guardarInfo(firma);
+
+            long infoSignaturaID = infoSignatura.getInfoSignaturaID();
+            log.info("Objecte InfoSignatura creat amb ID= " + infoSignaturaID);
+            peticio.setInfoSignaturaID(infoSignaturaID);
+
+            peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+            peticioLogicaEjb_self.procesarPeticioFirmadaAsync2(peticio, infoSignatura);
+
+        } catch (Throwable t) {
+            String errorMsg = "No s'ha pogut obtenir la infoSignatura de la petició ID=" + peticio.getPeticioID()
+                    + ". ";
+
+            log.error(errorMsg, t);
+
+            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_CALLBACK);
+            peticio.setErrorMsg(LogicUtils.split255(errorMsg + t.getMessage()));
+        }
+
+        this.updatePublic(peticio);
+        log.info("procesarPeticioFirmadaAsync():: " + peticio.getPeticioID() + " SORTIM !!!!! ");
     }
-    
-    
+
     @Override
     @PermitAll
     @Asynchronous
-	public void procesarPeticioFirmadaAsync2(Peticio peticio, InfoSignaturaJPA infoSignatura) throws I18NException {
+    public void procesarPeticioFirmadaAsync2(Peticio peticio, InfoSignaturaJPA infoSignatura) throws I18NException {
 
-//		log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " WAIT!!!!! ");
+        //		log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " WAIT!!!!! ");
 
-//		try {
-//			Thread.sleep(5000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+        //		try {
+        //			Thread.sleep(5000);
+        //		} catch (InterruptedException e) {
+        //			// TODO Auto-generated catch block
+        //			e.printStackTrace();
+        //		}
 
-		try {
-			log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " CONTINUAM !!!!! ");
+        try {
+            log.info("procesarPeticioFirmadaAsync2()::  " + peticio.getPeticioID() + " CONTINUAM !!!!! ");
 
-			Long peticioID = peticio.getPeticioID();
+            Long peticioID = peticio.getPeticioID();
 
-			String urlBase = Configuracio.getUrlBase();
+            String urlBase = Configuracio.getUrlBase();
 
-			log.info("procesarPeticioFirmadaAsync2():: Guardam dins arxiu .... ");
-			peticio = guardarFitxerArxiuSync(peticio, infoSignatura, urlBase);
+            log.info("procesarPeticioFirmadaAsync2():: Guardam dins arxiu .... ");
+            peticio = guardarFitxerArxiuSync(peticio, infoSignatura, urlBase);
 
-			String msg = "Peticio " + peticioID + ". ";
-			if (peticio.getInfoArxiuID() != null) {
-				msg += "Arxivat correctament. ";
-				if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
-					msg += "Expedient tancat correctament";
-				}
-				log.info(msg);
-			} else {
-				msg += "Error arxivant: " + peticio.getErrorMsg();
-				log.error(msg);
-			}
-		} catch (Throwable t) {
-			String errorMsg = "No s'ha pogut obtenir la infoSignatura de la petició ID=" + peticio.getPeticioID()
-					+ ". ";
+            String msg = "Peticio " + peticioID + ". ";
+            if (peticio.getInfoArxiuID() != null) {
+                msg += "Arxivat correctament. ";
+                if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+                    msg += "Expedient tancat correctament";
+                }
+                log.info(msg);
+            } else {
+                msg += "Error arxivant: " + peticio.getErrorMsg();
+                log.error(msg);
+            }
+        } catch (Throwable t) {
+            String errorMsg = "No s'ha pogut obtenir la infoSignatura de la petició ID=" + peticio.getPeticioID()
+                    + ". ";
 
-			log.error(errorMsg, t);
+            log.error(errorMsg, t);
 
-			peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_CALLBACK);
-			peticio.setErrorMsg(LogicUtils.split255(errorMsg + t.getMessage()));
-		}
-		
-		this.updatePublic(peticio);
-		
-		log.info("procesarPeticioFirmadaAsync2()::  SORTIM !!!!! ");
-	}
+            peticio.setEstat(Constants.ESTAT_PETICIO_ERROR_CALLBACK);
+            peticio.setErrorMsg(LogicUtils.split255(errorMsg + t.getMessage()));
+        }
+
+        this.updatePublic(peticio);
+
+        log.info("procesarPeticioFirmadaAsync2()::  SORTIM !!!!! ");
+    }
 
     @Override
     @PermitAll
@@ -511,18 +505,18 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         Long peticioID = getPeticioIdFromPortafibId(portafibID);
 
         if (peticioID == null) {
-        	log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ");
-        	return ;
+            log.error("No hi ha cap peticio amb portafibID=" + portafibID + ". ");
+            return;
         }
-    
+
         log.info("cosesAFerPeticioFirmaParcial():: Informam al camp REASON de la petició " + peticioID);
         Peticio peticio = findByPrimaryKey(peticioID);
-        
+
         String reason = peticio.getReason();
-        
+
         if (reason != null && reason.trim().length() > 0) {
             log.info("Ja tenia firma parcial: " + reason);
-        }else {
+        } else {
             peticio.setReason(Constants.FIRMADA_PARCIAL);
             this.update(peticio);
             log.info("Nou camp reason: " + peticio.getReason());
@@ -539,10 +533,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             log.info("Start guardar Peticio " + peticioID + " dins d'Arxiu.");
 
-//            Thread.sleep(40000);
+            //            Thread.sleep(40000);
             log.info("Guardant Peticio " + peticioID + " dins d'Arxiu.");
- //           Thread.sleep(40000);
-            
+            //           Thread.sleep(40000);
+
             peticio = guardarFitxerArxiuSync(peticio, infoSignatura, urlBase);
             log.info("Peticio Arxivada: " + peticioID);
         } catch (Exception e) {
@@ -552,30 +546,29 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
     }
 
-    
     @Override
     @PermitAll
-//    @Asynchronous
+    //    @Asynchronous
     public String reintentGuardarPeticioArxiu(long peticioID, long infoSignaturaID, String urlBase)
             throws I18NException {
 
         InfoSignatura infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaID);
-        
-		if (infoSignatura == null) {
-			String msg = "No s'ha trobat la infoSignatura amb ID=" + infoSignaturaID;
-			log.error(msg);
-			return msg;
-		}
-        
-        Peticio peticio = findByPrimaryKey(peticioID);
-		if (peticio == null) {
-//			return "No s'ha trobat la petició amb ID=" + peticioID;
-			String msg = "No s'ha trobat la petició amb ID=" + peticioID;
-			log.error(msg);
-			return msg;
-		}
 
-       // guardarPeticioArxiuAsync(peticio, languageUI, infoSignatura, urlBase);
+        if (infoSignatura == null) {
+            String msg = "No s'ha trobat la infoSignatura amb ID=" + infoSignaturaID;
+            log.error(msg);
+            return msg;
+        }
+
+        Peticio peticio = findByPrimaryKey(peticioID);
+        if (peticio == null) {
+            //			return "No s'ha trobat la petició amb ID=" + peticioID;
+            String msg = "No s'ha trobat la petició amb ID=" + peticioID;
+            log.error(msg);
+            return msg;
+        }
+
+        // guardarPeticioArxiuAsync(peticio, languageUI, infoSignatura, urlBase);
         peticio = guardarFitxerArxiuSync(peticio, infoSignatura, urlBase);
 
         if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
@@ -584,72 +577,71 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             return peticio.getErrorMsg();
         }
     }
-    
-//    @Override
-//    @PermitAll
-//    @Asynchronous
-//    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException {
-//
-//        {
-//            Peticio peticio = findByPrimaryKey(peticioID);
-//            peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-//            this.update(peticio);
-//        }
-//
-//        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
-//                PeticioFields.PETICIOID.equal(peticioID));
-//        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
-//
-//        Peticio peticio;
-//        try {
-//            log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
-//            peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
-//        } catch (Exception e) {
-//            // XYZ ZZZ TMP
-//            log.error("Future.get() ha llança un error: " + e.getMessage(), e);
-//            peticio = null;
-//        }
-//
-//        String msg;
-//        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
-//            msg = null;
-//        } else {
-//            msg = peticio.getErrorMsg();
-//        }
-//
-//        return msg;comp
-//    }
 
-    
+    //    @Override
+    //    @PermitAll
+    //    @Asynchronous
+    //    public String reintentarGuardarFitxerArxiu(long peticioID, String languageUI, String urlBase) throws I18NException {
+    //
+    //        {
+    //            Peticio peticio = findByPrimaryKey(peticioID);
+    //            peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+    //            this.update(peticio);
+    //        }
+    //
+    //        Long infoSignaturaId = this.executeQueryOne(PeticioFields.INFOSIGNATURAID,
+    //                PeticioFields.PETICIOID.equal(peticioID));
+    //        InfoSignaturaJPA infoSignatura = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignaturaId);
+    //
+    //        Peticio peticio;
+    //        try {
+    //            log.info("\n\n Reintentant el guardat de la Petició " + peticioID + " dins d'Arxiu.");
+    //            peticio = guardarFitxerArxiuSync(peticioID, languageUI, infoSignatura, urlBase);
+    //        } catch (Exception e) {
+    //            // XYZ ZZZ TMP
+    //            log.error("Future.get() ha llança un error: " + e.getMessage(), e);
+    //            peticio = null;
+    //        }
+    //
+    //        String msg;
+    //        if (peticio.getEstat() == Constants.ESTAT_PETICIO_FIRMADA) {
+    //            msg = null;
+    //        } else {
+    //            msg = peticio.getErrorMsg();
+    //        }
+    //
+    //        return msg;comp
+    //    }
+
     @Override
     public void tancarExpedientPeticio(long peticioID, String urlBase) throws I18NException {
-        
+
         Peticio peticio = this.findByPrimaryKey(peticioID);
 
         String expedientID = this.executeQueryOne(new PeticioQueryPath().INFOARXIU().ARXIUEXPEDIENTID(),
                 PETICIOID.equal(peticioID));
-        
+
         IArxiuPlugin plugin = pluginArxiuLogicaEjb.getInstance();
 
         boolean tancatExpedient = this.pluginArxiuLogicaEjb.tancarExpedient(peticio, plugin, expedientID);
         this.update(peticio);
-        
+
         if (tancatExpedient) {
             try {
                 enviarMailSolicitant(peticio, urlBase);
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
-        }else {
+        } else {
             throw new I18NException("genapp.comodi", peticio.getErrorMsg());
         }
-    }    
-    
+    }
+
     @Override
     public void reintentarTancarExpedient(long peticioID, String urlBase) throws I18NException {
 
         log.info("\n\n Reintentant el tancament d'expedient de la Petició " + peticioID + " dins d'Arxiu.");
-        tancarExpedientPeticio(peticioID, urlBase); 
+        tancarExpedientPeticio(peticioID, urlBase);
     }
 
     /**
@@ -664,10 +656,10 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throws I18NException {
         log.info(" guardarFitxerArxiu:: START");
 
-//        Peticio peticio = null;
+        //        Peticio peticio = null;
         long start = System.currentTimeMillis();
 
-//        peticio = findByPrimaryKey(peticioID);
+        //        peticio = findByPrimaryKey(peticioID);
 
         // No llança errors. Només torna InforArxiu null si hi ha hagut un error
         // Ja inicialitza Petició amb l'estat com toca i guarda resultat a InfoArxiu
@@ -675,7 +667,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         if (ia != null) {
             peticio.setDataFinal(new Timestamp(System.currentTimeMillis()));
-//            peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
+            //            peticio.setEstat(Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT);
             peticio.setErrorMsg(null);
             peticio.setErrorException(null);
             peticio.setReintentsArxiu(0L);
@@ -685,7 +677,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             } catch (Exception e) {
                 log.error("Error enviant correu: " + e.getMessage(), e);
             }
-        }else {
+        } else {
             long reintents = peticio.getReintentsArxiu() == null ? 0 : peticio.getReintentsArxiu();
             reintents++;
             peticio.setReintentsArxiu(reintents);
@@ -697,11 +689,11 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         return peticio;
     }
 
-//	protected InfoSignaturaJPA guardarFitxerInfoFirma(Peticio peticio) {
-//
-//		
-//
-//	}
+    //	protected InfoSignaturaJPA guardarFitxerInfoFirma(Peticio peticio) {
+    //
+    //		
+    //
+    //	}
 
     protected Long getPeticioIdFromPortafibId(long portafibID) throws I18NException {
         return this.executeQueryOne(PeticioFields.PETICIOID,
@@ -716,9 +708,9 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(portafibID, languageUI);
 
             ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
-            
-//            rinfo.getSignatureRequestID()
-            
+
+            //            rinfo.getSignatureRequestID()
+
             api.deleteSignatureRequest(rinfo);
             return true;
         } catch (ApisIBServerException e) {
@@ -750,20 +742,21 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                 String emailDestinatari = usuariEjb.executeQueryOne(UsuariFields.EMAIL,
                         UsuariFields.USUARIID.equal(solicitantID));
 
-                if ((int) estatPeticio == Constants.ESTAT_PETICIO_FIRMADA || (int) estatPeticio == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
+                if ((int) estatPeticio == Constants.ESTAT_PETICIO_FIRMADA
+                        || (int) estatPeticio == Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT) {
                     Map<String, Object> map = new HashMap<String, Object>();
 
                     map.put("nomFitxer", peticio.getFitxer().getNom());
                     map.put("numeroPeticio", "" + peticio.getPeticioID());
                     map.put("titolPeticio", peticio.getNom());
-                    
+
                     Long infoArxiuID = peticio.getInfoArxiuID();
-                    log.info("infoArxiuID :" + infoArxiuID );
-                    
-                    InfoArxiuJPA ia = infoArxiuLogicEjb.findByPrimaryKeyPublic(infoArxiuID );
+                    log.info("infoArxiuID :" + infoArxiuID);
+
+                    InfoArxiuJPA ia = infoArxiuLogicEjb.findByPrimaryKeyPublic(infoArxiuID);
                     String fileUrl = ia.getCsvValidationWeb() + "view.xhtml?hash=" + ia.getCsv();
                     map.put("fileUrl", fileUrl);
-                    
+
                     subject = I18NCommonUtils.tradueix(loc, "email.peticio.finalitzada.subject");
                     message = I18NCommonUtils.tradueix(loc, "email.peticio.finalitzada.message");
 
@@ -794,15 +787,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
                     message = I18NCommonUtils.tradueix(loc, code, nomPeticio, baseUrl);
                 }
 
-                
                 log.info(subject);
                 log.info(message);
-                
-                
-                
+
                 EmailUtil.postMail(subject, message, isHTML, from, emailDestinatari);
                 log.info("Enviat email a " + emailDestinatari + ": " + subject);
-                
+
             } catch (I18NException e) {
                 log.error("EJB: Error I18NException enviant mail: " + e.getMessage(), e);
             } catch (IOException e) {
@@ -916,15 +906,15 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Borrarem peticio: " + instance.getPeticioID());
 
         this.deleteIncludingFiles(instance, fitxerLogicEjb);
-        
+
         if (instance.getTipus() != Constants.TIPUS_PETICIO_AUTOFIRMA) {
             String portafibID = instance.getPeticioPortafirmes();
 
             //Per esborrar una peticio de portafib, cal que tingui un portafibID, i no tenir el prefix "ESBORRADA%"
-            
-            if (portafibID == null || portafibID.trim().length() == 0 || portafibID.startsWith(prefixeEsborrat) ) {
+
+            if (portafibID == null || portafibID.trim().length() == 0 || portafibID.startsWith(prefixeEsborrat)) {
                 log.error("La petició " + instance.getPeticioID() + " no te portafibID");
-            }else {
+            } else {
                 final String languageUI = "ca";
 
                 if (esborrarPeticioPortafib(portafibID, languageUI)) {
@@ -938,7 +928,7 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         }
 
         Long infoSignID = instance.getInfoSignaturaID();
-        
+
         if (infoSignID != null) {
             InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKey(infoSignID);
             infoSignaturaLogicaEjb.delete(is);
@@ -947,7 +937,6 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
     @Override
     public void deleteIncludingFiles(Peticio instance, FitxerService fitxerEjb) throws I18NException {
-
 
         List<Long> anexes = infoAnexEjb.executeQuery(InfoAnexFields.ANEXID,
                 InfoAnexFields.PETICIOID.equal(instance.getPeticioID()));
@@ -998,57 +987,57 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
 
         FirmaAsyncSimpleSignedFile fitxerSignat = null;
-        
-        
+
         try {
             fitxerSignat = api.getSignedFileOfSignatureRequest(rinfo);
         } catch (Throwable t) {
             throw new I18NException("error.portafib.fitxersignat", String.valueOf(portafibID), t.getMessage());
         }
-//        throw new I18NException("error.genapp.comodi", "Simulació d'error obtenint fitxer signat de Portafib per proves");
+        //        throw new I18NException("error.genapp.comodi", "Simulació d'error obtenint fitxer signat de Portafib per proves");
 
         return fitxerSignat;
     }
 
     @Override
-	public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID, boolean incloureDesconeguts) throws I18NException {
+    public List<StringKeyValue> getTipusDocumentals(String lang, String entitatID, boolean incloureDesconeguts)
+            throws I18NException {
 
-		List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-		List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
+        List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+        List<FirmaAsyncSimpleDocumentTypeInformation> tipusDocsPFI = PortafibUtils.getTipusDocumentalsAll(lang);
 
-		final Where wEntitat = SerieDocumentalFields.ENTITATID.equal(entitatID);
+        final Where wEntitat = SerieDocumentalFields.ENTITATID.equal(entitatID);
 
-		for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
-			Long key = tipusDocPFI.getDocumentType();
-			String name = tipusDocPFI.getName();
-			Long base = tipusDocPFI.getDocumentTypeBase();
+        for (FirmaAsyncSimpleDocumentTypeInformation tipusDocPFI : tipusDocsPFI) {
+            Long key = tipusDocPFI.getDocumentType();
+            String name = tipusDocPFI.getName();
+            Long base = tipusDocPFI.getDocumentTypeBase();
 
-//			log.info("getTipusDocumentals()::Tipus Documental: " + key + " - " + name + " - " + base);
+            //			log.info("getTipusDocumentals()::Tipus Documental: " + key + " - " + name + " - " + base);
 
-			// Agafa tots els tipus documentals, que tenen la serie pare amb una serie
-			// documental a la seva entitat.
+            // Agafa tots els tipus documentals, que tenen la serie pare amb una serie
+            // documental a la seva entitat.
 
-			Where wTipusDoc = SerieDocumentalFields.TIPUSDOCUMENTAL.equal(base.toString());
-			Long taulaSeriesOk = serieDocEjb.count(Where.AND(wTipusDoc, wEntitat));
+            Where wTipusDoc = SerieDocumentalFields.TIPUSDOCUMENTAL.equal(base.toString());
+            Long taulaSeriesOk = serieDocEjb.count(Where.AND(wTipusDoc, wEntitat));
 
-			if (taulaSeriesOk == 1) {
-				StringKeyValue skv = new StringKeyValue(key.toString(), name);
-				__tmp.add(skv);
-			}else {
-				if (incloureDesconeguts) {
-					// Afegir tipus documental null per desconegut.
-					__tmp.add(new StringKeyValue(key.toString(), "Tipus documental desconegut"));
-				}
-			}
-		}
-		
-		
-		log.info("getTipusDocumentals()::Retornem " + __tmp.size() + " tipus documentals");
-		return __tmp;
-	}
+            if (taulaSeriesOk == 1) {
+                StringKeyValue skv = new StringKeyValue(key.toString(), name);
+                __tmp.add(skv);
+            } else {
+                if (incloureDesconeguts) {
+                    // Afegir tipus documental null per desconegut.
+                    __tmp.add(new StringKeyValue(key.toString(), "Tipus documental desconegut"));
+                }
+            }
+        }
+
+        log.info("getTipusDocumentals()::Retornem " + __tmp.size() + " tipus documentals");
+        return __tmp;
+    }
 
     @Override
-    public InfoSignatura guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr) throws I18NException {
+    public InfoSignatura guardarResultatAutofirma(long peticioID, FirmaSimpleSignatureResult fssr)
+            throws I18NException {
 
         log.info("Autofirma Recuperada Informació de firma: \n"
                 + FirmaSimpleSignedFileInfo.toString(fssr.getSignedFileInfo()));
@@ -1072,18 +1061,17 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
 
         return infoSignatura;
         //guardarFitxerArxiu(peticioID, pet.getIdiomaID(), infoSignatura);
-        
-        
-//        Peticio peticio = findByPrimaryKey(peticioID);
-//        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
-//        this.update(peticio);
 
-//        log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
-//
-//        guardarPeticioArxiu(pet, pet.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
-//        //guardarFitxerArxiuSync(peticioID, peticio.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
-//
-//        log.info("guardarResultatAutofirma()::Autofirma => sortim");
+        //        Peticio peticio = findByPrimaryKey(peticioID);
+        //        peticio.setEstat(Constants.ESTAT_PETICIO_ARXIVANT);
+        //        this.update(peticio);
+
+        //        log.info("guardarResultatAutofirma()::Autofirma => guardar dins Arxiu de forma ASYNC ...");
+        //
+        //        guardarPeticioArxiu(pet, pet.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
+        //        //guardarFitxerArxiuSync(peticioID, peticio.getIdiomaID(), infoSignatura, Configuracio.getUrlBase());
+        //
+        //        log.info("guardarResultatAutofirma()::Autofirma => sortim");
 
         // pet.setDataFinal(new Timestamp(System.currentTimeMillis()));
         // pet.setEstat(Constants.ESTAT_PETICIO_FIRMADA);
@@ -1308,8 +1296,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         try {
             ApiFirmaAsyncSimple api = PortafibUtils.getApiFirmaAsyncSimple();
             FirmaAsyncSimpleSignatureRequestInfo rinfo = null;
-//            log.info("peticioPortaFIB: " + peticioPortaFIB);
-//            log.info("languageUI: " + languageUI);
+            //            log.info("peticioPortaFIB: " + peticioPortaFIB);
+            //            log.info("languageUI: " + languageUI);
             rinfo = new FirmaAsyncSimpleSignatureRequestInfo(peticioPortaFIB, languageUI);
             String url = api.getUrlToViewFlow(rinfo);
             return url;
@@ -1319,7 +1307,8 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             throw e;
         } catch (Exception e) {
             // XYZ ZZZ TRA
-            String msg = "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "  + e.getMessage();
+            String msg = "Error desconegut intentant obtenir una adreça per visualitzar l'estat del flux de firmes: "
+                    + e.getMessage();
             log.error(msg, e);
             throw new I18NException("genapp.comodi", msg);
         }
@@ -1346,12 +1335,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             List<StringKeyValue> result = new ArrayList<StringKeyValue>();
             for (BasicUserInfo userInfo : response.getData()) {
                 String key = userInfo.getAdministrationId();
-                
+
                 // Pepito Grillo Mola (pgrillo)
                 String nifOfuscat = "******" + userInfo.getAdministrationId().substring(6);
-                
-                String value = nifOfuscat + " - " + userInfo.getName() + " "
-                        + userInfo.getSurname() + " (" + userInfo.getUsername() +")";
+
+                String value = nifOfuscat + " - " + userInfo.getName() + " " + userInfo.getSurname() + " ("
+                        + userInfo.getUsername() + ")";
                 result.add(new StringKeyValue(key, value));
             }
 
@@ -1366,12 +1355,12 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
     }
 
     public boolean esFitxerPDF(File file) {
-		if (file == null) {
-			return false;
-		}
+        if (file == null) {
+            return false;
+        }
         try {
             log.info("Provant si fitxer es PDF:" + file.getAbsolutePath());
-            
+
             PdfReader reader = new PdfReader(new FileInputStream(file));
             int pages = reader.getNumberOfPages();
             reader.close();
@@ -1381,61 +1370,58 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
             return false;
         }
     }
-    
-    
-    
-    
+
     //Funció per controlar els reintents de tancament d'expedient. Si du mes de X reintents, no canviar estat a pendent.
     /**
      * Funció que s'executa cada migdiaa les 15:00 i Gestiona reintents.
      */
-//    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
-//    @Schedule(hour = "23", persistent = false)
-//	protected void reintentarArxivat() {
-//		log.info("Comença controlarReintentsArxiu()");
-//
-//		long startTime = System.currentTimeMillis();
-//		final String languageUI = "ca";
-//
-//		try {
-//
-//			Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
-//
-//			// Obtenir totes les peticions amb errors arxivant, i arxivarles.
-//			Where wReintentsMesDe = Where.OR(PeticioFields.REINTENTSARXIU.greaterThan(max_reintents), PeticioFields.REINTENTSARXIU.isNull());
-//			Where wErrorArxivant = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
-//
-//			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
-//
-//			List<Peticio> peticions = this.select(Where.AND(wErrorArxivant, wReintentsMesDe), orderBy);
-//
-//			log.info("Peticions que s'han d'arxivar: " + peticions.size());
-//
-//			String urlBase = Configuracio.getUrlBase();
-//
-//			for (Peticio peticio : peticions) {
-//
-//				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
-//				guardarPeticioArxiu(peticio, languageUI, is, urlBase);
-//
-//				// El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i
-//				// acaba la funció.
-//				if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
-//					log.warn("Timeout.");
-//					break;
-//				}
-//			}
-//
-//		} catch (I18NException e) {
-//			final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
-//					+ I18NCommonUtils.getMessage(e, new Locale(languageUI));
-//			log.error(msg, e);
-//		}
-//
-//		long endTime = System.currentTimeMillis();
-//		log.info("Total time: " + (endTime - startTime));
-//		log.info("Acaba controlarReintentsArxiu()");
-//	}
+    //    @TransactionTimeout(value = TRANSACTION_TIMEOUT_IN_SEC)
+    //    @Schedule(hour = "23", persistent = false)
+    //	protected void reintentarArxivat() {
+    //		log.info("Comença controlarReintentsArxiu()");
+    //
+    //		long startTime = System.currentTimeMillis();
+    //		final String languageUI = "ca";
+    //
+    //		try {
+    //
+    //			Long max_reintents = Long.valueOf(Configuracio.getMaximReintentsArxiu());
+    //
+    //			// Obtenir totes les peticions amb errors arxivant, i arxivarles.
+    //			Where wReintentsMesDe = Where.OR(PeticioFields.REINTENTSARXIU.greaterThan(max_reintents), PeticioFields.REINTENTSARXIU.isNull());
+    //			Where wErrorArxivant = PeticioFields.ESTAT.equal(Constants.ESTAT_PETICIO_ERROR_ARXIVANT);
+    //
+    //			OrderBy orderBy = new OrderBy(PeticioFields.DATAFINAL);
+    //
+    //			List<Peticio> peticions = this.select(Where.AND(wErrorArxivant, wReintentsMesDe), orderBy);
+    //
+    //			log.info("Peticions que s'han d'arxivar: " + peticions.size());
+    //
+    //			String urlBase = Configuracio.getUrlBase();
+    //
+    //			for (Peticio peticio : peticions) {
+    //
+    //				InfoSignaturaJPA is = infoSignaturaLogicaEjb.findByPrimaryKeyPublic(peticio.getInfoSignaturaID());
+    //				guardarPeticioArxiu(peticio, languageUI, is, urlBase);
+    //
+    //				// El Timeout son 3 minuts. Si el CRON s'executa durant 2 min, surt del for i
+    //				// acaba la funció.
+    //				if ((System.currentTimeMillis() - startTime) > TRANSACTION_EXIT_IN_MILI) {
+    //					log.warn("Timeout.");
+    //					break;
+    //				}
+    //			}
+    //
+    //		} catch (I18NException e) {
+    //			final String msg = "Error obtenint llistat de PortaFibIDs durant el cron nocturn: "
+    //					+ I18NCommonUtils.getMessage(e, new Locale(languageUI));
+    //			log.error(msg, e);
+    //		}
+    //
+    //		long endTime = System.currentTimeMillis();
+    //		log.info("Total time: " + (endTime - startTime));
+    //		log.info("Acaba controlarReintentsArxiu()");
+    //	}
 
     /**
      * Funció que s'executa cada vespre a les 5:00 i elimina els fitxers fisics i a BBDD de peticions arxiavdes.
@@ -1509,4 +1495,4 @@ public class PeticioLogicaEJB extends PeticioEJB implements PeticioLogicaService
         log.info("Acaba eliminarFitxersSignatsDeLocal()");
     }
 
-  }
+}

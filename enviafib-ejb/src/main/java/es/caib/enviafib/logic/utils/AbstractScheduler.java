@@ -26,22 +26,21 @@ public abstract class AbstractScheduler {
 
     protected final Logger log = Logger.getLogger(this.getClass());
 
-    
-	@EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.PluginArxiuLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PluginArxiuLogicaService pluginArxiuLogicaEjb;
 
-	@EJB(mappedName = es.caib.enviafib.logic.InfoArxiuLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.InfoArxiuLogicaService infoArxiuLogicEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.InfoArxiuLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoArxiuLogicaService infoArxiuLogicEjb;
 
-	@EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.PeticioLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.PeticioLogicaService peticioLogicaEjb;
 
-	@EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicaService.JNDI_NAME)
-	protected es.caib.enviafib.logic.InfoSignaturaLogicaService infoSignaturaLogicaEjb;
+    @EJB(mappedName = es.caib.enviafib.logic.InfoSignaturaLogicaService.JNDI_NAME)
+    protected es.caib.enviafib.logic.InfoSignaturaLogicaService infoSignaturaLogicaEjb;
 
     @javax.ejb.EJB(mappedName = es.caib.enviafib.logic.FitxerLogicaService.JNDI_NAME)
     protected es.caib.enviafib.logic.FitxerLogicaService fitxerLogicEjb;
-    
+
     /** Timeout de transacción: 4 minutos (el timeout de EJB es de 5 minutos) */
     protected final long TRANSACTION_EXIT_IN_MILI = 4 * 60 * 1000;
 

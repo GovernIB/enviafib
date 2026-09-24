@@ -53,10 +53,10 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
     protected final static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-//    public abstract FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(final String languageUI);
-    
+    //    public abstract FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(final String languageUI);
+
     public abstract String getOwner();
-    
+
     /**
      * 
      * @return true Nomes Palntilles
@@ -101,8 +101,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
             hiddens.remove(UsuariFields.NOM);
 
-//            usuariFilterForm.addLabel(UsuariFields.LLINATGE1, FitxerFields.DESCRIPCIO.fullName);
-//            hiddens.remove(UsuariFields.LLINATGE1);
+            //            usuariFilterForm.addLabel(UsuariFields.LLINATGE1, FitxerFields.DESCRIPCIO.fullName);
+            //            hiddens.remove(UsuariFields.LLINATGE1);
 
             usuariFilterForm.addLabel(UsuariFields.EMAIL, PeticioFields.DATACREACIO.fullName);
             hiddens.remove(UsuariFields.EMAIL);
@@ -138,7 +138,7 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
 
         for (Usuari usuari : list) {
             // BOTO PER ESBORRAR
-//        	log.info("Afegint boto esborrar per plantilla de flux: " + usuari.getNif());
+            //        	log.info("Afegint boto esborrar per plantilla de flux: " + usuari.getNif());
             filterForm.addAdditionalButtonByPK((long) usuari.getUsuariID(),
                     new AdditionalButton("fas fa-trash icon-white", "genapp.delete", "javascript: openModal('"
                             + request.getContextPath() + getContextWeb() + "/" + usuari.getNif() + "/esborrar','show')",
@@ -148,29 +148,30 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     }
 
     @RequestMapping(value = "/{fluxID}/esborrar")
-    public String esborrarFlux(@PathVariable("fluxID")
-    java.lang.String fluxID, HttpServletRequest request, HttpServletResponse response) {
+    public String esborrarFlux(
+            @PathVariable("fluxID")
+            java.lang.String fluxID, HttpServletRequest request, HttpServletResponse response) {
 
-//        final String languageUI = "ca";
+        //        final String languageUI = "ca";
 
         // Comprovam que és de la nostra propietat
         try {
 
-//    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+            //    		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
-//            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-//            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
+            //            FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+            //            flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
 
-//            FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+            //            FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
             Long owner = LoginInfo.getInstance().getUsuari().getUsuariID();
             FluxInfo flux = PortafibUtils.getFluxByID(String.valueOf(owner), fluxID);
-            
-//            String description = flux.getDescription();
+
+            //            String description = flux.getDescription();
 
             if (flux != null) {
-//                FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
-                
+                //                FlowTemplateSimpleFlowTemplateRequest r = new FlowTemplateSimpleFlowTemplateRequest(languageUI, fluxID);
+
                 if (PortafibUtils.esborrarFlux(flux)) {
                     String msg = I18NUtils.tradueix("plantillaflux.esborrar.ok", fluxID);
                     HtmlUtils.saveMessageSuccess(request, msg);
@@ -196,98 +197,95 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
     public List<Usuari> executeSelect(ITableManager<Usuari, Long> ejb, Where where, final OrderBy[] orderBy,
             final Integer itemsPerPage, final int inici) throws I18NException {
 
-//		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
+        //		ApiFlowTemplateSimple api = PortafibUtils.getApiFlowTemplateSimple();
 
-//        final String languageUI = "ca";
+        //        final String languageUI = "ca";
 
-    //    FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
+        //    FlowTemplateSimpleFilterGetAllByFilter filter = getFilterPlantillaFluxFirma(languageUI);
 
-//        try {
-  //          FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
+        //        try {
+        //          FlowTemplateSimpleFlowTemplateList list = api.getAllFlowTemplatesByFilter(filter);
 
-//            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
-            
-//            List<FlowTemplateSimpleKeyValue> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
-            List<FluxInfo> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
-            		
+        //            List<FlowTemplateSimpleKeyValue> plantilles = list.getList();
 
-			if (plantilles == null) {
-	            log.info("Llistat de plantilles:: null");
-				return new ArrayList<Usuari>();
-			}
-			
-            log.info("Llistat de plantilles:: PLANTILLES OBTINGUDES: " + plantilles.size());
+        //            List<FlowTemplateSimpleKeyValue> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
+        List<FluxInfo> plantilles = PortafibUtils.getPlantillesFluxByUsername(getOwner());
 
-            List<Usuari> usuaris = new ArrayList<Usuari>();
+        if (plantilles == null) {
+            log.info("Llistat de plantilles:: null");
+            return new ArrayList<Usuari>();
+        }
 
-            for (FluxInfo flux : plantilles) {
+        log.info("Llistat de plantilles:: PLANTILLES OBTINGUDES: " + plantilles.size());
 
-//                String flowTemplateId = flowKeyValue.getKey();
-//
-//                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
-//                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
-//
-//                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
-                
-                
-                String descrOriginal = flux.getDescription();
-                        
-                if (onlyAcceptTemplates() == null) {
-                    // Accept All
-                } else if (onlyAcceptTemplates() ==  true) {
-                    // Templates
-                    if (descrOriginal.indexOf("{template=true}") == -1) {
-                        continue;
-                    }
-                } else {
-                    // Temporal
-                    if (descrOriginal.indexOf("{temporal=true}") == -1) {
-                        continue;
-                    }
+        List<Usuari> usuaris = new ArrayList<Usuari>();
+
+        for (FluxInfo flux : plantilles) {
+
+            //                String flowTemplateId = flowKeyValue.getKey();
+            //
+            //                FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
+            //                flowTemplateRequest = new FlowTemplateSimpleFlowTemplateRequest(languageUI, flowTemplateId);
+            //
+            //                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
+
+            String descrOriginal = flux.getDescription();
+
+            if (onlyAcceptTemplates() == null) {
+                // Accept All
+            } else if (onlyAcceptTemplates() == true) {
+                // Templates
+                if (descrOriginal.indexOf("{template=true}") == -1) {
+                    continue;
                 }
-                
-
-                String description = descrOriginal.replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
-                        .replace("}{", "}<br/>{");
-
-                Usuari usuari = new UsuariJPA();
-                usuari.setUsuariID((long) flux.hashCode());
-                usuari.setNif(flux.getFluxID());
-                usuari.setNom(flux.getNom());
-                usuari.setLlinatge1(description);
-                usuari.setEmail(getCreationDate(description));
-                
-                usuaris.add(usuari);
-            }
-
-            setTotalPlantilles(usuaris.size());
-            
-            log.info("OrderBy " + orderBy);
-            if (orderBy != null) {
-                for (OrderBy o : orderBy) {
-                    log.info("OrderBy[" + o.javaName + " => " + o.orderType);
-
-                    // Data Creació
-                    if (o.javaName.equals(EMAIL.javaName)) {
-                        Collections.sort(usuaris, new ComparatorByCreationDate(o.orderType));
-                        break;
-                    }
-
-                    // Nom
-                    if (o.javaName.equals(NOM.javaName)) {
-                        Collections.sort(usuaris, new ComparatorByName(o.orderType));
-                        break;
-                    }
+            } else {
+                // Temporal
+                if (descrOriginal.indexOf("{temporal=true}") == -1) {
+                    continue;
                 }
             }
 
-            return usuaris;
+            String description = descrOriginal.replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{").replace("}{",
+                    "}<br/>{");
 
-//        } catch (AbstractApisIBException e) {
-//            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
-//            log.error(msg, e);
-//            throw new I18NException("genapp.comodi", msg);
-//        }
+            Usuari usuari = new UsuariJPA();
+            usuari.setUsuariID((long) flux.hashCode());
+            usuari.setNif(flux.getFluxID());
+            usuari.setNom(flux.getNom());
+            usuari.setLlinatge1(description);
+            usuari.setEmail(getCreationDate(description));
+
+            usuaris.add(usuari);
+        }
+
+        setTotalPlantilles(usuaris.size());
+
+        log.info("OrderBy " + orderBy);
+        if (orderBy != null) {
+            for (OrderBy o : orderBy) {
+                log.info("OrderBy[" + o.javaName + " => " + o.orderType);
+
+                // Data Creació
+                if (o.javaName.equals(EMAIL.javaName)) {
+                    Collections.sort(usuaris, new ComparatorByCreationDate(o.orderType));
+                    break;
+                }
+
+                // Nom
+                if (o.javaName.equals(NOM.javaName)) {
+                    Collections.sort(usuaris, new ComparatorByName(o.orderType));
+                    break;
+                }
+            }
+        }
+
+        return usuaris;
+
+        //        } catch (AbstractApisIBException e) {
+        //            String msg = "Error consultant API de Plantilles de Flux per username: " + e.getMessage();
+        //            log.error(msg, e);
+        //            throw new I18NException("genapp.comodi", msg);
+        //        }
 
     }
 

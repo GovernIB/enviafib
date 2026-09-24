@@ -13,11 +13,9 @@ import es.caib.pluginsib.arxiu.api.IArxiuPlugin;
  *
  */
 @Local
-public interface PluginArxiuLogicaService extends AbstractPluginLogicaService<IArxiuPlugin>  {
+public interface PluginArxiuLogicaService extends AbstractPluginLogicaService<IArxiuPlugin> {
 
-        
     public static final String JNDI_NAME = "java:app/enviafib-ejb/PluginArxiuLogicaEJB!es.caib.enviafib.logic.PluginArxiuLogicaService";
-
 
     /**
      * 
@@ -27,7 +25,6 @@ public interface PluginArxiuLogicaService extends AbstractPluginLogicaService<IA
      * @return
      */
     public InfoArxiuJPA custodiaAmbApiArxiu(Peticio peticio, InfoSignatura infoSignatura);
-
 
     /**
      * 

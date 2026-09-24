@@ -72,7 +72,6 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         return "plantillesfluxfirmesListUser";
     }
 
-
     @Override
     public String getOwner() {
         return String.valueOf(LoginInfo.getInstance().getUsuari().getUsuariID());
@@ -114,8 +113,11 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
     }
 
     @RequestMapping(value = "/editarflux/{fluxID}/{windowUrl}")
-    public ModelAndView editarFlux(@PathVariable("fluxID") java.lang.String fluxID,
-            @PathVariable("windowUrl") String windowUrl, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView editarFlux(
+            @PathVariable("fluxID")
+            java.lang.String fluxID,
+            @PathVariable("windowUrl")
+            String windowUrl, HttpServletRequest request, HttpServletResponse response) {
 
         ApiFlowTemplateSimple api = null;
         try {
@@ -124,7 +126,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             // Decodificam la URL que arriba en base64
             String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
 
-			api = PortafibUtils.getApiFlowTemplateSimple();
+            api = PortafibUtils.getApiFlowTemplateSimple();
 
             // Comprova que és de la nostra propietat
             FlowTemplateSimpleFlowTemplateRequest flowTemplateRequest;
@@ -141,7 +143,8 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             }
 
             final String callBackUrl = Configuracio.getUrlBase(decodedUrl, request.getContextPath()) + getContextWeb()
-                    + "/finalEdicio/" + fluxID;;
+                    + "/finalEdicio/" + fluxID;
+            ;
 
             FlowTemplateSimpleEditFlowTemplateRequest transactionRequest;
             transactionRequest = new FlowTemplateSimpleEditFlowTemplateRequest(languageUI, fluxID, callBackUrl);
@@ -163,15 +166,17 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
     }
 
     @RequestMapping(value = "/finalEdicio/{fluxID}", method = RequestMethod.GET)
-    public ModelAndView finalEditarFlux(HttpServletRequest request, HttpServletResponse response, @PathVariable("fluxID") String fluxID) {
+    public ModelAndView finalEditarFlux(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("fluxID")
+            String fluxID) {
         ModelAndView mav = new ModelAndView("finaliframe");
 
         log.info("Final Edicio FluxID = " + fluxID);
-        
+
         String owner = getOwner();
-        
+
         PortafibUtils.actualizarDadesFlux(owner, fluxID);
-        
+
         mav.addObject("URL_FINAL", request.getContextPath() + getContextWeb() + "/list");
         return mav;
     }
@@ -187,7 +192,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
             final String languageUI = LocaleContextHolder.getLocale().getLanguage();
 
-			api = PortafibUtils.getApiFlowTemplateSimple();
+            api = PortafibUtils.getApiFlowTemplateSimple();
 
             // Crear Flux
             final String name = "ENVIAFIB_Plantilla_Flux_Firma_" + FirmaFluxUserController.SDF.format(new Date()) + "_"
@@ -209,12 +214,12 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             log.info("TransactionID = |" + transactionID + "|");
 
             String urlBaseNavegador = (String) request.getSession().getAttribute(MenuUserController.URL_BASE_NAVEGADOR);
-            log.info("UrlBaseNavegador = " + urlBaseNavegador);	
-			if (urlBaseNavegador == null) {
-				urlBaseNavegador = Configuracio.getUrlBase();
-				log.info("UrlBaseNavegador no estava a sessió. Posam: " + urlBaseNavegador);
-			}
-			
+            log.info("UrlBaseNavegador = " + urlBaseNavegador);
+            if (urlBaseNavegador == null) {
+                urlBaseNavegador = Configuracio.getUrlBase();
+                log.info("UrlBaseNavegador no estava a sessió. Posam: " + urlBaseNavegador);
+            }
+
             final String callBackUrl = urlBaseNavegador + getContextWeb() + "/callbackflux/" + transactionID;
 
             // Per ara només suportam FULLVIEW
@@ -239,17 +244,18 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
             FirmaFluxUserController.cleanFlux(transactionID, intermediateID, log);
 
             return new ModelAndView(getRedirectToList());
-//            return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
+            //            return new ModelAndView(new RedirectView(getContextWeb() + "/list", true));
         }
     }
 
     public static String getRedirectToList() {
         return "redirect:" + LlistatPeticionsUserController.CONTEXT_WEB + "/list";
     }
-    
+
     @RequestMapping(value = "/callbackflux/{transactionID}")
     public ModelAndView finalProcesDeFlux(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("transactionID") String transactionID) {
+            @PathVariable("transactionID")
+            String transactionID) {
 
         log.info("CallBackFlux transactionID[" + transactionID + "] dins mapping ...");
 
@@ -259,7 +265,7 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
         String error = null;
         try {
 
-			api = PortafibUtils.getApiFlowTemplateSimple();
+            api = PortafibUtils.getApiFlowTemplateSimple();
 
             FlowTemplateSimpleGetFlowResultResponse fullResult = api.getFlowTemplateResult(transactionID);
 
@@ -300,9 +306,9 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
                     String fluxID = flux.getIntermediateServerFlowTemplateId();
                     String nom = flux.getName();
                     String description = flux.getDescription();
-                    
+
                     PortafibUtils.creaFluxInfo(userID, fluxID, nom, description);
-                    
+
                     // XYZ ZZZ TRA Debug a partir de setembre
                     log.info(" ======= FLUX ========= ");
                     log.info(FlowTemplateSimpleFlowTemplate.toString(flux));
@@ -345,13 +351,13 @@ public class PlantillesDeFluxDeFirmesUserController extends AbstractPlantillaDeF
 
     }
 
-//    @Override
-//    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
-//        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
-//        filter.setLanguageUI(languageUI);
-//        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
-//        return filter;
-//    }
+    //    @Override
+    //    public FlowTemplateSimpleFilterGetAllByFilter getFilterPlantillaFluxFirma(String languageUI) {
+    //        FlowTemplateSimpleFilterGetAllByFilter filter = new FlowTemplateSimpleFilterGetAllByFilter();
+    //        filter.setLanguageUI(languageUI);
+    //        filter.setDescriptionFilter(FirmaFluxUserController.getFluxFilterByUserName(getOwner()));
+    //        return filter;
+    //    }
 
     @Override
     public Boolean onlyAcceptTemplates() {
