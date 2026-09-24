@@ -143,7 +143,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             peticioFilterForm.addAdditionalButton(new AdditionalButton("fas fa-download", "descarregar.seleccionats",
                     "javascript:downloadSelectedFiles()", AdditionalButtonStyle.PRIMARY));
         }
-        
+
         peticioFilterForm.setVisibleExportList(true);
 
         return peticioFilterForm;
@@ -185,20 +185,17 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                         iconList.add("fas fa-file-signature");
                     }
                 break;
-                
-                
+
                 case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
                 case Constants.ESTAT_PETICIO_ERROR_CALLBACK:
-                	iconList.add("fas fa-file-signature");
-                	color = "orange";
+                    iconList.add("fas fa-file-signature");
+                    color = "orange";
                     if (isAdmin()) {
                         if (estat == Constants.ESTAT_PETICIO_ERROR_CALLBACK) {
                             color = "red";
                         }
                     }
                 break;
-                
-                
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
                 case Constants.ESTAT_PETICIO_ARXIVANT:
@@ -207,11 +204,11 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                         iconList.add("fas fa-user-clock");
                     } else {
                         iconList.add("fas fa-spinner");
-						if (estat == Constants.ESTAT_PETICIO_ARXIVANT) {
-							iconList.add("fas fa-archive");
-						}else {
-	                        iconList.add("fas fa-file-signature");
-						}
+                        if (estat == Constants.ESTAT_PETICIO_ARXIVANT) {
+                            iconList.add("fas fa-archive");
+                        } else {
+                            iconList.add("fas fa-file-signature");
+                        }
                     }
                 break;
                 case Constants.ESTAT_PETICIO_ERROR:
@@ -220,11 +217,11 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
                     color = "red";
                     if (estat == Constants.ESTAT_PETICIO_ERROR_ARXIVANT) {
                         iconList.add("fas fa-archive");
-					} else if (estat == Constants.ESTAT_PETICIO_REBUTJADA) {
-						iconList.add("fas fa-times-circle");
-					} else if (estat == Constants.ESTAT_PETICIO_ERROR) {
-						iconList.add("fas fa-exclamation-triangle");
-					}
+                    } else if (estat == Constants.ESTAT_PETICIO_REBUTJADA) {
+                        iconList.add("fas fa-times-circle");
+                    } else if (estat == Constants.ESTAT_PETICIO_ERROR) {
+                        iconList.add("fas fa-exclamation-triangle");
+                    }
                 break;
 
                 default:
@@ -241,70 +238,77 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             }
 
             String estatText = "<span class='estatText'>" + title + "</span>";
-            
-            long peticioID = peticio.getPeticioID();
-            
-            String background;
-            
-            switch (color) {
-			case "red":
-				background = "#ffc0c0";
-				break;
 
-			case "orange":
-				background = "#fddb9b";
-				break;
-			case "green":
-				background = "#b5ffb5";
-				break;
-			default:
-				background = "#ddd";
-				break;
-			}
-            
-            mapRemitent.put(peticioID, "<div style=\"background: " + background + ";\" class='estatInfo'>" + iconsStr.toString() + estatText + "</div>");
+            long peticioID = peticio.getPeticioID();
+
+            String background;
+
+            switch (color) {
+                case "red":
+                    background = "#ffc0c0";
+                break;
+
+                case "orange":
+                    background = "#fddb9b";
+                break;
+                case "green":
+                    background = "#b5ffb5";
+                break;
+                default:
+                    background = "#ddd";
+                break;
+            }
+
+            mapRemitent.put(peticioID, "<div style=\"background: " + background + ";\" class='estatInfo'>"
+                    + iconsStr.toString() + estatText + "</div>");
 
             //Gestió annexos
             {
                 Long annexes = infoAnexEjb.count(PETICIOID.equal(peticioID));
                 if (annexes > 0) {
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-folder-open",
-                            "user.veureannexes",
-                            "/" + (isAdmin() ? "admin" : "user") + "/infoAnnex/mostrarAnnexes/" + peticioID + "/toList",
-                            AdditionalButtonStyle.INFO));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton(
+                                    "fas fa-folder-open", "user.veureannexes", "/" + (isAdmin() ? "admin" : "user")
+                                            + "/infoAnnex/mostrarAnnexes/" + peticioID + "/toList",
+                                    AdditionalButtonStyle.INFO));
                 }
             }
 
             switch (estat) {
 
                 case Constants.ESTAT_PETICIO_EN_PROCES:
-				case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
+                case Constants.ESTAT_PETICIO_PROCESANT_CALLBACK:
 
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-user-friends",
-                            "flux.info", "javascript:openModalFluxInfo(" + peticioID + ");", AdditionalButtonStyle.INFO));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-user-friends", "flux.info",
+                                    "javascript:openModalFluxInfo(" + peticioID + ");", AdditionalButtonStyle.INFO));
 
                 break;
                 case Constants.ESTAT_PETICIO_ERROR_ARXIVANT:
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-redo-alt ",
-                            "arxiu.reintentar", "javascript:reintentarArxivat(" + peticioID + ")", AdditionalButtonStyle.WARNING));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-redo-alt ", "arxiu.reintentar",
+                                    "javascript:reintentarArxivat(" + peticioID + ")", AdditionalButtonStyle.WARNING));
                 break;
 
                 case Constants.ESTAT_PETICIO_ERROR_TANCANT_EXPEDIENT:
                 case Constants.ESTAT_PETICIO_PENDENT_TANCAR_EXPEDIENT:
                 case Constants.ESTAT_PETICIO_FIRMADA:
 
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-envelope ",
-                            "peticio.btn.sendmail", "javascript:cridaEmail(" + peticioID + ")", AdditionalButtonStyle.SUCCESS));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-envelope ", "peticio.btn.sendmail",
+                                    "javascript:cridaEmail(" + peticioID + ")", AdditionalButtonStyle.SUCCESS));
 
                     String csv = infoArxiuEjb.executeQueryOne(InfoArxiuFields.CSV,
                             InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
                     filterForm.addAdditionalButtonByPK(peticioID,
                             new AdditionalButton("fas fas fa-print", "download.arxivat.imprimible",
                                     getContextWeb() + "/descarregarimprimible/" + csv, AdditionalButtonStyle.INFO));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-file-pdf",
-                            "download.arxivat.firmat", getContextWeb() + "/descarregarfirmat/" + csv, AdditionalButtonStyle.INFO));
-                    filterForm.addAdditionalButtonByPK(peticioID, new AdditionalButton("fas fa-vote-yea",
-                            "download.arxivat.eni", getContextWeb() + "/descarregarenidoc/" + csv, AdditionalButtonStyle.INFO));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-file-pdf", "download.arxivat.firmat",
+                                    getContextWeb() + "/descarregarfirmat/" + csv, AdditionalButtonStyle.INFO));
+                    filterForm.addAdditionalButtonByPK(peticioID,
+                            new AdditionalButton("fas fa-vote-yea", "download.arxivat.eni",
+                                    getContextWeb() + "/descarregarenidoc/" + csv, AdditionalButtonStyle.INFO));
                 break;
                 default:
                 break;
@@ -330,7 +334,10 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
     @RequestMapping(value = "/tancarexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String tancarExpedient(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
+            @PathVariable("peticioId")
+            Long peticioId,
+            @PathVariable("windowUrl")
+            String windowUrl) {
 
         try {
             // Decodificam la URL que arriba en base64
@@ -354,56 +361,62 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         return "redirect:" + getContextWeb() + "/list";
     }
 
-	@RequestMapping(value = "/reintentararxivat/{peticioId}/{windowUrl}", method = RequestMethod.GET)
-	public String reintentarArxivat(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("peticioId") Long peticioID, @PathVariable("windowUrl") String windowUrl) {
+    @RequestMapping(value = "/reintentararxivat/{peticioId}/{windowUrl}", method = RequestMethod.GET)
+    public String reintentarArxivat(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("peticioId")
+            Long peticioID,
+            @PathVariable("windowUrl")
+            String windowUrl) {
 
-		// URL de redirección por defecto en caso de error
-		String returnUrl = "redirect:" + getContextWeb() + "/list";
+        // URL de redirección por defecto en caso de error
+        String returnUrl = "redirect:" + getContextWeb() + "/list";
 
-		try {
-			// Decodificar la URL que llega codificada en base64
-			String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
-			log.info("Decoded URL: " + decodedUrl);
+        try {
+            // Decodificar la URL que llega codificada en base64
+            String decodedUrl = new String(Base64.getDecoder().decode(windowUrl));
+            log.info("Decoded URL: " + decodedUrl);
 
-			// Obtener la URL base para la petición
-			String url = Configuracio.getUrlBase(decodedUrl, request.getContextPath());
-			log.info("Base URL: " + url);
+            // Obtener la URL base para la petición
+            String url = Configuracio.getUrlBase(decodedUrl, request.getContextPath());
+            log.info("Base URL: " + url);
 
-			// Obtener el ID de la firma asociada a la petición
-			Long infoSignaturaID = peticioLogicaEjb.executeQueryOne(PeticioFields.INFOSIGNATURAID,
-					PeticioFields.PETICIOID.equal(peticioID));
+            // Obtener el ID de la firma asociada a la petición
+            Long infoSignaturaID = peticioLogicaEjb.executeQueryOne(PeticioFields.INFOSIGNATURAID,
+                    PeticioFields.PETICIOID.equal(peticioID));
 
-			if (infoSignaturaID == null) {
-				String errorMsg = "Error: infoSignaturaID is null";
-				log.error(errorMsg);
-				HtmlUtils.saveMessageError(request, errorMsg);
-				return returnUrl; // Retornar en caso de error
-			}
+            if (infoSignaturaID == null) {
+                String errorMsg = "Error: infoSignaturaID is null";
+                log.error(errorMsg);
+                HtmlUtils.saveMessageError(request, errorMsg);
+                return returnUrl; // Retornar en caso de error
+            }
 
-			// Intentar guardar la petición de archivo
-			String saveResult = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, url);
-			if (saveResult == null) {
-				// Mensaje de éxito
-				HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
-			} else {
-				// Mensaje de error al guardar
-				HtmlUtils.saveMessageError(request, saveResult);
-				return returnUrl; // Retornar en caso de error
-			}
+            // Intentar guardar la petición de archivo
+            String saveResult = peticioLogicaEjb.reintentGuardarPeticioArxiu(peticioID, infoSignaturaID, url);
+            if (saveResult == null) {
+                // Mensaje de éxito
+                HtmlUtils.saveMessageSuccess(request, I18NUtils.tradueix("peticio.arxiu.reintent.success"));
+            } else {
+                // Mensaje de error al guardar
+                HtmlUtils.saveMessageError(request, saveResult);
+                return returnUrl; // Retornar en caso de error
+            }
 
-		} catch (Exception e) {
-			log.error("Error: " + e.getMessage(), e);
-			String msg = e instanceof I18NException ? I18NUtils.getMessage((I18NException) e) : e.getMessage();
-			HtmlUtils.saveMessageError(request, msg);
-		}
+        } catch (Exception e) {
+            log.error("Error: " + e.getMessage(), e);
+            String msg = e instanceof I18NException ? I18NUtils.getMessage((I18NException) e) : e.getMessage();
+            HtmlUtils.saveMessageError(request, msg);
+        }
 
-		return returnUrl;
-	}
-	
+        return returnUrl;
+    }
+
     @RequestMapping(value = "/reintentartancamentexpedient/{peticioId}/{windowUrl}", method = RequestMethod.GET)
     public String reintentarTancamentExpedient(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") Long peticioId, @PathVariable("windowUrl") String windowUrl) {
+            @PathVariable("peticioId")
+            Long peticioId,
+            @PathVariable("windowUrl")
+            String windowUrl) {
 
         try {
             // Decodificam la URL que arriba en base64
@@ -429,8 +442,12 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
     @RequestMapping(value = "/enviaremail/{peticioId}/{email}/{windowUrl}", method = RequestMethod.GET)
     public String enviarEmail(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioId") long peticioId, @PathVariable("email") String email,
-            @PathVariable("windowUrl") String windowUrl) {
+            @PathVariable("peticioId")
+            long peticioId,
+            @PathVariable("email")
+            String email,
+            @PathVariable("windowUrl")
+            String windowUrl) {
         final boolean isHTML = true;
 
         // Decodificam el email arriba en base64
@@ -472,7 +489,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             message = TemplateEngine.processExpressionLanguage(message, map);
 
             String remitent = user.getEmail();
-            
+
             EmailUtil.postMail(subject, message, isHTML, remitent, decodedEmail);
             String successMsg = "S'ha enviat el email correctament";
             HtmlUtils.saveMessageSuccess(request, successMsg);
@@ -496,22 +513,23 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
     @Override
     public void delete(HttpServletRequest request, Peticio peticio) throws I18NException {
-    	//Comprovar l'estat abans d'esborrar.
-    	
-    	if (peticio.getInfoArxiuID() != null) {
-    		throw new I18NException("genapp.comodi", "No es pot esborrar una petició guardad a Arxiu");
-		}
-    
+        //Comprovar l'estat abans d'esborrar.
+
+        if (peticio.getInfoArxiuID() != null) {
+            throw new I18NException("genapp.comodi", "No es pot esborrar una petició guardad a Arxiu");
+        }
+
         peticioLogicaEjb.deleteFull(peticio);
     }
 
     final static String PDF = "PDF";
     final static String XML = "XML";
     final static String ENI = "ENI";
-    
+
     @RequestMapping(value = "/descarregarfirmat/{csv}", method = RequestMethod.GET)
-    public void descarregarFirmat(@PathVariable("csv") String csv, HttpServletRequest request,
-            HttpServletResponse response) throws I18NException, IOException {
+    public void descarregarFirmat(
+            @PathVariable("csv")
+            String csv, HttpServletRequest request, HttpServletResponse response) throws I18NException, IOException {
 
         final String format = PDF;
         final String docName = "_firmat";
@@ -521,8 +539,9 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
     }
 
     @RequestMapping(value = "/descarregarenidoc/{csv}", method = RequestMethod.GET)
-    public void descarregarEnidoc(@PathVariable("csv") String csv, HttpServletRequest request,
-            HttpServletResponse response) throws I18NException, IOException {
+    public void descarregarEnidoc(
+            @PathVariable("csv")
+            String csv, HttpServletRequest request, HttpServletResponse response) throws I18NException, IOException {
 
         final String format = ENI;
         final String docName = "_eni";
@@ -533,7 +552,8 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
     @RequestMapping(value = "/descarregarimprimible/{csv}", method = RequestMethod.GET)
     public void descarregarFitxerArxiu(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("csv") String csv) throws I18NException, IOException {
+            @PathVariable("csv")
+            String csv) throws I18NException, IOException {
         final String format = PDF;
         TipusFile tipusFile = TipusFile.VERSIO_IMPRIMIBLE;
         final String docName = "_imprimible";
@@ -541,8 +561,8 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         prepareAndDownload(csv, response, format, docName, tipusFile);
     }
 
-	public void prepareAndDownload(String csv, HttpServletResponse response, final String format, final String docName,
-			TipusFile tipusFile) throws I18NException, IOException {
+    public void prepareAndDownload(String csv, HttpServletResponse response, final String format, final String docName,
+            TipusFile tipusFile) throws I18NException, IOException {
 
         if (csv == null) {
             return;
@@ -573,21 +593,20 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         }
 
         String fileName = generateFileName(csv, format, docName);
-        
+
         downloadDocument(response, data, fileName, format);
     }
 
-    
     private String generateFileName(String csv, String format, String docName) throws I18NException {
-    	
-    	String fileName = peticioLogicaEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
+
+        String fileName = peticioLogicaEjb.executeQueryOne(new PeticioQueryPath().FITXER().NOM(),
                 new PeticioQueryPath().INFOARXIU().CSV().equal(csv));
 
         if (fileName != null) {
-        	
-        	fileName = fileName.replace(" ", "_");
-        	String loweCase = fileName.toLowerCase();
-        	
+
+            fileName = fileName.replace(" ", "_");
+            String loweCase = fileName.toLowerCase();
+
             if (loweCase.endsWith(".pdf")) {
                 fileName = fileName.substring(0, loweCase.lastIndexOf(".pdf"));
             }
@@ -600,15 +619,16 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
             } else if (format.equals(ENI)) {
                 fileName += docName + ".xml";
             }
-            
-        }else {
-			fileName = "fitxer" + docName + "." + format.toLowerCase();
+
+        } else {
+            fileName = "fitxer" + docName + "." + format.toLowerCase();
         }
-        
+
         return fileName;
     }
-    
-    private void downloadDocument(HttpServletResponse response, byte[] data,  final String fileName, final String format) throws I18NException {
+
+    private void downloadDocument(HttpServletResponse response, byte[] data, final String fileName, final String format)
+            throws I18NException {
 
         response.setHeader("Content-disposition", "attachment; filename=" + fileName);
         response.setContentLength(data.length);
@@ -619,7 +639,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         } else if (format.equals(ENI)) {
             response.setContentType("text/xml");
         }
-        
+
         OutputStream out;
 
         try {
@@ -634,7 +654,8 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
     @RequestMapping(value = "/geturlflow/{peticioID}", method = RequestMethod.GET)
     public void getURLtoFluxInfo(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("peticioID") Long peticioID) throws I18NException, IOException {
+            @PathVariable("peticioID")
+            Long peticioID) throws I18NException, IOException {
 
         Peticio peticio = this.peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
         long portafibID = Long.parseLong(peticio.getPeticioPortafirmes()); // XYZ ZZZ
@@ -646,200 +667,201 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         response.getWriter().flush();
         response.getWriter().close();
     }
-    
-	final protected static HashMap<String, EstatTransaction> mapFitxersDescarrega = new HashMap<String, EstatTransaction>();
+
+    final protected static HashMap<String, EstatTransaction> mapFitxersDescarrega = new HashMap<String, EstatTransaction>();
     //Last clean:
-	private static long LAST_CLEAN = 0;
-	private static final long CLEAN_INTERVAL = 1000 * 60 * 5; // 5 minuts
-	
-	protected static class EstatTransaction {
-		private int estat;
-		private String missatge;
-		private final Long startTime;
-		
-//		public static final int ESTAT_OK = 0;
-		public static final int ESTAT_ERROR = 1;
-		public static final int ESTAT_PROCESSANT = 2;
-		public static final int ESTAT_FINALITZAT = 3;
-		
-		
-		public EstatTransaction() {
-			this.estat = ESTAT_PROCESSANT;
-			this.startTime = System.currentTimeMillis();
-		}
-		
-		public int getEstat() {
-			return estat;
-		}
+    private static long LAST_CLEAN = 0;
+    private static final long CLEAN_INTERVAL = 1000 * 60 * 5; // 5 minuts
 
-		public void setEstat(int estat) {
-			this.estat = estat;
-		}
-		
-		//get i set missatge
-		public String getMissatge() {
-			return missatge;
-		}
-		
-		public void setMissatge(String missatge) {
-			this.missatge = missatge;
-		}
+    protected static class EstatTransaction {
+        private int estat;
+        private String missatge;
+        private final Long startTime;
 
-		public Long getStartTime() {
-			return startTime;
-		}
-		
-		
-	}
-    
-    @GetMapping("/estatTransaction/{transactionID}")
-	public void estatTransaction(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("transactionID") String transactionID) throws IOException {
+        //		public static final int ESTAT_OK = 0;
+        public static final int ESTAT_ERROR = 1;
+        public static final int ESTAT_PROCESSANT = 2;
+        public static final int ESTAT_FINALITZAT = 3;
 
-    	// Retorn un status HTTP segons l'estat de EstatTransaction
-		EstatTransaction et = mapFitxersDescarrega.get(transactionID);
-		switch (et.getEstat()) {
+        public EstatTransaction() {
+            this.estat = ESTAT_PROCESSANT;
+            this.startTime = System.currentTimeMillis();
+        }
 
-		case EstatTransaction.ESTAT_ERROR:
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			response.getWriter().write(et.getMissatge());
-			break;
-			
-		case EstatTransaction.ESTAT_PROCESSANT:
-			// Si la darrera neteja fa més de 5 minuts, netejar.
-			if (System.currentTimeMillis() - LAST_CLEAN > CLEAN_INTERVAL) {
-				netejarTransaccionsCaducades();
-			}
-			
-			response.setStatus(HttpServletResponse.SC_ACCEPTED);
-			break;
+        public int getEstat() {
+            return estat;
+        }
 
-		case EstatTransaction.ESTAT_FINALITZAT:
-			response.setStatus(HttpServletResponse.SC_OK);
-			break;
+        public void setEstat(int estat) {
+            this.estat = estat;
+        }
 
-		default:
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			break;
-		}
+        //get i set missatge
+        public String getMissatge() {
+            return missatge;
+        }
 
-	}
-    
-	private void netejarTransaccionsCaducades() {
-		//La neteja consisteix en eliminar les transaccions que no estan en proces de fa mes de 5 minuts.
-		
-		log.info("Netejan transaccions caducades. Transactions actuals: " + mapFitxersDescarrega.size());
-		List<String> keysToRemove = new ArrayList<>();
-		
-		for (Map.Entry<String, EstatTransaction> entry : mapFitxersDescarrega.entrySet()) {
-			EstatTransaction et = entry.getValue();
-			if (et.getEstat() != EstatTransaction.ESTAT_PROCESSANT) {
-				keysToRemove.add(entry.getKey());
-			} else if (System.currentTimeMillis() - et.getStartTime() > CLEAN_INTERVAL) {
-				keysToRemove.add(entry.getKey());
-			}
-		}
-		
-		log.info("Transaccions a eliminar: " + keysToRemove.size());
-		for (String key : keysToRemove) {
-			mapFitxersDescarrega.remove(key);
-		}
-		
-		LAST_CLEAN = System.currentTimeMillis();
+        public void setMissatge(String missatge) {
+            this.missatge = missatge;
+        }
 
-		log.info("Neteja finalitzada. Transactions actuals: " + mapFitxersDescarrega.size());
-	}
-    
-    @GetMapping("/downloadSelectedFiles/{transactionID}")
-	public void downloadSelectedFiles(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("transactionID") String transactionID) {
+        public Long getStartTime() {
+            return startTime;
+        }
 
-		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				ZipOutputStream zos = new ZipOutputStream(baos)) {
-
-			mapFitxersDescarrega.put(transactionID, new EstatTransaction());
-
-			String seleccionats = request.getParameter("selectedItems");
-			log.info(seleccionats);
-
-			if (seleccionats == null || seleccionats.isEmpty()) {
-				String msg = "No hi ha fitxers seleccionats.";
-				procesarError(transactionID, msg);
-				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-				return;
-			}
-
-			IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
-
-//            processSelectedFiles(seleccionatsArray, zos, plugin);
-
-			List<Peticio> perDescarregar = new ArrayList<>();
-
-			for (String seleccionat : seleccionats.split(",")) {
-				Long peticioID = stringToPK(seleccionat);
-				Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
-
-				// Controlar si la peticio es de l'usuari loguejat.
-
-				if (peticio.getInfoArxiuID() == null) {
-					log.info("La peticio " + peticioID + " no esta a l'Arxiu.");
-					continue;
-				}
-
-				perDescarregar.add(peticio);
-			}
-
-			if (perDescarregar.size() == 0) {
-				String msg = "Els fitxers selecionats no estan firmats. No es poden descarregar.";
-				procesarError(transactionID, msg);
-				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-				return;
-			}
-
-			for (Peticio peticio : perDescarregar) {
-				try {
-					addPeticioToZip(peticio, zos, plugin);
-				} catch (Exception e) {
-					log.error("Error processant la peticio: " + peticio.getPeticioID(), e);
-				}
-			}
-
-			zos.close();
-
-			response.setHeader("Content-disposition", "attachment; filename=fitxers_seleccionats.zip");
-
-			final byte[] zipData = baos.toByteArray();
-
-			response.setContentLength(zipData.length);
-			response.getOutputStream().write(zipData);
-
-			log.info("Fitxers seleccionats descarregats correctament.");
-
-			mapFitxersDescarrega.get(transactionID).setEstat(EstatTransaction.ESTAT_FINALITZAT);
-
-		} catch (Exception e) {
-
-			String msg;
-
-			if (e instanceof I18NException) {
-				msg = "Error al descarregar fitxers seleccionats: " + I18NUtils.getMessage((I18NException) e);
-			} else {
-				msg = "Error al crear el archivo ZIP: " + e.getMessage();
-			}
-
-			procesarError(transactionID, msg);
-			log.error(msg, e);
-		}
-	}
-    
-    private void procesarError(String transactionID, String msg) {
-		log.info(msg);
-		EstatTransaction et = mapFitxersDescarrega.get(transactionID);
-		et.setMissatge(msg);
-		et.setEstat(EstatTransaction.ESTAT_ERROR);
     }
-    
-    private void addPeticioToZip(Peticio peticio, ZipOutputStream zos, IArxiuPlugin plugin) throws IOException, I18NException {
+
+    @GetMapping("/estatTransaction/{transactionID}")
+    public void estatTransaction(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("transactionID")
+            String transactionID) throws IOException {
+
+        // Retorn un status HTTP segons l'estat de EstatTransaction
+        EstatTransaction et = mapFitxersDescarrega.get(transactionID);
+        switch (et.getEstat()) {
+
+            case EstatTransaction.ESTAT_ERROR:
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.getWriter().write(et.getMissatge());
+            break;
+
+            case EstatTransaction.ESTAT_PROCESSANT:
+                // Si la darrera neteja fa més de 5 minuts, netejar.
+                if (System.currentTimeMillis() - LAST_CLEAN > CLEAN_INTERVAL) {
+                    netejarTransaccionsCaducades();
+                }
+
+                response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            break;
+
+            case EstatTransaction.ESTAT_FINALITZAT:
+                response.setStatus(HttpServletResponse.SC_OK);
+            break;
+
+            default:
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            break;
+        }
+
+    }
+
+    private void netejarTransaccionsCaducades() {
+        //La neteja consisteix en eliminar les transaccions que no estan en proces de fa mes de 5 minuts.
+
+        log.info("Netejan transaccions caducades. Transactions actuals: " + mapFitxersDescarrega.size());
+        List<String> keysToRemove = new ArrayList<>();
+
+        for (Map.Entry<String, EstatTransaction> entry : mapFitxersDescarrega.entrySet()) {
+            EstatTransaction et = entry.getValue();
+            if (et.getEstat() != EstatTransaction.ESTAT_PROCESSANT) {
+                keysToRemove.add(entry.getKey());
+            } else if (System.currentTimeMillis() - et.getStartTime() > CLEAN_INTERVAL) {
+                keysToRemove.add(entry.getKey());
+            }
+        }
+
+        log.info("Transaccions a eliminar: " + keysToRemove.size());
+        for (String key : keysToRemove) {
+            mapFitxersDescarrega.remove(key);
+        }
+
+        LAST_CLEAN = System.currentTimeMillis();
+
+        log.info("Neteja finalitzada. Transactions actuals: " + mapFitxersDescarrega.size());
+    }
+
+    @GetMapping("/downloadSelectedFiles/{transactionID}")
+    public void downloadSelectedFiles(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("transactionID")
+            String transactionID) {
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ZipOutputStream zos = new ZipOutputStream(baos)) {
+
+            mapFitxersDescarrega.put(transactionID, new EstatTransaction());
+
+            String seleccionats = request.getParameter("selectedItems");
+            log.info(seleccionats);
+
+            if (seleccionats == null || seleccionats.isEmpty()) {
+                String msg = "No hi ha fitxers seleccionats.";
+                procesarError(transactionID, msg);
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                return;
+            }
+
+            IArxiuPlugin plugin = pluginArxiuEjb.getInstance();
+
+            //            processSelectedFiles(seleccionatsArray, zos, plugin);
+
+            List<Peticio> perDescarregar = new ArrayList<>();
+
+            for (String seleccionat : seleccionats.split(",")) {
+                Long peticioID = stringToPK(seleccionat);
+                Peticio peticio = peticioLogicaEjb.findByPrimaryKeyPublic(peticioID);
+
+                // Controlar si la peticio es de l'usuari loguejat.
+
+                if (peticio.getInfoArxiuID() == null) {
+                    log.info("La peticio " + peticioID + " no esta a l'Arxiu.");
+                    continue;
+                }
+
+                perDescarregar.add(peticio);
+            }
+
+            if (perDescarregar.size() == 0) {
+                String msg = "Els fitxers selecionats no estan firmats. No es poden descarregar.";
+                procesarError(transactionID, msg);
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                return;
+            }
+
+            for (Peticio peticio : perDescarregar) {
+                try {
+                    addPeticioToZip(peticio, zos, plugin);
+                } catch (Exception e) {
+                    log.error("Error processant la peticio: " + peticio.getPeticioID(), e);
+                }
+            }
+
+            zos.close();
+
+            response.setHeader("Content-disposition", "attachment; filename=fitxers_seleccionats.zip");
+
+            final byte[] zipData = baos.toByteArray();
+
+            response.setContentLength(zipData.length);
+            response.getOutputStream().write(zipData);
+
+            log.info("Fitxers seleccionats descarregats correctament.");
+
+            mapFitxersDescarrega.get(transactionID).setEstat(EstatTransaction.ESTAT_FINALITZAT);
+
+        } catch (Exception e) {
+
+            String msg;
+
+            if (e instanceof I18NException) {
+                msg = "Error al descarregar fitxers seleccionats: " + I18NUtils.getMessage((I18NException) e);
+            } else {
+                msg = "Error al crear el archivo ZIP: " + e.getMessage();
+            }
+
+            procesarError(transactionID, msg);
+            log.error(msg, e);
+        }
+    }
+
+    private void procesarError(String transactionID, String msg) {
+        log.info(msg);
+        EstatTransaction et = mapFitxersDescarrega.get(transactionID);
+        et.setMissatge(msg);
+        et.setEstat(EstatTransaction.ESTAT_ERROR);
+    }
+
+    private void addPeticioToZip(Peticio peticio, ZipOutputStream zos, IArxiuPlugin plugin)
+            throws IOException, I18NException {
         String docID = infoArxiuEjb.executeQueryOne(InfoArxiuFields.ARXIUDOCUMENTID,
                 InfoArxiuFields.INFOARXIUID.equal(peticio.getInfoArxiuID()));
 
@@ -856,6 +878,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
         zos.write(data);
         zos.closeEntry();
 
-        log.info("Fitxer de la peticioID: " + peticio.getPeticioID() + " descarregat correctament. bytes: " + data.length);
+        log.info("Fitxer de la peticioID: " + peticio.getPeticioID() + " descarregat correctament. bytes: "
+                + data.length);
     }
 }

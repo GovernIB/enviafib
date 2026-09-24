@@ -89,7 +89,7 @@ function downloadSelectedFiles(){
     var items = selectedItems.join(",");
     url +=  "?selectedItems=" + items;
     
-    console.log("Enviando petición para descargar los siguientes ficheros:", selectedItems);
+    console.log("Enviando peticiï¿½n para descargar los siguientes ficheros:", selectedItems);
     console.log("Items:", items);
     console.log("URL:", url);
     
@@ -159,14 +159,14 @@ function downloadSelectedFilesOld(){
         return;
     }
 
-    console.log("Enviando petición para descargar los siguientes ficheros:", selectedItems);
+    console.log("Enviando peticiï¿½n para descargar los siguientes ficheros:", selectedItems);
     
     $('#downloadingModal').modal({
     	backdrop : "static"
      });
     
     
-    // Enviar los datos en el cuerpo de la petición
+    // Enviar los datos en el cuerpo de la peticiï¿½n
     fetch(url, {
         method: 'POST',
         headers: {
@@ -196,7 +196,7 @@ function downloadSelectedFilesOld(){
             console.log("Descarga completada");
         }
     })
-    .catch(error => console.error('Error en la petición:', error));
+    .catch(error => console.error('Error en la peticiï¿½n:', error));
 }
 
 
@@ -680,7 +680,7 @@ function openModalFluxInfo(peticioID) {
 <!-- MILLORES A COLUMNA ESTAT -->
 <script type="text/javascript">
 
-//Añadir clase tdEstat a los parents td de la columna .estatInfo
+//AÃ±adir clase tdEstat a los parents td de la columna .estatInfo
 
 $(document).ready(function(){
     $('.estatInfo').each(function(){
@@ -709,7 +709,6 @@ $(document).ready(function(){
 	padding-left: 6px;
 	font-size: 14px;
 	font-style: italic;
-	max-width: 6rem;
 	white-space: nowrap;
 }
 </style>
