@@ -117,6 +117,9 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.REINTENTSARXIU)}">
         <th>${efi:getSortIcons(__theFilterForm,PeticioFields.REINTENTSARXIU)}</th>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.FLUXDEFIRMES)}">
+        <th>${efi:getSortIcons(__theFilterForm,PeticioFields.FLUXDEFIRMES)}</th>
+        </c:if>
 
 
         <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">

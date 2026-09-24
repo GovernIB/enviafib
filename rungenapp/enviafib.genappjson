@@ -4022,6 +4022,31 @@
             "webtype": 14
           },
           "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "fluxdefirmes",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Flux de firmes",
+            "es": "Flujo de firmas"
+          },
+          "javaName": "fluxDeFirmes",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
         }
       ]
     },
@@ -4977,7 +5002,7 @@
           "foreignKeys": []
         },
         {
-          "index": "efi_usuarientitat_usuari_fk_i",
+          "index": "efi_usrent_usuariid_fk_i",
           "isAutoIncrement": false,
           "sqlName": "usuariid",
           "sqlType": -5,
@@ -5016,7 +5041,7 @@
           ]
         },
         {
-          "index": "efi_usuarientitat_entitat_fk_i",
+          "index": "efi_usrent_entitatid_fk_i",
           "isAutoIncrement": false,
           "sqlName": "entitatid",
           "sqlType": 12,

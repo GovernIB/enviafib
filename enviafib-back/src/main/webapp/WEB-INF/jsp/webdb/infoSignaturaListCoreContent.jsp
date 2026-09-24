@@ -66,14 +66,14 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.TIMESTAMPINCLUDED)}">
           <td>
             &nbsp;<c:if test="${not empty infoSignatura.timestampIncluded}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.timestampIncluded?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.timestampIncluded?'success':'error'}.png"/>" alt="${infoSignatura.timestampIncluded}" >
             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.POLICYINCLUDED)}">
           <td>
             &nbsp;<c:if test="${not empty infoSignatura.policyIncluded}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.policyIncluded?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.policyIncluded?'success':'error'}.png"/>" alt="${infoSignatura.policyIncluded}" >
             </c:if>
           </td>
         </c:if>
@@ -110,21 +110,21 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER)}">
           <td>
             &nbsp;<c:if test="${not empty infoSignatura.checkAdministrationIdOfSigner}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkAdministrationIdOfSigner?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkAdministrationIdOfSigner?'success':'error'}.png"/>" alt="${infoSignatura.checkAdministrationIdOfSigner}" >
             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS)}">
           <td>
             &nbsp;<c:if test="${not empty infoSignatura.checkDocumentModifications}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkDocumentModifications?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkDocumentModifications?'success':'error'}.png"/>" alt="${infoSignatura.checkDocumentModifications}" >
             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,InfoSignaturaFields.CHECKVALIDATIONSIGNATURE)}">
           <td>
             &nbsp;<c:if test="${not empty infoSignatura.checkValidationSignature}">
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkValidationSignature?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${infoSignatura.checkValidationSignature?'success':'error'}.png"/>" alt="${infoSignatura.checkValidationSignature}" >
             </c:if>
           </td>
         </c:if>

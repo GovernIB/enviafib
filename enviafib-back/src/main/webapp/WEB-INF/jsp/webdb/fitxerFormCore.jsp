@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FitxerFields.NOM)}">
         <tr id="fitxer_nom_rowid">
           <td id="fitxer_nom_columnlabelid">
-            <label>
+            <label for="fitxer.nom">
               <fmt:message key="${(empty __theForm.labels[FitxerFields.NOM])?'fitxer.nom':__theForm.labels[FitxerFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[FitxerFields.NOM]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FitxerFields.MIME)}">
         <tr id="fitxer_mime_rowid">
           <td id="fitxer_mime_columnlabelid">
-            <label>
+            <label for="fitxer.mime">
               <fmt:message key="${(empty __theForm.labels[FitxerFields.MIME])?'fitxer.mime':__theForm.labels[FitxerFields.MIME]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[FitxerFields.MIME]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FitxerFields.TAMANY)}">
         <tr id="fitxer_tamany_rowid">
           <td id="fitxer_tamany_columnlabelid">
-            <label>
+            <label for="fitxer.tamany">
               <fmt:message key="${(empty __theForm.labels[FitxerFields.TAMANY])?'fitxer.tamany':__theForm.labels[FitxerFields.TAMANY]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[FitxerFields.TAMANY]}">
@@ -59,7 +59,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FitxerFields.DESCRIPCIO)}">
         <tr id="fitxer_descripcio_rowid">
           <td id="fitxer_descripcio_columnlabelid">
-            <label>
+            <label for="fitxer.descripcio">
               <fmt:message key="${(empty __theForm.labels[FitxerFields.DESCRIPCIO])?'fitxer.descripcio':__theForm.labels[FitxerFields.DESCRIPCIO]}" />
              </label>
               <c:if test="${not empty __theForm.help[FitxerFields.DESCRIPCIO]}">
@@ -75,7 +75,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_descripcio" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_descripcio" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('fitxer.descripcio'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('fitxer.descripcio'); ta.wrap='soft';">Soft Wrap</a>

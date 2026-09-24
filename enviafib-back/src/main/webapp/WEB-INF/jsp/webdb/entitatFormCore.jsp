@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.ENTITATID)}">
         <tr id="entitat_entitatid_rowid">
           <td id="entitat_entitatid_columnlabelid">
-            <label>
+            <label for="entitat.entitatid">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.ENTITATID])?'entitat.entitatid':__theForm.labels[EntitatFields.ENTITATID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.ENTITATID]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.NOM)}">
         <tr id="entitat_nom_rowid">
           <td id="entitat_nom_columnlabelid">
-            <label>
+            <label for="entitat.nom">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.NOM])?'entitat.nom':__theForm.labels[EntitatFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.NOM]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.DESCRIPCIO)}">
         <tr id="entitat_descripcio_rowid">
           <td id="entitat_descripcio_columnlabelid">
-            <label>
+            <label for="entitat.descripcio">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.DESCRIPCIO])?'entitat.descripcio':__theForm.labels[EntitatFields.DESCRIPCIO]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.DESCRIPCIO]}">
@@ -57,7 +57,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_descripcio" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_descripcio" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('entitat.descripcio'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('entitat.descripcio'); ta.wrap='soft';">Soft Wrap</a>
@@ -80,7 +80,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.ADREZAHTML)}">
         <tr id="entitat_adrezahtml_rowid">
           <td id="entitat_adrezahtml_columnlabelid">
-            <label>
+            <label for="entitat.adrezahtml">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.ADREZAHTML])?'entitat.adrezahtml':__theForm.labels[EntitatFields.ADREZAHTML]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.ADREZAHTML]}">
@@ -97,7 +97,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.ACTIVA)}">
         <tr id="entitat_activa_rowid">
           <td id="entitat_activa_columnlabelid">
-            <label>
+            <label for="entitat.activa">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.ACTIVA])?'entitat.activa':__theForm.labels[EntitatFields.ACTIVA]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.ACTIVA]}">
@@ -106,8 +106,8 @@
             </td>
           <td id="entitat_activa_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,EntitatFields.ACTIVA)}" >
-              <form:errors path="entitat.activa" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,EntitatFields.ACTIVA)? 'false' : 'true'}" path="entitat.activa" />
+              <form:errors  path="entitat.activa" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,EntitatFields.ACTIVA)? 'false' : 'true'}" path="entitat.activa"  aria-label="entitat.activa" />
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,EntitatFields.ACTIVA)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.entitat.activa}" />
@@ -119,7 +119,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.SUPORTTELEFON)}">
         <tr id="entitat_suporttelefon_rowid">
           <td id="entitat_suporttelefon_columnlabelid">
-            <label>
+            <label for="entitat.suporttelefon">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.SUPORTTELEFON])?'entitat.suporttelefon':__theForm.labels[EntitatFields.SUPORTTELEFON]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.SUPORTTELEFON]}">
@@ -137,7 +137,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.SUPORTWEB)}">
         <tr id="entitat_suportweb_rowid">
           <td id="entitat_suportweb_columnlabelid">
-            <label>
+            <label for="entitat.suportweb">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.SUPORTWEB])?'entitat.suportweb':__theForm.labels[EntitatFields.SUPORTWEB]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.SUPORTWEB]}">
@@ -155,7 +155,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.SUPORTEMAIL)}">
         <tr id="entitat_suportemail_rowid">
           <td id="entitat_suportemail_columnlabelid">
-            <label>
+            <label for="entitat.suportemail">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.SUPORTEMAIL])?'entitat.suportemail':__theForm.labels[EntitatFields.SUPORTEMAIL]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.SUPORTEMAIL]}">
@@ -173,7 +173,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.FAVICONID)}">
         <tr id="entitat_faviconID_rowid">
           <td id="entitat_faviconID_columnlabelid">
-            <label>
+            <label for="entitat.faviconID">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.FAVICONID])?'entitat.faviconID':__theForm.labels[EntitatFields.FAVICONID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.FAVICONID]}">
@@ -189,7 +189,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,EntitatFields.FAVICONID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,EntitatFields.FAVICONID)? ' uneditable-input' : ''}"   path="faviconID" type="file" />
-                  <label class="custom-file-label" for="faviconID">
+                  <label class="custom-file-label" for="faviconID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -225,7 +225,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.LOGOWEBID)}">
         <tr id="entitat_logowebID_rowid">
           <td id="entitat_logowebID_columnlabelid">
-            <label>
+            <label for="entitat.logowebID">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.LOGOWEBID])?'entitat.logowebID':__theForm.labels[EntitatFields.LOGOWEBID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.LOGOWEBID]}">
@@ -241,7 +241,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,EntitatFields.LOGOWEBID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,EntitatFields.LOGOWEBID)? ' uneditable-input' : ''}"   path="logowebID" type="file" />
-                  <label class="custom-file-label" for="logowebID">
+                  <label class="custom-file-label" for="logowebID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -277,7 +277,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.LOGOWEBPEUID)}">
         <tr id="entitat_logowebpeuID_rowid">
           <td id="entitat_logowebpeuID_columnlabelid">
-            <label>
+            <label for="entitat.logowebpeuID">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.LOGOWEBPEUID])?'entitat.logowebpeuID':__theForm.labels[EntitatFields.LOGOWEBPEUID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.LOGOWEBPEUID]}">
@@ -293,7 +293,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,EntitatFields.LOGOWEBPEUID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,EntitatFields.LOGOWEBPEUID)? ' uneditable-input' : ''}"   path="logowebpeuID" type="file" />
-                  <label class="custom-file-label" for="logowebpeuID">
+                  <label class="custom-file-label" for="logowebpeuID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -329,7 +329,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.LOGOSEGELLID)}">
         <tr id="entitat_logosegellID_rowid">
           <td id="entitat_logosegellID_columnlabelid">
-            <label>
+            <label for="entitat.logosegellID">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.LOGOSEGELLID])?'entitat.logosegellID':__theForm.labels[EntitatFields.LOGOSEGELLID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.LOGOSEGELLID]}">
@@ -345,7 +345,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,EntitatFields.LOGOSEGELLID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,EntitatFields.LOGOSEGELLID)? ' uneditable-input' : ''}"   path="logosegellID" type="file" />
-                  <label class="custom-file-label" for="logosegellID">
+                  <label class="custom-file-label" for="logosegellID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -381,7 +381,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.WEB)}">
         <tr id="entitat_web_rowid">
           <td id="entitat_web_columnlabelid">
-            <label>
+            <label for="entitat.web">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.WEB])?'entitat.web':__theForm.labels[EntitatFields.WEB]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.WEB]}">
@@ -399,7 +399,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.MOTIUDELEGACIOID)}">
         <tr id="entitat_motiudelegacioID_rowid">
           <td id="entitat_motiudelegacioID_columnlabelid">
-            <label>
+            <label for="entitat.motiudelegacioID">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.MOTIUDELEGACIOID])?'entitat.motiudelegacioID':__theForm.labels[EntitatFields.MOTIUDELEGACIOID]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.MOTIUDELEGACIOID]}">
@@ -412,16 +412,16 @@
          <ul class="nav nav-tabs" style="margin: 0 15px -1px;">
              <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
             <li class="nav-item ">
-                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#${counter.index}_tab_motiudelegacio_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
+                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#tab_${counter.index}_motiudelegacio_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
             </li>
           </c:forEach>
            
          </ul>
          <div class="tab-content well well-white" style="padding:8px;margin:0px;">
            <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
-           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="${counter.index}_tab_motiudelegacio_${idioma.idiomaID}">
+           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="tab_${counter.index}_motiudelegacio_${idioma.idiomaID}">
                <form:errors path="entitat.motiudelegacio.traduccions['${idioma.idiomaID}'].valor" cssClass="errorField alert alert-danger"/>
-               <form:input path="entitat.motiudelegacio.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,EntitatFields.MOTIUDELEGACIOID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,EntitatFields.MOTIUDELEGACIOID)}" maxlength="4000" />
+               <form:input aria-label="entitat.motiudelegacioID"  path="entitat.motiudelegacio.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,EntitatFields.MOTIUDELEGACIOID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,EntitatFields.MOTIUDELEGACIOID)}" maxlength="4000" />
            </div>
            </c:forEach>
          </div>
@@ -434,7 +434,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.SEGELLDETEMPSVIAWEB)}">
         <tr id="entitat_segelldetempsviaweb_rowid">
           <td id="entitat_segelldetempsviaweb_columnlabelid">
-            <label>
+            <label for="entitat.segelldetempsviaweb">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.SEGELLDETEMPSVIAWEB])?'entitat.segelldetempsviaweb':__theForm.labels[EntitatFields.SEGELLDETEMPSVIAWEB]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.SEGELLDETEMPSVIAWEB]}">
@@ -452,7 +452,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.CHECKCANVIATDOCFIRMAT)}">
         <tr id="entitat_checkcanviatdocfirmat_rowid">
           <td id="entitat_checkcanviatdocfirmat_columnlabelid">
-            <label>
+            <label for="entitat.checkcanviatdocfirmat">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.CHECKCANVIATDOCFIRMAT])?'entitat.checkcanviatdocfirmat':__theForm.labels[EntitatFields.CHECKCANVIATDOCFIRMAT]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.CHECKCANVIATDOCFIRMAT]}">
@@ -461,8 +461,8 @@
             </td>
           <td id="entitat_checkcanviatdocfirmat_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,EntitatFields.CHECKCANVIATDOCFIRMAT)}" >
-              <form:errors path="entitat.checkcanviatdocfirmat" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,EntitatFields.CHECKCANVIATDOCFIRMAT)? 'false' : 'true'}" path="entitat.checkcanviatdocfirmat" />
+              <form:errors  path="entitat.checkcanviatdocfirmat" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,EntitatFields.CHECKCANVIATDOCFIRMAT)? 'false' : 'true'}" path="entitat.checkcanviatdocfirmat"  aria-label="entitat.checkcanviatdocfirmat" />
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,EntitatFields.CHECKCANVIATDOCFIRMAT)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.entitat.checkcanviatdocfirmat}" />
@@ -474,7 +474,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.PROPIETATSTAULAFIRMES)}">
         <tr id="entitat_propietatstaulafirmes_rowid">
           <td id="entitat_propietatstaulafirmes_columnlabelid">
-            <label>
+            <label for="entitat.propietatstaulafirmes">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.PROPIETATSTAULAFIRMES])?'entitat.propietatstaulafirmes':__theForm.labels[EntitatFields.PROPIETATSTAULAFIRMES]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.PROPIETATSTAULAFIRMES]}">
@@ -490,7 +490,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_propietatstaulafirmes" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_propietatstaulafirmes" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('entitat.propietatstaulafirmes'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('entitat.propietatstaulafirmes'); ta.wrap='soft';">Soft Wrap</a>
@@ -513,7 +513,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,EntitatFields.DIR3)}">
         <tr id="entitat_dir3_rowid">
           <td id="entitat_dir3_columnlabelid">
-            <label>
+            <label for="entitat.dir3">
               <fmt:message key="${(empty __theForm.labels[EntitatFields.DIR3])?'entitat.dir3':__theForm.labels[EntitatFields.DIR3]}" />
              </label>
               <c:if test="${not empty __theForm.help[EntitatFields.DIR3]}">

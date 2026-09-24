@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoAnexFields.PETICIOID)}">
         <tr id="infoAnex_peticioID_rowid">
           <td id="infoAnex_peticioID_columnlabelid">
-            <label>
+            <label for="infoAnex.peticioID">
               <fmt:message key="${(empty __theForm.labels[InfoAnexFields.PETICIOID])?'infoAnex.peticioID':__theForm.labels[InfoAnexFields.PETICIOID]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoAnexFields.PETICIOID]}">
@@ -16,11 +16,11 @@
           <form:errors path="infoAnex.peticioID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,InfoAnexFields.PETICIOID)}" >
           <form:hidden path="infoAnex.peticioID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoAnex.peticioID,__theForm.listOfPeticioForPeticioID)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoAnex.peticioID,__theForm.listOfPeticioForPeticioID)}" aria-label="infoAnex.peticioID" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,InfoAnexFields.PETICIOID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="infoAnex_peticioID"  onchange="if(typeof onChangePeticioID == 'function') {  onChangePeticioID(this); };"  cssClass="form-control col-md-9-optional" path="infoAnex.peticioID">
+          <form:select id="infoAnex_peticioID"  onchange="if(typeof onChangePeticioID == 'function') {  onChangePeticioID(this); };"  cssClass="form-control col-md-9-optional" path="infoAnex.peticioID"  aria-label="infoAnex.peticioID" >
             <c:forEach items="${__theForm.listOfPeticioForPeticioID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -45,7 +45,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoAnexFields.ANEXID)}">
         <tr id="infoAnex_anexID_rowid">
           <td id="infoAnex_anexID_columnlabelid">
-            <label>
+            <label for="infoAnex.anexID">
               <fmt:message key="${(empty __theForm.labels[InfoAnexFields.ANEXID])?'infoAnex.anexID':__theForm.labels[InfoAnexFields.ANEXID]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoAnexFields.ANEXID]}">
@@ -61,7 +61,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,InfoAnexFields.ANEXID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,InfoAnexFields.ANEXID)? ' uneditable-input' : ''}"   path="anexID" type="file" />
-                  <label class="custom-file-label" for="anexID">
+                  <label class="custom-file-label" for="anexID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -71,9 +71,11 @@
                   <small>              <a target="_blank" href="<c:url value="${efi:fileUrl(__theForm.infoAnex.anex)}"/>">${__theForm.infoAnex.anex.nom}</a>
 </small>
                   </span>
-                  <span class="input-group-text" id="">
-                        <form:checkbox path="anexIDDelete"/>
-                        <small><fmt:message key="genapp.form.file.delete"/></small>
+                  <span class="input-group-text" >
+                        <form:checkbox aria-label="infoAnex.anexIDDelete"  path="anexIDDelete"/>
+                        <label style="margin-bottom:0px" for="infoAnex.anexIDDelete">
+                        <small style="color:#000">&nbsp;<fmt:message key="genapp.form.file.delete"/></small>
+                        </label>
                   </span>
                 </div>
                 </c:when>

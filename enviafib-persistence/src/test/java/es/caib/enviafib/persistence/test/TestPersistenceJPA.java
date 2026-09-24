@@ -28,7 +28,7 @@ public class TestPersistenceJPA {
 
     public static final Logger log = Logger.getLogger(TestPersistenceJPA.class);
 
-    public static final void main(String[] args) {
+    public static void main(String[] args) {
         try {
             log.info(">>>>>>>>>>>>  Hello World!");
 

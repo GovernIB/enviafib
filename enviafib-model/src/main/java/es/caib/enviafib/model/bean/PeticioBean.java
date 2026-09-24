@@ -43,6 +43,7 @@ public class PeticioBean implements Peticio {
 	java.lang.Long infoArxiuID;
 	java.lang.String revisor;
 	java.lang.Long reintentsArxiu;
+	java.lang.String fluxDeFirmes;
 
 
   /** Constructor Buit */
@@ -50,7 +51,7 @@ public class PeticioBean implements Peticio {
   }
 
   /** Constructor amb tots els camps  */
-  public PeticioBean(long peticioID , java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor , java.lang.Long reintentsArxiu) {
+  public PeticioBean(long peticioID , java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor , java.lang.Long reintentsArxiu , java.lang.String fluxDeFirmes) {
     this.peticioID=peticioID;
     this.nom=nom;
     this.dataCreacio=dataCreacio;
@@ -86,9 +87,10 @@ public class PeticioBean implements Peticio {
     this.infoArxiuID=infoArxiuID;
     this.revisor=revisor;
     this.reintentsArxiu=reintentsArxiu;
+    this.fluxDeFirmes=fluxDeFirmes;
 }
   /** Constructor sense valors autoincrementals */
-  public PeticioBean(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor , java.lang.Long reintentsArxiu) {
+  public PeticioBean(java.lang.String nom , java.sql.Timestamp dataCreacio , java.sql.Timestamp dataFinal , long fitxerID , long solicitantID , java.lang.String idiomaID , java.lang.String destinatariNif , int estat , java.lang.Long fitxerFirmatID , java.lang.String tipusDocumental , java.lang.String idiomaDoc , java.lang.Long infoSignaturaID , int tipus , java.lang.String errorMsg , java.lang.String errorException , java.lang.String peticioPortafirmes , java.lang.String reason , java.lang.String arxiuFuncionariUsername , java.lang.String arxiuParamFuncionariNom , java.lang.String arxiuParamFuncionariNif , java.lang.String arxiuParamFuncionariDir3 , java.lang.String arxiuReqParamDocEstatElabora , java.lang.String arxiuReqParamInteressats , java.lang.String arxiuReqParamCiutadaNif , java.lang.String arxiuReqParamCiutadaNom , java.lang.String arxiuReqParamOrgans , java.lang.String arxiuOptParamProcedimentCodi , java.lang.String arxiuOptParamProcedimentNom , java.lang.String arxiuOptParamSerieDocumental , java.lang.String arxiuOptParamExpedientId , java.lang.Integer arxiuReqParamOrigen , java.lang.Long infoArxiuID , java.lang.String revisor , java.lang.Long reintentsArxiu , java.lang.String fluxDeFirmes) {
     this.nom=nom;
     this.dataCreacio=dataCreacio;
     this.dataFinal=dataFinal;
@@ -123,6 +125,7 @@ public class PeticioBean implements Peticio {
     this.infoArxiuID=infoArxiuID;
     this.revisor=revisor;
     this.reintentsArxiu=reintentsArxiu;
+    this.fluxDeFirmes=fluxDeFirmes;
 }
   /** Constructor dels valors Not Null */
   public PeticioBean(long peticioID , java.sql.Timestamp dataCreacio , long fitxerID , long solicitantID , java.lang.String idiomaID , int estat , java.lang.String tipusDocumental , java.lang.String idiomaDoc , int tipus) {
@@ -172,6 +175,7 @@ public class PeticioBean implements Peticio {
     this.setInfoArxiuID(__bean.getInfoArxiuID());
     this.setRevisor(__bean.getRevisor());
     this.setReintentsArxiu(__bean.getReintentsArxiu());
+    this.setFluxDeFirmes(__bean.getFluxDeFirmes());
     // Fitxer
     this.setFitxer(FitxerBean.toBean(__bean.getFitxer()));
     // Fitxer
@@ -423,6 +427,13 @@ public class PeticioBean implements Peticio {
 		this.reintentsArxiu = _reintentsArxiu_;
 	};
 
+	public java.lang.String getFluxDeFirmes() {
+		return(fluxDeFirmes);
+	};
+	public void setFluxDeFirmes(java.lang.String _fluxDeFirmes_) {
+		this.fluxDeFirmes = _fluxDeFirmes_;
+	};
+
 
 
   // ======================================
@@ -465,6 +476,7 @@ public class PeticioBean implements Peticio {
     __tmp.setInfoArxiuID(__bean.getInfoArxiuID());
     __tmp.setRevisor(__bean.getRevisor());
     __tmp.setReintentsArxiu(__bean.getReintentsArxiu());
+    __tmp.setFluxDeFirmes(__bean.getFluxDeFirmes());
     // Fitxer
     __tmp.setFitxer(FitxerBean.toBean(__bean.getFitxer()));
     // Fitxer

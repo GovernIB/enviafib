@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,GrupFields.NOM)}">
         <tr id="grup_nom_rowid">
           <td id="grup_nom_columnlabelid">
-            <label>
+            <label for="grup.nom">
               <fmt:message key="${(empty __theForm.labels[GrupFields.NOM])?'grup.nom':__theForm.labels[GrupFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[GrupFields.NOM]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,GrupFields.DESCRIPCIO)}">
         <tr id="grup_descripcio_rowid">
           <td id="grup_descripcio_columnlabelid">
-            <label>
+            <label for="grup.descripcio">
               <fmt:message key="${(empty __theForm.labels[GrupFields.DESCRIPCIO])?'grup.descripcio':__theForm.labels[GrupFields.DESCRIPCIO]}" />
              </label>
               <c:if test="${not empty __theForm.help[GrupFields.DESCRIPCIO]}">
@@ -39,7 +39,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_descripcio" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_descripcio" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('grup.descripcio'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('grup.descripcio'); ta.wrap='soft';">Soft Wrap</a>

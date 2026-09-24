@@ -22,22 +22,23 @@ import org.fundaciobit.genapp.common.web.controller.RefListBase;
  * 
  */
 @Component
-public class IdiomaRefList extends RefListBase
-    implements IdiomaFields {
+public class IdiomaRefList extends RefListBase implements IdiomaFields {
 
-  @EJB(mappedName = IdiomaService.JNDI_NAME)
-  private IdiomaService idiomaEjb;
+    @EJB(mappedName = IdiomaService.JNDI_NAME)
+    private IdiomaService idiomaEjb;
 
-  public IdiomaRefList(IdiomaRefList __clone) {
-    super(__clone);
-    this.idiomaEjb = __clone.idiomaEjb;
-  }
-  public IdiomaRefList() {
-    setSelects(new Select<?>[] { NOM.select });
-  }
-  public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
-    Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
-    List<StringKeyValue> list = idiomaEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
+    public IdiomaRefList(IdiomaRefList __clone) {
+        super(__clone);
+        this.idiomaEjb = __clone.idiomaEjb;
+    }
+
+    public IdiomaRefList() {
+        setSelects(new Select<?>[] { NOM.select });
+    }
+
+    public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
+        Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
+        List<StringKeyValue> list = idiomaEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
     return list;
-  }
+    }
 }

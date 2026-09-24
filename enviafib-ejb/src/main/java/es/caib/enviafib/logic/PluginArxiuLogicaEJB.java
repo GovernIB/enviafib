@@ -1,8 +1,19 @@
 package es.caib.enviafib.logic;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
 import org.apache.log4j.Logger;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignedFileInfo;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
@@ -32,7 +43,6 @@ import es.caib.pluginsib.arxiu.api.DocumentEstatElaboracio;
 import es.caib.pluginsib.arxiu.api.DocumentExtensio;
 import es.caib.pluginsib.arxiu.api.DocumentFormat;
 import es.caib.pluginsib.arxiu.api.DocumentMetadades;
-import es.caib.pluginsib.arxiu.api.DocumentRepositori;
 import es.caib.pluginsib.arxiu.api.DocumentTipus;
 import es.caib.pluginsib.arxiu.api.Expedient;
 import es.caib.pluginsib.arxiu.api.ExpedientEstat;
@@ -41,16 +51,6 @@ import es.caib.pluginsib.arxiu.api.Firma;
 import es.caib.pluginsib.arxiu.api.FirmaPerfil;
 import es.caib.pluginsib.arxiu.api.FirmaTipus;
 import es.caib.pluginsib.arxiu.api.IArxiuPlugin;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * 

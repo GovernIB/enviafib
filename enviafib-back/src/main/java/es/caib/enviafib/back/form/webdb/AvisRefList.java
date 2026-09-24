@@ -22,22 +22,23 @@ import org.fundaciobit.genapp.common.web.controller.RefListBase;
  * 
  */
 @Component
-public class AvisRefList extends RefListBase
-    implements AvisFields {
+public class AvisRefList extends RefListBase implements AvisFields {
 
-  @EJB(mappedName = AvisService.JNDI_NAME)
-  private AvisService avisEjb;
+    @EJB(mappedName = AvisService.JNDI_NAME)
+    private AvisService avisEjb;
 
-  public AvisRefList(AvisRefList __clone) {
-    super(__clone);
-    this.avisEjb = __clone.avisEjb;
-  }
-  public AvisRefList() {
-    setSelects(new Select<?>[] { AVISID.select });
-  }
-  public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
-    Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
-    List<StringKeyValue> list = avisEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
+    public AvisRefList(AvisRefList __clone) {
+        super(__clone);
+        this.avisEjb = __clone.avisEjb;
+    }
+
+    public AvisRefList() {
+        setSelects(new Select<?>[] { AVISID.select });
+    }
+
+    public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
+        Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
+        List<StringKeyValue> list = avisEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
     return list;
-  }
+    }
 }

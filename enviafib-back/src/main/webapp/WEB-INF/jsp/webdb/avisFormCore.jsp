@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,AvisFields.MISSATGE)}">
         <tr id="avis_missatge_rowid">
           <td id="avis_missatge_columnlabelid">
-            <label>
+            <label for="avis.missatge">
               <fmt:message key="${(empty __theForm.labels[AvisFields.MISSATGE])?'avis.missatge':__theForm.labels[AvisFields.MISSATGE]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[AvisFields.MISSATGE]}">
@@ -21,7 +21,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_missatge" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_missatge" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('avis.missatge'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('avis.missatge'); ta.wrap='soft';">Soft Wrap</a>
@@ -44,7 +44,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,AvisFields.DATAINICI)}">
         <tr id="avis_datainici_rowid">
           <td id="avis_datainici_columnlabelid">
-            <label>
+            <label for="avis.datainici">
               <fmt:message key="${(empty __theForm.labels[AvisFields.DATAINICI])?'avis.datainici':__theForm.labels[AvisFields.DATAINICI]}" />
              </label>
               <c:if test="${not empty __theForm.help[AvisFields.DATAINICI]}">
@@ -55,7 +55,7 @@
     <form:errors path="avis.datainici" cssClass="errorField alert alert-danger" />
             <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="avis_datainici" data-target-input="nearest">
-                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,AvisFields.DATAINICI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#avis_datainici" path="avis.datainici" />
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,AvisFields.DATAINICI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#avis_datainici" path="avis.datainici" aria-label="avis.datainici"  />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,AvisFields.DATAINICI)}" >
                     <div class="input-group-append"  data-target="#avis_datainici"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -80,7 +80,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,AvisFields.DATAFI)}">
         <tr id="avis_datafi_rowid">
           <td id="avis_datafi_columnlabelid">
-            <label>
+            <label for="avis.datafi">
               <fmt:message key="${(empty __theForm.labels[AvisFields.DATAFI])?'avis.datafi':__theForm.labels[AvisFields.DATAFI]}" />
              </label>
               <c:if test="${not empty __theForm.help[AvisFields.DATAFI]}">
@@ -91,7 +91,7 @@
     <form:errors path="avis.datafi" cssClass="errorField alert alert-danger" />
             <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="avis_datafi" data-target-input="nearest">
-                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,AvisFields.DATAFI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#avis_datafi" path="avis.datafi" />
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,AvisFields.DATAFI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#avis_datafi" path="avis.datafi" aria-label="avis.datafi"  />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,AvisFields.DATAFI)}" >
                     <div class="input-group-append"  data-target="#avis_datafi"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -116,7 +116,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,AvisFields.ACTIU)}">
         <tr id="avis_actiu_rowid">
           <td id="avis_actiu_columnlabelid">
-            <label>
+            <label for="avis.actiu">
               <fmt:message key="${(empty __theForm.labels[AvisFields.ACTIU])?'avis.actiu':__theForm.labels[AvisFields.ACTIU]}" />
              </label>
               <c:if test="${not empty __theForm.help[AvisFields.ACTIU]}">
@@ -125,8 +125,8 @@
             </td>
           <td id="avis_actiu_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,AvisFields.ACTIU)}" >
-              <form:errors path="avis.actiu" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,AvisFields.ACTIU)? 'false' : 'true'}" path="avis.actiu" />
+              <form:errors  path="avis.actiu" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,AvisFields.ACTIU)? 'false' : 'true'}" path="avis.actiu"  aria-label="avis.actiu" />
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,AvisFields.ACTIU)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.avis.actiu}" />
@@ -138,7 +138,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,AvisFields.TIPUS)}">
         <tr id="avis_tipus_rowid">
           <td id="avis_tipus_columnlabelid">
-            <label>
+            <label for="avis.tipus">
               <fmt:message key="${(empty __theForm.labels[AvisFields.TIPUS])?'avis.tipus':__theForm.labels[AvisFields.TIPUS]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[AvisFields.TIPUS]}">
@@ -149,11 +149,11 @@
           <form:errors path="avis.tipus" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,AvisFields.TIPUS)}" >
           <form:hidden path="avis.tipus"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.avis.tipus,__theForm.listOfValuesForTipus)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.avis.tipus,__theForm.listOfValuesForTipus)}" aria-label="avis.tipus" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,AvisFields.TIPUS)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="avis_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="avis.tipus">
+          <form:select id="avis_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="avis.tipus"  aria-label="avis.tipus" >
             <c:forEach items="${__theForm.listOfValuesForTipus}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">

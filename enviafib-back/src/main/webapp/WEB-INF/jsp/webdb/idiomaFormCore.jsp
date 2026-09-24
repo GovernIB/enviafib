@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,IdiomaFields.IDIOMAID)}">
         <tr id="idioma_idiomaID_rowid">
           <td id="idioma_idiomaID_columnlabelid">
-            <label>
+            <label for="idioma.idiomaID">
               <fmt:message key="${(empty __theForm.labels[IdiomaFields.IDIOMAID])?'idioma.idiomaID':__theForm.labels[IdiomaFields.IDIOMAID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[IdiomaFields.IDIOMAID]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,IdiomaFields.NOM)}">
         <tr id="idioma_nom_rowid">
           <td id="idioma_nom_columnlabelid">
-            <label>
+            <label for="idioma.nom">
               <fmt:message key="${(empty __theForm.labels[IdiomaFields.NOM])?'idioma.nom':__theForm.labels[IdiomaFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[IdiomaFields.NOM]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,IdiomaFields.SUPORTAT)}">
         <tr id="idioma_suportat_rowid">
           <td id="idioma_suportat_columnlabelid">
-            <label>
+            <label for="idioma.suportat">
               <fmt:message key="${(empty __theForm.labels[IdiomaFields.SUPORTAT])?'idioma.suportat':__theForm.labels[IdiomaFields.SUPORTAT]}" />
              </label>
               <c:if test="${not empty __theForm.help[IdiomaFields.SUPORTAT]}">
@@ -50,8 +50,8 @@
             </td>
           <td id="idioma_suportat_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,IdiomaFields.SUPORTAT)}" >
-              <form:errors path="idioma.suportat" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,IdiomaFields.SUPORTAT)? 'false' : 'true'}" path="idioma.suportat" />
+              <form:errors  path="idioma.suportat" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,IdiomaFields.SUPORTAT)? 'false' : 'true'}" path="idioma.suportat"  aria-label="idioma.suportat" />
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,IdiomaFields.SUPORTAT)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.idioma.suportat}" />
@@ -63,7 +63,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,IdiomaFields.ORDRE)}">
         <tr id="idioma_ordre_rowid">
           <td id="idioma_ordre_columnlabelid">
-            <label>
+            <label for="idioma.ordre">
               <fmt:message key="${(empty __theForm.labels[IdiomaFields.ORDRE])?'idioma.ordre':__theForm.labels[IdiomaFields.ORDRE]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[IdiomaFields.ORDRE]}">

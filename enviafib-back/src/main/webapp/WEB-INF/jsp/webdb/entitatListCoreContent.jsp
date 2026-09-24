@@ -46,7 +46,7 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EntitatFields.ACTIVA)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${entitat.activa?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${entitat.activa?'success':'error'}.png"/>" alt="${entitat.activa}" >
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EntitatFields.SUPORTTELEFON)}">
@@ -112,7 +112,7 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EntitatFields.CHECKCANVIATDOCFIRMAT)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${entitat.checkcanviatdocfirmat?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${entitat.checkcanviatdocfirmat?'success':'error'}.png"/>" alt="${entitat.checkcanviatdocfirmat}" >
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EntitatFields.PROPIETATSTAULAFIRMES)}">

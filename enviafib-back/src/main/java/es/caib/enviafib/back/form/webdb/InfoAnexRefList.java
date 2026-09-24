@@ -22,22 +22,23 @@ import org.fundaciobit.genapp.common.web.controller.RefListBase;
  * 
  */
 @Component
-public class InfoAnexRefList extends RefListBase
-    implements InfoAnexFields {
+public class InfoAnexRefList extends RefListBase implements InfoAnexFields {
 
-  @EJB(mappedName = InfoAnexService.JNDI_NAME)
-  private InfoAnexService infoAnexEjb;
+    @EJB(mappedName = InfoAnexService.JNDI_NAME)
+    private InfoAnexService infoAnexEjb;
 
-  public InfoAnexRefList(InfoAnexRefList __clone) {
-    super(__clone);
-    this.infoAnexEjb = __clone.infoAnexEjb;
-  }
-  public InfoAnexRefList() {
-    setSelects(new Select<?>[] { INFOANEXID.select });
-  }
-  public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
-    Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
-    List<StringKeyValue> list = infoAnexEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
+    public InfoAnexRefList(InfoAnexRefList __clone) {
+        super(__clone);
+        this.infoAnexEjb = __clone.infoAnexEjb;
+    }
+
+    public InfoAnexRefList() {
+        setSelects(new Select<?>[] { INFOANEXID.select });
+    }
+
+    public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
+        Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
+        List<StringKeyValue> list = infoAnexEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
     return list;
-  }
+    }
 }

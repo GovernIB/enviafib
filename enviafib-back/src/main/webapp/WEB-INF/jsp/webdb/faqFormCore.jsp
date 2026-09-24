@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.ORDRE)}">
         <tr id="faq_ordre_rowid">
           <td id="faq_ordre_columnlabelid">
-            <label>
+            <label for="faq.ordre">
               <fmt:message key="${(empty __theForm.labels[FaqFields.ORDRE])?'faq.ordre':__theForm.labels[FaqFields.ORDRE]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.ORDRE]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.ENUNCIAT_ES)}">
         <tr id="faq_enunciat_es_rowid">
           <td id="faq_enunciat_es_columnlabelid">
-            <label>
+            <label for="faq.enunciat_es">
               <fmt:message key="${(empty __theForm.labels[FaqFields.ENUNCIAT_ES])?'faq.enunciat_es':__theForm.labels[FaqFields.ENUNCIAT_ES]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.ENUNCIAT_ES]}">
@@ -39,7 +39,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_enunciat_es" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_enunciat_es" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('faq.enunciat_es'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('faq.enunciat_es'); ta.wrap='soft';">Soft Wrap</a>
@@ -62,7 +62,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.ENUNCIAT_CA)}">
         <tr id="faq_enunciat_ca_rowid">
           <td id="faq_enunciat_ca_columnlabelid">
-            <label>
+            <label for="faq.enunciat_ca">
               <fmt:message key="${(empty __theForm.labels[FaqFields.ENUNCIAT_CA])?'faq.enunciat_ca':__theForm.labels[FaqFields.ENUNCIAT_CA]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.ENUNCIAT_CA]}">
@@ -78,7 +78,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_enunciat_ca" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_enunciat_ca" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('faq.enunciat_ca'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('faq.enunciat_ca'); ta.wrap='soft';">Soft Wrap</a>
@@ -101,7 +101,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.RESPOSTA_ES)}">
         <tr id="faq_resposta_es_rowid">
           <td id="faq_resposta_es_columnlabelid">
-            <label>
+            <label for="faq.resposta_es">
               <fmt:message key="${(empty __theForm.labels[FaqFields.RESPOSTA_ES])?'faq.resposta_es':__theForm.labels[FaqFields.RESPOSTA_ES]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.RESPOSTA_ES]}">
@@ -118,7 +118,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.RESPOSTA_CA)}">
         <tr id="faq_resposta_ca_rowid">
           <td id="faq_resposta_ca_columnlabelid">
-            <label>
+            <label for="faq.resposta_ca">
               <fmt:message key="${(empty __theForm.labels[FaqFields.RESPOSTA_CA])?'faq.resposta_ca':__theForm.labels[FaqFields.RESPOSTA_CA]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.RESPOSTA_CA]}">
@@ -135,7 +135,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.FITXER1ID)}">
         <tr id="faq_fitxer1ID_rowid">
           <td id="faq_fitxer1ID_columnlabelid">
-            <label>
+            <label for="faq.fitxer1ID">
               <fmt:message key="${(empty __theForm.labels[FaqFields.FITXER1ID])?'faq.fitxer1ID':__theForm.labels[FaqFields.FITXER1ID]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.FITXER1ID]}">
@@ -151,7 +151,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,FaqFields.FITXER1ID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,FaqFields.FITXER1ID)? ' uneditable-input' : ''}"   path="fitxer1ID" type="file" />
-                  <label class="custom-file-label" for="fitxer1ID">
+                  <label class="custom-file-label" for="fitxer1ID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -161,9 +161,11 @@
                   <small>              <a target="_blank" href="<c:url value="${efi:fileUrl(__theForm.faq.fitxer1)}"/>">${__theForm.faq.fitxer1.nom}</a>
 </small>
                   </span>
-                  <span class="input-group-text" id="">
-                        <form:checkbox path="fitxer1IDDelete"/>
-                        <small><fmt:message key="genapp.form.file.delete"/></small>
+                  <span class="input-group-text" >
+                        <form:checkbox aria-label="faq.fitxer1IDDelete"  path="fitxer1IDDelete"/>
+                        <label style="margin-bottom:0px" for="faq.fitxer1IDDelete">
+                        <small style="color:#000">&nbsp;<fmt:message key="genapp.form.file.delete"/></small>
+                        </label>
                   </span>
                 </div>
                 </c:when>
@@ -191,7 +193,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.FITXER2ID)}">
         <tr id="faq_fitxer2ID_rowid">
           <td id="faq_fitxer2ID_columnlabelid">
-            <label>
+            <label for="faq.fitxer2ID">
               <fmt:message key="${(empty __theForm.labels[FaqFields.FITXER2ID])?'faq.fitxer2ID':__theForm.labels[FaqFields.FITXER2ID]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.FITXER2ID]}">
@@ -207,7 +209,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,FaqFields.FITXER2ID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,FaqFields.FITXER2ID)? ' uneditable-input' : ''}"   path="fitxer2ID" type="file" />
-                  <label class="custom-file-label" for="fitxer2ID">
+                  <label class="custom-file-label" for="fitxer2ID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -217,9 +219,11 @@
                   <small>              <a target="_blank" href="<c:url value="${efi:fileUrl(__theForm.faq.fitxer2)}"/>">${__theForm.faq.fitxer2.nom}</a>
 </small>
                   </span>
-                  <span class="input-group-text" id="">
-                        <form:checkbox path="fitxer2IDDelete"/>
-                        <small><fmt:message key="genapp.form.file.delete"/></small>
+                  <span class="input-group-text" >
+                        <form:checkbox aria-label="faq.fitxer2IDDelete"  path="fitxer2IDDelete"/>
+                        <label style="margin-bottom:0px" for="faq.fitxer2IDDelete">
+                        <small style="color:#000">&nbsp;<fmt:message key="genapp.form.file.delete"/></small>
+                        </label>
                   </span>
                 </div>
                 </c:when>
@@ -247,7 +251,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,FaqFields.FITXER3ID)}">
         <tr id="faq_fitxer3ID_rowid">
           <td id="faq_fitxer3ID_columnlabelid">
-            <label>
+            <label for="faq.fitxer3ID">
               <fmt:message key="${(empty __theForm.labels[FaqFields.FITXER3ID])?'faq.fitxer3ID':__theForm.labels[FaqFields.FITXER3ID]}" />
              </label>
               <c:if test="${not empty __theForm.help[FaqFields.FITXER3ID]}">
@@ -263,7 +267,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,FaqFields.FITXER3ID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,FaqFields.FITXER3ID)? ' uneditable-input' : ''}"   path="fitxer3ID" type="file" />
-                  <label class="custom-file-label" for="fitxer3ID">
+                  <label class="custom-file-label" for="fitxer3ID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -273,9 +277,11 @@
                   <small>              <a target="_blank" href="<c:url value="${efi:fileUrl(__theForm.faq.fitxer3)}"/>">${__theForm.faq.fitxer3.nom}</a>
 </small>
                   </span>
-                  <span class="input-group-text" id="">
-                        <form:checkbox path="fitxer3IDDelete"/>
-                        <small><fmt:message key="genapp.form.file.delete"/></small>
+                  <span class="input-group-text" >
+                        <form:checkbox aria-label="faq.fitxer3IDDelete"  path="fitxer3IDDelete"/>
+                        <label style="margin-bottom:0px" for="faq.fitxer3IDDelete">
+                        <small style="color:#000">&nbsp;<fmt:message key="genapp.form.file.delete"/></small>
+                        </label>
                   </span>
                 </div>
                 </c:when>

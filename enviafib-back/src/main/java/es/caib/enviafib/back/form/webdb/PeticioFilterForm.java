@@ -461,6 +461,17 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
   }
 
 
+  private java.lang.String fluxDeFirmes;
+
+  public java.lang.String getFluxDeFirmes() {
+    return this.fluxDeFirmes;
+  }
+
+  public void setFluxDeFirmes(java.lang.String fluxDeFirmes) {
+    this.fluxDeFirmes = fluxDeFirmes;
+  }
+
+
   public PeticioFilterForm() {
   }
   
@@ -506,6 +517,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
     this.revisor = __toClone.revisor;
     this.reintentsArxiuDesde = __toClone.reintentsArxiuDesde;
     this.reintentsArxiuFins = __toClone.reintentsArxiuFins;
+    this.fluxDeFirmes = __toClone.fluxDeFirmes;
     this.mapOfUsuariForSolicitantID = __toClone.mapOfUsuariForSolicitantID;
     this.mapOfIdiomaForIdiomaID = __toClone.mapOfIdiomaForIdiomaID;
     this.mapOfValuesForEstat = __toClone.mapOfValuesForEstat;
@@ -523,7 +535,7 @@ public class PeticioFilterForm extends EnviaFIBBaseFilterForm implements Peticio
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { PETICIOID ,NOM ,ESTAT }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { PETICIOID ,NOM ,ESTAT ,FLUXDEFIRMES }));
   }
 
   @Override

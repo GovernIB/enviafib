@@ -27,8 +27,10 @@
       
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key < 0 && not empty __entry.value.searchBy }">
-      <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+      <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
+        <label for="${__entry.value.codeName}" style="display: inline;">
         <span class="add-on"><fmt:message key="${__entry.value.codeName}" />:</span>
+        </label>
         <fmt:message key="genapp.form.searchby" var="cercaperAF" >
           <fmt:param>
             <fmt:message key="${__entry.value.codeName}" />
@@ -37,12 +39,12 @@
         <c:choose>
           <c:when test="${gen:isFieldSearchInRange(__entry.value.searchBy)}">
             <span class="add-on"><fmt:message key="genapp.from" /></span>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}"  id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
             <span class="add-on"><fmt:message key="genapp.to" /></span>
             <input id="${__entry.value.searchBy.fullName}Fins" name="${__entry.value.searchBy.fullName}Fins" class="input-small input-medium search-query" type="text" value="${__entry.value.searchByValueFins}"/>
           </c:when>
           <c:otherwise>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}" id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
           </c:otherwise>
         </c:choose>
       </div>
@@ -51,9 +53,11 @@
 
 
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,FaqFields.FAQID)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
+              <label for="faq.faqID" style="display: inline;">
               <span class="add-on"><fmt:message key="faq.faqID" />:</span>
+              </label>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
@@ -69,9 +73,11 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,FaqFields.ORDRE)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
+              <label for="faq.ordre" style="display: inline;">
               <span class="add-on"><fmt:message key="faq.ordre" />:</span>
+              </label>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
@@ -88,52 +94,60 @@
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,FaqFields.ENUNCIAT_ES)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="faq.enunciat_es" style="display: inline;">
               <fmt:message key="faq.enunciat_es" var="enunciat_es" />
               <fmt:message key="genapp.form.searchby" var="cercaperenunciat_es" >                
                  <fmt:param value="${enunciat_es}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${enunciat_es}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperenunciat_es}" path="enunciat_es" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperenunciat_es}" path="enunciat_es" aria-label="faq.enunciat_es" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,FaqFields.ENUNCIAT_CA)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="faq.enunciat_ca" style="display: inline;">
               <fmt:message key="faq.enunciat_ca" var="enunciat_ca" />
               <fmt:message key="genapp.form.searchby" var="cercaperenunciat_ca" >                
                  <fmt:param value="${enunciat_ca}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${enunciat_ca}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperenunciat_ca}" path="enunciat_ca" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperenunciat_ca}" path="enunciat_ca" aria-label="faq.enunciat_ca" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,FaqFields.RESPOSTA_ES)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="faq.resposta_es" style="display: inline;">
               <fmt:message key="faq.resposta_es" var="resposta_es" />
               <fmt:message key="genapp.form.searchby" var="cercaperresposta_es" >                
                  <fmt:param value="${resposta_es}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${resposta_es}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperresposta_es}" path="resposta_es" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperresposta_es}" path="resposta_es" aria-label="faq.resposta_es" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,FaqFields.RESPOSTA_CA)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="faq.resposta_ca" style="display: inline;">
               <fmt:message key="faq.resposta_ca" var="resposta_ca" />
               <fmt:message key="genapp.form.searchby" var="cercaperresposta_ca" >                
                  <fmt:param value="${resposta_ca}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${resposta_ca}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperresposta_ca}" path="resposta_ca" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperresposta_ca}" path="resposta_ca" aria-label="faq.resposta_ca" />
             </div>
 
 
@@ -141,8 +155,10 @@
 
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key >= 0 && not empty __entry.value.searchBy }">
-      <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+      <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
+        <label for="${__entry.value.codeName}" style="display: inline;">
         <span class="add-on"><fmt:message key="${__entry.value.codeName}" />:</span>
+        </label>
         <fmt:message key="genapp.form.searchby" var="cercaperAF" >
           <fmt:param>
             <fmt:message key="${__entry.value.codeName}" />
@@ -151,12 +167,12 @@
         <c:choose>
           <c:when test="${gen:isFieldSearchInRange(__entry.value.searchBy)}">
             <span class="add-on"><fmt:message key="genapp.from" /></span>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}"  id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
             <span class="add-on"><fmt:message key="genapp.to" /></span>
             <input id="${__entry.value.searchBy.fullName}Fins" name="${__entry.value.searchBy.fullName}Fins" class="input-small input-medium search-query" type="text" value="${__entry.value.searchByValueFins}"/>
           </c:when>
           <c:otherwise>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}" id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
           </c:otherwise>
         </c:choose>
       </div>

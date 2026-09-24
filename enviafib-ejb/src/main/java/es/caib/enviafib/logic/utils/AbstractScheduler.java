@@ -1,16 +1,20 @@
 package es.caib.enviafib.logic.utils;
 
+import java.util.Locale;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.ScheduleExpression;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerService;
 
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
-
-import es.caib.enviafib.commons.utils.Configuracio;
-
-import java.util.Locale;
 
 /**
  * Clase abstracta base para los schedulers periódicos de la aplicación.

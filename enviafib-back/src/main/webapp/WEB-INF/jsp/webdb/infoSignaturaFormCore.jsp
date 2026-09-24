@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.SIGNOPERATION)}">
         <tr id="infoSignatura_signOperation_rowid">
           <td id="infoSignatura_signOperation_columnlabelid">
-            <label>
+            <label for="infoSignatura.signOperation">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.SIGNOPERATION])?'infoSignatura.signOperation':__theForm.labels[InfoSignaturaFields.SIGNOPERATION]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.SIGNOPERATION]}">
@@ -16,11 +16,11 @@
           <form:errors path="infoSignatura.signOperation" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNOPERATION)}" >
           <form:hidden path="infoSignatura.signOperation"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signOperation,__theForm.listOfValuesForSignOperation)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signOperation,__theForm.listOfValuesForSignOperation)}" aria-label="infoSignatura.signOperation" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNOPERATION)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="infoSignatura_signOperation"  onchange="if(typeof onChangeSignOperation == 'function') {  onChangeSignOperation(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signOperation">
+          <form:select id="infoSignatura_signOperation"  onchange="if(typeof onChangeSignOperation == 'function') {  onChangeSignOperation(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signOperation"  aria-label="infoSignatura.signOperation" >
             <c:forEach items="${__theForm.listOfValuesForSignOperation}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -36,7 +36,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.SIGNTYPE)}">
         <tr id="infoSignatura_signType_rowid">
           <td id="infoSignatura_signType_columnlabelid">
-            <label>
+            <label for="infoSignatura.signType">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.SIGNTYPE])?'infoSignatura.signType':__theForm.labels[InfoSignaturaFields.SIGNTYPE]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.SIGNTYPE]}">
@@ -54,7 +54,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.SIGNALGORITHM)}">
         <tr id="infoSignatura_signAlgorithm_rowid">
           <td id="infoSignatura_signAlgorithm_columnlabelid">
-            <label>
+            <label for="infoSignatura.signAlgorithm">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.SIGNALGORITHM])?'infoSignatura.signAlgorithm':__theForm.labels[InfoSignaturaFields.SIGNALGORITHM]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.SIGNALGORITHM]}">
@@ -72,7 +72,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.SIGNMODE)}">
         <tr id="infoSignatura_signMode_rowid">
           <td id="infoSignatura_signMode_columnlabelid">
-            <label>
+            <label for="infoSignatura.signMode">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.SIGNMODE])?'infoSignatura.signMode':__theForm.labels[InfoSignaturaFields.SIGNMODE]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.SIGNMODE]}">
@@ -83,11 +83,11 @@
           <form:errors path="infoSignatura.signMode" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNMODE)}" >
           <form:hidden path="infoSignatura.signMode"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signMode,__theForm.listOfValuesForSignMode)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signMode,__theForm.listOfValuesForSignMode)}" aria-label="infoSignatura.signMode" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNMODE)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="infoSignatura_signMode"  onchange="if(typeof onChangeSignMode == 'function') {  onChangeSignMode(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signMode">
+          <form:select id="infoSignatura_signMode"  onchange="if(typeof onChangeSignMode == 'function') {  onChangeSignMode(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signMode"  aria-label="infoSignatura.signMode" >
             <c:forEach items="${__theForm.listOfValuesForSignMode}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -112,7 +112,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.SIGNATURESTABLELOCATION)}">
         <tr id="infoSignatura_signaturesTableLocation_rowid">
           <td id="infoSignatura_signaturesTableLocation_columnlabelid">
-            <label>
+            <label for="infoSignatura.signaturesTableLocation">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.SIGNATURESTABLELOCATION])?'infoSignatura.signaturesTableLocation':__theForm.labels[InfoSignaturaFields.SIGNATURESTABLELOCATION]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.SIGNATURESTABLELOCATION]}">
@@ -123,11 +123,11 @@
           <form:errors path="infoSignatura.signaturesTableLocation" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNATURESTABLELOCATION)}" >
           <form:hidden path="infoSignatura.signaturesTableLocation"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signaturesTableLocation,__theForm.listOfValuesForSignaturesTableLocation)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.infoSignatura.signaturesTableLocation,__theForm.listOfValuesForSignaturesTableLocation)}" aria-label="infoSignatura.signaturesTableLocation" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,InfoSignaturaFields.SIGNATURESTABLELOCATION)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="infoSignatura_signaturesTableLocation"  onchange="if(typeof onChangeSignaturesTableLocation == 'function') {  onChangeSignaturesTableLocation(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signaturesTableLocation">
+          <form:select id="infoSignatura_signaturesTableLocation"  onchange="if(typeof onChangeSignaturesTableLocation == 'function') {  onChangeSignaturesTableLocation(this); };"  cssClass="form-control col-md-9-optional" path="infoSignatura.signaturesTableLocation"  aria-label="infoSignatura.signaturesTableLocation" >
             <c:forEach items="${__theForm.listOfValuesForSignaturesTableLocation}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -152,7 +152,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.TIMESTAMPINCLUDED)}">
         <tr id="infoSignatura_timestampIncluded_rowid">
           <td id="infoSignatura_timestampIncluded_columnlabelid">
-            <label>
+            <label for="infoSignatura.timestampIncluded">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.TIMESTAMPINCLUDED])?'infoSignatura.timestampIncluded':__theForm.labels[InfoSignaturaFields.TIMESTAMPINCLUDED]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.TIMESTAMPINCLUDED]}">
@@ -177,7 +177,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.POLICYINCLUDED)}">
         <tr id="infoSignatura_policyIncluded_rowid">
           <td id="infoSignatura_policyIncluded_columnlabelid">
-            <label>
+            <label for="infoSignatura.policyIncluded">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.POLICYINCLUDED])?'infoSignatura.policyIncluded':__theForm.labels[InfoSignaturaFields.POLICYINCLUDED]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.POLICYINCLUDED]}">
@@ -202,7 +202,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.ENITIPOFIRMA)}">
         <tr id="infoSignatura_eniTipoFirma_rowid">
           <td id="infoSignatura_eniTipoFirma_columnlabelid">
-            <label>
+            <label for="infoSignatura.eniTipoFirma">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.ENITIPOFIRMA])?'infoSignatura.eniTipoFirma':__theForm.labels[InfoSignaturaFields.ENITIPOFIRMA]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.ENITIPOFIRMA]}">
@@ -220,7 +220,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.ENIPERFILFIRMA)}">
         <tr id="infoSignatura_eniPerfilFirma_rowid">
           <td id="infoSignatura_eniPerfilFirma_columnlabelid">
-            <label>
+            <label for="infoSignatura.eniPerfilFirma">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.ENIPERFILFIRMA])?'infoSignatura.eniPerfilFirma':__theForm.labels[InfoSignaturaFields.ENIPERFILFIRMA]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.ENIPERFILFIRMA]}">
@@ -238,7 +238,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.ENIROLFIRMA)}">
         <tr id="infoSignatura_eniRolFirma_rowid">
           <td id="infoSignatura_eniRolFirma_columnlabelid">
-            <label>
+            <label for="infoSignatura.eniRolFirma">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.ENIROLFIRMA])?'infoSignatura.eniRolFirma':__theForm.labels[InfoSignaturaFields.ENIROLFIRMA]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.ENIROLFIRMA]}">
@@ -256,7 +256,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.ENISIGNERNAME)}">
         <tr id="infoSignatura_eniSignerName_rowid">
           <td id="infoSignatura_eniSignerName_columnlabelid">
-            <label>
+            <label for="infoSignatura.eniSignerName">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.ENISIGNERNAME])?'infoSignatura.eniSignerName':__theForm.labels[InfoSignaturaFields.ENISIGNERNAME]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.ENISIGNERNAME]}">
@@ -274,7 +274,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.ENISIGNERADMINISTRATIONID)}">
         <tr id="infoSignatura_eniSignerAdministrationId_rowid">
           <td id="infoSignatura_eniSignerAdministrationId_columnlabelid">
-            <label>
+            <label for="infoSignatura.eniSignerAdministrationId">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.ENISIGNERADMINISTRATIONID])?'infoSignatura.eniSignerAdministrationId':__theForm.labels[InfoSignaturaFields.ENISIGNERADMINISTRATIONID]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.ENISIGNERADMINISTRATIONID]}">
@@ -292,7 +292,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.ENISIGNLEVEL)}">
         <tr id="infoSignatura_eniSignLevel_rowid">
           <td id="infoSignatura_eniSignLevel_columnlabelid">
-            <label>
+            <label for="infoSignatura.eniSignLevel">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.ENISIGNLEVEL])?'infoSignatura.eniSignLevel':__theForm.labels[InfoSignaturaFields.ENISIGNLEVEL]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.ENISIGNLEVEL]}">
@@ -310,7 +310,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER)}">
         <tr id="infoSignatura_checkAdministrationIdOfSigner_rowid">
           <td id="infoSignatura_checkAdministrationIdOfSigner_columnlabelid">
-            <label>
+            <label for="infoSignatura.checkAdministrationIdOfSigner">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER])?'infoSignatura.checkAdministrationIdOfSigner':__theForm.labels[InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.CHECKADMINISTRATIONIDOFSIGNER]}">
@@ -335,7 +335,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS)}">
         <tr id="infoSignatura_checkDocumentModifications_rowid">
           <td id="infoSignatura_checkDocumentModifications_columnlabelid">
-            <label>
+            <label for="infoSignatura.checkDocumentModifications">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS])?'infoSignatura.checkDocumentModifications':__theForm.labels[InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.CHECKDOCUMENTMODIFICATIONS]}">
@@ -360,7 +360,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoSignaturaFields.CHECKVALIDATIONSIGNATURE)}">
         <tr id="infoSignatura_checkValidationSignature_rowid">
           <td id="infoSignatura_checkValidationSignature_columnlabelid">
-            <label>
+            <label for="infoSignatura.checkValidationSignature">
               <fmt:message key="${(empty __theForm.labels[InfoSignaturaFields.CHECKVALIDATIONSIGNATURE])?'infoSignatura.checkValidationSignature':__theForm.labels[InfoSignaturaFields.CHECKVALIDATIONSIGNATURE]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoSignaturaFields.CHECKVALIDATIONSIGNATURE]}">

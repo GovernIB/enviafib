@@ -262,6 +262,14 @@ public class PeticioValidator<I extends Peticio>
       }
     }
 
+    if (__vr.getFieldErrorCount(FLUXDEFIRMES) == 0) {
+      java.lang.String __fluxdefirmes = __target__.getFluxDeFirmes();
+      if (__fluxdefirmes!= null && __fluxdefirmes.length() > 255) {
+        __vr.rejectValue(FLUXDEFIRMES, "genapp.validation.sizeexceeds",
+            new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(FLUXDEFIRMES)), new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(255)));
+      }
+    }
+
     if (__isNou__) { // Creació
       // ================ CREATION
       // Fitxers 

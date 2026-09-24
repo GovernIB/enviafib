@@ -73,8 +73,8 @@ public class EntitatJPA implements Entitat {
     @Column(name="motiudelegacioid",length = 19)
     java.lang.Long motiudelegacioID;
 
-    @org.hibernate.annotations.ColumnDefault("0")
     @Column(name="segelldetempsviaweb",nullable = false,length = 10)
+    @org.hibernate.annotations.ColumnDefault("0")
     int segelldetempsviaweb = 0;
 
     @Column(name="checkcanviatdocfirmat",nullable = false,length = 1)

@@ -18,8 +18,8 @@ import javax.persistence.Id;
 @Entity(name = "UsuariEntitatJPA")
 @Table(name = "efi_usuarientitat" , indexes = { 
         @Index(name="efi_usuarientitat_pk_i", columnList = "usuarientitatid"),
-        @Index(name="efi_usuarientitat_usuari_fk_i", columnList = "usuariid"),
-        @Index(name="efi_usuarientitat_entitat_fk_i", columnList = "entitatid")})
+        @Index(name="efi_usrent_usuariid_fk_i", columnList = "usuariid"),
+        @Index(name="efi_usrent_entitatid_fk_i", columnList = "entitatid")})
 @SequenceGenerator(name="USUARIENTITAT_SEQ", sequenceName="efi_usuarientitat_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class UsuariEntitatJPA implements UsuariEntitat {

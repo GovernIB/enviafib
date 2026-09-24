@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.NOM)}">
         <tr id="menu_nom_rowid">
           <td id="menu_nom_columnlabelid">
-            <label>
+            <label for="menu.nom">
               <fmt:message key="${(empty __theForm.labels[MenuFields.NOM])?'menu.nom':__theForm.labels[MenuFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.NOM]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.DESCRIPCIO)}">
         <tr id="menu_descripcio_rowid">
           <td id="menu_descripcio_columnlabelid">
-            <label>
+            <label for="menu.descripcio">
               <fmt:message key="${(empty __theForm.labels[MenuFields.DESCRIPCIO])?'menu.descripcio':__theForm.labels[MenuFields.DESCRIPCIO]}" />
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.DESCRIPCIO]}">
@@ -39,7 +39,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_descripcio" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_descripcio" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('menu.descripcio'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('menu.descripcio'); ta.wrap='soft';">Soft Wrap</a>
@@ -62,7 +62,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.TITOLMENUID)}">
         <tr id="menu_titolMenuID_rowid">
           <td id="menu_titolMenuID_columnlabelid">
-            <label>
+            <label for="menu.titolMenuID">
               <fmt:message key="${(empty __theForm.labels[MenuFields.TITOLMENUID])?'menu.titolMenuID':__theForm.labels[MenuFields.TITOLMENUID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.TITOLMENUID]}">
@@ -75,16 +75,16 @@
          <ul class="nav nav-tabs" style="margin: 0 15px -1px;">
              <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
             <li class="nav-item ">
-                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#${counter.index}_tab_titolMenu_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
+                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#tab_${counter.index}_titolMenu_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
             </li>
           </c:forEach>
            
          </ul>
          <div class="tab-content well well-white" style="padding:8px;margin:0px;">
            <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
-           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="${counter.index}_tab_titolMenu_${idioma.idiomaID}">
+           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="tab_${counter.index}_titolMenu_${idioma.idiomaID}">
                <form:errors path="menu.titolMenu.traduccions['${idioma.idiomaID}'].valor" cssClass="errorField alert alert-danger"/>
-               <form:input path="menu.titolMenu.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,MenuFields.TITOLMENUID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,MenuFields.TITOLMENUID)}" maxlength="4000" />
+               <form:input aria-label="menu.titolMenuID"  path="menu.titolMenu.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,MenuFields.TITOLMENUID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,MenuFields.TITOLMENUID)}" maxlength="4000" />
            </div>
            </c:forEach>
          </div>
@@ -97,7 +97,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.AJUDAMENUID)}">
         <tr id="menu_ajudaMenuID_rowid">
           <td id="menu_ajudaMenuID_columnlabelid">
-            <label>
+            <label for="menu.ajudaMenuID">
               <fmt:message key="${(empty __theForm.labels[MenuFields.AJUDAMENUID])?'menu.ajudaMenuID':__theForm.labels[MenuFields.AJUDAMENUID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.AJUDAMENUID]}">
@@ -110,16 +110,16 @@
          <ul class="nav nav-tabs" style="margin: 0 15px -1px;">
              <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
             <li class="nav-item ">
-                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#${counter.index}_tab_ajudaMenu_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
+                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#tab_${counter.index}_ajudaMenu_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
             </li>
           </c:forEach>
            
          </ul>
          <div class="tab-content well well-white" style="padding:8px;margin:0px;">
            <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
-           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="${counter.index}_tab_ajudaMenu_${idioma.idiomaID}">
+           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="tab_${counter.index}_ajudaMenu_${idioma.idiomaID}">
                <form:errors path="menu.ajudaMenu.traduccions['${idioma.idiomaID}'].valor" cssClass="errorField alert alert-danger"/>
-               <form:input path="menu.ajudaMenu.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,MenuFields.AJUDAMENUID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,MenuFields.AJUDAMENUID)}" maxlength="4000" />
+               <form:input aria-label="menu.ajudaMenuID"  path="menu.ajudaMenu.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,MenuFields.AJUDAMENUID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,MenuFields.AJUDAMENUID)}" maxlength="4000" />
            </div>
            </c:forEach>
          </div>
@@ -132,7 +132,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.ORDRE)}">
         <tr id="menu_ordre_rowid">
           <td id="menu_ordre_columnlabelid">
-            <label>
+            <label for="menu.ordre">
               <fmt:message key="${(empty __theForm.labels[MenuFields.ORDRE])?'menu.ordre':__theForm.labels[MenuFields.ORDRE]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.ORDRE]}">
@@ -150,7 +150,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.TIPUS)}">
         <tr id="menu_tipus_rowid">
           <td id="menu_tipus_columnlabelid">
-            <label>
+            <label for="menu.tipus">
               <fmt:message key="${(empty __theForm.labels[MenuFields.TIPUS])?'menu.tipus':__theForm.labels[MenuFields.TIPUS]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.TIPUS]}">
@@ -161,11 +161,11 @@
           <form:errors path="menu.tipus" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,MenuFields.TIPUS)}" >
           <form:hidden path="menu.tipus"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.menu.tipus,__theForm.listOfValuesForTipus)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.menu.tipus,__theForm.listOfValuesForTipus)}" aria-label="menu.tipus" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,MenuFields.TIPUS)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="menu_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="menu.tipus">
+          <form:select id="menu_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="menu.tipus"  aria-label="menu.tipus" >
             <c:forEach items="${__theForm.listOfValuesForTipus}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -181,7 +181,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.GRUPID)}">
         <tr id="menu_grupID_rowid">
           <td id="menu_grupID_columnlabelid">
-            <label>
+            <label for="menu.grupID">
               <fmt:message key="${(empty __theForm.labels[MenuFields.GRUPID])?'menu.grupID':__theForm.labels[MenuFields.GRUPID]}" />
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.GRUPID]}">
@@ -192,11 +192,11 @@
           <form:errors path="menu.grupID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,MenuFields.GRUPID)}" >
           <form:hidden path="menu.grupID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.menu.grupID,__theForm.listOfGrupForGrupID)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.menu.grupID,__theForm.listOfGrupForGrupID)}" aria-label="menu.grupID" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,MenuFields.GRUPID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="menu_grupID"  onchange="if(typeof onChangeGrupID == 'function') {  onChangeGrupID(this); };"  cssClass="form-control col-md-9-optional" path="menu.grupID">
+          <form:select id="menu_grupID"  onchange="if(typeof onChangeGrupID == 'function') {  onChangeGrupID(this); };"  cssClass="form-control col-md-9-optional" path="menu.grupID"  aria-label="menu.grupID" >
             <c:forEach items="${__theForm.listOfGrupForGrupID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -221,7 +221,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.PARAMETRECOMBO)}">
         <tr id="menu_parametreCombo_rowid">
           <td id="menu_parametreCombo_columnlabelid">
-            <label>
+            <label for="menu.parametreCombo">
               <fmt:message key="${(empty __theForm.labels[MenuFields.PARAMETRECOMBO])?'menu.parametreCombo':__theForm.labels[MenuFields.PARAMETRECOMBO]}" />
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.PARAMETRECOMBO]}">
@@ -232,11 +232,11 @@
           <form:errors path="menu.parametreCombo" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,MenuFields.PARAMETRECOMBO)}" >
           <form:hidden path="menu.parametreCombo"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.menu.parametreCombo,__theForm.listOfValuesForParametreCombo)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.menu.parametreCombo,__theForm.listOfValuesForParametreCombo)}" aria-label="menu.parametreCombo" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,MenuFields.PARAMETRECOMBO)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="menu_parametreCombo"  onchange="if(typeof onChangeParametreCombo == 'function') {  onChangeParametreCombo(this); };"  cssClass="form-control col-md-9-optional" path="menu.parametreCombo">
+          <form:select id="menu_parametreCombo"  onchange="if(typeof onChangeParametreCombo == 'function') {  onChangeParametreCombo(this); };"  cssClass="form-control col-md-9-optional" path="menu.parametreCombo"  aria-label="menu.parametreCombo" >
             <c:forEach items="${__theForm.listOfValuesForParametreCombo}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -261,7 +261,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.PARAMETRETEXT)}">
         <tr id="menu_parametreText_rowid">
           <td id="menu_parametreText_columnlabelid">
-            <label>
+            <label for="menu.parametreText">
               <fmt:message key="${(empty __theForm.labels[MenuFields.PARAMETRETEXT])?'menu.parametreText':__theForm.labels[MenuFields.PARAMETRETEXT]}" />
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.PARAMETRETEXT]}">
@@ -277,7 +277,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_parametreText" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_parametreText" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('menu.parametreText'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('menu.parametreText'); ta.wrap='soft';">Soft Wrap</a>
@@ -300,7 +300,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,MenuFields.ACTIU)}">
         <tr id="menu_actiu_rowid">
           <td id="menu_actiu_columnlabelid">
-            <label>
+            <label for="menu.actiu">
               <fmt:message key="${(empty __theForm.labels[MenuFields.ACTIU])?'menu.actiu':__theForm.labels[MenuFields.ACTIU]}" />
              </label>
               <c:if test="${not empty __theForm.help[MenuFields.ACTIU]}">
@@ -309,8 +309,8 @@
             </td>
           <td id="menu_actiu_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,MenuFields.ACTIU)}" >
-              <form:errors path="menu.actiu" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,MenuFields.ACTIU)? 'false' : 'true'}" path="menu.actiu" />
+              <form:errors  path="menu.actiu" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,MenuFields.ACTIU)? 'false' : 'true'}" path="menu.actiu"  aria-label="menu.actiu" />
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,MenuFields.ACTIU)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.menu.actiu}" />

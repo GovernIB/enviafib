@@ -2,7 +2,6 @@ package es.caib.enviafib.back.controller.user;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +25,6 @@ import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.Field;
 import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.web.HtmlUtils;
-
 import org.fundaciobit.genapp.common.web.form.AdditionalButton;
 import org.fundaciobit.genapp.common.web.form.AdditionalButtonStyle;
 import org.fundaciobit.genapp.common.web.form.Section;
@@ -749,7 +747,12 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
 		if (peticio.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_USUARI
 				|| peticio.getTipus() == Constants.TIPUS_PETICIO_PLANTILLAFLUX_ENTITAT) {
-			peticio.setReason(flowTemplateId);
+		    
+		    log.info("\n\nXYZ ZZZ ASSIGNANT flowTemplateId: " + flowTemplateId + " a la peticio " + peticio.getNom() + "\n\n");
+		    
+		    // ERROR GREU: No utilitzar camp REASON per altres coses #513
+		    
+			peticio.setFluxDeFirmes(flowTemplateId);
 		}
 
 		CommonsMultipartFile file = infoPet.getFitxerPeticio();

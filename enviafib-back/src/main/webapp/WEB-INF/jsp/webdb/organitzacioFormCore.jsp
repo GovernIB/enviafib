@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,OrganitzacioFields.CODICONSELLERIA)}">
         <tr id="organitzacio_codiConselleria_rowid">
           <td id="organitzacio_codiConselleria_columnlabelid">
-            <label>
+            <label for="organitzacio.codiConselleria">
               <fmt:message key="${(empty __theForm.labels[OrganitzacioFields.CODICONSELLERIA])?'organitzacio.codiConselleria':__theForm.labels[OrganitzacioFields.CODICONSELLERIA]}" />
              </label>
               <c:if test="${not empty __theForm.help[OrganitzacioFields.CODICONSELLERIA]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,OrganitzacioFields.CODIDIRECCIOGENERAL)}">
         <tr id="organitzacio_codiDireccioGeneral_rowid">
           <td id="organitzacio_codiDireccioGeneral_columnlabelid">
-            <label>
+            <label for="organitzacio.codiDireccioGeneral">
               <fmt:message key="${(empty __theForm.labels[OrganitzacioFields.CODIDIRECCIOGENERAL])?'organitzacio.codiDireccioGeneral':__theForm.labels[OrganitzacioFields.CODIDIRECCIOGENERAL]}" />
              </label>
               <c:if test="${not empty __theForm.help[OrganitzacioFields.CODIDIRECCIOGENERAL]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,OrganitzacioFields.TIPUS)}">
         <tr id="organitzacio_tipus_rowid">
           <td id="organitzacio_tipus_columnlabelid">
-            <label>
+            <label for="organitzacio.tipus">
               <fmt:message key="${(empty __theForm.labels[OrganitzacioFields.TIPUS])?'organitzacio.tipus':__theForm.labels[OrganitzacioFields.TIPUS]}" />
              </label>
               <c:if test="${not empty __theForm.help[OrganitzacioFields.TIPUS]}">
@@ -52,11 +52,11 @@
           <form:errors path="organitzacio.tipus" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,OrganitzacioFields.TIPUS)}" >
           <form:hidden path="organitzacio.tipus"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.organitzacio.tipus,__theForm.listOfValuesForTipus)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.organitzacio.tipus,__theForm.listOfValuesForTipus)}" aria-label="organitzacio.tipus" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,OrganitzacioFields.TIPUS)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="organitzacio_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="organitzacio.tipus">
+          <form:select id="organitzacio_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="organitzacio.tipus"  aria-label="organitzacio.tipus" >
             <c:forEach items="${__theForm.listOfValuesForTipus}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -81,7 +81,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,OrganitzacioFields.VALOR)}">
         <tr id="organitzacio_valor_rowid">
           <td id="organitzacio_valor_columnlabelid">
-            <label>
+            <label for="organitzacio.valor">
               <fmt:message key="${(empty __theForm.labels[OrganitzacioFields.VALOR])?'organitzacio.valor':__theForm.labels[OrganitzacioFields.VALOR]}" />
              </label>
               <c:if test="${not empty __theForm.help[OrganitzacioFields.VALOR]}">

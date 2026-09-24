@@ -1,20 +1,19 @@
 package es.caib.enviafib.logic.utils;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.query.Where;
 import org.fundaciobit.genapp.common.query.OrderBy;
+import org.fundaciobit.genapp.common.query.Where;
 
-import es.caib.enviafib.commons.utils.Configuracio;
 import es.caib.enviafib.model.entity.Peticio;
 import es.caib.enviafib.model.fields.PeticioFields;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Singleton
 @Startup
@@ -51,7 +50,6 @@ public class SchedulerEsborrarFitxersArxivats extends AbstractScheduler {
 
     @Override
     protected void executeScheduledTask(long startTime) throws Exception {
-        final String languageUI = DEFAULT_LANGUAGE;
 
         try {
             // Recollir totes les peticions arxivades

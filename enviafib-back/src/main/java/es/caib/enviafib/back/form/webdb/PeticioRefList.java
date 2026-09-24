@@ -22,22 +22,23 @@ import org.fundaciobit.genapp.common.web.controller.RefListBase;
  * 
  */
 @Component
-public class PeticioRefList extends RefListBase
-    implements PeticioFields {
+public class PeticioRefList extends RefListBase implements PeticioFields {
 
-  @EJB(mappedName = PeticioService.JNDI_NAME)
-  private PeticioService peticioEjb;
+    @EJB(mappedName = PeticioService.JNDI_NAME)
+    private PeticioService peticioEjb;
 
-  public PeticioRefList(PeticioRefList __clone) {
-    super(__clone);
-    this.peticioEjb = __clone.peticioEjb;
-  }
-  public PeticioRefList() {
-    setSelects(new Select<?>[] { PETICIOID.select });
-  }
-  public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
-    Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
-    List<StringKeyValue> list = peticioEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
+    public PeticioRefList(PeticioRefList __clone) {
+        super(__clone);
+        this.peticioEjb = __clone.peticioEjb;
+    }
+
+    public PeticioRefList() {
+        setSelects(new Select<?>[] { PETICIOID.select });
+    }
+
+    public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
+        Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
+        List<StringKeyValue> list = peticioEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
     return list;
-  }
+    }
 }

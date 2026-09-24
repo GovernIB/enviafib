@@ -107,6 +107,9 @@ public interface Peticio extends org.fundaciobit.genapp.common.IGenAppEntity {
 	public java.lang.Long getReintentsArxiu();
 	public void setReintentsArxiu(java.lang.Long _reintentsArxiu_);
 
+	public java.lang.String getFluxDeFirmes();
+	public void setFluxDeFirmes(java.lang.String _fluxDeFirmes_);
+
   // Fitxer
   public <F extends Fitxer> F getFitxer();
   // Fitxer

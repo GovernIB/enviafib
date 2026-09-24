@@ -50,8 +50,8 @@ public class UsuariJPA implements Usuari {
     @Column(name="email",nullable = false,length = 256)
     java.lang.String email;
 
-    @org.hibernate.annotations.ColumnDefault("'ca'")
     @Column(name="idiomaid",nullable = false,length = 5)
+    @org.hibernate.annotations.ColumnDefault("ca")
     java.lang.String idiomaID = "ca";
 
     @Column(name="entitatid",length = 50)

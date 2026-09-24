@@ -1,0 +1,89 @@
+<!-- @author: anadal (u80067) -->
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definir los paths de las órbitas -->
+  <defs>
+    <!-- Path base para todas las órbitas -->
+    <path id="orbitBase" d="M 15,50 a 35,15 0 1,0 70,0 a 35,15 0 1,0 -70,0"/>
+  </defs>
+
+  <!-- Núcleo con protones y neutrones rotando -->
+  <g>
+    <!-- Protón 1 -->
+    <circle cx="47" cy="50" r="4" fill="#e74c3c">
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        values="0 50 50;360 50 50" 
+        dur="3s" 
+        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="50;47;50;53;50" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Neutrón 1 -->
+    <circle cx="53" cy="50" r="4" fill="#95a5a6">
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        values="0 50 50;360 50 50" 
+        dur="3s" 
+        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="50;53;50;47;50" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Protón 2 -->
+    <circle cx="50" cy="47" r="4" fill="#e74c3c">
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        values="90 50 50;450 50 50" 
+        dur="3s" 
+        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="47;50;53;50;47" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Neutrón 2 -->
+    <circle cx="50" cy="53" r="4" fill="#95a5a6">
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        values="90 50 50;450 50 50" 
+        dur="3s" 
+        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="53;50;47;50;53" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Órbita 1 visible (horizontal) -->
+  <ellipse cx="50" cy="50" rx="35" ry="15" fill="none" stroke="#4285f4" stroke-width="1" opacity="0.3"/>
+
+  <!-- Electrón 1 viajando sobre órbita 1 -->
+  <circle r="4" fill="#ea4335">
+    <animateMotion dur="3s" repeatCount="indefinite">
+      <mpath href="#orbitBase"/>
+    </animateMotion>
+  </circle>
+
+  <!-- Órbita 2 visible (rotada 60°) -->
+  <ellipse cx="50" cy="50" rx="35" ry="15" fill="none" stroke="#34a853" stroke-width="1" opacity="0.3" transform="rotate(60 50 50)"/>
+
+  <!-- Electrón 2 viajando sobre órbita 2 -->
+  <g transform="rotate(60 50 50)">
+    <circle r="4" fill="#fbbc04">
+      <animateMotion dur="2s" repeatCount="indefinite">
+        <mpath href="#orbitBase"/>
+      </animateMotion>
+    </circle>
+  </g>
+
+  <!-- Órbita 3 visible (rotada 120°) -->
+  <ellipse cx="50" cy="50" rx="35" ry="15" fill="none" stroke="#ea4335" stroke-width="1" opacity="0.3" transform="rotate(120 50 50)"/>
+
+  <!-- Electrón 3 viajando sobre órbita 3 -->
+  <g transform="rotate(120 50 50)">
+    <circle r="4" fill="#34a853">
+      <animateMotion dur="2.5s" repeatCount="indefinite">
+        <mpath href="#orbitBase"/>
+      </animateMotion>
+    </circle>
+  </g>
+</svg>

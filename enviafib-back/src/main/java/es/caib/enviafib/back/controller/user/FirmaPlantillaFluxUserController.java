@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.ApiFlowTemplateSimple;
-import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFilterGetAllByFilter;
-import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplate;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateList;
-import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleFlowTemplateRequest;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleKeyValue;
 import org.fundaciobit.apisib.apiflowtemplatesimple.v1.beans.FlowTemplateSimpleViewFlowTemplateRequest;
 import org.fundaciobit.apisib.core.exceptions.AbstractApisIBException;
@@ -74,8 +71,15 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
         }
 
         if (__isView) {
-        	String plantillaFluxID = peticioForm.getPeticio().getReason();
+            // ERROR GREU: No utilitzar camp REASON per altres coses #513
+        	String plantillaFluxID = peticioForm.getPeticio().getFluxDeFirmes();
+        	
+        	log.info("\n\n XYZ ZZZ  LLEGINT Plantilla Flux ID : " + plantillaFluxID + "\n\n");
+        	
         	String nomPlantilla = getNomPlantillaFlux(plantillaFluxID);
+        	
+        	
+        	log.info("\n\n XYZ ZZZ  Nom Plantilla Flux => ]" + nomPlantilla + "[\n\n");
         	
 			if (nomPlantilla != null) {
 				peticioForm.getPeticio().setReason(nomPlantilla);

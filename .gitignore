@@ -234,3 +234,8 @@ installCerts.bat
 /enviafib-pluginsib/*.versionsBackup
 /*.versionsBackup
 /scripts/*.versionsBackup
+/deps.txt
+/enviafib-ejb/pro.csv
+/enviafib-ejb/pro.sql
+/enviafib-ejb/se.csv
+/enviafib-ejb/se.sql

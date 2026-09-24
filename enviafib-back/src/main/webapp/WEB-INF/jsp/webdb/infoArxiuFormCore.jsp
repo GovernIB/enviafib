@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.ORIGINALFILEURL)}">
         <tr id="infoArxiu_originalFileUrl_rowid">
           <td id="infoArxiu_originalFileUrl_columnlabelid">
-            <label>
+            <label for="infoArxiu.originalFileUrl">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.ORIGINALFILEURL])?'infoArxiu.originalFileUrl':__theForm.labels[InfoArxiuFields.ORIGINALFILEURL]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.ORIGINALFILEURL]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.CSV)}">
         <tr id="infoArxiu_csv_rowid">
           <td id="infoArxiu_csv_columnlabelid">
-            <label>
+            <label for="infoArxiu.csv">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.CSV])?'infoArxiu.csv':__theForm.labels[InfoArxiuFields.CSV]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.CSV]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.CSVGENERATIONDEFINITION)}">
         <tr id="infoArxiu_csvGenerationDefinition_rowid">
           <td id="infoArxiu_csvGenerationDefinition_columnlabelid">
-            <label>
+            <label for="infoArxiu.csvGenerationDefinition">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.CSVGENERATIONDEFINITION])?'infoArxiu.csvGenerationDefinition':__theForm.labels[InfoArxiuFields.CSVGENERATIONDEFINITION]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.CSVGENERATIONDEFINITION]}">
@@ -59,7 +59,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.CSVVALIDATIONWEB)}">
         <tr id="infoArxiu_csvValidationWeb_rowid">
           <td id="infoArxiu_csvValidationWeb_columnlabelid">
-            <label>
+            <label for="infoArxiu.csvValidationWeb">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.CSVVALIDATIONWEB])?'infoArxiu.csvValidationWeb':__theForm.labels[InfoArxiuFields.CSVVALIDATIONWEB]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.CSVVALIDATIONWEB]}">
@@ -77,7 +77,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.ARXIUEXPEDIENTID)}">
         <tr id="infoArxiu_arxiuExpedientID_rowid">
           <td id="infoArxiu_arxiuExpedientID_columnlabelid">
-            <label>
+            <label for="infoArxiu.arxiuExpedientID">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.ARXIUEXPEDIENTID])?'infoArxiu.arxiuExpedientID':__theForm.labels[InfoArxiuFields.ARXIUEXPEDIENTID]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.ARXIUEXPEDIENTID]}">
@@ -95,7 +95,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.ARXIUDOCUMENTID)}">
         <tr id="infoArxiu_arxiuDocumentID_rowid">
           <td id="infoArxiu_arxiuDocumentID_columnlabelid">
-            <label>
+            <label for="infoArxiu.arxiuDocumentID">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.ARXIUDOCUMENTID])?'infoArxiu.arxiuDocumentID':__theForm.labels[InfoArxiuFields.ARXIUDOCUMENTID]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.ARXIUDOCUMENTID]}">
@@ -113,7 +113,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.PRINTABLEURL)}">
         <tr id="infoArxiu_printableUrl_rowid">
           <td id="infoArxiu_printableUrl_columnlabelid">
-            <label>
+            <label for="infoArxiu.printableUrl">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.PRINTABLEURL])?'infoArxiu.printableUrl':__theForm.labels[InfoArxiuFields.PRINTABLEURL]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.PRINTABLEURL]}">
@@ -131,7 +131,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.ENIFILEURL)}">
         <tr id="infoArxiu_eniFileUrl_rowid">
           <td id="infoArxiu_eniFileUrl_columnlabelid">
-            <label>
+            <label for="infoArxiu.eniFileUrl">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.ENIFILEURL])?'infoArxiu.eniFileUrl':__theForm.labels[InfoArxiuFields.ENIFILEURL]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.ENIFILEURL]}">
@@ -149,7 +149,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,InfoArxiuFields.VALIDATIONFILEURL)}">
         <tr id="infoArxiu_validationFileUrl_rowid">
           <td id="infoArxiu_validationFileUrl_columnlabelid">
-            <label>
+            <label for="infoArxiu.validationFileUrl">
               <fmt:message key="${(empty __theForm.labels[InfoArxiuFields.VALIDATIONFILEURL])?'infoArxiu.validationFileUrl':__theForm.labels[InfoArxiuFields.VALIDATIONFILEURL]}" />
              </label>
               <c:if test="${not empty __theForm.help[InfoArxiuFields.VALIDATIONFILEURL]}">

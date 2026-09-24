@@ -22,8 +22,8 @@
      <c:url var="thelink" value=""/>
     </c:if>
     <a class="btn <c:out value="${button.style}" />" 
-       href="${thehref}" onclick="${thelink}" style="${(empty button.style)? '' : 'color: white;'}"  >
-       <i class="${button.icon}"></i><fmt:message key="${button.codeText}"/>
+       href="${thehref}" onclick="${thelink}">
+       <i class="${button.icon}"></i>&nbsp;<fmt:message key="${button.codeText}"/>
     </a>
     </c:if>
     </c:forEach>

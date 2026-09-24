@@ -8,9 +8,13 @@
       </fmt:message>
   </c:if>
   <c:if test="${empty __theFilterForm.titleCode}">
-    <fmt:message key="genapp.listtitle">
-      <fmt:param value="${entitynameplural}"/>
-    </fmt:message>
+      <c:set var="keyTitle" value="genapp.listtitle" />
+      <c:if test="${fn:startsWith(fn:toLowerCase(entitynameplural), 'a') or fn:startsWith(fn:toLowerCase(entitynameplural), 'e') or fn:startsWith(fn:toLowerCase(entitynameplural), 'i') or fn:startsWith(fn:toLowerCase(entitynameplural), 'o') or fn:startsWith(fn:toLowerCase(entitynameplural), 'u') or fn:startsWith(fn:toLowerCase(entitynameplural), 'h')}">
+        <c:set var="keyTitle" value="genapp.listtitle2" />
+      </c:if>
+      <fmt:message key="${keyTitle}">
+          <fmt:param value="${entitynameplural}"/>
+      </fmt:message>
   </c:if>
   </label>
 
@@ -18,7 +22,7 @@
   <c:if test="${fn:length(groupby_items) > 0}">
       <c:set var="displayGroupBut" value="${__theFilterForm.visibleGroupBy?'display:none;':''}" />
       <a id="GroupButton" style="${displayGroupBut}" title="<fmt:message key="genapp.form.groupby"/>" onclick="document.getElementById('GroupDiv').style.display = 'inherit'; document.getElementById('GroupButton').style.display = 'none';" class="btn btn-sm btn-secondary" role="button" data-toggle="modal">
-         <img src="<c:url value="/img/treeicon.png"/>"/>
+         <img alt="Tree" src="<c:url value="/img/treeicon.png"/>"/>
       </a>
   </c:if>
       <%-- AGRUPAR PER BOTO - FINAL  --%>

@@ -232,6 +232,11 @@
           ${peticio.reintentsArxiu}
           </td>
         </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PeticioFields.FLUXDEFIRMES)}">
+          <td>
+          ${peticio.fluxDeFirmes}
+          </td>
+        </c:if>
 
 
         <!--  /** Additional Fields */  -->

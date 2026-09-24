@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.USERNAME)}">
         <tr id="usuari_username_rowid">
           <td id="usuari_username_columnlabelid">
-            <label>
+            <label for="usuari.username">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.USERNAME])?'usuari.username':__theForm.labels[UsuariFields.USERNAME]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.USERNAME]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.NOM)}">
         <tr id="usuari_nom_rowid">
           <td id="usuari_nom_columnlabelid">
-            <label>
+            <label for="usuari.nom">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.NOM])?'usuari.nom':__theForm.labels[UsuariFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.NOM]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.LLINATGE1)}">
         <tr id="usuari_llinatge1_rowid">
           <td id="usuari_llinatge1_columnlabelid">
-            <label>
+            <label for="usuari.llinatge1">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.LLINATGE1])?'usuari.llinatge1':__theForm.labels[UsuariFields.LLINATGE1]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.LLINATGE1]}">
@@ -59,7 +59,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.LLINATGE2)}">
         <tr id="usuari_llinatge2_rowid">
           <td id="usuari_llinatge2_columnlabelid">
-            <label>
+            <label for="usuari.llinatge2">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.LLINATGE2])?'usuari.llinatge2':__theForm.labels[UsuariFields.LLINATGE2]}" />
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.LLINATGE2]}">
@@ -77,7 +77,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.NIF)}">
         <tr id="usuari_nif_rowid">
           <td id="usuari_nif_columnlabelid">
-            <label>
+            <label for="usuari.nif">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.NIF])?'usuari.nif':__theForm.labels[UsuariFields.NIF]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.NIF]}">
@@ -95,7 +95,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.EMAIL)}">
         <tr id="usuari_email_rowid">
           <td id="usuari_email_columnlabelid">
-            <label>
+            <label for="usuari.email">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.EMAIL])?'usuari.email':__theForm.labels[UsuariFields.EMAIL]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.EMAIL]}">
@@ -113,7 +113,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.IDIOMAID)}">
         <tr id="usuari_idiomaID_rowid">
           <td id="usuari_idiomaID_columnlabelid">
-            <label>
+            <label for="usuari.idiomaID">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.IDIOMAID])?'usuari.idiomaID':__theForm.labels[UsuariFields.IDIOMAID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.IDIOMAID]}">
@@ -124,11 +124,11 @@
           <form:errors path="usuari.idiomaID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariFields.IDIOMAID)}" >
           <form:hidden path="usuari.idiomaID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuari.idiomaID,__theForm.listOfIdiomaForIdiomaID)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuari.idiomaID,__theForm.listOfIdiomaForIdiomaID)}" aria-label="usuari.idiomaID" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariFields.IDIOMAID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="usuari_idiomaID"  onchange="if(typeof onChangeIdiomaID == 'function') {  onChangeIdiomaID(this); };"  cssClass="form-control col-md-9-optional" path="usuari.idiomaID">
+          <form:select id="usuari_idiomaID"  onchange="if(typeof onChangeIdiomaID == 'function') {  onChangeIdiomaID(this); };"  cssClass="form-control col-md-9-optional" path="usuari.idiomaID"  aria-label="usuari.idiomaID" >
             <c:forEach items="${__theForm.listOfIdiomaForIdiomaID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -144,7 +144,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariFields.ENTITATID)}">
         <tr id="usuari_entitatID_rowid">
           <td id="usuari_entitatID_columnlabelid">
-            <label>
+            <label for="usuari.entitatID">
               <fmt:message key="${(empty __theForm.labels[UsuariFields.ENTITATID])?'usuari.entitatID':__theForm.labels[UsuariFields.ENTITATID]}" />
              </label>
               <c:if test="${not empty __theForm.help[UsuariFields.ENTITATID]}">
@@ -155,11 +155,11 @@
           <form:errors path="usuari.entitatID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariFields.ENTITATID)}" >
           <form:hidden path="usuari.entitatID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuari.entitatID,__theForm.listOfEntitatForEntitatID)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuari.entitatID,__theForm.listOfEntitatForEntitatID)}" aria-label="usuari.entitatID" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariFields.ENTITATID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="usuari_entitatID"  onchange="if(typeof onChangeEntitatID == 'function') {  onChangeEntitatID(this); };"  cssClass="form-control col-md-9-optional" path="usuari.entitatID">
+          <form:select id="usuari_entitatID"  onchange="if(typeof onChangeEntitatID == 'function') {  onChangeEntitatID(this); };"  cssClass="form-control col-md-9-optional" path="usuari.entitatID"  aria-label="usuari.entitatID" >
             <c:forEach items="${__theForm.listOfEntitatForEntitatID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">

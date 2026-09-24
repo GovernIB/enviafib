@@ -22,22 +22,23 @@ import org.fundaciobit.genapp.common.web.controller.RefListBase;
  * 
  */
 @Component
-public class GrupRefList extends RefListBase
-    implements GrupFields {
+public class GrupRefList extends RefListBase implements GrupFields {
 
-  @EJB(mappedName = GrupService.JNDI_NAME)
-  private GrupService grupEjb;
+    @EJB(mappedName = GrupService.JNDI_NAME)
+    private GrupService grupEjb;
 
-  public GrupRefList(GrupRefList __clone) {
-    super(__clone);
-    this.grupEjb = __clone.grupEjb;
-  }
-  public GrupRefList() {
-    setSelects(new Select<?>[] { NOM.select });
-  }
-  public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
-    Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
-    List<StringKeyValue> list = grupEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
+    public GrupRefList(GrupRefList __clone) {
+        super(__clone);
+        this.grupEjb = __clone.grupEjb;
+    }
+
+    public GrupRefList() {
+        setSelects(new Select<?>[] { NOM.select });
+    }
+
+    public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
+        Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
+        List<StringKeyValue> list = grupEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
     return list;
-  }
+    }
 }

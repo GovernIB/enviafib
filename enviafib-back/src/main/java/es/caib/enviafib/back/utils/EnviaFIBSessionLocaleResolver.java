@@ -33,7 +33,7 @@ public class EnviaFIBSessionLocaleResolver extends SessionLocaleResolver {
 	@Override
 	protected Locale determineDefaultLocale(HttpServletRequest request) {
 	    
-	    log.info("\n XXXXX Entra a determineDefaultLocale \n"); 
+	    //log.info("\n XXXXX Entra a determineDefaultLocale \n"); 
 
 		String idioma;
 		try {
@@ -41,18 +41,18 @@ public class EnviaFIBSessionLocaleResolver extends SessionLocaleResolver {
 		} catch (Throwable th) {
 			idioma = null;
 		}
-		log.info("\n XXXXX Entra a determineDefaultLocale Idioma LoginINfo " + idioma + " \n");
+		//log.info("\n XXXXX Entra a determineDefaultLocale Idioma LoginINfo " + idioma + " \n");
 
 		try {
 
 			if (idioma == null) {
                idioma = es.caib.enviafib.commons.utils.Configuracio.getDefaultLanguage();
 			}
-			log.info("\n XXXXX Entra a determineDefaultLocale Idioma post Configuracio.getDefaultLanguage() " + idioma + " \n");
+			//log.info("\n XXXXX Entra a determineDefaultLocale Idioma post Configuracio.getDefaultLanguage() " + idioma + " \n");
 			
 			idioma = checkLanguage(idiomaEjb, idioma);
 			
-			log.info("\n XXXXX Entra a determineDefaultLocale Idioma post checkLanguage() " + idioma + " \n");
+			//log.info("\n XXXXX Entra a determineDefaultLocale Idioma post checkLanguage() " + idioma + " \n");
 
 			Locale loc = new Locale(idioma);
 			LocaleContextHolder.setLocale(loc);

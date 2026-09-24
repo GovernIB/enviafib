@@ -1,0 +1,30 @@
+# git config --global core.autocrlf false
+# git config --global core.eol lf
+# git add --renormalize .
+
+# Per defecte, Git decideix automàticament
+* text=auto
+
+# Forçar LF per als fitxers de codi font i de configuració
+*.java   text eol=lf
+*.groovy text eol=lf
+*.xml    text eol=lf
+*.json   text eol=lf
+*.properties text eol=lf
+*.md     text eol=lf
+*.txt    text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.sh     text eol=lf
+
+# Fitxers binaris (no tocar mai)
+*.pdf    binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.jar    binary
+*.war    binary
+*.zip    binary
+*.class  binary
+*.bat    text eol=crlf

@@ -47,6 +47,7 @@ public interface PeticioFields extends java.io.Serializable {
 	 public static final LongField INFOARXIUID = new LongField(_TABLE_MODEL, "infoArxiuID", "infoarxiuid");
 	 public static final StringField REVISOR = new StringField(_TABLE_MODEL, "revisor", "revisor");
 	 public static final LongField REINTENTSARXIU = new LongField(_TABLE_MODEL, "reintentsArxiu", "reintentsarxiu");
+	 public static final StringField FLUXDEFIRMES = new StringField(_TABLE_MODEL, "fluxDeFirmes", "fluxdefirmes");
 
 
   public static final Field<?>[] ALL_PETICIO_FIELDS = {
@@ -84,7 +85,8 @@ public interface PeticioFields extends java.io.Serializable {
     ARXIUREQPARAMORIGEN,
     INFOARXIUID,
     REVISOR,
-    REINTENTSARXIU
+    REINTENTSARXIU,
+    FLUXDEFIRMES
   };
 
 

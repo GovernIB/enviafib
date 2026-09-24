@@ -27,8 +27,10 @@
       
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key < 0 && not empty __entry.value.searchBy }">
-      <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+      <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
+        <label for="${__entry.value.codeName}" style="display: inline;">
         <span class="add-on"><fmt:message key="${__entry.value.codeName}" />:</span>
+        </label>
         <fmt:message key="genapp.form.searchby" var="cercaperAF" >
           <fmt:param>
             <fmt:message key="${__entry.value.codeName}" />
@@ -37,12 +39,12 @@
         <c:choose>
           <c:when test="${gen:isFieldSearchInRange(__entry.value.searchBy)}">
             <span class="add-on"><fmt:message key="genapp.from" /></span>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}"  id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
             <span class="add-on"><fmt:message key="genapp.to" /></span>
             <input id="${__entry.value.searchBy.fullName}Fins" name="${__entry.value.searchBy.fullName}Fins" class="input-small input-medium search-query" type="text" value="${__entry.value.searchByValueFins}"/>
           </c:when>
           <c:otherwise>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}" id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
           </c:otherwise>
         </c:choose>
       </div>
@@ -51,9 +53,11 @@
 
 
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.INFOSIGNATURAID)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
+              <label for="infoSignatura.infoSignaturaID" style="display: inline;">
               <span class="add-on"><fmt:message key="infoSignatura.infoSignaturaID" />:</span>
+              </label>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
@@ -69,14 +73,16 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.SIGNOPERATION)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
               <%-- FILTRE NUMERO SELECT MULTIPLE --%>
-              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 24px;">
+              <label for="infoSignatura.signOperationSelect" style="display: inline;">
                  <span class="add-on"><fmt:message key="infoSignatura.signOperation" />:</span>
+              </label>
               </div>
 
               <div class="input-group-prepend" style="min-width:200px">
-                <form:select id="infosign_signOperation_select" path="signOperationSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                <form:select aria-label="infoSignatura.signOperationSelect"   id="infosign_signOperation_select" path="signOperationSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
                     <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForSignOperation}">
                       <option value="${_entry.key}" ${fn:contains(__theFilterForm.signOperationSelect, _entry.key)?'selected':''} >${_entry.value}</option>
                     </c:forEach>
@@ -85,9 +91,22 @@
 
               <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#infosign_signOperation_select').select2({
+                    var $select = $('#infosign_signOperation_select');
+                    var ariaLabel = $select.attr('aria-label');
+
+                    $select.select2({
                         closeOnSelect: false
                     });
+
+                    if (ariaLabel) {
+                        $select.next('.select2-container')
+                               .find('[role="combobox"]')
+                               .attr('aria-label', ariaLabel);
+                        $select.next('.select2-container')
+                               .find('.select2-search__field')
+                               .attr('aria-label', ariaLabel);
+                    }
+
                     $('.select2-selection__rendered').css('padding-bottom','5px');
                 });
               </script>
@@ -97,39 +116,45 @@
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.SIGNTYPE)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.signType" style="display: inline;">
               <fmt:message key="infoSignatura.signType" var="signType" />
               <fmt:message key="genapp.form.searchby" var="cercapersignType" >                
                  <fmt:param value="${signType}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${signType}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapersignType}" path="signType" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapersignType}" path="signType" aria-label="infoSignatura.signType" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.SIGNALGORITHM)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.signAlgorithm" style="display: inline;">
               <fmt:message key="infoSignatura.signAlgorithm" var="signAlgorithm" />
               <fmt:message key="genapp.form.searchby" var="cercapersignAlgorithm" >                
                  <fmt:param value="${signAlgorithm}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${signAlgorithm}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapersignAlgorithm}" path="signAlgorithm" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapersignAlgorithm}" path="signAlgorithm" aria-label="infoSignatura.signAlgorithm" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.SIGNMODE)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
               <%-- FILTRE NUMERO SELECT MULTIPLE --%>
-              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 24px;">
+              <label for="infoSignatura.signModeSelect" style="display: inline;">
                  <span class="add-on"><fmt:message key="infoSignatura.signMode" />:</span>
+              </label>
               </div>
 
               <div class="input-group-prepend" style="min-width:200px">
-                <form:select id="infosign_signMode_select" path="signModeSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                <form:select aria-label="infoSignatura.signModeSelect"   id="infosign_signMode_select" path="signModeSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
                     <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForSignMode}">
                       <option value="${_entry.key}" ${fn:contains(__theFilterForm.signModeSelect, _entry.key)?'selected':''} >${_entry.value}</option>
                     </c:forEach>
@@ -138,9 +163,22 @@
 
               <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#infosign_signMode_select').select2({
+                    var $select = $('#infosign_signMode_select');
+                    var ariaLabel = $select.attr('aria-label');
+
+                    $select.select2({
                         closeOnSelect: false
                     });
+
+                    if (ariaLabel) {
+                        $select.next('.select2-container')
+                               .find('[role="combobox"]')
+                               .attr('aria-label', ariaLabel);
+                        $select.next('.select2-container')
+                               .find('.select2-search__field')
+                               .attr('aria-label', ariaLabel);
+                    }
+
                     $('.select2-selection__rendered').css('padding-bottom','5px');
                 });
               </script>
@@ -149,14 +187,16 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.SIGNATURESTABLELOCATION)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
               <%-- FILTRE NUMERO SELECT MULTIPLE --%>
-              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 24px;">
+              <label for="infoSignatura.signaturesTableLocationSelect" style="display: inline;">
                  <span class="add-on"><fmt:message key="infoSignatura.signaturesTableLocation" />:</span>
+              </label>
               </div>
 
               <div class="input-group-prepend" style="min-width:200px">
-                <form:select id="infosign_signaturesTableLocation_select" path="signaturesTableLocationSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                <form:select aria-label="infoSignatura.signaturesTableLocationSelect"   id="infosign_signaturesTableLocation_select" path="signaturesTableLocationSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
                     <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForSignaturesTableLocation}">
                       <option value="${_entry.key}" ${fn:contains(__theFilterForm.signaturesTableLocationSelect, _entry.key)?'selected':''} >${_entry.value}</option>
                     </c:forEach>
@@ -165,9 +205,22 @@
 
               <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#infosign_signaturesTableLocation_select').select2({
+                    var $select = $('#infosign_signaturesTableLocation_select');
+                    var ariaLabel = $select.attr('aria-label');
+
+                    $select.select2({
                         closeOnSelect: false
                     });
+
+                    if (ariaLabel) {
+                        $select.next('.select2-container')
+                               .find('[role="combobox"]')
+                               .attr('aria-label', ariaLabel);
+                        $select.next('.select2-container')
+                               .find('.select2-search__field')
+                               .attr('aria-label', ariaLabel);
+                    }
+
                     $('.select2-selection__rendered').css('padding-bottom','5px');
                 });
               </script>
@@ -177,78 +230,90 @@
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.ENITIPOFIRMA)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.eniTipoFirma" style="display: inline;">
               <fmt:message key="infoSignatura.eniTipoFirma" var="eniTipoFirma" />
               <fmt:message key="genapp.form.searchby" var="cercapereniTipoFirma" >                
                  <fmt:param value="${eniTipoFirma}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${eniTipoFirma}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapereniTipoFirma}" path="eniTipoFirma" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapereniTipoFirma}" path="eniTipoFirma" aria-label="infoSignatura.eniTipoFirma" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.ENIPERFILFIRMA)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.eniPerfilFirma" style="display: inline;">
               <fmt:message key="infoSignatura.eniPerfilFirma" var="eniPerfilFirma" />
               <fmt:message key="genapp.form.searchby" var="cercapereniPerfilFirma" >                
                  <fmt:param value="${eniPerfilFirma}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${eniPerfilFirma}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapereniPerfilFirma}" path="eniPerfilFirma" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapereniPerfilFirma}" path="eniPerfilFirma" aria-label="infoSignatura.eniPerfilFirma" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.ENIROLFIRMA)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.eniRolFirma" style="display: inline;">
               <fmt:message key="infoSignatura.eniRolFirma" var="eniRolFirma" />
               <fmt:message key="genapp.form.searchby" var="cercapereniRolFirma" >                
                  <fmt:param value="${eniRolFirma}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${eniRolFirma}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapereniRolFirma}" path="eniRolFirma" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapereniRolFirma}" path="eniRolFirma" aria-label="infoSignatura.eniRolFirma" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.ENISIGNERNAME)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.eniSignerName" style="display: inline;">
               <fmt:message key="infoSignatura.eniSignerName" var="eniSignerName" />
               <fmt:message key="genapp.form.searchby" var="cercapereniSignerName" >                
                  <fmt:param value="${eniSignerName}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${eniSignerName}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapereniSignerName}" path="eniSignerName" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapereniSignerName}" path="eniSignerName" aria-label="infoSignatura.eniSignerName" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.ENISIGNERADMINISTRATIONID)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.eniSignerAdministrationId" style="display: inline;">
               <fmt:message key="infoSignatura.eniSignerAdministrationId" var="eniSignerAdministrationId" />
               <fmt:message key="genapp.form.searchby" var="cercapereniSignerAdministrationId" >                
                  <fmt:param value="${eniSignerAdministrationId}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${eniSignerAdministrationId}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapereniSignerAdministrationId}" path="eniSignerAdministrationId" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapereniSignerAdministrationId}" path="eniSignerAdministrationId" aria-label="infoSignatura.eniSignerAdministrationId" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,InfoSignaturaFields.ENISIGNLEVEL)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="infoSignatura.eniSignLevel" style="display: inline;">
               <fmt:message key="infoSignatura.eniSignLevel" var="eniSignLevel" />
               <fmt:message key="genapp.form.searchby" var="cercapereniSignLevel" >                
                  <fmt:param value="${eniSignLevel}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${eniSignLevel}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapereniSignLevel}" path="eniSignLevel" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercapereniSignLevel}" path="eniSignLevel" aria-label="infoSignatura.eniSignLevel" />
             </div>
 
 
@@ -256,8 +321,10 @@
 
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key >= 0 && not empty __entry.value.searchBy }">
-      <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+      <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
+        <label for="${__entry.value.codeName}" style="display: inline;">
         <span class="add-on"><fmt:message key="${__entry.value.codeName}" />:</span>
+        </label>
         <fmt:message key="genapp.form.searchby" var="cercaperAF" >
           <fmt:param>
             <fmt:message key="${__entry.value.codeName}" />
@@ -266,12 +333,12 @@
         <c:choose>
           <c:when test="${gen:isFieldSearchInRange(__entry.value.searchBy)}">
             <span class="add-on"><fmt:message key="genapp.from" /></span>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}"  id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
             <span class="add-on"><fmt:message key="genapp.to" /></span>
             <input id="${__entry.value.searchBy.fullName}Fins" name="${__entry.value.searchBy.fullName}Fins" class="input-small input-medium search-query" type="text" value="${__entry.value.searchByValueFins}"/>
           </c:when>
           <c:otherwise>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}" id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
           </c:otherwise>
         </c:choose>
       </div>

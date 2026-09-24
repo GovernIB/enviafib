@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.NOM)}">
         <tr id="serieDocumental_nom_rowid">
           <td id="serieDocumental_nom_columnlabelid">
-            <label>
+            <label for="serieDocumental.nom">
               <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.NOM])?'serieDocumental.nom':__theForm.labels[SerieDocumentalFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[SerieDocumentalFields.NOM]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.TIPUSDOCUMENTAL)}">
         <tr id="serieDocumental_tipusDocumental_rowid">
           <td id="serieDocumental_tipusDocumental_columnlabelid">
-            <label>
+            <label for="serieDocumental.tipusDocumental">
               <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.TIPUSDOCUMENTAL])?'serieDocumental.tipusDocumental':__theForm.labels[SerieDocumentalFields.TIPUSDOCUMENTAL]}" />
              </label>
               <c:if test="${not empty __theForm.help[SerieDocumentalFields.TIPUSDOCUMENTAL]}">
@@ -34,11 +34,11 @@
           <form:errors path="serieDocumental.tipusDocumental" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.TIPUSDOCUMENTAL)}" >
           <form:hidden path="serieDocumental.tipusDocumental"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.serieDocumental.tipusDocumental,__theForm.listOfValuesForTipusDocumental)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.serieDocumental.tipusDocumental,__theForm.listOfValuesForTipusDocumental)}" aria-label="serieDocumental.tipusDocumental" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.TIPUSDOCUMENTAL)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="serieDocumental_tipusDocumental"  onchange="if(typeof onChangeTipusDocumental == 'function') {  onChangeTipusDocumental(this); };"  cssClass="form-control col-md-9-optional" path="serieDocumental.tipusDocumental">
+          <form:select id="serieDocumental_tipusDocumental"  onchange="if(typeof onChangeTipusDocumental == 'function') {  onChangeTipusDocumental(this); };"  cssClass="form-control col-md-9-optional" path="serieDocumental.tipusDocumental"  aria-label="serieDocumental.tipusDocumental" >
             <c:forEach items="${__theForm.listOfValuesForTipusDocumental}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -63,7 +63,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTNOM)}">
         <tr id="serieDocumental_procedimentNom_rowid">
           <td id="serieDocumental_procedimentNom_columnlabelid">
-            <label>
+            <label for="serieDocumental.procedimentNom">
               <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.PROCEDIMENTNOM])?'serieDocumental.procedimentNom':__theForm.labels[SerieDocumentalFields.PROCEDIMENTNOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[SerieDocumentalFields.PROCEDIMENTNOM]}">
@@ -81,7 +81,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.PROCEDIMENTCODI)}">
         <tr id="serieDocumental_procedimentCodi_rowid">
           <td id="serieDocumental_procedimentCodi_columnlabelid">
-            <label>
+            <label for="serieDocumental.procedimentCodi">
               <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI])?'serieDocumental.procedimentCodi':__theForm.labels[SerieDocumentalFields.PROCEDIMENTCODI]}" />
              </label>
               <c:if test="${not empty __theForm.help[SerieDocumentalFields.PROCEDIMENTCODI]}">
@@ -99,7 +99,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,SerieDocumentalFields.ENTITATID)}">
         <tr id="serieDocumental_entitatID_rowid">
           <td id="serieDocumental_entitatID_columnlabelid">
-            <label>
+            <label for="serieDocumental.entitatID">
               <fmt:message key="${(empty __theForm.labels[SerieDocumentalFields.ENTITATID])?'serieDocumental.entitatID':__theForm.labels[SerieDocumentalFields.ENTITATID]}" />
              </label>
               <c:if test="${not empty __theForm.help[SerieDocumentalFields.ENTITATID]}">
@@ -110,11 +110,11 @@
           <form:errors path="serieDocumental.entitatID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.ENTITATID)}" >
           <form:hidden path="serieDocumental.entitatID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.serieDocumental.entitatID,__theForm.listOfEntitatForEntitatID)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.serieDocumental.entitatID,__theForm.listOfEntitatForEntitatID)}" aria-label="serieDocumental.entitatID" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,SerieDocumentalFields.ENTITATID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="serieDocumental_entitatID"  onchange="if(typeof onChangeEntitatID == 'function') {  onChangeEntitatID(this); };"  cssClass="form-control col-md-9-optional" path="serieDocumental.entitatID">
+          <form:select id="serieDocumental_entitatID"  onchange="if(typeof onChangeEntitatID == 'function') {  onChangeEntitatID(this); };"  cssClass="form-control col-md-9-optional" path="serieDocumental.entitatID"  aria-label="serieDocumental.entitatID" >
             <c:forEach items="${__theForm.listOfEntitatForEntitatID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">

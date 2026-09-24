@@ -91,7 +91,7 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,MenuFields.ACTIU)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${menu.actiu?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${menu.actiu?'success':'error'}.png"/>" alt="${menu.actiu}" >
           </td>
         </c:if>
 

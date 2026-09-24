@@ -22,22 +22,23 @@ import org.fundaciobit.genapp.common.web.controller.RefListBase;
  * 
  */
 @Component
-public class InfoArxiuRefList extends RefListBase
-    implements InfoArxiuFields {
+public class InfoArxiuRefList extends RefListBase implements InfoArxiuFields {
 
-  @EJB(mappedName = InfoArxiuService.JNDI_NAME)
-  private InfoArxiuService infoArxiuEjb;
+    @EJB(mappedName = InfoArxiuService.JNDI_NAME)
+    private InfoArxiuService infoArxiuEjb;
 
-  public InfoArxiuRefList(InfoArxiuRefList __clone) {
-    super(__clone);
-    this.infoArxiuEjb = __clone.infoArxiuEjb;
-  }
-  public InfoArxiuRefList() {
-    setSelects(new Select<?>[] { INFOARXIUID.select });
-  }
-  public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
-    Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
-    List<StringKeyValue> list = infoArxiuEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
+    public InfoArxiuRefList(InfoArxiuRefList __clone) {
+        super(__clone);
+        this.infoArxiuEjb = __clone.infoArxiuEjb;
+    }
+
+    public InfoArxiuRefList() {
+        setSelects(new Select<?>[] { INFOARXIUID.select });
+    }
+
+    public List<StringKeyValue> getReferenceList(Field<?> keyField, Where where, OrderBy ... orderBy) throws I18NException {
+        Select<StringKeyValue> select =  new org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue(keyField.select, getSeparator(), getSelects());
+        List<StringKeyValue> list = infoArxiuEjb.executeQuery(select, where, (orderBy==null || orderBy.length == 0) ? getOrderBy() : orderBy);
     return list;
-  }
+    }
 }

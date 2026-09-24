@@ -36,7 +36,7 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,IdiomaFields.SUPORTAT)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${idioma.suportat?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${idioma.suportat?'success':'error'}.png"/>" alt="${idioma.suportat}" >
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,IdiomaFields.ORDRE)}">
