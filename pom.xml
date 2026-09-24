@@ -7,14 +7,11 @@
     <packaging>pom</packaging>
     <name>EnviaFIB</name>
 
-
     <parent>
-        <artifactId>
-            caib-artifacts-github-governib-distribution-with-jdk11-jboss72</artifactId>
+        <artifactId>caib-artifacts-jdk11-jboss72or74-with-github-governib-distribution</artifactId>
         <groupId>es.caib.maven</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
-
 
     <modules>
         <module>enviafib-pluginsib</module>
@@ -29,48 +26,6 @@
         <module>scripts</module>
     </modules>
     <repositories>
-        <!--
-        <repository>
-            <id>maven-nuxeo</id>
-            <name>Maven Nuxeo Repository</name>
-            <url>https://maven.nuxeo.org/nexus/content/groups/public/</url>
-            <layout>default</layout>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-        </repository>
-        <repository>
-            <id>repository.spring.release</id>
-            <name>Spring GA Repository</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-        </repository>
-        <repository>
-            <id>jboss-releases</id>
-            <name>JBoss Releases Repository</name>
-            <url>https://maven.repository.redhat.com/ga/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-        </repository>
-        -->
         <repository>
             <id>github_governib_maven</id>
             <name>GitHub GovernIB Maven Repository</name>
@@ -84,7 +39,6 @@
                 <updatePolicy>never</updatePolicy>
             </releases>
         </repository>
-
     </repositories>
     <dependencies>
         <dependency>

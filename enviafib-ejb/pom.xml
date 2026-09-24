@@ -243,7 +243,6 @@
             <artifactId>diff-match-patch</artifactId>
             <version>0.0.2</version>
             <scope>test</scope>
-
         </dependency>
 
         <dependency>
@@ -262,6 +261,11 @@
                 <artifactId>maven-ejb-plugin</artifactId>
                 <configuration>
                     <ejbVersion>3.2</ejbVersion>
+                    <archive>
+                        <manifest>
+                            <addClasspath>false</addClasspath>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

@@ -185,6 +185,12 @@
                     
                     <packagingExcludes>**/commons-lang3*redhat*.jar</packagingExcludes>
                     
+                    <archive>
+                        <manifest>
+                            <addClasspath>false</addClasspath>
+                        </manifest>
+                    </archive>
+                    
                     
                     <webResources>
                         <resource>

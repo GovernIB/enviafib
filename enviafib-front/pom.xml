@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>enviafib-front</artifactId>
-	<packaging>war</packaging>
-	<parent>
-		<groupId>es.caib.enviafib</groupId>
-		<artifactId>enviafib</artifactId>
-		<version>2.0.9</version>
-	</parent>
-	<name>EnviaFIB - Front</name>
-	<dependencies>
-
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>enviafib-front</artifactId>
+    <packaging>war</packaging>
+    <parent>
+        <groupId>es.caib.enviafib</groupId>
+        <artifactId>enviafib</artifactId>
+        <version>2.0.9</version>
+    </parent>
+    <name>EnviaFIB - Front</name>
+    <dependencies>
     </dependencies>
-	<build>
-		<plugins>
-
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>false</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
 
         </plugins>
-	</build>
+    </build>
 </project>
