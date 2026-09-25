@@ -239,3 +239,6 @@ installCerts.bat
 /enviafib-ejb/pro.sql
 /enviafib-ejb/se.csv
 /enviafib-ejb/se.sql
+/enviafib-pluginsib/target/antrun/build-main.xml
+/scripts/target/antrun/build-main.xml
+/target/antrun/build-main.xml
