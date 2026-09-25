@@ -1,2 +1,48 @@
 
 /* Estils especifics de l'APP */
+
+/* Sobreescriptura de la classe btn-group de Bootstrap */
+/* Evita que els botons del grup saltin de línia */
+.btn-group {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+}
+
+
+body {
+    <%-- background-image: url("<c:url value="/img/background-pattern.png"></c:url>"); --%>
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.well.well-white {
+    padding: 20px 0.75rem;
+    margin: 0rem 4rem;
+}
+
+.btn-primary  <%--, .btn-warning, .btn-secondary --%> {
+    background-color: #246EB9;
+    border-color: #246EB9;
+    color: #FDFFFC;
+}
+
+.btn-primary:hover<%-- , .btn-warning:hover, .btn-secondary:hover --%> {
+    background-color: #00B2FF;
+    border-color: #00B2FF;
+}
+
+ul {
+    padding: 5px !important;
+}
+
+form {
+    padding: 0.75rem;
+    padding-top: 0px;
+}
+
+.lead label {
+    font-weight: 500 !important;
+    margin: 0px;
+    font-size: 1.35rem !important;
+}

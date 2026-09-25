@@ -233,7 +233,7 @@
                 <c:if test="${efi:hasRole(ConstantsEnviaFIB.ROLE_USER)}">
 					<li class="dropdown">
 
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1"
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-file-signature"></i>
                             <fmt:message key="ferfirma" />

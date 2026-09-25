@@ -95,6 +95,7 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
             peticioFilterForm.setActionsRenderer(PeticioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
 
+
             Set<Field<?>> hiddens = new HashSet<Field<?>>(Arrays.asList(PeticioFields.ALL_PETICIO_FIELDS));
 
             hiddens.remove(PETICIOID);
@@ -155,12 +156,23 @@ public abstract class AbstractLlistatPeticionsController extends AbstractPeticio
 
         // Millores en els filtres dels llistat de peticions. #248: Mostrar sempre filtres
         filterForm.setVisibleFilterBy(true);
+        
+        Map<Object, Object> mapActionsRenderer = filterForm.getAdditionalInfoForActionsRendererByPK();
+        
+        mapActionsRenderer.clear();
 
         Map<Long, String> mapRemitent = (Map<Long, String>) filterForm.getAdditionalField(COLUMN_ESTAT_IMG)
                 .getValueMap();
         mapRemitent.clear();
 
         for (Peticio peticio : list) {
+
+            // Boto despleglabe en blau  
+            long id = peticio.getPeticioID();
+            mapActionsRenderer.put(id, "btn-primary");
+                       
+            // Altres opcions de menu
+            
             String color;
             ArrayList<String> iconList = new ArrayList<String>();
             int estat = (int) peticio.getEstat();

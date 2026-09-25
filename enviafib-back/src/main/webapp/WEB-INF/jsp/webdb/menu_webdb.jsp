@@ -2,7 +2,7 @@
  <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
  <c:set var="url" value="${urlActual}" />
  <div>
- class="linkAjudaPeu">WebDatabase</span>
+ <span class="linkAjudaPeu">WebDatabase</span>
  <ul class="tree" style="margin:3px; padding:0px;">
  <%-- ==== GENAPP MARK START --%>
 
