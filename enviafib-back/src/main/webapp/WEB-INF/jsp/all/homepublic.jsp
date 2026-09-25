@@ -9,7 +9,7 @@
 <div>
 <br/>
 <center>
-<img src="<c:url value="/img/app-logo.png"/>"  alt="EnviaFIB" title="EnviaFIB"/>
+<img src="<c:url value="/img/app-logo.png"/>"  alt="EnviaFIB" />
 
 <br/>
 <br/>
@@ -20,16 +20,11 @@ This page is generated automatically. Please edit.
 
 <br/>
 <br/>
-<table border="0" >
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-<td valign="top">
-<a href="http://blog.fundaciobit.org/category/admindigital/" target="_blank">
-<img src="<c:url value="/img/fundaciobit.png"/>"  alt="Fundació Bit" title="Fundació Bit"/>
+<div>
+<a href="https://governdigital.fundaciobit.org/" target="_blank">
+<img src="<c:url value="/img/fundaciobit.png"/>"  alt="IBDigital" />
 </a>
-</td>
-</tr>
-</table>
+</div>
 <br/>
 </center>
  

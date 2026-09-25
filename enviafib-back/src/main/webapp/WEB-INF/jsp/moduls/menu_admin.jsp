@@ -2,9 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <c:set var="url" value="${urlActual}" />
 <div>
-    <h5>
+     <span style="font-size: 1.25rem">
         <fmt:message key="menu.administrador" />
-    </h5>
+    </span>
     <ul class="tree" style="margin: 3px; padding: 0px;">
 
         <li style="list-style-type: disc; list-style-position: inside;"><a

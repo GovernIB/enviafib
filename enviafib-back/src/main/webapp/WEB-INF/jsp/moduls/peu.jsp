@@ -10,7 +10,7 @@
 			<strong class="font-weight-bold h6"> ${versio.projectName}
 				v${versio.version}<%=Configuracio.isCAIB() ? "-caib" : ""%>
 
-			</strong> <br /> <small> Build: ${versio.buildTime} <br /> JDK:
+			</strong> <br /> <small style="color:#fff"> Build: ${versio.buildTime} <br /> JDK:
 				${version.jdkVersion} <br /> <fmt:message key="revisio" />: <c:if
 					test="${empty versio.scmRevision}">
 					<fmt:message key="scmversion.msg" />
@@ -37,7 +37,7 @@
 			 <br /> 
 			 
 			<!-- Button to trigger modal -->
-			<small><a href="#modalAjuda" role="button"
+			<small><a href="#modalAjuda" class="linkAjudaPeu" role="button"
 				data-toggle="modal" style="color: #999"><fmt:message key="ajuda.necessitau" /></a></small>
 		</div>
 

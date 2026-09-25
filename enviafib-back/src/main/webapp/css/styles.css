@@ -16,6 +16,16 @@ a:hover{
 	color: #000;
 	text-decoration: none;
 }
+
+ .link-accessibilitat {
+color: #0069d9;
+}
+
+.link-accessibilitat:hover,
+.link-accessibilitat:focus {
+color: #000;
+}
+
 .p-3aplicacio{
 	padding: 3.5rem 1rem!important;
 }
@@ -63,6 +73,21 @@ a:hover{
 	box-shadow: none !important;
 }
 
+ .btn-success {
+background-color: #317a4c;
+}
+
+
+.btn-primary {
+background-color: #0069d9;
+border-color: #0062cc;
+}
+
+
+.btn-info {
+color: #000;
+}
+
 .lh15{
 	line-height:1.5
 }
@@ -74,6 +99,24 @@ a:hover{
 	margin-left: auto;
 	margin-right: auto;
 }
+
+
+ /* Menú d'inici (arbre) amb contrast suficient (WCAG AA).
+
+Sobreescriu el blau #007bff (~4.0:1) per un blau més fosc accessible. */
+
+.tree a {
+color: #0069d9;
+}
+
+.tree a:hover,
+.tree a:focus {
+color: #000;
+}
+
+
+
+
 /* FI Estils generals */
 
 /* Motlla de pa */
@@ -299,9 +342,24 @@ a:hover{
 .minW0{
 	min-width: 0;
 }
-/* FI Cap�alera */
 
-/* Men� m�bil */
+
+ /* Sobreescriu el color per defecte de Bootstrap de .nav-link per millorar l'accessibilitat (contrast) */
+.nav-link{
+color: rgb(0, 95, 255) !important;
+}
+
+.titol {
+font-weight: bold;
+}
+
+.subtitolMay {
+font-weight: bold;
+}
+
+/* FI Capçalera */
+
+/* Menú mòbil */
 .botoMobil{
 	position: absolute;
 	right: 10px;
@@ -378,6 +436,28 @@ a.dropdown-item.mobil:hover{
 /* FI Suport */
 
 /* Peu */
+
+
+/* Text informatiu del peu amb contrast suficient (WCAG AA).
+
+Sobreescriu el gris clar (#999 -> 3.97:1) heretat de Bootstrap. */
+
+#footer small,
+#footer small i,
+#footer small span {
+color: #595959;
+}
+
+/* Tots els enllaços del peu amb contrast suficient (WCAG AA) */
+#footer a {
+color: #0069d9;
+}
+
+#footer a:hover,
+#footer a:focus {
+color: #000;
+}
+
 .opcionsPeu li::before {
 	content: "\0000a0\0000a0|\0000a0\0000a0";
 }

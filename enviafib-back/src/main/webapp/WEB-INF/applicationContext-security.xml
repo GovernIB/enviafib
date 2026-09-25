@@ -20,6 +20,7 @@
 
   		<sec:intercept-url pattern="/js/**" access="permitAll"/>
 		<sec:intercept-url pattern="/doc/**" access="permitAll"/>
+        <sec:intercept-url pattern="/fonts/**" access="permitAll"/>
 		<sec:intercept-url pattern="/img/**" access="permitAll"/>
 		<sec:intercept-url pattern="/css/**" access="permitAll"/>
 		<sec:intercept-url pattern="/error.jsp" access="permitAll"/>

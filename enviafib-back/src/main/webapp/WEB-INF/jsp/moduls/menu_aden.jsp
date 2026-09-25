@@ -3,9 +3,9 @@
 	file="/WEB-INF/jsp/moduls/includes.jsp"%>
 <c:set var="url" value="${urlActual}" />
 <div>
-	<h5>
+	 <span style="font-size: 1.25rem">
 		<fmt:message key="menu.aden" />
-	</h5>
+	</span>
 	<ul class="tree" style="margin: 3px; padding: 0px;">
 
 		<!-- DADES ENTITAT -->

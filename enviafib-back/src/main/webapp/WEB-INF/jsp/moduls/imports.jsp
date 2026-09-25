@@ -9,10 +9,7 @@
 <link rel="icon" type="image/vnd.microsoft.icon" href="<c:url value="/img/favicon.ico"/>">
 
 <!-- CSS -->
-<link href="<c:url value="/css/styles.css"/>" rel="stylesheet">
-<link href="<c:url value="/css/default.css"/>" rel="stylesheet">
 
-<link href="<c:url value="/css/genapp.css"/>" rel="stylesheet">
 
 <!-- Bootstrap CSS-->
 <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
@@ -26,6 +23,13 @@
 
 <%--  Select Multiple --%> 
 <link href="<c:url value="/css/select2.min.css"/>" rel="stylesheet">
+
+<link href="<c:url value="/css/styles.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/default.css"/>" rel="stylesheet">
+
+<link href="<c:url value="/css/genapp.css"/>" rel="stylesheet">
+
+<link href="<c:url value="/css/stylesapp.css"/>" rel="stylesheet">
 
 <!-- JS -->
 <script src="<c:url value="/js/jquery.js"/>"></script>
@@ -170,7 +174,7 @@
 
 <style>
 body {
-	background-image: url("/img/background-pattern.png");
+	<%-- background-image: url("<c:url value="/img/background-pattern.png"></c:url>"); --%>
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;

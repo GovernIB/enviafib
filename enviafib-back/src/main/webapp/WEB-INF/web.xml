@@ -46,6 +46,7 @@
 		<url-pattern>*.jar</url-pattern>
 		<url-pattern>*.pdf</url-pattern>
         <url-pattern>*.ico</url-pattern>
+        <url-pattern>*.ttf</url-pattern>
 		<url-pattern>*.properties</url-pattern>
 	</servlet-mapping>
 
@@ -147,6 +148,7 @@
             <url-pattern>/img/*</url-pattern>
             <url-pattern>/js/*</url-pattern>
             <url-pattern>/doc/*</url-pattern>
+            <url-pattern>/fonts/*</url-pattern>
             <url-pattern>/error.jsp</url-pattern>
             <url-pattern>/user/autofirma/finalWeb/*</url-pattern>
             <url-pattern>/user/flux/mostrarflux/*/*</url-pattern>

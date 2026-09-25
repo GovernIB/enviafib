@@ -1,15 +1,16 @@
-<%@page import="es.caib.enviafib.back.preparer.MenuPreparer"%>
-<%@page import="es.caib.enviafib.model.entity.Menu"%>
-<%@page import="java.util.List"%>
-<%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
-<%@page import="es.caib.enviafib.commons.utils.Configuracio"%>
-<%@page import="java.util.Locale"%>
-<%@page import="es.caib.enviafib.back.security.LoginInfo"%>
-<%@page import="es.caib.enviafib.back.controller.user.MenuUserController"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@page import="es.caib.enviafib.back.preparer.MenuPreparer"
+%><%@page import="es.caib.enviafib.model.entity.Menu"
+%><%@page import="java.util.List"
+%><%@page import="org.springframework.context.i18n.LocaleContextHolder"
+%><%@page import="es.caib.enviafib.commons.utils.Configuracio"
+%><%@page import="java.util.Locale"
+%><%@page import="es.caib.enviafib.back.security.LoginInfo"
+%><%@page import="es.caib.enviafib.back.controller.user.MenuUserController"
+%><%@ page contentType="text/html;charset=UTF-8" language="java"
+%><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"
+%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"
+%><%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"
+%>
 <un:useConstants var="ConstantsEnviaFIB" className="es.caib.enviafib.commons.utils.Constants" />
 
 <header>
@@ -34,8 +35,7 @@
 		</div>
 
 		<div id="logoEnviafibContainer" class="logoEntitat">
-			<img src="<c:url value="/img/app-logo.png"/>" style="height: 4rem;"
-				alt="EnviaFIB" title="EnviaFIB" />
+			<img src="<c:url value="/img/app-logo.png"/>" style="height: 4rem;"	alt="EnviaFIB" />
 		</div>
 		
         <div id="menuCapContainer" >
@@ -61,9 +61,7 @@
 									<a class="dropdown-item" href="<c:url value="/canviarEntitat/${entry.key}"/>"> ${entry.value.entitat.descripcio}</a> 
 								</c:if>
 							</c:forEach>
-	
-						<!-- <a class="dropdown-item" href="http://www.caib.es"> Govern de les Illes Balears</a> 
-						 	 <a class="dropdown-item" href="https://www.fundaciobit.org/es/inicio/"> Fundacio BIT</a> -->
+
 						</div>
 					</c:if>
 				</li>
@@ -304,12 +302,12 @@
 
 <style>
 header {
-/* 	position: fixed;
+<%-- 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 5rem;
-	height: 7rem; */
+	height: 7rem; --%>
 	z-index: 10;
 	background-color: #fff;
 	margin-bottom: 2rem;

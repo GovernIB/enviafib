@@ -11,9 +11,9 @@
 
 <c:set var="url" value="${urlActual}" />
 <div>
-    <h5>
+     <span style="font-size: 1.25rem">
         <fmt:message key="user.menu.title" />
-    </h5>
+    </span>
     <ul class="tree" style="margin: 3px; padding: 0px;">
 
         <%-- Example with security: virtual roles  --%>

@@ -11,7 +11,7 @@
 <div>
 <br/>
 <center>
-<img src="<c:url value="/img/app-logo.png"/>"  alt="EnviaFIB" title="EnviaFIB"/>
+<img src="<c:url value="/img/app-logo.png"/>"  alt="EnviaFIB" />
 
 <br/>
 <br/>
@@ -19,22 +19,22 @@ This page is generated automatically. Please edit.
 
 <br/>
 <br/>
-<table border="0" >
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-<td valign="top">
-<a href="http://blog.fundaciobit.org/category/admindigital/" target="_blank">
-<img src="<c:url value="/img/fundaciobit.png"/>"  alt="Fundaci� Bit" title="Fundaci� Bit"/>
+<div>
+<a href="https://governdigital.fundaciobit.org" target="_blank">
+<img src="<c:url value="/img/fundaciobit.png"/>"  alt="IBDigital" />
 </a>
-</td>
-</tr>
-</table>
+</div>
 <br/>
 </center>
  
 </div>
 
 <br/>
+<c:if test="${efi:isDesenvolupament()}">
+
+<b>Only in Development Mode</b><br/>
+
+
 Username: ${loginInfo.username}<br/>
 &#36;{efi:hasRole(ROLE_ADMIN)}= ${efi:hasRole('ROLE_ADMIN')}<br/>
 &#36;{efi:hasRole(ROLE_USER) }= ${efi:hasRole('ROLE_USER') }<br/>
@@ -53,6 +53,6 @@ lang = ${lang} <br/>
 	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br/>
 </c:if>
 
-<c:if test="${efi:isDesenvolupament()}">
-Only in Development Mode
+
+
 </c:if>
