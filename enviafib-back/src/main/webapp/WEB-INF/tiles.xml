@@ -66,6 +66,10 @@
     <definition name="home" extends="common">
         <put-attribute name="contingut" value="/WEB-INF/jsp/common/home.jsp" />
     </definition>
+    
+    <definition name="acessibilitat" extends="common">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/all/acessibilitat.jsp" />
+    </definition>
 
     <!--  ===========  AJUDA  ================== -->
    

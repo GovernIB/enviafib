@@ -34,7 +34,4 @@
 <c:remove var="avisos" scope="session" />
 <c:remove var="missatges" scope="session" />
 
-
-
-
 <div class="spacer"></div>

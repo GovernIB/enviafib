@@ -365,7 +365,7 @@ header {
   border: none;
   padding-right: 0px;
 }
-
+<%--
 @font-face {
 	font-family: CaviarDreamsFont;
 	src: url(/fonts/RubikGlitch-Regular.ttf);
@@ -375,6 +375,7 @@ h1 {
 	font-family: CaviarDreamsFont;
 	color: darkgreen;
 }
+--%>
 
 #FilterButton, #GroupButton {
 	background-color: #E1E1E1;

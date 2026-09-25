@@ -20,12 +20,13 @@
 			</small>
 		</div>
 
-	<%-- 	<!-- Centre -->
+<%-- Centre --%>
 		<div id="peu-centre">
-			<img src="<c:url value="/img/app-logo-bn.png"/>" style="height: 6rem;"
-				alt="EnviaFIB" title="EnviaFIB" />
+			<a styleClass="text-dark linkPeu" style="color:white" href="<c:url value="/public/accessibilitat"/>">
+            <fmt:message key="accessibilitat" />&nbsp;<i class="fas fa-external-link-alt fa-sm"></i>
+            </a>
 		</div>
- --%>
+
 		<!-- Dreta -->
 		<div id="peu-dreta">
 			<a href="http://www.caib.es/"> <img

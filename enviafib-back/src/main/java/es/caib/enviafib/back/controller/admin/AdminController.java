@@ -50,8 +50,8 @@ import es.caib.enviafib.ejb.FitxerService;
 
 /**
  * 
- * @author anadal
- *
+ * @author anadal (u80067)
+ * 25 sept 2026 13:38:53
  */
 @Controller
 @RequestMapping(value = "/admin")
@@ -161,6 +161,8 @@ public class AdminController {
             throws Exception {
 
         Configuracio.reloadProperties();
+        
+        HtmlUtils.saveMessageSuccess(request, "Les propietats de l'aplicació s'han recarregat correctament.");
 
         return "redirect:/admin/properties";
     }
