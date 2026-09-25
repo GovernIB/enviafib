@@ -66,6 +66,11 @@ public class Configuracio implements Constants {
                     + propertyFileName + ") que no es pot llegir:" + e.getMessage(), e);
         }
     }
+    
+    public static void reloadProperties() {
+        appProperties = null;
+        appSystemProperties = null;
+    }
 
     /*
     private static Long getLongAppProperty(String key) {

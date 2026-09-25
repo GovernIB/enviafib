@@ -339,7 +339,13 @@
         <put-attribute name="contingut" value="/WEB-INF/jsp/webdb/infoAnexList.jsp" />
     </definition>
 
+    <definition name="keyvalueAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/common/keyvalue.jsp" />
+    </definition>
 
+    <definition name="editpropertiesAdmin" extends="admin">
+        <put-attribute name="contingut" value="/WEB-INF/jsp/admin/editproperties.jsp" />
+    </definition>
 
     <!--  ===========  ADMIN ENTITAT ================== -->
     
