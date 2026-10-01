@@ -106,7 +106,7 @@ public class FaqsCommonController extends FaqController {
             faqFilterForm.setEditButtonVisible(false);
 
             faqFilterForm.addAdditionalButton(new AdditionalButton("fas fa-list", "back.to.list",
-                    LlistatPeticionsUserController.CONTEXT_WEB + "/list", AdditionalButtonStyle.PRIMARY));
+                    LlistatPeticionsUserController.CONTEXT_WEB + "/list", AdditionalButtonStyle.SECONDARY));
         }
 
         OrderBy[] ordre = { new OrderBy(ORDRE) };

@@ -333,7 +333,7 @@ public abstract class AbstractFirmaUserController extends AbstractPeticioUserCon
 
             peticioForm.setSaveButtonVisible(false);
             peticioForm.addAdditionalButton(new AdditionalButton("", getSubmitLabel(), "javascript:enviar();",
-                    AdditionalButtonStyle.SECONDARY));
+                    AdditionalButtonStyle.PRIMARY));
 
             peticioForm.addAdditionalButton(new AdditionalButton("fas fa-info-circle", "advanced.show",
                     "javascript:mostrarOcultarCampsAvanzats(this)", AdditionalButtonStyle.WARNING));

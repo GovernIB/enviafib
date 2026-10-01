@@ -39,7 +39,7 @@
 			 
 			<!-- Button to trigger modal -->
 			<small><a href="#modalAjuda" class="linkAjudaPeu" role="button"
-				data-toggle="modal" style="color: #999"><fmt:message key="ajuda.necessitau" /></a></small>
+				data-toggle="modal" style="color: #fff"><fmt:message key="ajuda.necessitau" /></a></small>
 		</div>
 
 

@@ -324,6 +324,7 @@ header {
     padding-right: 0px;
 }
 
+<%--
 #FilterButton, #GroupButton {
     background-color: #E1E1E1;
     border-color: #E1E1E1;
@@ -334,6 +335,7 @@ header {
     background-color: #A1A1A1;
     border-color: #A1A1A1;
 }
+--%>
 
 .dropdown .btn-secondary {
     margin: 0 5px;

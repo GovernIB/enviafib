@@ -22,8 +22,8 @@
 				<td valign="top"><a
 					href="http://blog.fundaciobit.org/category/admindigital/"
 					target="_blank"> <img
-						src="<c:url value="/img/fundaciobit.png"/>" alt="Fundació Bit"
-						title="Fundació Bit" />
+						src="<c:url value="/img/fundaciobit.png"/>" alt="IBDigital"
+						 />
 				</a></td>
 			</tr>
 		</table>
