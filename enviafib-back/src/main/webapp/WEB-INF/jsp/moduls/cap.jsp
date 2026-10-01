@@ -1,5 +1,5 @@
-<%@page import="es.caib.enviafib.back.preparer.MenuPreparer"%><%@page import="es.caib.enviafib.model.entity.Menu"%><%@page
-    import="java.util.List"%><%@page import="org.springframework.context.i18n.LocaleContextHolder"%><%@page
+<%@page import="es.caib.enviafib.back.preparer.MenuPreparer"%><%@page import="es.caib.enviafib.model.entity.Menu"
+%><%@page import="java.util.List"%><%@page import="org.springframework.context.i18n.LocaleContextHolder"%><%@page
     import="es.caib.enviafib.commons.utils.Configuracio"%><%@page import="java.util.Locale"%><%@page
     import="es.caib.enviafib.back.security.LoginInfo"%><%@page import="es.caib.enviafib.back.controller.user.MenuUserController"%><%@ page
     contentType="text/html;charset=UTF-8" language="java"%><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%><%@ taglib prefix="c"
@@ -7,8 +7,8 @@
 <un:useConstants var="ConstantsEnviaFIB" className="es.caib.enviafib.commons.utils.Constants" />
 
 <header>
-    <!-- Header -->
-    <!-- set entitat actual.  -->
+    <%-- Header --%>
+    <%-- set entitat actual.  --%>
     <c:set var="entitatActual" value="${loginInfo.entitatRolsActual.entitat}" />
 
     <nav id="nav-cap" class="navbar navbar-expand-md navbar-dark">
@@ -18,7 +18,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Logo i nom aplicació -->
+        <%-- Logo i nom aplicació --%>
         <div id="logoEntitatContainer" class="logoEntitat">
 
             <a href="${entitatActual.web}">
@@ -187,9 +187,9 @@
                     </div></li>
             </ul>
         </div>
-        <!-- FI Logo i nom aplicació -->
+        <%-- FI Logo i nom aplicació --%>
 
-        <!-- Botons -->
+        <%-- Botons --%>
         <div id="botoneraCapContainer" class="collapse navbar-collapse" id="navbarCollapse">
 
             <ul class="navbar-nav mobil">
@@ -254,27 +254,19 @@
                     </button>
                 </li>
             </ul>
-            <!-- FI Botons -->
+            <%-- FI Botons --%>
     </nav>
 </header>
 
 
-
-
-
-<!-- CAPÇALERA MODERNA -->
+<%-- CAPÇALERA MODERNA --%>
 <script type="text/javascript">
     $('.subtitolMay').css('font-size', '1rem !important');
 </script>
 
 <style>
-header { <%
-    -- position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 5rem;
-    height: 7rem; -- %> z-index : 10;
+header { 
+    z-index : 10;
     background-color: #fff;
     margin-bottom: 2rem;
 }
@@ -332,29 +324,7 @@ header { <%
     padding-right: 0px;
 }
 
-<%
---
-
-
-
-
-
-
-
-
-
-
-@font-face {
-    font-family: CaviarDreamsFont;
-    src: url(/fonts/RubikGlitch-Regular.ttf);
-}
-
-h1 {
-    font-family: CaviarDreamsFont;
-    color: darkgreen;
-}
-
--- %>#FilterButton, #GroupButton {
+#FilterButton, #GroupButton {
     background-color: #E1E1E1;
     border-color: #E1E1E1;
     margin-left: 3px;

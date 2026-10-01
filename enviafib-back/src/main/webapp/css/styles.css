@@ -559,15 +559,17 @@ a.iconoXarxes{
 
 /* Per paginació */
 .page-link{
-	color: #FF9523;
+    color: #0069d9;
 }
 .page-item.active .page-link {
-	background-color: #FF9523;
-	border-color: #FF9523;
+    background-color: #0069d9; /* #317a4c */
+    border-color: #0069d9;
 }
 .page-link:focus, .page-link:hover {
-	color: #000;
+    color: #000;
 }
+
+
 #GroupDiv { font-size:90%; }
 #FilterDiv { font-size:90%; }
 

@@ -15,7 +15,7 @@
 					test="${empty versio.scmRevision}">
 					<fmt:message key="scmversion.msg" />
 				</c:if> <c:if test="${not empty versio.scmRevision}">${versio.scmRevision}</c:if>
-				<br /> <span style="padding-top: 2px"> <i><fmt:message
+				<br /> <span style="padding-top: 2px;style="color:#fff"> <i><fmt:message
 							key="desenvolupatper" /></i></span>
 			</small>
 		</div>
