@@ -39,55 +39,19 @@ hs_err_pid*
 /enviafib-back/target
 /enviafib-persistence/target
 /enviafib-model/target
-/enviafib-back/.settings/.jsdtscope
-/enviafib-back/.settings/org.eclipse.core.resources.prefs
-/enviafib-back/.settings/org.eclipse.jdt.core.prefs
-/enviafib-back/.settings/org.eclipse.wst.common.component
-/enviafib-back/.settings/org.eclipse.wst.common.project.facet.core.prefs.xml
-/enviafib-back/.settings/org.eclipse.wst.common.project.facet.core.xml
-/enviafib-back/.settings/org.eclipse.wst.jsdt.ui.superType.container
-/enviafib-back/.settings/org.eclipse.wst.jsdt.ui.superType.name
-/enviafib-back/.settings/org.eclipse.wst.validation.prefs
-/enviafib-commons/.settings/org.eclipse.core.resources.prefs
-/enviafib-commons/.settings/org.eclipse.jdt.core.prefs
-/enviafib-commons/.settings/org.eclipse.wst.common.component
-/enviafib-commons/.settings/org.eclipse.wst.common.project.facet.core.xml
-/enviafib-commons/.settings/org.eclipse.wst.validation.prefs
-/enviafib-ear/.settings/org.eclipse.core.resources.prefs
-/enviafib-ear/.settings/org.eclipse.wst.common.component
-/enviafib-ear/.settings/org.eclipse.wst.common.project.facet.core.xml
-/enviafib-ear/.settings/org.eclipse.wst.validation.prefs
-/enviafib-ejb/.settings/org.eclipse.core.resources.prefs
-/enviafib-ejb/.settings/org.eclipse.jdt.core.prefs
-/enviafib-ejb/.settings/org.eclipse.wst.common.component
-/enviafib-ejb/.settings/org.eclipse.wst.common.project.facet.core.xml
-/enviafib-ejb/.settings/org.eclipse.wst.validation.prefs
-/enviafib-model/.settings/org.eclipse.core.resources.prefs
-/enviafib-model/.settings/org.eclipse.jdt.core.prefs
-/enviafib-model/.settings/org.eclipse.wst.common.component
-/enviafib-model/.settings/org.eclipse.wst.common.project.facet.core.xml
-/enviafib-model/.settings/org.eclipse.wst.validation.prefs
-/enviafib-persistence/.settings/org.eclipse.core.resources.prefs
-/enviafib-persistence/.settings/org.eclipse.jdt.core.prefs
-/enviafib-persistence/.settings/org.eclipse.jpt.core.prefs
-/enviafib-persistence/.settings/org.eclipse.wst.common.component
-/enviafib-persistence/.settings/org.eclipse.wst.common.project.facet.core.prefs.xml
-/enviafib-persistence/.settings/org.eclipse.wst.common.project.facet.core.xml
-/enviafib-persistence/.settings/org.eclipse.wst.validation.prefs
 /version-ruleset.xml
 /dependencies.txt
 /enviafib-model/.project
 /enviafib-ejb/email.properties
-/enviafib-back/.settings/org.eclipse.m2e.core.prefs
-/enviafib-commons/.settings/org.eclipse.m2e.core.prefs
-/enviafib-ejb/.settings/org.eclipse.m2e.core.prefs
-/enviafib-model/.settings/org.eclipse.m2e.core.prefs
-/enviafib-persistence/.settings/org.eclipse.m2e.core.prefs
+/enviafib-back/.settings
+/enviafib-commons/.settings
+/enviafib-ejb/.settings
+/enviafib-model/.settings
+/enviafib-persistence/.settings
 /genapp.bat
 /enviafib-api-interna/target
 /enviafib-api-interna/.project
 /enviafib-api-interna/.classpath
-
 /enviafib-api-interna/.settings
 /back.bat
 /ejb.bat
@@ -124,7 +88,6 @@ pemfiles
 /enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/target
 /enviafib-pluginsib/pluginsib-estructuraorganitzativa/database/.classpath
 installCerts.bat
-
 /doc/QuadernDeCarrega/20221122/fitxers
 /doc/QuadernDeCarrega/20221122/fitxers
 /doc/QuadernDeCarrega/fitxers
@@ -163,7 +126,6 @@ installCerts.bat
 /api.bat
 /enviafib-api-interna-client/test.properties
 /enviafib-api-externa
-/enviafib-back/*.bak
 /enviafib-api-interna-client/.github
 /enviafib-api-interna-client/.openapi-generator
 /enviafib-api-interna-client/api
@@ -180,31 +142,21 @@ installCerts.bat
 /enviafib-persistence/.settings/org.eclipse.jdt.apt.core.prefs
 /interna.bat
 /test.bat
-/.settings/org.eclipse.core.resources.prefs
-/.settings/org.eclipse.m2e.core.prefs
 /scripts/sqlgenerator/.classpath
 /scripts/sqlgenerator/.project
-/scripts/sqlgenerator/.settings/org.eclipse.core.resources.prefs
-/scripts/sqlgenerator/.settings/org.eclipse.jdt.core.prefs
-/scripts/sqlgenerator/.settings/org.eclipse.m2e.core.prefs
-/scripts/sqlgenerator/target/classes/META-INF/MANIFEST.MF
-/scripts/sqlgenerator/target/classes/META-INF/maven/es.caib.enviafib/enviafib-sqlgenerator/pom.properties
-/scripts/sqlgenerator/target/classes/META-INF/maven/es.caib.enviafib/enviafib-sqlgenerator/pom.xml
+/scripts/sqlgenerator/.settings
+/scripts/sqlgenerator/target
 /scripts/.settings/org.eclipse.core.resources.prefs
 /scripts/.settings/org.eclipse.m2e.core.prefs
-/.project
 /enviafib-pluginsib/pluginsib-estructuraorganitzativa/.project
-/enviafib-pluginsib/pluginsib-estructuraorganitzativa/.settings/org.eclipse.core.resources.prefs
-/enviafib-pluginsib/pluginsib-estructuraorganitzativa/.settings/org.eclipse.m2e.core.prefs
+/enviafib-pluginsib/pluginsib-estructuraorganitzativa/.settings
 /doc/QuadernDeCarrega/enviafib_2.0.1/IN241125 ENVIAFIB.odt
 /doc/QuadernDeCarrega/enviafib_2.0/IN230515ENVIAFIBDEV.odt
 /doc/QuadernDeCarrega/enviafib_2.0/IN240923 ENVIAFIB PRO.odt
 /doc/QuadernDeCarrega/enviafib_2.0/SW240917 ENVIAFIB.odt
 /doc/QuadernDeCarrega/enviafib_dev/IN151023 ENVIAFIB DEV.odt
 /scripts/bbdd/postgresql/lastChanges.sql
-/enviafib-api-interna/*.versionsBackup
 /doc/QuadernDeCarrega/enviafib_2.0.2/SW250207 ENVIAFIB.odt
-<<<<<<< HEAD
 /doc/QuadernDeCarrega/enviafib_1.0/enviafib_1.0.4/IN221122ENVIAFIBDEV.odt
 /doc/QuadernDeCarrega/enviafib_1.0/enviafib_1.0.5/IN221212ENVIAFIBDEV.odt
 /doc/QuadernDeCarrega/enviafib_1.0/enviafib_1.0.6/IN230515ENVIAFIBDEV.odt
@@ -217,28 +169,19 @@ installCerts.bat
 /doc/QuadernDeCarrega/enviafib_2.0/enviafib_2.0.3/SW250228 ENVIAFIB.odt
 /doc/QuadernDeCarrega/enviafib_2.0/enviafib_2.0.3/SW250318 ENVIAFIB.odt
 /doc/QuadernDeCarrega/enviafib_2.0/enviafib_2.0.4/SW250430 ENVIAFIB.odt
-=======
+/scripts/bbdd/Peticions amb anexes.sql
+/deps.txt
 /enviafib-ejb/dev.csv
-/enviafib-ejb/dev.sql
 /enviafib-ejb/pre.csv
 /enviafib-ejb/pre.sql
->>>>>>> 01c6aabe7446df7753328b4da12ae4215c44b052
-/scripts/bbdd/Peticions amb anexes.sql
-/enviafib-back/*.versionsBackup
-/enviafib-commons/*.versionsBackup
-/enviafib-ear/*.versionsBackup
-/enviafib-ejb/*.versionsBackup
-/enviafib-front/*.versionsBackup
-/enviafib-model/*.versionsBackup
-/enviafib-persistence/*.versionsBackup
-/enviafib-pluginsib/*.versionsBackup
-/*.versionsBackup
-/scripts/*.versionsBackup
-/deps.txt
 /enviafib-ejb/pro.csv
 /enviafib-ejb/pro.sql
 /enviafib-ejb/se.csv
 /enviafib-ejb/se.sql
 /enviafib-pluginsib/target/antrun/build-main.xml
 /scripts/target/antrun/build-main.xml
-/target/antrun/build-main.xml
+/.project
+/.settings
+/target
+/enviafib-ejb/dev.sql
+/enviafib-ear/.settings
