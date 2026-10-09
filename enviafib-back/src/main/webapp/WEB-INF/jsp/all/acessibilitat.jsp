@@ -1,4 +1,4 @@
-﻿<div style="min-width: 45%;max-width: 400px;">
+﻿<div style="min-width: 45%;max-width: 900px;">
 <h1>DECLARACIÓ D'ACCESSIBILITAT</h1>
 
 <p>
@@ -37,7 +37,7 @@
         el RD 1112/2018
     </a>.
 </p>
-
+<br>
 <p>
     <span >
         <strong>1. Ús d’encapçalaments: Absència d’elements d’encapçalament.</strong>
@@ -58,7 +58,7 @@
         utilitzen lectors de pantalla, puguin identificar i navegar ràpidament per les diferents seccions de la pàgina.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>2. Ús de llistes: Llistes no ordenades mal estructurades.</strong>
@@ -78,7 +78,7 @@
         interpretin adequadament la informació i la relació entre els diferents elements de la llista.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>3. Taules de dades: Estructuració incorrecta dels encapçalaments de les taules.</strong>
@@ -99,7 +99,7 @@
         correctament les relacions entre els encapçalaments i les dades de la taula.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>4. Agrupació estructural: Ús excessiu de salts de línia BR.</strong>
@@ -119,7 +119,7 @@
         estructures mitjançant una successió de salts de línia.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>5. Separació de contingut i presentació: Ús d’elements HTML de presentació desaconsellats.</strong>
@@ -140,7 +140,7 @@
         presentació.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>6. Separació de contingut i presentació: Generació de contingut mitjançant CSS.</strong>
@@ -160,7 +160,7 @@
         content. La informació significativa ha d’estar disponible directament en el contingut HTML.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>7. Navegació amb JavaScript i control de l’usuari: Elements d’interacció no accessibles.</strong>
@@ -182,7 +182,7 @@
         aplicant les recomanacions WAI-ARIA quan sigui necessari.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>8. Formularis i etiquetes: Associació incorrecta entre controls i etiquetes.</strong>
@@ -202,7 +202,7 @@
         relació entre cada etiqueta i el seu camp de formulari.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>9. Formularis i etiquetes: Camps de formulari sense una etiqueta que n’identifiqui la finalitat.</strong>
@@ -222,7 +222,7 @@
         ARIA-LABELLEDBY, segons correspongui. El problema afecta especialment alguns elements SELECT i INPUT.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>10. Formularis i etiquetes: No s’identifiquen els camps obligatoris.</strong>
@@ -242,7 +242,7 @@
         produeixin errors durant la validació.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>11. Formularis i estructura: Grups de botons de ràdio o caselles de verificació sense FIELDSET.</strong>
@@ -263,7 +263,7 @@
         controls del formulari.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>12. Títol de pàgina i de marcs: Títols inadequats o absents.</strong>
@@ -284,7 +284,7 @@
         o contingut.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>13. Enllaços descriptius: Enllaços sense text significatiu.</strong>
@@ -305,7 +305,7 @@
         continua essent buit.
     </span>
 </p>
-
+<br>
 <p>
     <span >
         <strong>14. Compatibilitat: Errors en el codi CSS.</strong>
