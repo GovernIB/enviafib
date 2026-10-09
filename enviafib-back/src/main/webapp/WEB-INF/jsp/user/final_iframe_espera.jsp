@@ -32,7 +32,7 @@
 }
 </style>
 
-<script>
+<script type="text/javascript">
 	$(document).ready(function() {
 		//sleep(4000);//Mentre arxiu no funciona...
 		window.location.href = '${URL_FINAL}';

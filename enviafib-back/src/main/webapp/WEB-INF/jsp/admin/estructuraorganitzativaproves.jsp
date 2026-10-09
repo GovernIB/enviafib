@@ -27,7 +27,7 @@ fieldset.scheduler-border {
 </style>
 <c:forEach var="entry" items="${estructura}">
  
-<br/>
+<br>
 <fieldset>
 <legend><b>${entry.key}</b></legend>
  <table class="table table-bordered">

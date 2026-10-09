@@ -199,7 +199,7 @@ public class MenuAdminController extends MenuController implements Constants {
                 + "                   - Càrrec Addicional 1 => ${Carrec1}\n"
                 + "                   - Càrrec Addicional 2 => ${Carrec2}\n"
                 + "                   - Usuari Loguejat => ${UsuariActual}";
-        HtmlUtils.saveMessageInfo(request, help.replace("\n", "<br/>\n"));
+        HtmlUtils.saveMessageInfo(request, help.replace("\n", "<br>\n"));
     }
 
     @Override

@@ -1,52 +1,52 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>Benvingut a EnviaFIB</title>
 
 
-<link rel="icon" type="image/vnd.microsoft.icon" href="<c:url value="/img/favicon.ico"/>">
+<link rel="icon" type="image/vnd.microsoft.icon" href="<c:url value="/img/favicon.ico"/>"/>
 
 <!-- CSS -->
 
 
 <!-- Bootstrap CSS-->
-<link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
-<link href="<c:url value="/css/datatables.min.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet"/>
+<link href="<c:url value="/css/datatables.min.css"/>" rel="stylesheet"/>
 
 <!-- Bootstrap TREE CSS-->
-<link href="<c:url value="/css/gijgo.min.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/gijgo.min.css"/>" rel="stylesheet"/>
 
 <!-- Bootstrap DateTimepicker CSS -->
-<link href="<c:url value="/css/datetimepicker/tempusdominus-bootstrap-4.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/datetimepicker/tempusdominus-bootstrap-4.css"/>" rel="stylesheet"/>
 
 <%--  Select Multiple --%> 
-<link href="<c:url value="/css/select2.min.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/select2.min.css"/>" rel="stylesheet"/>
 
-<link href="<c:url value="/css/styles.css"/>" rel="stylesheet">
-<link href="<c:url value="/css/default.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/styles.css"/>" rel="stylesheet"/>
+<link href="<c:url value="/css/default.css"/>" rel="stylesheet"/>
 
-<link href="<c:url value="/css/genapp.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/genapp.css"/>" rel="stylesheet"/>
 
-<link href="<c:url value="/css/stylesapp.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/stylesapp.css"/>" rel="stylesheet"/>
 
 <!-- JS -->
-<script src="<c:url value="/js/jquery.js"/>"></script>
-<script src="<c:url value="/js/popper.min.js"/>"></script>
+<script src="<c:url value="/js/jquery.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/js/popper.min.js"/>" type="text/javascript"></script>
 
 <!-- JS bootstrap -->
-<script src="<c:url value="/js/bootstrap.js"/>"></script>
+<script src="<c:url value="/js/bootstrap.js"/>" type="text/javascript"></script>
 
 <%-- https://fontawesome.com/icons?d=gallery&m=free --%>
-<script src="<c:url value="/js/fontawesome-all.js"/>"></script>
+<script src="<c:url value="/js/fontawesome-all.js"/>" type="text/javascript"></script>
 
 <!-- Bootstrap TREE JS-->
-<script src="<c:url value="/js/gijgo.min.js"/>"></script>
+<script src="<c:url value="/js/gijgo.min.js"/>" type="text/javascript"></script>
 
 <!-- Bootstrap DateTimePicker JS -->
-<script src="<c:url value="/js/datetimepicker/moment-with-locales.js"/>"></script>
-<script src="<c:url value="/js/datetimepicker/tempusdominus-bootstrap-4.js"/>"></script>
+<script src="<c:url value="/js/datetimepicker/moment-with-locales.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/js/datetimepicker/tempusdominus-bootstrap-4.js"/>" type="text/javascript"></script>
 
 <!-- TinyMCE -->
 <script type="text/javascript">
@@ -56,8 +56,8 @@
 <script src="<c:url value="/js/tinymce.js"/>" type="text/javascript"></script>
 
 <%-- Select Multiple i Select amb cerca --%>
-<script src="<c:url value="/js/select2.min.js"/>"></script>
-<script src="<c:url value="/js/select2_i18n/${lang}.js"/>"></script>
+<script src="<c:url value="/js/select2.min.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/js/select2_i18n/${lang}.js"/>" type="text/javascript"></script>
 
 <script type="text/javascript">
     function clear_form_elements(ele) {

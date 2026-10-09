@@ -245,8 +245,8 @@ public abstract class AbstractPlantillaDeFluxDeFirmesController extends UsuariCo
                 }
             }
 
-            String description = descrOriginal.replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{").replace("}{",
-                    "}<br/>{");
+            String description = descrOriginal.replace("}\n{", "}<br>{").replace("}\r\n{", "}<br>{").replace("}{",
+                    "}<br>{");
 
             Usuari usuari = new UsuariJPA();
             usuari.setUsuariID((long) flux.hashCode());

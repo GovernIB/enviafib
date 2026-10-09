@@ -32,7 +32,7 @@
    </sec:authorize>
     --%>
 
-	    <hr  style="margin-top: 6px;  margin-bottom: 6px;" />
+	    <li style="list-style-type: none;"><hr style="margin-top: 6px;  margin-bottom: 6px;" /></li>
 	    <li style="list-style-type: disc; list-style-position: inside;">
 	      <a href="<c:url value="/common/usuari/${loginInfo.usuari.usuariID}/edit"/>">
 	        <span style="${(fn:contains(url, 'common/usuari/edit'))? "font-weight: bold;" : ""}"><fmt:message key="inici.menu.editar.usuari"/></span>

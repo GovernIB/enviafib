@@ -17,7 +17,7 @@
 <h2>Situació de compliment</h2>
 
 <p>
-    Aquest lloc web és parcialment conforme amb
+    Aquest lloc web és <b>No Conforme</b> amb
     <a href="https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-12699" target="_blank" rel="noopener noreferrer">
         el RD 1112/2018
     </a>
@@ -39,55 +39,300 @@
 </p>
 
 <p>
-    <span style="background-color: #ffff00;">
-        1. Ús d’encapçalaments: Absència d’un encapçalament principal H1.
+    <span >
+        <strong>1. Ús d’encapçalaments: Absència d’elements d’encapçalament.</strong>
     </span>
 </p>
 
 <p>
-    <span style="background-color: #ffff00;">
-        Els elements d’encapçalament (H1...H6) serveixen per identificar els títols de les diferents seccions en què s’estructura un document.
-        El nivell emprat en cada encapçalament és el que definirà l’estructura jeràrquica de les seccions del document. Per tant, aquesta
-        estructura d’encapçalaments i els nivells emprats ha de ser correcta, reflectint l’estructura lògica del contingut de la pàgina,
-        identificant com a encapçalaments tots els títols de secció, sense emprar elements d’encapçalament únicament per crear efectes
-        de presentació i sense saltar nivells intermedis en descendir en la jerarquia d’encapçalaments.
+    <span >
+        Les pàgines han d’utilitzar elements d’encapçalament (H1...H6) per identificar els títols de les diferents seccions
+        del document. L’estructura dels encapçalaments ha de reflectir la jerarquia lògica del contingut, sense utilitzar-los
+        únicament amb finalitats de presentació ni saltar nivells dins de la jerarquia.
     </span>
 </p>
 
 <p>
-    <span style="background-color: #ffff00;">
-        Algunes pàgines no contenen un encapçalament H1, sinó que contenen altres encapçalaments de nivell inferior. Tot i que totes les
-        pantalles presenten algun tipus d’encapçalament, la jerarquia no és correcta en tots els casos.
+    <span >
+        En diverses pàgines no es detecten elements d’encapçalament. Això dificulta que els usuaris, especialment els que
+        utilitzen lectors de pantalla, puguin identificar i navegar ràpidament per les diferents seccions de la pàgina.
     </span>
 </p>
 
 <p>
-    <span style="background-color: #ffff00;">
-        Una estructura correcta d’encapçalaments és de gran importància, ja que les aplicacions d’usuari i els productes de suport, com
-        els lectors de pantalla, poden proporcionar mecanismes especials de navegació que permetin als usuaris accedir de manera ràpida
-        a les diferents seccions que componen una pàgina web (p. ex. mitjançant un índex o mapa del document amb accessos directes a les
-        diferents seccions).
+    <span >
+        <strong>2. Ús de llistes: Llistes no ordenades mal estructurades.</strong>
     </span>
 </p>
 
 <p>
-    <span style="background-color: #ffff00;">2. Editor de taulers de control.</span>
+    <span >
+        Les llistes no ordenades s’han d’estructurar mitjançant l’element UL i els seus elements han de ser elements LI.
+        No s’han d’incloure altres tipus d’elements com a fills directes d’un UL.
+    </span>
 </p>
 
 <p>
-    <span style="background-color: #ffff00;">
-        L’editor de taulers de control actualment no és accessible. Es tracta d’un component interactiu que utilitza elements gràfics amb
-        funcionalitat d’arrossegar i deixar anar (<i>drag and drop</i>) i altres interaccions complexes que no són completament operables
-        mitjançant el teclat ni compatibles amb tecnologies de suport, com ara els lectors de pantalla.
+    <span >
+        Una estructura incorrecta de les llistes pot dificultar que els productes de suport, com ara els lectors de pantalla,
+        interpretin adequadament la informació i la relació entre els diferents elements de la llista.
     </span>
 </p>
+
+<p>
+    <span >
+        <strong>3. Taules de dades: Estructuració incorrecta dels encapçalaments de les taules.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        Les taules de dades han d’estar estructurades correctament mitjançant cel·les d’encapçalament (TH) i cel·les de dades.
+        Quan la primera fila o la primera columna conté cel·les d’encapçalament, no s’hi han de barrejar incorrectament
+        cel·les de dades i cel·les d’encapçalament, excepte en el cas de cel·les buides.
+    </span>
+</p>
+
+<p>
+    <span >
+        Una estructura correcta permet que els lectors de pantalla i altres productes de suport puguin interpretar
+        correctament les relacions entre els encapçalaments i les dades de la taula.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>4. Agrupació estructural: Ús excessiu de salts de línia BR.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        Els salts de línia BR s’han d’utilitzar de manera excepcional i només quan estigui justificat. No s’han d’utilitzar
+        per simular estructures que haurien d’estar representades mitjançant elements HTML específics.
+    </span>
+</p>
+
+<p>
+    <span >
+        Per exemple, els llistats s’han d’estructurar amb UL, OL i LI, i els paràgrafs amb P, en lloc de construir aquestes
+        estructures mitjançant una successió de salts de línia.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>5. Separació de contingut i presentació: Ús d’elements HTML de presentació desaconsellats.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        S’han detectat elements o atributs HTML destinats a controlar la presentació del contingut, com ara CENTER.
+        Aquest tipus d’elements s’han d’evitar, ja que poden quedar obsolets i dificultar el manteniment i la correcta
+        interpretació del contingut.
+    </span>
+</p>
+
+<p>
+    <span >
+        La presentació visual s’ha de controlar mitjançant fulls d’estil CSS, mantenint separats el contingut i la seva
+        presentació.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>6. Separació de contingut i presentació: Generació de contingut mitjançant CSS.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        No s’han d’utilitzar els fulls d’estil per incorporar contingut o informació textual que formi part del contingut
+        de la pàgina. Aquest contingut pot no estar disponible per als lectors de pantalla o altres aplicacions de suport.
+    </span>
+</p>
+
+<p>
+    <span >
+        En particular, s’ha d’evitar incorporar text mitjançant els pseudoelements :before o :after i la propietat CSS
+        content. La informació significativa ha d’estar disponible directament en el contingut HTML.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>7. Navegació amb JavaScript i control de l’usuari: Elements d’interacció no accessibles.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        S’han detectat elements d’interacció programats mitjançant scripts que no garanteixen l’accessibilitat.
+        Els elements interactius s’han d’implementar preferentment mitjançant elements HTML estàndard, com ara
+        enllaços o botons.
+    </span>
+</p>
+
+<p>
+    <span >
+        Quan es creen components interactius personalitzats mitjançant elements com SPAN, DIV, IMG o elements de
+        taula, aquests han de continuar sent operables amb el teclat i compatibles amb les tecnologies de suport,
+        aplicant les recomanacions WAI-ARIA quan sigui necessari.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>8. Formularis i etiquetes: Associació incorrecta entre controls i etiquetes.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        Les etiquetes dels camps de formulari s’han d’associar explícitament amb el control corresponent. Per fer-ho,
+        l’atribut FOR de l’element LABEL ha de coincidir amb l’atribut ID del camp de formulari.
+    </span>
+</p>
+
+<p>
+    <span >
+        Aquesta associació permet que els agents d’usuari i les tecnologies de suport identifiquin correctament la
+        relació entre cada etiqueta i el seu camp de formulari.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>9. Formularis i etiquetes: Camps de formulari sense una etiqueta que n’identifiqui la finalitat.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        Els camps de formulari han de disposar d’un text o etiqueta que permeti identificar clarament la seva funció.
+        Aquesta etiqueta es pot proporcionar mitjançant un element LABEL associat al camp.
+    </span>
+</p>
+
+<p>
+    <span >
+        Quan no existeixi un text visible adequat, es poden utilitzar alternatives com l’atribut TITLE, ARIA-LABEL o
+        ARIA-LABELLEDBY, segons correspongui. El problema afecta especialment alguns elements SELECT i INPUT.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>10. Formularis i etiquetes: No s’identifiquen els camps obligatoris.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        En els formularis que contenen camps obligatoris i opcionals s’ha de proporcionar informació que permeti als
+        usuaris diferenciar-los clarament.
+    </span>
+</p>
+
+<p>
+    <span >
+        Aquesta identificació ajuda els usuaris a emplenar correctament els formularis i redueix la possibilitat que es
+        produeixin errors durant la validació.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>11. Formularis i estructura: Grups de botons de ràdio o caselles de verificació sense FIELDSET.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        Els grups de camps de formulari relacionats entre si, especialment els grups de botons de ràdio o caselles de
+        verificació, s’han d’agrupar mitjançant l’element FIELDSET.
+    </span>
+</p>
+
+<p>
+    <span >
+        Cada grup s’ha d’identificar mitjançant un element LEGEND que descrigui la finalitat del conjunt de camps.
+        Aquesta estructura permet que les tecnologies de suport entenguin correctament la relació entre els diferents
+        controls del formulari.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>12. Títol de pàgina i de marcs: Títols inadequats o absents.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        Les pàgines analitzades utilitzen el mateix títol de pàgina, “Benvingut a EnviaFIB”, fet que no permet identificar
+        de manera clara el contingut de cada pàgina.
+    </span>
+</p>
+
+<p>
+    <span >
+        Cada pàgina ha de disposar d’un element TITLE breu i descriptiu que permeti identificar-ne el contingut de forma
+        inequívoca. A més, els marcs IFRAME han de disposar d’un atribut TITLE que descrigui clarament la seva finalitat
+        o contingut.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>13. Enllaços descriptius: Enllaços sense text significatiu.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        S’han detectat enllaços que no contenen text. El text d’un enllaç ha de permetre identificar de manera clara la
+        seva funció o el seu destí.
+    </span>
+</p>
+
+<p>
+    <span >
+        Quan l’enllaç només conté una imatge o una icona, aquesta ha de disposar d’un text alternatiu significatiu.
+        No és suficient que la informació només aparegui com a títol o tooltip si el contingut accessible de l’enllaç
+        continua essent buit.
+    </span>
+</p>
+
+<p>
+    <span >
+        <strong>14. Compatibilitat: Errors en el codi CSS.</strong>
+    </span>
+</p>
+
+<p>
+    <span >
+        S’han detectat errors de sintaxi en els fulls d’estil CSS que poden dificultar-ne el processament correcte.
+        El codi CSS ha de poder ser processat sense inconsistències pels diferents navegadors i aplicacions d’usuari.
+    </span>
+</p>
+
+<p>
+    <span >
+        Cal revisar i corregir els errors de sintaxi detectats en els fulls d’estil, mantenint la compatibilitat amb els
+        diferents navegadors i tecnologies de suport.
+    </span>
+</p>
+
 
 <br>
 <h2>Preparació de la present declaració d’accessibilitat</h2>
 
 <p>
     La present declaració va ser preparada el
-    <span style="background-color: #ffff00;">8 de setembre de 2026.</span>
+    <span >8 d´Octubre de 2026.</span>
 </p>
 
 <p>
@@ -169,7 +414,7 @@
 
 <p>
     S’han utilitzat eines automàtiques per verificar l’accessibilitat de la pàgina (Observatori d’Accessibilitat).
-    El resultat obtingut ha estat el següent:
+    El resultat obtingut ha sigut el següent:
 </p>
 
 <table class="table table-bordered">
@@ -182,25 +427,27 @@
     <tbody>
         <tr>
             <td>Puntuació mitjana del lloc web</td>
-            <td><span style="background-color: #ffff00;">8.20</span></td>
+            <td><span>4.92</span></td>
         </tr>
         <tr>
             <td>Nivell d’adequació estimat</td>
-            <td><span style="background-color: #ffff00;">AA</span></td>
+            <td><span>No v&agrave;lid</span></td>
         </tr>
         <tr>
             <td>Situació de compliment estimada</td>
-            <td><span style="background-color: #ffff00;">Parcialment conforme</span></td>
+            <td><span>No conforme</span></td>
         </tr>
     </tbody>
 </table>
 <br>
+<!--
 <p>
-    <span style="background-color: #ffff00;">Nivell AA WCAG 2.1</span>
+    <span >Nivell AA WCAG 2.1</span>
 </p>
+
 <br>
 <p>
     El lloc web està dissenyat per a la seva visualització <i>responsive</i>, de manera que es visualitza de forma òptima en dispositius tauleta i mòbils.
 </p>
-
+-->
 </div>

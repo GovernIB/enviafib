@@ -120,7 +120,7 @@ try {
  <div class="alert alert-danger">
       <c:set var="stacktrace"  value="${pageContext.exception.stackTrace}"/>
       <div><h4><%=titolPagina%></h4></div>
-      <br/>
+      <br>
       <% if (!sessioinvalida) { %>
         <c:if test = "${empty stacktrace}">
             <%= missatgeTipusError%>
@@ -130,7 +130,7 @@ try {
         </c:if>
       <% } %>
       <div><b><%=missatgeSessioInvalida%></b></div>
-      <br/>
+      <br>
       <!-- Mostram el stacktrace de l'excepció en cas que hi hagi -->
       <div>
         <!-- Botó de mostrar stacktrace en cas que hi hagi stacktrace -->
@@ -142,20 +142,20 @@ try {
         <!-- Mostram el botó de tornar a principal -->
         <a href="<c:url value="/"/>" class="btn btn-secondary"><%=etiquetaBoto%></a>
         
-        <br/>
+        <br>
         
         
         <b>[[[[ MESSAGE: ${pageContext.exception.message}]]]</b>
 
-        <br/>
-        <br/>
+        <br>
+        <br>
         <!-- Mostram la traça de l'error -->
         <c:if test="${not empty stacktrace}">
             <div class="trace"><b><%=detallError%></b></div>
             <c:forEach var="trace" items="${stacktrace}">
               <p class="trace">"${trace}"</p>
             </c:forEach>
-            <br/>
+            <br>
          </c:if>
        <% } %>
       </div>

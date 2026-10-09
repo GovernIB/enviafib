@@ -1,9 +1,9 @@
 
 
-<script>
+<script type="text/javascript">
 
 function regenerar() {
-   var dir3 = prompt("Introdueix el codi arrel DIR3 de l'organització:", "A04003003");
+   var dir3 = prompt("Introdueix el codi arrel DIR3 de l'organitzaciï¿½:", "A04003003");
    if (dir3 != null) {
        var context = "<%=request.getContextPath()%>";
        document.location.href =  context + "${contexte}/regenerar/" + dir3;

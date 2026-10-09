@@ -194,7 +194,7 @@
     
     <!-- XXX   CLIENT-CERT,BASIC -->
 	<login-config>
-		<auth-method>KEYCLOAK</auth-method>
+		<auth-method>BASIC</auth-method>
 		<realm-name>Govern de les Illes Balears</realm-name>
 	</login-config>
 

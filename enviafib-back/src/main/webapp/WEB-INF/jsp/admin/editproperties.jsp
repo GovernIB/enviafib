@@ -18,12 +18,12 @@
 <div style="resize: both; overflow: auto; border:1px solid #ccc; margin:20px;height:60vh;">
     <textarea id="editor" name="fileContent" >${fileContent}</textarea>
 </div>
-    <br />
+    <br>
     <small>L´acció de guardar no recarrega les propietats. Ha de recarregar les propietats manualment després de guardar.</small>
-    <br /> <input class="btn btn-warning" type="submit" value="Guardar" />
+    <br> <input class="btn btn-warning" type="submit" value="Guardar" />
 </form>
 
-<script>
+<script type="text/javascript">
   var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
     mode: "properties",
     lineNumbers: true,

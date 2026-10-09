@@ -128,8 +128,8 @@ public class FirmaPlantillaFluxUserController extends AbstractFirmaUserControlle
             //
             //                FlowTemplateSimpleFlowTemplate flux = api.getFlowInfoByFlowTemplateID(flowTemplateRequest);
 
-            String description = flux.getDescription().replace("}\n{", "}<br/>{").replace("}\r\n{", "}<br/>{")
-                    .replace("}{", "}<br/>{");
+            String description = flux.getDescription().replace("}\n{", "}<br>{").replace("}\r\n{", "}<br>{")
+                    .replace("}{", "}<br>{");
 
             if (description.indexOf("{template=true}") == -1) {
                 continue;

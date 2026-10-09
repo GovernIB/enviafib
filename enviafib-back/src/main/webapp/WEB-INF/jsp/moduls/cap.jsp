@@ -190,7 +190,7 @@
         <%-- FI Logo i nom aplicació --%>
 
         <%-- Botons --%>
-        <div id="botoneraCapContainer" class="collapse navbar-collapse" id="navbarCollapse">
+        <div id="botoneraCapContainer" class="collapse navbar-collapse">
 
             <ul class="navbar-nav mobil">
                 <%--  MENÚ d'Usuari SI NOMES TE ROL EFI_USER --%>
@@ -255,6 +255,7 @@
                 </li>
             </ul>
             <%-- FI Botons --%>
+        </div>            
     </nav>
 </header>
 
@@ -264,107 +265,8 @@
     $('.subtitolMay').css('font-size', '1rem !important');
 </script>
 
-<style>
-header { 
-    z-index : 10;
-    background-color: #fff;
-    margin-bottom: 2rem;
-}
 
-#nav-cap {
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
-    padding: 0 5rem;
-    height: 6rem;
-}
-
-.subtitolMay {
-    font-size: 1rem;
-}
-
-#menu_i_contingut {
-    padding: 0rem 8rem;
-    /* 	padding-top: 8rem; */
-}
-
-#logoEntitatContainer {
-    border-right: 1px solid black;
-}
-
-#botoneraCapContainer {
-    margin-top: 2.5rem;
-    /*   margin-bottom: 1rem; */
-}
-
-#botoneraCapContainer button {
-    padding: 0.2rem 0.65rem;
-}
-
-#menuCapContainer {
-    position: absolute;
-    top: 11px;
-    right: 88px;
-    display: flex;
-    color: black;
-}
-
-.menuCapItem span {
-    color: black;
-    text-transform: uppercase;
-    margin-left: 4px;
-}
-
-#menuCapContainer li {
-    padding: 0 1rem;
-    border-right: 1px solid black;
-    cursor: pointer;
-}
-
-#menuCapContainer li:last-child {
-    border: none;
-    padding-right: 0px;
-}
-
-<%--
-#FilterButton, #GroupButton {
-    background-color: #E1E1E1;
-    border-color: #E1E1E1;
-    margin-left: 3px;
-}
-
-#FilterButton:hover, #GroupButton:hover {
-    background-color: #A1A1A1;
-    border-color: #A1A1A1;
-}
---%>
-
-.dropdown .btn-secondary {
-    margin: 0 5px;
-}
-
-.dropdown-menu {
-    margin-top: 0px;
-}
-
-#titol-idiomes {
-    color: #314b87;
-    font-weight: bold;
-}
-
-#titol-idiomes:hover {
-    background-color: transparent;
-}
-
-#nomApp {
-    text-transform: uppercase;
-    font-size: 2rem;
-    margin: 0;
-    font-family: 'Montserrat', serif;
-    color: black;
-}
-</style>
-
-
-<script>
+<script type="text/javascript">
     function cridarOpcioMenu(menuID, tipus) {
         window.location = '<c:url value="/user/menu/show/"/>' + menuID + '/' + tipus + '/' + btoa(window.location);
     }

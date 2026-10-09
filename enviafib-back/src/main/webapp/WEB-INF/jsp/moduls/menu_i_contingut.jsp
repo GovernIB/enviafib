@@ -4,7 +4,7 @@
 <tiles:importAttribute name="menu" />
 <tiles:importAttribute name="contingut" />
 
-        <div id="mostrarMenu" class="upper-left-corner no-disponible" ">
+        <div id="mostrarMenu" class="upper-left-corner no-disponible">
             <a id="mostrar" href="#" data-toggle="tooltip"
                 title="Mostrar Menu"> <i class="fas fa-expand-alt"></i>
             </a>
@@ -41,7 +41,7 @@
 	</div>
 </div>
 
-<script>
+<script type="text/javascript">
     $('#ocultar').click(function() {
         show('#mostrarMenu');
 		hide('#ocultarMenu');
@@ -69,58 +69,7 @@
 	}
 	   
 </script>
-<style>
-.no-disponible {
-  display: none;
-  visibility: hidden;
-}
 
-.disponible {
-  display: block;
-  visibility: visible;
-}
-
-.mainMenu .upper-right-corner {
-  z-index: 9;
-  float: right;
-  padding-right: 9px;
-}
-
-.mainMenu .upper-left-corner {
-  z-index: 9;
-  float: left;
-}
-.thumbnail {
-  /* display: block; */
-  line-height: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
-  transition: all 0.2s ease-in-out;
-}
-
-#ocultarMenu {
-    padding: 0.5rem;
-}
-
-#mostrarMenu{
-	padding-left: 1.25rem;
-	padding-bottom: 0.5rem;
-	padding-top: 0.5rem;	
-}
-
-#principal {
-/*     width: 30%; */
-    min-width: 250px;
-    max-width: 350px;
-
-    padding: 0px 0.75rem;
-}
-
-#contingut {
-    width: 100%;
-}
-</style>
 
 <script type="text/javascript">
 $("#GroupDiv").after($("#infoNumRegistres"));

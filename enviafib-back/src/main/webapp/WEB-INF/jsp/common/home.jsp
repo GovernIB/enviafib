@@ -9,14 +9,14 @@
 <div class="spacer"></div>
 
 <div>
-	<br />
-	<center>
+	<br>
+	<div style="text-align: center;">
 		<img src="<c:url value="/img/app-logo.png"/>" alt="EnviaFIB"
-			title="EnviaFIB" style="width: 125px;"/> <br /> <br />
+			title="EnviaFIB" style="width: 125px;"/> <br> <br>
 		<fmt:message key="common.benvinguda.missatge" />
 
-		<br /> <br />
-		<table border="0">
+		<br> <br>
+		<table border="0" style="margin-left: auto; margin-right: auto;">
 			<tr>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td valign="top"><a
@@ -27,43 +27,43 @@
 				</a></td>
 			</tr>
 		</table>
-		<br />
-	</center>
+		<br>
+	</div>
 
 </div>
 
-<br />
+<br>
 
 <c:if test="${efi:isDesenvolupament()}">
-<br />
-<br />
+<br>
+<br>
 &#36;{efi:hasRole(ROLE_ADMIN)}= ${efi:hasRole('ROLE_ADMIN')}
-<br />
+<br>
 &#36;{efi:hasRole(ROLE_USER) }= ${efi:hasRole('ROLE_USER') }
-<br />
+<br>
 Locale =
 <%=LocaleContextHolder.getLocale()%>
-<br />
+<br>
 lang = ${lang}
-<br />
+<br>
 Only in Development Mode
 
 
-<br />
+<br>
 Username: ${loginInfo.username}
-<br />
-<br />
+<br>
+<br>
 > UserInformation:
-<br />
+<br>
 <c:if test="${not empty loginInfo.usuari}">
-	name= ${loginInfo.usuari.nom} <br /> 
- 	surname1= ${loginInfo.usuari.llinatge1} <br />
- 	surname2= ${loginInfo.usuari.llinatge2} <br />
- 	email= ${loginInfo.usuari.email} <br />
- 	nif= ${loginInfo.usuari.nif} <br />
-	<br />
+	name= ${loginInfo.usuari.nom} <br> 
+ 	surname1= ${loginInfo.usuari.llinatge1} <br>
+ 	surname2= ${loginInfo.usuari.llinatge2} <br>
+ 	email= ${loginInfo.usuari.email} <br>
+ 	nif= ${loginInfo.usuari.nif} <br>
+	<br>
 </c:if>
 <c:if test="${empty loginInfo.usuari}">
-	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br />
+	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br>
 </c:if>
 </c:if>

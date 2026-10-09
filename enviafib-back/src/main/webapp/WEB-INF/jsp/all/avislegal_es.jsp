@@ -188,7 +188,7 @@
                                 cierra el navegador y que se utilizan para identificar la sesión de este usuario
                                 mientras se navega por el sitio web.
                             </p></li>
-                        <li id="analitiques"><strong> <em>Cookies&nbsp;</em>analíticas.&nbsp;<br />Son <em>cookies&nbsp;</em>que
+                        <li id="analitiques"><strong> <em>Cookies&nbsp;</em>analíticas.&nbsp;<br>Son <em>cookies&nbsp;</em>que
                                 registran información para poder elaborar estadísticas sobre el tráfico y el volumen de
                                 visitas del sitio web. Al utilizarse un sitio web se está consintiendo el tratamiento de
                                 información sobre uno mismo por parte de Google. Por lo tanto, el ejercicio de cualquier

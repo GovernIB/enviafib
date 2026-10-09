@@ -10,19 +10,19 @@
 			<strong class="font-weight-bold h6"> ${versio.projectName}
 				v${versio.version}<%=Configuracio.isCAIB() ? "-caib" : ""%>
 
-			</strong> <br /> <small style="color:#fff"> Build: ${versio.buildTime} <br /> JDK:
-				${version.jdkVersion} <br /> <fmt:message key="revisio" />: <c:if
+			</strong> <br> <small style="color:#fff"> Build: ${versio.buildTime} <br> JDK:
+				${version.jdkVersion} <br> <fmt:message key="revisio" />: <c:if
 					test="${empty versio.scmRevision}">
 					<fmt:message key="scmversion.msg" />
 				</c:if> <c:if test="${not empty versio.scmRevision}">${versio.scmRevision}</c:if>
-				<br /> <span style="padding-top: 2px;style="color:#fff"> <i><fmt:message
+				<br> <span style="padding-top: 2px;color:#fff"> <i><fmt:message
 							key="desenvolupatper" /></i></span>
 			</small>
 		</div>
 
 <%-- Centre --%>
 		<div id="peu-centre">
-			<a styleClass="text-dark linkPeu" style="color:white" href="<c:url value="/public/accessibilitat"/>">
+			<a class="text-dark linkPeu" style="color:white" href="<c:url value="/public/accessibilitat"/>">
             <fmt:message key="accessibilitat" />&nbsp;<i class="fas fa-external-link-alt fa-sm"></i>
             </a>
 		</div>
@@ -35,7 +35,7 @@
 				alt="Govern de les Illes Balears" />
 			</a>
 
-			 <br /> 
+			 <br> 
 			 
 			<!-- Button to trigger modal -->
 			<small><a href="#modalAjuda" class="linkAjudaPeu" role="button"
@@ -71,7 +71,7 @@
 
 						<c:if test="${not empty ajudaemail}">
 							<li><fmt:message key="ajuda.viaemail" /> <a
-								href="mailto: ${ajudaemail}"> ${ajudaemail}</a></li>
+								href="mailto:${ajudaemail}"> ${ajudaemail}</a></li>
 						</c:if>
 
 					</ul>
@@ -87,31 +87,3 @@
 	</div>
 </footer>
 
-<style>
-#footer {
-	padding: 6px 6rem 6px;
-	background-color: #4d4d4d;
-	color: white;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	
-	margin-top: auto;
-}
-
-#peu-dreta {
-	display: flex;
-	flex-direction: column;
-	text-align: right;
-	gap: 3px;
-	width: 25rem;
-}
-
-#peu-esquerra {
-	width: 25rem;
-}
-
-#modalAjuda {
-	color: black;
-}
-</style>

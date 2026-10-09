@@ -9,48 +9,48 @@
 <div class="spacer"></div>
 
 <div>
-<br/>
-<center>
+<br>
+<div style="text-align: center;">
 <img src="<c:url value="/img/app-logo.png"/>"  alt="EnviaFIB" />
 
-<br/>
-<br/>
+<br>
+<br>
 This page is generated automatically. Please edit.
 
-<br/>
-<br/>
+<br>
+<br>
 <div>
 <a href="https://governdigital.fundaciobit.org" target="_blank">
 <img src="<c:url value="/img/fundaciobit.png"/>"  alt="IBDigital" />
 </a>
 </div>
-<br/>
-</center>
+<br>
+</div>
  
 </div>
 
-<br/>
+<br>
 <c:if test="${efi:isDesenvolupament()}">
 
-<b>Only in Development Mode</b><br/>
+<b>Only in Development Mode</b><br>
 
 
-Username: ${loginInfo.username}<br/>
-&#36;{efi:hasRole(ROLE_ADMIN)}= ${efi:hasRole('ROLE_ADMIN')}<br/>
-&#36;{efi:hasRole(ROLE_USER) }= ${efi:hasRole('ROLE_USER') }<br/>
-Locale = <%=LocaleContextHolder.getLocale() %> <br/>
-lang = ${lang} <br/>
-> UserInformation:<br/>
- <c:if test="${not empty loginInfo.userInfo}">
-	name= ${loginInfo.userInfo.name} <br/> 
- 	surname1= ${loginInfo.userInfo.surname1} <br/>
- 	surname2= ${loginInfo.userInfo.surname2} <br/>
- 	email= ${loginInfo.userInfo.email} <br/>
- 	nif= ${loginInfo.userInfo.attributes["nif"]} <br/> 
-  <br/>
+Username: ${loginInfo.username}<br>
+&#36;{efi:hasRole(ROLE_ADMIN)}= ${efi:hasRole('ROLE_ADMIN')}<br>
+&#36;{efi:hasRole(ROLE_USER) }= ${efi:hasRole('ROLE_USER') }<br>
+Locale = <%=LocaleContextHolder.getLocale() %> <br>
+lang = ${lang} <br>
+> UserInformation:<br>
+ <c:if test="${not empty loginInfo.usuari}">
+	name= ${loginInfo.usuari.nom} <br> 
+ 	surname1= ${loginInfo.usuari.llinatge1} <br>
+ 	surname2= ${loginInfo.usuari.llinatge2} <br>
+ 	email= ${loginInfo.usuari.email} <br>
+ 	nif= ${loginInfo.usuari.nif} <br> 
+  <br>
 </c:if>
-<c:if test="${empty loginInfo.userInfo}">
-	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br/>
+<c:if test="${empty loginInfo.usuari}">
+	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br>
 </c:if>
 
 

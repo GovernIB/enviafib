@@ -7,6 +7,6 @@
 <div class="clear"></div>
 <div class="spacer"></div>
 
-<center><h1>Option Page ${optionNumber}</h1></center>
+<h1 style="text-align: center;">Option Page ${optionNumber}</h1>
 
-<center><img src="<c:url value="/img/icn_alert_success.png"/>"  alt="exemple" title="exemple"/></center>
+<div style="text-align: center;"><img src="<c:url value="/img/icn_alert_success.png"/>"  alt="exemple" title="exemple"/></div>

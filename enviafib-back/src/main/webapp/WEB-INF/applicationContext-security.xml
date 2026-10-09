@@ -112,5 +112,14 @@
 
 	
 	<bean class="es.caib.enviafib.back.security.AuthenticationSuccessListener" />
+    
+    
+    <!-- Firewall personalitzat per permetre el caràcter ";" a les URLs -->
+    <sec:http-firewall ref="httpFirewall"/>
+    
+    <bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
+        <!-- Permet el caràcter punt i coma (;) a les URLs, p.ex. per a jsessionid -->
+        <property name="allowSemicolon" value="true"/>
+    </bean>
 	
 </beans>
